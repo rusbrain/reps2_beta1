@@ -27,7 +27,6 @@ class CreateUsersTable extends Migration
             $table->string('skype')                 ->nullable();
             $table->string('vk_link')               ->nullable();
             $table->string('fb_link')               ->nullable();
-            $table->string('skype')                 ->nullable();
             $table->string('signature')             ->nullable();
             $table->integer('file_id')              ->nullable();
             $table->string('mouse')                 ->nullable();

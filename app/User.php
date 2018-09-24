@@ -62,7 +62,7 @@ class User extends Authenticatable
      */
     public function files()
     {
-        return $this->hasMany('app\File');
+        return $this->hasMany('App\File');
     }
 
     /**
@@ -72,7 +72,7 @@ class User extends Authenticatable
      */
     public function avatar()
     {
-        return $this->hasOne('app\File');
+        return $this->hasOne('App\File');
     }
 
     /**
@@ -82,7 +82,7 @@ class User extends Authenticatable
      */
     public function send_reputation()
     {
-        return $this->hasMany('app\UserReputation', 'sender_id');
+        return $this->hasMany('App\UserReputation', 'sender_id');
     }
 
     /**
@@ -92,7 +92,7 @@ class User extends Authenticatable
      */
     public function reputation()
     {
-        return $this->hasMany('app\UserReputation', 'recipient_id');
+        return $this->hasMany('App\UserReputation', 'recipient_id');
     }
 
     /**
@@ -115,6 +115,6 @@ class User extends Authenticatable
      */
     public function user_email_token($function)
     {
-        return $this->hasMany('app\UserEmailToken')->where('function',$function)->orderBy('created_at', 'desc')->first();
+        return $this->hasMany('App\UserEmailToken')->where('function',$function)->orderBy('created_at', 'desc')->first();
     }
 }

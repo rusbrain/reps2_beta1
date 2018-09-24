@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserLoginRequest;
+use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -25,7 +28,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -35,5 +38,21 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    /**
+     * User login
+     *
+     * @param UserLoginRequest $request
+     * @return mixed
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function userLogin(UserLoginRequest $request)
+    {
+        if($user = User::getOld($request->get('email'))){
+            return redirect('/password/update')->with('user', $user);
+        }
+
+        $this->login($request);
     }
 }

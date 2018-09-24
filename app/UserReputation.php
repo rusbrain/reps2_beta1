@@ -20,7 +20,7 @@ class UserReputation extends Model
      */
     public function sender()
     {
-        return $this->belongsTo('app\USer', 'sender_id');
+        return $this->belongsTo('App\User', 'sender_id');
     }
 
     /**
@@ -30,6 +30,6 @@ class UserReputation extends Model
      */
     public function recipient()
     {
-        return $this->belongsTo('app\USer', 'recipient_id');
+        return $this->belongsTo('App\User', 'recipient_id');
     }
 }
