@@ -11,6 +11,13 @@ class User extends Authenticatable
     use Notifiable;
 
     /**
+     * Using table name
+     *
+     * @var string
+     */
+    protected $table='users';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -27,4 +34,87 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * Relations. Users country
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function countries()
+    {
+        return $this->belongsTo('App\Country');
+    }
+
+    /**
+     * Relations. Users role
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function role()
+    {
+        return $this->belongsTo('App\UserRole');
+    }
+
+    /**
+     * Relations. Users files
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function files()
+    {
+        return $this->hasMany('app\File');
+    }
+
+    /**
+     * Relations. Users avatar
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function avatar()
+    {
+        return $this->hasOne('app\File');
+    }
+
+    /**
+     * Relations. Users sending reputation
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function send_reputation()
+    {
+        return $this->hasMany('app\UserReputation', 'sender_id');
+    }
+
+    /**
+     * Relations. Users reputation
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function reputation()
+    {
+        return $this->hasMany('app\UserReputation', 'recipient_id');
+    }
+
+    /**
+     * Get user if his password id not update
+     *
+     * @param $email
+     * @return mixed
+     */
+
+    public static function getOld($email)
+    {
+        return User::where('email', $email)->where('updated_password', 0)->first();
+    }
+
+    /**
+     * Get last users token by function
+     *
+     * @param $function
+     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Relations\HasMany|null|object
+     */
+    public function user_email_token($function)
+    {
+        return $this->hasMany('app\UserEmailToken')->where('function',$function)->orderBy('created_at', 'desc')->first();
+    }
 }
