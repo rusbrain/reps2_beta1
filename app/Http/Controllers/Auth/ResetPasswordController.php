@@ -60,7 +60,7 @@ class ResetPasswordController extends Controller
         UserEmailToken::create(
             [
                 'user_id' => $user->id,
-                'function' => UserEmailToken::TOK_FUNC_UPDATE_EMAIL,
+                'function' => UserEmailToken::TOK_FUNC_VERIFIED_EMAIL,
                 'token' => $token
             ]
         );
@@ -70,18 +70,26 @@ class ResetPasswordController extends Controller
         return view('auth.passwords.update_old')->with('email', $user->email);
     }
 
+    /**
+     * @param $token
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function viewNewPassword($token)
     {
-        if (UserEmailToken::where('token',$token)->where('function', UserEmailToken::TOK_FUNC_UPDATE_EMAIL)->count()){
+        if (UserEmailToken::where('token',$token)->where('function', UserEmailToken::TOK_FUNC_UPDATE_PASSWORD)->count()){
             return view('auth.passwords.new')->with('update_email_token', $token);
         }
 
         return view('auth.passwords.not_correct_token');
     }
 
+    /**
+     * @param SaveNewPasswordRequest $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
+     */
     public function saveNewPassword(SaveNewPasswordRequest $request)
     {
-        if( $user = UserEmailToken::where('token',$request->get('password_update_token'))->where('function', UserEmailToken::TOK_FUNC_UPDATE_EMAIL)->first()->user()->first()) {
+        if( $user = UserEmailToken::where('token',$request->get('password_update_token'))->where('function', UserEmailToken::TOK_FUNC_UPDATE_PASSWORD)->first()->user()->first()) {
             $user->password = Hash::make($request->get('password'));
             $user->updated_password = true;
             $user->save();

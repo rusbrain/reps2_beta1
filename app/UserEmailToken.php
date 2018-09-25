@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class UserEmailToken extends Model
 {
 
-    const TOK_FUNC_UPDATE_EMAIL = 'update_email';
+    const TOK_FUNC_UPDATE_PASSWORD = 'update_password';
+    const TOK_FUNC_VERIFIED_EMAIL = 'verified_email';
 
     /**
      * Using table name

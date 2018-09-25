@@ -21,5 +21,7 @@
     </div>
 
 </form>
+
+<a href="{{route('registration_form')}}">Регистрация</a>
 </body>
 </html>
