@@ -52,17 +52,17 @@ class RegisterController extends Controller
             'country' => 'exists:countries,id',
                 ],
             [
-            'password.required'                 => 'Не указан новый пароль.',
-            'password.confirmed'                => 'Пароль не подтвержден или подтвержден не верно.',
-            'password.min'                      => 'Минимальная длина пароля 8 символов.',
-            'password.max'                      => 'Максимальная длина пароля 255 символов.',
-            'name.required'                     => 'Не укано имя.',
-            'name.max'                          => 'Максимальная длина имени 255 символов.',
-            'email.required'                    => 'Email обязательный для заполнения.',
-            'email.email'                       => 'Введен не верный формат Email.',
-            'email.unique'                      => 'Пользователь с таким Email уже зарегестрирован.',
-            'email.max'                         => 'Максимальная длина Email 255 символов.',
-            'country.exists'                    => 'Не верно указана страна.',
+            'password.required'  => 'Не указан новый пароль.',
+            'password.confirmed' => 'Пароль не подтвержден или подтвержден не верно.',
+            'password.min'       => 'Минимальная длина пароля 8 символов.',
+            'password.max'       => 'Максимальная длина пароля 255 символов.',
+            'name.required'      => 'Не указно имя.',
+            'name.max'           => 'Максимальная длина имени 255 символов.',
+            'email.required'     => 'Email обязательный для заполнения.',
+            'email.email'        => 'Введен не верный формат Email.',
+            'email.unique'       => 'Пользователь с таким Email уже зарегестрирован.',
+            'email.max'          => 'Максимальная длина Email 255 символов.',
+            'country.exists'     => 'Не верно указана страна.',
                 ]
         );
     }
@@ -79,7 +79,8 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'user_role_id' => 0
+            'user_role_id' => 0,
+            'updated_password' => 1
         ];
 
         if (isset($data['country']) && $data['country']>0){
@@ -110,8 +111,14 @@ class RegisterController extends Controller
     protected function registered(Request $request, $user)
     {
         Mail::to($user->email)->send(new RegisteredUser($user));
+
+        return redirect('/user.php');
     }
 
+    /**
+     * @param $token
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
+     */
     public function emailVerified($token)
     {
         if( $user = UserEmailToken::where('token',$token)->where('function', UserEmailToken::TOK_FUNC_VERIFIED_EMAIL)->first()->user()->first()) {

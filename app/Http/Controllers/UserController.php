@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Country;
+use App\File;
+use App\Http\Requests\User\UpdateProfileRequest;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use PHPUnit\Framework\Constraint\Count;
 
 class UserController extends Controller
 {
@@ -18,30 +23,10 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     *  Display the specified resource.
+     * Display the specified resource.
      *
      * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show(Request $request)
     {
@@ -49,41 +34,54 @@ class UserController extends Controller
             abort(404);
         }
 
-
-        dd(123);
+        return view('user.profile')->with('user', $user);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit($id)
+    public function edit()
     {
-        //
+        return view('user.edit_profile')->with(['user'=> Auth::user(), 'countries' => Country::all()]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param UpdateProfileRequest $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function update(Request $request, $id)
+    public function update(UpdateProfileRequest $request)
     {
-        //
-    }
+        $user_data = $request->all();
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        foreach ($user_data as $key=>$item){
+            if (is_null($item)){
+                unset($user_data[$key]);
+            }
+        }
+
+        if (isset($user_data['country'])){
+            $user_data['country_id'] = $user_data['country'];
+            unset($user_data['country']);
+        }
+
+        if ($request->file('avatar')){
+            $path = str_replace('public', '/storage',$request->file('avatar')->store('public/avatars'));
+
+            $file = File::create([
+                'user_id' => Auth::id(),
+                'title' => 'Аватар '.Auth::user()->name,
+                'link' => $path
+                ]);
+
+            $user_data['file_id'] = $file->id;
+        }
+
+        Auth::user()->update($user_data);
+
+        return redirect('/info.php?user='.Auth::id());
     }
 }

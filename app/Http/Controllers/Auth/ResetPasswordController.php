@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SaveNewPasswordRequest;
 use App\Mail\UpdateOldUserPassword;
+use App\Mail\UserPasswordUpdated;
 use App\UserEmailToken;
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -92,9 +94,12 @@ class ResetPasswordController extends Controller
         if( $user = UserEmailToken::where('token',$request->get('password_update_token'))->where('function', UserEmailToken::TOK_FUNC_UPDATE_PASSWORD)->first()->user()->first()) {
             $user->password = Hash::make($request->get('password'));
             $user->updated_password = true;
+            $user->email_verified_at = Carbon::now();
             $user->save();
 
-            Mail::to($user->email)->send(new UpdateOldUserPassword());
+            $this->guard()->login($user);
+
+            Mail::to($user->email)->send(new UserPasswordUpdated());
 
             return redirect('/');
         }

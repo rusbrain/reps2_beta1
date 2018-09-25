@@ -13,6 +13,11 @@ class File extends Model
      */
     protected $table='files';
 
+    protected $fillable = [
+        'user_id',
+        'title',
+        'link'
+    ];
     /**
      * Relations. Files user
      *

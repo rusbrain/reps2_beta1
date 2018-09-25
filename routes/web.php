@@ -24,8 +24,8 @@ Route::middleware([/*'guest'*/])->group(function () {
     Route::post('/registration.php', 'Auth\RegisterController@register')->name('registration');
 });
 
-
-
-Route::get('info.php', 'UserController@show');
+Route::get('/info.php', 'UserController@show')->name('user_profile');
+Route::get('/user.php', 'UserController@edit')->name('edit_profile');
+Route::post('/user', 'UserController@update')->name('save_profile');
 
 //Auth::routes();
