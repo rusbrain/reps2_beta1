@@ -54,5 +54,7 @@ class LoginController extends Controller
         }
 
         $this->login($request);
+
+        return redirect('/');
     }
 }

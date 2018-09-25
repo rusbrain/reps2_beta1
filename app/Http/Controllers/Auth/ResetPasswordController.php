@@ -31,7 +31,7 @@ class ResetPasswordController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -86,7 +86,9 @@ class ResetPasswordController extends Controller
             $user->updated_password = true;
             $user->save();
 
-            return redirect('login');
+            Mail::to($user->email)->send(new UpdateOldUserPassword());
+
+            return redirect('/');
         }
 
         return view('auth.passwords.not_correct_token');

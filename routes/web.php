@@ -11,15 +11,12 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::post('/login', 'Auth\LoginController@userLogin')->name('user_login');
+Route::get('/', 'HomeController@index');
+Route::post('/login', 'Auth\LoginController@userLogin')->name('login');
 
 //Auth::routes();
 Route::get('/password/update', 'Auth\ResetPasswordController@updateOldPassword')->name('post_update_password');
 Route::get('/password/new/{token}', 'Auth\ResetPasswordController@viewNewPassword')->name('update_old_password');
 Route::post('/password/new/', 'Auth\ResetPasswordController@saveNewPassword')->name('save_new_password');
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('info.php', 'UserController@show');
