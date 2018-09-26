@@ -28,4 +28,8 @@ Route::get('/info.php', 'UserController@show')->name('user_profile');
 Route::get('/user.php', 'UserController@edit')->name('edit_profile');
 Route::post('/user', 'UserController@update')->name('save_profile');
 
+Route::get('news.php', 'ForumController@index');
+Route::get('columns.php', 'ForumController@index');
+Route::get('forum.php', 'ForumController@index');
+
 //Auth::routes();

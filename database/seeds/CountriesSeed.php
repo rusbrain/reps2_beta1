@@ -12,7 +12,6 @@ class CountriesSeed extends Seeder
     public function run()
     {
         $countries = [
-            [ 'name' => 'Select one', 'id'=>0],
             [ 'name' => 'Afghanistan',],
             [ 'name' => 'African Rep.',],
             [ 'name' => 'Albania',],

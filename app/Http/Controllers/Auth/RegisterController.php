@@ -49,7 +49,7 @@ class RegisterController extends Controller
             'name' => 'required|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|max:255|confirmed',
-            'country' => 'exists:countries,id',
+            'country' => 'nullable|exists:countries,id',
                 ],
             [
             'password.required'  => 'Не указан новый пароль.',

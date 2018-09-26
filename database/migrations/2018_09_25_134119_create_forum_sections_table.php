@@ -15,8 +15,15 @@ class CreateForumSectionsTable extends Migration
     {
         Schema::create('forum_sections', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->integer('position');
+            $table->integer('reps_id')->nullable();
+            $table->string('name')->nullable();
+            $table->string('title');
+            $table->string('description');
             $table->boolean('is_active')->default(true);
+            $table->boolean('in_menu')->default(false);
+            $table->string('url')->nullable();
+
         });
     }
 

@@ -14,12 +14,12 @@ class ForumSection extends Model
     protected $table = 'forum_sections';
 
     /**
-     * Relations. Sections categories
+     * Relations. Sections topics
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function categories()
+    public function topics()
     {
-        return $this->hasMany('App\ForumCategory');
+        return $this->hasMany('App\ForumTopic', 'section_id');
     }
 }
