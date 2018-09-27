@@ -46,13 +46,20 @@ Route::group(['prefix' => 'forum'], function () {
         Route::get('/{id}', 'ForumTopicController@index')->name('forum.topic.index');
 
         Route::group(['middleware' => 'auth'], function () {
-            Route::get('/create', 'ForumTopicController@create')        ->name('forum.topic.create');
-            Route::post('/store', 'ForumTopicController@store')         ->name('forum.topic.store');
-            Route::get('{id}/delete', 'ForumTopicController@delete')    ->name('forum.topic.delete');
-            Route::get('{id}/edit', 'ForumTopicController@edit')        ->name('forum.topic.edit');
-            Route::post('{id}/update', 'ForumTopicController@update')   ->name('forum.topic.update');
-            Route::post('{id}/rebase', 'ForumTopicController@rebase')   ->name('forum.topic.rebase');
+            Route::get('/create', 'ForumTopicController@create')          ->name('forum.topic.create');
+            Route::post('/store', 'ForumTopicController@store')           ->name('forum.topic.store');
+            Route::get('{id}/delete', 'ForumTopicController@destroy')     ->name('forum.topic.delete');
+            Route::get('{id}/edit', 'ForumTopicController@edit')          ->name('forum.topic.edit');
+            Route::post('{id}/update', 'ForumTopicController@update')     ->name('forum.topic.update');
+            Route::post('{id}/rebase', 'ForumTopicController@rebase')     ->name('forum.topic.rebase');
+
+            Route::group(['prefix' => 'comment'], function () {
+                Route::post('/store', 'ForumTopicController@store')       ->name('forum.topic.comment.store');
+                Route::get('{id}/delete', 'ForumTopicController@destroy') ->name('forum.topic.comment.delete');
+                Route::post('{id}/update', 'ForumTopicController@update') ->name('forum.topic.comment.update');
+            });
         });
+
     });
 
 });
