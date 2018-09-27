@@ -19,12 +19,11 @@ class CreateForumTopicsTable extends Migration
             $table->string('reps_section')->nullable();
             $table->integer('section_id');
             $table->string('title');
-            $table->text('preview_content');
+            $table->text('preview_content')->nullable();
             $table->text('content');
             $table->integer('user_id');
-            $table->integer('reviews');
+            $table->integer('reviews')->default(0);
             $table->dateTime('start_on');
-            $table->string('url');
             $table->timestamps();
         });
     }

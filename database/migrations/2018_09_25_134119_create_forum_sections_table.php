@@ -21,9 +21,8 @@ class CreateForumSectionsTable extends Migration
             $table->string('title');
             $table->string('description');
             $table->boolean('is_active')->default(true);
-            $table->boolean('in_menu')->default(false);
-            $table->string('url')->nullable();
-
+            $table->boolean('is_general')->default(false);
+            $table->boolean('user_can_add_topics')->default(true);
         });
     }
 
