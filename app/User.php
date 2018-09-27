@@ -23,7 +23,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'email_verified_at":"user_role_id', 'country_id', 'score', 'homepage', 'isq', 'skype', 'vk_link', 'fb_link',
+        'name', 'email', 'email_verified_at','user_role_id', 'country_id', 'score', 'homepage', 'isq', 'skype', 'vk_link', 'fb_link',
         'signature', 'file_id', 'mouse', 'keyboard', 'headphone', 'mousepad', 'birthday', 'last_ip', 'is_ban', 'rep_allow', 'rep_buy',
         'rep_sell', 'view_signs', 'view_avatars', 'updated_password',
     ];
@@ -98,6 +98,22 @@ class User extends Authenticatable
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function positive()
+    {
+        return $this->hasMany('App\UserReputation', 'recipient_id')->where('rating',1);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function negative()
+    {
+        return $this->hasMany('App\UserReputation', 'recipient_id')->where('rating',-1);
+    }
+
+    /**
      * Get user if his password id not update
      *
      * @param $email
@@ -118,5 +134,18 @@ class User extends Authenticatable
     public function user_email_token($function)
     {
         return $this->hasMany('App\UserEmailToken')->where('function',$function)->orderBy('created_at', 'desc')->first();
+    }
+
+    public static function getUserWithReputationQuery()
+    {
+        return ['user' => function($query){
+            $query->withCount([
+                'reputation as rep_positive' => function($query){
+                    $query->where('rating', 1);
+                },
+                'reputation as rep_negative' => function($query){
+                    $query->where('rating', -1);
+                }]);
+        }];
     }
 }

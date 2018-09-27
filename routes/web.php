@@ -35,13 +35,20 @@ Route::group(['prefix' => 'user'], function () {
 
 });
 
-Route::group(['prefix' => 'forum', 'name' => 'forum'], function () {
-    Route::get('/', 'ForumController@index')->name('index');
+Route::group(['prefix' => 'forum'], function () {
+    Route::get('/', 'ForumController@index')->name('forum.index');
 
-    Route::group(['prefix' => 'section', 'name' => 'section'], function () {
-        Route::get('/{name}', 'ForumController@section')->name('index');
+    Route::group(['prefix' => 'section'], function () {
+        Route::get('/{name}', 'ForumController@section')->name('forum.section.index');
+    });
 
+    Route::group(['prefix' => 'topic'], function () {
+        Route::get('/{id}', 'ForumTopicController@index')->name('forum.topic.index');
 
+        Route::group(['middleware' => 'auth'], function () {
+            Route::get('/create', 'ForumTopicController@create')->name('forum.topic.create');
+            Route::post('/store', 'ForumTopicController@store')->name('forum.topic.store');
+        });
     });
 
 });

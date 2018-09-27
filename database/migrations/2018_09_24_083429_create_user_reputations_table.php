@@ -17,6 +17,7 @@ class CreateUserReputationsTable extends Migration
             $table->increments('id');
             $table->integer('sender_id');
             $table->integer('recipient_id');
+            $table->integer('topic_id');
             $table->string('comment')->nullable();
             $table->enum('rating',[1,-1])->default(1);
             $table->timestamps();

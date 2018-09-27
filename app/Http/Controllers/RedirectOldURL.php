@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\ForumSection;
+use App\ForumTopic;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -12,25 +13,65 @@ class RedirectOldURL extends Controller
      * Redirect to forum
      *
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse|void
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function forum(Request $request)
     {
         if ($request->has('forum')){
-            $section_name = ForumSection::where('reps_id', $request->get('forum'))->orWhere('id', $request->get('forum'))->get();
+            return $this->initSection($request);
+        }
 
-            if(!$section_name){
-                $section_name = ForumSection::where('id', $request->get('forum'))->first()->name;
-            }
-
-            if (!$section_name){
-                return abort(404);
-            }
-
-            return redirect()->route('forum.section.index', ['name' => $section_name]);
+        if ($request->has('topic')){
+            return $this->initTopic($request);
         }
 
         return redirect()->route('forum.index');
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    private function initTopic(Request $request)
+    {
+        $topic_id = false;
+
+        $topic = ForumTopic::where('reps_id', $request->get('topic'))->orWhere('id', $request->get('topic'))->get();
+
+        if(count($topic)>1){
+            $topic_id = $topic->where('reps_id', $request->get('forum'))->first()->id;
+        } elseif (count($topic) == 1){
+            $topic_id = $topic->first()->id;
+        }
+
+        if (!$topic_id){
+            return redirect('/');
+        }
+
+        return redirect()->route('forum.topic.index', ['id' => $topic_id]);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    private function initSection(Request $request)
+    {
+        $section_name = false;
+
+        $section = ForumSection::where('reps_id', $request->get('forum'))->orWhere('id', $request->get('forum'))->get();
+
+        if(count($section)>1){
+            $section_name = $section->where('reps_id', $request->get('forum'))->first()->name;
+        } elseif (count($section) == 1){
+            $section_name = $section->first()->name;
+        }
+
+        if (!$section_name){
+            return redirect('/');
+        }
+
+        return redirect()->route('forum.section.index', ['name' => $section_name]);
     }
 
     /**
@@ -55,6 +96,16 @@ class RedirectOldURL extends Controller
         }
 
         if ($request->has('news')){
+            if ($request->has('id')){
+                $topic_id = ForumTopic::where('reps_id', $request->get('id'))->where('reps_section', $request->get('news'))->first()->id;
+
+                if($topic_id){
+                    return redirect()->route('forum.topic.index', ['id' => $topic_id]);
+                }
+
+                return redirect('/');
+            }
+
             return redirect()->route('forum.section.index', ['name' => $request->get('news')]);
         }
     }
@@ -77,7 +128,7 @@ class RedirectOldURL extends Controller
             return redirect()->route('user_profile', ['id' => $user_id]);
         }
 
-        return abort(404);
+        return redirect('/');
     }
 
     /**
