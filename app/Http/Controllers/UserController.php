@@ -23,14 +23,14 @@ class UserController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Get user profile view
      *
-     * @param Request $request
+     * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show(Request $request)
+    public function show($id)
     {
-        if (!$request->has('user') || !$user = User::find($request->get('user'))){
+        if (!$user = User::find($id)){
             abort(404);
         }
 
@@ -82,6 +82,6 @@ class UserController extends Controller
 
         Auth::user()->update($user_data);
 
-        return redirect('/info.php?user='.Auth::id());
+        return redirect()->route('user_profile', ['id' => Auth::id()]);
     }
 }

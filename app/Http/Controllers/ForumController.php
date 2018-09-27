@@ -9,65 +9,11 @@ use Illuminate\Http\Request;
 class ForumController extends Controller
 {
     /**
-     * Request identification
-     *
-     * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function index(Request $request)
-    {
-        $uri = str_replace(".php", "", str_replace("/", "", $request->getPathInfo()));
-
-        if ($uri == 'columns') {
-            return $this->getSection('columns');
-        }
-
-        if ($uri == 'forum') {
-            if ($request->has('forum')){
-                return $this->getSectionRepsId($request->get('forum'));
-            }
-
-            return $this->getForum();
-        }
-
-        if ($request->has('search')){
-            return $this->getSection('all');
-        }
-
-        if ($request->has('news')){
-            return $this->getSection($request->get('news'));
-        }
-    }
-
-    /**
-     * Get section date by name
-     *
-     * @param $section_name
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    private function getSection($section_name)
-    {
-        if($section_name = 'all'){
-            $data = ForumTopic::whereHas('section', function ($query){
-                $query->where('in_menu', 1);
-            });
-        } else {
-            $data = ForumTopic::whereHas('section', function ($query) use ($section_name){
-                $query->where('name', $section_name);
-            });
-        }
-
-        $data->with('user')->withCount(['comments', 'positive', 'negative'])->orderBy('created_at','desc')->paginate(20);
-
-        return view('forum.section')->with('topics', $data);
-    }
-
-    /**
-     * Get forum data
+     * Get forum page
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    private function getForum()
+    public function index()
     {
         $data = ForumSection::with(['topics' => function($query){
             $query->with('user')->orderBy('created_at', 'desc')->withCount(['positive', 'negative'])->limit(5);
@@ -77,20 +23,19 @@ class ForumController extends Controller
     }
 
     /**
-     * Get section date by reps id
+     * get forum section page
      *
-     * @param $section_id
+     * @param $name
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    private function getSectionRepsId($section_id)
+    public function section($name)
     {
-        $data = ForumTopic::whereHas('section', function ($query) use($section_id){
-            $query->where('reps_id', $section_id);
-        })
-            ->withCount(['comments', 'positive', 'negative'])
-            ->with('user')
-            ->orderBy('created_at','desc')
-            ->paginate(20);
+        $data = ForumSection::where('name', $name)->first()
+            ->topics()->with('user:id,name')->with(['comments' => function($query){
+                $query->orderBy('created_at', 'desc')->first();
+            }])
+            ->withCount(['positive', 'negative', 'comments'])
+            ->orderBy('created_at', 'desc')->paginate(20);
 
         return view('forum.section')->with('topics', $data);
     }

@@ -17,7 +17,7 @@ class CreateForumSectionsTable extends Migration
             $table->increments('id');
             $table->integer('position');
             $table->integer('reps_id')->nullable();
-            $table->string('name')->nullable();
+            $table->string('name');
             $table->string('title');
             $table->string('description');
             $table->boolean('is_active')->default(true);
