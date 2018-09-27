@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\ForumSection;
 use App\ForumTopic;
+use App\Http\Requests\ForumTopicRebaseRequest;
 use App\Http\Requests\ForumTopicStoreRequest;
+use App\Http\Requests\ForumTopicUpdteRequest;
 use App\User;
 use foo\bar;
 use Illuminate\Http\Request;
@@ -62,7 +64,7 @@ class ForumTopicController extends Controller
     public function store(ForumTopicStoreRequest $request)
     {
         $topic_data = [
-        'section_id' => $request->get('section_id'),
+            'section_id' => $request->get('section_id'),
             'title'=> $request->get('title'),
             'content'=> $request->get('content'),
             'user_id' => Auth::id()
@@ -82,14 +84,27 @@ class ForumTopicController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Rebase topic to other section
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param ForumTopicRebaseRequest $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function show(Request $request)
+    public function rebase(ForumTopicRebaseRequest $request, $id)
     {
-        //
+        $topic = ForumTopic::fint($id);
+
+        if (!$topic){
+            return abort(404);
+        }
+
+        if ($topic->user_id != Auth::id()){
+            return abort(403);
+        }
+
+        ForumTopic::where('id', $id)->update(['section_id' => $request->get('section_id')]);
+
+        return redirect()->route('forum.topic.index', ['id' => $id]);
     }
 
     /**
@@ -100,19 +115,44 @@ class ForumTopicController extends Controller
      */
     public function edit($id)
     {
-        //
+        $topic = ForumTopic::find($id);
+
+        if(!$topic){
+            return abort(404);
+        }
+
+        return view('forum.edit_topic', ['topic' => $topic->load('section'), 'sections' => ForumSection::where('is_active', 1)->get(['id', 'title','name'])]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param ForumTopicUpdteRequest $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(ForumTopicUpdteRequest $request, $id)
     {
-        //
+        $topic_data = [
+            'title'=> $request->get('title'),
+            'content'=> $request->get('content')
+        ];
+
+        if ($request->has('preview_content') && $request->get('preview_content') != ''){
+            $topic_data['preview_content'] = $request->get('preview_content');
+        } else {
+            $topic_data['preview_content'] = null;
+        }
+
+        if ($request->has('start_on') && $request->get('start_on') != ''){
+            $topic_data['start_on'] = $request->get('start_on');
+        } else {
+            $topic_data['start_on'] = null;
+        }
+
+        ForumTopic::where('id', $id)->update($topic_data);
+
+        return redirect()->route('forum.topic.index', ['id' => $id]);
     }
 
     /**
@@ -123,6 +163,18 @@ class ForumTopicController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $topic = ForumTopic::fint($id);
+
+        if (!$topic){
+            return abort(404);
+        }
+
+        if ($topic->user_id != Auth::id()){
+            return abort(403);
+        }
+
+        $topic->delete();
+
+        return redirect()->foute('forum.index');
     }
 }
