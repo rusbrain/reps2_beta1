@@ -50,7 +50,7 @@ class LoginController extends Controller
     public function userLogin(UserLoginRequest $request)
     {
         if($user = User::getOld($request->get('email'))){
-            return redirect('/password/update')->with('user', $user);
+            return redirect()->route('get_update_password')->with('user', $user);
         }
 
         $this->login($request);
