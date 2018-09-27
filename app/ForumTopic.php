@@ -14,6 +14,13 @@ class ForumTopic extends Model
     protected $table = 'forum_topics';
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['reps_id', 'reps_section', 'section_id', 'title', 'preview_content', 'content', 'user_id', 'reviews', 'start_on'];
+
+    /**
      * Relations. Topics section
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -46,7 +53,7 @@ class ForumTopic extends Model
      */
     public function positive()
     {
-       return $this->hasMany('App\ForumTopicRating')->where('positive',1)->where('negative',0);
+       return $this->hasMany('App\UserReputation', 'topic_id')->where('rating',1);
     }
 
     /**
@@ -54,6 +61,6 @@ class ForumTopic extends Model
      */
     public function negative()
     {
-       return $this->hasMany('App\ForumTopicRating')->where('positive',0)->where('negative',1);
+       return $this->hasMany('App\UserReputation', 'topic_id')->where('rating',-1);
     }
 }

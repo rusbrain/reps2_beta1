@@ -18,29 +18,47 @@ Route::middleware(['guest'])->group(function () {
     Route::post('/login', 'Auth\LoginController@userLogin')->name('login');
 
     Route::group(['prefix' => 'password'], function () {
-        Route::get('/update', 'Auth\ResetPasswordController@updateOldPassword')->name('get_update_password');
-        Route::get('/new/{token}', 'Auth\ResetPasswordController@viewNewPassword')->name('update_old_password');
-        Route::post('/new', 'Auth\ResetPasswordController@saveNewPassword')->name('save_new_password');
+        Route::get('/update', 'Auth\ResetPasswordController@updateOldPassword')     ->name('get_update_password');
+        Route::get('/new/{token}', 'Auth\ResetPasswordController@viewNewPassword')  ->name('update_old_password');
+        Route::post('/new', 'Auth\ResetPasswordController@saveNewPassword')         ->name('save_new_password');
     });
 
 });
 
 Route::group(['prefix' => 'user'], function () {
-    Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('registration_form');
-    Route::post('/register', 'Auth\RegisterController@register')->name('registration');
+    Route::get('/register', 'Auth\RegisterController@showRegistrationForm') ->name('registration_form');
+    Route::post('/register', 'Auth\RegisterController@register')            ->name('registration');
 
-    Route::get('/{id}', 'UserController@show')->name('user_profile');
-    Route::get('/edit', 'UserController@edit')->name('edit_profile');
-    Route::post('/save', 'UserController@update')->name('save_profile');
+    Route::get('/{id}', 'UserController@show')      ->name('user_profile');
+    Route::get('/edit', 'UserController@edit')      ->name('edit_profile');
+    Route::post('/save', 'UserController@update')   ->name('save_profile');
 
 });
 
-Route::group(['prefix' => 'forum', 'name' => 'forum'], function () {
-    Route::get('/', 'ForumController@index')->name('index');
+Route::group(['prefix' => 'forum'], function () {
+    Route::get('/', 'ForumController@index')->name('forum.index');
 
-    Route::group(['prefix' => 'section', 'name' => 'section'], function () {
-        Route::get('/{name}', 'ForumController@section')->name('index');
+    Route::group(['prefix' => 'section'], function () {
+        Route::get('/{name}', 'ForumController@section')->name('forum.section.index');
+    });
 
+    Route::group(['prefix' => 'topic'], function () {
+        Route::get('/{id}', 'ForumTopicController@index')->name('forum.topic.index');
+
+        Route::group(['middleware' => 'auth'], function () {
+            Route::get('/create', 'ForumTopicController@create')          ->name('forum.topic.create');
+            Route::post('/store', 'ForumTopicController@store')           ->name('forum.topic.store');
+            Route::get('{id}/delete', 'ForumTopicController@destroy')     ->name('forum.topic.delete');
+            Route::get('{id}/edit', 'ForumTopicController@edit')          ->name('forum.topic.edit');
+            Route::post('{id}/update', 'ForumTopicController@update')     ->name('forum.topic.update');
+            Route::post('{id}/rebase', 'ForumTopicController@rebase')     ->name('forum.topic.rebase');
+
+            Route::group(['prefix' => 'comment'], function () {
+                Route::post('/store', 'ForumTopicController@store')       ->name('forum.topic.comment.store');
+                Route::get('{id}/delete', 'ForumTopicController@destroy') ->name('forum.topic.comment.delete');
+                Route::post('{id}/update', 'ForumTopicController@update') ->name('forum.topic.comment.update');
+            });
+        });
 
     });
 
