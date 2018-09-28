@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\File;
 use App\ForumSection;
 use App\ForumTopic;
 use App\Http\Requests\ForumTopicRebaseRequest;
@@ -76,6 +77,18 @@ class ForumTopicController extends Controller
 
         if ($request->has('start_on') && $request->get('start_on') != ''){
             $topic_data['start_on'] = $request->get('start_on');
+        }
+
+        if ($request->file('preview_img')){
+            $path = str_replace('public', '/storage',$request->file('preview_img')->store('public/preview_img'));
+
+            $file = File::create([
+                'user_id' => Auth::id(),
+                'title' => 'Превью '.$request->get('title'),
+                'link' => $path
+            ]);
+
+            $topic_data['preview_file_id'] = $file->id;
         }
 
         $topic = ForumTopic::create($topic_data);

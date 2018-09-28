@@ -28,7 +28,8 @@ class ForumTopicStoreRequest extends FormRequest
             'title'           =>'required|min:3|max:255',
             'preview_content' =>'nullable|max:1000',
             'content'         =>'required|min:3',
-            'start_on'        =>'nullable|date'
+            'start_on'        =>'nullable|date',
+            'preview_img'     =>'nullable|image'
         ];
     }
 
@@ -49,6 +50,7 @@ class ForumTopicStoreRequest extends FormRequest
             'content.required'    => 'Основное описание обязаельно для заполнения',
             'content.min'         => 'Основное описание должен быть не меньше 3 символов',
             'start_on.date'       => 'Дата начала должно быть в формате date',
+            'preview_img.image'   => 'Файл превью должен быть картинкой',
         ];
     }
 }

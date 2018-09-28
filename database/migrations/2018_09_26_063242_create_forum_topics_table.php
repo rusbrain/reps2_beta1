@@ -20,6 +20,7 @@ class CreateForumTopicsTable extends Migration
             $table->integer('section_id');
             $table->string('title');
             $table->text('preview_content')->nullable();
+            $table->text('preview_file_id')->nullable();
             $table->text('content');
             $table->integer('user_id');
             $table->integer('reviews')->default(0);
