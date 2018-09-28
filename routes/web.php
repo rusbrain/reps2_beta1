@@ -32,7 +32,7 @@ Route::group(['prefix' => 'user'], function () {
     Route::get('/{id}', 'UserController@show')      ->name('user_profile');
     Route::get('/edit', 'UserController@edit')      ->name('edit_profile');
     Route::post('/save', 'UserController@update')   ->name('save_profile');
-
+    Route::post('{id}/get_rating', 'RatingController@getRatingUser')   ->name('user.get_rating');
 });
 
 Route::group(['prefix' => 'forum'], function () {
@@ -44,14 +44,18 @@ Route::group(['prefix' => 'forum'], function () {
 
     Route::group(['prefix' => 'topic'], function () {
         Route::get('/{id}', 'ForumTopicController@index')->name('forum.topic.index');
+        Route::post('{id}/get_rating', 'RatingController@getRatingTopic')   ->name('forum.topic.get_rating');
 
         Route::group(['middleware' => 'auth'], function () {
-            Route::get('/create', 'ForumTopicController@create')          ->name('forum.topic.create');
-            Route::post('/store', 'ForumTopicController@store')           ->name('forum.topic.store');
-            Route::get('{id}/delete', 'ForumTopicController@destroy')     ->name('forum.topic.delete');
-            Route::get('{id}/edit', 'ForumTopicController@edit')          ->name('forum.topic.edit');
-            Route::post('{id}/update', 'ForumTopicController@update')     ->name('forum.topic.update');
-            Route::post('{id}/rebase', 'ForumTopicController@rebase')     ->name('forum.topic.rebase');
+            Route::get('/create', 'ForumTopicController@create')                ->name('forum.topic.create');
+            Route::post('/store', 'ForumTopicController@store')                 ->name('forum.topic.store');
+            Route::get('{id}/delete', 'ForumTopicController@destroy')           ->name('forum.topic.delete');
+            Route::get('{id}/edit', 'ForumTopicController@edit')                ->name('forum.topic.edit');
+            Route::post('{id}/update', 'ForumTopicController@update')           ->name('forum.topic.update');
+            Route::post('{id}/rebase', 'ForumTopicController@rebase')           ->name('forum.topic.rebase');
+            Route::post('{id}/set_rating', 'RatingController@setRating')        ->name('forum.topic.set_rating');
+
+
 
             Route::group(['prefix' => 'comment'], function () {
                 Route::post('/store', 'ForumTopicController@store')       ->name('forum.topic.comment.store');

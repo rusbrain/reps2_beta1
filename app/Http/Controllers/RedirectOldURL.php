@@ -97,9 +97,11 @@ class RedirectOldURL extends Controller
 
         if ($request->has('news')){
             if ($request->has('id')){
-                $topic_id = ForumTopic::where('reps_id', $request->get('id'))->where('reps_section', $request->get('news'))->first()->id;
+                $topic = ForumTopic::where('reps_id', $request->get('id'))->where('reps_section', $request->get('news'))->first();
 
-                if($topic_id){
+                if($topic){
+                    $topic_id = $topic->id;
+
                     return redirect()->route('forum.topic.index', ['id' => $topic_id]);
                 }
 
@@ -114,15 +116,17 @@ class RedirectOldURL extends Controller
      * Redirect to user profile
      *
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse|void
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function info(Request $request)
     {
         if ($request->has('user')){
-            $user_id = User::where('reps_id', $request->get('user'))->first()->id;
+            $user = User::where('reps_id', $request->get('user'))->first();
 
-            if (!$user_id){
+            if (!$user){
                 $user_id = $request->get('user');
+            } else {
+                $user_id = $user->id;
             }
 
             return redirect()->route('user_profile', ['id' => $user_id]);

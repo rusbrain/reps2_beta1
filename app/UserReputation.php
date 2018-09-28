@@ -32,4 +32,14 @@ class UserReputation extends Model
     {
         return $this->belongsTo('App\User', 'recipient_id');
     }
+
+    /**
+     * Relations. Reputations user sender
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function topic()
+    {
+        return $this->belongsTo('App\User', 'topic_id');
+    }
 }
