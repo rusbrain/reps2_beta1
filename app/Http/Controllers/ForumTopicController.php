@@ -23,7 +23,7 @@ class ForumTopicController extends Controller
     public function index($id)
     {
         $topic = ForumTopic::where('id', $id)->with(User::getUserWithReputationQuery())
-            ->withCount('comments')->first();
+            ->withCount('comments', 'positive','negative')->first();
 
         if(!$topic){
             return abort(404);
@@ -115,7 +115,7 @@ class ForumTopicController extends Controller
      */
     public function edit($id)
     {
-        $topic = ForumTopic::find($id);
+        $topic = ForumTopic::where('id', $id)->withCount('comments', 'positive','negative')->first();
 
         if(!$topic){
             return abort(404);
