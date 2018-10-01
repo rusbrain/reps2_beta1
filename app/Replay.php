@@ -70,4 +70,48 @@ class Replay extends Model
     {
         return $this->belongsTo('App\Country', 'second_country_id');
     }
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function positive()
+    {
+        return $this->hasMany('App\UserReputation', 'topic_id')->where('rating',1);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function negative()
+    {
+        return $this->hasMany('App\UserReputation', 'topic_id')->where('rating',-1);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function user_rating()
+    {
+        return $this->hasMany('App\ReplayUserRating', 'replay_id');
+    }
+
+    /**
+     * @param $rating
+     * @param $topic_id
+     */
+    public static function updateRating($rating, $replay_id)
+    {
+        \DB::update('update replays set rating = rating + (?) where id = ?', [$rating, $replay_id]);
+    }
+
+    /**
+     * @param $replay_id
+     */
+    public static function updateUserRating($replay_id)
+    {
+        $rating = \DB::select('SELECT Sum(rating)/COUNT(rating) as rating FROM replay_user_ratings where replay_id = ?'[$replay_id])[0]->rating??0;
+
+        Replay::where('id', $replay_id)->update(['user_rating'=>$rating]);
+    }
 }

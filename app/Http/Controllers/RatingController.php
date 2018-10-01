@@ -35,8 +35,8 @@ class RatingController extends Controller
                 ['comment' => $comment, 'rating'=> $request->get('rating')]
             );
 
-            \DB::update('update users set rating = rating + (?) where id = ?', [$request->get('rating'), $topic->user_id]);
-            \DB::update('update forum_topics set rating = rating + (?) where id = ?', [$request->get('rating'), $topic->user_id]);
+            User::updateRating($request->get('rating'), $topic->user_id);
+            ForumTopic::updateRating($request->get('rating'), $topic->id);
 
             return ['topic_id' => $topic->id, 'rating' => ($topic->positive()->count()-$topic->negative()->count())];
         }

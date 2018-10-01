@@ -63,4 +63,13 @@ class ForumTopic extends Model
     {
        return $this->hasMany('App\UserReputation', 'topic_id')->where('rating',-1);
     }
+
+    /**
+     * @param $rating
+     * @param $topic_id
+     */
+    public static function updateRating($rating, $topic_id)
+    {
+        \DB::update('update forum_topics set rating = rating + (?) where id = ?', [$rating, $topic_id]);
+    }
 }
