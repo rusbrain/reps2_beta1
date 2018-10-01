@@ -1,0 +1,73 @@
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Replay extends Model
+{
+    /**
+     * Using table name
+     *
+     * @var string
+     */
+    protected $table = 'replays';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'user_id', 'user_replay', 'type_id','title', 'content', 'map_id', 'file_id',
+        'game_version', 'championship', 'first_country_id', 'second_country_id',
+        'first_matchup', 'second_matchup', 'rating', 'user_rating' ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function type()
+    {
+        return $this->belongsTo('App\ReplayType', 'type_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function map()
+    {
+        return $this->belongsTo('App\ReplayMap', 'myp_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function file()
+    {
+        return $this->belongsTo('App\File', 'file_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function first_country()
+    {
+        return $this->belongsTo('App\Country', 'first_country_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function second_country()
+    {
+        return $this->belongsTo('App\Country', 'second_country_id');
+    }
+}
