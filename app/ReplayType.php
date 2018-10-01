@@ -19,4 +19,12 @@ class ReplayType extends Model
      * @var array
      */
     protected $fillable = ['name'];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function replay()
+    {
+        return $this->hasMany('App\Replay');
+    }
 }

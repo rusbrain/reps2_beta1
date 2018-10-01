@@ -23,14 +23,16 @@ class CreateReplaysTable extends Migration
             $table->integer('map_id')->default(0);
             $table->integer('file_id');
             $table->string('game_version');
-            $table->string('championship');
+            $table->string('championship')->nullable();
             $table->integer('first_country_id');
             $table->integer('second_country_id');
-            $table->string('first_matchup');
-            $table->string('second_matchup');
+            $table->string('first_race');
+            $table->string('second_race');
             $table->integer('rating')->default(0);
             $table->integer('user_rating')->default(0);
             $table->integer('evaluation');
+            $table->integer('downloaded')->default(0);
+            $table->time('length')->default('00:00:00');
             $table->timestamps();
         });
     }

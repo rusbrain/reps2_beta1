@@ -7,6 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 class Replay extends Model
 {
     /**
+     * @var array
+     */
+    public static $races = [
+        1 => 'All',
+        2 => 'Z',
+        3 => 'T',
+        4 => 'P',
+    ];
+
+    /**
      * Using table name
      *
      * @var string
@@ -71,13 +81,12 @@ class Replay extends Model
         return $this->belongsTo('App\Country', 'second_country_id');
     }
 
-
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function positive()
     {
-        return $this->hasMany('App\UserReputation', 'topic_id')->where('rating',1);
+        return $this->hasMany('App\UserReputation', 'replay_id')->where('rating',1);
     }
 
     /**
@@ -85,7 +94,7 @@ class Replay extends Model
      */
     public function negative()
     {
-        return $this->hasMany('App\UserReputation', 'topic_id')->where('rating',-1);
+        return $this->hasMany('App\UserReputation', 'replay_id')->where('rating',-1);
     }
 
     /**
@@ -113,5 +122,31 @@ class Replay extends Model
         $rating = \DB::select('SELECT Sum(rating)/COUNT(rating) as rating FROM replay_user_ratings where replay_id = ?'[$replay_id])[0]->rating??0;
 
         Replay::where('id', $replay_id)->update(['user_rating'=>$rating]);
+    }
+
+    /**
+     * @return mixed
+     */
+    public static function userReplay()
+    {
+        return Replay::where('user_replay', 1);
+    }
+
+    /**
+     * @return mixed
+     */
+    public static function gosuReplay()
+    {
+        return Replay::where('user_replay', 0);
+    }
+
+    /**
+     * Relations. Topic comments
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany('App\ReplayComment', 'replay_id');
     }
 }

@@ -20,5 +20,11 @@ class ReplayMap extends Model
      */
     protected $fillable = ['name', 'url'];
 
-
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function replay()
+    {
+        return $this->hasMany('App\Replay');
+    }
 }
