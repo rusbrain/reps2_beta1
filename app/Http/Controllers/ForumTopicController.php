@@ -64,20 +64,9 @@ class ForumTopicController extends Controller
      */
     public function store(ForumTopicStoreRequest $request)
     {
-        $topic_data = [
-            'section_id' => $request->get('section_id'),
-            'title'=> $request->get('title'),
-            'content'=> $request->get('content'),
-            'user_id' => Auth::id()
-        ];
+        $topic_data = $request->validated();
 
-        if ($request->has('preview_content') && $request->get('preview_content') != ''){
-            $topic_data['preview_content'] = $request->get('preview_content');
-        }
-
-        if ($request->has('start_on') && $request->get('start_on') != ''){
-            $topic_data['start_on'] = $request->get('start_on');
-        }
+        $topic_data['user_id'] = Auth::id();
 
         if ($request->file('preview_img')){
             $path = str_replace('public', '/storage',$request->file('preview_img')->store('public/preview_img'));
@@ -88,8 +77,11 @@ class ForumTopicController extends Controller
                 'link' => $path
             ]);
 
+            unset($topic_data['preview_img']);
+
             $topic_data['preview_file_id'] = $file->id;
         }
+
 
         $topic = ForumTopic::create($topic_data);
 

@@ -148,4 +148,14 @@ class User extends Authenticatable
                 }]);
         }];
     }
+
+    /**
+     * @param $rating
+     * @param $user_id
+     */
+    public static function updateRating($rating, $user_id)
+    {
+        \DB::update('update users set rating = rating + (?) where id = ?', [$rating, $user_id]);
+
+    }
 }
