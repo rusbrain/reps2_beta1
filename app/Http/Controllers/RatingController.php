@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\ForumTopic;
 use App\ForumTopicComment;
 use App\Http\Requests\SetRatingRequest;
+use App\User;
 use App\UserReputation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -33,6 +34,9 @@ class RatingController extends Controller
                 ['sender_id' => Auth::id(), 'recipient_id' => $topic->user_id, 'topic_id' => $topic->id],
                 ['comment' => $comment, 'rating'=> $request->get('rating')]
             );
+
+            \DB::update('update users set rating = rating + (?) where id = ?', [$request->get('rating'), $topic->user_id]);
+            \DB::update('update forum_topics set rating = rating + (?) where id = ?', [$request->get('rating'), $topic->user_id]);
 
             return ['topic_id' => $topic->id, 'rating' => ($topic->positive()->count()-$topic->negative()->count())];
         }
