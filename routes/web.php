@@ -55,8 +55,6 @@ Route::group(['prefix' => 'forum'], function () {
             Route::post('{id}/rebase', 'ForumTopicController@rebase')           ->name('forum.topic.rebase');
             Route::post('{id}/set_rating', 'RatingController@setRating')        ->name('forum.topic.set_rating');
 
-
-
             Route::group(['prefix' => 'comment'], function () {
                 Route::post('/store', 'ForumTopicController@store')       ->name('forum.topic.comment.store');
                 Route::get('{id}/delete', 'ForumTopicController@destroy') ->name('forum.topic.comment.delete');
@@ -66,6 +64,19 @@ Route::group(['prefix' => 'forum'], function () {
 
     });
 
+});
+
+Route::group(['prefix' => 'replay'], function (){
+    Route::get('/users', 'ReplayController@user_list')->name('replay.users');
+    Route::get('/gosus', 'ReplayController@gosu_list')->name('replay.gosus');
+    Route::get('/{id}', 'ReplayController@show')->name('replay.get');
+
+    Route::group(['middleware' => 'auth'], function () {
+        Route::get('/create', 'ReplayController@create')->name('replay.create');
+        Route::post('/store', 'ReplayController@store')->name('replay.store');
+        Route::get('/{id}/edit', 'ReplayController@edit')->name('replay.edit');
+        Route::post('/{id}/update', 'ReplayController@update')->name('replay.update');
+    });
 });
 
 

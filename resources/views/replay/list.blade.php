@@ -1,0 +1,1 @@
+{{dd($replays, $user_gosu)}}
