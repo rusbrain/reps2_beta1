@@ -1,0 +1,226 @@
+/**-------------------------------*/
+/**-------------Fonts------------------*/
+/**-------------------------------*/
+@font-face {
+  font-family: 'Philosopher-Regular';
+  src: url('../fonts/philosopher/Philosopher-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Philosopher-Bold';
+  src: url('../fonts/philosopher/Philosopher-Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Ubuntu-Light';
+  src: url('../fonts/ubuntu/Ubuntu-Light.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Ubuntu-Regular';
+  src: url('../fonts/ubuntu/Ubuntu-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Ubuntu-Medium';
+  src: url('../fonts/ubuntu/Ubuntu-Medium.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Ubuntu-Bold';
+  src: url('../fonts/ubuntu/Ubuntu-Bold.ttf') format('truetype');
+}
+/**---------------------*/
+/**------Base style-----------*/
+/**---------------------*/
+a {
+  outline: none;
+}
+a:hover {
+  text-decoration: none;
+}
+h1, h2, h3 {
+  font-weight: 400;
+  font-family: "Philosopher-Regular", sans-serif;
+}
+h1 {
+  font-size: 55px;
+  margin: 0;
+  text-transform: uppercase;
+}
+h2 {
+  font-size: 36px;
+  text-transform: uppercase;
+}
+h3 {
+  font-size: 30px;
+}
+img {
+  max-width: 100%;
+}
+.form-control {
+  height: 2rem;
+}
+.btn {
+  padding: .2rem .75rem;
+}
+/*helpers*/
+.margin-bottom-10 {
+  margin-bottom: 10px !important;
+}
+.margin-bottom-15 {
+  margin-bottom: 15px !important;
+}
+.margin-bottom-20 {
+  margin-bottom: 20px !important;
+}
+.margin-bottom-30 {
+  margin-bottom: 30px !important;
+}
+.margin-bottom-40 {
+  margin-bottom: 40px !important;
+}
+.margin-bottom-60 {
+  margin-bottom: 60px;
+}
+.margin-top-40 {
+  margin-top: 40px;
+}
+.margin-top-20 {
+  margin-top: 20px !important;
+}
+.margin-top-10 {
+  margin-top: 10px !important;
+}
+.margin-top-0 {
+  margin-top: 0 !important;
+}
+.remove-padding {
+  margin-right: -15px;
+  margin-left: -15px;
+}
+.error {
+  color: red;
+}
+textarea.error,
+input.error {
+  border: 1px solid red;
+}
+.padding-top-20 {
+  padding-top: 20px !important;
+}
+.padding-top-30 {
+  padding-top: 30px;
+}
+.padding-bottom-30 {
+  padding-bottom: 30px !important;
+}
+.padding-bottom-40 {
+  padding-bottom: 40px;
+}
+.padding-bottom-60 {
+  padding-bottom: 60px;
+}
+.padding-left-35 {
+  padding-left: 35px;
+}
+.padding-left-20 {
+  padding-left: 20px;
+}
+/*************GENERAL PARTS********* */
+html, body {
+  height: 100%;
+}
+body {
+  font-family: "Ubuntu-Regular", sans-serif;
+  font-size: 16px;
+  color: #303030;
+  font-weight: 300;
+  background: #D8DCE0;
+}
+/****Breadcrumb******/
+.breadcrumb-wrapper {
+  justify-content: center;
+}
+.breadcrumb {
+  background-color: transparent;
+  padding: .75rem 0;
+  font-size: 12px;
+  margin-bottom: 40px;
+}
+.breadcrumb a {
+  color: #426995;
+}
+.breadcrumb a:hover {
+  text-decoration: underline;
+}
+.back-home a {
+  font-size: 12px;
+  margin-bottom: 50px;
+  color: #426995;
+  display: inline-block;
+  margin-right: 20px;
+  text-decoration: underline;
+}
+.back-home a:hover {
+  text-decoration: underline;
+}
+/**** END Breadcrumb******/
+
+/*****Modal Windows*****/
+
+/*****END Modal Windows*****/
+
+/*************END GENERAL PARTS********* */
+/**---------------------*/
+/**------HEADER---------*/
+/**---------------------*/
+.header {
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 20px;
+  padding-top: 20px;
+  background: #717171 url("../images/bg_reps.gif") repeat-x
+}
+.login-form {
+}
+.header-social a {
+  color: #17a2b8;
+  font-size: 24px;
+}
+.register-link {
+  color: #17a2b8;
+}
+.register-link:hover {
+  color: #17a2b8;
+}
+.header-profile{
+  text-align: center;
+  color: #fff;
+}
+.header-profile .profile-link{
+  font-size: 12px;
+  display: block;
+}
+/**---------------------*/
+/**------HOME PAGE-----------*/
+/**---------------------*/
+/**Sidebar - LEFT*/
+.sidebar-left {
+  border-left: 1px solid #17a2b8;
+}
+/**Content - CENTER*/
+.content-center {
+  border-right: 1px solid #17a2b8;
+  border-left: 1px solid #17a2b8;
+  height: 100vh;
+}
+/**Sidebar - RIGHT*/
+.sidebar-right {
+  border-right: 1px solid #17a2b8;
+}
+
+/**---------------------*/
+/**------ REGISTRATION PAGE -----------*/
+/**---------------------*/
+.register-form{
+  padding: 30px;
+}
+.register-form label{
+
+}

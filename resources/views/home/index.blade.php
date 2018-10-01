@@ -1,27 +1,25 @@
-<html>
-<body>
-<form method="POST" action="{{ route('login') }}">
-    @csrf
-<input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus><br>
-<input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required><br>
-<button type="submit" class="btn btn-primary">
-    Ok
-</button>
-    <div style="color: red">
-        @if ($errors->has('email'))
-            <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-        @endif
-        @if ($errors->has('password'))
-            <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-        @endif
-    </div>
+@extends('layouts.site')
 
-</form>
+@section('header')
+    @include('header')
+@endsection
 
-<a href="{{route('registration_form')}}">Регистрация</a>
-</body>
-</html>
+@section('navigation')
+    @include('navigation')
+@endsection
+
+@section('sidebar-left')
+    @include('sidebar-left')
+@endsection
+
+@section('content')
+    <div class="col-md-6 content-center"></div>
+@endsection
+
+@section('sidebar-right')
+    @include('sidebar-right')
+@endsection
+
+@section('footer')
+    @include('footer')
+@endsection

@@ -24,7 +24,7 @@ class RatingController extends Controller
 
         $comment = null;
 
-        if($request->hes('comment')){
+        if($request->has('comment')){
             $comment = $request->get('comment');
         }
 
