@@ -15,36 +15,45 @@ Route::get('/', 'HomeController@index');
 Route::get('/email/verified/{token}', 'Auth\RegisterController@emailVerified')->name('email_verified');
 
 Route::middleware(['guest'])->group(function () {
-    Route::post('/login', 'Auth\LoginController@userLogin')->name('login');
+    Route::post('/login', 'Auth\LoginController@userLogin')                         ->name('login');
 
     Route::group(['prefix' => 'password'], function () {
         Route::get('/update', 'Auth\ResetPasswordController@updateOldPassword')     ->name('get_update_password');
         Route::get('/new/{token}', 'Auth\ResetPasswordController@viewNewPassword')  ->name('update_old_password');
         Route::post('/new', 'Auth\ResetPasswordController@saveNewPassword')         ->name('save_new_password');
+        Route::get('/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')   ->name('password.request');
+        Route::post('/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')   ->name('password.email');
+        Route::get('/reset/{token}', 'Auth\ResetPasswordController@showResetForm')  ->name('password.reset');
+        Route::post('/reset', 'Auth\ResetPasswordController@reset')                 ->name('password.update');
     });
+});
 
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 });
 
 Route::group(['prefix' => 'user'], function () {
     Route::get('/register', 'Auth\RegisterController@showRegistrationForm') ->name('registration_form');
     Route::post('/register', 'Auth\RegisterController@register')            ->name('registration');
 
-    Route::get('/{id}', 'UserController@show')      ->name('user_profile');
-    Route::get('/edit', 'UserController@edit')      ->name('edit_profile');
-    Route::post('/save', 'UserController@update')   ->name('save_profile');
-    Route::post('{id}/get_rating', 'RatingController@getRatingUser')   ->name('user.get_rating');
+    Route::get('/{id}', 'UserController@show')                              ->name('user_profile');
+    Route::get('/edit', 'UserController@edit')                              ->name('edit_profile');
+    Route::post('/save', 'UserController@update')                           ->name('save_profile');
+    Route::post('{id}/get_rating', 'RatingController@getRatingUser')        ->name('user.get_rating');
+    Route::get('{id}/replay', 'ReplayController@getUserReplay')             ->name('user.user_replay');
+    Route::get('{id}/gosu_replay', 'ReplayController@getUserGosuReplay')    ->name('user.gosu_replay');
 });
 
 Route::group(['prefix' => 'forum'], function () {
-    Route::get('/', 'ForumController@index')->name('forum.index');
+    Route::get('/', 'ForumController@index')                                    ->name('forum.index');
 
     Route::group(['prefix' => 'section'], function () {
-        Route::get('/{name}', 'ForumController@section')->name('forum.section.index');
+        Route::get('/{name}', 'ForumController@section')                        ->name('forum.section.index');
     });
 
     Route::group(['prefix' => 'topic'], function () {
-        Route::get('/{id}', 'ForumTopicController@index')->name('forum.topic.index');
-        Route::post('{id}/get_rating', 'RatingController@getRatingTopic')   ->name('forum.topic.get_rating');
+        Route::get('/{id}', 'ForumTopicController@index')                       ->name('forum.topic.index');
+        Route::post('{id}/get_rating', 'RatingController@getRatingTopic')       ->name('forum.topic.get_rating');
 
         Route::group(['middleware' => 'auth'], function () {
             Route::get('/create', 'ForumTopicController@create')                ->name('forum.topic.create');
@@ -56,9 +65,9 @@ Route::group(['prefix' => 'forum'], function () {
             Route::post('{id}/set_rating', 'RatingController@setRating')        ->name('forum.topic.set_rating');
 
             Route::group(['prefix' => 'comment'], function () {
-                Route::post('/store', 'ForumTopicController@store')       ->name('forum.topic.comment.store');
-                Route::get('{id}/delete', 'ForumTopicController@destroy') ->name('forum.topic.comment.delete');
-                Route::post('{id}/update', 'ForumTopicController@update') ->name('forum.topic.comment.update');
+                Route::post('/store', 'ForumTopicController@store')             ->name('forum.topic.comment.store');
+                Route::get('{id}/delete', 'ForumTopicController@destroy')       ->name('forum.topic.comment.delete');
+                Route::post('{id}/update', 'ForumTopicController@update')       ->name('forum.topic.comment.update');
             });
         });
 
@@ -67,15 +76,20 @@ Route::group(['prefix' => 'forum'], function () {
 });
 
 Route::group(['prefix' => 'replay'], function (){
-    Route::get('/users', 'ReplayController@user_list')->name('replay.users');
-    Route::get('/gosus', 'ReplayController@gosu_list')->name('replay.gosus');
-    Route::get('/{id}', 'ReplayController@show')->name('replay.get');
+    Route::get('/users', 'ReplayController@user_list')              ->name('replay.users');
+    Route::get('/gosus', 'ReplayController@gosu_list')              ->name('replay.gosus');
+    Route::get('/{id}', 'ReplayController@show')                    ->name('replay.get');
+    Route::get('/user/{type}', 'ReplayController@show')                    ->name('replay.get');
+    Route::get('/gosu/{type}', 'ReplayController@show')                    ->name('replay.get');
+
 
     Route::group(['middleware' => 'auth'], function () {
-        Route::get('/create', 'ReplayController@create')->name('replay.create');
-        Route::post('/store', 'ReplayController@store')->name('replay.store');
-        Route::get('/{id}/edit', 'ReplayController@edit')->name('replay.edit');
-        Route::post('/{id}/update', 'ReplayController@update')->name('replay.update');
+        Route::get('/create', 'ReplayController@create')            ->name('replay.create');
+        Route::post('/store', 'ReplayController@store')             ->name('replay.store');
+        Route::get('/{id}/edit', 'ReplayController@edit')           ->name('replay.edit');
+        Route::post('/{id}/update', 'ReplayController@update')      ->name('replay.update');
+        Route::get('/my', 'ReplayController@getUserReplay')         ->name('replay.my_user');
+        Route::get('/my_gosu', 'ReplayController@getUserGosuReplay')->name('replay.my_gosu');
     });
 });
 

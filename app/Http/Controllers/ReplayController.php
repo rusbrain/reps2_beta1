@@ -22,7 +22,7 @@ class ReplayController extends Controller
      */
     public function user_list()
     {
-        return $this->list(Replay::userReplay());
+        return $this->list(Replay::userReplay(), 'Users Replays');
     }
 
     /**
@@ -30,20 +30,20 @@ class ReplayController extends Controller
      */
     public function gosu_list()
     {
-        return $this->list(Replay::gosuReplay());
+        return $this->list(Replay::gosuReplay(), 'Gosu Replay');
     }
 
     /**
      * @param Replay $replay
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    private function list(Replay $replay)
+    private function list(Replay $replay, $title)
     {
         $data = $this->getReplay($replay)
             ->orderBy('created_at')
             ->paginate(20);
 
-        return view('replay.list')->with(['replays' => $data, 'user_gosu'=>'Users Replays']);
+        return view('replay.list')->with(['replays' => $data, 'title'=>$title]);
     }
 
     /**
@@ -173,5 +173,61 @@ class ReplayController extends Controller
         }
 
         return abort(404);
+    }
+
+    /**
+     * @param int $user_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getUserReplay($user_id = 0)
+    {
+        if (!$user_id){
+            $user_id = Auth::id();
+        }
+
+        return $this->list(Replay::userReplay()->where('user_id',$user_id), 'User Replay');
+    }
+
+    /**
+     * @param int $user_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getUserGosuReplay($user_id = 0)
+    {
+        if (!$user_id){
+            $user_id = Auth::id();
+        }
+
+        return $this->list(Replay::gosuReplay()->where('user_id',$user_id), 'Gosu Replay');
+    }
+
+    /**
+     * @param $type
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getUserReplayByType($type)
+    {
+        $type = ReplayType::where('name', $type)->first();
+
+        if(!$type){
+            return abort(404);
+        }
+
+        return $this->list(Replay::userReplay()->where('type_id',$type->id), 'User Replay '.$type);
+    }
+
+    /**
+     * @param $type
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getUserGosuReplayByType($type)
+    {
+        $type = ReplayType::where('name', $type)->first();
+
+        if(!$type){
+            return abort(404);
+        }
+
+        return $this->list(Replay::gosuReplay()->where('user_id',$type->id), 'Gosu Replay '.$type);
     }
 }

@@ -1,1 +1,1 @@
-{{dd($replays, $user_gosu)}}
+{{dd($replays, $title)}}
