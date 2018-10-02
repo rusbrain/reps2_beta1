@@ -83,6 +83,7 @@ Route::group(['prefix' => 'replay'], function (){
     Route::get('/gosu/{type}', 'ReplayGosuController@getReplayByType')              ->name('replay.gosu_type');
     Route::get('/{id}/get_rating', 'ReplayRatingController@getRating')              ->name('replay.ger_rating');
     Route::get('/{id}/get_evaluation', 'ReplayRatingController@getEvaluation')      ->name('replay.get_evaluation');
+    Route::get('/{id}/download', 'ReplayController@download')                       ->name('replay.download');
 
 
     Route::group(['middleware' => 'auth'], function () {

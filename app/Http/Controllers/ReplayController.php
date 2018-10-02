@@ -12,6 +12,7 @@ use App\ReplayType;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use phpDocumentor\Reflection\Project;
 
 class ReplayController extends Controller
@@ -229,5 +230,23 @@ class ReplayController extends Controller
 
         $method = self::$method_get;
         return $this->getList(Replay::$method()->where('type_id',$type->id), self::$replay_group.' '.$type);
+    }
+
+    /**
+     * Download replay file
+     *
+     * @param $id
+     */
+    public function download($id)
+    {
+        $replay = Replay::find($id);
+
+        if(!$replay){
+            return abort(404);
+        }
+
+        $file = $replay->file()->first();
+
+        return Storage::download(str_replace('/storage','public', $file->link));
     }
 }
