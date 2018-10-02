@@ -16,37 +16,51 @@ use phpDocumentor\Reflection\Project;
 
 class ReplayController extends Controller
 {
+    /**
+     * Replay group name
+     *
+     * @var string
+     */
+    protected static $replay_group;
 
     /**
+     * Replay query function name
+     *
+     * @var string
+     */
+    protected static $method_get;
+
+    /**
+     * Get list of all Replay
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function user_list()
+    public function list()
     {
-        return $this->list(Replay::userReplay(), 'Users Replays');
+        $method = self::$method_get;
+
+        return $this->getList(Replay::$method());
     }
 
     /**
+     * get Replay view list
+     *
+     * @param $query
+     * @param bool $title
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function gosu_list()
+    protected function getList($query, $title = false)
     {
-        return $this->list(Replay::gosuReplay(), 'Gosu Replay');
-    }
-
-    /**
-     * @param Replay $replay
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    private function list(Replay $replay, $title)
-    {
-        $data = $this->getReplay($replay)
+        $data = $this->getReplay($query)
             ->orderBy('created_at')
             ->paginate(20);
 
-        return view('replay.list')->with(['replays' => $data, 'title'=>$title]);
+        return view('replay.list')->with(['replays' => $data, 'title'=>($title??self::$replay_group)]);
     }
 
     /**
+     * get Replay query
+     *
      * @param Replay $replay
      * @return Replay|\Illuminate\Database\Eloquent\Builder
      */
@@ -58,6 +72,8 @@ class ReplayController extends Controller
     }
 
     /**
+     * Get replay from Id
+     *
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -76,6 +92,8 @@ class ReplayController extends Controller
     }
 
     /**
+     * Get view for create new replay
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
@@ -84,6 +102,8 @@ class ReplayController extends Controller
     }
 
     /**
+     * Save new Replay
+     *
      * @param ReplayStoreRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -109,8 +129,9 @@ class ReplayController extends Controller
         return redirect()->route('replay.get', ['id' => $replay->id]);
     }
 
-
     /**
+     * Get view for update replay
+     *
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -126,6 +147,8 @@ class ReplayController extends Controller
     }
 
     /**
+     * Save update of replay
+     *
      * @param ReplayUpdateRequest $request
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
@@ -176,8 +199,9 @@ class ReplayController extends Controller
     }
 
     /**
+     * Get replay by user
+     *
      * @param int $user_id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getUserReplay($user_id = 0)
     {
@@ -185,27 +209,17 @@ class ReplayController extends Controller
             $user_id = Auth::id();
         }
 
-        return $this->list(Replay::userReplay()->where('user_id',$user_id), 'User Replay');
+        $method = self::$method_get;
+        $this->getList(Replay::$method()->where('user_id',$user_id));
     }
 
     /**
-     * @param int $user_id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function getUserGosuReplay($user_id = 0)
-    {
-        if (!$user_id){
-            $user_id = Auth::id();
-        }
-
-        return $this->list(Replay::gosuReplay()->where('user_id',$user_id), 'Gosu Replay');
-    }
-
-    /**
+     * Get Replay by type
+     *
      * @param $type
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getUserReplayByType($type)
+    public function getReplayByType($type)
     {
         $type = ReplayType::where('name', $type)->first();
 
@@ -213,21 +227,17 @@ class ReplayController extends Controller
             return abort(404);
         }
 
-        return $this->list(Replay::userReplay()->where('type_id',$type->id), 'User Replay '.$type);
+        $method = self::$method_get;
+        return $this->getList(Replay::$method()->where('type_id',$type->id), self::$replay_group.' '.$type);
     }
 
-    /**
-     * @param $type
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function getUserGosuReplayByType($type)
+    public function setRating(Request $request, $id)
     {
-        $type = ReplayType::where('name', $type)->first();
 
-        if(!$type){
-            return abort(404);
-        }
+    }
 
-        return $this->list(Replay::gosuReplay()->where('user_id',$type->id), 'Gosu Replay '.$type);
+    public function setEvaluation(Request $request, $id)
+    {
+
     }
 }
