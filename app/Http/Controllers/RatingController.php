@@ -99,7 +99,7 @@ class RatingController extends Controller
 
     /**
      * Get calculation of rating value
-     * 
+     *
      * @param $object
      * @return mixed
      */
