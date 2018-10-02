@@ -65,9 +65,9 @@ Route::group(['prefix' => 'forum'], function () {
             Route::post('{id}/set_rating', 'TopicRatingController@setRating')       ->name('forum.topic.set_rating');
 
             Route::group(['prefix' => 'comment'], function () {
-                Route::post('/store', 'ForumTopicController@store')                 ->name('forum.topic.comment.store');
-                Route::get('{id}/delete', 'ForumTopicController@destroy')           ->name('forum.topic.comment.delete');
-                Route::post('{id}/update', 'ForumTopicController@update')           ->name('forum.topic.comment.update');
+                Route::post('/store', 'TopicCommentController@store')               ->name('forum.topic.comment.store');
+                Route::get('{id}/delete', 'TopicCommentController@destroy')         ->name('forum.topic.comment.delete');
+                Route::post('{id}/update', 'TopicCommentController@update')         ->name('forum.topic.comment.update');
             });
         });
 

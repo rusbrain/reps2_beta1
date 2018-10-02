@@ -97,7 +97,7 @@ class ForumTopicController extends Controller
      */
     public function rebase(ForumTopicRebaseRequest $request, $id)
     {
-        $topic = ForumTopic::fint($id);
+        $topic = ForumTopic::find($id);
 
         if (!$topic){
             return abort(404);
@@ -168,7 +168,7 @@ class ForumTopicController extends Controller
      */
     public function destroy($id)
     {
-        $topic = ForumTopic::fint($id);
+        $topic = ForumTopic::find($id);
 
         if (!$topic){
             return abort(404);
