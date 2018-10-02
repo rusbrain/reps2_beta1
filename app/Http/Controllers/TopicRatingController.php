@@ -20,5 +20,5 @@ class TopicRatingController extends RatingController
      *
      * @var string
      */
-    protected static $model = 'ForumTopic';
+    protected static $model = ForumTopic::class;
 }

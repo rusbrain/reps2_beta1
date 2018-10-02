@@ -54,7 +54,7 @@ class RatingController extends Controller
         if($object){
             self::saveUserReputation($object->user_id, $object->id, $request->get('rating'), $comment);
 
-            return [self::$object => $object->id, 'rating' => self::getRatingValue($object)];
+            return ['rating' => self::getRatingValue($object)];
         }
 
         return abort(404);

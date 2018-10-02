@@ -230,14 +230,4 @@ class ReplayController extends Controller
         $method = self::$method_get;
         return $this->getList(Replay::$method()->where('type_id',$type->id), self::$replay_group.' '.$type);
     }
-
-    public function setRating(Request $request, $id)
-    {
-
-    }
-
-    public function setEvaluation(Request $request, $id)
-    {
-
-    }
 }
