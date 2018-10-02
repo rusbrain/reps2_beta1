@@ -28,7 +28,7 @@ class AddRepsIdToreplay extends Migration
     {
         Schema::table('replays', function($table)
         {
-            $table->integer('reps_id')->nullable();
+            $table->dropColumn('reps_id');
         });
     }
 }
