@@ -79,8 +79,8 @@ Route::group(['prefix' => 'replay'], function (){
     Route::get('/users', 'ReplayController@user_list')              ->name('replay.users');
     Route::get('/gosus', 'ReplayController@gosu_list')              ->name('replay.gosus');
     Route::get('/{id}', 'ReplayController@show')                    ->name('replay.get');
-    Route::get('/user/{type}', 'ReplayController@show')                    ->name('replay.get');
-    Route::get('/gosu/{type}', 'ReplayController@show')                    ->name('replay.get');
+    Route::get('/user/{type}', 'ReplayController@show')             ->name('replay.user_type');
+    Route::get('/gosu/{type}', 'ReplayController@show')             ->name('replay.gosu_type');
 
 
     Route::group(['middleware' => 'auth'], function () {
