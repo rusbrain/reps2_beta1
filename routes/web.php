@@ -85,7 +85,6 @@ Route::group(['prefix' => 'replay'], function (){
     Route::get('/{id}/get_evaluation', 'ReplayRatingController@getEvaluation')      ->name('replay.get_evaluation');
     Route::get('/{id}/download', 'ReplayController@download')                       ->name('replay.download');
 
-
     Route::group(['middleware' => 'auth'], function () {
         Route::get('/create', 'ReplayController@create')                            ->name('replay.create');
         Route::post('/store', 'ReplayController@store')                             ->name('replay.store');

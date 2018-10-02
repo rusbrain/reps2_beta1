@@ -247,6 +247,10 @@ class ReplayController extends Controller
 
         $file = $replay->file()->first();
 
+        $replay->downloaded = $replay->downloaded+1;
+        
+        $replay->save();
+
         return Storage::download(str_replace('/storage','public', $file->link));
     }
 }
