@@ -24,8 +24,8 @@ class CommentUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'=>'nullable|min:3|max:255',
-            'content'=>'required|max:1000',
+            'title'     =>'nullable|min:3|max:255',
+            'content'   =>'required|max:1000',
         ];
     }
 

@@ -44,6 +44,13 @@ class ReplayRatingController extends RatingController
         return view('replay.evaluation')->with(['replay' => $replay, 'list' => $replay->user_rating()->with('user')->paginate(20)]);
     }
 
+    /**
+     * Save Replay Evaluation
+     *
+     * @param SetReplayUserRatingRequest $request
+     * @param $id
+     * @return array
+     */
     public function setEvaluation(SetReplayUserRatingRequest $request, $id)
     {
         if (Replay::find($id)){

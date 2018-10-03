@@ -36,9 +36,10 @@ Route::group(['prefix' => 'user'], function () {
     Route::get('/register', 'Auth\RegisterController@showRegistrationForm') ->name('registration_form');
     Route::post('/register', 'Auth\RegisterController@register')            ->name('registration');
 
-    Route::get('/{id}', 'UserController@show')                              ->name('user_profile');
     Route::get('/edit', 'UserController@edit')                              ->name('edit_profile');
     Route::post('/save', 'UserController@update')                           ->name('save_profile');
+    Route::get('/{id}', 'UserController@show')                              ->name('user_profile');
+
     Route::post('{id}/get_rating', 'RatingController@getRatingUser')        ->name('user.get_rating');
     Route::get('{id}/replay', 'ReplayUsersController@getUserReplay')        ->name('user.user_replay');
     Route::get('{id}/gosu_replay', 'ReplayGosuController@getUserReplay')    ->name('user.gosu_replay');
@@ -52,7 +53,6 @@ Route::group(['prefix' => 'forum'], function () {
     });
 
     Route::group(['prefix' => 'topic'], function () {
-        Route::get('/{id}', 'ForumTopicController@index')                           ->name('forum.topic.index');
         Route::post('{id}/get_rating', 'TopicRatingController@getRating')           ->name('forum.topic.get_rating');
 
         Route::group(['middleware' => 'auth'], function () {
@@ -71,6 +71,7 @@ Route::group(['prefix' => 'forum'], function () {
             });
         });
 
+        Route::get('/{id}', 'ForumTopicController@index')                           ->name('forum.topic.index');
     });
 
 });

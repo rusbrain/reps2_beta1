@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\CensorshipWord;
 use App\ForumTopic;
 use App\Http\Requests\SetRatingRequest;
 use App\User;
@@ -91,7 +92,7 @@ class RatingController extends Controller
         $comment = null;
 
         if($request->has('comment')){
-            $comment = $request->get('comment');
+            $comment = CensorshipWord::check($request->get('comment'));
         }
 
         return $comment;

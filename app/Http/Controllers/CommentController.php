@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\CensorshipWord;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\ForumTopicComment;
@@ -84,6 +85,8 @@ class CommentController extends Controller
         $data = $request->validated();
         $data['user_id'] = Auth::id();
 
+        $data = self::checkCommentData($data);
+
         self::$model::create($data);
     }
 
@@ -98,6 +101,25 @@ class CommentController extends Controller
          $replay_data = $request->validated();
          $replay_data['title'] = $replay_data['title']??null;
 
+         $replay_data = self::checkCommentData($replay_data);
+
          self::$model::where('id', $id)->update($replay_data);
+    }
+
+    /**
+     * Check text data in comment to censorship words
+     *
+     * @param array $data
+     * @return array
+     */
+    public static function checkCommentData(array $data)
+    {
+        if(isset($data['title']) && $data['title']){
+            $data['title'] = CensorshipWord::check($data['title']);
+        }
+
+        $data['comment'] = CensorshipWord::check($data['comment']);
+
+        return $data;
     }
 }

@@ -30,6 +30,8 @@ class RedirectOldURL extends Controller
     }
 
     /**
+     * Get topic for redirect
+     *
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -53,6 +55,8 @@ class RedirectOldURL extends Controller
     }
 
     /**
+     * Get section for redirect
+     *
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -147,6 +151,8 @@ class RedirectOldURL extends Controller
     }
 
     /**
+     * Redirect to users replay
+     *
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -164,6 +170,8 @@ class RedirectOldURL extends Controller
     }
 
     /**
+     * Redirect to gosu replay
+     *
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -185,6 +193,8 @@ class RedirectOldURL extends Controller
     }
 
     /**
+     * Get Id of replay for redirect
+     *
      * @param Request $request
      * @return bool
      */

@@ -24,9 +24,9 @@ class TopicCommentStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'topic_id' =>'required|exists:forum_topics,id',
-            'title'=>'nullable|min:3|max:255',
-            'content'=>'required|max:1000',
+            'topic_id'  =>'required|exists:forum_topics,id',
+            'title'     =>'nullable|min:3|max:255',
+            'content'   =>'required|max:1000',
         ];
     }
 

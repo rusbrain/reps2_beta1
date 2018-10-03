@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\CensorshipWord;
 use App\Country;
 use App\File;
 use App\Http\Requests\User\UpdateProfileRequest;
@@ -80,8 +81,29 @@ class UserController extends Controller
             $user_data['file_id'] = $file->id;
         }
 
+        $user_data = self::checkUser($user_data);
+
         Auth::user()->update($user_data);
 
         return redirect()->route('user_profile', ['id' => Auth::id()]);
+    }
+
+    /**
+     * Check user data to censorship words
+     *
+     * @param $data
+     * @return mixed
+     */
+    public static function checkUser($data)
+    {
+        $rows = ['isq', 'skype', 'signature', 'mouse', 'keyboard', 'headphone', 'mousepad', 'birthday'];
+
+        foreach ($rows as $row){
+            if(isset($data[$row]) && $data[$row]){
+                $data[$row] = CensorshipWord::check($data[$row]);
+            }
+        }
+
+        return $data;
     }
 }
