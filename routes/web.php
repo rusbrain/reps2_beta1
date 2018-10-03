@@ -108,6 +108,31 @@ Route::group(['prefix' => 'replay'], function (){
     });
 });
 
+Route::group(['prefix' => 'gallery'], function (){
+    Route::get('/', 'UserGalleryController@index')                              ->name('gallery.list');
+    Route::get('/my', 'UserGalleryController@indexUser')                          ->name('gallery.list_my');
+    Route::get('/user/{id}', 'UserGalleryController@indexUser')                 ->name('gallery.list_user');
+
+
+//    Route::get('/{id}/get_rating', 'ReplayRatingController@getRating')        ->name('replay.ger_rating');
+
+    Route::group(['middleware' => 'auth', 'prefix' => 'photo'], function () {
+        Route::get('/create', 'UserGalleryController@create')                   ->name('gallery.create');
+        Route::get('/{id}/edit', 'UserGalleryController@edit')                  ->name('gallery.edit');
+        Route::post('/store', 'UserGalleryController@store')                    ->name('gallery.store');
+        Route::post('/{id}/update', 'UserGalleryController@update')             ->name('gallery.update');
+//        Route::get('{id}/set_rating', 'ReplayRatingController@setRating')       ->name('replay.set_rating');
+
+//        Route::group(['prefix' => 'comment'], function () {
+//            Route::post('/store', 'ReplayCommentController@store')                  ->name('replay.comment.store');
+//            Route::get('{id}/delete', 'ReplayCommentController@destroy')            ->name('replay.comment.delete');
+//            Route::post('{id}/update', 'ReplayCommentController@update')            ->name('replay.comment.update');
+//        });
+    });
+
+    Route::get('/photo/{id}', 'UserGalleryController@show')                     ->name('gallery.view');
+});
+
 
 //
 //Route::group(['prefix' => 'user', 'middleware' => 'auth'], function () {

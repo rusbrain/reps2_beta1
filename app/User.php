@@ -159,7 +159,6 @@ class User extends Authenticatable
     public static function updateRating($rating, $user_id)
     {
         \DB::update('update users set rating = rating + (?) where id = ?', [$rating, $user_id]);
-
     }
 
     /**
@@ -168,5 +167,13 @@ class User extends Authenticatable
     public function answers_to_questions()
     {
         return $this->hasMany('App\InterviewUserAnswers', 'user_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function user_galleries()
+    {
+        return $this->hasMany('App\UserGallery');
     }
 }
