@@ -25,8 +25,8 @@ class ReplayCommentStoreRequest extends FormRequest
     {
         return [
             'replay_id' =>'required|exists:replays,id',
-            'title'=>'nullable|min:3|max:255',
-            'content'=>'required|max:1000',
+            'title'     =>'nullable|min:3|max:255',
+            'content'   =>'required|max:1000',
         ];
     }
 
@@ -38,12 +38,12 @@ class ReplayCommentStoreRequest extends FormRequest
     public function messages()
     {
         return [
-            'replay_id.required'   => 'Не определен коментируемый replay для публикации',
-            'replay_id.exists'     => 'Не определен коментируемый replay для публикации',
-            'title.min'           => 'Заголовок должен быть не меньше 3 символов',
-            'title.max'           => 'Заголовок должен быть не больше 255 символов',
-            'content.required'    => 'Основное описание обязаельно для заполнения',
-            'content.min'         => 'Основное описание должен быть не больше 1000 символов',
+            'replay_id.required'    => 'Не определен коментируемый replay для публикации',
+            'replay_id.exists'      => 'Не определен коментируемый replay для публикации',
+            'title.min'             => 'Заголовок должен быть не меньше 3 символов',
+            'title.max'             => 'Заголовок должен быть не больше 255 символов',
+            'content.required'      => 'Основное описание обязаельно для заполнения',
+            'content.min'           => 'Основное описание должен быть не больше 1000 символов',
         ];
     }
 }

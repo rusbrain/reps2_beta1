@@ -13,11 +13,17 @@ class File extends Model
      */
     protected $table='files';
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
         'user_id',
         'title',
         'link'
     ];
+
     /**
      * Relations. Files user
      *

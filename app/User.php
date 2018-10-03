@@ -136,6 +136,9 @@ class User extends Authenticatable
         return $this->hasMany('App\UserEmailToken')->where('function',$function)->orderBy('created_at', 'desc')->first();
     }
 
+    /**
+     * @return array
+     */
     public static function getUserWithReputationQuery()
     {
         return ['user' => function($query){
