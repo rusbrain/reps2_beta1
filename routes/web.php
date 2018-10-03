@@ -28,6 +28,8 @@ Route::middleware(['guest'])->group(function () {
     });
 });
 
+Route::post('question/{id}/set_answer', 'InterviewQuestionController@setAnswer')    ->name('question.set_answer');
+
 Route::group(['middleware' => 'auth'], function () {
     Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 });

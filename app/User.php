@@ -161,4 +161,12 @@ class User extends Authenticatable
         \DB::update('update users set rating = rating + (?) where id = ?', [$rating, $user_id]);
 
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function answers_to_questions()
+    {
+        return $this->hasMany('App\InterviewUserAnswers', 'user_id');
+    }
 }
