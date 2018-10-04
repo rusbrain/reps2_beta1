@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\ForumTopicComment;
+use App\Comment;
 use App\Http\Requests\TopicCommentStoreRequest;
 
 class TopicCommentController extends CommentController
 {
     /**
-     * Model name
+     * Relation id
      *
      * @var string
      */
-    protected static $model = ForumTopicComment::class;
+    protected static $relation = Comment::RELATION_FORUM_TOPIC;
 
     /**
      * View name

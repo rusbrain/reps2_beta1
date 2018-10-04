@@ -7,9 +7,7 @@ use App\Country;
 use App\File;
 use App\Http\Requests\User\UpdateProfileRequest;
 use App\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use PHPUnit\Framework\Constraint\Count;
 
 class UserController extends Controller
 {
@@ -31,7 +29,12 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        if (!$user = User::find($id)){
+        $user = User::where('id',$id)
+            ->with('role', 'avatar', 'country')
+            ->withCount('positive', 'negative', 'user_galleries', 'topics', 'replay', 'gosu_replay', 'topic_comments', 'replay_comments', 'gallery_comments')
+            ->first();
+
+        if (!$user){
             abort(404);
         }
 

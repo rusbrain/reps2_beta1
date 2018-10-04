@@ -42,9 +42,9 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function countries()
+    public function country()
     {
-        return $this->belongsTo('App\Country');
+        return $this->belongsTo('App\Country', 'country_id');
     }
 
     /**
@@ -69,12 +69,11 @@ class User extends Authenticatable
 
     /**
      * Relations. Users avatar
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function avatar()
     {
-        return $this->hasOne('App\File');
+        return $this->belongsTo('App\File', 'file_id');
     }
 
     /**
@@ -175,5 +174,53 @@ class User extends Authenticatable
     public function user_galleries()
     {
         return $this->hasMany('App\UserGallery');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function topics()
+    {
+        return $this->hasMany('App\ForumTopic', 'user_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function replay()
+    {
+        return $this->hasMany('App\Replay', 'user_id')->where('user_replay', 1);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function gosu_replay()
+    {
+        return $this->hasMany('App\Replay', 'user_id')->where('user_replay', 0);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function topic_comments()
+    {
+        return $this->hasMany('App\Comment', 'user_id')->where('relation', Comment::RELATION_FORUM_TOPIC);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function replay_comments()
+    {
+        return $this->hasMany('App\Comment', 'user_id')->where('relation', Comment::RELATION_REPLAY);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function gallery_comments()
+    {
+        return $this->hasMany('App\Comment', 'user_id')->where('relation', Comment::RELATION_USER_GALLERY);
     }
 }

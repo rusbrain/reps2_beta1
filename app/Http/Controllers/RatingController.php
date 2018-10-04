@@ -15,11 +15,11 @@ use App\Replay;
 class RatingController extends Controller
 {
     /**
-     * Object name with 'id'
+     * Object relation
      *
      * @var string
      */
-    protected static $object;
+    protected static $relation;
 
     /**
      * Model name
@@ -36,7 +36,7 @@ class RatingController extends Controller
      */
     public function getRating($id)
     {
-        return $this->getRatingView(UserReputation::where(self::$object, $id));
+        return $this->getRatingView(UserReputation::where('object_id', $id)->where('relation', self::$relation));
     }
 
     /**
@@ -72,7 +72,7 @@ class RatingController extends Controller
     protected static function saveUserReputation($user_id, $object_id, $rating, $comment = '')
     {
         UserReputation::updateOrCreate(
-            ['sender_id' => Auth::id(), 'recipient_id' => $user_id, self::$object => $object_id],
+            ['sender_id' => Auth::id(), 'recipient_id' => $user_id, 'object_id' => $object_id, 'relation' => self::$relation],
             ['comment' => $comment, 'rating'=>  $rating]
         );
 

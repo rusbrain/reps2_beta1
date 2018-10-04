@@ -5,18 +5,17 @@ namespace App\Http\Controllers;
 use App\CensorshipWord;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\ForumTopicComment;
+use App\Comment;
 use App\Http\Requests\CommentUpdateRequest;
-use App\ReplayComment;
 
 class CommentController extends Controller
 {
     /**
-     * Model name
+     * Relation id
      *
      * @var string
      */
-    protected static $model;
+    protected static $relation;
 
     /**
      * View name
@@ -41,7 +40,7 @@ class CommentController extends Controller
      */
     public function update(CommentUpdateRequest $request, $id)
     {
-        if (self::$model::find($id)){
+        if (Comment::find($id)){
             self::updateComment($request, $id);
             return redirect()->route(self::$view_name, ['id' => $id]);
         }
@@ -57,7 +56,7 @@ class CommentController extends Controller
      */
     public function destroy($id)
     {
-        $object = self::$model::find($id);
+        $object = Comment::find($id);
 
         $name_id = self::$name_id;
         $object_id = $object->$name_id;
@@ -84,10 +83,11 @@ class CommentController extends Controller
     {
         $data = $request->validated();
         $data['user_id'] = Auth::id();
+        $data['relation'] = self::$relation;
 
         $data = self::checkCommentData($data);
 
-        self::$model::create($data);
+        Comment::create($data);
     }
 
     /**
@@ -103,7 +103,7 @@ class CommentController extends Controller
 
          $replay_data = self::checkCommentData($replay_data);
 
-         self::$model::where('id', $id)->update($replay_data);
+         Comment::where('id', $id)->update($replay_data);
     }
 
     /**

@@ -38,11 +38,14 @@ Route::group(['prefix' => 'user'], function () {
     Route::get('/register', 'Auth\RegisterController@showRegistrationForm') ->name('registration_form');
     Route::post('/register', 'Auth\RegisterController@register')            ->name('registration');
 
-    Route::get('/edit', 'UserController@edit')                              ->name('edit_profile');
-    Route::post('/save', 'UserController@update')                           ->name('save_profile');
+    Route::group(['middleware' => 'auth'], function () {
+        Route::get('/edit', 'UserController@edit')->name('edit_profile');
+        Route::post('/save', 'UserController@update')->name('save_profile');
+    });
+
     Route::get('/{id}', 'UserController@show')                              ->name('user_profile');
 
-    Route::post('{id}/get_rating', 'RatingController@getRatingUser')        ->name('user.get_rating');
+    Route::get('{id}/get_rating', 'RatingController@getRatingUser')        ->name('user.get_rating');
     Route::get('{id}/replay', 'ReplayUsersController@getUserReplay')        ->name('user.user_replay');
     Route::get('{id}/gosu_replay', 'ReplayGosuController@getUserReplay')    ->name('user.gosu_replay');
 });
@@ -160,6 +163,6 @@ Route::get('sc2.php', 'RedirectOldURL@sc2');
 Route::get('rating.php', 'RedirectOldURL@rating');
 Route::get('donate.php', 'RedirectOldURL@donate');
 Route::get('userbars.php', 'RedirectOldURL@userBars');
-Route::get('registration.php', 'RedirectOldURL@registration');
+Route::get('registration.php', 'RedirectOldURL@registration'); //TODO:: redirect for gallery
 
 //Auth::routes();

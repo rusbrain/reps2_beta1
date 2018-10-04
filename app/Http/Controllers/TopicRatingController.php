@@ -9,11 +9,11 @@ use App\UserReputation;
 class TopicRatingController extends RatingController
 {
     /**
-     * Object name
+     * Object relation
      *
      * @var string
      */
-    protected static $object = 'topic_id';
+    protected static $relation = UserReputation::RELATION_FORUM_TOPIC;
 
     /**
      * Model name

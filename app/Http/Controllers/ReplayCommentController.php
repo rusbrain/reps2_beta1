@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Comment;
 use App\Http\Requests\ReplayCommentStoreRequest;
-use App\ReplayComment;
 
 class ReplayCommentController extends CommentController
 {
     /**
-     * Model name
+     * Relation id
      *
      * @var string
      */
-    protected static $model = ReplayComment::class;
+    protected static $relation = Comment::RELATION_REPLAY;
 
     /**
      * View name

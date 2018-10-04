@@ -13,11 +13,11 @@ use Illuminate\Support\Facades\Auth;
 class ReplayRatingController extends RatingController
 {
     /**
-     * Object name
+     * Object relation
      *
      * @var string
      */
-    protected static $object = 'replay_id';
+    protected static $relation = UserReputation::RELATION_REPLAY;
 
     /**
      * Model name
@@ -57,7 +57,7 @@ class ReplayRatingController extends RatingController
             $comment = self::getComment($request);
 
             ReplayUserRating::updateOrCreate(
-                ['user_id' => Auth::id(), self::$object => $id],
+                ['user_id' => Auth::id(), 'object_id' => $id, 'relation' => self::$relation],
                 ['comment' => $comment, 'rating'=> $request->get('rating')]
             );
 

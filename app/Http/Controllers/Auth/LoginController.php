@@ -67,7 +67,7 @@ class LoginController extends Controller
     protected function validateLogin(Request $request)
     {
         $this->validate($request, [
-            $this->username() => 'required|email|exist:users,email',
+            $this->username() => 'required|email|exists:users,email',
             'password' => 'required|string',
         ],[
             $this->username().'.required'   => 'Не указан E-mail',
