@@ -2,83 +2,41 @@
 
 namespace App\Http\Controllers;
 
+use App\Comment;
+use App\Http\Requests\UserGalleryStoreCommentRequest;
 use Illuminate\Http\Request;
 
-class UserGalleryCommentController extends Controller
+class UserGalleryCommentController extends CommentController
 {
     /**
-     * Display a listing of the resource.
+     * Relation id
      *
-     * @return \Illuminate\Http\Response
+     * @var string
      */
-    public function index()
-    {
-        //
-    }
+    protected static $relation = Comment::RELATION_USER_GALLERY;
 
     /**
-     * Show the form for creating a new resource.
+     * View name
      *
-     * @return \Illuminate\Http\Response
+     * @var string
      */
-    public function create()
-    {
-        //
-    }
+    protected static $view_name = 'gallery.photo';
+
+    /**
+     * object name with 'id'
+     *
+     * @var string
+     */
+    protected static $name_id = 'gallery_id';
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param UserGalleryStoreCommentRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(UserGalleryStoreCommentRequest $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return self::storeComment($request);
     }
 }

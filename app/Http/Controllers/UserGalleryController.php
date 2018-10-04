@@ -21,7 +21,7 @@ class UserGalleryController extends Controller
      */
     public function index()
     {
-        return view('gallery.list')->with('photos', UserGallery::with('file')->orderBy('created_at')->paginate(50));
+        return view('gallery.list')->with('photos', self::getList(new UserGallery()));
     }
 
     /**
@@ -36,9 +36,17 @@ class UserGalleryController extends Controller
             $id = Auth::id();
         }
 
-        return view('gallery.list')->with('photos', UserGallery::where('user_id',$id)->with('file')->orderBy('created_at')->paginate(50));
+        return view('gallery.list')->with('photos', self::getList(UserGallery::where('user_id',$id)));
     }
 
+    /**
+     * @param UserGallery $gallery
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    private static function getList(UserGallery $gallery)
+    {
+        return $gallery->with('file')->withCount('positive', 'negative', 'comments')->orderBy('created_at')->paginate(50);
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -89,7 +97,7 @@ class UserGalleryController extends Controller
      */
     public function show($id)
     {
-        $photo = UserGallery::where('id', $id)->with('file', 'user')->with(['comments'=>function($query){
+        $photo = UserGallery::where('id', $id)->with('file', 'user')->withCount('positive', 'negative', 'comments')->with(['comments'=>function($query){
             $query->orderBy('created_at')->paginate(20);
         }])->first();
 
@@ -178,14 +186,20 @@ class UserGalleryController extends Controller
     {
         $gallery = UserGallery::find($id);
 
-        if(!$gallery){
+        if (!$gallery){
             return abort(404);
         }
 
-        $file = $gallery->file()->first();
-        $gallery->downloaded = $gallery->downloaded+1;
-        $gallery->save();
+        if ($gallery->user_id != Auth::id()){
+            return abort(403);
+        }
 
-        return Storage::download(str_replace('/storage','public', $file->link));
+        $file = $gallery->file()->first();
+
+        Storage::delete(str_replace('/storage','public', $file->link));
+
+        $gallery->delete();
+
+        return redirect()->route('gallery.list_my');
     }
 }

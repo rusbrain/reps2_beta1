@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class TopicCommentStoreRequest extends BaseStoreCommentRequest
+class UserGalleryStoreCommentRequest extends BaseStoreCommentRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -15,7 +15,7 @@ class TopicCommentStoreRequest extends BaseStoreCommentRequest
     {
         $rules = parent::rules();
 
-        $rules['topic_id'] = 'required|exists:forum_topics,id';
+        $rules['gallery_id'] = 'required|exists:user_galleries,id';
 
         return $rules;
     }
@@ -29,8 +29,8 @@ class TopicCommentStoreRequest extends BaseStoreCommentRequest
     {
         $messages = parent::messages();
 
-        $messages['topic_id.required'] = 'Не определен коментируемый пост для публикации';
-        $messages['topic_id.exists'] = 'Не определен коментируемый пост для публикации';
+        $messages['gallery_id.required'] = 'Не определена коментируемая фотография';
+        $messages['gallery_id.exists'] = 'Не определена коментируемая фотография';
 
         return $messages;
     }

@@ -35,7 +35,6 @@ class ReplayCommentController extends CommentController
      */
     public function store(ReplayCommentStoreRequest $request)
     {
-        self::storeComment($request);
-        return redirect()->route('replay.get', ['id' => $request->get('replay_id')]);
+        return self::storeComment($request);
     }
 }

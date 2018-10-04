@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\CensorshipWord;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Comment;
@@ -29,7 +28,7 @@ class CommentController extends Controller
      *
      * @var string
      */
-    protected static $name_id;
+    protected static $name_id = 'topic_id';
 
     /**
      * Update the specified resource in storage.
@@ -58,12 +57,11 @@ class CommentController extends Controller
     {
         $object = Comment::find($id);
 
-        $name_id = self::$name_id;
-        $object_id = $object->$name_id;
-
         if (!$object){
             return abort(404);
         }
+
+        $object_id = $object->object_id;
 
         if ($object->user_id != Auth::id()){
             return abort(403);
@@ -84,10 +82,13 @@ class CommentController extends Controller
         $data = $request->validated();
         $data['user_id'] = Auth::id();
         $data['relation'] = self::$relation;
+        $data['object_id'] = $data[self::$name_id];
 
-        $data = self::checkCommentData($data);
+        unset($data[self::$name_id]);
 
         Comment::create($data);
+
+        redirect()->route(self::$view_name, ['id' => $data['object_id']]);
     }
 
     /**
@@ -103,23 +104,6 @@ class CommentController extends Controller
 
          $replay_data = self::checkCommentData($replay_data);
 
-         Comment::where('id', $id)->update($replay_data);
-    }
-
-    /**
-     * Check text data in comment to censorship words
-     *
-     * @param array $data
-     * @return array
-     */
-    public static function checkCommentData(array $data)
-    {
-        if(isset($data['title']) && $data['title']){
-            $data['title'] = CensorshipWord::check($data['title']);
-        }
-
-        $data['comment'] = CensorshipWord::check($data['comment']);
-
-        return $data;
+         Comment::where('id', $id)->where('relation', self::$relation)->update($replay_data);
     }
 }

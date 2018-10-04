@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\CensorshipWord;
 use App\File;
 use App\ForumSection;
 use App\ForumTopic;
@@ -83,8 +82,6 @@ class ForumTopicController extends Controller
             $topic_data['preview_file_id'] = $file->id;
         }
 
-        $topic_data = self::checkTopicData($topic_data);
-
         $topic = ForumTopic::create($topic_data);
 
         return redirect()->route('forum.topic.index', ['id' => $topic->id]);
@@ -157,8 +154,6 @@ class ForumTopicController extends Controller
             $topic_data['start_on'] = null;
         }
 
-        $topic_data = self::checkTopicData($topic_data);
-
         ForumTopic::where('id', $id)->update($topic_data);
 
         return redirect()->route('forum.topic.index', ['id' => $id]);
@@ -184,27 +179,6 @@ class ForumTopicController extends Controller
 
         $topic->delete();
 
-        return redirect()->foute('forum.index');
-    }
-
-    /**
-     * Check text data to censorship words
-     *
-     * @param array $data
-     * @return array
-     */
-    public static function checkTopicData(array $data)
-    {
-        if(isset($data['title']) && $data['title']){
-            $data['title'] = CensorshipWord::check($data['title']);
-        }
-
-        if (isset($data['preview_content']) && $data['preview_content']){
-            $data['preview_content'] = CensorshipWord::check($data['preview_content']);
-        }
-
-        $data['comment'] = CensorshipWord::check($data['comment']);
-
-        return $data;
+        return redirect()->route('forum.index');
     }
 }

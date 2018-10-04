@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\CensorshipWord;
+
 use App\Country;
 use App\File;
 use App\Http\Requests\ReplayStoreRequest;
@@ -126,28 +126,9 @@ class ReplayController extends Controller
 
         unset($replay_data['replay']);
 
-        $replay_data = self::checkReplay($replay_data);
-
         $replay = Replay::create($replay_data);
 
         return redirect()->route('replay.get', ['id' => $replay->id]);
-    }
-
-    /**
-     * Check replay content to censorship words
-     * @param $data
-     * @return mixed
-     */
-    public static function checkReplay($data)
-    {
-        if(isset($data['championship']) && $data['championship']){
-            $data['championship'] = CensorshipWord::check($data['championship']);
-        }
-
-        $data['title'] = CensorshipWord::check($data['title']);
-        $data['content'] = CensorshipWord::check($data['content']);
-
-        return $data;
     }
 
     /**
@@ -210,8 +191,6 @@ class ReplayController extends Controller
             if ($request->has('length') && $request->get('length') == ''){
                 $replay_data['length'] = '00:00:00';
             }
-
-            $replay_data = self::checkReplay($replay_data);
 
             $replay = Replay::where('id', $id)->update($replay_data);
 
@@ -276,5 +255,30 @@ class ReplayController extends Controller
         return Storage::download(str_replace('/storage','public', $file->link));
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $replay = Replay::find($id);
 
+        if (!$replay){
+            return abort(404);
+        }
+
+        if ($replay->user_id != Auth::id()){
+            return abort(403);
+        }
+
+        $file = $replay->file()->first();
+
+        Storage::delete(str_replace('/storage','public', $file->link));
+
+        $replay->delete();
+
+        return redirect()->route('replay.gosus');
+    }
 }

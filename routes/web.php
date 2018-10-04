@@ -96,6 +96,7 @@ Route::group(['prefix' => 'replay'], function (){
         Route::post('/store', 'ReplayController@store')                             ->name('replay.store');
         Route::get('/{id}/edit', 'ReplayController@edit')                           ->name('replay.edit');
         Route::post('/{id}/update', 'ReplayController@update')                      ->name('replay.update');
+        Route::get('{id}/delete', 'ReplayController@destroy')                       ->name('replay.delete');
         Route::get('/my', 'ReplayUsersController@getUserReplay')                    ->name('replay.my_user');
         Route::get('/my_gosu', 'ReplayGosuController@getUserReplay')                ->name('replay.my_gosu');
 
@@ -113,24 +114,24 @@ Route::group(['prefix' => 'replay'], function (){
 
 Route::group(['prefix' => 'gallery'], function (){
     Route::get('/', 'UserGalleryController@index')                              ->name('gallery.list');
-    Route::get('/my', 'UserGalleryController@indexUser')                          ->name('gallery.list_my');
+    Route::get('/my', 'UserGalleryController@indexUser')                        ->name('gallery.list_my');
     Route::get('/user/{id}', 'UserGalleryController@indexUser')                 ->name('gallery.list_user');
 
 
-//    Route::get('/{id}/get_rating', 'ReplayRatingController@getRating')        ->name('replay.ger_rating');
+    Route::get('/{id}/get_rating', 'UserGalleryRatingController@getRating')     ->name('gallery.ger_rating');
 
     Route::group(['middleware' => 'auth', 'prefix' => 'photo'], function () {
         Route::get('/create', 'UserGalleryController@create')                   ->name('gallery.create');
         Route::get('/{id}/edit', 'UserGalleryController@edit')                  ->name('gallery.edit');
         Route::post('/store', 'UserGalleryController@store')                    ->name('gallery.store');
         Route::post('/{id}/update', 'UserGalleryController@update')             ->name('gallery.update');
-//        Route::get('{id}/set_rating', 'ReplayRatingController@setRating')       ->name('replay.set_rating');
+        Route::get('{id}/set_rating', 'UserGalleryRatingController@setRating')  ->name('gallery.set_rating');
 
-//        Route::group(['prefix' => 'comment'], function () {
-//            Route::post('/store', 'ReplayCommentController@store')                  ->name('replay.comment.store');
-//            Route::get('{id}/delete', 'ReplayCommentController@destroy')            ->name('replay.comment.delete');
-//            Route::post('{id}/update', 'ReplayCommentController@update')            ->name('replay.comment.update');
-//        });
+        Route::group(['prefix' => 'comment'], function () {
+            Route::post('/store', 'UserGalleryCommentController@store')                  ->name('gallery.comment.store');
+            Route::get('{id}/delete', 'UserGalleryCommentController@destroy')            ->name('gallery.comment.delete');
+            Route::post('{id}/update', 'UserGalleryCommentController@update')            ->name('gallery.comment.update');
+        });
     });
 
     Route::get('/photo/{id}', 'UserGalleryController@show')                     ->name('gallery.view');

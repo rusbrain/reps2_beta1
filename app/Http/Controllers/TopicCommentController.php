@@ -36,7 +36,6 @@ class TopicCommentController extends CommentController
      */
     public function store(TopicCommentStoreRequest $request)
     {
-        self::storeComment($request);
-        return redirect()->route('forum.topic.index', ['id' => $request->get('topic_id')]);
+        return self::storeComment($request);
     }
 }
