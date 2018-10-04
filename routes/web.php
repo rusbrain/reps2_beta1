@@ -39,13 +39,16 @@ Route::group(['prefix' => 'user'], function () {
     Route::post('/register', 'Auth\RegisterController@register')            ->name('registration');
 
     Route::group(['middleware' => 'auth'], function () {
-        Route::get('/edit', 'UserController@edit')->name('edit_profile');
-        Route::post('/save', 'UserController@update')->name('save_profile');
+        Route::get('{id}/ignore', 'IgnoreController@setIgnore')             ->name('user.set_ignore');
+        Route::get('{id}/not_ignore', 'IgnoreController@setNotIgnore')      ->name('user.set_not_ignore');
+        Route::get('/ignore_list', 'IgnoreController@getIgnoreList')        ->name('user.ignore_list');
+        Route::get('/edit', 'UserController@edit')                          ->name('edit_profile');
+        Route::post('/save', 'UserController@update')                       ->name('save_profile');
     });
 
     Route::get('/{id}', 'UserController@show')                              ->name('user_profile');
 
-    Route::get('{id}/get_rating', 'RatingController@getRatingUser')        ->name('user.get_rating');
+    Route::get('{id}/get_rating', 'RatingController@getRatingUser')         ->name('user.get_rating');
     Route::get('{id}/replay', 'ReplayUsersController@getUserReplay')        ->name('user.user_replay');
     Route::get('{id}/gosu_replay', 'ReplayGosuController@getUserReplay')    ->name('user.gosu_replay');
 });
