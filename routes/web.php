@@ -12,7 +12,7 @@
 */
 
 Route::get('/', 'HomeController@index');
-Route::get('/email/verified/{token}', 'Auth\RegisterController@emailVerified')->name('email_verified');
+Route::get('/email/verified/{token}', 'Auth\RegisterController@emailVerified')      ->name('email_verified');
 
 Route::middleware(['guest'])->group(function () {
     Route::post('/login', 'Auth\LoginController@userLogin')                         ->name('login');
@@ -35,22 +35,25 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 Route::group(['prefix' => 'user'], function () {
-    Route::get('/register', 'Auth\RegisterController@showRegistrationForm') ->name('registration_form');
-    Route::post('/register', 'Auth\RegisterController@register')            ->name('registration');
+    Route::get('/register', 'Auth\RegisterController@showRegistrationForm')         ->name('registration_form');
+    Route::post('/register', 'Auth\RegisterController@register')                    ->name('registration');
 
     Route::group(['middleware' => 'auth'], function () {
-        Route::get('{id}/ignore', 'IgnoreController@setIgnore')             ->name('user.set_ignore');
-        Route::get('{id}/not_ignore', 'IgnoreController@setNotIgnore')      ->name('user.set_not_ignore');
-        Route::get('/ignore_list', 'IgnoreController@getIgnoreList')        ->name('user.ignore_list');
-        Route::get('/edit', 'UserController@edit')                          ->name('edit_profile');
-        Route::post('/save', 'UserController@update')                       ->name('save_profile');
+        Route::get('{id}/ignore', 'IgnoreController@setIgnore')                     ->name('user.set_ignore');
+        Route::get('{id}/not_ignore', 'IgnoreController@setNotIgnore')              ->name('user.set_not_ignore');
+        Route::get('/ignore_list', 'IgnoreController@getIgnoreList')                ->name('user.ignore_list');
+        Route::get('{id}/add_friend', 'UserFriendController@addFriend')             ->name('user.add_friend');
+        Route::get('{id}/remove_friend', 'UserFriendController@removeFriend')       ->name('user.remove_friend');
+        Route::get('/friends_list', 'UserFriendController@getFriendsList')          ->name('user.friends_list');
+        Route::get('/edit', 'UserController@edit')                                  ->name('edit_profile');
+        Route::post('/save', 'UserController@update')                               ->name('save_profile');
     });
 
-    Route::get('/{id}', 'UserController@show')                              ->name('user_profile');
+    Route::get('/{id}', 'UserController@show')                                      ->name('user_profile');
 
-    Route::get('{id}/get_rating', 'RatingController@getRatingUser')         ->name('user.get_rating');
-    Route::get('{id}/replay', 'ReplayUsersController@getUserReplay')        ->name('user.user_replay');
-    Route::get('{id}/gosu_replay', 'ReplayGosuController@getUserReplay')    ->name('user.gosu_replay');
+    Route::get('{id}/get_rating', 'RatingController@getRatingUser')                 ->name('user.get_rating');
+    Route::get('{id}/replay', 'ReplayUsersController@getUserReplay')                ->name('user.user_replay');
+    Route::get('{id}/gosu_replay', 'ReplayGosuController@getUserReplay')            ->name('user.gosu_replay');
 });
 
 Route::group(['prefix' => 'forum'], function () {
@@ -116,28 +119,28 @@ Route::group(['prefix' => 'replay'], function (){
 });
 
 Route::group(['prefix' => 'gallery'], function (){
-    Route::get('/', 'UserGalleryController@index')                              ->name('gallery.list');
-    Route::get('/my', 'UserGalleryController@indexUser')                        ->name('gallery.list_my');
-    Route::get('/user/{id}', 'UserGalleryController@indexUser')                 ->name('gallery.list_user');
+    Route::get('/', 'UserGalleryController@index')                                  ->name('gallery.list');
+    Route::get('/my', 'UserGalleryController@indexUser')                            ->name('gallery.list_my');
+    Route::get('/user/{id}', 'UserGalleryController@indexUser')                     ->name('gallery.list_user');
 
 
-    Route::get('/{id}/get_rating', 'UserGalleryRatingController@getRating')     ->name('gallery.ger_rating');
+    Route::get('/{id}/get_rating', 'UserGalleryRatingController@getRating')         ->name('gallery.ger_rating');
 
     Route::group(['middleware' => 'auth', 'prefix' => 'photo'], function () {
-        Route::get('/create', 'UserGalleryController@create')                   ->name('gallery.create');
-        Route::get('/{id}/edit', 'UserGalleryController@edit')                  ->name('gallery.edit');
-        Route::post('/store', 'UserGalleryController@store')                    ->name('gallery.store');
-        Route::post('/{id}/update', 'UserGalleryController@update')             ->name('gallery.update');
-        Route::get('{id}/set_rating', 'UserGalleryRatingController@setRating')  ->name('gallery.set_rating');
+        Route::get('/create', 'UserGalleryController@create')                       ->name('gallery.create');
+        Route::get('/{id}/edit', 'UserGalleryController@edit')                      ->name('gallery.edit');
+        Route::post('/store', 'UserGalleryController@store')                        ->name('gallery.store');
+        Route::post('/{id}/update', 'UserGalleryController@update')                 ->name('gallery.update');
+        Route::get('{id}/set_rating', 'UserGalleryRatingController@setRating')      ->name('gallery.set_rating');
 
         Route::group(['prefix' => 'comment'], function () {
-            Route::post('/store', 'UserGalleryCommentController@store')                  ->name('gallery.comment.store');
-            Route::get('{id}/delete', 'UserGalleryCommentController@destroy')            ->name('gallery.comment.delete');
-            Route::post('{id}/update', 'UserGalleryCommentController@update')            ->name('gallery.comment.update');
+            Route::post('/store', 'UserGalleryCommentController@store')             ->name('gallery.comment.store');
+            Route::get('{id}/delete', 'UserGalleryCommentController@destroy')       ->name('gallery.comment.delete');
+            Route::post('{id}/update', 'UserGalleryCommentController@update')       ->name('gallery.comment.update');
         });
     });
 
-    Route::get('/photo/{id}', 'UserGalleryController@show')                     ->name('gallery.view');
+    Route::get('/photo/{id}', 'UserGalleryController@show')                         ->name('gallery.view');
 });
 
 
