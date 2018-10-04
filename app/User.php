@@ -223,4 +223,36 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Comment', 'user_id')->where('relation', Comment::RELATION_USER_GALLERY);
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function ignore_users()
+    {
+        return $this->hasMany('App\IgnoreUser', 'ignored_user_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function ignored_users()
+    {
+        return $this->hasMany('App\IgnoreUser', 'user_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function user_friends()
+    {
+        return $this->hasMany('App\UserFriend', 'user_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function user_friendly()
+    {
+        return $this->hasMany('App\UserFriend', 'friend_user_id');
+    }
 }
