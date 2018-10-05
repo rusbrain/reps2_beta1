@@ -27,6 +27,7 @@ class UserMessagingController extends Controller
         $send_message = UserMessage::where('user_sender_id', Auth::id())->orderBy('created_at')->with('recipient')->get()->groupBy(function ($item) {
             return 'user_'.$item['user_recipient_id'];
         });
+
         $recipient_message = UserMessage::where('user_recipient_id', Auth::id())->orderBy('created_at')->with('sender')->get()->groupBy(function ($item) {
             return 'user_'.$item['user_sender_id'];
         });
@@ -34,6 +35,7 @@ class UserMessagingController extends Controller
         $recipient_message->transform(function ($item){
             return $item->last();
         });
+
         $send_message->transform(function ($item){
             return $item->last();
         });
