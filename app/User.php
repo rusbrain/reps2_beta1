@@ -255,4 +255,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\UserFriend', 'friend_user_id');
     }
+
+    public function new_messages()
+    {
+        return $this->hasMany('App\UserMessage', 'user_recipient_id')->where('is_read',0);
+    }
 }

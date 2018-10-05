@@ -47,6 +47,14 @@ Route::group(['prefix' => 'user'], function () {
         Route::get('/friends_list', 'UserFriendController@getFriendsList')          ->name('user.friends_list');
         Route::get('/edit', 'UserController@edit')                                  ->name('edit_profile');
         Route::post('/save', 'UserController@update')                               ->name('save_profile');
+
+        Route::post('{id}/send_message', 'UserMessagingController@sendMessage')     ->name('user.message.send');
+        Route::get('messages', 'UserMessagingController@getCorrespList')            ->name('user.message.get_list');
+        Route::get('{id}/messages', 'UserMessagingController@getMessages')          ->name('user.message.get_user_list');
+        Route::post('{id}/messages', 'UserMessagingController@loadMessages')        ->name('user.message.load_user_list');
+        Route::post('messages/{id}', 'UserMessagingController@getMessage')          ->name('user.message.get');
+        Route::post('messages/{id}/update', 'UserMessagingController@updateMessage')->name('user.message.update');
+        Route::post('messages/{id}/delete', 'UserMessagingController@removeMessage')->name('user.message.delete');
     });
 
     Route::get('/{id}', 'UserController@show')                                      ->name('user_profile');
