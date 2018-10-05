@@ -9,6 +9,7 @@ use App\Http\Requests\ForumTopicRebaseRequest;
 use App\Http\Requests\ForumTopicStoreRequest;
 use App\Http\Requests\ForumTopicUpdteRequest;
 use App\User;
+use App\UserReputation;
 use foo\bar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -69,13 +70,8 @@ class ForumTopicController extends Controller
         $topic_data['user_id'] = Auth::id();
 
         if ($request->file('preview_img')){
-            $path = str_replace('public', '/storage',$request->file('preview_img')->store('public/preview_img'));
-
-            $file = File::create([
-                'user_id' => Auth::id(),
-                'title' => 'Превью '.$request->get('title'),
-                'link' => $path
-            ]);
+            $title = 'Превью '.$request->has('title')?$request->get('title'):'';
+            $file = File::storeFile($request->file('preview_img'), 'preview_img', $title);
 
             unset($topic_data['preview_img']);
 
@@ -137,6 +133,12 @@ class ForumTopicController extends Controller
      */
     public function update(ForumTopicUpdteRequest $request, $id)
     {
+        $topic = ForumTopic::find($id);
+
+        if (!$topic){
+            return abort(404);
+        }
+
         $topic_data = [
             'title'=> $request->get('title'),
             'content'=> $request->get('content')
@@ -152,6 +154,19 @@ class ForumTopicController extends Controller
             $topic_data['start_on'] = $request->get('start_on');
         } else {
             $topic_data['start_on'] = null;
+        }
+
+        if ($request->file('preview_img')){
+            if ($topic->preview_file_id){
+                File::removeFile($topic->preview_file_id);
+            }
+
+            $title = 'Превью '.$request->has('title')?$request->get('title'):'';
+            $file = File::storeFile($request->file('preview_img'), 'preview_img', $title);
+
+            unset($topic_data['preview_img']);
+
+            $topic_data['preview_file_id'] = $file->id;
         }
 
         ForumTopic::where('id', $id)->update($topic_data);
@@ -177,7 +192,16 @@ class ForumTopicController extends Controller
             return abort(403);
         }
 
+        if ($topic->preview_file_id){
+            File::removeFile($topic->preview_file_id);
+        }
+
+        $topic->comments()->delete();
+        $topic->positive()->delete();
+        $topic->negative()->delete();
         $topic->delete();
+
+        UserReputation::refreshUserRating(Auth::id());
 
         return redirect()->route('forum.index');
     }

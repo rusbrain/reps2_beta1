@@ -8,6 +8,7 @@ use App\Http\Requests\UserGalleryStoreRequest;
 use App\Http\Requests\UserGalleryUpdateRequest;
 use App\IgnoreUser;
 use App\UserGallery;
+use App\UserReputation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -132,6 +133,7 @@ class UserGalleryController extends Controller
             $gallery_data = $request->validated();
 
             if($request->has('image')){
+                File::removeFile($gallery->file_id);
                 $gallery_data = self::saveImage($gallery_data);
             }
 
@@ -157,13 +159,9 @@ class UserGalleryController extends Controller
      */
     private static function saveImage($gallery_data)
     {
-        $path = str_replace('public', '/storage',$gallery_data['image']->store('public/gallery'));
+        $title = 'Gallery Photo of user '.Auth::user()->name;
 
-        $file = File::create([
-            'user_id' => Auth::id(),
-            'title' => 'Gallery Photo of user '.Auth::user()->name,
-            'link' => $path
-        ]);
+        $file = File::storeFile($gallery_data['image'], 'gallery', $title);
 
         $gallery_data['file_id'] = $file->id;
 
@@ -191,10 +189,14 @@ class UserGalleryController extends Controller
         }
 
         $file = $gallery->file()->first();
+        File::removeFile($file->id);
 
-        Storage::delete(str_replace('/storage','public', $file->link));
-
+        $gallery->comments()->delete();
+        $gallery->positive()->delete();
+        $gallery->negative()->delete();
         $gallery->delete();
+
+        UserReputation::refreshUserRating(Auth::id());
 
         return redirect()->route('gallery.list_my');
     }

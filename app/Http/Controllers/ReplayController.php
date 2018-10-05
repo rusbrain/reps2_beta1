@@ -11,6 +11,7 @@ use App\Replay;
 use App\ReplayMap;
 use App\ReplayType;
 use App\User;
+use App\UserReputation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -113,13 +114,8 @@ class ReplayController extends Controller
     {
         $replay_data = $request->validated();
 
-        $path = str_replace('public', '/storage',$replay_data['replay']->store('public/replays'));
-
-        $file = File::create([
-            'user_id' => Auth::id(),
-            'title' => 'Replay '.$request->get('title'),
-            'link' => $path
-        ]);
+        $title = 'Replay '.$request->has('title')?$request->get('title'):'';
+        $file = File::storeFile($replay_data['replay'], 'replays', $title);
 
         $replay_data['file_id'] = $file->id;
         $replay_data['user_id'] = Auth::id();
@@ -163,13 +159,10 @@ class ReplayController extends Controller
             $replay_data = $request->validated();
 
             if($request->has('replay')){
-                $path = str_replace('public', '/storage',$replay_data['replay']->store('public/replays'));
+                File::removeFile($replay->file_id);
 
-                $file = File::create([
-                    'user_id' => Auth::id(),
-                    'title' => 'Replay '.$request->get('title'),
-                    'link' => $path
-                ]);
+                $title = 'Replay '.$request->has('title')?$request->get('title'):'';
+                $file = File::storeFile($replay_data['replay'], 'replays', $title);
 
                 $replay_data['file_id'] = $file->id;
 
@@ -274,10 +267,13 @@ class ReplayController extends Controller
         }
 
         $file = $replay->file()->first();
+        File::removeFile($file->id);
 
-        Storage::delete(str_replace('/storage','public', $file->link));
-
+        $replay->user_rating()->delete();
+        $replay->comments()->delete();
         $replay->delete();
+
+        UserReputation::refreshUserRating(Auth::id());
 
         return redirect()->route('replay.gosus');
     }

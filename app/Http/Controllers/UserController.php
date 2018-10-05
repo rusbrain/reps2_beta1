@@ -77,13 +77,8 @@ class UserController extends Controller
         }
 
         if ($request->file('avatar')){
-            $path = str_replace('public', '/storage',$request->file('avatar')->store('public/avatars'));
-
-            $file = File::create([
-                'user_id' => Auth::id(),
-                'title' => 'Аватар '.Auth::user()->name,
-                'link' => $path
-                ]);
+            $title = 'Аватар '.Auth::user()->name;
+            $file = File::storeFile($request->file('avatar'), 'avatars', $title);
 
             $user_data['file_id'] = $file->id;
         }

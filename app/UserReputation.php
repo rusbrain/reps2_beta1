@@ -81,4 +81,21 @@ class UserReputation extends Model
     {
         return $this->belongsTo('App\UserGallery', 'object_id')->where('relation', self::RELATION_USER_GALLERY);
     }
+
+    /**
+     * Refresh user Rating
+     *
+     * @param $user_id
+     */
+    public static function refreshUserRating($user_id)
+    {
+        $val = UserReputation::where('recipient_id', $user_id)->sum('rating');
+        User::where('id', $user_id)->update(['rating'=>$val]);
+    }
+
+    public static function refreshObjectRating($class_name, $object_id, $relation_id)
+    {
+        $val = UserReputation::where('object_id', $object_id)->where('relation',$relation_id)->sum('rating');
+        $class_name::where('id', $object_id)->update(['rating'=>$val]);
+    }
 }

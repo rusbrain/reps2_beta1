@@ -37,7 +37,7 @@ class ForumTopic extends Model
      */
     public function comments()
     {
-        return $this->hasMany('App\Comment', 'topic_id')->where('relation', Comment::RELATION_FORUM_TOPIC);
+        return $this->hasMany('App\Comment', 'object_id')->where('relation', Comment::RELATION_FORUM_TOPIC);
     }
 
     /**

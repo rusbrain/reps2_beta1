@@ -102,7 +102,7 @@ class Replay extends Model
      */
     public function user_rating()
     {
-        return $this->hasMany('App\ReplayUserRating', 'replay_id');
+        return $this->hasMany('App\ReplayUserRating', 'object_id')->where('relation', UserReputation::RELATION_REPLAY);
     }
 
     /**

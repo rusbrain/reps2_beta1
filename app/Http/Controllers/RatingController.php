@@ -80,7 +80,8 @@ class RatingController extends Controller
             ['comment' => $comment, 'rating'=>  $rating]
         );
 
-        User::updateRating($rating, $user_id);
+        UserReputation::refreshUserRating($user_id);
+        UserReputation::refreshObjectRating(self::$model, $object_id, self::$relation);
 
         self::$model::updateRating($rating, $object_id);
     }
