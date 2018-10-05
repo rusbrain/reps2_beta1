@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Comment;
 use App\Http\Requests\UserGalleryStoreCommentRequest;
+use App\IgnoreUser;
+use App\UserGallery;
 use Illuminate\Http\Request;
 
 class UserGalleryCommentController extends CommentController
@@ -37,6 +39,12 @@ class UserGalleryCommentController extends CommentController
      */
     public function store(UserGalleryStoreCommentRequest $request)
     {
+        $user_id = UserGallery::find('gallery_id')->user_id;
+
+        if (IgnoreUser::me_ignore($user_id)){
+            return abort(403);
+        }
+
         return self::storeComment($request);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Country;
 use App\File;
 use App\Http\Requests\User\UpdateProfileRequest;
+use App\IgnoreUser;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,6 +29,10 @@ class UserController extends Controller
      */
     public function show($id)
     {
+        if (Auth::user() && IgnoreUser::me_ignore($id)){
+            return abort(403);
+        }
+
         $user = User::where('id',$id)
             ->with('role', 'avatar', 'country')
             ->withCount('positive', 'negative', 'user_galleries', 'topics', 'replay', 'gosu_replay', 'topic_comments', 'replay_comments', 'gallery_comments')

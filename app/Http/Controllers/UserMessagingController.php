@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SendUserMessageRequest;
+use App\IgnoreUser;
 use App\UserMessage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,6 +11,10 @@ use Illuminate\Support\Facades\Auth;
 class UserMessagingController extends Controller
 {
     public function sendMessage(SendUserMessageRequest $request, $user_id){
+
+        if (IgnoreUser::me_ignore($user_id)){
+            return abort(403);
+        }
         $message = UserMessage::create([
             'user_sender_id'    => Auth::id(),
             'user_recipient_id' => $user_id,
@@ -105,6 +110,12 @@ class UserMessagingController extends Controller
      */
     public function updateMessage(SendUserMessageRequest $request, $message_id)
     {
+        $message = UserMessage::find($message_id);
+
+        if ($message->user_sender_id != Auth::id()){
+            return abort(403);
+        }
+
         UserMessage::where('id', $message_id)->update(['message' => $request->get('message')]);
 
         return UserMessage::find($message_id);

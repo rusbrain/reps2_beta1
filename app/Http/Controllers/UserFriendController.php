@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\IgnoreUser;
 use App\UserFriend;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,6 +17,10 @@ class UserFriendController extends Controller
      */
     public function addFriend($user_id)
     {
+        if (IgnoreUser::me_ignore($user_id)){
+            return abort(403);
+        }
+
         UserFriend::create([
             'user_id' => Auth::id(),
             'friend_user_id' => $user_id

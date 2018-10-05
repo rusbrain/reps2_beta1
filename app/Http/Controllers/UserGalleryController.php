@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\CensorshipWord;
+
 use App\File;
 use App\Http\Requests\UserGalleryStoreRequest;
 use App\Http\Requests\UserGalleryUpdateRequest;
+use App\IgnoreUser;
 use App\UserGallery;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -34,6 +35,10 @@ class UserGalleryController extends Controller
     {
         if ($id == 0){
             $id = Auth::id();
+        }
+
+        if (IgnoreUser::me_ignore($id)){
+            return abort(403);
         }
 
         return view('gallery.list')->with('photos', self::getList(UserGallery::where('user_id',$id)));
@@ -68,26 +73,13 @@ class UserGalleryController extends Controller
         $data = $request->validated();
         $data = self::saveImage($data);
         $data['user_id'] = Auth::id();
-        $data = self::checkComment($data);
 
         $gallery = UserGallery::create($data);
 
         return redirect()->route('gallery.view', ['id' => $gallery->id]);
     }
 
-    /**
-     * Check comment content to censorship words
-     *
-     * @param $data
-     * @return mixed
-     */
-    public static function checkComment($data)
-    {
-        if(isset($data['content']) && $data['content']){
-            $data['content'] = CensorshipWord::check($data['content']);
-        }
-        return $data;
-    }
+
 
     /**
      * Display the specified resource.
@@ -100,6 +92,10 @@ class UserGalleryController extends Controller
         $photo = UserGallery::where('id', $id)->with('file', 'user')->withCount('positive', 'negative', 'comments')->with(['comments'=>function($query){
             $query->orderBy('created_at')->paginate(20);
         }])->first();
+
+        if (IgnoreUser::me_ignore($photo->user_id)){
+            return abort(403);
+        }
 
         return view('gallery.photo')->with('photo', $photo);
     }

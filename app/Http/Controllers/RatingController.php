@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\ForumTopic;
 use App\Http\Requests\SetRatingRequest;
+use App\IgnoreUser;
 use App\User;
 use App\UserReputation;
 use Illuminate\Http\Request;
@@ -48,6 +49,10 @@ class RatingController extends Controller
     public function setRating(SetRatingRequest $request, $id)
     {
         $object = self::$model::find($id);
+
+        if (IgnoreUser::me_ignore($object->user_id)){
+            return abort(403);
+        }
 
         $comment = self::getComment($request);
 
