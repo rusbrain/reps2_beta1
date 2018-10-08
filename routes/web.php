@@ -159,12 +159,13 @@ Route::group(['prefix' => 'gallery'], function (){
 });
 
 Route::group(['middleware' => ['auth', 'admin_panel'], 'prefix' => 'admin_panel', 'namespace' => 'Admin'], function () {
-    Route::get('/', 'BaseController@index')->name('admin.home');
+    Route::get('/', 'BaseController@index')                             ->name('admin.home');
+    Route::post('send_quick_email', 'BaseController@sendQuickEmail')    ->name('admin.send_quick_email');
     Route::group(['prefix' => 'user'], function (){
-        Route::get('/', 'UserController@index')->name('admin.users');
+        Route::get('/', 'UserController@index')                         ->name('admin.users');
     });
     Route::group(['prefix' => 'forum'], function (){
-        Route::get('/', 'ForumController@index')->name('admin.forum_sections');
+        Route::get('/', 'ForumController@index')                        ->name('admin.forum_sections');
     });
 
     Route::get('test', function () {

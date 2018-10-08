@@ -21,4 +21,8 @@
     <li class="header">FORUM</li>
     <!-- Optionally, you can add icons to the links -->
     <li @if($admin_helper->getMenuName() == 'forum') class="active" @endif><a href="{{route('admin.forum_sections')}}"><i class="fa fa-list"></i> <span>Forum sections</span></a></li>
+    <li class="header">Replay</li>
+    <!-- Optionally, you can add icons to the links -->
+    <li @if($admin_helper->getMenuName() == 'forum') class="active" @endif><a href="{{route('admin.forum_sections')}}"><i class="fa fa-film"></i> <span>Gosu</span></a></li>
+    <li @if($admin_helper->getMenuName() == 'forum') class="active" @endif><a href="{{route('admin.forum_sections')}}"><i class="fa fa-film"></i> <span>Users</span></a></li>
 </ul>
