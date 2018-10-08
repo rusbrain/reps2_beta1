@@ -22,4 +22,20 @@ class ForumSection extends Model
     {
         return $this->hasMany('App\ForumTopic', 'section_id');
     }
+
+    /**
+     * @return mixed
+     */
+    public static function active()
+    {
+        return $general_gorum = ForumSection::where('is_active',1)->orderBy('position');
+    }
+
+    /**
+     * @return mixed
+     */
+    public static function general_active()
+    {
+        return $general_gorum = ForumSection::where('is_active',1)->where('is_general', 1)->orderBy('position');
+    }
 }
