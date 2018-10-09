@@ -39,7 +39,7 @@ h1, h2, h3 {
   font-family: "Philosopher-Regular", sans-serif;
 }
 h1 {
-  font-size: 55px;
+  font-size:40px;
   margin: 0;
   text-transform: uppercase;
 }
@@ -192,11 +192,63 @@ body {
 .header-profile{
   text-align: center;
   color: #fff;
+  position: relative;
 }
 .header-profile .profile-link{
-  font-size: 12px;
+  font-size: 14px;
+  display: block;
+  color: #000;
+  padding: 5px 10px;
+}
+.header-profile .profile-link:hover{
+  background: #efefef;
+}
+.profile-avatar-header{
+  width: 50px;
+}
+
+.user-menu-hover{
+  z-index: 10;
+  position: relative;
+}
+.user-menu-hover:hover .user-menu-wrapper{
   display: block;
 }
+.user-menu-wrapper{
+  display: none;
+  position: absolute;
+  background: #fff;
+  top: 30px;
+  left: 15px;
+  border: 1px solid #efefef;
+  border-radius: 4px;
+  text-align: left;
+}
+
+.user-menu-wrapper > div{
+  display: flex;
+  flex-direction: column;
+}
+/**---------------------*/
+/**------NAVIGATION-----------*/
+/**---------------------*/
+.navbar-nav li:hover > ul.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu {
+  position:relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top:0;
+  left:10rem; /* 10rem is the min-width of dropdown-menu */
+  margin-top:-6px;
+}
+/* rotate caret on hover */
+.dropdown-menu > li > a:hover:after {
+  text-decoration: underline;
+  transform: rotate(-90deg);
+}
+
 /**---------------------*/
 /**------HOME PAGE-----------*/
 /**---------------------*/
@@ -208,7 +260,11 @@ body {
 .content-center {
   border-right: 1px solid #17a2b8;
   border-left: 1px solid #17a2b8;
-  height: 100vh;
+  min-height: 100vh;
+}
+.content-center form{
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 /**Sidebar - RIGHT*/
 .sidebar-right {
@@ -221,6 +277,43 @@ body {
 .register-form{
   padding: 30px;
 }
-.register-form label{
 
+/**---------------------*/
+/**------ PROFILE PAGE -----------*/
+/**---------------------*/
+.content-center .page-title{
+  color: #fff;
+  background: #717171;
+  text-align: center !important;
+  margin-right: -15px;
+  margin-left: -15px;
+  padding: 4px;
 }
+.profile-avatar{
+  width: 300px;
+}
+.profile-avatar-row{
+  align-items: center;
+}
+.profile-page .row {
+  border-bottom: 1px solid #eee;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+/**---------------------*/
+/**------ FOOTER -----------*/
+/**---------------------*/
+.footer{
+  height: 40px;
+  background: #717171;
+}
+/**---------------------*/
+/**------ LEFT SIDEBAR -----------*/
+/**---------------------*/
+.sidebar-left{
+  text-align: center;
+}
+/**---------------------*/
+/**------ RIGHT SIDEBAR ----------*/
+/**---------------------*/
