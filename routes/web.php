@@ -10,8 +10,15 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', 'HomeController@index');
+Route::group(['middleware' => ['auth', 'admin_panel']], function () {
+    Route::get('test', function () {
+        if (!Auth::user()->role) {
+            return redirect('/');
+        }
+        dd(Auth::user()->role);
+    });
+});
+Route::get('/', 'HomeController@index')                                             ->name('home');
 Route::get('/email/verified/{token}', 'Auth\RegisterController@emailVerified')      ->name('email_verified');
 
 Route::middleware(['guest'])->group(function () {
@@ -151,6 +158,23 @@ Route::group(['prefix' => 'gallery'], function (){
     Route::get('/photo/{id}', 'UserGalleryController@show')                         ->name('gallery.view');
 });
 
+Route::group(['middleware' => ['auth', 'admin_panel'], 'prefix' => 'admin_panel', 'namespace' => 'Admin'], function () {
+    Route::get('/', 'BaseController@index')                             ->name('admin.home');
+    Route::post('send_quick_email', 'BaseController@sendQuickEmail')    ->name('admin.send_quick_email');
+    Route::group(['prefix' => 'user'], function (){
+        Route::get('/', 'UserController@index')                         ->name('admin.users');
+    });
+    Route::group(['prefix' => 'forum'], function (){
+        Route::get('/', 'ForumController@index')                        ->name('admin.forum_sections');
+    });
+
+    Route::get('test', function () {
+        if (!Auth::user()->role) {
+            return redirect('/');
+        }
+        dd(Auth::user()->role);
+    });
+});
 
 //
 //Route::group(['prefix' => 'user', 'middleware' => 'auth'], function () {
