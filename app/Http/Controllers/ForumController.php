@@ -15,9 +15,9 @@ class ForumController extends Controller
      */
     public function index()
     {
-        $data = ForumSection::where('is_active', 1)->with(['topics' => function($query){
+        $data = ForumSection::active()->with(['topics' => function($query){
             $query->with('user')->orderBy('created_at', 'desc')->withCount(['positive', 'negative'])->limit(5);
-        }])->withCount('topics')->orderBy('position')->get();
+        }])->withCount('topics')->get();
 
         return view('forum.forum')->with('sections', $data);
     }
@@ -30,7 +30,7 @@ class ForumController extends Controller
      */
     public function section($name)
     {
-        $data = ForumSection::where('is_active', 1)->where('name', $name)->first();
+        $data = ForumSection::active()->where('name', $name)->first();
 
         if (!$data){
             return abort(404);

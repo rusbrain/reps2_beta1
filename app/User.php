@@ -44,7 +44,7 @@ class User extends Authenticatable
      */
     public function country()
     {
-        return $this->belongsTo('App\Country');
+        return $this->belongsTo('App\Country', 'country_id');
     }
 
     /**
@@ -54,7 +54,7 @@ class User extends Authenticatable
      */
     public function role()
     {
-        return $this->belongsTo('App\UserRole');
+        return $this->belongsTo('App\UserRole', 'user_role_id');
     }
 
     /**
@@ -69,12 +69,11 @@ class User extends Authenticatable
 
     /**
      * Relations. Users avatar
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function avatar()
     {
-        return $this->hasOne('App\File');
+        return $this->belongsTo('App\File', 'file_id');
     }
 
     /**
@@ -136,6 +135,9 @@ class User extends Authenticatable
         return $this->hasMany('App\UserEmailToken')->where('function',$function)->orderBy('created_at', 'desc')->first();
     }
 
+    /**
+     * @return array
+     */
     public static function getUserWithReputationQuery()
     {
         return ['user' => function($query){
@@ -156,6 +158,106 @@ class User extends Authenticatable
     public static function updateRating($rating, $user_id)
     {
         \DB::update('update users set rating = rating + (?) where id = ?', [$rating, $user_id]);
+    }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function answers_to_questions()
+    {
+        return $this->hasMany('App\InterviewUserAnswers', 'user_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function user_galleries()
+    {
+        return $this->hasMany('App\UserGallery');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function topics()
+    {
+        return $this->hasMany('App\ForumTopic', 'user_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function replay()
+    {
+        return $this->hasMany('App\Replay', 'user_id')->where('user_replay', 1);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function gosu_replay()
+    {
+        return $this->hasMany('App\Replay', 'user_id')->where('user_replay', 0);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function topic_comments()
+    {
+        return $this->hasMany('App\Comment', 'user_id')->where('relation', Comment::RELATION_FORUM_TOPIC);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function replay_comments()
+    {
+        return $this->hasMany('App\Comment', 'user_id')->where('relation', Comment::RELATION_REPLAY);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function gallery_comments()
+    {
+        return $this->hasMany('App\Comment', 'user_id')->where('relation', Comment::RELATION_USER_GALLERY);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function ignore_users()
+    {
+        return $this->hasMany('App\IgnoreUser', 'ignored_user_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function ignored_users()
+    {
+        return $this->hasMany('App\IgnoreUser', 'user_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function user_friends()
+    {
+        return $this->hasMany('App\UserFriend', 'user_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function user_friendly()
+    {
+        return $this->hasMany('App\UserFriend', 'friend_user_id');
+    }
+
+    public function new_messages()
+    {
+        return $this->hasMany('App\UserMessage', 'user_recipient_id')->where('is_read',0);
     }
 }

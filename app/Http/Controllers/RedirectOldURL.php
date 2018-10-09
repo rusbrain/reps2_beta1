@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\ForumSection;
 use App\ForumTopic;
+use App\Replay;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -29,6 +30,8 @@ class RedirectOldURL extends Controller
     }
 
     /**
+     * Get topic for redirect
+     *
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -52,6 +55,8 @@ class RedirectOldURL extends Controller
     }
 
     /**
+     * Get section for redirect
+     *
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -145,14 +150,67 @@ class RedirectOldURL extends Controller
         return redirect()->route('edit_profile');
     }
 
+    /**
+     * Redirect to users replay
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function freeReplays(Request $request)
     {
+        if($request->has('id')){
+            $replay_id = $this->getReplayId($request);
 
+            if ($replay_id){
+                return redirect()->route('replay.get',['id'=> $replay_id]);
+            }
+        }
+
+        return redirect()->route('replay.users');
     }
 
+    /**
+     * Redirect to gosu replay
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function replays(Request $request)
     {
+        if($request->has('id')){
+             $replay_id = $this->getReplayId($request);
 
+             if ($replay_id){
+                 return redirect()->route('replay.get',['id'=> $replay_id]);
+             }
+        }
+
+        if($request->has('type')){
+            return redirect()->route('replay.gosu_type',['type', $request->get('type')]);
+        }
+
+        return redirect()->route('replay.gosus');
+    }
+
+    /**
+     * Get Id of replay for redirect
+     *
+     * @param Request $request
+     * @return bool
+     */
+    private function getReplayId(Request $request)
+    {
+        $replay_id = false;
+
+        $replays =Replay::where('id', $request->get('id'))->orWhere('reps_id', $request->get('id'))->get();
+
+        if(count($replays)>1){
+            $replay_id = $replays->where('reps_id', $request->get('id'))->first()->id;
+        } elseif (count($replays) == 1){
+            $replay_id = $replays->first()->id;
+        }
+
+        return $replay_id;
     }
 
     public function sc2(Request $request)

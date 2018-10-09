@@ -57,4 +57,24 @@ class LoginController extends Controller
 
         return redirect('/');
     }
+
+    /**
+     * Validate the user login request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return void
+     */
+    protected function validateLogin(Request $request)
+    {
+        $this->validate($request, [
+            $this->username() => 'required|email|exists:users,email',
+            'password' => 'required|string',
+        ],[
+            $this->username().'.required'   => 'Не указан E-mail',
+            $this->username().'.email'      => 'Не верно указана почьта',
+            $this->username().'.exist'      => 'Пользователя с указаной почьтой не существует',
+            'password.required'             => 'Не указан пароль',
+            'password.string'               => 'Пароль должен быть строкой',
+        ]);
+    }
 }

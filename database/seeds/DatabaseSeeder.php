@@ -14,5 +14,6 @@ class DatabaseSeeder extends Seeder
          $this->call(CountriesSeed::class);
          $this->call(ReplayMapsSeeding::class);
          $this->call(ReplayTypesSeeding::class);
+         $this->call(ForumSectionSeeding::class);
     }
 }

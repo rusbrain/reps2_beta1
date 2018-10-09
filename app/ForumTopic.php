@@ -37,7 +37,7 @@ class ForumTopic extends Model
      */
     public function comments()
     {
-        return $this->hasMany('App\ForumTopicComment', 'topic_id');
+        return $this->hasMany('App\Comment', 'object_id')->where('relation', Comment::RELATION_FORUM_TOPIC);
     }
 
     /**
@@ -53,7 +53,7 @@ class ForumTopic extends Model
      */
     public function positive()
     {
-       return $this->hasMany('App\UserReputation', 'topic_id')->where('rating',1);
+       return $this->hasMany('App\UserReputation', 'object_id')->where('relation', UserReputation::RELATION_FORUM_TOPIC)->where('rating',1);
     }
 
     /**
@@ -61,7 +61,7 @@ class ForumTopic extends Model
      */
     public function negative()
     {
-       return $this->hasMany('App\UserReputation', 'topic_id')->where('rating',-1);
+       return $this->hasMany('App\UserReputation', 'object_id')->where('relation', UserReputation::RELATION_FORUM_TOPIC)->where('rating',-1);
     }
 
     /**

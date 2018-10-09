@@ -5,10 +5,9 @@ namespace App\Http\Controllers;
 use App\Country;
 use App\File;
 use App\Http\Requests\User\UpdateProfileRequest;
+use App\IgnoreUser;
 use App\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use PHPUnit\Framework\Constraint\Count;
 
 class UserController extends Controller
 {
@@ -30,7 +29,16 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        if (!$user = User::find($id)){
+        if (Auth::user() && IgnoreUser::me_ignore($id)){
+            return abort(403);
+        }
+
+        $user = User::where('id',$id)
+            ->with('role', 'avatar', 'country')
+            ->withCount('positive', 'negative', 'user_galleries', 'topics', 'replay', 'gosu_replay', 'topic_comments', 'replay_comments', 'gallery_comments')
+            ->first();
+
+        if (!$user){
             abort(404);
         }
 
@@ -69,13 +77,8 @@ class UserController extends Controller
         }
 
         if ($request->file('avatar')){
-            $path = str_replace('public', '/storage',$request->file('avatar')->store('public/avatars'));
-
-            $file = File::create([
-                'user_id' => Auth::id(),
-                'title' => 'Аватар '.Auth::user()->name,
-                'link' => $path
-                ]);
+            $title = 'Аватар '.Auth::user()->name;
+            $file = File::storeFile($request->file('avatar'), 'avatars', $title);
 
             $user_data['file_id'] = $file->id;
         }

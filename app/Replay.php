@@ -86,7 +86,7 @@ class Replay extends Model
      */
     public function positive()
     {
-        return $this->hasMany('App\UserReputation', 'replay_id')->where('rating',1);
+        return $this->hasMany('App\UserReputation', 'object_id')->where('relation', UserReputation::RELATION_REPLAY)->where('rating',1);
     }
 
     /**
@@ -94,7 +94,7 @@ class Replay extends Model
      */
     public function negative()
     {
-        return $this->hasMany('App\UserReputation', 'replay_id')->where('rating',-1);
+        return $this->hasMany('App\UserReputation', 'object_id')->where('relation', UserReputation::RELATION_REPLAY)->where('rating',-1);
     }
 
     /**
@@ -102,7 +102,7 @@ class Replay extends Model
      */
     public function user_rating()
     {
-        return $this->hasMany('App\ReplayUserRating', 'replay_id');
+        return $this->hasMany('App\ReplayUserRating', 'object_id')->where('relation', UserReputation::RELATION_REPLAY);
     }
 
     /**
@@ -147,6 +147,6 @@ class Replay extends Model
      */
     public function comments()
     {
-        return $this->hasMany('App\ReplayComment', 'replay_id');
+        return $this->hasMany('App\Comment', 'replay_id')->where('relation', Comment::RELATION_REPLAY);
     }
 }

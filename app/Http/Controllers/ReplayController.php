@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Country;
 use App\File;
 use App\Http\Requests\ReplayStoreRequest;
@@ -10,43 +11,59 @@ use App\Replay;
 use App\ReplayMap;
 use App\ReplayType;
 use App\User;
+use App\UserReputation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use phpDocumentor\Reflection\Project;
 
 class ReplayController extends Controller
 {
+    /**
+     * Replay group name
+     *
+     * @var string
+     */
+    protected static $replay_group;
 
     /**
+     * Replay query function name
+     *
+     * @var string
+     */
+    protected static $method_get;
+
+    /**
+     * Get list of all Replay
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function user_list()
+    public function list()
     {
-        return $this->list(Replay::userReplay());
+        $method = self::$method_get;
+
+        return $this->getList(Replay::$method());
     }
 
     /**
+     * get Replay view list
+     *
+     * @param $query
+     * @param bool $title
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function gosu_list()
+    protected function getList($query, $title = false)
     {
-        return $this->list(Replay::gosuReplay());
-    }
-
-    /**
-     * @param Replay $replay
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    private function list(Replay $replay)
-    {
-        $data = $this->getReplay($replay)
+        $data = $this->getReplay($query)
             ->orderBy('created_at')
             ->paginate(20);
 
-        return view('replay.list')->with(['replays' => $data, 'user_gosu'=>'Users Replays']);
+        return view('replay.list')->with(['replays' => $data, 'title'=>($title??self::$replay_group)]);
     }
 
     /**
+     * get Replay query
+     *
      * @param Replay $replay
      * @return Replay|\Illuminate\Database\Eloquent\Builder
      */
@@ -58,6 +75,8 @@ class ReplayController extends Controller
     }
 
     /**
+     * Get replay from Id
+     *
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -76,6 +95,8 @@ class ReplayController extends Controller
     }
 
     /**
+     * Get view for create new replay
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
@@ -84,6 +105,8 @@ class ReplayController extends Controller
     }
 
     /**
+     * Save new Replay
+     *
      * @param ReplayStoreRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -91,13 +114,8 @@ class ReplayController extends Controller
     {
         $replay_data = $request->validated();
 
-        $path = str_replace('public', '/storage',$replay_data['replay']->store('public/replays'));
-
-        $file = File::create([
-            'user_id' => Auth::id(),
-            'title' => 'Replay '.$request->get('title'),
-            'link' => $path
-        ]);
+        $title = 'Replay '.$request->has('title')?$request->get('title'):'';
+        $file = File::storeFile($replay_data['replay'], 'replays', $title);
 
         $replay_data['file_id'] = $file->id;
         $replay_data['user_id'] = Auth::id();
@@ -109,8 +127,9 @@ class ReplayController extends Controller
         return redirect()->route('replay.get', ['id' => $replay->id]);
     }
 
-
     /**
+     * Get view for update replay
+     *
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -126,6 +145,8 @@ class ReplayController extends Controller
     }
 
     /**
+     * Save update of replay
+     *
      * @param ReplayUpdateRequest $request
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
@@ -138,13 +159,10 @@ class ReplayController extends Controller
             $replay_data = $request->validated();
 
             if($request->has('replay')){
-                $path = str_replace('public', '/storage',$replay_data['replay']->store('public/replays'));
+                File::removeFile($replay->file_id);
 
-                $file = File::create([
-                    'user_id' => Auth::id(),
-                    'title' => 'Replay '.$request->get('title'),
-                    'link' => $path
-                ]);
+                $title = 'Replay '.$request->has('title')?$request->get('title'):'';
+                $file = File::storeFile($replay_data['replay'], 'replays', $title);
 
                 $replay_data['file_id'] = $file->id;
 
@@ -173,5 +191,90 @@ class ReplayController extends Controller
         }
 
         return abort(404);
+    }
+
+    /**
+     * Get replay by user
+     *
+     * @param int $user_id
+     */
+    public function getUserReplay($user_id = 0)
+    {
+        if (!$user_id){
+            $user_id = Auth::id();
+        }
+
+        $method = self::$method_get;
+        $this->getList(Replay::$method()->where('user_id',$user_id));
+    }
+
+    /**
+     * Get Replay by type
+     *
+     * @param $type
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getReplayByType($type)
+    {
+        $type = ReplayType::where('name', $type)->first();
+
+        if(!$type){
+            return abort(404);
+        }
+
+        $method = self::$method_get;
+        return $this->getList(Replay::$method()->where('type_id',$type->id), self::$replay_group.' '.$type);
+    }
+
+    /**
+     * Download replay file
+     *
+     * @param $id
+     */
+    public function download($id)
+    {
+        $replay = Replay::find($id);
+
+        if(!$replay){
+            return abort(404);
+        }
+
+        $file = $replay->file()->first();
+        
+        $replay->downloaded = $replay->downloaded+1;
+        
+        $replay->save();
+
+        return Storage::download(str_replace('/storage','public', $file->link));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $replay = Replay::find($id);
+
+        if (!$replay){
+            return abort(404);
+        }
+
+        if ($replay->user_id != Auth::id()){
+            return abort(403);
+        }
+
+        $file = $replay->file()->first();
+        File::removeFile($file->id);
+
+        $replay->user_rating()->delete();
+        $replay->comments()->delete();
+        $replay->delete();
+
+        UserReputation::refreshUserRating(Auth::id());
+
+        return redirect()->route('replay.gosus');
     }
 }
