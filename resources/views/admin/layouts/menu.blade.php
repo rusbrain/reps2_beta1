@@ -1,4 +1,3 @@
-
 <ul class="sidebar-menu" data-widget="tree">
     <li class="header">GENERAL</li>
     <!-- Optionally, you can add icons to the links -->
