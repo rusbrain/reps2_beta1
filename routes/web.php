@@ -29,10 +29,10 @@ Route::group(['prefix' => 'user'], function () {
     Route::get('/register', 'Auth\RegisterController@showRegistrationForm') ->name('registration_form');
     Route::post('/register', 'Auth\RegisterController@register')            ->name('registration');
 
-    Route::get('/{id}', 'UserController@show')      ->name('user_profile');
     Route::get('/edit', 'UserController@edit')      ->name('edit_profile');
     Route::post('/save', 'UserController@update')   ->name('save_profile');
     Route::post('{id}/get_rating', 'RatingController@getRatingUser')   ->name('user.get_rating');
+    Route::get('/{id}', 'UserController@show')      ->name('user_profile');
 });
 
 Route::group(['prefix' => 'forum'], function () {
@@ -61,9 +61,7 @@ Route::group(['prefix' => 'forum'], function () {
                 Route::post('{id}/update', 'ForumTopicController@update') ->name('forum.topic.comment.update');
             });
         });
-
     });
-
 });
 
 Route::group(['prefix' => 'replay'], function (){

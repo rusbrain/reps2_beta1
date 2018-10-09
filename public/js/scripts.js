@@ -49,8 +49,7 @@ $(function () {
                 name: "required",
                 email: {required: true, email: true},
                 password: "required",
-                password_confirmation: "required",
-                country : "required"
+                password_confirmation: "required"
             },
             messages: {
                 name: {
@@ -61,8 +60,7 @@ $(function () {
                     email: "Неверный формат электронной почты"
                 },
                 password: "Заполните это поле",
-                password_confirmation: "Заполните это поле",
-                country: "Заполните это поле"
+                password_confirmation: "Заполните это поле"
             },
             errorPlacement: function (error, element) {
                 if (element.attr("name") === "name") {
@@ -70,9 +68,6 @@ $(function () {
                 }
                 if (element.attr("name") === "email") {
                     error.insertBefore(registrationForm.find("input[name=email]"))
-                }
-                if (element.attr("name") === "country") {
-                    error.insertBefore(registrationForm.find("select[name=country]"))
                 }
                 if (element.attr("name") === "password") {
                     error.insertBefore(registrationForm.find("input[name=password]"))

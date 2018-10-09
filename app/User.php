@@ -42,7 +42,7 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function countries()
+    public function country()
     {
         return $this->belongsTo('App\Country');
     }

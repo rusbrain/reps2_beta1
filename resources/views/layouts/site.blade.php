@@ -7,10 +7,16 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
+
     <!-- font-awesome-->
     <link rel="stylesheet" href="/css/all.css">
+
     <!--Main CSS-->
     <link rel="stylesheet" href="/css/main.css">
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <!-- CkEditor -->
+    <script src="/js/ckeditor/ckeditor.js"></script>
 
     <title>Главная | Reps.ru</title>
 </head>
@@ -20,7 +26,7 @@
     <!--SECTION HEADER-->
     <section>
         <div class="container">
-            @yield('header')
+            @include('header')
         </div>
     </section>
     <!--END SECTION HEADER-->
@@ -29,8 +35,8 @@
     <section>
         <div class="container">
             <!-- MAIN NAVIGATION-->
-            @yield('navigation')
-            <!-- END MAIN NAVIGATION -->
+            @include('navigation')
+        <!-- END MAIN NAVIGATION -->
         </div>
     </section>
     <!--END SECTION NAVIGATION-->
@@ -40,15 +46,21 @@
         <div class="container">
             <div class="row">
                 <!--LEFT SIDEBAR-->
-                @yield('sidebar-left')
-                <!--END SIDEBAR -->
+                <div class="col-md-2">
+                    @include('sidebar-left')
+                </div>
+                <!--END LEFT SIDEBAR -->
 
                 <!--CONTENT CENTER-->
-                @yield('content')
+                <div class="col-md-8 content-center">
+                    @yield('content')
+                </div>
                 <!--END CONTENT CENTER-->
 
                 <!--RIGHT SIDEBAR-->
-                @yield('sidebar-right')
+                <div class="col-md-2">
+                    @include('sidebar-right')
+                </div>
                 <!--END RIGHT SIDEBAR-->
             </div>
         </div>
@@ -58,13 +70,14 @@
     <!--FOOTER-->
     <section>
         <div class="container">
-            @yield('footer')
+            @section('footer')
+                @include('footer')
+            @endsection
         </div>
     </section>
     <!--END FOOTER-->
 
 </div><!--close div /.wrapper-->
-
 
 <!-- ========ALL MODAL WINDOWS ============== -->
 
@@ -72,9 +85,9 @@
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="/js/jquery-3.2.1.min.js"></script>
 <script src="/js/popper.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
+<script src="/js/bootstrap-filestyle.min.js"></script>
 
 <!-- jQuery Validate -->
 <script src="/js/jquery.validate.min.js"></script>

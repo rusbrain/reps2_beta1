@@ -34,7 +34,7 @@ class UserController extends Controller
             abort(404);
         }
 
-        return view('user.profile')->with('user', $user);
+        return view('user.profile')->with('user', $user->load('country', 'avatar'));
     }
 
     /**
