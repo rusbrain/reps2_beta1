@@ -67,6 +67,8 @@ class InterviewQuestion extends Model
 
         $id = rand(0, $data->max('id'));
 
-        return $data->where('id', '=>', $id)->first()->load('answers');
+        $data =  $data->where('id', '=>', $id)->first();
+
+        return $data?$data->load('answers'):[];
     }
 }
