@@ -163,9 +163,14 @@ Route::group(['middleware' => ['auth', 'admin_panel'], 'prefix' => 'admin_panel'
     Route::post('send_quick_email', 'BaseController@sendQuickEmail')    ->name('admin.send_quick_email');
     Route::group(['prefix' => 'user'], function (){
         Route::get('/', 'UserController@index')                         ->name('admin.users');
+        Route::get('/role', 'UserRoleController@index')                 ->name('admin.users.role');
     });
     Route::group(['prefix' => 'forum'], function (){
         Route::get('/', 'ForumController@index')                        ->name('admin.forum_sections');
+    });
+    Route::group(['prefix' => 'replay'], function (){
+        Route::get('/users', 'ReplayController@indexUsers')             ->name('admin.replay.users');
+        Route::get('/gosu', 'ReplayController@indexGosu')               ->name('admin.replay.gosu');
     });
 
     Route::get('test', function () {

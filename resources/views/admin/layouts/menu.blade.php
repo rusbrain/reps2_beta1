@@ -1,7 +1,11 @@
+@php
+$menu_name = $admin_helper->getMenuName();
+@endphp
+
 <ul class="sidebar-menu" data-widget="tree">
-    <li class="header">GENERAL</li>
+    <li class="header">ОСНОВНОЕ</li>
     <!-- Optionally, you can add icons to the links -->
-    <li @if($admin_helper->getMenuName() == 'admin_panel') class="active" @endif><a href="{{route('admin.home')}}"><i class="fa fa-home"></i> <span>Dashboard</span></a></li>
+    <li @if($menu_name == 'admin_panel') class="active" @endif><a href="{{route('admin.home')}}"><i class="fa fa-home"></i> <span>Главная панель</span></a></li>
     <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
     <li class="treeview">
         <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
@@ -14,14 +18,20 @@
             <li><a href="#">Link in level 2</a></li>
         </ul>
     </li>
-    <li class="header">USERS</li>
+
+    <li class="header">ПОЛЬЗОВАТЕЛИ</li>
     <!-- Optionally, you can add icons to the links -->
-    <li @if($admin_helper->getMenuName() == 'user') class="active" @endif><a href="{{route('admin.users')}}"><i class="fa fa-users"></i> <span>Users</span></a></li>
-    <li class="header">FORUM</li>
+    <li @if($menu_name == 'user') class="active" @endif><a href="{{route('admin.users')}}"><i class="fa fa-users"></i> <span>Список пользователей</span></a></li>
+    <li @if($menu_name == 'user/role') class="active" @endif><a href="{{route('admin.users.role')}}"><i class="fa fa-users"></i> <span>Роли пользователей</span></a></li>
+
+    <li class="header">ФОРУМ</li>
     <!-- Optionally, you can add icons to the links -->
-    <li @if($admin_helper->getMenuName() == 'forum') class="active" @endif><a href="{{route('admin.forum_sections')}}"><i class="fa fa-list"></i> <span>Forum sections</span></a></li>
+    <li @if($menu_name == 'forum') class="active" @endif><a href="{{route('admin.forum_sections')}}"><i class="fa fa-list"></i> <span>Разделы форума</span></a></li>
+
     <li class="header">Replay</li>
     <!-- Optionally, you can add icons to the links -->
-    <li @if($admin_helper->getMenuName() == 'forum') class="active" @endif><a href="{{route('admin.forum_sections')}}"><i class="fa fa-film"></i> <span>Gosu</span></a></li>
-    <li @if($admin_helper->getMenuName() == 'forum') class="active" @endif><a href="{{route('admin.forum_sections')}}"><i class="fa fa-film"></i> <span>Users</span></a></li>
+    <li @if($menu_name == 'replay/gosu') class="active" @endif><a href="{{route('admin.replay.gosu')}}"><i class="fa fa-film"></i> <span>Gosu</span></a></li>
+    @if($admin_helper->admin())
+        <li @if($menu_name == 'replay/users') class="active" @endif><a href="{{route('admin.replay.users')}}"><i class="fa fa-film"></i> <span>Пользовательские</span></a></li>
+    @endif
 </ul>

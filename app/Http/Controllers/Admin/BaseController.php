@@ -9,6 +9,7 @@ use App\Replay;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
 class BaseController extends Controller
@@ -27,14 +28,13 @@ class BaseController extends Controller
             'gosu_replay_count' => $gosu_replay_count,
             'user_replay_count' => $user_replay_count,
             'user_count'        => $user_count,
-//            'topic_count' => $topic_count,
         ]);
     }
 
     /**
      * Send quick email
      *
-     * @param Request $request
+     * @param QuickEmailRequest $request
      */
     public function sendQuickEmail(QuickEmailRequest $request)
     {
