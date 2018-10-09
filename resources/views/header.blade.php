@@ -44,7 +44,9 @@
             <div class="col-3 header-profile">
                 <p class="hello">
                     @if((Auth::user()->view_avatars))
-                        <img class="img-responsive profile-avatar-header" src="{{Auth::user()->avatar->link}}" alt="">
+                        @if(Auth::user()->avatar)
+                            <img class="img-responsive profile-avatar-header" src="{{Auth::user()->avatar->link}}" alt="">
+                        @endif
                     @endif
                     Hello {{Auth::user()->name}}
                 </p>
@@ -55,7 +57,7 @@
                             <a class="profile-link" href="{{route('user_profile',['id' =>Auth::user()->id])}}">Профиль
                                 пользователя</a>
                             <a class="profile-link" href="{{route('edit_profile')}}">Настройки</a>
-                            <a class="profile-link" href="{{route('user_profile',['id' =>Auth::user()->id])}}">Выход</a>
+                            <a class="profile-link" href="{{route('logout',['id' =>Auth::user()->id])}}">Выход</a>
                         </div>
                     </div>
                 </div>
