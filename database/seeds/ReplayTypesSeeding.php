@@ -11,13 +11,13 @@ class ReplayTypesSeeding extends Seeder
      */
     public function run()
     {
-        $countries = [
+        $replay_type = [
             [ 'name' => 'duel',],
             [ 'name' => 'pack',],
             [ 'name' => 'rotw',],
             [ 'name' => 'team',],
         ];
 
-        \App\ReplayType::insert($countries);
+        \App\ReplayType::insert($replay_type);
     }
 }
