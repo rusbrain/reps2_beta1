@@ -11,7 +11,7 @@ class ReplayMapsSeeding extends Seeder
      */
     public function run()
     {
-        $countries = [
+        $replay_map = [
             [ 'name' => 'Alchemistanistan',     'url'=> 'maps/sc/Alchemistanistan.jpg'],
             [ 'name' => 'Andromeda',            'url'=> 'maps/sc/Andromeda.jpg'],
             [ 'name' => 'Arcadia II',           'url'=> 'maps/sc/Arcadia II.jpg'],
@@ -126,6 +126,6 @@ class ReplayMapsSeeding extends Seeder
             [ 'name' => 'Zodiac',               'url'=> 'maps/sc/Zodiac.jpg'],
         ];
 
-        \App\ReplayMap::insert($countries);
+        \App\ReplayMap::insert($replay_map);
     }
 }
