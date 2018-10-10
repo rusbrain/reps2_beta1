@@ -2,7 +2,7 @@
 
 @section('content')
     <div>
-        <div class="page-title">Редактирование профайла пользователя</div>
+        <div class="page-title row">Редактирование профайла пользователя</div>
         <form method="POST" action="{{ route('save_profile') }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
@@ -78,7 +78,7 @@
 
             <div class="form-group">
                 <label for="avatar">Аватар:</label><br>
-                @if($user->avatar())
+                @if($user->avatar)
                     <img class="img-responsive profile-avatar" src="{{$user->avatar->link}}" alt="">
                 @endif
 

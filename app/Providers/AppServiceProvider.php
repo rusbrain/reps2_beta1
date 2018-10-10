@@ -28,7 +28,7 @@ class AppServiceProvider extends ServiceProvider
 
         $last_forum = ForumSection::general_active()->with(['topics' =>function($query){
             $query->withCount('comments', 'positive', 'negative')->with('user')->orderBy('created_at', 'desc')->limit(5);
-        }]);
+        }])->get();
 
         $last_gosu_replay = Replay::gosuReplay()->withCount('comments', 'positive', 'negative')->with('user')->orderBy('created_at', 'desc')->limit(5);
         $last_user_replay = Replay::userReplay()->withCount('comments', 'positive', 'negative')->with('user')->orderBy('created_at', 'desc')->limit(5);
@@ -39,7 +39,6 @@ class AppServiceProvider extends ServiceProvider
         if (Auth::user()){
             $new_user_message = UserMessage::where('user_recipient_id', Auth::id())->where('is_read',0)->count();
         }
-
 
         View::share([
             'random_img'        => $random_img,

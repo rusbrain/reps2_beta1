@@ -160,6 +160,10 @@ body {
 .back-home a:hover {
   text-decoration: underline;
 }
+.page{
+  border-left: 1px solid #17a2b8;
+  border-right: 1px solid #17a2b8;
+}
 /**** END Breadcrumb******/
 
 /*****Modal Windows*****/
@@ -252,10 +256,7 @@ body {
 /**---------------------*/
 /**------HOME PAGE-----------*/
 /**---------------------*/
-/**Sidebar - LEFT*/
-.sidebar-left {
-  border-left: 1px solid #17a2b8;
-}
+
 /**Content - CENTER*/
 .content-center {
   border-right: 1px solid #17a2b8;
@@ -266,11 +267,8 @@ body {
   padding-top: 20px;
   padding-bottom: 20px;
 }
-/**Sidebar - RIGHT*/
-.sidebar-right {
-  border-right: 1px solid #17a2b8;
-}
 
+/**---------------------*/
 /**---------------------*/
 /**------ REGISTRATION PAGE -----------*/
 /**---------------------*/
@@ -281,13 +279,12 @@ body {
 /**---------------------*/
 /**------ PROFILE PAGE -----------*/
 /**---------------------*/
-.content-center .page-title{
+.page-title{
   color: #fff;
   background: #717171;
-  text-align: center !important;
-  margin-right: -15px;
-  margin-left: -15px;
   padding: 4px;
+  align-items: center;
+  justify-content: center;
 }
 .profile-avatar{
   width: 300px;
@@ -312,8 +309,30 @@ body {
 /**------ LEFT SIDEBAR -----------*/
 /**---------------------*/
 .sidebar-left{
-  text-align: center;
+
+}
+.sidebar-widget{
+  border: 1px solid #717171;
+  margin-bottom: 20px;
+}
+.sidebar-widget-title{
+  color: #fff;
+  background: #717171;
+  padding: 4px;
+  align-items: center;
+  justify-content: center;
+
+}
+.sidebar-widget-content{
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
 }
 /**---------------------*/
 /**------ RIGHT SIDEBAR ----------*/
 /**---------------------*/
+
+/**Sidebar - LEFT*/
+.sidebar-left {
+
+}
