@@ -99,7 +99,7 @@
                             <th>Рейтинг</th>
                             <th>Почта подтверждена</th>
                             <th>Заблокирован</th>
-                            <th style="width: 300px">Действия</th>
+                            <th style="width: 330px">Действия</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -115,10 +115,11 @@
                                 <td>{!! $user->is_ban?'<i class="fa fa-circle-o text-green"></i>':'<i class="fa fa-ban text-red"></i>' !!}</td>
                                 <td>
                                     <div class="btn-group">
-                                        <a type="button" class="btn btn-default text-green" title="Написать сообщение"><i class="fa fa-send-o"></i></a>
+                                        <a type="button" class="btn btn-default text-green" title="Написать сообщение" href="{{route('admin.user.messages', ['id' => $user->id])}}"><i class="fa fa-send-o"></i></a>
                                         <a type="button" class="btn btn-default text-purple"  title="Написать письмо на E-mail"><i class="fa fa-envelope-o"></i></a>
                                         <a type="button" class="btn btn-default" title="Реплеи пользователя"><i class="fa fa-film"></i></a>
                                         <a type="button" class="btn btn-default text-aqua"  title="Темы пользователя на форуме"><i class="fa fa-list"></i></a>
+                                        <a type="button" class="btn btn-default text-fuchsia"  title="Просмотреть профиль пользователя"><i class="fa fa-eye"></i></a>
                                         <a type="button" class="btn btn-default text-orange"  title="Править профиль пользователя"><i class="fa fa-edit"></i></a>
                                         @if($user->is_ban)
                                             <a type="button" class="btn btn-default text-olive" title="Снять блокировку пользователя"><i class="fa fa-thumbs-o-up"></i></a>
