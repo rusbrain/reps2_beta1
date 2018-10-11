@@ -24,7 +24,7 @@ class CreateForumTopicsTable extends Migration
             $table->text('content');
             $table->integer('user_id');
             $table->integer('reviews')->default(0);
-            $table->dateTime('start_on');
+            $table->dateTime('start_on')->nullable();
             $table->timestamps();
         });
     }

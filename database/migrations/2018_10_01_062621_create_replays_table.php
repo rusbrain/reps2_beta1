@@ -29,7 +29,7 @@ class CreateReplaysTable extends Migration
             $table->string('first_race');
             $table->string('second_race');
             $table->integer('rating')->default(0);
-            $table->integer('user_rating')->default(0);
+            $table->double('user_rating',10,2)->default(0);
             $table->integer('evaluation');
             $table->integer('downloaded')->default(0);
             $table->time('length')->default('00:00:00');
