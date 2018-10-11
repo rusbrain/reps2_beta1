@@ -15,11 +15,8 @@ class UserMessagingController extends Controller
         if (IgnoreUser::me_ignore($user_id)){
             return abort(403);
         }
-        $message = UserMessage::create([
-            'user_sender_id'    => Auth::id(),
-            'user_recipient_id' => $user_id,
-            'message'           => $request->get('message'),
-        ]);
+
+        $message = UserMessage::createMessage($request, $user_id);
 
         return $message->load('recipient', 'sender');
     }
@@ -68,26 +65,7 @@ class UserMessagingController extends Controller
      */
     public function getMessages($user_id)
     {
-        return view('user.messages')->with('messages', $this->loadMessages($user_id));
-    }
-
-    /**
-     * Loaded user messages with pagination/Get user messages
-     *
-     * @param $user_id
-     * @return mixed
-     */
-    public function loadMessages($user_id)
-    {
-        $messages = UserMessage::where(function ($query) use ($user_id){
-            $query->where('user_sender_id', Auth::id())->where('user_recipient_id', $user_id);
-        })
-            ->orWhere(function ($query) use ($user_id){
-                $query->where('user_sender_id', $user_id)->where('user_recipient_id', Auth::id());
-            })
-            ->with('sender.avatar', 'recipient.avatar')->paginate(20);
-
-        return $messages;
+        return view('user.messages')->with('messages', UserMessage::loadMessages($user_id));
     }
 
     /**

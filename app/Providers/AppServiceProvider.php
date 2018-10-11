@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Country;
 use App\ForumSection;
 use App\InterviewQuestion;
 use App\Replay;
@@ -47,7 +48,8 @@ class AppServiceProvider extends ServiceProvider
             'last_gosu_replay'  => $last_gosu_replay,
             'last_user_replay'  => $last_user_replay,
             'new_user_message'  => $new_user_message,
-            'new_users'         => $new_users
+            'new_users'         => $new_users,
+            'countries'         => Country::all()
         ]);
     }
 

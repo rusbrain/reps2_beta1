@@ -44,4 +44,14 @@ class AdminViewHelper
             'all_notification'  => $new_topics + $new_gosu_replays + $new_user_replays,
         ];
     }
+
+    /**
+     * User is admin
+     *
+     * @return bool
+     */
+    public function admin()
+    {
+        return Auth::user()->role->name == 'admin';
+    }
 }
