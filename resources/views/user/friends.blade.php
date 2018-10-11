@@ -1,1 +1,2 @@
 {{dd($friends, $friendly)}}
+

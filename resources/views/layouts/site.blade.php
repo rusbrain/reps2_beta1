@@ -10,7 +10,8 @@
 
     <!-- font-awesome-->
     <link rel="stylesheet" href="/css/all.css">
-
+    <!--Flags CSS-->
+    <link rel="stylesheet" href="/css/flag-icon.css">
     <!--Main CSS-->
     <link rel="stylesheet" href="/css/main.css">
 
@@ -44,21 +45,21 @@
     <!--CONTENT-->
     <section>
         <div class="container">
-            <div class="row">
+            <div class="row page">
                 <!--LEFT SIDEBAR-->
-                <div class="col-md-2">
+                <div class="col">
                     @include('sidebar-left')
                 </div>
                 <!--END LEFT SIDEBAR -->
 
                 <!--CONTENT CENTER-->
-                <div class="col-md-8 content-center">
+                <div class="col-md-7 content-center">
                     @yield('content')
                 </div>
                 <!--END CONTENT CENTER-->
 
                 <!--RIGHT SIDEBAR-->
-                <div class="col-md-2">
+                <div class="col">
                     @include('sidebar-right')
                 </div>
                 <!--END RIGHT SIDEBAR-->

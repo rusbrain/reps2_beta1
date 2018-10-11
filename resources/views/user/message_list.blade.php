@@ -1,1 +1,1 @@
-{{$messages_list}}
+{{dd($messages_list)}}
