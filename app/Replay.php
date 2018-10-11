@@ -148,6 +148,6 @@ class Replay extends Model
      */
     public function comments()
     {
-        return $this->hasMany('App\Comment', 'replay_id')->where('relation', Comment::RELATION_REPLAY);
+        return $this->hasMany('App\Comment', 'object_id')->where('relation', Comment::RELATION_REPLAY);
     }
 }

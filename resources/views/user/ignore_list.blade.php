@@ -1,1 +1,1 @@
-{{$users}}
+{{dd($users)}}

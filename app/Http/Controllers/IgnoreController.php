@@ -44,7 +44,7 @@ class IgnoreController extends Controller
      */
     public function getIgnoreList()
     {
-        $users = IgnoreUser::where('user_id', Auth::id())->with('user.avatar')->withCount('positive', 'negative')->paginate(50);
+        $users = IgnoreUser::where('user_id', Auth::id())->with('user.avatar')->paginate(50);
 
         return view('user.ignore_list')->with('users', $users);
     }

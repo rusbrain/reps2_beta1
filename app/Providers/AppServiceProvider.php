@@ -29,12 +29,12 @@ class AppServiceProvider extends ServiceProvider
 
         $last_forum = ForumSection::general_active()->with(['topics' =>function($query){
             $query->withCount('comments', 'positive', 'negative')->with('user')->orderBy('created_at', 'desc')->limit(5);
-        }]);
+        }])->get();
 
-        $last_gosu_replay = Replay::gosuReplay()->withCount('comments', 'positive', 'negative')->with('user')->orderBy('created_at', 'desc')->limit(5);
-        $last_user_replay = Replay::userReplay()->withCount('comments', 'positive', 'negative')->with('user')->orderBy('created_at', 'desc')->limit(5);
+        $last_gosu_replay = Replay::gosuReplay()->withCount('comments', 'positive', 'negative')->with('user')->orderBy('created_at', 'desc')->limit(5)->get();
+        $last_user_replay = Replay::userReplay()->withCount('comments', 'positive', 'negative')->with('user')->orderBy('created_at', 'desc')->limit(5)->get();
 
-        $new_users = User::where('is_ban',0)->orderBy('created_at')->limit(10)->get();
+        $new_users = User::where('is_ban',0)->orderBy('created_at', 'desc')->limit(10)->get();
         $new_user_message = 0;
 
         if (Auth::user()){
