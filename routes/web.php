@@ -10,13 +10,22 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('test', function (){
+    $question_w_answers = \App\InterviewQuestion::with('answers')->get();
+
+    foreach ($question_w_answers as $question_w_answer){
+        dd($question_w_answer->answers[array_rand($question_w_answer->answers->toArray())]->id);
+    }
+
+});
 Route::group(['middleware' => ['auth', 'admin_panel']], function () {
-    Route::get('test', function () {
-        if (!Auth::user()->role) {
-            return redirect('/');
-        }
-        dd(Auth::user()->role);
-    });
+//    Route::get('test', function () {
+//        if (!Auth::user()->role) {
+//            return redirect('/');
+//        }
+//        dd(Auth::user()->role);
+//    });
 });
 Route::get('/', 'HomeController@index')                                             ->name('home');
 Route::get('/email/verified/{token}', 'Auth\RegisterController@emailVerified')      ->name('email_verified');

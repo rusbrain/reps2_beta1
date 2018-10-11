@@ -119,7 +119,9 @@ class Replay extends Model
      */
     public static function updateUserRating($replay_id)
     {
-        $rating = \DB::select('SELECT Sum(rating)/COUNT(rating) as rating FROM replay_user_ratings where replay_id = ?'[$replay_id])[0]->rating??0;
+//        $rating = \DB::select('SELECT Sum(rating)/COUNT(rating) as rating FROM replay_user_ratings where replay_id = ?'[$replay_id])[0]->rating??0;
+        $count = ReplayUserRating::where('replay_id',[$replay_id])->count();
+        $rating = $count?(ReplayUserRating::where('replay_id',[$replay_id])->sum('rating')/$count):0;
 
         Replay::where('id', $replay_id)->update(['user_rating'=>$rating]);
     }

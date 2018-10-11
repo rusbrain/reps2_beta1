@@ -61,4 +61,13 @@ class UserGallery extends Model
     {
         return $this->hasMany('App\Comment', 'object_id')->where('relation', Comment::RELATION_USER_GALLERY);
     }
+
+    /**
+     * @param $rating
+     * @param $user_gallery_id
+     */
+    public static function updateRating($rating, $user_gallery_id)
+    {
+        \DB::update('update user_galleries set rating = rating + (?) where id = ?', [$rating, $user_gallery_id]);
+    }
 }
