@@ -22,7 +22,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         $data_img = UserGallery::with('file')->orderBy('created_at', 'desc')->limit(5000)->get()->toArray();
-        $random_img = $data_img?array_rand($data_img,(count($data_img)>4?4:count($data_img))):[];
+        $random_img_ids = $data_img?array_rand($data_img,(count($data_img)>4?4:count($data_img))):[];
+        $random_img = [];
+        foreach ($random_img_ids as $item){
+            $random_img[] = $data_img[$item];
+        }
 
         $random_question = InterviewQuestion::getRandomQuestion();
 

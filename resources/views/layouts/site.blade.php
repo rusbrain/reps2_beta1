@@ -10,7 +10,8 @@
 
     <!-- font-awesome-->
     <link rel="stylesheet" href="/css/all.css">
-
+    <!--Flags CSS-->
+    <link rel="stylesheet" href="/css/flag-icon.css">
     <!--Main CSS-->
     <link rel="stylesheet" href="/css/main.css">
 

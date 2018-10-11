@@ -57,6 +57,9 @@
                             <a class="profile-link" href="{{route('user_profile',['id' =>Auth::user()->id])}}">Профиль
                                 пользователя</a>
                             <a class="profile-link" href="{{route('edit_profile')}}">Настройки</a>
+                            <a class="profile-link" href="{{route('user.message.get_list')}}">Сообщения</a>
+                            <a class="profile-link" href="{{route('user.friends_list')}}">Список друзей</a>
+                            <a class="profile-link" href="{{route('user.ignore_list')}}">Игнор лист</a>
                             <a class="profile-link" href="{{route('logout',['id' =>Auth::user()->id])}}">Выход</a>
                         </div>
                     </div>
