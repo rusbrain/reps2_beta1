@@ -40,7 +40,6 @@ class AppServiceProvider extends ServiceProvider
             $new_user_message = UserMessage::where('user_recipient_id', Auth::id())->where('is_read',0)->count();
         }
 
-
         View::share([
             'random_img'        => $random_img,
             'random_question'   => $random_question,
