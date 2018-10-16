@@ -299,6 +299,4 @@ class ReplayController extends Controller
 
         return redirect()->route('replay.gosus');
     }
-
-
 }

@@ -187,6 +187,14 @@ class User extends Authenticatable
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
+    public function replays()
+    {
+        return $this->hasMany('App\Replay', 'user_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function replay()
     {
         return $this->hasMany('App\Replay', 'user_id')->where('user_replay', 1);

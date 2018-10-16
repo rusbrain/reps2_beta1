@@ -169,6 +169,8 @@ Route::group(['middleware' => ['auth', 'admin_panel'], 'prefix' => 'admin_panel'
     Route::post('send_quick_email', 'BaseController@sendQuickEmail')                ->name('admin.send_quick_email');
     Route::group(['prefix' => 'user'], function (){
         Route::get('{id}/email', 'UserEmailController@index')                       ->name('admin.user.email');
+        Route::get('{id}/replay', 'ReplayController@getReplayByUser')               ->name('admin.user.replay');
+        Route::get('{id}/topic', 'ForumController@getUsersTopics')                  ->name('admin.user.topic');
         Route::get('/', 'UserController@index')                                     ->name('admin.users');
         Route::get('{id}/message', 'UserMessageController@getUser')                 ->name('admin.user.messages');
         Route::get('/message/{dialog_id}/load', 'UserMessageController@load')       ->name('admin.user.message_load');

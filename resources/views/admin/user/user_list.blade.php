@@ -15,7 +15,6 @@
 @endsection
 
 @section('content')
-    {{--{{dd($data->getUrlRange(1,10))}}--}}
     <div class="row">
         <div class="col-md-12">
             <div class="box">
@@ -123,8 +122,8 @@
                                             <a type="button" class="btn btn-default text-green" title="Написать сообщение" href="{{route('admin.user.messages', ['id' => $user->id])}}"><i class="fa fa-send-o"></i></a>
                                             <a type="button" class="btn btn-default text-purple" title="Написать письмо на E-mail"  href="{{route('admin.user.email', ['id' => $user->id])}}"><i class="fa fa-envelope-o"></i></a>
                                         @endif
-                                        <a type="button" class="btn btn-default" title="Реплеи пользователя"><i class="fa fa-film"></i></a>
-                                        <a type="button" class="btn btn-default text-aqua"  title="Темы пользователя на форуме"><i class="fa fa-list"></i></a>
+                                        <a type="button" class="btn btn-default" title="Реплеи пользователя" href="{{route('admin.user.replay', ['id' => $user->id])}}"><i class="fa fa-film"></i></a>
+                                        <a type="button" class="btn btn-default text-aqua"  title="Темы пользователя на форуме" href="{{route('admin.user.topic', ['id' => $user->id])}}"><i class="fa fa-list"></i></a>
                                         <a type="button" class="btn btn-default text-fuchsia"  title="Просмотреть профиль пользователя"><i class="fa fa-eye"></i></a>
                                         <a type="button" class="btn btn-default text-orange"  title="Править профиль пользователя"><i class="fa fa-edit"></i></a>
                                         @if($user->is_ban)
