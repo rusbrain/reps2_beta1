@@ -211,6 +211,14 @@ class User extends Authenticatable
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
+    public function comments()
+    {
+        return $this->hasMany('App\Comment', 'user_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function topic_comments()
     {
         return $this->hasMany('App\Comment', 'user_id')->where('relation', Comment::RELATION_FORUM_TOPIC);
@@ -278,5 +286,27 @@ class User extends Authenticatable
     public function dialogues()
     {
         return $this->belongsToMany('App\Dialogue', 'user_messages');
+    }
+
+    public static function getUserProfile($user_id)
+    {
+        return User::where('id', $user_id)->with('country', 'role', 'avatar', 'user_friends', 'user_friendly')
+            ->with(['topics' => function($query){
+                $query->withCount('positive', 'negative', 'comments')
+                    ->orderBy('created_at', 'desc')->limit(5);
+            }])
+            ->with(['replays' => function($query){
+                $query->withCount('positive', 'negative', 'comments')
+                    ->orderBy('created_at', 'desc')->limit(5);
+            }])
+            ->with(['user_galleries' => function($query){
+                $query->withCount('positive', 'negative', 'comments')
+                    ->with('file')
+                    ->orderBy('created_at', 'desc')->limit(10);
+            }])
+            ->withCount('positive', 'negative', 'topics','user_galleries', 'files',
+                'user_friends', 'user_friendly', 'ignore_users', 'ignored_users', 'gallery_comments', 'replay_comments',
+                'topic_comments', 'gosu_replay', 'replay', 'answers_to_questions')
+            ->first();
     }
 }

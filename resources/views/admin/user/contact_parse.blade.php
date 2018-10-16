@@ -34,7 +34,7 @@
             <div class="col-md-6 text-left">
                 <a class="users-list-name" href="#">{{$sender->name}}</a>
                 <span class="users-list-date">{{$date}}</span>
-                <span data-toggle="tooltip" title="" class="badge bg-red" data-original-title="3 New Messages">Новые сообщения: {{$contact->new_messages}}</span>
+                @if($contact->new_messages)<span data-toggle="tooltip" title="" class="badge bg-red" data-original-title="{{$contact->new_messages}} New Messages">Новые сообщения: {{$contact->new_messages}}</span>@endif
             </div>
         </div>
     </li>

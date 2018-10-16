@@ -16,7 +16,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $users = User::with('role', 'country')->withCount('positive', 'negative');
+        $users = User::with('role', 'country')->withCount('topics', 'replays', 'comments', 'user_galleries');
 
         if ($request->has('search') && null !==$request->get('search')){
             $users->where(function ($query) use ($request)
@@ -53,4 +53,11 @@ class UserController extends Controller
 
         return view('admin.user.user_list')->with(['data'=> $users, 'request_data' => $request->all()]);
     }
+
+    public function getUserProfile($user_id)
+    {
+        return view('admin.user.profile')->with('user', User::getUserProfile($user_id));
+    }
+
+
 }
