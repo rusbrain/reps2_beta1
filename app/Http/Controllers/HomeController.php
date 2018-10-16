@@ -47,5 +47,6 @@ class HomeController extends Controller
             'popular_forum_topics'  => $popular_forum_topics,
             'new_forum_topics'      => $new_forum_topics
         ]);
+
     }
 }

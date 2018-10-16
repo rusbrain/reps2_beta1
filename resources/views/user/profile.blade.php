@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="profile-page">
-        <div class="page-title">Профайл пользователя</div>
+        <div class="page-title row">Профайл пользователя</div>
         <div class="row">
             <div class="col-4">
                 <span class="key">Имя:</span>
