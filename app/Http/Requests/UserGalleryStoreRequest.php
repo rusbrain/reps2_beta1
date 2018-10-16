@@ -24,8 +24,9 @@ class UserGalleryStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'image'     =>'required|image|max:2048',
-            'comment'   =>'nullable|string|max:1000',
+            'image'         =>'required|image|max:2048',
+            'comment'       =>'nullable|string|max:1000',
+            'for_adults'    =>'nullable|boolean',
         ];
     }
 
@@ -37,11 +38,12 @@ class UserGalleryStoreRequest extends FormRequest
     public function messages()
     {
         return [
-            'image.required'    => 'Не выбран файл картинки.',
-            'image.image'       => 'Файл должен быть картинкой.',
-            'image.max'         => 'Максимальный размер загрузаемого файла 2 мб',
-            'comment.string'    => 'Комментарий должен быть строкой',
-            'comment.max'       => 'Комментарий должен быть не больше 1000 символов',
+            'image.required'        => 'Не выбран файл картинки.',
+            'image.image'           => 'Файл должен быть картинкой.',
+            'image.max'             => 'Максимальный размер загрузаемого файла 2 мб',
+            'comment.string'        => 'Комментарий должен быть строкой',
+            'comment.max'           => 'Комментарий должен быть не больше 1000 символов',
+            'for_adults.boolean'    => 'Отметка 18+ долюа быть true,  false, 1, 0, "1", and "0"',
         ];
     }
 }

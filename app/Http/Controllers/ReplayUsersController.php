@@ -11,12 +11,12 @@ class ReplayUsersController extends ReplayController
      *
      * @var string
      */
-    protected $replay_group = 'Users Replay';
+    protected  $replay_group = 'Users Replay';
 
     /**
      * Replay query function name
      *
      * @var string
      */
-    protected $method_get = 'userReplay';
+    protected  $method_get = "userReplay";
 }

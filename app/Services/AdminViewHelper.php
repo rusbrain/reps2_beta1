@@ -29,8 +29,15 @@ class AdminViewHelper
 
     public function getNotifications()
     {
-        $new_messages_count = UserMessage::where('user_recipient_id', Auth::id())->where('is_read',0)->count();
-        $new_messages       = UserMessage::where('user_recipient_id', Auth::id())->where('is_read',0)->limit(5)->with('sender.avatar')->get();
+        $new_user_message_q = UserMessage::whereHas('dialogue.users', function ($query){
+            $query->where('users.id', Auth::id());
+        })->where('user_id', '<>', Auth::id())->where('is_read',0);
+
+        $new_user_message_q2 = clone $new_user_message_q;
+
+        $new_messages_count = $new_user_message_q2->count();
+
+        $new_messages       = $new_user_message_q->limit(5)->with('sender.avatar')->get();
         $new_topics         = ForumTopic::where('approved',0)->count();
         $new_gosu_replays   = Replay::gosuReplay()->where('approved',0)->count();
         $new_user_replays   = Replay::userReplay()->where('approved',0)->count();

@@ -43,4 +43,17 @@ class InterviewQuestionController extends Controller
             $query->withCount('user_answers');
         }])->first();
     }
+
+    /**
+     * Get result data
+     *
+     * @param $question_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getResult($question_id)
+    {
+        return view('answers_result')->with('answers', InterviewQuestion::where('id',$question_id)->with(['answers' => function($query){
+            $query->withCount('user_answers');
+        }])->first());
+    }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Country;
 use App\File;
+use App\Http\Requests\ReplaySearchRequest;
 use App\Http\Requests\ReplayStoreRequest;
 use App\Http\Requests\ReplayUpdateRequest;
 use App\Replay;
@@ -12,6 +13,7 @@ use App\ReplayMap;
 use App\ReplayType;
 use App\User;
 use App\UserReputation;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -24,25 +26,44 @@ class ReplayController extends Controller
      *
      * @var string
      */
-    protected static $replay_group;
+    protected $replay_group = "";
 
     /**
      * Replay query function name
      *
      * @var string
      */
-    protected static $method_get;
+    protected $method_get = "";
 
     /**
      * Get list of all Replay
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function list()
+    public function list(ReplaySearchRequest $request)
     {
-        $method = self::$method_get;
+        $method = $this->method_get;
 
-        return $this->getList(Replay::$method());
+        $query = Replay::$method();
+
+        $request_data = $request->validated();
+        unset($request_data['sort_type']);
+        if ($request_data)
+            foreach ($request_data as $key=>$request_datum) {
+                if ($key == 'text'){
+                    $query->where(function ($q) use ($request_datum){
+                        $q->where('title', 'like', "%$request_datum%")
+                            ->orWhere('content', 'like', "%$request_datum%")
+                            ->orWhere('championship', 'like', "%$request_datum%");
+                    });
+                }elseif($key == 'sort_by'){
+                    $query->orderBy($request_datum, ($request_data['sort_type']??'desc'));
+                }else{
+                    $query->where($key, $request_datum);
+                }
+            }
+
+        return $this->getList($query);
     }
 
     /**
@@ -58,16 +79,16 @@ class ReplayController extends Controller
             ->orderBy('created_at')
             ->paginate(20);
 
-        return view('replay.list')->with(['replays' => $data, 'title'=>($title??self::$replay_group)]);
+        return view('replay.list')->with(['replays' => $data, 'title'=>($title?$title:$this->replay_group)]);
     }
 
     /**
      * get Replay query
      *
-     * @param Replay $replay
+     * @param \Illuminate\Database\Eloquent\Builder $replay
      * @return Replay|\Illuminate\Database\Eloquent\Builder
      */
-    private function getReplay(Replay $replay)
+    private function getReplay(Builder $replay)
     {
         return $replay->with(User::getUserWithReputationQuery())
                 ->withCount('comments', 'positive','negative')
@@ -82,6 +103,7 @@ class ReplayController extends Controller
      */
     public function show($id)
     {
+
         $replay = $this->getReplay(Replay::where('id', $id))->first();
 
         if ($replay){
@@ -204,7 +226,7 @@ class ReplayController extends Controller
             $user_id = Auth::id();
         }
 
-        $method = self::$method_get;
+        $method = $this->method_get;
         $this->getList(Replay::$method()->where('user_id',$user_id));
     }
 
@@ -222,8 +244,8 @@ class ReplayController extends Controller
             return abort(404);
         }
 
-        $method = self::$method_get;
-        return $this->getList(Replay::$method()->where('type_id',$type->id), self::$replay_group.' '.$type);
+        $method = $this->method_get;
+        return $this->getList(Replay::$method()->where('type_id',$type->id), $this->replay_group.' '.$type);
     }
 
     /**
@@ -277,4 +299,6 @@ class ReplayController extends Controller
 
         return redirect()->route('replay.gosus');
     }
+
+
 }
