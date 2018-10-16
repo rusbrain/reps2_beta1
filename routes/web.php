@@ -12,11 +12,7 @@
 */
 
 Route::get('test', function (){
-    $question_w_answers = \App\InterviewQuestion::with('answers')->get();
-
-    foreach ($question_w_answers as $question_w_answer){
-        dd($question_w_answer->answers[array_rand($question_w_answer->answers->toArray())]->id);
-    }
+    dd(\App\Dialogue::getUserDialogue(2));
 
 });
 Route::group(['middleware' => ['auth', 'admin_panel']], function () {
@@ -45,9 +41,10 @@ Route::middleware(['guest'])->group(function () {
 });
 
 Route::post('question/{id}/set_answer', 'InterviewQuestionController@setAnswer')    ->name('question.set_answer');
+Route::post('question/{id}/view_answer', 'InterviewQuestionController@getResult')   ->name('question.view_answer');
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('logout', 'Auth\LoginController@logout')->name('logout');
+    Route::get('logout', 'Auth\LoginController@logout')                             ->name('logout');
 });
 
 Route::group(['prefix' => 'user'], function () {
@@ -168,28 +165,22 @@ Route::group(['prefix' => 'gallery'], function (){
 });
 
 Route::group(['middleware' => ['auth', 'admin_panel'], 'prefix' => 'admin_panel', 'namespace' => 'Admin'], function () {
-    Route::get('/', 'BaseController@index')                             ->name('admin.home');
-    Route::post('send_quick_email', 'BaseController@sendQuickEmail')    ->name('admin.send_quick_email');
+    Route::get('/', 'BaseController@index')                                         ->name('admin.home');
+    Route::post('send_quick_email', 'BaseController@sendQuickEmail')                ->name('admin.send_quick_email');
     Route::group(['prefix' => 'user'], function (){
-        Route::get('/', 'UserController@index')                         ->name('admin.users');
-        Route::get('{id}/message', 'UserMessageController@getUser')     ->name('admin.user.messages');
-        Route::post('{id}/message', 'UserMessageController@load')       ->name('admin.user.messages.load');
-        Route::post('{id}/message/send', 'UserMessageController@send')       ->name('admin.user.message.send');
-        Route::get('/role', 'UserRoleController@index')                 ->name('admin.users.role');
+        Route::get('{id}/email', 'UserEmailController@index')                       ->name('admin.user.email');
+        Route::get('/', 'UserController@index')                                     ->name('admin.users');
+        Route::get('{id}/message', 'UserMessageController@getUser')                 ->name('admin.user.messages');
+        Route::get('/message/{dialog_id}/load', 'UserMessageController@load')       ->name('admin.user.message_load');
+        Route::post('/message/{dialog_id}/send', 'UserMessageController@send')      ->name('admin.user.message.send');
+        Route::get('/role', 'UserRoleController@index')                             ->name('admin.users.role');
     });
     Route::group(['prefix' => 'forum'], function (){
-        Route::get('/', 'ForumController@index')                        ->name('admin.forum_sections');
+        Route::get('/', 'ForumController@index')                                    ->name('admin.forum_sections');
     });
     Route::group(['prefix' => 'replay'], function (){
-        Route::get('/users', 'ReplayController@indexUsers')             ->name('admin.replay.users');
-        Route::get('/gosu', 'ReplayController@indexGosu')               ->name('admin.replay.gosu');
-    });
-
-    Route::get('test', function () {
-        if (!Auth::user()->role) {
-            return redirect('/');
-        }
-        dd(Auth::user()->role);
+        Route::get('/users', 'ReplayController@indexUsers')                         ->name('admin.replay.users');
+        Route::get('/gosu', 'ReplayController@indexGosu')                           ->name('admin.replay.gosu');
     });
 });
 

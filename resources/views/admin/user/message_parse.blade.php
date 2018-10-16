@@ -1,12 +1,11 @@
-{{--{{dd($messages)}}--}}
 @if($messages->lastPage() > $messages->currentPage())
     <div class="text-center load-more-box">
         <span title="" class="badge bg-light-blue load-more" date-href="{{$messages->url($page??2)}}">Загрузить предыдущие сообщеня</span>
     </div>
 @endif
+
 @foreach(collect($messages->items())->sortBy('id') as $message)
-    {{--{{dd($message)}}--}}
-    @if($message->user_sender_id == Auth::id())
+    @if($message->user_id == Auth::id())
         <!-- Message to the right -->
         <div class="direct-chat-msg right">
             <div class="direct-chat-info clearfix">
@@ -29,3 +28,4 @@
                 </div>
                 <!-- /.direct-chat-msg -->
         @endforeach
+                <div class="scroll-to"></div>

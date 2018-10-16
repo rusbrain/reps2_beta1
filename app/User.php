@@ -256,8 +256,19 @@ class User extends Authenticatable
         return $this->hasMany('App\UserFriend', 'friend_user_id');
     }
 
-    public function new_messages()
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function messages()
     {
-        return $this->hasMany('App\UserMessage', 'user_recipient_id')->where('is_read',0);
+        return $this->hasMany('App\UserMessage', 'user_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function dialogues()
+    {
+        return $this->belongsToMany('App\Dialogue', 'user_messages');
     }
 }

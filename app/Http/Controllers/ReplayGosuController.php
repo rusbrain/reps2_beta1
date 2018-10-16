@@ -11,12 +11,12 @@ class ReplayGosuController extends ReplayController
      *
      * @var string
      */
-    protected $replay_group = 'Gosu Replay';
+    protected  $replay_group = 'Gosu Replay';
 
     /**
      * Replay query function name
      *
      * @var string
      */
-    protected $method_get = 'gosuReplay';
+    protected  $method_get = "gosuReplay";
 }

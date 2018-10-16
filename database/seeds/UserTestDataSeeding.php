@@ -91,6 +91,7 @@ class UserTestDataSeeding extends Seeder
                 'user_id'       => $user_ids[array_rand($user_ids)],
                 'file_id'       => $file_ids[array_rand($file_ids)],
                 'comment'       => 'Comment to Image '.$i,
+                'for_adults'    => rand(0,1),
                 'created_at'    => Carbon\Carbon::now(),
                 'updated_at'    => Carbon\Carbon::now(),
             ];

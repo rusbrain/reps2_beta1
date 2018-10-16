@@ -64,6 +64,11 @@ class ForumTopic extends Model
        return $this->hasMany('App\UserReputation', 'object_id')->where('relation', UserReputation::RELATION_FORUM_TOPIC)->where('rating',-1);
     }
 
+    public function preview_image()
+    {
+        return $this->belongsTo('App\File', 'preview_file_id');
+    }
+
     /**
      * @param $rating
      * @param $topic_id

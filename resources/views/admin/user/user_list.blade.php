@@ -92,6 +92,7 @@
                         <thead>
                         <tr>
                             <th style="width: 30px">ID</th>
+                            <th>Аватар</th>
                             <th>Имя</th>
                             <th>Почта</th>
                             <th>Страна</th>
@@ -106,17 +107,22 @@
                         @foreach($data->items() as $user)
                             <tr>
                                 <td>{{$user->id}}</td>
+                                <td>
+                                    <img class="direct-chat-img" src="{{route('home').($user->avatar?$user->avatar->link:'/dist/img/avatar.png')}}" alt="Аватар пользователя"><!-- /.direct-chat-img -->
+                                </td>
                                 <td>{{$user->name}}</td>
                                 <td>{{$user->email}}</td>
                                 <td>{{$user->country->name??"Нет"}}</td>
                                 <td>{{$user->role->title??"Пользователь"}}</td>
                                 <td>{{$user->rating}}</td>
                                 <td>{!! $user->email_verified_at?'<i class="fa fa-check text-green"></i>':'<i class="fa fa-ban text-red"></i>' !!}</td>
-                                <td>{!! $user->is_ban?'<i class="fa fa-circle-o text-green"></i>':'<i class="fa fa-ban text-red"></i>' !!}</td>
+                                <td>{!! $user->is_ban?'<i class="fa fa-ban text-red"></i>' : '<i class="fa fa-circle-o text-green"></i>'!!}</td>
                                 <td>
                                     <div class="btn-group">
-                                        <a type="button" class="btn btn-default text-green" title="Написать сообщение" href="{{route('admin.user.messages', ['id' => $user->id])}}"><i class="fa fa-send-o"></i></a>
-                                        <a type="button" class="btn btn-default text-purple"  title="Написать письмо на E-mail"><i class="fa fa-envelope-o"></i></a>
+                                        @if(Auth::id() != $user->id)
+                                            <a type="button" class="btn btn-default text-green" title="Написать сообщение" href="{{route('admin.user.messages', ['id' => $user->id])}}"><i class="fa fa-send-o"></i></a>
+                                            <a type="button" class="btn btn-default text-purple" title="Написать письмо на E-mail"  href="{{route('admin.user.email', ['id' => $user->id])}}"><i class="fa fa-envelope-o"></i></a>
+                                        @endif
                                         <a type="button" class="btn btn-default" title="Реплеи пользователя"><i class="fa fa-film"></i></a>
                                         <a type="button" class="btn btn-default text-aqua"  title="Темы пользователя на форуме"><i class="fa fa-list"></i></a>
                                         <a type="button" class="btn btn-default text-fuchsia"  title="Просмотреть профиль пользователя"><i class="fa fa-eye"></i></a>

@@ -21,8 +21,8 @@ class UserMessage extends Model
      * @var array
      */
     protected $fillable = [
-        'user_sender_id',
-        'user_recipient_id',
+        'user_id',
+        'dialogue_id',
         'message',
         'is_read',
     ];
@@ -32,49 +32,30 @@ class UserMessage extends Model
      */
     public function sender()
     {
-        return $this->belongsTo('App\User', 'user_sender_id');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function recipient()
-    {
-        return $this->belongsTo('App\User', 'user_recipient_id');
-    }
-
-    /**
-     * Loaded user messages with pagination/Get user messages
-     *
-     * @param $user_id
-     * @return mixed
-     */
-    public static function loadMessages($user_id)
-    {
-        $messages = UserMessage::where(function ($query) use ($user_id){
-            $query->where('user_sender_id', Auth::id())->where('user_recipient_id', $user_id);
-        })
-            ->orWhere(function ($query) use ($user_id){
-                $query->where('user_sender_id', $user_id)->where('user_recipient_id', Auth::id());
-            })
-            ->with('sender.avatar', 'recipient.avatar')->orderBy('id', 'desc')->paginate(20);
-
-        return $messages;
+        return $this->belongsTo('App\User', 'user_id');
     }
 
     /**
      * Save new message
      *
      * @param Request $request
-     * @param $user_id
+     * @param $dialogue_id
      * @return mixed
      */
-    public static function createMessage(Request $request, $user_id)
+    public static function createMessage(Request $request, $dialogue_id)
     {
         return UserMessage::create([
-            'user_sender_id'    => Auth::id(),
-            'user_recipient_id' => $user_id,
-            'message'           => $request->get('message'),
+            'user_id'       => Auth::id(),
+            'dialogue_id'   => $dialogue_id,
+            'message'       => $request->get('message'),
         ]);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function dialogue()
+    {
+        return $this->belongsTo('App\Dialogue', 'dialogue_id');
     }
 }

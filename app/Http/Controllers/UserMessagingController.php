@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Dialogue;
 use App\Http\Requests\SendUserMessageRequest;
 use App\IgnoreUser;
 use App\UserMessage;
@@ -16,7 +17,9 @@ class UserMessagingController extends Controller
             return abort(403);
         }
 
-        $message = UserMessage::createMessage($request, $user_id);
+        $dialogue = Dialogue::getDialogUser($user_id);
+
+        $message = UserMessage::createMessage($request, $dialogue->id);
 
         return $message->load('recipient', 'sender');
     }
@@ -26,35 +29,7 @@ class UserMessagingController extends Controller
      */
     public function getCorrespList()
     {
-        $send_message = UserMessage::where('user_sender_id', Auth::id())->orderBy('created_at')->with('recipient')->get()->groupBy(function ($item) {
-            return 'user_'.$item['user_recipient_id'];
-        });
-
-        $recipient_message = UserMessage::where('user_recipient_id', Auth::id())->orderBy('created_at')->with('sender')->get()->groupBy(function ($item) {
-            return 'user_'.$item['user_sender_id'];
-        });
-
-        $recipient_message->transform(function ($item){
-            return $item->last();
-        });
-
-        $send_message->transform(function ($item){
-            return $item->last();
-        });
-
-        foreach ($send_message as $key=>$item){
-            if (isset($recipient_message[$key])){
-                if ($item->created_at > $recipient_message[$key]->created_at){
-                    unset($recipient_message[$key]);
-                } else{
-                    unset($send_message[$key]);
-                }
-            }
-        }
-
-        $message_list = array_merge($send_message->toArray(), $recipient_message->toArray());
-
-        return view('user.message_list')->with('messages_list', $message_list);
+        return view('user.message_list')->with('messages_list', Dialogue::getUserDialogues());
     }
 
     /**
@@ -65,7 +40,9 @@ class UserMessagingController extends Controller
      */
     public function getMessages($user_id)
     {
-        return view('user.messages')->with('messages', UserMessage::loadMessages($user_id));
+        $dialog_id = Dialogue::getDialogUser($user_id)->id;
+
+        return view('user.messages')->with(['messages'=>Dialogue::getUserDialogueContent($user_id), 'dialog_id'=>$dialog_id]);
     }
 
     /**
@@ -109,7 +86,7 @@ class UserMessagingController extends Controller
     {
         $message = UserMessage::find($message_id);
 
-        if ($message->user_sender_id != Auth::id()){
+        if ($message->user_id != Auth::id()){
             return abort(403);
         }
 
