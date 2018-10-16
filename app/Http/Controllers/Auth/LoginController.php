@@ -7,6 +7,7 @@ use App\Http\Requests\UserLoginRequest;
 use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -55,14 +56,18 @@ class LoginController extends Controller
 
         $this->login($request);
 
+        if(Auth::user()->is_ban){
+            $this->logout($request);
+        }
+
         return redirect('/');
     }
 
     /**
      * Validate the user login request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return void
+     * @param Request $request
+     * @throws \Illuminate\Validation\ValidationException
      */
     protected function validateLogin(Request $request)
     {
@@ -76,5 +81,22 @@ class LoginController extends Controller
             'password.required'             => 'Не указан пароль',
             'password.string'               => 'Пароль должен быть строкой',
         ]);
+    }
+
+
+
+    /**
+     * Log the user out of the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function logout(Request $request)
+    {
+        $this->guard()->logout();
+
+        $request->session()->invalidate();
+
+        return redirect('/');
     }
 }
