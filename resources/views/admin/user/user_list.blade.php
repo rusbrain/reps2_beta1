@@ -121,7 +121,7 @@
                                     <div class="btn-group">
                                         @if(Auth::id() != $user->id)
                                             <a type="button" class="btn btn-default text-green" title="Написать сообщение" href="{{route('admin.user.messages', ['id' => $user->id])}}"><i class="fa fa-send-o"></i></a>
-                                            <a type="button" class="btn btn-default text-purple" title="Написать письмо на E-mail"><i class="fa fa-envelope-o"></i></a>
+                                            <a type="button" class="btn btn-default text-purple" title="Написать письмо на E-mail"  href="{{route('admin.user.email', ['id' => $user->id])}}"><i class="fa fa-envelope-o"></i></a>
                                         @endif
                                         <a type="button" class="btn btn-default" title="Реплеи пользователя"><i class="fa fa-film"></i></a>
                                         <a type="button" class="btn btn-default text-aqua"  title="Темы пользователя на форуме"><i class="fa fa-list"></i></a>
