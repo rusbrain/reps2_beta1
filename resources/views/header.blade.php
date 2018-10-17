@@ -45,7 +45,8 @@
                 <p class="hello">
                     @if((Auth::user()->view_avatars))
                         @if(Auth::user()->avatar)
-                            <img class="img-responsive profile-avatar-header" src="{{Auth::user()->avatar->link}}" alt="">
+                            <img class="img-responsive profile-avatar-header" src="{{Auth::user()->avatar->link}}"
+                                 alt="">
                         @endif
                     @endif
                     Hello {{Auth::user()->name}}
@@ -57,13 +58,19 @@
                             <a class="profile-link" href="{{route('user_profile',['id' =>Auth::user()->id])}}">Профиль
                                 пользователя</a>
                             <a class="profile-link" href="{{route('edit_profile')}}">Настройки</a>
-                            <a class="profile-link" href="{{route('user.message.get_list')}}">Сообщения</a>
+                            <a class="profile-link" href="{{route('user.message.get_list')}}">Новые сообщения
+                                ({{$new_user_message}})</a>
                             <a class="profile-link" href="{{route('user.friends_list')}}">Список друзей</a>
                             <a class="profile-link" href="{{route('user.ignore_list')}}">Игнор лист</a>
                             <a class="profile-link" href="{{route('logout',['id' =>Auth::user()->id])}}">Выход</a>
                         </div>
                     </div>
                 </div>
+                @if(Auth::user()->user_role_id == 1)
+                    <div>
+                        <a href="{{route('admin.home')}}">Admin Panel</a>
+                    </div>
+                @endif
             </div>
         @endif
     @else

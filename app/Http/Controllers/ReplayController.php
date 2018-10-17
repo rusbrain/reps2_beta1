@@ -40,30 +40,11 @@ class ReplayController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function list(ReplaySearchRequest $request)
+    public function list()
     {
         $method = $this->method_get;
 
-        $query = Replay::$method();
-
-        $request_data = $request->validated();
-        unset($request_data['sort_type']);
-        if ($request_data)
-            foreach ($request_data as $key=>$request_datum) {
-                if ($key == 'text'){
-                    $query->where(function ($q) use ($request_datum){
-                        $q->where('title', 'like', "%$request_datum%")
-                            ->orWhere('content', 'like', "%$request_datum%")
-                            ->orWhere('championship', 'like', "%$request_datum%");
-                    });
-                }elseif($key == 'sort_by'){
-                    $query->orderBy($request_datum, ($request_data['sort_type']??'desc'));
-                }else{
-                    $query->where($key, $request_datum);
-                }
-            }
-
-        return $this->getList($query);
+        return $this->getList(Replay::$method());
     }
 
     /**
@@ -85,17 +66,14 @@ class ReplayController extends Controller
     /**
      * get Replay query
      *
-     * @param \Illuminate\Database\Eloquent\Builder $replay
+     * @param Replay $replay
      * @return Replay|\Illuminate\Database\Eloquent\Builder
      */
     private function getReplay(Builder $replay)
     {
         return $replay->with(User::getUserWithReputationQuery())
                 ->withCount('comments', 'positive','negative')
-                ->with('type','user', 'map','first_country','second_country')
-                ->with(['user_rating' => function($query){
-                    $query->where('user_id', Auth::id());
-                }]);
+                ->with('type','user', 'map','first_country','second_country');
     }
 
     /**
@@ -106,7 +84,6 @@ class ReplayController extends Controller
      */
     public function show($id)
     {
-
         $replay = $this->getReplay(Replay::where('id', $id))->first();
 
         if ($replay){
