@@ -45,7 +45,7 @@
                     <h3 class="box-title">Переписки</h3>
 
                     <div class="box-tools pull-right">
-                        <span class="badge bg-red">{{$all_new_messages}} Новых сообщени{{$end}}</span>
+                       @if($all_new_messages) <span class="badge bg-red">{{$all_new_messages}} Новых сообщени{{$end}}</span>@endif
                     </div>
                 </div>
                 <!-- /.box-header -->

@@ -54,7 +54,7 @@ class Replay extends Model
      */
     public function map()
     {
-        return $this->belongsTo('App\ReplayMap', 'myp_id');
+        return $this->belongsTo('App\ReplayMap', 'map_id');
     }
 
     /**
@@ -102,7 +102,7 @@ class Replay extends Model
      */
     public function user_rating()
     {
-        return $this->hasMany('App\ReplayUserRating', 'object_id')->where('relation', UserReputation::RELATION_REPLAY);
+        return $this->hasMany('App\ReplayUserRating', 'object_id');
     }
 
     /**

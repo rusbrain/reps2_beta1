@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -187,6 +188,14 @@ class User extends Authenticatable
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
+    public function replays()
+    {
+        return $this->hasMany('App\Replay', 'user_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function replay()
     {
         return $this->hasMany('App\Replay', 'user_id')->where('user_replay', 1);
@@ -198,6 +207,14 @@ class User extends Authenticatable
     public function gosu_replay()
     {
         return $this->hasMany('App\Replay', 'user_id')->where('user_replay', 0);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany('App\Comment', 'user_id');
     }
 
     /**
@@ -270,5 +287,83 @@ class User extends Authenticatable
     public function dialogues()
     {
         return $this->belongsToMany('App\Dialogue', 'user_messages');
+    }
+
+    /**
+     * Get all data of user
+     *
+     * @param $user_id
+     * @return mixed
+     */
+    public static function getAllUserProfile($user_id)
+    {
+        return User::where('id', $user_id)->with('country', 'role', 'avatar', 'user_friends.friend_user.avatar',
+            'user_friendly.user.avatar', 'answers_to_questions.question.answers')
+            ->with(['topics' => function($query){
+                $query->with('section', 'preview_image')
+                    ->withCount('positive', 'negative', 'comments')
+                    ->orderBy('created_at', 'desc')->limit(5);
+            }])
+            ->with(['replays' => function($query){
+                $query->with('map', 'type','first_country','second_country')
+                    ->withCount('positive', 'negative', 'comments')
+                    ->orderBy('created_at', 'desc')->limit(5);
+            }])
+            ->with(['user_galleries' => function($query){
+                $query->withCount('positive', 'negative', 'comments')
+                    ->with('file')
+                    ->orderBy('created_at', 'desc')->limit(9);
+            }])
+            ->withCount('positive', 'negative', 'topics','user_galleries', 'files',
+                'user_friends', 'user_friendly', 'ignore_users', 'ignored_users', 'gallery_comments', 'replay_comments',
+                'topic_comments', 'gosu_replay', 'replay', 'answers_to_questions')
+            ->first();
+    }
+
+    /**
+     * Get user profile data
+     *
+     * @param $user_id
+     * @return mixed
+     */
+    public static function getUserProfile($user_id)
+    {
+        return User::find($user_id)->load('country', 'role', 'avatar');
+    }
+
+    /**
+     * Update user data profile
+     *
+     * @param Request $request
+     * @param $user_id
+     * @return mixed
+     */
+    public static function updateData(Request $request, $user_id)
+    {
+        $user = User::find($user_id);
+
+        $user_data = $request->all();
+
+        foreach ($user_data as $key=>$item){
+            if (is_null($item)){
+                unset($user_data[$key]);
+            }
+        }
+
+        if (isset($user_data['country'])){
+            $user_data['country_id'] = $user_data['country'];
+            unset($user_data['country']);
+        }
+
+        if ($request->file('avatar')){
+            $title = 'Аватар '.$user->name;
+            $file = File::storeFile($request->file('avatar'), 'avatars', $title);
+
+            $user_data['file_id'] = $file->id;
+        }
+
+        $user->update($user_data);
+
+        return User::find($user_id);
     }
 }

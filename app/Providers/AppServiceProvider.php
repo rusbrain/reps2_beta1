@@ -9,6 +9,7 @@ use App\Replay;
 use App\User;
 use App\UserGallery;
 use App\UserMessage;
+use App\UserRole;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
@@ -53,7 +54,8 @@ class AppServiceProvider extends ServiceProvider
             'last_user_replay'  => $last_user_replay,
             'new_user_message'  => $new_user_message,
             'new_users'         => $new_users,
-            'countries'         => Country::all()
+            'countries'         => Country::all(),
+            'users_role'        =>UserRole::all()
         ]);
     }
 

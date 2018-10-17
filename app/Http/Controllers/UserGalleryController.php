@@ -9,6 +9,7 @@ use App\Http\Requests\UserGalleryUpdateRequest;
 use App\IgnoreUser;
 use App\UserGallery;
 use App\UserReputation;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -46,10 +47,10 @@ class UserGalleryController extends Controller
     }
 
     /**
-     * @param UserGallery $gallery
+     * @param Builder $gallery
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    private static function getList(UserGallery $gallery)
+    private static function getList($gallery)
     {
         return $gallery->with('file')->withCount('positive', 'negative', 'comments')->orderBy('created_at')->paginate(50);
     }

@@ -129,7 +129,7 @@
         <!-- Menu Toggle Button -->
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <!-- The user image in the navbar-->
-            @if($message->sender->avatar)
+            @if(isset(Auth::user()->avatar))
                 <img src="{{route('home').Auth::user()->avatar->link}}" class="user-image" alt="User Image">
             @else
                 <img src="{{route('home').'/dist/img/avatar.png'}}" class="user-image" alt="User Image">
@@ -140,7 +140,7 @@
         <ul class="dropdown-menu">
             <!-- The user image in the menu -->
             <li class="user-header">
-                @if($message->sender->avatar)
+                @if(isset(Auth::user()->avatar))
                     <img src="{{route('home').Auth::user()->avatar->link}}" class="user-image" alt="User Image">
                 @else
                     <img src="{{route('home').'/dist/img/avatar.png'}}" class="user-image" alt="User Image">

@@ -111,7 +111,6 @@ Route::group(['prefix' => 'forum'], function () {
 Route::group(['prefix' => 'replay'], function (){
     Route::get('/users', 'ReplayUsersController@list')                              ->name('replay.users');
     Route::get('/gosus', 'ReplayGosuController@list')                               ->name('replay.gosus');
-    Route::get('/{id}', 'ReplayController@show')                                    ->name('replay.get');
     Route::get('/user/{type}', 'ReplayUsersController@getReplayByType')             ->name('replay.user_type');
     Route::get('/gosu/{type}', 'ReplayGosuController@getReplayByType')              ->name('replay.gosu_type');
     Route::get('/{id}/get_rating', 'ReplayRatingController@getRating')              ->name('replay.ger_rating');
@@ -137,6 +136,7 @@ Route::group(['prefix' => 'replay'], function (){
             Route::post('{id}/update', 'ReplayCommentController@update')            ->name('replay.comment.update');
         });
     });
+    Route::get('/{id}', 'ReplayController@show')                                    ->name('replay.get');
 });
 
 Route::group(['prefix' => 'gallery'], function (){
@@ -169,6 +169,11 @@ Route::group(['middleware' => ['auth', 'admin_panel'], 'prefix' => 'admin_panel'
     Route::post('send_quick_email', 'BaseController@sendQuickEmail')                ->name('admin.send_quick_email');
     Route::group(['prefix' => 'user'], function (){
         Route::get('{id}/email', 'UserEmailController@index')                       ->name('admin.user.email');
+        Route::get('{id}/replay', 'ReplayController@getReplayByUser')               ->name('admin.user.replay');
+        Route::get('{id}/topic', 'ForumController@getUsersTopics')                  ->name('admin.user.topic');
+        Route::get('{id}/profile', 'UserController@getUserProfile')                 ->name('admin.user.profile');
+        Route::get('{id}/profile/edit', 'UserController@getEditUserProfile')        ->name('admin.user.profile.edit');
+        Route::post('{id}/profile/save', 'UserController@saveUserProfile')          ->name('admin.user.profile.save');
         Route::get('/', 'UserController@index')                                     ->name('admin.users');
         Route::get('{id}/message', 'UserMessageController@getUser')                 ->name('admin.user.messages');
         Route::get('/message/{dialog_id}/load', 'UserMessageController@load')       ->name('admin.user.message_load');

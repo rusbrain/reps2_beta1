@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\User\UpdateProfileRequest;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -16,7 +17,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $users = User::with('role', 'country')->withCount('positive', 'negative');
+        $users = User::with('role', 'country')->withCount('topics', 'replays', 'comments', 'user_galleries');
 
         if ($request->has('search') && null !==$request->get('search')){
             $users->where(function ($query) use ($request)
@@ -53,4 +54,42 @@ class UserController extends Controller
 
         return view('admin.user.user_list')->with(['data'=> $users, 'request_data' => $request->all()]);
     }
+
+    /**
+     * GEt user profile page
+     *
+     * @param $user_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getUserProfile($user_id)
+    {
+        return view('admin.user.profile')->with('user', User::getAllUserProfile($user_id));
+    }
+
+    /**
+     * Get user edit profile page
+     *
+     * @param $user_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getEditUserProfile($user_id)
+    {
+        return view('admin.user.profile_edit')->with('user', User::getUserProfile($user_id));
+    }
+
+    /**
+     * Save updated user data
+     *
+     * @param UpdateProfileRequest $request
+     * @param $user_id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function saveUserProfile(UpdateProfileRequest $request, $user_id)
+    {
+        User::updateData($request, $user_id);
+
+        return redirect()->route('admin.user.profile.edit', ['id' => $user_id]);
+    }
+
+
 }

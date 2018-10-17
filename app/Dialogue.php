@@ -75,16 +75,8 @@ class Dialogue extends Model
     public static function getUserDialogueContent($dialog_id)
     {
         $dialogues = Dialogue::find($dialog_id)->messages()->with('sender.avatar')->paginate(10);
-//         $dialogues = Dialogue::whereHas('users', function ($query) use ($user_id){
-//            $query->where('user_id', $user_id)->orWhere('user_id', Auth::id());
-//        })->with(['messages.sender', 'users.avatar'])->first();
-//
-//         $dialogues->transform(function ($item)
-//         {
-//             $item->senders = $item->users->unique();
-//             unset($item->users);
-//             return $item;
-//         });
+
+        Dialogue::find($dialog_id)->messages()->update(['is_read'=>1]);
 
          return $dialogues;
     }

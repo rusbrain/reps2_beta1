@@ -15,7 +15,6 @@
 @endsection
 
 @section('content')
-    {{--{{dd($data->getUrlRange(1,10))}}--}}
     <div class="row">
         <div class="col-md-12">
             <div class="box">
@@ -98,8 +97,12 @@
                             <th>Страна</th>
                             <th>Роль</th>
                             <th>Рейтинг</th>
-                            <th>Почта подтверждена</th>
-                            <th>Заблокирован</th>
+                            <th>Темы</th>
+                            <th>Replay</th>
+                            <th>Галерея</th>
+                            <th>Коментарии</th>
+                            <th>Почта</th>
+                            <th>Бан</th>
                             <th style="width: 330px">Действия</th>
                         </tr>
                         </thead>
@@ -115,6 +118,10 @@
                                 <td>{{$user->country->name??"Нет"}}</td>
                                 <td>{{$user->role->title??"Пользователь"}}</td>
                                 <td>{{$user->rating}}</td>
+                                <td>{{$user->topics_count}}</td>
+                                <td>{{$user->replays_count}}</td>
+                                <td>{{$user->user_galleries_count}}</td>
+                                <td>{{$user->comments_count}}</td>
                                 <td>{!! $user->email_verified_at?'<i class="fa fa-check text-green"></i>':'<i class="fa fa-ban text-red"></i>' !!}</td>
                                 <td>{!! $user->is_ban?'<i class="fa fa-ban text-red"></i>' : '<i class="fa fa-circle-o text-green"></i>'!!}</td>
                                 <td>
@@ -123,10 +130,10 @@
                                             <a type="button" class="btn btn-default text-green" title="Написать сообщение" href="{{route('admin.user.messages', ['id' => $user->id])}}"><i class="fa fa-send-o"></i></a>
                                             <a type="button" class="btn btn-default text-purple" title="Написать письмо на E-mail"  href="{{route('admin.user.email', ['id' => $user->id])}}"><i class="fa fa-envelope-o"></i></a>
                                         @endif
-                                        <a type="button" class="btn btn-default" title="Реплеи пользователя"><i class="fa fa-film"></i></a>
-                                        <a type="button" class="btn btn-default text-aqua"  title="Темы пользователя на форуме"><i class="fa fa-list"></i></a>
-                                        <a type="button" class="btn btn-default text-fuchsia"  title="Просмотреть профиль пользователя"><i class="fa fa-eye"></i></a>
-                                        <a type="button" class="btn btn-default text-orange"  title="Править профиль пользователя"><i class="fa fa-edit"></i></a>
+                                        <a type="button" class="btn btn-default" title="Реплеи пользователя" href="{{route('admin.user.replay', ['id' => $user->id])}}"><i class="fa fa-film"></i></a>
+                                        <a type="button" class="btn btn-default text-aqua"  title="Темы пользователя на форуме" href="{{route('admin.user.topic', ['id' => $user->id])}}"><i class="fa fa-list"></i></a>
+                                        <a type="button" class="btn btn-default text-fuchsia"  title="Просмотреть профиль пользователя" href="{{route('admin.user.profile', ['id' => $user->id])}}"><i class="fa fa-eye"></i></a>
+                                        <a type="button" class="btn btn-default text-orange"  title="Править профиль пользователя"  href="{{route('admin.user.profile.edit', ['id' => $user->id])}}"><i class="fa fa-edit"></i></a>
                                         @if($user->is_ban)
                                             <a type="button" class="btn btn-default text-olive" title="Снять блокировку пользователя"><i class="fa fa-thumbs-o-up"></i></a>
                                         @else
