@@ -50,10 +50,12 @@ class UserFriendController extends Controller
     public function getFriendsList()
     {
         $friends = Auth::user()->user_friends()->with('friend_user')->get()->transform(function ($friend){
+            $friend->friend_user->friendly_data = $friend->created_at;
             return $friend->friend_user;
         });
 
         $friendly = Auth::user()->user_friendly()->with('user')->get()->transform(function ($friend){
+            $friend->user->friendly_data = $friend->created_at;
             return $friend->user;
         });
 

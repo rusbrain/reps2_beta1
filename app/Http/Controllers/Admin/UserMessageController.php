@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Dialogue;
 use App\Http\Requests\SendUserMessageRequest;
 use App\User;
 use App\UserMessage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 
 class UserMessageController extends Controller
@@ -26,14 +28,14 @@ class UserMessageController extends Controller
      * Seva new message to user
      *
      * @param SendUserMessageRequest $request
-     * @param $id
+     * @param $dialog_id
      * @return array
      */
-    public function send(SendUserMessageRequest $request, $id)
+    public function send(SendUserMessageRequest $request, $dialog_id)
     {
-        UserMessage::createMessage($request, $id);
+        UserMessage::createMessage($request, $dialog_id);
 
-        return redirect()->route('admin.user.message.load', ['id'=>$id]);
+        return redirect()->route('admin.user.message_load', ['id'=>$dialog_id]);
     }
 
     /**
@@ -44,17 +46,23 @@ class UserMessageController extends Controller
      */
     private static function getMessageData($id)
     {
-        return ['messages'=> UserMessage::loadMessages($id), 'user' => User::find($id), 'page' => Input::has('page')?Input::get('page')+1:2];
+        $dialog_id = Dialogue::getDialogUser($id)->id;
+
+        return ['dialog_id' => $dialog_id,'messages'=> Dialogue::getUserDialogueContent($dialog_id), 'contacts' => Dialogue::getUserDialogues(), 'user' => User::find($id), 'page' => Input::has('page')?Input::get('page')+1:2];
     }
 
     /**
      * Load messages of user
      *
-     * @param $id
+     * @param $dialog_id
      * @return array
      */
-    public function load($id)
+    public function load($dialog_id)
     {
-        return view('admin.user.message_parse')->with(self::getMessageData($id));
+        $user = Dialogue::find($dialog_id)->users()->where('id','<>', Auth::id())->first();
+
+        return view('admin.user.message_parse')->with(self::getMessageData($user->id));
     }
+
+
 }

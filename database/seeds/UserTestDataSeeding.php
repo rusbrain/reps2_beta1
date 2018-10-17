@@ -91,15 +91,48 @@ class UserTestDataSeeding extends Seeder
                 'user_id'       => $user_ids[array_rand($user_ids)],
                 'file_id'       => $file_ids[array_rand($file_ids)],
                 'comment'       => 'Comment to Image '.$i,
+                'for_adults'    => rand(0,1),
                 'created_at'    => Carbon\Carbon::now(),
                 'updated_at'    => Carbon\Carbon::now(),
             ];
         }
         \App\UserGallery::insert($gellery_data);
 
-        $user_friends = [];
-        $user_message = [];
-        $ignore_users = [];
+        $user_friends   = [];
+        $user_message   = [];
+        $dialogues      = [];
+        $ignore_users   = [];
+        $dialogue_user  = [];
+
+        for($i = 0; $i < 10; $i++){
+            $dialogues[] = ['name' => 'Диалог '.$i];
+        }
+        
+        \App\Dialogue::insert($dialogues);
+        
+        $dialogues = \App\Dialogue::all();
+
+        foreach ($dialogues as $key=>$dialogue) {
+            $user_1 = $user_ids[array_rand($user_ids)];
+            do{
+                $user_2 = $user_ids[array_rand($user_ids)];
+            }while ($user_1 == $user_2);
+
+            $dialogue->users()->attach(['user_id' =>$user_1], ['user_id' =>$user_2]);
+
+            for ($j = 0; $j<rand(2,15); $j++){
+                $user_message[] = [
+                    'user_id'               => $j%2?$user_1:$user_2,
+                    'dialogue_id'           => $dialogue->id,
+                    'message'               => "Тестовое сообщение $key - $j",
+                    'created_at'            => Carbon\Carbon::now(),
+                    'updated_at'            => Carbon\Carbon::now(),
+                ];
+            }
+        }
+
+        //seed user messages
+        \App\UserMessage::insert($user_message);
 
         for($i = 0; $i < 10; $i++)
         {
@@ -111,14 +144,6 @@ class UserTestDataSeeding extends Seeder
                     'created_at'        => Carbon\Carbon::now(),
                     'updated_at'        => Carbon\Carbon::now(),
                 ];
-
-                $user_message[] = [
-                    'user_sender_id'        => $user_ids[$i],
-                    'user_recipient_id'     => $user_ids[array_rand($user_ids)],
-                    'message'               => "Тестовое сообщение $i - $j",
-                    'created_at'            => Carbon\Carbon::now(),
-                    'updated_at'            => Carbon\Carbon::now(),
-                ];
             }
 
             $ignore_users[] = [
@@ -127,13 +152,10 @@ class UserTestDataSeeding extends Seeder
                 'created_at'        => Carbon\Carbon::now(),
                 'updated_at'        => Carbon\Carbon::now(),
             ];
-
         }
 
         //seed user friends
         \App\UserFriend::insert($user_friends);
-        //seed user messages
-        \App\UserMessage::insert($user_message);
         //seed ignore users
         \App\IgnoreUser::insert($ignore_users);
 
