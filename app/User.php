@@ -141,7 +141,8 @@ class User extends Authenticatable
     public static function getUserWithReputationQuery()
     {
         return ['user' => function($query){
-            $query->withCount([
+            $query->with('country')
+                ->withCount([
                 'reputation as rep_positive' => function($query){
                     $query->where('rating', 1);
                 },

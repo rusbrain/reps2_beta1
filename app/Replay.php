@@ -54,7 +54,7 @@ class Replay extends Model
      */
     public function map()
     {
-        return $this->belongsTo('App\ReplayMap', 'myp_id');
+        return $this->belongsTo('App\ReplayMap', 'map_id');
     }
 
     /**

@@ -12,6 +12,7 @@ use App\ReplayMap;
 use App\ReplayType;
 use App\User;
 use App\UserReputation;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -24,14 +25,14 @@ class ReplayController extends Controller
      *
      * @var string
      */
-    protected static $replay_group;
+    protected  $replay_group;
 
     /**
      * Replay query function name
      *
      * @var string
      */
-    protected static $method_get;
+    protected  $method_get;
 
     /**
      * Get list of all Replay
@@ -40,7 +41,7 @@ class ReplayController extends Controller
      */
     public function list()
     {
-        $method = self::$method_get;
+        $method = $this->method_get;
 
         return $this->getList(Replay::$method());
     }
@@ -58,7 +59,7 @@ class ReplayController extends Controller
             ->orderBy('created_at')
             ->paginate(20);
 
-        return view('replay.list')->with(['replays' => $data, 'title'=>($title??self::$replay_group)]);
+        return view('replay.list')->with(['replays' => $data, 'title'=>($title?$title:$this->replay_group)]);
     }
 
     /**
@@ -67,7 +68,7 @@ class ReplayController extends Controller
      * @param Replay $replay
      * @return Replay|\Illuminate\Database\Eloquent\Builder
      */
-    private function getReplay(Replay $replay)
+    private function getReplay(Builder $replay)
     {
         return $replay->with(User::getUserWithReputationQuery())
                 ->withCount('comments', 'positive','negative')
@@ -204,7 +205,7 @@ class ReplayController extends Controller
             $user_id = Auth::id();
         }
 
-        $method = self::$method_get;
+        $method = $this->method_get;
         $this->getList(Replay::$method()->where('user_id',$user_id));
     }
 
@@ -222,8 +223,8 @@ class ReplayController extends Controller
             return abort(404);
         }
 
-        $method = self::$method_get;
-        return $this->getList(Replay::$method()->where('type_id',$type->id), self::$replay_group.' '.$type);
+        $method = $this->method_get;
+        return $this->getList(Replay::$method()->where('type_id',$type->id), $this->replay_group.' '.$type);
     }
 
     /**

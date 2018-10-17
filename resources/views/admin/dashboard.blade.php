@@ -66,7 +66,6 @@
                 <div class="small-box bg-purple-gradient">
                     <div class="inner">
                         <h3>{{$user_count}}</h3>
-
                         <p>Users</p>
                     </div>
                     <div class="icon">
@@ -114,8 +113,7 @@
                     </div>
 
                     <div>
-                  <textarea class="textarea" placeholder="Message" name="content"
-                            style="width: 100%; height: 125px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                        <textarea class="textarea" placeholder="Message" name="content" style="width: 100%; height: 125px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
                     </div>
                     @if ($errors->has('content'))
                         <span class="invalid-feedback text-danger" role="alert">
@@ -128,7 +126,6 @@
                     </div>
                 </form>
             </div>
-
         </div>
 @endsection
 

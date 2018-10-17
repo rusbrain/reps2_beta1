@@ -32,7 +32,7 @@
                         <a href="">View results</a>
                     </p>
                 @else
-                    <p class="sidebar-widget-no-results">There is no answer variants</p>
+                    <p class="sidebar-widget-no-results">There are no answer variants</p>
                     <a class="view-results" href="">View results</a>
                 @endif
             @endif
@@ -57,16 +57,16 @@
     <div class="sidebar-widget">
         <div class="sidebar-widget-title">Юзерские реплеи</div>
         <div class="sidebar-widget-content">
-            {{--{{dd($last_user_replay)}}--}}
+
             @if(!empty($last_user_replay))
                 @foreach($last_user_replay as $replay)
-                    <div>
-                        <p></p>
+                    <div class="replays-wrapper">
+                        <a class="replay" href="{{route('replay.get',['id' => $replay->id])}}"><span>{{$replay->title}}</span><span class="qty-downloaded">{{$replay->downloaded}}</span></a>
                     </div>
                 @endforeach
-                    <a class="view-results" href="">Ещё</a>
+                    <a class="view-results" href="{{route('replay.users')}}">Ещё</a>
             @else
-                <p class="sidebar-widget-no-results">There is no User's replays</p>
+                <p class="sidebar-widget-no-results">There are no User's replays</p>
             @endif
         </div>
     </div>
