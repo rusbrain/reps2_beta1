@@ -111,7 +111,6 @@ Route::group(['prefix' => 'forum'], function () {
 Route::group(['prefix' => 'replay'], function (){
     Route::get('/users', 'ReplayUsersController@list')                              ->name('replay.users');
     Route::get('/gosus', 'ReplayGosuController@list')                               ->name('replay.gosus');
-    Route::get('/{id}', 'ReplayController@show')                                    ->name('replay.get');
     Route::get('/user/{type}', 'ReplayUsersController@getReplayByType')             ->name('replay.user_type');
     Route::get('/gosu/{type}', 'ReplayGosuController@getReplayByType')              ->name('replay.gosu_type');
     Route::get('/{id}/get_rating', 'ReplayRatingController@getRating')              ->name('replay.ger_rating');
@@ -137,6 +136,7 @@ Route::group(['prefix' => 'replay'], function (){
             Route::post('{id}/update', 'ReplayCommentController@update')            ->name('replay.comment.update');
         });
     });
+    Route::get('/{id}', 'ReplayController@show')                                    ->name('replay.get');
 });
 
 Route::group(['prefix' => 'gallery'], function (){

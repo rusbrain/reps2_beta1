@@ -18,7 +18,6 @@
     {{--{{dd($user)}}--}}
     <div class="row">
         <div class="col-lg-3">
-
             <!-- Profile Image -->
             <div class="box box-primary">
                 <div class="box-body box-profile">
@@ -42,44 +41,66 @@
                     </p>
 
                     <ul class="list-group list-group-unbordered">
-                        <li class="list-group-item">
-                            <b>Положительные оценки</b> <a class="pull-right">{{$user->positive_count}}</a>
-                        </li>
-                        <li class="list-group-item">
-                            <b>Отрицательные оценки</b> <a class="pull-right">{{$user->negative_count}}</a>
-                        </li>
-                        <li class="list-group-item">
-                            <b>Записей на форуме</b> <a class="pull-right">{{$user->topics_count}}</a>
-                        </li>
-                        <li class="list-group-item">
-                            <b>Пользовательских Replays</b> <a class="pull-right">{{$user->replay_count}}</a>
-                        </li>
-                        <li class="list-group-item">
-                            <b>Gosu Replays</b> <a class="pull-right">{{$user->gosu_replay_count}}</a>
-                        </li>
-                        <li class="list-group-item">
-                            <b>Изображений в галерее</b> <a class="pull-right">{{$user->user_galleries_count}}</a>
-                        </li>
+                        @if($user->positive_count)
+                            <li class="list-group-item">
+                                <b>Положительные оценки</b> <a class="pull-right">{{$user->positive_count}}</a>
+                            </li>
+                        @endif
+                        @if($user->negative_count)
+                            <li class="list-group-item">
+                                <b>Отрицательные оценки</b> <a class="pull-right">{{$user->negative_count}}</a>
+                            </li>
+                        @endif
+                        @if($user->topics_count)
+                            <li class="list-group-item">
+                                <b>Записей на форуме</b> <a class="pull-right">{{$user->topics_count}}</a>
+                            </li>
+                        @endif
+                        @if($user->replay_count)
+                            <li class="list-group-item">
+                                <b>Пользовательских Replays</b> <a class="pull-right">{{$user->replay_count}}</a>
+                            </li>
+                        @endif
+                        @if($user->gosu_replay_count)
+                            <li class="list-group-item">
+                                <b>Gosu Replays</b> <a class="pull-right">{{$user->gosu_replay_count}}</a>
+                            </li>
+                        @endif
+                        @if($user->user_galleries_count)
+                            <li class="list-group-item">
+                                <b>Изображений в галерее</b> <a class="pull-right">{{$user->user_galleries_count}}</a>
+                            </li>
+                        @endif
+                        @if($user->topic_comments_count)
                         <li class="list-group-item">
                             <b>Комментариев на форуме</b> <a class="pull-right">{{$user->topic_comments_count}}</a>
                         </li>
-                        <li class="list-group-item">
-                            <b>Комментариев к Replays</b> <a class="pull-right">{{$user->replay_comments_count}}</a>
-                        </li>
-                        <li class="list-group-item">
-                            <b>Комментариев в галерее</b> <a class="pull-right">{{$user->gallery_comments_count}}</a>
-                        </li>
-                        <li class="list-group-item">
-                            <b>Загруженных файлов всего</b> <a class="pull-right">{{$user->files_count}}</a>
-                        </li>
-                        <li class="list-group-item">
-                            <b>Ответов на опросы</b> <a class="pull-right">{{$user->answers_to_questions_count}}</a>
-                        </li>
+                        @endif
+                        @if($user->replay_comments_count)
+                            <li class="list-group-item">
+                                <b>Комментариев к Replays</b> <a class="pull-right">{{$user->replay_comments_count}}</a>
+                            </li>
+                        @endif
+                        @if($user->gallery_comments_count)
+                            <li class="list-group-item">
+                                <b>Комментариев в галерее</b> <a class="pull-right">{{$user->gallery_comments_count}}</a>
+                            </li>
+                        @endif
+                        @if($user->files_count)
+                            <li class="list-group-item">
+                                <b>Загруженных файлов всего</b> <a class="pull-right">{{$user->files_count}}</a>
+                            </li>
+                        @endif
+                        @if($user->answers_to_questions_count)
+                            <li class="list-group-item">
+                                <b>Ответов на опросы</b> <a class="pull-right">{{$user->answers_to_questions_count}}</a>
+                            </li>
+                        @endif
                     </ul>
                 </div>
                 <!-- /.box-body -->
             </div>
-            </div>
+        </div>
         <!-- /.box -->
         <div class="col-lg-3">
             <!-- About Me Box -->
@@ -167,274 +188,196 @@
         <div class="col-lg-6">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="#activity" data-toggle="tab">Activity</a></li>
-                    <li><a href="#timeline" data-toggle="tab">Timeline</a></li>
-                    <li><a href="#settings" data-toggle="tab">Settings</a></li>
+                    <li class="active"><a href="#activity" data-toggle="tab">Последние публикации</a></li>
+                    <li><a href="#friends" data-toggle="tab">Друзья</a></li>
+                    <li><a href="#voting" data-toggle="tab">Голосование</a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="active tab-pane" id="activity">
-                        <!-- Post -->
-                        <div class="post">
-                            <div class="user-block">
-                                <img class="img-circle img-bordered-sm" src="../../dist/img/user1-128x128.jpg" alt="user image">
-                                <span class="username">
-                          <a href="#">Jonathan Burke Jr.</a>
-                          <a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i></a>
-                        </span>
-                                <span class="description">Shared publicly - 7:30 PM today</span>
-                            </div>
-                            <!-- /.user-block -->
-                            <p>
-                                Lorem ipsum represents a long-held tradition for designers,
-                                typographers and the like. Some people hate it and argue for
-                                its demise, but others ignore the hate as they create awesome
-                                tools to help create filler text for everyone from bacon lovers
-                                to Charlie Sheen fans.
-                            </p>
-                            <ul class="list-inline">
-                                <li><a href="#" class="link-black text-sm"><i class="fa fa-share margin-r-5"></i> Share</a></li>
-                                <li><a href="#" class="link-black text-sm"><i class="fa fa-thumbs-o-up margin-r-5"></i> Like</a>
-                                </li>
-                                <li class="pull-right">
-                                    <a href="#" class="link-black text-sm"><i class="fa fa-comments-o margin-r-5"></i> Comments
-                                        (5)</a></li>
-                            </ul>
-
-                            <input class="form-control input-sm" type="text" placeholder="Type a comment">
-                        </div>
-                        <!-- /.post -->
-
-                        <!-- Post -->
-                        <div class="post clearfix">
-                            <div class="user-block">
-                                <img class="img-circle img-bordered-sm" src="../../dist/img/user7-128x128.jpg" alt="User Image">
-                                <span class="username">
-                          <a href="#">Sarah Ross</a>
-                          <a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i></a>
-                        </span>
-                                <span class="description">Sent you a message - 3 days ago</span>
-                            </div>
-                            <!-- /.user-block -->
-                            <p>
-                                Lorem ipsum represents a long-held tradition for designers,
-                                typographers and the like. Some people hate it and argue for
-                                its demise, but others ignore the hate as they create awesome
-                                tools to help create filler text for everyone from bacon lovers
-                                to Charlie Sheen fans.
-                            </p>
-
-                            <form class="form-horizontal">
-                                <div class="form-group margin-bottom-none">
-                                    <div class="col-sm-9">
-                                        <input class="form-control input-sm" placeholder="Response">
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <button type="submit" class="btn btn-danger pull-right btn-block btn-sm">Send</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <!-- /.post -->
-
-                        <!-- Post -->
-                        <div class="post">
-                            <div class="user-block">
-                                <img class="img-circle img-bordered-sm" src="../../dist/img/user6-128x128.jpg" alt="User Image">
-                                <span class="username">
-                          <a href="#">Adam Jones</a>
-                          <a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i></a>
-                        </span>
-                                <span class="description">Posted 5 photos - 5 days ago</span>
-                            </div>
-                            <!-- /.user-block -->
-                            <div class="row margin-bottom">
-                                <div class="col-sm-6">
-                                    <img class="img-responsive" src="../../dist/img/photo1.png" alt="Photo">
-                                </div>
-                                <!-- /.col -->
-                                <div class="col-sm-6">
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <img class="img-responsive" src="../../dist/img/photo2.png" alt="Photo">
-                                            <br>
-                                            <img class="img-responsive" src="../../dist/img/photo3.jpg" alt="Photo">
+                        <div class="row">
+                            @if($user->topics->count())
+                                <div class="col-md-{{$user->replays->count()?'6':'12'}}">
+                                    <h3 class="text-blue"> <a href="{{route('admin.user.topic', ['id'=>$user->id])}}">Форум</a></h3>
+                                    @foreach($user->topics as $topic)
+                                        {{--{{dd($topic)}}--}}
+                                        <div class="post">
+                                            <div class="user-block">
+                                                <span class="username">
+                                                    <a href="{{route('forum.topic.index', ['id'=>$topic->id])}}">{{$topic->section->title}} >> {{$topic->title}}</a>
+                                                </span>
+                                                <span class="description">{{$topic->created_at->format('h:m d.m.y')}}</span>
+                                            </div>
+                                            @if($topic->preview_image)
+                                                <img class="img-responsive" src="{{route('home').$topic->preview_image->link}}" alt="Photo">
+                                            @endif
+                                            <!-- /.user-block -->
+                                            <p>
+                                                @if($topic->preview_content)
+                                                    {{$topic->preview_content}}
+                                                @else
+                                                    {{mb_strimwidth($topic->content,0,1000, '...')}}
+                                                @endif
+                                            </p>
+                                            <ul class="list-inline">
+                                                <li class="pull-right">
+                                                    <p  class="link-black text-sm"><i class="fa fa-comments-o margin-r-5"></i>
+                                                        {{$topic->comments_count}}</p></li>
+                                                <li class="pull-right">
+                                                    <p  class="link-black text-sm"><i class="fa fa-thumbs-o-down margin-r-5 text-red"></i>
+                                                        {{$topic->negative_count}}</p></li>
+                                                <li class="pull-right">
+                                                    <p  class="link-black text-sm"><i class="fa fa-thumbs-o-up margin-r-5 text-green"></i>
+                                                        {{$topic->positive_count}}</p></li>
+                                            </ul>
                                         </div>
-                                        <!-- /.col -->
-                                        <div class="col-sm-6">
-                                            <img class="img-responsive" src="../../dist/img/photo4.jpg" alt="Photo">
-                                            <br>
-                                            <img class="img-responsive" src="../../dist/img/photo1.png" alt="Photo">
-                                        </div>
-                                        <!-- /.col -->
-                                    </div>
-                                    <!-- /.row -->
+                                    @endforeach
                                 </div>
-                                <!-- /.col -->
-                            </div>
-                            <!-- /.row -->
-
-                            <ul class="list-inline">
-                                <li><a href="#" class="link-black text-sm"><i class="fa fa-share margin-r-5"></i> Share</a></li>
-                                <li><a href="#" class="link-black text-sm"><i class="fa fa-thumbs-o-up margin-r-5"></i> Like</a>
-                                </li>
-                                <li class="pull-right">
-                                    <a href="#" class="link-black text-sm"><i class="fa fa-comments-o margin-r-5"></i> Comments
-                                        (5)</a></li>
-                            </ul>
-
-                            <input class="form-control input-sm" type="text" placeholder="Type a comment">
+                            @endif
+                            @if($user->replays->count())
+                                <div class="col-md-{{$user->topics->count()?'6':'12'}}">
+                                    <h3 class="text-blue"><a href="{{route('admin.user.replay', ['id'=>$user->id])}}">Replay</a></h3>
+                                    @foreach($user->replays as $replay)
+                                        <div class="post">
+                                            <div class="user-block">
+                                                <span class="username">
+                                                    <a href="{{route('replay.get', ['id'=>$replay->id])}}">{{$replay->user_replay?"Пользовательский":"Gosu"}} Replay >> {{$replay->title}}({{$replay->type->name}})</a>
+                                                </span>
+                                                <span class="description">{{$replay->created_at->format('h:m d.m.y')}}</span>
+                                            </div>
+                                            <div class="row">
+                                                @if($replay->map)
+                                                    <div class="col-md-4">
+                                                        <img class="img-responsive" src="{{route('home').'/'.$replay->map->url}}" alt="Photo">
+                                                    </div>
+                                                @endif
+                                        <!--     /.user-block -->
+                                                <div class="col-md-{{$replay->map != null ?'8':'12'}}">
+                                                    <p>
+                                                        <b>Страны:</b> {{$replay->first_country->name??"NO"}} vs {{$replay->second_country->name??"NO"}} <br>
+                                                        <b>Матчап:</b> {{$replay->first_race??"NO"}} vs {{$replay->second_race??"NO"}} <br>
+                                                        <b>Локации:</b> {{$replay->first_location??"NO"}} vs {{$replay->second_location??"NO"}} <br>
+                                                        <b>Длительность:</b> {{$replay->length}} <br>
+                                                        <b>Чемпионат:</b> {{$replay->championship}} <br>
+                                                        <b>Версия:</b> {{$replay->game_version}} <br>
+                                                        <b>Рейтинг:</b> {{$replay->evaluation}} <br>
+                                                        <b>Юзер Рейтинг:</b> {{$replay->user_rating}} <br>
+                                                        {{mb_strimwidth($replay->content,0,1000, '...')}}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <ul class="list-inline">
+                                                <li class="pull-right">
+                                                    <p  class="link-black text-sm"><i class="fa fa-comments-o margin-r-5"></i>
+                                                        {{$replay->comments_count}}</p></li>
+                                                <li class="pull-right">
+                                                    <p  class="link-black text-sm"><i class="fa fa-thumbs-o-down margin-r-5 text-red"></i>
+                                                        {{$replay->negative_count}}</p></li>
+                                                <li class="pull-right">
+                                                    <p  class="link-black text-sm"><i class="fa fa-thumbs-o-up margin-r-5 text-green"></i>
+                                                        {{$replay->positive_count}}</p></li>
+                                            </ul>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @endif
+                            @if($user->user_galleries->count())
+                                <div class="col-md-12">
+                                    <h3 class="text-blue"><a href="{{route('gallery.list_user', ['id'=>$user->id])}}">Галерея</a></h3>
+                                    <div class="post">
+                                        <!-- /.user-block -->
+                                        <div class="row margin-bottom">
+                                            @php $i = 0; @endphp
+                                            @foreach($user->user_galleries as $user_galleries)
+                                                @php $i++; @endphp
+                                                <div class="col-sm-4">
+                                                    <a href="{{route('gallery.view', ['id' => $user_galleries->id])}}"><img class="img-responsive" src="{{route('home').'/'.$user_galleries->file->link}}" alt="Photo"></a>
+                                                </div>
+                                                @if($i%3 == 0) <div class="row" style="margin: 30px"></div>@endif
+                                            @endforeach
+                                        </div>
+                                        <!-- /.row -->
+                                    </div>
+                                </div>
+                            @endif
                         </div>
-                        <!-- /.post -->
                     </div>
                     <!-- /.tab-pane -->
-                    <div class="tab-pane" id="timeline">
+                    <div class="tab-pane" id="friends">
                         <!-- The timeline -->
-                        <ul class="timeline timeline-inverse">
-                            <!-- timeline time label -->
-                            <li class="time-label">
-                        <span class="bg-red">
-                          10 Feb. 2014
-                        </span>
-                            </li>
-                            <!-- /.timeline-label -->
-                            <!-- timeline item -->
-                            <li>
-                                <i class="fa fa-envelope bg-blue"></i>
-
-                                <div class="timeline-item">
-                                    <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
-
-                                    <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
-
-                                    <div class="timeline-body">
-                                        Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
-                                        weebly ning heekya handango imeem plugg dopplr jibjab, movity
-                                        jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
-                                        quora plaxo ideeli hulu weebly balihoo...
-                                    </div>
-                                    <div class="timeline-footer">
-                                        <a class="btn btn-primary btn-xs">Read more</a>
-                                        <a class="btn btn-danger btn-xs">Delete</a>
-                                    </div>
-                                </div>
-                            </li>
-                            <!-- END timeline item -->
-                            <!-- timeline item -->
-                            <li>
-                                <i class="fa fa-user bg-aqua"></i>
-
-                                <div class="timeline-item">
-                                    <span class="time"><i class="fa fa-clock-o"></i> 5 mins ago</span>
-
-                                    <h3 class="timeline-header no-border"><a href="#">Sarah Young</a> accepted your friend request
-                                    </h3>
-                                </div>
-                            </li>
-                            <!-- END timeline item -->
-                            <!-- timeline item -->
-                            <li>
-                                <i class="fa fa-comments bg-yellow"></i>
-
-                                <div class="timeline-item">
-                                    <span class="time"><i class="fa fa-clock-o"></i> 27 mins ago</span>
-
-                                    <h3 class="timeline-header"><a href="#">Jay White</a> commented on your post</h3>
-
-                                    <div class="timeline-body">
-                                        Take me to your leader!
-                                        Switzerland is small and neutral!
-                                        We are more like Germany, ambitious and misunderstood!
-                                    </div>
-                                    <div class="timeline-footer">
-                                        <a class="btn btn-warning btn-flat btn-xs">View comment</a>
-                                    </div>
-                                </div>
-                            </li>
-                            <!-- END timeline item -->
-                            <!-- timeline time label -->
-                            <li class="time-label">
-                        <span class="bg-green">
-                          3 Jan. 2014
-                        </span>
-                            </li>
-                            <!-- /.timeline-label -->
-                            <!-- timeline item -->
-                            <li>
-                                <i class="fa fa-camera bg-purple"></i>
-
-                                <div class="timeline-item">
-                                    <span class="time"><i class="fa fa-clock-o"></i> 2 days ago</span>
-
-                                    <h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos</h3>
-
-                                    <div class="timeline-body">
-                                        <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                        <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                        <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                        <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                    </div>
-                                </div>
-                            </li>
-                            <!-- END timeline item -->
-                            <li>
-                                <i class="fa fa-clock-o bg-gray"></i>
-                            </li>
-                        </ul>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h3 class="text-blue">{{$user->name}} дружит с:</h3>
+                                <table class="table table-condensed">
+                                    <thead>
+                                    <tr>
+                                        <th style="width: 30px">ID</th>
+                                        <th style="width: 50px">Аватар</th>
+                                        <th>Имя</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($user->user_friends as $friend)
+                                        <tr>
+                                            <td>{{$friend->friend_user->id}}</td>
+                                            <td>
+                                                <img class="direct-chat-img" src="{{route('home').($friend->friend_user->avatar?$friend->friend_user->avatar->link:'/dist/img/avatar.png')}}" alt="Аватар пользователя"><!-- /.direct-chat-img -->
+                                            </td>
+                                            <td><a href="{{route('admin.user.profile', ['id' => $friend->friend_user->id])}}">{{$friend->friend_user->name}}</a></td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-6">
+                                <h3 class="text-blue">Дружат с {{$user->name}}:</h3>
+                                <table class="table table-condensed">
+                                    <thead>
+                                    <tr>
+                                        <th style="width: 30px">ID</th>
+                                        <th style="width: 50px">Аватар</th>
+                                        <th>Имя</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($user->user_friendly as $friend)
+                                        <tr>
+                                            <td>{{$friend->user->id}}</td>
+                                            <td>
+                                                <img class="direct-chat-img" src="{{route('home').($friend->user->avatar?$friend->user->avatar->link:'/dist/img/avatar.png')}}" alt="Аватар пользователя"><!-- /.direct-chat-img -->
+                                            </td>
+                                            <td><a href="{{route('admin.user.profile', ['id' => $friend->user->id])}}">{{$friend->user->name}}</a></td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                     <!-- /.tab-pane -->
+                    <div class="tab-pane" id="voting">
+                        <!-- The timeline -->
+                        <table class="table table-condensed">
+                        <thead>
+                        <tr>
+                            <th style="width: 30px">ID</th>
+                            <th>Вопрос</th>
+                            <th>Выбраный ответ</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($user->answers_to_questions as $answers_to_questions)
+                            <tr>
+                                <td>{{$answers_to_questions->question->id}}</td>
+                                <td>
+                                    <a href="#">{{$answers_to_questions->question->question}}</a>
+                                </td>
+                                <td>{{$answers_to_questions->question->answers->where('id', $answers_to_questions->answer_id)->first()->answer}}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                        </table>
+                    </div>
 
-                    <div class="tab-pane" id="settings">
-                        <form class="form-horizontal">
-                            <div class="form-group">
-                                <label for="inputName" class="col-sm-2 control-label">Name</label>
-
-                                <div class="col-sm-10">
-                                    <input type="email" class="form-control" id="inputName" placeholder="Name">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputEmail" class="col-sm-2 control-label">Email</label>
-
-                                <div class="col-sm-10">
-                                    <input type="email" class="form-control" id="inputEmail" placeholder="Email">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputName" class="col-sm-2 control-label">Name</label>
-
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="inputName" placeholder="Name">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputExperience" class="col-sm-2 control-label">Experience</label>
-
-                                <div class="col-sm-10">
-                                    <textarea class="form-control" id="inputExperience" placeholder="Experience"></textarea>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputSkills" class="col-sm-2 control-label">Skills</label>
-
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="inputSkills" placeholder="Skills">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-offset-2 col-sm-10">
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox"> I agree to the <a href="#">terms and conditions</a>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-offset-2 col-sm-10">
-                                    <button type="submit" class="btn btn-danger">Submit</button>
-                                </div>
-                            </div>
-                        </form>
                     </div>
                     <!-- /.tab-pane -->
                 </div>

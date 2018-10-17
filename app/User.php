@@ -290,19 +290,22 @@ class User extends Authenticatable
 
     public static function getUserProfile($user_id)
     {
-        return User::where('id', $user_id)->with('country', 'role', 'avatar', 'user_friends', 'user_friendly')
+        return User::where('id', $user_id)->with('country', 'role', 'avatar', 'user_friends.friend_user.avatar',
+            'user_friendly.user.avatar', 'answers_to_questions.question.answers')
             ->with(['topics' => function($query){
-                $query->withCount('positive', 'negative', 'comments')
+                $query->with('section', 'preview_image')
+                    ->withCount('positive', 'negative', 'comments')
                     ->orderBy('created_at', 'desc')->limit(5);
             }])
             ->with(['replays' => function($query){
-                $query->withCount('positive', 'negative', 'comments')
+                $query->with('map', 'type','first_country','second_country')
+                    ->withCount('positive', 'negative', 'comments')
                     ->orderBy('created_at', 'desc')->limit(5);
             }])
             ->with(['user_galleries' => function($query){
                 $query->withCount('positive', 'negative', 'comments')
                     ->with('file')
-                    ->orderBy('created_at', 'desc')->limit(10);
+                    ->orderBy('created_at', 'desc')->limit(9);
             }])
             ->withCount('positive', 'negative', 'topics','user_galleries', 'files',
                 'user_friends', 'user_friendly', 'ignore_users', 'ignored_users', 'gallery_comments', 'replay_comments',

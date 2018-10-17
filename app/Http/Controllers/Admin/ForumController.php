@@ -18,7 +18,9 @@ class ForumController extends Controller
     }
 
     /**
+     *
      * @param $user_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getUsersTopics($user_id)
     {
