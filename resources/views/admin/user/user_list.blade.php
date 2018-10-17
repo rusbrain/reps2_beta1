@@ -133,7 +133,7 @@
                                         <a type="button" class="btn btn-default" title="Реплеи пользователя" href="{{route('admin.user.replay', ['id' => $user->id])}}"><i class="fa fa-film"></i></a>
                                         <a type="button" class="btn btn-default text-aqua"  title="Темы пользователя на форуме" href="{{route('admin.user.topic', ['id' => $user->id])}}"><i class="fa fa-list"></i></a>
                                         <a type="button" class="btn btn-default text-fuchsia"  title="Просмотреть профиль пользователя" href="{{route('admin.user.profile', ['id' => $user->id])}}"><i class="fa fa-eye"></i></a>
-                                        <a type="button" class="btn btn-default text-orange"  title="Править профиль пользователя"><i class="fa fa-edit"></i></a>
+                                        <a type="button" class="btn btn-default text-orange"  title="Править профиль пользователя"  href="{{route('admin.user.profile.edit', ['id' => $user->id])}}"><i class="fa fa-edit"></i></a>
                                         @if($user->is_ban)
                                             <a type="button" class="btn btn-default text-olive" title="Снять блокировку пользователя"><i class="fa fa-thumbs-o-up"></i></a>
                                         @else

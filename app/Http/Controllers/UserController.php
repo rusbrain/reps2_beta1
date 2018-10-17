@@ -63,27 +63,7 @@ class UserController extends Controller
      */
     public function update(UpdateProfileRequest $request)
     {
-        $user_data = $request->all();
-
-        foreach ($user_data as $key=>$item){
-            if (is_null($item)){
-                unset($user_data[$key]);
-            }
-        }
-
-        if (isset($user_data['country'])){
-            $user_data['country_id'] = $user_data['country'];
-            unset($user_data['country']);
-        }
-
-        if ($request->file('avatar')){
-            $title = 'Аватар '.Auth::user()->name;
-            $file = File::storeFile($request->file('avatar'), 'avatars', $title);
-
-            $user_data['file_id'] = $file->id;
-        }
-
-        Auth::user()->update($user_data);
+        User::updateData($request, Auth::id());
 
         return redirect()->route('user_profile', ['id' => Auth::id()]);
     }

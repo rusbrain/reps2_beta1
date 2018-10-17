@@ -160,7 +160,7 @@
                         <hr>
                     @endif
                     @if($user->mouse)
-                        <strong><i class="fa fa-mouse-pointer margin-r-5"></i>Машь</strong>
+                        <strong><i class="fa fa-mouse-pointer margin-r-5"></i>Мышь</strong>
                         <p class="text-muted">{{$user->mouse}}</p>
                         <hr>
                     @endif

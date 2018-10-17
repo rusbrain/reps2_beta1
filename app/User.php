@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -288,7 +289,13 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Dialogue', 'user_messages');
     }
 
-    public static function getUserProfile($user_id)
+    /**
+     * Get all data of user
+     *
+     * @param $user_id
+     * @return mixed
+     */
+    public static function getAllUserProfile($user_id)
     {
         return User::where('id', $user_id)->with('country', 'role', 'avatar', 'user_friends.friend_user.avatar',
             'user_friendly.user.avatar', 'answers_to_questions.question.answers')
@@ -311,5 +318,52 @@ class User extends Authenticatable
                 'user_friends', 'user_friendly', 'ignore_users', 'ignored_users', 'gallery_comments', 'replay_comments',
                 'topic_comments', 'gosu_replay', 'replay', 'answers_to_questions')
             ->first();
+    }
+
+    /**
+     * Get user profile data
+     *
+     * @param $user_id
+     * @return mixed
+     */
+    public static function getUserProfile($user_id)
+    {
+        return User::find($user_id)->load('country', 'role', 'avatar');
+    }
+
+    /**
+     * Update user data profile
+     *
+     * @param Request $request
+     * @param $user_id
+     * @return mixed
+     */
+    public static function updateData(Request $request, $user_id)
+    {
+        $user = User::find($user_id);
+
+        $user_data = $request->all();
+
+        foreach ($user_data as $key=>$item){
+            if (is_null($item)){
+                unset($user_data[$key]);
+            }
+        }
+
+        if (isset($user_data['country'])){
+            $user_data['country_id'] = $user_data['country'];
+            unset($user_data['country']);
+        }
+
+        if ($request->file('avatar')){
+            $title = 'Аватар '.$user->name;
+            $file = File::storeFile($request->file('avatar'), 'avatars', $title);
+
+            $user_data['file_id'] = $file->id;
+        }
+
+        $user->update($user_data);
+
+        return User::find($user_id);
     }
 }
