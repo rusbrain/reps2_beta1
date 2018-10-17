@@ -21,7 +21,7 @@ class AddAgeToUserGallery extends Migration
         Schema::table('replays', function($table)
         {
             $table->integer('first_location')->nullable();
-            $table->integer('second_location')->nullable(0);
+            $table->integer('second_location')->nullable();
         });
     }
 

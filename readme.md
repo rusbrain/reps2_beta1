@@ -7,7 +7,7 @@ Update data in .env file
 
 Run:
 ```
-php artisan migration
+php artisan migrate
 php artisan db:seed
 php artisan storage:link
 ```
