@@ -18,12 +18,12 @@ class HomeController extends Controller
     public function index()
     {
         $general_gorum = ForumSection::general_active()->get();
-        $last_forum = ForumSection::active()->with(['topics' =>function($query){
-            $query->withCount('comments', 'positive', 'negative')->with('user')->orderBy('created_at', 'desc')->limit(5);
-        }]);
-
-        $last_gosu_replay = Replay::gosuReplay()->withCount('comments', 'positive', 'negative')->with('user')->orderBy('created_at', 'desc')->limit(5)->get();
-        $last_user_replay = Replay::userReplay()->withCount('comments', 'positive', 'negative')->with('user')->orderBy('created_at', 'desc')->limit(5)->get();
+//        $last_forum = ForumSection::active()->with(['topics' =>function($query){
+//            $query->withCount('comments', 'positive', 'negative')->with('user')->orderBy('created_at', 'desc')->limit(5);
+//        }]);
+//
+//        $last_gosu_replay = Replay::gosuReplay()->withCount('comments', 'positive', 'negative')->with('user')->orderBy('created_at', 'desc')->limit(5)->get();
+//        $last_user_replay = Replay::userReplay()->withCount('comments', 'positive', 'negative')->with('user')->orderBy('created_at', 'desc')->limit(5)->get();
 
         $forum_topic_query = ForumTopic::where('approved',1)
             ->whereHas('section', function ($query){
@@ -41,9 +41,9 @@ class HomeController extends Controller
 
         return view('home.index')->with([
             'forum_menu'            => $general_gorum,
-            'last_forum'            =>$last_forum,
-            'last_gosu_replay'      =>$last_gosu_replay,
-            'last_user_replay'      => $last_user_replay,
+//            'last_forum'            =>$last_forum,
+//            'last_gosu_replay'      =>$last_gosu_replay,
+//            'last_user_replay'      => $last_user_replay,
             'popular_forum_topics'  => $popular_forum_topics,
             'new_forum_topics'      => $new_forum_topics
         ]);
