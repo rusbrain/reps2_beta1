@@ -11,10 +11,6 @@
 |
 */
 
-Route::get('test', function (){
-    dd(\App\Dialogue::getUserDialogue(2));
-
-});
 Route::get('/', 'HomeController@index')                                             ->name('home');
 Route::get('/email/verified/{token}', 'Auth\RegisterController@emailVerified')      ->name('email_verified');
 
@@ -177,6 +173,10 @@ Route::group(['middleware' => ['auth', 'admin_panel'], 'prefix' => 'admin_panel'
     });
     Route::group(['prefix' => 'forum'], function (){
         Route::get('/', 'ForumController@index')                                    ->name('admin.forum_sections');
+
+        Route::group(['prefix' => 'forum'], function (){
+            Route::get('/topic', 'ForumController@topics')                          ->name('admin.forum_topic');
+        });
     });
     Route::group(['prefix' => 'replay'], function (){
         Route::get('/users', 'ReplayController@indexUsers')                         ->name('admin.replay.users');

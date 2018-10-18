@@ -62,7 +62,7 @@ class ForumTopic extends Model
      */
     public function negative()
     {
-       return $this->hasMany('App\UserReputation', 'object_id')->where('relation', UserReputation::RELATION_FORUM_TOPIC)->where('rating',-1);
+       return $this->hasMany('App\UserReputation', 'object_id')->where('relation', UserReputation::RELATION_FORUM_TOPIC)->where('rating','-1');
     }
 
     public function preview_image()

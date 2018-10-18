@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\ForumSection;
 use App\ForumTopic;
+use App\Http\Requests\SearchForumTopicRequest;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -15,6 +17,17 @@ class ForumController extends Controller
     public function index()
     {
         return view('admin.user.user_list');
+    }
+
+    /**
+     * @param SearchForumTopicRequest $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function topics(SearchForumTopicRequest $request)
+    {
+        $data = ForumTopic::search(ForumTopic::with('user', 'section')->withCount('negative','positive','comments'), $request->validated())->paginate(50);
+
+        return view('admin.forum.topic.list')->with(['data' => $data, 'request_data' => $request->validated()]);
     }
 
     /**

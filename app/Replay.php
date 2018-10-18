@@ -94,7 +94,7 @@ class Replay extends Model
      */
     public function negative()
     {
-        return $this->hasMany('App\UserReputation', 'object_id')->where('relation', UserReputation::RELATION_REPLAY)->where('rating',-1);
+        return $this->hasMany('App\UserReputation', 'object_id')->where('relation', UserReputation::RELATION_REPLAY)->where('rating','-1');
     }
 
     /**

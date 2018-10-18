@@ -51,7 +51,7 @@ class UserGallery extends Model
      */
     public function negative()
     {
-        return $this->hasMany('App\UserReputation', 'object_id')->where('relation', UserReputation::RELATION_USER_GALLERY)->where('rating',-1);
+        return $this->hasMany('App\UserReputation', 'object_id')->where('relation', UserReputation::RELATION_USER_GALLERY)->where('rating','-1');
     }
 
     /**

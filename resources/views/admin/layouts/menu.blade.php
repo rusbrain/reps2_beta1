@@ -27,6 +27,7 @@ $menu_name = $admin_helper->getMenuName();
     <li class="header">ФОРУМ</li>
     <!-- Optionally, you can add icons to the links -->
     <li @if($menu_name == 'forum') class="active" @endif><a href="{{route('admin.forum_sections')}}"><i class="fa fa-list"></i> <span>Разделы форума</span></a></li>
+    <li @if($menu_name == 'forum/topic') class="active" @endif><a href="{{route('admin.forum_topic')}}"><i class="fa fa-list"></i> <span>Темы форума</span></a></li>
 
     <li class="header">Replay</li>
     <!-- Optionally, you can add icons to the links -->
