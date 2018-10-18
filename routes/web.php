@@ -172,6 +172,9 @@ Route::group(['middleware' => ['auth', 'admin_panel'], 'prefix' => 'admin_panel'
         Route::get('{id}/replay', 'ReplayController@getReplayByUser')               ->name('admin.user.replay');
         Route::get('{id}/topic', 'ForumController@getUsersTopics')                  ->name('admin.user.topic');
         Route::get('{id}/profile', 'UserController@getUserProfile')                 ->name('admin.user.profile');
+        Route::get('{id}/ban', 'UserController@banUser')                            ->name('admin.user.ban');
+        Route::get('{id}/remove', 'UserController@removeUser')                      ->name('admin.user.remove');
+        Route::get('{id}/not_ban', 'UserController@notBanUser')                     ->name('admin.user.not_ban');
         Route::get('{id}/profile/edit', 'UserController@getEditUserProfile')        ->name('admin.user.profile.edit');
         Route::post('{id}/profile/save', 'UserController@saveUserProfile')          ->name('admin.user.profile.save');
         Route::get('/', 'UserController@index')                                     ->name('admin.users');

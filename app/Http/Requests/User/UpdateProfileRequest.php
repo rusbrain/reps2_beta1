@@ -38,6 +38,7 @@ class UpdateProfileRequest extends FormRequest
             'mousepad'      => 'nullable|string|max:255',
             'birthday'      => 'nullable|string|max:255',
             'avatar'        => 'nullable|image|max:2048',
+            'user_role_id'  => 'nullable',
         ];
     }
 

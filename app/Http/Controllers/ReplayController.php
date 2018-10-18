@@ -92,6 +92,9 @@ class ReplayController extends Controller
     {
         return $replay->with(User::getUserWithReputationQuery())
                 ->withCount('comments', 'positive','negative')
+                ->with(['user'=> function($q){
+                $q->withTrashed();
+            }])
                 ->with('type','user', 'map','first_country','second_country')
                 ->with(['user_rating' => function($query){
                     $query->where('user_id', Auth::id());

@@ -10,6 +10,7 @@ class UserEmailController extends Controller
 {
     /**
      * @param $user_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index($user_id)
     {

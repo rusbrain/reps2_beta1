@@ -2,14 +2,17 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable
 {
     use Notifiable;
+    use SoftDeletes;
 
     /**
      * Using table name
@@ -142,7 +145,8 @@ class User extends Authenticatable
     public static function getUserWithReputationQuery()
     {
         return ['user' => function($query){
-            $query->with('country')
+            $query->withTrashed()
+                ->with('country')
                 ->withCount([
                 'reputation as rep_positive' => function($query){
                     $query->where('rating', 1);
@@ -361,6 +365,10 @@ class User extends Authenticatable
             $file = File::storeFile($request->file('avatar'), 'avatars', $title);
 
             $user_data['file_id'] = $file->id;
+        }
+
+        if(Auth::user()->role->name != 'admin'){
+            unset($user_data['user_role_id']);
         }
 
         $user->update($user_data);

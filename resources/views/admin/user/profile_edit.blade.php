@@ -153,7 +153,7 @@
                                 <br>
                                 <div class="form-group">
                                     <label>Роль</label>
-                                    <select class="form-control">
+                                    <select class="form-control" name="user_role_id">
                                         <option @if(!$user->user_role_id) selected @endif>Пользователь</option>
                                         @foreach($users_role as $role)
                                             <option value="{{$role->id}}" @if($user->user_role_id == $role->id) selected @endif>{{$role->title}}</option>
