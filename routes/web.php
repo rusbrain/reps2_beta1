@@ -15,14 +15,6 @@ Route::get('test', function (){
     dd(\App\Dialogue::getUserDialogue(2));
 
 });
-Route::group(['middleware' => ['auth', 'admin_panel']], function () {
-//    Route::get('test', function () {
-//        if (!Auth::user()->role) {
-//            return redirect('/');
-//        }
-//        dd(Auth::user()->role);
-//    });
-});
 Route::get('/', 'HomeController@index')                                             ->name('home');
 Route::get('/email/verified/{token}', 'Auth\RegisterController@emailVerified')      ->name('email_verified');
 
@@ -39,6 +31,8 @@ Route::middleware(['guest'])->group(function () {
         Route::post('/reset', 'Auth\ResetPasswordController@reset')                 ->name('password.update');
     });
 });
+
+Route::get('news', 'NewsController@index')                                         ->name('news');
 
 Route::post('question/{id}/set_answer', 'InterviewQuestionController@setAnswer')    ->name('question.set_answer');
 Route::post('question/{id}/view_answer', 'InterviewQuestionController@getResult')   ->name('question.view_answer');

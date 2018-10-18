@@ -37,8 +37,7 @@ class HomeController extends Controller
             ->withCount('comments', 'positive', 'negative')
             ->limit(5);
 
-        $new_forum_topics_q = clone $forum_topic_query;
-        $new_forum_topics = $new_forum_topics_q->orderBy('created_at', 'desc')->get();
+        $new_forum_topics = ForumTopic::news()->limit(5)->get();
         $popular_forum_topics = $forum_topic_query
             ->where('created_at', '<=', Carbon::now()->addMonth(-1)->startOfDay())
             ->orderBy('rating', 'desc')->get();

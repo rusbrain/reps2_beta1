@@ -22,6 +22,15 @@ class ForumSection extends Model
     {
         return $this->hasMany('App\ForumTopic', 'section_id');
     }
+    /**
+     * Relations. Sections topics
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function news_topics()
+    {
+        return $this->hasMany('App\ForumTopic', 'section_id')->where('news',1);
+    }
 
     /**
      * @return mixed
