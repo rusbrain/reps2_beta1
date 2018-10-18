@@ -125,11 +125,8 @@ Route::group(['prefix' => 'replay'], function (){
         Route::get('{id}/delete', 'ReplayController@destroy')                       ->name('replay.delete');
         Route::get('/my', 'ReplayUsersController@getUserReplay')                    ->name('replay.my_user');
         Route::get('/my_gosu', 'ReplayGosuController@getUserReplay')                ->name('replay.my_gosu');
-
-
         Route::get('{id}/set_rating', 'ReplayRatingController@setRating')           ->name('replay.set_rating');
         Route::post('{id}/set_evaluation', 'ReplayRatingController@setEvaluation')  ->name('replay.set_evaluation');
-
         Route::group(['prefix' => 'comment'], function () {
             Route::post('/store', 'ReplayCommentController@store')                  ->name('replay.comment.store');
             Route::get('{id}/delete', 'ReplayCommentController@destroy')            ->name('replay.comment.delete');
@@ -179,6 +176,7 @@ Route::group(['middleware' => ['auth', 'admin_panel'], 'prefix' => 'admin_panel'
         Route::post('{id}/profile/save', 'UserController@saveUserProfile')          ->name('admin.user.profile.save');
         Route::get('/', 'UserController@index')                                     ->name('admin.users');
         Route::get('{id}/message', 'UserMessageController@getUser')                 ->name('admin.user.messages');
+        Route::get('message', 'UserMessageController@getUser')                      ->name('admin.user.messages_all');
         Route::get('/message/{dialog_id}/load', 'UserMessageController@load')       ->name('admin.user.message_load');
         Route::post('/message/{dialog_id}/send', 'UserMessageController@send')      ->name('admin.user.message.send');
         Route::get('/role', 'UserRoleController@index')                             ->name('admin.users.role');

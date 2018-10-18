@@ -89,11 +89,13 @@ class Dialogue extends Model
      */
     public static function getDialogUser($user_id)
     {
-        $dialogue = Dialogue::whereHas('users',function ($query) use ($user_id){
-            $query->where('users.id', $user_id);
-        })->whereHas('users',function ($query) use ($user_id){
-            $query->where('users.id', Auth::id());
-        })->first();
+        $dialogue = Dialogue::where(function ($q) use ($user_id){
+            $q->whereHas('users',function ($query) use ($user_id){
+                $query->where('users.id', $user_id);
+            })->whereHas('users',function ($query){
+                $query->where('users.id', Auth::id());
+            });
+        })->with('users')->first();
 
         if(!$dialogue){
             $dialogue = new Dialogue();

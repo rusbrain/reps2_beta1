@@ -32,7 +32,7 @@
                 <img src="{{route('home').(($sender->avatar?$sender->avatar->link:'/dist/img/avatar.png'))}}" alt="User Image" >
             </div>
             <div class="col-md-6 text-left">
-                <a class="users-list-name" href="#">{{$sender->name}}</a>
+                <a class="users-list-name" href="{{route('admin.user.messages', ['id' => $sender->id])}}">{{$sender->name}}</a>
                 <span class="users-list-date">{{$date}}</span>
                 @if($contact->new_messages)<span data-toggle="tooltip" title="" class="badge bg-red" data-original-title="{{$contact->new_messages}} New Messages">Новые сообщения: {{$contact->new_messages}}</span>@endif
             </div>
