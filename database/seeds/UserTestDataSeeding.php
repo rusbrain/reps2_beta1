@@ -118,7 +118,7 @@ class UserTestDataSeeding extends Seeder
                 $user_2 = $user_ids[array_rand($user_ids)];
             }while ($user_1 == $user_2);
 
-            $dialogue->users()->attach(['user_id' =>$user_1], ['user_id' =>$user_2]);
+            $dialogue->users()->attach([['user_id' =>$user_1], ['user_id' =>$user_2]]);
 
             for ($j = 0; $j<rand(2,15); $j++){
                 $user_message[] = [

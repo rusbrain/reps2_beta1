@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class UserFriend extends Model
 {
+    use SoftDeletes;
     /**
      * Using table name
      *

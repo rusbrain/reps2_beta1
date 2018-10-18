@@ -29,7 +29,11 @@ class HomeController extends Controller
             ->whereHas('section', function ($query){
             $query->where('is_active',1)->where('is_general',1);
                 })
-            ->has('preview_image')->with('user.country', 'user.avatar', 'preview_image')
+            ->has('preview_image')
+            ->with(['user'=> function($q){
+                $q->withTrashed()->with('country', 'avatar');
+            }])
+            ->with('preview_image')
             ->withCount('comments', 'positive', 'negative')
             ->limit(5);
 

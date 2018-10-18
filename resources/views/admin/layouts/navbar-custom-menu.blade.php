@@ -17,11 +17,10 @@
                 <ul class="menu">
                     @foreach($notification['new_messages'] as $message)
                     <li><!-- start message -->
-                        <a href="#"> {{--TODO: Add url--}}
+                        <a href="{{$message->sender != null ?route('admin.user.messages', ['id' => $message->sender->id]):'#'}}">
                             <div class="pull-left">
                                 <!-- User Image -->
-
-                                @if($message->sender->avatar)
+                                @if(isset($message->sender->avatar))
                                     <img src="{{route('home').$message->sender->avatar->link}}" class="img-circle" alt="User Image">
                                 @else
                                     <img src="{{route('home').'/dist/img/avatar.png'}}" class="img-circle" alt="User Image">
@@ -29,7 +28,7 @@
                             </div>
                             <!-- Message title and timestamp -->
                             <h4>
-                                {{$message->sender->name}}
+                                {{$message->sender->name??"NONE"}}
                                 <small><i class="fa fa-clock-o"></i> {{$message->created_at}}</small>
                             </h4>
                             <!-- The message -->
@@ -41,7 +40,7 @@
                 </ul>
                 <!-- /.menu -->
             </li>
-            <li class="footer"><a href="#">See All Messages</a></li> {{--TODO: Add url--}}
+            <li class="footer"><a href="{{route('admin.user.messages_all')}}">Все сообщения</a></li>
         </ul>
     </li>
     <!-- /.messages-menu -->
@@ -56,28 +55,28 @@
             @endif
         </a>
         <ul class="dropdown-menu">
-            <li class="header">You have {{$notification['all_notification']}} notification(s)</li>
+            <li class="header">У вас {{$notification['all_notification']}} уведомлений</li>
             <li>
                 <!-- Inner Menu: contains the notifications -->
                 <ul class="menu">
                     @if($notification['new_topics'])
                     <li><!-- start notification -->
                         <a href="#">
-                            <i class="fa fa-list text-aqua"></i> {{$notification['new_topics']}} new forum topic(s)
+                            <i class="fa fa-list text-aqua"></i> {{$notification['new_topics']}} новых записей на форуме
                         </a>
                     </li>
                     @endif
                     @if($notification['new_gosu_replays'])
                     <li><!-- start notification -->
                         <a href="#">
-                            <i class="fa fa-film text-aqua"></i> {{$notification['new_gosu_replays']}} new Gosu replay(s)
+                            <i class="fa fa-film text-aqua"></i> {{$notification['new_gosu_replays']}} новых Gosu replay(s)
                         </a>
                     </li>
                     @endif
                     @if($notification['new_user_replays'])
                     <li><!-- start notification -->
                         <a href="#">
-                            <i class="fa fa-film text-aqua"></i> {{$notification['new_user_replays']}} new user replay(s)
+                            <i class="fa fa-film text-aqua"></i> {{$notification['new_user_replays']}} новых пользовательский replay(s)
                         </a>
                     </li>
                     @endif
@@ -87,43 +86,6 @@
             {{--<li class="footer"><a href="#">View all</a></li>--}}
         </ul>
     </li>
-    <!-- Tasks Menu -->
-    {{--<li class="dropdown tasks-menu">--}}
-        {{--<!-- Menu Toggle Button -->--}}
-        {{--<a href="#" class="dropdown-toggle" data-toggle="dropdown">--}}
-            {{--<i class="fa fa-flag-o"></i>--}}
-            {{--<span class="label label-danger">9</span>--}}
-        {{--</a>--}}
-        {{--<ul class="dropdown-menu">--}}
-            {{--<li class="header">You have 9 tasks</li>--}}
-            {{--<li>--}}
-                {{--<!-- Inner menu: contains the tasks -->--}}
-                {{--<ul class="menu">--}}
-                    {{--<li><!-- Task item -->--}}
-                        {{--<a href="#">--}}
-                            {{--<!-- Task title and progress text -->--}}
-                            {{--<h3>--}}
-                                {{--Design some buttons--}}
-                                {{--<small class="pull-right">20%</small>--}}
-                            {{--</h3>--}}
-                            {{--<!-- The progress bar -->--}}
-                            {{--<div class="progress xs">--}}
-                                {{--<!-- Change the css width attribute to simulate progress -->--}}
-                                {{--<div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar"--}}
-                                     {{--aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">--}}
-                                    {{--<span class="sr-only">20% Complete</span>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                        {{--</a>--}}
-                    {{--</li>--}}
-                    {{--<!-- end task item -->--}}
-                {{--</ul>--}}
-            {{--</li>--}}
-            {{--<li class="footer">--}}
-                {{--<a href="#">View all tasks</a>--}}
-            {{--</li>--}}
-        {{--</ul>--}}
-    {{--</li>--}}
     <!-- User Account Menu -->
     <li class="dropdown user user-menu">
         <!-- Menu Toggle Button -->

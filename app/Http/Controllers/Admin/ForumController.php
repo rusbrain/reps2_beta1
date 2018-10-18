@@ -26,7 +26,9 @@ class ForumController extends Controller
     {
         $user = User::find($user_id);
 
-        $topics  = $user->topics()->with('section', 'user')->withCount('comments', 'positive', 'negative')->paginate(50);
+        $topics  = $user->topics()->with('section')->with(['user'=> function($q){
+            $q->withTrashed();
+        }])->withCount('comments', 'positive', 'negative')->paginate(50);
 
         return view('admin.topics')->with(['topics' => $topics, 'title' => "Темы форума $user->name", 'user' => $user]);
     }

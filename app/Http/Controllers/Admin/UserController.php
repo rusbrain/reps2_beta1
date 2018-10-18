@@ -44,6 +44,10 @@ class UserController extends Controller
             $users->where('user_role_id', $request->get('role'));
         }
 
+        if ($request->has('is_ban') && null !==$request->get('is_ban')){
+            $users->where('is_ban', $request->get('is_ban'));
+        }
+
         if($request->has('sort') && null !==$request->get('sort')){
             $users->orderBy($request->get('sort'));
         } else{
@@ -91,5 +95,43 @@ class UserController extends Controller
         return redirect()->route('admin.user.profile.edit', ['id' => $user_id]);
     }
 
+    /**
+     * @param $user_id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function banUser($user_id)
+    {
+        User::where('id', $user_id)->update(['is_ban' => 1]);
 
+        return back();
+    }
+
+    /**
+     * @param $user_id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function notBanUser($user_id)
+    {
+        User::where('id', $user_id)->update(['is_ban' => 0]);
+
+        return back();
+    }
+
+    /**
+     * @param $user_id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function removeUser($user_id)
+    {
+        $user = User::find($user_id);
+
+        $user->user_galleries()->delete();
+        $user->dialogues()->delete();
+        $user->user_friends()->delete();
+        $user->user_friendly()->delete();
+
+        User::where('id', $user_id)->delete();
+
+        return back();
+    }
 }

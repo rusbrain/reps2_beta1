@@ -19,8 +19,12 @@ class UserMessageController extends Controller
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getUser($id)
+    public function getUser($id = false)
     {
+        if($id == Auth::id()){
+            return redirect()->route('admin.user.messages_all');
+        }
+
         return view('admin.user.messages')->with(self::getMessageData($id));
     }
 
@@ -46,9 +50,19 @@ class UserMessageController extends Controller
      */
     private static function getMessageData($id)
     {
+        $contacts = Dialogue::getUserDialogues();
+
+        if(!$id){
+            foreach ($contacts->first()->senders as $sender){
+                if ($sender->id != Auth::id()){
+                    $id = $sender->id;
+                }
+            }
+        }
+
         $dialog_id = Dialogue::getDialogUser($id)->id;
 
-        return ['dialog_id' => $dialog_id,'messages'=> Dialogue::getUserDialogueContent($dialog_id), 'contacts' => Dialogue::getUserDialogues(), 'user' => User::find($id), 'page' => Input::has('page')?Input::get('page')+1:2];
+        return ['dialog_id' => $dialog_id,'messages'=> Dialogue::getUserDialogueContent($dialog_id), 'contacts' => $contacts, 'user' => User::find($id), 'page' => Input::has('page')?Input::get('page')+1:2];
     }
 
     /**
