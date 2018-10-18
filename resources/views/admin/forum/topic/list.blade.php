@@ -10,7 +10,7 @@
 
 @section('breadcrumb')
     <li><a href="{{route('admin.home')}}"><i class="fa fa-dashboard"></i>Главная панель</a></li>
-    <li><a href="{{route('admin.users')}}">Темы форума</a></li>
+    <li class="active">Темы форума</li>
 @endsection
 
 @section('content')
@@ -57,12 +57,11 @@
                                     <select class="form-control" style="width: 100%;" name="sort">
                                         <option value="">Select...</option>
                                         <option value="id" @if(isset($request_data['sort']) && $request_data['sort'] == 'id') selected @endif>ID</option>
-                                        <option value="title" @if(isset($request_data['sort']) && $request_data['sort'] == 'name') selected @endif>Название</option>
-                                        <option value="user_id" @if(isset($request_data['sort']) && $request_data['sort'] == 'email') selected @endif>Автор</option>
-                                        <option value="section_id" @if(isset($request_data['sort']) && $request_data['sort'] == 'rating') selected @endif>Раздел</option>
+                                        <option value="title" @if(isset($request_data['sort']) && $request_data['sort'] == 'title') selected @endif>Название</option>
+                                        <option value="section_id" @if(isset($request_data['sort']) && $request_data['sort'] == 'section_id') selected @endif>Раздел</option>
                                         <option value="rating" @if(isset($request_data['sort']) && $request_data['sort'] == 'rating') selected @endif>Рейтинг</option>
-                                        <option value="comments_count" @if(isset($request_data['sort']) && $request_data['sort'] == 'rating') selected @endif>Коментарии</option>
-                                        <option value="reviews" @if(isset($request_data['sort']) && $request_data['sort'] == 'rating') selected @endif>Просмотры</option>
+                                        <option value="comments_count" @if(isset($request_data['sort']) && $request_data['sort'] == 'comments_count') selected @endif>Коментарии</option>
+                                        <option value="reviews" @if(isset($request_data['sort']) && $request_data['sort'] == 'reviews') selected @endif>Просмотры</option>
                                     </select>
                                 </div>
                                 <div class="form-group col-md-12">

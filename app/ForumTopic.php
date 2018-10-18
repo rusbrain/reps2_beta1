@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Input;
 
 class ForumTopic extends Model
 {
@@ -132,6 +133,10 @@ class ForumTopic extends Model
             $query->whereHas('section', function ($q) use ($data){
                 $q->where('id', $data['section_id']);
             });
+        }
+
+        if(Input::has('sort')){
+            $query->orderBy(Input::get('sort'));
         }
 
         return $query;
