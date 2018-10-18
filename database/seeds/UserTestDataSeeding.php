@@ -218,6 +218,7 @@ class UserTestDataSeeding extends Seeder
                 'user_id'           => $user_ids[array_rand($user_ids)],
                 'reviews'           => rand(0,50),
                 'approved'          => rand(0,1),
+                'news'              => rand(0,1),
                 'preview_file_id'   => $topic_img_id,
                 'preview_content'   => "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.",
                 'content'           => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
