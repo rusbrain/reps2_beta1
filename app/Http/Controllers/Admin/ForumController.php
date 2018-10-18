@@ -27,7 +27,7 @@ class ForumController extends Controller
     {
         $data = ForumTopic::search(ForumTopic::with('user', 'section')->withCount('negative','positive','comments'), $request->validated())->paginate(50);
 
-        return view('admin.forum.topic.list')->with(['data' => $data, 'request_data' => $request->validated()]);
+        return view('admin.forum.topic.list')->with(['data' => $data, 'request_data' => $request->validated(), 'sections' => ForumSection::all()]);
     }
 
     /**

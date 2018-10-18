@@ -112,6 +112,14 @@ class ForumTopic extends Model
             $query->where('created_at','<=', $data['max_date']);
         }
 
+        if (isset($data['news']) && null !== $data['news']){
+            $query->where('news',$data['news']);
+        }
+
+        if (isset($data['approved']) && null !== $data['approved']){
+            $query->where('approved',$data['approved']);
+        }
+
         if (isset($data['text']) && null !== $data['text']){
             $query->where(function ($q) use ($data){
                 $q->where('title', 'like', "%{$data['text']}%")

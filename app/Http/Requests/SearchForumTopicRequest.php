@@ -31,6 +31,7 @@ class SearchForumTopicRequest extends FormRequest
             'min_date'   => 'nullable|date_format:Y-m-d',
             'max_date'   => 'nullable|date_format:Y-m-d',
             'news'       => 'nullable',
+            'approved'   => 'nullable',
         ];
     }
 
