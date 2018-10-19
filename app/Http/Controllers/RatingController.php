@@ -19,14 +19,14 @@ class RatingController extends Controller
      *
      * @var string
      */
-    protected static $relation;
+    protected $relation;
 
     /**
      * Model name
      *
      * @var string
      */
-    protected static $model;
+    protected $model;
 
     /**
      * Get rating
@@ -36,7 +36,7 @@ class RatingController extends Controller
      */
     public function getRating($id)
     {
-        return $this->getRatingView(UserReputation::where('object_id', $id)->where('relation', self::$relation));
+        return $this->getRatingView(UserReputation::where('object_id', $id)->where('relation', $this->relation));
     }
 
     /**
@@ -48,7 +48,7 @@ class RatingController extends Controller
      */
     public function setRating(SetRatingRequest $request, $id)
     {
-        $object = self::$model::find($id);
+        $object = ($this->model)::find($id);
 
         if (IgnoreUser::me_ignore($object->user_id)){
             return abort(403);
@@ -57,33 +57,20 @@ class RatingController extends Controller
         $comment = self::getComment($request);
 
         if($object){
-            self::saveUserReputation($object->user_id, $object->id, $request->get('rating'), $comment);
+            UserReputation::updateOrCreate(
+                ['sender_id' => Auth::id(), 'recipient_id' => $object->user_id, 'object_id' => $object->id, 'relation' => $this->relation],
+                ['comment' => $comment, 'rating'=>  $request->get('rating')]
+            );
+
+            UserReputation::refreshUserRating($object->user_id);
+            UserReputation::refreshObjectRating($this->model, $object->id, $this->relation);
+
+            $this->model::updateRating($request->get('rating'), $object->id);
 
             return ['rating' => self::getRatingValue($object)];
         }
 
         return abort(404);
-    }
-
-    /**
-     * Save updated rating values
-     *
-     * @param $user_id
-     * @param $object_id
-     * @param $rating
-     * @param string $comment
-     */
-    protected static function saveUserReputation($user_id, $object_id, $rating, $comment = '')
-    {
-        UserReputation::updateOrCreate(
-            ['sender_id' => Auth::id(), 'recipient_id' => $user_id, 'object_id' => $object_id, 'relation' => self::$relation],
-            ['comment' => $comment, 'rating'=>  $rating]
-        );
-
-        UserReputation::refreshUserRating($user_id);
-        UserReputation::refreshObjectRating(self::$model, $object_id, self::$relation);
-
-        self::$model::updateRating($rating, $object_id);
     }
 
     /**

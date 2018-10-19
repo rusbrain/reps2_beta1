@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Input;
 
 class ForumTopic extends Model
 {
@@ -112,6 +113,14 @@ class ForumTopic extends Model
             $query->where('created_at','<=', $data['max_date']);
         }
 
+        if (isset($data['news']) && null !== $data['news']){
+            $query->where('news',$data['news']);
+        }
+
+        if (isset($data['approved']) && null !== $data['approved']){
+            $query->where('approved',$data['approved']);
+        }
+
         if (isset($data['text']) && null !== $data['text']){
             $query->where(function ($q) use ($data){
                 $q->where('title', 'like', "%{$data['text']}%")
@@ -126,6 +135,25 @@ class ForumTopic extends Model
             });
         }
 
+        if(Input::has('sort') && Input::get('sort')){
+            $query->orderBy(Input::get('sort'));
+        }
+
         return $query;
+    }
+
+    /**
+     * @param $topic_id
+     * @return mixed
+     */
+    public static function getTopicById($topic_id)
+    {
+        return ForumTopic::where('id', $topic_id)
+            ->withCount('comments', 'positive', 'negative')
+            ->with('section', 'user.avatar','preview_image')
+            ->with(['comments' => function($q) {
+                $q->with('user.avatar')->orderBy('created_at', 'desc')->paginate(20);
+            }])
+            ->first();
     }
 }

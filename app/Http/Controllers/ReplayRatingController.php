@@ -17,14 +17,14 @@ class ReplayRatingController extends RatingController
      *
      * @var string
      */
-    protected static $relation = UserReputation::RELATION_REPLAY;
+    protected $relation = UserReputation::RELATION_REPLAY;
 
     /**
      * Model name
      *
      * @var string
      */
-    protected static $model = Replay::class;
+    protected $model = Replay::class;
 
     /**
      * Get list of replay evaluation
@@ -62,7 +62,7 @@ class ReplayRatingController extends RatingController
             $comment = self::getComment($request);
 
             ReplayUserRating::updateOrCreate(
-                ['user_id' => Auth::id(), 'object_id' => $id, 'relation' => self::$relation],
+                ['user_id' => Auth::id(), 'object_id' => $id, 'relation' => $this->relation],
                 ['comment' => $comment, 'rating'=> $request->get('rating')]
             );
 

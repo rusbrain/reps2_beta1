@@ -174,8 +174,19 @@ Route::group(['middleware' => ['auth', 'admin_panel'], 'prefix' => 'admin_panel'
     Route::group(['prefix' => 'forum'], function (){
         Route::get('/', 'ForumController@index')                                    ->name('admin.forum_sections');
 
-        Route::group(['prefix' => 'forum'], function (){
-            Route::get('/topic', 'ForumController@topics')                          ->name('admin.forum_topic');
+        Route::group(['prefix' => 'topic'], function (){
+            Route::get('/', 'ForumController@topics')                               ->name('admin.forum_topic');
+            Route::get('/{id}/news', 'ForumController@news')                        ->name('admin.forum.topic.news');
+            Route::get('/{id}/not_news', 'ForumController@notNews')                 ->name('admin.forum.topic.not_news');
+            Route::get('/{id}/approve', 'ForumController@approve')                  ->name('admin.forum.topic.approve');
+            Route::get('/{id}/unapprove', 'ForumController@unapprove')              ->name('admin.forum.topic.unapprove');
+            Route::get('/{id}/remove', 'ForumController@remove')                    ->name('admin.forum.topic.remove');
+            Route::get('/{id}/edit', 'ForumController@getTopicEdit')                ->name('admin.forum.topic.edit');
+            Route::post('/{id}/edit', 'ForumController@saveTopic')                  ->name('admin.forum.topic.edit.save');
+            Route::get('/{id}', 'ForumController@getTopic')                         ->name('admin.forum.topic.get');
+            Route::post('/{id}/send_comment', 'ForumController@sendComment')        ->name('admin.forum.topic.comment_send');
+            Route::get('comment/{id}/remove', 'ForumController@commentRemove')      ->name('admin.forum.topic.comment.remove');
+
         });
     });
     Route::group(['prefix' => 'replay'], function (){

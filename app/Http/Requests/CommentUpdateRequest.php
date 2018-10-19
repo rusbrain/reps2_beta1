@@ -24,7 +24,6 @@ class CommentUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'     =>'nullable|min:3|max:255',
             'content'   =>'required|max:1000',
         ];
     }
@@ -37,8 +36,6 @@ class CommentUpdateRequest extends FormRequest
     public function messages()
     {
         return [
-            'title.min'           => 'Заголовок должен быть не меньше 3 символов',
-            'title.max'           => 'Заголовок должен быть не больше 255 символов',
             'content.required'    => 'Основное описание обязаельно для заполнения',
             'content.min'         => 'Основное описание должен быть не больше 1000 символов',
         ];

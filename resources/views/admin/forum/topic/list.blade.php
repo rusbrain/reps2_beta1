@@ -1,4 +1,3 @@
-{{--{{dd($data)}}--}}
 @extends('admin.layouts.admin')
 
 @section('css')
@@ -10,7 +9,7 @@
 
 @section('breadcrumb')
     <li><a href="{{route('admin.home')}}"><i class="fa fa-dashboard"></i>Главная панель</a></li>
-    <li><a href="{{route('admin.users')}}">Темы форума</a></li>
+    <li class="active">Темы форума</li>
 @endsection
 
 @section('content')
@@ -25,54 +24,46 @@
                             <div class="row">
                                 <div class="form-group col-md-3">
                                     <label>Поиск(Название, содержание):</label>
-                                    <input type="text" class="form-control" name="search" placeholder="Enter ..." value="{{$request_data['text']??''}}">
+                                    <input type="text" class="form-control" name="text" placeholder="Enter ..." value="{{$request_data['text']??''}}">
                                 </div>
-                                {{--<div class="form-group col-md-3">--}}
-                                    {{--<label>Страна:</label>--}}
-                                    {{--<select class="form-control" style="width: 100%;" name="country">--}}
-                                        {{--<option value="">Select...</option>--}}
-                                        {{--@foreach($countries as $country)--}}
-                                            {{--<option value="{{$country->id}}" @if(isset($request_data['country']) && $request_data['country'] == $country->id) selected @endif>{{$country->name}}</option>--}}
-                                        {{--@endforeach--}}
-                                    {{--</select>--}}
-                                {{--</div>--}}
-                                {{--<div class="form-group col-md-3">--}}
-                                    {{--<label>Роль:</label>--}}
-                                    {{--<select class="form-control" style="width: 100%;" name="role">--}}
-                                        {{--<option value="">Select...</option>--}}
-                                        {{--<option value="0" @if(isset($request_data['role']) && $request_data['role'] == '0') selected @endif>Пользователь</option>--}}
-                                        {{--@foreach(\App\UserRole::all() as $role)--}}
-                                            {{--<option value="{{$role->id}}"  @if(isset($request_data['role']) && $request_data['role'] === $role->id) selected @endif>{{$role->title}}</option>--}}
-                                        {{--@endforeach--}}
-                                    {{--</select>--}}
-                                {{--</div>--}}
-                                {{--<div class="form-group col-md-3">--}}
-                                    {{--<label>Почта подтверждена:</label>--}}
-                                    {{--<select class="form-control" style="width: 100%;" name="email_verified">--}}
-                                        {{--<option value="">Select...</option>--}}
-                                        {{--<option value="0" @if(isset($request_data['email_verified']) && $request_data['email_verified'] == '0') selected @endif>Нет</option>--}}
-                                        {{--<option value="1" @if(isset($request_data['email_verified']) && $request_data['email_verified'] == '1') selected @endif>Да</option>--}}
-                                    {{--</select>--}}
-                                {{--</div>--}}
-                                {{--<div class="form-group col-md-3">--}}
-                                    {{--<label>Бан:</label>--}}
-                                    {{--<select class="form-control" style="width: 100%;" name="is_ban">--}}
-                                        {{--<option value="">Select...</option>--}}
-                                        {{--<option value="0" @if(isset($request_data['is_ban']) && $request_data['is_ban'] == '0') selected @endif>Нет</option>--}}
-                                        {{--<option value="1" @if(isset($request_data['is_ban']) && $request_data['is_ban'] == '1') selected @endif>Да</option>--}}
-                                    {{--</select>--}}
-                                {{--</div>--}}
-                                {{--<div class="form-group col-md-3 col-md-offset-6">--}}
-                                    {{--<label>Сортировать по:</label>--}}
-                                    {{--<select class="form-control" style="width: 100%;" name="sort">--}}
-                                        {{--<option value="">Select...</option>--}}
-                                        {{--<option value="id" @if(isset($request_data['sort']) && $request_data['sort'] == 'id') selected @endif>ID</option>--}}
-                                        {{--<option value="name" @if(isset($request_data['sort']) && $request_data['sort'] == 'name') selected @endif>Имя</option>--}}
-                                        {{--<option value="email" @if(isset($request_data['sort']) && $request_data['sort'] == 'email') selected @endif>Почта</option>--}}
-                                        {{--<option value="rating" @if(isset($request_data['sort']) && $request_data['sort'] == 'rating') selected @endif>Рейтинг</option>--}}
-                                    {{--</select>--}}
-                                {{--</div>--}}
-                                {{--<div class="form-group col-md-12">--}}
+                                <div class="form-group col-md-3">
+                                    <label>Раздел:</label>
+                                    <select class="form-control" style="width: 100%;" name="section_id">
+                                        <option value="">Select...</option>
+                                        @foreach($sections as $section)
+                                            <option value="{{$section->id}}" @if(isset($request_data['section_id']) && $request_data['section_id'] == $section->id) selected @endif>{{$section->title}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label>Новости:</label>
+                                    <select class="form-control" style="width: 100%;" name="news">
+                                        <option value="">Select...</option>
+                                        <option value="0" @if(isset($request_data['news']) && $request_data['news'] == '0') selected @endif>Нет</option>
+                                        <option value="1" @if(isset($request_data['news']) && $request_data['news'] == '1') selected @endif>Да</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label>Одобрен:</label>
+                                    <select class="form-control" style="width: 100%;" name="approved">
+                                        <option value="">Select...</option>
+                                        <option value="0" @if(isset($request_data['approved']) && $request_data['approved'] == '0') selected @endif>Нет</option>
+                                        <option value="1" @if(isset($request_data['approved']) && $request_data['approved'] == '1') selected @endif>Да</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-3 col-md-offset-9">
+                                    <label>Сортировать по:</label>
+                                    <select class="form-control" style="width: 100%;" name="sort">
+                                        <option value="">Select...</option>
+                                        <option value="id" @if(isset($request_data['sort']) && $request_data['sort'] == 'id') selected @endif>ID</option>
+                                        <option value="title" @if(isset($request_data['sort']) && $request_data['sort'] == 'title') selected @endif>Название</option>
+                                        <option value="section_id" @if(isset($request_data['sort']) && $request_data['sort'] == 'section_id') selected @endif>Раздел</option>
+                                        <option value="rating" @if(isset($request_data['sort']) && $request_data['sort'] == 'rating') selected @endif>Рейтинг</option>
+                                        <option value="comments_count" @if(isset($request_data['sort']) && $request_data['sort'] == 'comments_count') selected @endif>Коментарии</option>
+                                        <option value="reviews" @if(isset($request_data['sort']) && $request_data['sort'] == 'reviews') selected @endif>Просмотры</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-12">
                                     <div class="text-right">
                                         <button type="submit" class="btn btn-primary">Поиск</button>
                                     </div>
@@ -129,19 +120,19 @@
                                 <td>{!! $topic->news?'<i class="fa fa-newspaper-o text-blue"></i>':'<i class="fa  fa-newspaper-o text-gray"></i>' !!}</td>
                                 <td>
                                     <div class="btn-group">
-                                        <a type="button" class="btn btn-default text-aqua"  title="Просмотреть запись" href="{{route('admin.user.profile', ['id' => $topic->id])}}"><i class="fa fa-eye"></i></a>
-                                        <a type="button" class="btn btn-default text-orange"  title="Править запись"  href="{{route('admin.user.profile.edit', ['id' => $topic->id])}}"><i class="fa fa-edit"></i></a>
+                                        <a type="button" class="btn btn-default text-aqua"  title="Просмотреть запись" href="{{route('admin.forum.topic.get', ['id' => $topic->id])}}"><i class="fa fa-eye"></i></a>
+                                        <a type="button" class="btn btn-default text-orange"  title="Править запись"  href="{{route('admin.forum.topic.edit', ['id' => $topic->id])}}"><i class="fa fa-edit"></i></a>
                                         @if(!$topic->approved)
-                                            <a type="button" class="btn btn-default text-green" title="Одобрить запись" href="{{route('admin.user.not_ban', ['id' => $topic->id])}}"><i class="fa fa-check"></i></a>
+                                            <a type="button" class="btn btn-default text-green" title="Одобрить запись" href="{{route('admin.forum.topic.approve', ['id' => $topic->id])}}"><i class="fa fa-check"></i></a>
                                         @else
-                                            <a type="button" class="btn btn-default text-red"  title="Заблокировать запись" href="{{route('admin.user.ban', ['id' => $topic->id])}}"><i class="fa fa-ban"></i></a>
+                                            <a type="button" class="btn btn-default text-red"  title="Заблокировать запись" href="{{route('admin.forum.topic.unapprove', ['id' => $topic->id])}}"><i class="fa fa-ban"></i></a>
                                         @endif
                                         @if(!$topic->news)
-                                            <a type="button" class="btn btn-default text-blue" title="Сделать новостью" href="{{route('admin.user.not_ban', ['id' => $topic->id])}}"><i class="fa fa-newspaper-o"></i></a>
+                                            <a type="button" class="btn btn-default text-blue" title="Сделать новостью" href="{{route('admin.forum.topic.news', ['id' => $topic->id])}}"><i class="fa fa-newspaper-o"></i></a>
                                         @else
-                                            <a type="button" class="btn btn-default text-grey"  title="Убрать из новостей" href="{{route('admin.user.ban', ['id' => $topic->id])}}"><i class="fa fa-newspaper-o"></i></a>
+                                            <a type="button" class="btn btn-default text-grey"  title="Убрать из новостей" href="{{route('admin.forum.topic.not_news', ['id' => $topic->id])}}"><i class="fa fa-newspaper-o"></i></a>
                                         @endif
-                                        <a type="button" class="btn btn-default text-red"  title="Удалить запись" href="{{route('admin.user.remove', ['id' => $topic->id])}}"><i class="fa fa-trash"></i></a>
+                                        <a type="button" class="btn btn-default text-red"  title="Удалить запись" href="{{route('admin.forum.topic.remove', ['id' => $topic->id])}}"><i class="fa fa-trash"></i></a>
                                     </div>
                                 </td>
                             </tr>
