@@ -135,7 +135,7 @@ class ForumTopic extends Model
             });
         }
 
-        if(Input::has('sort')){
+        if(Input::has('sort') && Input::get('sort')){
             $query->orderBy(Input::get('sort'));
         }
 
