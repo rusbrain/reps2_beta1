@@ -141,4 +141,19 @@ class ForumTopic extends Model
 
         return $query;
     }
+
+    /**
+     * @param $topic_id
+     * @return mixed
+     */
+    public static function getTopicById($topic_id)
+    {
+        return ForumTopic::where('id', $topic_id)
+            ->withCount('comments', 'positive', 'negative')
+            ->with('section', 'user.avatar','preview_image')
+            ->with(['comments' => function($q) {
+                $q->with('user.avatar')->orderBy('created_at', 'desc')->paginate(20);
+            }])
+            ->first();
+    }
 }

@@ -6,11 +6,13 @@ use App\Comment;
 use App\ForumSection;
 use App\ForumTopic;
 use App\Http\Requests\CommentUpdateRequest;
+use App\Http\Requests\ForumTopicUpdateAdminRequest;
 use App\Http\Requests\SearchForumTopicRequest;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\File;
 
 class ForumController extends Controller
 {
@@ -131,13 +133,7 @@ class ForumController extends Controller
      */
     public function getTopic($topic_id)
     {
-        return view('admin.forum.topic.view')->with('topic', ForumTopic::where('id', $topic_id)
-            ->withCount('comments', 'positive', 'negative')
-            ->with('section', 'user.avatar','preview_image')
-            ->with(['comments' => function($q) {
-                $q->with('user.avatar')->orderBy('created_at', 'desc')->paginate(20);
-            }])
-            ->first());
+        return view('admin.forum.topic.view')->with('topic', ForumTopic::getTopicById( $topic_id));
     }
 
     /**
@@ -157,9 +153,54 @@ class ForumController extends Controller
         return back();
     }
 
+    /**
+     * @param $comment_id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function commentRemove($comment_id)
     {
         Comment::where('id', $comment_id)->delete();
+
+        return back();
+    }
+
+    /**
+     * @param $topic_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getTopicEdit($topic_id)
+    {
+        return view('admin.forum.topic.edit')->with(['topic' => ForumTopic::getTopicById( $topic_id), 'sections' => ForumSection::all()]);
+    }
+
+    /**
+     * @param ForumTopicUpdateAdminRequest $request
+     * @param $topic_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function saveTopic(ForumTopicUpdateAdminRequest $request, $topic_id)
+    {
+        $topic = ForumTopic::find($topic_id);
+        $data = $request->validated();
+
+        $data['approved']   = $data['approved']??0;
+        $data['news']       = $data['news']??0;
+
+        if($request->file('preview_img')){
+            if ($request->file('preview_img')){
+                if ($topic->preview_file_id){
+                    File::removeFile($topic->preview_file_id);
+                }
+
+                $title = 'Превью '.$request->has('title')?$request->get('title'):'';
+                $file = File::storeFile($request->file('preview_img'), 'preview_img', $title);
+
+                $data['preview_file_id'] = $file->id;
+            }
+        }
+
+        unset($data['preview_img']);
+        ForumTopic::where('id',$topic_id)->update($data);
 
         return back();
     }

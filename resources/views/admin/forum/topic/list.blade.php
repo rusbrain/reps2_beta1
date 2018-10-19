@@ -121,7 +121,7 @@
                                 <td>
                                     <div class="btn-group">
                                         <a type="button" class="btn btn-default text-aqua"  title="Просмотреть запись" href="{{route('admin.forum.topic.get', ['id' => $topic->id])}}"><i class="fa fa-eye"></i></a>
-                                        <a type="button" class="btn btn-default text-orange"  title="Править запись"  href="{{route('admin.user.profile.edit', ['id' => $topic->id])}}"><i class="fa fa-edit"></i></a>
+                                        <a type="button" class="btn btn-default text-orange"  title="Править запись"  href="{{route('admin.forum.topic.edit', ['id' => $topic->id])}}"><i class="fa fa-edit"></i></a>
                                         @if(!$topic->approved)
                                             <a type="button" class="btn btn-default text-green" title="Одобрить запись" href="{{route('admin.forum.topic.approve', ['id' => $topic->id])}}"><i class="fa fa-check"></i></a>
                                         @else
