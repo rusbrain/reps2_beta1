@@ -109,9 +109,9 @@
                 @endif
 
                 <p>
-                    {{Auth::user()->name}} - {{Auth::user()->role->name}}
+                    {{Auth::user()->name}} - {{Auth::user()->role->title}}
                     @if(Auth::user()->created_at)
-                        <small>Member since {{Auth::user()->created_at->format('M. Y')}}</small>
+                        <small>На портале с {{Auth::user()->created_at->format('M. Y')}}</small>
                     @endif
                 </p>
             </li>

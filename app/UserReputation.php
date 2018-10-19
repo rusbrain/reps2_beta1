@@ -23,7 +23,6 @@ class UserReputation extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id',
         'object_id',
         'sender_id',
         'recipient_id',

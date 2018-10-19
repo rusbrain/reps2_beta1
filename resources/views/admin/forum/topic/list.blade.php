@@ -1,4 +1,3 @@
-{{--{{dd($data)}}--}}
 @extends('admin.layouts.admin')
 
 @section('css')
@@ -121,19 +120,19 @@
                                 <td>{!! $topic->news?'<i class="fa fa-newspaper-o text-blue"></i>':'<i class="fa  fa-newspaper-o text-gray"></i>' !!}</td>
                                 <td>
                                     <div class="btn-group">
-                                        <a type="button" class="btn btn-default text-aqua"  title="Просмотреть запись" href="{{route('admin.user.profile', ['id' => $topic->id])}}"><i class="fa fa-eye"></i></a>
+                                        <a type="button" class="btn btn-default text-aqua"  title="Просмотреть запись" href="{{route('admin.forum.topic.get', ['id' => $topic->id])}}"><i class="fa fa-eye"></i></a>
                                         <a type="button" class="btn btn-default text-orange"  title="Править запись"  href="{{route('admin.user.profile.edit', ['id' => $topic->id])}}"><i class="fa fa-edit"></i></a>
                                         @if(!$topic->approved)
-                                            <a type="button" class="btn btn-default text-green" title="Одобрить запись" href="{{route('admin.user.not_ban', ['id' => $topic->id])}}"><i class="fa fa-check"></i></a>
+                                            <a type="button" class="btn btn-default text-green" title="Одобрить запись" href="{{route('admin.forum.topic.approve', ['id' => $topic->id])}}"><i class="fa fa-check"></i></a>
                                         @else
-                                            <a type="button" class="btn btn-default text-red"  title="Заблокировать запись" href="{{route('admin.user.ban', ['id' => $topic->id])}}"><i class="fa fa-ban"></i></a>
+                                            <a type="button" class="btn btn-default text-red"  title="Заблокировать запись" href="{{route('admin.forum.topic.unapprove', ['id' => $topic->id])}}"><i class="fa fa-ban"></i></a>
                                         @endif
                                         @if(!$topic->news)
-                                            <a type="button" class="btn btn-default text-blue" title="Сделать новостью" href="{{route('admin.user.not_ban', ['id' => $topic->id])}}"><i class="fa fa-newspaper-o"></i></a>
+                                            <a type="button" class="btn btn-default text-blue" title="Сделать новостью" href="{{route('admin.forum.topic.news', ['id' => $topic->id])}}"><i class="fa fa-newspaper-o"></i></a>
                                         @else
-                                            <a type="button" class="btn btn-default text-grey"  title="Убрать из новостей" href="{{route('admin.user.ban', ['id' => $topic->id])}}"><i class="fa fa-newspaper-o"></i></a>
+                                            <a type="button" class="btn btn-default text-grey"  title="Убрать из новостей" href="{{route('admin.forum.topic.not_news', ['id' => $topic->id])}}"><i class="fa fa-newspaper-o"></i></a>
                                         @endif
-                                        <a type="button" class="btn btn-default text-red"  title="Удалить запись" href="{{route('admin.user.remove', ['id' => $topic->id])}}"><i class="fa fa-trash"></i></a>
+                                        <a type="button" class="btn btn-default text-red"  title="Удалить запись" href="{{route('admin.forum.topic.remove', ['id' => $topic->id])}}"><i class="fa fa-trash"></i></a>
                                     </div>
                                 </td>
                             </tr>
