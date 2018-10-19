@@ -12,12 +12,12 @@ class UserGalleryRatingController extends RatingController
      *
      * @var string
      */
-    protected static $relation = UserReputation::RELATION_USER_GALLERY;
+    protected $relation = UserReputation::RELATION_USER_GALLERY;
 
     /**
      * Model name
      *
      * @var string
      */
-    protected static $model = UserGallery::class;
+    protected $model = UserGallery::class;
 }

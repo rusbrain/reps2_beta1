@@ -13,12 +13,12 @@ class TopicRatingController extends RatingController
      *
      * @var string
      */
-    protected static $relation = UserReputation::RELATION_FORUM_TOPIC;
+    protected $relation = UserReputation::RELATION_FORUM_TOPIC;
 
     /**
      * Model name
      *
      * @var string
      */
-    protected static $model = ForumTopic::class;
+    protected $model = ForumTopic::class;
 }
