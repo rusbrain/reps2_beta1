@@ -9,6 +9,7 @@ use App\Http\Requests\ForumTopicUpdateAdminRequest;
 use App\Http\Requests\SearchForumTopicRequest;
 use App\User;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class ForumTopicController extends Controller
@@ -21,7 +22,10 @@ class ForumTopicController extends Controller
      */
     public function topics(SearchForumTopicRequest $request)
     {
-        $data = ForumTopic::search(ForumTopic::with('user', 'section')->withCount('negative','positive','comments'), $request->validated())->paginate(50);
+        $data = ForumTopic::search(ForumTopic::with('user', 'section')->withCount('negative','positive','comments'), $request->validated())->where(function ($q){
+            $q->whereNull('start_on')
+                ->orWhere('start_on', Carbon::now()->format('Y-M-d'));
+        })->paginate(50);
 
         return view('admin.forum.topic.list')->with(['data' => $data, 'request_data' => $request->validated(), 'sections' => ForumSection::all()]);
     }

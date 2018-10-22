@@ -24,7 +24,12 @@ class ForumTopicController extends Controller
      */
     public function index($id)
     {
-        $topic = ForumTopic::where('id', $id)->with(User::getUserWithReputationQuery())
+        $topic = ForumTopic::where('id', $id)
+            ->where(function ($q){
+                $q->whereNull('start_on')
+                    ->orWhere('start_on', Carbon::now()->format('Y-M-d'));
+            })
+            ->with(User::getUserWithReputationQuery())
             ->withCount('comments', 'positive','negative')->first();
 
         if(!$topic){

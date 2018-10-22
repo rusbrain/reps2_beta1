@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Input;
@@ -92,7 +93,12 @@ class ForumTopic extends Model
      */
     public static function news()
     {
-        return ForumTopic::where('news',1)->whereHas('section', function($q){
+        return ForumTopic::where('news',1)
+            ->where(function ($q){
+                $q->whereNull('start_on')
+                    ->orWhere('start_on', Carbon::now()->format('Y-M-d'));
+            })
+            ->whereHas('section', function($q){
             $q->where('is_active', 1)->where('is_general', 1);
         })->orderBy('created_at', 'desc');
     }

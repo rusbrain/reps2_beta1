@@ -12,6 +12,7 @@
 */
 
 Route::get('/', 'HomeController@index')                                                 ->name('home');
+Route::get('/search', 'HomeController@search')                                          ->name('home.search');
 Route::get('/email/verified/{token}', 'Auth\RegisterController@emailVerified')          ->name('email_verified');
 
 Route::middleware(['guest'])->group(function () {

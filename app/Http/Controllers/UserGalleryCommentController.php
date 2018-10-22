@@ -45,6 +45,6 @@ class UserGalleryCommentController extends CommentController
             return abort(403);
         }
 
-        return self::storeComment($request);
+        return $this->storeComment($request);
     }
 }

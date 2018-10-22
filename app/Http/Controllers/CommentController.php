@@ -14,21 +14,21 @@ class CommentController extends Controller
      *
      * @var string
      */
-    protected static $relation;
+    protected $relation;
 
     /**
      * View name
      *
      * @var string
      */
-    protected static $view_name;
+    protected $view_name;
 
     /**
      * object name with 'id'
      *
      * @var string
      */
-    protected static $name_id = 'topic_id';
+    protected $name_id = 'topic_id';
 
     /**
      * Update the specified resource in storage.
@@ -40,8 +40,8 @@ class CommentController extends Controller
     public function update(CommentUpdateRequest $request, $id)
     {
         if (Comment::find($id)){
-            self::updateComment($request, $id);
-            return redirect()->route(self::$view_name, ['id' => $id]);
+            $this->updateComment($request, $id);
+            return redirect()->route($this->view_name, ['id' => $id]);
         }
 
         return abort(404);
@@ -69,7 +69,7 @@ class CommentController extends Controller
 
         $object->delete();
 
-        return redirect()->route(self::$view_name, ['id' => $object_id]);
+        return redirect()->route($this->view_name, ['id' => $object_id]);
     }
 
     /**
@@ -77,18 +77,18 @@ class CommentController extends Controller
      *
      * @param Request $request
      */
-    public static function storeComment(Request $request)
+    public function storeComment(Request $request)
     {
         $data = $request->validated();
         $data['user_id'] = Auth::id();
-        $data['relation'] = self::$relation;
-        $data['object_id'] = $data[self::$name_id];
+        $data['relation'] = $this->relation;
+        $data['object_id'] = $data[$this->name_id];
 
-        unset($data[self::$name_id]);
+        unset($data[$this->name_id]);
 
         Comment::create($data);
 
-        redirect()->route(self::$view_name, ['id' => $data['object_id']]);
+        redirect()->route($this->view_name, ['id' => $data['object_id']]);
     }
 
     /**
@@ -97,13 +97,11 @@ class CommentController extends Controller
      * @param Request $request
      * @param $id
      */
-    public static function updateComment(Request $request, $id)
+    public function updateComment(Request $request, $id)
     {
          $replay_data = $request->validated();
          $replay_data['title'] = $replay_data['title']??null;
 
-         $replay_data = self::checkCommentData($replay_data);
-
-         Comment::where('id', $id)->where('relation', self::$relation)->update($replay_data);
+         Comment::where('id', $id)->where('relation', $this->relation)->update($replay_data);
     }
 }

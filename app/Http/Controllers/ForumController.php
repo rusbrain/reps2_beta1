@@ -40,7 +40,12 @@ class ForumController extends Controller
 
         $data->topics = $data->topics()->with(['user'=> function($q){
             $q->withTrashed();
-        }])->with(['comments' => function($query){
+        }])
+            ->where(function ($q){
+                $q->whereNull('start_on')
+                    ->orWhere('start_on', Carbon::now()->format('Y-M-d'));
+            })
+            ->with(['comments' => function($query){
                 $query->orderBy('created_at', 'desc')->first();
             }])
             ->withCount(['positive', 'negative', 'comments'])

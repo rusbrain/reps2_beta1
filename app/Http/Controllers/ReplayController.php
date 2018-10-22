@@ -38,6 +38,7 @@ class ReplayController extends Controller
     /**
      * Get list of all Replay
      *
+     * @param ReplaySearchRequest $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function list(ReplaySearchRequest $request)
@@ -73,7 +74,7 @@ class ReplayController extends Controller
      * @param bool $title
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    protected function getList($query, $title = false)
+    public function getList($query, $title = false)
     {
         $data = $this->getReplay($query)
             ->orderBy('created_at')

@@ -7,6 +7,7 @@ use App\Http\Requests\QuickEmailRequest;
 use App\Mail\QuickEmail;
 use App\Replay;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -21,7 +22,10 @@ class BaseController extends Controller
      */
     public function index()
     {
-        $topic_count = ForumTopic::count();
+        $topic_count = ForumTopic::where(function ($q){
+            $q->whereNull('start_on')
+                ->orWhere('start_on', Carbon::now()->format('Y-M-d'));
+        })->count();
         $gosu_replay_count = Replay::gosuReplay()->count();
         $user_replay_count = Replay::userReplay()->count();
         $user_count = User::count();

@@ -36,6 +36,6 @@ class TopicCommentController extends CommentController
      */
     public function store(TopicCommentStoreRequest $request)
     {
-        return self::storeComment($request);
+        return $this->storeComment($request);
     }
 }

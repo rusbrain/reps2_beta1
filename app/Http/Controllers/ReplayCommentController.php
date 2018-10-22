@@ -12,21 +12,21 @@ class ReplayCommentController extends CommentController
      *
      * @var string
      */
-    protected static $relation = Comment::RELATION_REPLAY;
+    protected $relation = Comment::RELATION_REPLAY;
 
     /**
      * View name
      *
      * @var string
      */
-    protected static $view_name = 'replay.get';
+    protected $view_name = 'replay.get';
 
     /**
      * object name with 'id'
      *
      * @var string
      */
-    protected static $name_id = 'replay_id';
+    protected $name_id = 'replay_id';
     /**
      * Store a newly created resource in storage.
      *
@@ -35,6 +35,6 @@ class ReplayCommentController extends CommentController
      */
     public function store(ReplayCommentStoreRequest $request)
     {
-        return self::storeComment($request);
+        return $this->storeComment($request);
     }
 }
