@@ -14,6 +14,20 @@ class ForumSection extends Model
     protected $table = 'forum_sections';
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['position', 'reps_id', 'name', 'title', 'description', 'is_active', 'is_general', 'user_can_add_topics'];
+
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
+
+    /**
      * Relations. Sections topics
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

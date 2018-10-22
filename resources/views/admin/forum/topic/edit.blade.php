@@ -7,7 +7,7 @@
 @endsection
 
 @section('page_header')
-    Темы форума
+   Редактировать {{$topic->title}}
 @endsection
 
 @section('breadcrumb')

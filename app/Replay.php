@@ -107,7 +107,7 @@ class Replay extends Model
 
     /**
      * @param $rating
-     * @param $topic_id
+     * @param $replay_id
      */
     public static function updateRating($rating, $replay_id)
     {
@@ -115,6 +115,8 @@ class Replay extends Model
     }
 
     /**
+     * Update value of user rating
+     *
      * @param $replay_id
      */
     public static function updateUserRating($replay_id)
@@ -126,6 +128,8 @@ class Replay extends Model
     }
 
     /**
+     * Get query users replay
+     *
      * @return mixed
      */
     public static function userReplay()
@@ -134,6 +138,8 @@ class Replay extends Model
     }
 
     /**
+     * Get query for gosu replay
+     *
      * @return mixed
      */
     public static function gosuReplay()

@@ -2,206 +2,178 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Comment;
 use App\ForumSection;
-use App\ForumTopic;
-use App\Http\Requests\CommentUpdateRequest;
-use App\Http\Requests\ForumTopicUpdateAdminRequest;
-use App\Http\Requests\SearchForumTopicRequest;
-use App\User;
+use App\Http\Requests\ForumSectionUpdateAdminRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use App\File;
 
 class ForumController extends Controller
 {
     /**
+     * Get forum sections list
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
-        return view('admin.user.user_list');
+        $data = ForumSection::withCount('topics')->orderBy('position')->paginate(20);
+
+        return view('admin.forum.section.list')->with(['data' => $data]);
     }
 
     /**
-     * Get Forum topic list
+     * Set not active section
      *
-     * @param SearchForumTopicRequest $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function topics(SearchForumTopicRequest $request)
-    {
-        $data = ForumTopic::search(ForumTopic::with('user', 'section')->withCount('negative','positive','comments'), $request->validated())->paginate(50);
-
-        return view('admin.forum.topic.list')->with(['data' => $data, 'request_data' => $request->validated(), 'sections' => ForumSection::all()]);
-    }
-
-    /**
-     * Get Forum Topics by user
-     *
-     * @param $user_id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function getUsersTopics($user_id)
-    {
-        $user = User::find($user_id);
-
-        $topics  = $user->topics()->with('section')->with(['user'=> function($q){
-            $q->withTrashed();
-        }])->withCount('comments', 'positive', 'negative')->paginate(50);
-
-        return view('admin.topics')->with(['topics' => $topics, 'title' => "Темы форума $user->name", 'user' => $user]);
-    }
-
-    /**
-     * Forum Topic as news
-     *
-     * @param $topic_id
+     * @param $section_id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function news($topic_id)
+    public function unactive($section_id)
     {
-        ForumTopic::where('id', $topic_id)->update(['news' => 1]);
+        ForumSection::where('id', $section_id)->update(['is_active' => 0]);
 
         return back();
     }
 
     /**
-     * Forum topic as not news
+     * Set active section
      *
-     * @param $topic_id
+     * @param $section_id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function notNews($topic_id)
+    public function active($section_id)
     {
-        ForumTopic::where('id', $topic_id)->update(['news' => 0]);
+        ForumSection::where('id', $section_id)->update(['is_active' => 1]);
 
         return back();
     }
 
     /**
-     * Approve Forum Topic
+     * Set general section
      *
-     * @param $topic_id
+     * @param $section_id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function approve($topic_id)
+    public function general($section_id)
     {
-        ForumTopic::where('id', $topic_id)->update(['approved' => 1]);
+        ForumSection::where('id', $section_id)->update(['is_general' => 1]);
 
         return back();
     }
 
     /**
-     * Disable Forum Topic
+     * Set not general section
      *
-     * @param $topic_id
+     * @param $section_id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function unApprove($topic_id)
+    public function notGeneral($section_id)
     {
-        ForumTopic::where('id', $topic_id)->update(['approved' => 0]);
+        ForumSection::where('id', $section_id)->update(['is_general' => 0]);
 
         return back();
     }
 
     /**
-     * Delete Forum Topic
+     * Set user can add topic to section
      *
-     * @param $topic_id
+     * @param $section_id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function remove($topic_id)
+    public function userCan($section_id)
     {
-        $topic = ForumTopic::find($topic_id);
-
-        $topic->comments()->delete();
-        $topic->positive()->delete();
-        $topic->negative()->delete();
-
-        ForumTopic::where('id', $topic_id)->delete();
+        ForumSection::where('id', $section_id)->update(['user_can_add_topics' => 1]);
 
         return back();
     }
 
     /**
-     * Get Forum Topic
+     * Set user can`t add topic to section
      *
-     * @param $topic_id
-     * @return mixed
-     */
-    public function getTopic($topic_id)
-    {
-        return view('admin.forum.topic.view')->with('topic', ForumTopic::getTopicById( $topic_id));
-    }
-
-    /**
-     * @param CommentUpdateRequest $request
-     * @param $topic_id
+     * @param $section_id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function sendComment(CommentUpdateRequest $request, $topic_id)
+    public function userNotCan($section_id)
     {
-        $data = $request->validated();
-        $data['user_id'] = Auth::id();
-        $data['relation'] = Comment::RELATION_FORUM_TOPIC;
-        $data['object_id'] = $topic_id;
-
-        Comment::create($data);
+        ForumSection::where('id', $section_id)->update(['user_can_add_topics' => 0]);
 
         return back();
     }
 
     /**
-     * @param $comment_id
+     * Delete Forum Section
+     *
+     * @param $section_id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function commentRemove($comment_id)
+    public function remove($section_id)
     {
-        Comment::where('id', $comment_id)->delete();
 
-        return back();
-    }
+        $section = ForumSection::find($section_id);
 
-    /**
-     * @param $topic_id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function getTopicEdit($topic_id)
-    {
-        return view('admin.forum.topic.edit')->with(['topic' => ForumTopic::getTopicById( $topic_id), 'sections' => ForumSection::all()]);
-    }
-
-    /**
-     * @param ForumTopicUpdateAdminRequest $request
-     * @param $topic_id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function saveTopic(ForumTopicUpdateAdminRequest $request, $topic_id)
-    {
-        $topic = ForumTopic::find($topic_id);
-        $data = $request->validated();
-
-        $data['approved']   = $data['approved']??0;
-        $data['news']       = $data['news']??0;
-
-        if($request->file('preview_img')){
-            if ($request->file('preview_img')){
-                if ($topic->preview_file_id){
-                    File::removeFile($topic->preview_file_id);
-                }
-
-                $title = 'Превью '.$request->has('title')?$request->get('title'):'';
-                $file = File::storeFile($request->file('preview_img'), 'preview_img', $title);
-
-                $data['preview_file_id'] = $file->id;
-            }
+        foreach ($section->topics()->get() as $topic){
+            $topic->comments()->delete();
+            $topic->positive()->delete();
+            $topic->negative()->delete();
         }
 
-        unset($data['preview_img']);
-        ForumTopic::where('id',$topic_id)->update($data);
+        $section->topics()->delete();
+
+        ForumSection::where('id', $section_id)->delete();
 
         return back();
+    }
+
+    /**
+     * Get view with form for edit forum section
+     *
+     * @param $section_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getSectionEdit($section_id)
+    {
+        return view('admin.forum.section.edit')->with('section', ForumSection::find( $section_id));
+    }
+
+    /**
+     * Get view with form for create forum section
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getSectionAdd()
+    {
+        return view('admin.forum.section.add');
+    }
+
+    /**
+     * Save updates of forum section
+     *
+     * @param ForumSectionUpdateAdminRequest $request
+     * @param $section_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function saveTopic(ForumSectionUpdateAdminRequest $request, $section_id)
+    {
+        $data = $request->validated();
+
+        $data['is_active']              = $data['is_active']??0;
+        $data['is_general']             = $data['is_general']??0;
+        $data['user_can_add_topics']    = $data['user_can_add_topics']??0;
+
+        ForumSection::where('id',$section_id)->update($data);
+
+        return back();
+    }
+
+    /**
+     * Create new forum section
+     *
+     * @param ForumSectionUpdateAdminRequest $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function createTopic(ForumSectionUpdateAdminRequest $request)
+    {
+        $section = ForumSection::create($request->validated());
+
+        return redirect()->route('admin.forum.section.edit', ['id' => $section->id]);
     }
 }

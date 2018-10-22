@@ -84,6 +84,8 @@ class Dialogue extends Model
     }
 
     /**
+     * get dialogue by user
+     *
      * @param $user_id
      * @return mixed
      */
