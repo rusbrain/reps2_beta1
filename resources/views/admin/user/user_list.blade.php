@@ -1,4 +1,5 @@
 @extends('admin.layouts.admin')
+@inject('admin_helper', 'App\Services\AdminViewHelper')
 
 @section('css')
 @endsection
@@ -32,7 +33,7 @@
                                     <label>Страна:</label>
                                     <select class="form-control" style="width: 100%;" name="country">
                                         <option value="">Select...</option>
-                                        @foreach($countries as $country)
+                                        @foreach($admin_helper->getCountries() as $country)
                                             <option value="{{$country->id}}" @if(isset($request_data['country']) && $request_data['country'] == $country->id) selected @endif>{{$country->name}}</option>
                                         @endforeach
                                     </select>
