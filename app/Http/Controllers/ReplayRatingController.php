@@ -62,13 +62,17 @@ class ReplayRatingController extends RatingController
             $comment = self::getComment($request);
 
             ReplayUserRating::updateOrCreate(
+<<<<<<< HEAD
                 ['user_id' => Auth::id(), 'object_id' => $id, 'relation' => $this->relation],
+=======
+                ['user_id' => Auth::id(), 'replay_id' => $id],
+>>>>>>> feature/front_home_page3
                 ['comment' => $comment, 'rating'=> $request->get('rating')]
             );
 
             Replay::updateUserRating($id);
 
-            return ['replay' => Replay::find($id)];
+            return back();
         }
 
         return abort(404);
