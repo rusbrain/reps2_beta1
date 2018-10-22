@@ -97,7 +97,7 @@ img {
 .error {
   color: red;
 }
-.success{
+.success {
   color: green;
 }
 textarea.error,
@@ -125,13 +125,19 @@ input.error {
 .padding-left-20 {
   padding-left: 20px;
 }
+.green-color {
+  color: green;
+}
+.red-color {
+  color: red;
+}
 /*************GENERAL PARTS********* */
 html, body {
   height: 100%;
 }
 body {
   font-family: "Ubuntu-Regular", sans-serif;
-  font-size: 16px;
+  font-size: 14px;
   color: #303030;
   font-weight: 300;
   background: #d8dce0;
@@ -326,7 +332,6 @@ body {
 .sidebar-widget-content {
   display: flex;
   flex-direction: column;
-  padding: 5px;
 }
 .sidebar-widget.random-image img {
   border: 1px solid #efefef;
@@ -343,9 +348,10 @@ body {
 .sidebar-widget-subtitle {
   background: lightgray;
   color: #222;
-  margin: -5px -5px 10px -5px;
+  margin: -5px 0px 10px 0px;
   padding: 4px;
   font-size: 12px;
+  text-align: center;
 }
 .sidebar-widget-no-results {
   margin-top: 15px;
@@ -379,6 +385,30 @@ body {
 .sidebar-widget .view-results:hover {
   text-decoration: underline;
 }
+.sidebar-widget-forum-section{
+  margin-bottom: 20px;
+}
+.forum-section-title {
+  background: #efefef;
+  font-weight: bold;
+  padding: 2px 5px;
+}
+.forum-section-title a{
+  color: #000;
+}
+.topic-wrapper p{
+  margin-bottom: 0;
+}
+.topic-wrapper p a{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #303030;
+  font-size: 11px;
+}
+.forum-section-content{
+  padding: 2px 5px;
+}
 /**---------------------*/
 /**------ RIGHT SIDEBAR ----------*/
 /**---------------------*/
@@ -386,70 +416,140 @@ body {
 .sidebar-right {
   padding-top: 10px;
 }
-
 .sidebar-widget .replay {
   display: flex;
   justify-content: space-between;
   margin-bottom: 5px;
 }
-.sidebar-widget .replays-wrapper{
-
+.sidebar-widget .replays-wrapper {
 }
-
 /**---------------------*/
 /**------USER IGNORED LIST PAGE ----------*/
 /**---------------------*/
-.ignored-user-header{
+.ignored-user-header {
   border-right: 1px solid #17a2b8;
   font-size: 14px;
   text-align: center;
 }
-.ignored-user{
+.ignored-user {
   margin-bottom: 10px;
   margin-top: 10px;
   border-top: 1px solid #17a2b8;
   font-size: 14px;
   text-align: center;
 }
-.ignored-user div{
+.ignored-user div {
   border-right: 1px solid #17a2b8;
 }
-.ignored-user div:last-of-type{
+.ignored-user div:last-of-type {
   border-right: none;
 }
 /**---------------------*/
 /**------SINGLE REPLAY PAGE ----------*/
 /**---------------------*/
-.comment-title{
+.map-wrapper {
+  padding-top: 20px;
+}
+.comments-wrapper {
+}
+.comment-title {
   display: flex;
   align-items: center;
   justify-content: start;
   background: #cfcfcf;
 }
-.comment-content{
+.comment-title span {
+  margin-right: 10px;
+}
+.comment-date {
+}
+.comment-user {
+}
+.comment-flag {
+}
+.comment-rating {
+}
+.comment-rating-plus {
+}
+.comment-rating-minus {
+}
+.comment-content {
+  background: #fff;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.comments-wrapper {
+}
+.evolution-replay {
+}
+.evolution-replay-form-content {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+.evolution-replay-form-content div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.evolution-replay-form-content label {
+  margin-bottom: 0;
+}
+.vote-replay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+.vote-replay a {
+  margin-right: 10px;
+}
+.vote-replay-up {
+  color: green;
+}
+.vote-replay-down {
+  color: red;
+}
+/**---------------------*/
+/**------REPLAYS PAGE ----------*/
+/**---------------------*/
+.page-replay-content > div{
+  background: #fff;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.page-replays-subtitle > div{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.page-replays-subtitle > div p{
+  margin-bottom: 0;
+}
+.page-replay-title > div{
+  background: #cfcfcf;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.page-replay-title > div > div span{
+  margin-right: 15px;
+}
+
+/**---------------------*/
+/**------TOPIC PAGE ----------*/
+/**---------------------*/
+.topic-title{
 
 }
-.comment-date{
+.topic-content{
 
 }
-.comment-user{
+.topic-comments{
 
 }
-.comment-flag{
-
-}
-.comment-rating{
-
-}
-.comment-rating-plus{
-
-}
-.comment-rating-minus{
-
-}
-.comment-content{
-
-}
-.comments-wrapper{
+.topic-author{
 
 }
