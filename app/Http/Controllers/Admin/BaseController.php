@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Mail;
 class BaseController extends Controller
 {
     /**
+     * Get dashboard of Admin panel
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()

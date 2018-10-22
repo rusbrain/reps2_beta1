@@ -38,7 +38,7 @@ class ForumController extends Controller
             return abort(404);
         }
 
-        $data->topics()->with(['user'=> function($q){
+        $data->topics = $data->topics()->with(['user'=> function($q){
             $q->withTrashed();
         }])->with(['comments' => function($query){
                 $query->orderBy('created_at', 'desc')->first();

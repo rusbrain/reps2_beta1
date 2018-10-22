@@ -20,7 +20,7 @@ class ForumTopic extends Model
      *
      * @var array
      */
-    protected $fillable = ['reps_id', 'reps_section', 'section_id', 'title', 'preview_content', 'content', 'user_id', 'reviews', 'start_on', 'preview_file_id'];
+    protected $fillable = ['reps_id', 'reps_section', 'section_id', 'title', 'preview_content', 'content', 'user_id', 'reviews', 'start_on', 'preview_file_id', 'news'];
 
     /**
      * Relations. Topics section
@@ -66,12 +66,17 @@ class ForumTopic extends Model
        return $this->hasMany('App\UserReputation', 'object_id')->where('relation', UserReputation::RELATION_FORUM_TOPIC)->where('rating','-1');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function preview_image()
     {
         return $this->belongsTo('App\File', 'preview_file_id');
     }
 
     /**
+     * Update forum topic rating
+     *
      * @param $rating
      * @param $topic_id
      */
@@ -81,6 +86,8 @@ class ForumTopic extends Model
     }
 
     /**
+     * Get forum topics for news
+     *
      * @return mixed
      */
     public static function news()
@@ -91,6 +98,8 @@ class ForumTopic extends Model
     }
 
     /**
+     * Generate query with search request
+     *
      * @param Builder $query
      * @param array $data
      * @return Builder
@@ -143,6 +152,8 @@ class ForumTopic extends Model
     }
 
     /**
+     * Get Forum Topic with all data by id
+     *
      * @param $topic_id
      * @return mixed
      */

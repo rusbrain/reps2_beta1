@@ -77,6 +77,7 @@
             <div class="box">
                 <div class="box-header with-border">
                     <h3 class="box-title">Тем ({{$data->total()}})</h3>
+                    <a class="btn btn-info" href="{{route('admin.forum.topic.add')}}">Создать</a>
                     <div class="box-tools">
                         @include('admin.user.pagination')
                     </div>

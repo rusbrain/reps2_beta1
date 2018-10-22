@@ -96,6 +96,8 @@ class UserController extends Controller
     }
 
     /**
+     * Banning user
+     *
      * @param $user_id
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -107,6 +109,8 @@ class UserController extends Controller
     }
 
     /**
+     * User permission
+     *
      * @param $user_id
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -118,6 +122,8 @@ class UserController extends Controller
     }
 
     /**
+     * Soft delete user
+     *
      * @param $user_id
      * @return \Illuminate\Http\RedirectResponse
      */

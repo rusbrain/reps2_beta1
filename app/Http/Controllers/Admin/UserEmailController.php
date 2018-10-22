@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 class UserEmailController extends Controller
 {
     /**
+     * Get view for send mail to user
+     *
      * @param $user_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */

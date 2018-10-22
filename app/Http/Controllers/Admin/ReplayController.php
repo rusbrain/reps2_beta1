@@ -8,16 +8,28 @@ use App\Http\Controllers\Controller;
 
 class ReplayController extends Controller
 {
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function indexUsers()
     {
         return view('admin.replays');
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function indexGosu()
     {
         return view('admin.replays');
     }
 
+    /**
+     * Get replays by user
+     *
+     * @param $user_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function getReplayByUser($user_id)
     {
         $user = User::find($user_id);

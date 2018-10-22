@@ -34,6 +34,13 @@
                         <div class="row">
                             <div class="col-md-10 col-md-offset-1">
                                 <p>
+                                    {!! $topic->preview_content !!}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1">
+                                <p>
                                     {!! $topic->content !!}
                                 </p>
                             </div>

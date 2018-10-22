@@ -7,13 +7,13 @@
 @endsection
 
 @section('page_header')
-   Редактировать {{$topic->title}}
+    Создать новую тему
 @endsection
 
 @section('breadcrumb')
     <li><a href="{{route('admin.home')}}"><i class="fa fa-dashboard"></i>Главная панель</a></li>
     <li><a href="{{route('admin.forum_topic')}}">Темы Форума</a></li>
-    <li class="active">{{$topic->title}}</li>
+    <li class="active">Новая тема</li>
 @endsection
 
 @section('content')
@@ -21,7 +21,7 @@
     <div class="col-md-10 col-md-offset-1">
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title text-blue">{{$topic->section->title}} / {{$topic->title}}</h3>
+                <h3 class="box-title text-blue">Новая тема</h3>
             </div>
             <div class="box-body">
                 <div class="box-tools col-md-12">
@@ -37,34 +37,32 @@
                                     <div class="form-group">
                                         <select class="form-control" name="section_id">
                                             @foreach($sections as $section)
-                                                <option value="{{$section->id}}" {{$section->id == $topic->section_id?'selected':''}}>{{$section->title}}</option>
+                                                <option value="{{$section->id}}" {{$section->id == old('section_id')?'selected':''}}>{{$section->title}}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-8">
+                                <div class="col-md-4">
                                     <div class="box-header">
                                         <h3 class="box-title">Название:</h3>
                                         <!-- /. tools -->
                                     </div>
-                                    <input type="text" name="title" class="form-control" placeholder="Название..." value="{{old('title')??$topic->title}}">
+                                    <input type="text" name="title" class="form-control" placeholder="Название..." value="{{old('title')}}">
                                     @if ($errors->has('title'))
                                         <span class="invalid-feedback text-red" role="alert">
                                         <strong>{{ $errors->first('title') }}</strong>
                                     </span>
                                     @endif
                                 </div>
-                            </div>
-                            <div class="row">
+
+
                                 <div class="col-md-4">
                                     <div class="box-header">
                                         <h3 class="box-title">Превью:</h3>
                                         <!-- /. tools -->
                                     </div>
-                                    <img class="img-responsive" src="{{route('home').($topic->preview_image->link??'/dist/img/default-50x50.gif')}}" alt="Photo">
-                                    <br>
                                     <div class="form-group">
-                                        <label for="exampleInputFile">Загрузить новую картинку</label>
+                                        <label for="exampleInputFile">Загрузить картинку превью</label>
                                         <input type="file" id="preview_img" name="preview_img">
                                     </div>
                                     @if ($errors->has('avatar'))
@@ -73,7 +71,9 @@
                                     </span>
                                     @endif
                                 </div>
-                                <div class="col-md-8">
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
                                     <div class="row">
                                         <div>
                                             <div class="box-header">
@@ -83,7 +83,7 @@
                                             <!-- /.box-header -->
                                             <div class="box-body pad">
                                         <textarea id="preview_content" name="preview_content" rows="5" cols="80">
-                                                                {!! old('preview_content')??$topic->preview_content !!}
+                                                                {!! old('preview_content')!!}
                                         </textarea>
                                             </div>
                                             @if ($errors->has('preview_content'))
@@ -104,7 +104,7 @@
                                     <!-- /.box-header -->
                                     <div class="box-body pad">
                                         <textarea id="content" name="content" rows="10" cols="80">
-                                                                {!! old('content')??$topic->content !!}
+                                                                {!! old('content')!!}
                                         </textarea>
                                     </div>
                                     @if ($errors->has('content'))
@@ -126,7 +126,7 @@
                                             <div class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
                                             </div>
-                                            <input type="text" name="start_on" class="form-control pull-right" id="datepicker" value="{{old('start_on')??($topic->start_on??'')}}">
+                                            <input type="text" name="start_on" class="form-control pull-right" id="datepicker" value="{{old('start_on')}}">
                                             @if ($errors->has('start_on'))
                                                 <span class="invalid-feedback text-red" role="alert">
                                         <strong>{{ $errors->first('start_on') }}</strong>
@@ -141,7 +141,7 @@
                                     <div class="form-group">
                                         <div class="form-group">
                                             <label>
-                                                <input type="checkbox" name="news" class="flat-red" {{old('news')?'checked':($topic->news?'checked':'')}} value="1">
+                                                <input type="checkbox" name="news" class="flat-red" {{old('news')?'checked':''}} value="1">
                                                 Отображать в новостях
                                             </label>
                                             @if ($errors->has('news'))
@@ -152,7 +152,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label>
-                                                <input type="checkbox" name="approved" class="flat-red" {{old('approved')?'checked':($topic->approved?'checked':'')}} value="1">
+                                                <input type="checkbox" name="approved" class="flat-red" {{old('approved')?'checked':''}} value="1">
                                                 Подтвердить
                                             </label>
                                             @if ($errors->has('approved'))
