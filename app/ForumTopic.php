@@ -20,7 +20,7 @@ class ForumTopic extends Model
      *
      * @var array
      */
-    protected $fillable = ['reps_id', 'reps_section', 'section_id', 'title', 'preview_content', 'content', 'user_id', 'reviews', 'start_on', 'preview_file_id'];
+    protected $fillable = ['reps_id', 'reps_section', 'section_id', 'title', 'preview_content', 'content', 'user_id', 'reviews', 'start_on', 'preview_file_id', 'news'];
 
     /**
      * Relations. Topics section

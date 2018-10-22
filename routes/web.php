@@ -174,7 +174,7 @@ Route::group(['middleware' => ['auth', 'admin_panel'], 'prefix' => 'admin_panel'
     Route::group(['prefix' => 'forum'], function (){
         Route::get('/', 'ForumController@index')                                        ->name('admin.forum_sections');
         Route::get('/add', 'ForumController@getSectionAdd')                             ->name('admin.forum.section.add');
-        Route::post('/add', 'ForumController@createTopic')                              ->name('admin.forum.section.create');
+        Route::post('/add', 'ForumController@createSection')                            ->name('admin.forum.section.create');
         Route::get('{id}/active', 'ForumController@active')                             ->name('admin.forum.section.active');
         Route::get('{id}/unactive', 'ForumController@unactive')                         ->name('admin.forum.section.not_active');
         Route::get('{id}/general', 'ForumController@general')                           ->name('admin.forum.section.general');
@@ -183,11 +183,13 @@ Route::group(['middleware' => ['auth', 'admin_panel'], 'prefix' => 'admin_panel'
         Route::get('{id}/user_not_can', 'ForumController@userNotCan')                   ->name('admin.forum.section.user_not_can');
         Route::get('{id}/remove', 'ForumController@remove')                             ->name('admin.forum.section.remove');
         Route::get('{id}/edit', 'ForumController@getSectionEdit')                       ->name('admin.forum.section.edit');
-        Route::post('{id}/edit', 'ForumController@saveTopic')                           ->name('admin.forum.section.edit.save');
+        Route::post('{id}/edit', 'ForumController@saveSection')                         ->name('admin.forum.section.edit.save');
 
 
         Route::group(['prefix' => 'topic'], function (){
             Route::get('/', 'ForumTopicController@topics')                              ->name('admin.forum_topic');
+            Route::get('/add', 'ForumTopicController@getTopicAdd')                      ->name('admin.forum.topic.add');
+            Route::post('/add', 'ForumTopicController@createTopic')                     ->name('admin.forum.topic.create');
             Route::get('/{id}/news', 'ForumTopicController@news')                       ->name('admin.forum.topic.news');
             Route::get('/{id}/not_news', 'ForumTopicController@notNews')                ->name('admin.forum.topic.not_news');
             Route::get('/{id}/approve', 'ForumTopicController@approve')                 ->name('admin.forum.topic.approve');

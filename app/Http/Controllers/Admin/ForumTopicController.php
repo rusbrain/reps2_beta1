@@ -9,6 +9,7 @@ use App\Http\Requests\ForumTopicUpdateAdminRequest;
 use App\Http\Requests\SearchForumTopicRequest;
 use App\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class ForumTopicController extends Controller
 {
@@ -167,5 +168,45 @@ class ForumTopicController extends Controller
         ForumTopic::where('id', $topic_id)->update(['news' => 0]);
 
         return back();
+    }
+
+    /**
+     * Get view with form for create forum section
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getTopicAdd()
+    {
+        return view('admin.forum.topic.add')->with('sections', ForumSection::all());
+    }
+
+    /**
+     * Create new forum section
+     *
+     * @param ForumTopicUpdateAdminRequest $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function createTopic(ForumTopicUpdateAdminRequest $request)
+    {
+        $data = $request->validated();
+
+        if($request->file('preview_img')){
+            if ($request->file('preview_img')){
+                $title = 'Превью '.$request->has('title')?$request->get('title'):'';
+                $file = File::storeFile($request->file('preview_img'), 'preview_img', $title);
+
+                $data['preview_file_id'] = $file->id;
+            }
+        }
+
+        $data['user_id'] = Auth::id();
+        $data['approved']   = $data['approved']??0;
+        $data['news']       = $data['news']??0;
+
+        unset($data['preview_img']);
+
+        $topic = ForumTopic::create($data);
+
+        return redirect()->route('admin.forum.topic.edit', ['id' => $topic->id]);
     }
 }

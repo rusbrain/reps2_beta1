@@ -151,7 +151,7 @@ class ForumController extends Controller
      * @param $section_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function saveTopic(ForumSectionUpdateAdminRequest $request, $section_id)
+    public function saveSection(ForumSectionUpdateAdminRequest $request, $section_id)
     {
         $data = $request->validated();
 
@@ -170,7 +170,7 @@ class ForumController extends Controller
      * @param ForumSectionUpdateAdminRequest $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function createTopic(ForumSectionUpdateAdminRequest $request)
+    public function createSection(ForumSectionUpdateAdminRequest $request)
     {
         $section = ForumSection::create($request->validated());
 
