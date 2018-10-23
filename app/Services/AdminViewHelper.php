@@ -9,6 +9,7 @@
 namespace App\Services;
 
 
+use App\Country;
 use App\ForumTopic;
 use App\Replay;
 use App\UserMessage;
@@ -21,6 +22,7 @@ class AdminViewHelper
     protected $menu_name;
     protected $notifications;
     protected $role;
+    protected $countries;
 
     /**
      * Get URI name for admin panel
@@ -74,5 +76,14 @@ class AdminViewHelper
         $this->role = $this->role??Auth::user()->role->name == 'admin';
 
         return $this->role;
+    }
+
+    /**
+     * @return Country[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public function getCountries()
+    {
+        $this->countries = $this->countries??Country::all();
+        return $this->countries;
     }
 }
