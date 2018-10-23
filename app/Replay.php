@@ -32,7 +32,8 @@ class Replay extends Model
     protected $fillable = [
         'user_id', 'user_replay', 'type_id','title', 'content', 'map_id', 'file_id',
         'game_version', 'championship', 'first_country_id', 'second_country_id',
-        'first_matchup', 'second_matchup', 'rating', 'user_rating' ];
+        'first_matchup', 'second_matchup', 'rating', 'user_rating', 'first_race',
+        'second_race', 'first_location', 'second_location', 'evaluation' ];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
