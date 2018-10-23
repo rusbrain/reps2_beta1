@@ -81,6 +81,7 @@
             <div class="box">
                 <div class="box-header with-border">
                     <h3 class="box-title">Replays ({{$data->total()}})</h3>
+                    <a class="btn btn-info" href="{{route('admin.replay.add')}}">Создать</a>
                     <div class="box-tools">
                         @include('admin.user.pagination')
                     </div>

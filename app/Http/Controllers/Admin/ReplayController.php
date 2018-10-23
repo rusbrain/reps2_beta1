@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Comment;
 use App\File;
 use App\Http\Requests\CommentUpdateRequest;
+use App\Http\Requests\ReplayStoreRequest;
 use App\Http\Requests\ReplayUpdateRequest;
 use App\Replay;
 use App\ReplayMap;
@@ -129,8 +130,9 @@ class ReplayController extends Controller
     }
 
     /**
+     * @param ReplayUpdateRequest $request
      * @param $replay_id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function save(ReplayUpdateRequest $request, $replay_id)
     {
@@ -156,5 +158,34 @@ class ReplayController extends Controller
         }])
             ->withCount('positive', 'negative', 'comments', 'user_rating')
             ->with('user.avatar', 'type', 'map', 'file', 'first_country', 'second_country')->first();
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function add()
+    {
+        return view('admin.replay.create')->with(['types' => ReplayType::all(), 'maps' => ReplayMap::all()]);
+    }
+
+    /**
+     * @param ReplayStoreRequest $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function create(ReplayStoreRequest $request)
+    {
+        $replay_data = $request->validated();
+
+        $title = 'Replay '.$request->has('title')?$request->get('title'):'';
+        $file = File::storeFile($replay_data['replay'], 'replays', $title);
+
+        $replay_data['file_id'] = $file->id;
+        $replay_data['user_id'] = Auth::id();
+
+        unset($replay_data['replay']);
+
+        $replay = Replay::create($replay_data);
+
+        return redirect()->route('admin.replay.view', ['id' => $replay->id]);
     }
 }
