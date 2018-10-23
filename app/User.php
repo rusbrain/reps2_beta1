@@ -167,6 +167,20 @@ class User extends Authenticatable
     }
 
     /**
+     * @param $user_id
+     */
+    public static function recountRating($user_id)
+    {
+        $ratings = UserReputation::where('recipient_id', $user_id)->get();
+        $sum = 0;
+        foreach ($ratings as $rating){
+            $sum += $rating->rating;
+        }
+
+        User::where('id', $user_id)->update(['rating' => $sum]);
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function answers_to_questions()

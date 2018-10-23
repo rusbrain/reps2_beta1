@@ -13,6 +13,7 @@ use App\Country;
 use App\ForumTopic;
 use App\Replay;
 use App\UserMessage;
+use App\UserRole;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,6 +24,7 @@ class AdminViewHelper
     protected $notifications;
     protected $role;
     protected $countries;
+    protected $user_role;
 
     /**
      * Get URI name for admin panel
@@ -85,5 +87,14 @@ class AdminViewHelper
     {
         $this->countries = $this->countries??Country::all();
         return $this->countries;
+    }
+
+    /**
+     * @return Country[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public function getUserRole()
+    {
+        $this->user_role = $this->user_role??UserRole::all();
+        return $this->user_role;
     }
 }

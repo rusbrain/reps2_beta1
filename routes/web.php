@@ -214,8 +214,15 @@ Route::group(['middleware' => ['auth', 'admin_panel'], 'prefix' => 'admin_panel'
         });
     });
     Route::group(['prefix' => 'replay'], function (){
-        Route::get('/users', 'ReplayController@indexUsers')                             ->name('admin.replay.users');
-        Route::get('/gosu', 'ReplayController@indexGosu')                               ->name('admin.replay.gosu');
+        Route::get('/', 'ReplayController@index')                                       ->name('admin.replay');
+        Route::get('/{id}/user_rating', 'ReplayController@getUserRating')               ->name('admin.replay.user_rating');
+        Route::get('/{id}/approve', 'ReplayController@approve')                         ->name('admin.replay.approve');
+        Route::get('/{id}/not_approve', 'ReplayController@notApprove')                  ->name('admin.replay.not_approve');
+        Route::get('/{id}/remove', 'ReplayController@remove')                           ->name('admin.replay.remove');
+        Route::get('/{id}/view', 'ReplayController@getReplay')                          ->name('admin.replay.view');
+        Route::get('/{id}/edit', 'ReplayController@edit')                               ->name('admin.replay.edit');
+        Route::get('/{id}/save', 'ReplayController@save')                               ->name('admin.replay.save');
+        Route::post('/{id}/send_comment', 'ReplayController@sendComment')               ->name('admin.replay.comment_send');
     });
 });
 
