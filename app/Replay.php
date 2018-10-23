@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 
 class Replay extends Model
 {
@@ -31,7 +32,8 @@ class Replay extends Model
     protected $fillable = [
         'user_id', 'user_replay', 'type_id','title', 'content', 'map_id', 'file_id',
         'game_version', 'championship', 'first_country_id', 'second_country_id',
-        'first_matchup', 'second_matchup', 'rating', 'user_rating' ];
+        'first_matchup', 'second_matchup', 'rating', 'user_rating', 'first_race',
+        'second_race', 'first_location', 'second_location', 'evaluation' ];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -155,5 +157,44 @@ class Replay extends Model
     public function comments()
     {
         return $this->hasMany('App\Comment', 'object_id')->where('relation', Comment::RELATION_REPLAY);
+    }
+
+    /**
+     * @param Request $request
+     * @param Replay $replay
+     * @return bool|void
+     */
+    public static function updateReplay(Request $request, Replay $replay)
+    {
+        $replay_data = $request->validated();
+
+        if($request->has('replay')){
+            File::removeFile($replay->file_id);
+
+            $title = 'Replay '.$request->has('title')?$request->get('title'):'';
+            $file = File::storeFile($replay_data['replay'], 'replays', $title);
+
+            $replay_data['file_id'] = $file->id;
+
+            unset($replay_data['replay']);
+        }
+
+        if ($request->has('map_id') && $request->get('map_id') === null){
+            $replay_data['map_id'] = 0;
+        }
+
+        if ($request->has('championship') && $request->get('championship') == ''){
+            $replay_data['championship'] = '';
+        }
+
+        if ($request->has('evaluation') && $request->get('evaluation') == ''){
+            $replay_data['evaluation'] = '';
+        }
+
+        if ($request->has('length') && $request->get('length') == ''){
+            $replay_data['length'] = '00:00:00';
+        }
+
+        Replay::where('id', $replay->id)->update($replay_data);
     }
 }

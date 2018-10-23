@@ -1,4 +1,5 @@
 @extends('admin.layouts.admin')
+@inject('admin_helper', 'App\Services\AdminViewHelper')
 
 @section('css')
     <link rel="stylesheet" href="{{route('home')}}/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
@@ -153,9 +154,9 @@
                                 <br>
                                 <div class="form-group">
                                     <label>Роль</label>
-                                    <select class="form-control" name="user_role_id">
+                                    <select class="form-control" name="user_role_id" @if(!$admin_helper->admin()) disabled @endif>
                                         <option @if(!$user->user_role_id) selected @endif>Пользователь</option>
-                                        @foreach($users_role as $role)
+                                        @foreach($admin_helper->getUserRole() as $role)
                                             <option value="{{$role->id}}" @if($user->user_role_id == $role->id) selected @endif>{{$role->title}}</option>
                                         @endforeach
                                     </select>
@@ -163,7 +164,7 @@
                                 <div class="form-group">
                                     <label>Страна</label>
                                     <select class="form-control" name="country_id">
-                                        @foreach($countries as $country)
+                                        @foreach($admin_helper->getCountries() as $country)
                                             <option value="{{$country->id}}" @if($user->country_id == $country->id) selected @endif>{{$country->name}}</option>
                                         @endforeach
                                     </select>

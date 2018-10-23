@@ -5,13 +5,13 @@
 @endsection
 
 @section('page_header')
-    {{$title}}
+    Replays
 @endsection
 
 @section('breadcrumb')
     <li><a href="{{route('admin.home')}}"><i class="fa fa-dashboard"></i>Главная панель</a></li>
     <li><a href="{{route('admin.users')}}">Пользователи</a></li>
-    <li class="active">{{$title}}</li>
+    <li class="active">Replays</li>
 @endsection
 
 @section('content')
@@ -80,9 +80,10 @@
             </div>
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Replays ({{$replays->total()}})</h3>
+                    <h3 class="box-title">Replays ({{$data->total()}})</h3>
+                    <a class="btn btn-info" href="{{route('admin.replay.add')}}">Создать</a>
                     <div class="box-tools">
-                        {{--@include('admin.user.pagination')--}}
+                        @include('admin.user.pagination')
                     </div>
                 </div>
                 <!-- /.box-header -->
@@ -100,38 +101,43 @@
                             <th>Gosu/Пользоватлеьский</th>
                             <th>Коментарии</th>
                             <th>Оценка пользователей</th>
-                            <th>Нравится</th>
-                            <th>Не нравится</th>
+                            <th>Рейтинг</th>
                             <th>Подтвержден</th>
                             <th>Действия</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($replays->items() as $replay)
+                        @foreach($data->items() as $replay)
                             <tr>
                                 <td>{{$replay->id}}</td>
-                                <td>{{$replay->user->name}}</td>
-                                <td>{{$replay->title}}</td>
+                                <td><a href="{{route('admin.user.profile', ['id' => $replay->user->id])}}">{{$replay->user->name}}</a></td>
+                                <td><a href="{{route('replay.get', ['id' => $replay->id])}}">{{$replay->title}}</a></td>
                                 <td>{{($replay->map != null)? $replay->map->name:"Нет" }}</td>
                                 <td>{{($replay->first_country->name??"Нет")}} vs {{($replay->second_country->name??"Нет")}}</td>
                                 <td>{{$replay->first_race}} vs {{$replay->second_race}}</td>
                                 <td>{{$replay->type->name}}</td>
                                 <td>{{($replay->user_replay == 1)?"Пользоватлеьский":"Gosu"}}</td>
                                 <td>{{$replay->comments_count}}</td>
-                                <td>{{$replay->user_rating}}</td>
-                                <td class="text-green">{{$replay->positive_count}}</td>
-                                <td class="text-red">{{$replay->negative_count}}</td>
-                                <td>{!! $replay->approved?'<i class="fa fa-check text-green"></i>':'<i class="fa fa-clock-o text-red"></i>' !!}</td>--}}</td>
+                                <td>
+                                    <a type="button" title="Править профиль пользователя"  data-toggle="modal" data-target="#modal-default_{{$replay->id}}"
+                                       href="{{route('admin.replay.user_rating', ['id' => $replay->id])}}">
+                                        {{$replay->user_rating}} ({{$replay->user_rating_count}})
+                                    </a>
+                                </td>
+                                <td><i class="fa fa-thumbs-o-up margin-r-5 text-green"></i>{{$replay->positive_count}} /
+                                    <i class="fa fa-thumbs-o-down margin-r-5 text-red"></i>{{$replay->negative_count}}
+                                    - ({{$replay->rating}})</td>
+                                <td>{!! $replay->approved?'<i class="fa fa-check text-green"></i>':'<i class="fa fa-clock-o text-red"></i>' !!}</td>
                                 <td>
                                     <div class="btn-group">
-                                        <a type="button" class="btn btn-default text-fuchsia"  title="Просмотреть"><i class="fa fa-eye"></i></a>
-                                        <a type="button" class="btn btn-default text-orange"  title="Править"><i class="fa fa-edit"></i></a>
+                                        <a type="button" class="btn btn-default text-fuchsia"  title="Просмотреть" href="{{route('admin.replay.view', ['role' => $replay->id])}}"><i class="fa fa-eye"></i></a>
+                                        <a type="button" class="btn btn-default text-orange"  title="Править"  href="{{route('admin.replay.edit', ['role' => $replay->id])}}"><i class="fa fa-edit"></i></a>
                                         @if(!$replay->approved)
-                                            <a type="button" class="btn btn-default text-green" title="Подтвердить"><i class="fa fa-check"></i></a>
+                                            <a type="button" class="btn btn-default text-green" title="Подтвердить" href="{{route('admin.replay.approve', ['id' => $replay->id])}}"><i class="fa fa-check"></i></a>
                                         @else
-                                            <a type="button" class="btn btn-default text-red"  title="Снять подтверждение"><i class="fa fa-clock-o"></i></a>
+                                            <a type="button" class="btn btn-default text-red"  title="Снять подтверждение" href="{{route('admin.replay.not_approve', ['id' => $replay->id])}}"><i class="fa fa-clock-o"></i></a>
                                         @endif
-                                        <a type="button" class="btn btn-default text-red"  title="Удалить"><i class="fa fa-trash"></i></a>
+                                        <a type="button" class="btn btn-default text-red"  title="Удалить" href="{{route('admin.replay.remove', ['id' => $replay->id])}}"><i class="fa fa-trash"></i></a>
                                     </div>
                                 </td>
                             </tr>
@@ -140,14 +146,36 @@
                     </table>
                 </div>
                 <!-- /.box-body -->
-                <div class="box-footer clearfix">
-                    {{--@include('admin.user.pagination')--}}
+                <div class="box-tools">
+                    @include('admin.user.pagination')
                 </div>
             </div>
         </div>
         <!-- /.col -->
     </div>
-
+    @foreach($data->items() as $replay)
+    <div class="modal fade" id="modal-default_{{$replay->id}}">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Default Modal</h4>
+                </div>
+                <div class="modal-body">
+                    <p>One fine body&hellip;</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+    @endforeach
 @endsection
 
 @section('js')

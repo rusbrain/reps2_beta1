@@ -28,6 +28,7 @@ class GeneralViewHelper
     protected $countries;
     protected $user_roles;
     protected $bd_users;
+    protected $all_sections;
 
     /**
      * Get random user gallery images
@@ -135,6 +136,16 @@ class GeneralViewHelper
         return $this->bd_users;
     }
 
+    /**
+     * @return ForumSection[]|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public function getAllForumSections()
+    {
+        $this->all_sections = $this->all_sections??ForumSection::with(['topics' =>function($q){
+            $q->orderBy('created_at', 'desc')->withCount('comments')->limit(5);
+            }])->orderBy('position')->get();
+        return $this->all_sections;
+    }
     public function getTopReplayAll()
     {
 

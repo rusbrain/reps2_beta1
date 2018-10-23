@@ -47,7 +47,7 @@
                         <td>
                             <div class="btn-group">
                                 <a type="button" class="btn btn-default text-fuchsia"  title="Просмотреть профиль пользователя" href="{{route('admin.users', ['role' => $role->id])}}"><i class="fa fa-eye"></i></a>
-                                <a type="button" class="btn btn-default text-orange"  title="Править профиль пользователя"  data-toggle="modal" data-target="#modal-default" href="{{route('admin.user.role.edit', ['id' => $role->id])}}"><i class="fa fa-edit"></i></a>
+                                <a type="button" class="btn btn-default text-orange"  title="Править профиль пользователя"  data-toggle="modal" data-target="#modal-default_{{$role->id}}" href="{{route('admin.user.role.edit', ['id' => $role->id])}}"><i class="fa fa-edit"></i></a>
                                 <a type="button" class="btn btn-default text-red"  title="Удалить пользователя" href="{{route('admin.user.role.remove', ['id' => $role->id])}}"><i class="fa fa-trash"></i></a>
                             </div>
                         </td>
@@ -64,7 +64,8 @@
     </div>
     <!-- /.col -->
 </div>
-<div class="modal fade" id="modal-default">
+@foreach($data->items() as $role)
+<div class="modal fade" id="modal-default_{{$role->id}}">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -85,6 +86,7 @@
     <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+@endforeach
 <div class="modal fade" id="modal-default-1">
     <div class="modal-dialog">
         <div class="modal-content">
