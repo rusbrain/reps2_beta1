@@ -14,6 +14,23 @@ class UserRole extends Model
     protected $table='user_roles';
 
     /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name',
+        'title',
+    ];
+
+    /**
      * Relations. Roles users
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

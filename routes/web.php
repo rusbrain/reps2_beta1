@@ -170,8 +170,17 @@ Route::group(['middleware' => ['auth', 'admin_panel'], 'prefix' => 'admin_panel'
         Route::get('message', 'UserMessageController@getUser')                          ->name('admin.user.messages_all');
         Route::get('/message/{dialog_id}/load', 'UserMessageController@load')           ->name('admin.user.message_load');
         Route::post('/message/{dialog_id}/send', 'UserMessageController@send')          ->name('admin.user.message.send');
-        Route::get('/role', 'UserRoleController@index')                                 ->name('admin.users.role');
+
+        Route::group(['prefix' => 'role'], function () {
+            Route::get('/', 'UserRoleController@index')                                 ->name('admin.users.role');
+            Route::get('/{id}/edit', 'UserRoleController@edit')                         ->name('admin.user.role.edit');
+            Route::get('/{id}/remove', 'UserRoleController@remove')                     ->name('admin.user.role.remove');
+            Route::get('/add', 'UserRoleController@add')                                ->name('admin.user.role.add');
+            Route::post('/create', 'UserRoleController@create')                         ->name('admin.user.role.create');
+            Route::post('/{id}/save', 'UserRoleController@save')                        ->name('admin.user.role.save');
+        });
     });
+
     Route::group(['prefix' => 'forum'], function (){
         Route::get('/', 'ForumController@index')                                        ->name('admin.forum_sections');
         Route::get('/add', 'ForumController@getSectionAdd')                             ->name('admin.forum.section.add');
