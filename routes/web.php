@@ -221,7 +221,7 @@ Route::group(['middleware' => ['auth', 'admin_panel'], 'prefix' => 'admin_panel'
         Route::get('/{id}/remove', 'ReplayController@remove')                           ->name('admin.replay.remove');
         Route::get('/{id}/view', 'ReplayController@getReplay')                          ->name('admin.replay.view');
         Route::get('/{id}/edit', 'ReplayController@edit')                               ->name('admin.replay.edit');
-        Route::get('/{id}/save', 'ReplayController@save')                               ->name('admin.replay.save');
+        Route::post('/{id}/edit', 'ReplayController@save')                              ->name('admin.replay.save');
         Route::post('/{id}/send_comment', 'ReplayController@sendComment')               ->name('admin.replay.comment_send');
     });
 });

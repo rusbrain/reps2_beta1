@@ -95,79 +95,174 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="col-md-3">
-                                    <div class="box-header">
-                                        <h3 class="box-title">Первая Раса:</h3>
-                                        <!-- /. tools -->
-                                    </div>
-                                    <div class="form-group">
-                                        <select class="form-control" name="first_race">
-                                            @foreach(\App\Replay::$races as $race)
-                                                <option value="{{$race}}" {{$race == $replay->first_race?'selected':''}}>{{$race}}</option>
-                                            @endforeach
-                                        </select>
-                                        @if ($errors->has('first_race'))
-                                            <span class="invalid-feedback text-red" role="alert">
+
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="box-header">
+                                                <h3 class="box-title">Первая раса:</h3>
+                                                <!-- /. tools -->
+                                            </div>
+                                            <div class="form-group">
+                                                <select class="form-control" name="first_race">
+                                                    @foreach(\App\Replay::$races as $race)
+                                                        <option value="{{$race}}" {{$race == $replay->first_race?'selected':''}}>{{$race}}</option>
+                                                    @endforeach
+                                                </select>
+                                                @if ($errors->has('first_race'))
+                                                    <span class="invalid-feedback text-red" role="alert">
                                                 <strong>{{ $errors->first('first_race') }}</strong>
                                             </span>
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="box-header">
-                                        <h3 class="box-title">Вторая Раса:</h3>
-                                        <!-- /. tools -->
-                                    </div>
-                                    <div class="form-group">
-                                        <select class="form-control" name="second_race">
-                                            @foreach(\App\Replay::$races as $race)
-                                                <option value="{{$race}}" {{$race == $replay->second_race?'selected':''}}>{{$race}}</option>
-                                            @endforeach
-                                        </select>
-                                        @if ($errors->has('second_race'))
-                                            <span class="invalid-feedback text-red" role="alert">
-                                                <strong>{{ $errors->first('second_race') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="box-header">
-                                        <h3 class="box-title">Первая страна:</h3>
-                                        <!-- /. tools -->
-                                    </div>
-                                    <div class="form-group">
-                                        <select class="form-control" name="first_country_id">
-                                            @foreach($admin_helper->getCountries() as $country)
-                                                <option value="{{$country->id}}" {{$country->id == $replay->first_country_id?'selected':''}}>{{$country->name}}</option>
-                                            @endforeach
-                                        </select>
-                                        @if ($errors->has('first_country_id'))
-                                            <span class="invalid-feedback text-red" role="alert">
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="box-header">
+                                                <h3 class="box-title">Первая страна:</h3>
+                                                <!-- /. tools -->
+                                            </div>
+                                            <div class="form-group">
+                                                <select class="form-control" name="first_country_id">
+                                                    @foreach($admin_helper->getCountries() as $country)
+                                                        <option value="{{$country->id}}" {{$country->id == $replay->first_country_id?'selected':''}}>{{$country->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                                @if ($errors->has('first_country_id'))
+                                                    <span class="invalid-feedback text-red" role="alert">
                                                 <strong>{{ $errors->first('first_country_id') }}</strong>
                                             </span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="box-header">
+                                                <h3 class="box-title">Первая локация:</h3>
+                                                <!-- /. tools -->
+                                            </div>
+                                            <input type="text" name="first_location" class="form-control" placeholder="Локация..." value="{{old('first_location')??$replay->first_location}}">
+                                            @if ($errors->has('first_location'))
+                                                <span class="invalid-feedback text-red" role="alert">
+                                        <strong>{{ $errors->first('first_location') }}</strong>
+                                    </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="box-header">
+                                                <h3 class="box-title">Вторая раса:</h3>
+                                                <!-- /. tools -->
+                                            </div>
+                                            <div class="form-group">
+                                                <select class="form-control" name="second_race">
+                                                    @foreach(\App\Replay::$races as $race)
+                                                        <option value="{{$race}}" {{$race == $replay->second_race?'selected':''}}>{{$race}}</option>
+                                                    @endforeach
+                                                </select>
+                                                @if ($errors->has('second_race'))
+                                                    <span class="invalid-feedback text-red" role="alert">
+                                                <strong>{{ $errors->first('second_race') }}</strong>
+                                            </span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="box-header">
+                                                <h3 class="box-title">Вторая страна:</h3>
+                                                <!-- /. tools -->
+                                            </div>
+                                            <div class="form-group">
+                                                <select class="form-control" name="second_country_id">
+                                                    @foreach($admin_helper->getCountries() as $country)
+                                                        <option value="{{$country->id}}" {{$country->id == $replay->second_country_id?'selected':''}}>{{$country->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                                @if ($errors->has('second_country_id'))
+                                                    <span class="invalid-feedback text-red" role="alert">
+                                                <strong>{{ $errors->first('second_country_id') }}</strong>
+                                            </span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="box-header">
+                                                <h3 class="box-title">Вторая локация:</h3>
+                                                <!-- /. tools -->
+                                            </div>
+                                            <input type="text" name="second_location" class="form-control" placeholder="Локация..." value="{{old('second_location')??$replay->second_location}}">
+                                            @if ($errors->has('second_location'))
+                                                <span class="invalid-feedback text-red" role="alert">
+                                        <strong>{{ $errors->first('second_location') }}</strong>
+                                    </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="box-header">
+                                        <h3 class="box-title">Версия игры:</h3>
+                                        <!-- /. tools -->
+                                    </div>
+                                    <input type="text" name="game_version" class="form-control" placeholder="Локация..." value="{{old('game_version')??$replay->game_version}}">
+                                    @if ($errors->has('game_version'))
+                                        <span class="invalid-feedback text-red" role="alert">
+                                        <strong>{{ $errors->first('game_version') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="box-header">
+                                        <h3 class="box-title">Чемпионат:</h3>
+                                        <!-- /. tools -->
+                                    </div>
+                                    <input type="text" name="championship" class="form-control" placeholder="Локация..." value="{{old('championship')??$replay->championship}}">
+                                    @if ($errors->has('championship'))
+                                        <span class="invalid-feedback text-red" role="alert">
+                                        <strong>{{ $errors->first('championship') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="box-header">
+                                        <h3 class="box-title">Оценка:</h3>
+                                        <!-- /. tools -->
+                                    </div>
+                                    <input type="text" name="evaluation" class="form-control" placeholder="Локация..." value="{{old('evaluation')??$replay->evaluation}}">
+                                    @if ($errors->has('evaluation'))
+                                        <span class="invalid-feedback text-red" role="alert">
+                                        <strong>{{ $errors->first('evaluation') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <br>
+                                        <br>
+                                        <label>
+                                            <input type="checkbox" name="approved" class="flat-red" {{old('approved')?'checked':($replay->approved?'checked':'')}} value="1">
+                                            Подтвердить
+                                        </label>
+                                        @if ($errors->has('approved'))
+                                            <span class="invalid-feedback text-red" role="alert">
+                                                <strong>{{ $errors->first('approved') }}</strong>
+                                            </span>
                                         @endif
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="box-header">
-                                        <h3 class="box-title">Вторая страна:</h3>
+                                        <h3 class="box-title">Загрузить новый Replay:</h3>
                                         <!-- /. tools -->
                                     </div>
                                     <div class="form-group">
-                                        <select class="form-control" name="second_country_id">
-                                            @foreach($admin_helper->getCountries() as $country)
-                                                <option value="{{$country->id}}" {{$country->id == $replay->second_country_id?'selected':''}}>{{$country->name}}</option>
-                                            @endforeach
-                                        </select>
-                                        @if ($errors->has('second_country_id'))
-                                            <span class="invalid-feedback text-red" role="alert">
-                                                <strong>{{ $errors->first('second_country_id') }}</strong>
-                                            </span>
-                                        @endif
+                                        <input type="file" id="preview_img" name="preview_img">
                                     </div>
+                                    @if ($errors->has('avatar'))
+                                        <span class="invalid-feedback text-red" role="alert">
+                                        <strong>{{ $errors->first('avatar') }}</strong>
+                                    </span>
+                                    @endif
                                 </div>
-
                             </div>
                             <div class="row">
                                 <div class="col-md-12">

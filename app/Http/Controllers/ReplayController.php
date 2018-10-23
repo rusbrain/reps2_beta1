@@ -185,36 +185,7 @@ class ReplayController extends Controller
         $replay = Replay::find($id);
 
         if($replay){
-            $replay_data = $request->validated();
-
-            if($request->has('replay')){
-                File::removeFile($replay->file_id);
-
-                $title = 'Replay '.$request->has('title')?$request->get('title'):'';
-                $file = File::storeFile($replay_data['replay'], 'replays', $title);
-
-                $replay_data['file_id'] = $file->id;
-
-                unset($replay_data['replay']);
-            }
-
-            if ($request->has('map_id') && $request->get('map_id') === null){
-                $replay_data['map_id'] = 0;
-            }
-
-            if ($request->has('championship') && $request->get('championship') == ''){
-                $replay_data['championship'] = '';
-            }
-
-            if ($request->has('evaluation') && $request->get('evaluation') == ''){
-                $replay_data['evaluation'] = '';
-            }
-
-            if ($request->has('length') && $request->get('length') == ''){
-                $replay_data['length'] = '00:00:00';
-            }
-
-            $replay = Replay::where('id', $id)->update($replay_data);
+            Replay::updateReplay($request, $replay);
 
             return redirect()->route('replay.get', ['id' => $replay->id]);
         }

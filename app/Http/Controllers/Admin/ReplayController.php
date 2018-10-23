@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Comment;
 use App\File;
 use App\Http\Requests\CommentUpdateRequest;
+use App\Http\Requests\ReplayUpdateRequest;
 use App\Replay;
 use App\ReplayMap;
 use App\ReplayType;
@@ -125,6 +126,23 @@ class ReplayController extends Controller
     public function edit($replay_id)
     {
         return view('admin.replay.edit')->with(['replay'=> $this->getReplayObject($replay_id), 'types' => ReplayType::all(), 'maps' => ReplayMap::all()]);
+    }
+
+    /**
+     * @param $replay_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function save(ReplayUpdateRequest $request, $replay_id)
+    {
+        $replay = Replay::find($replay_id);
+
+        if($replay){
+            Replay::updateReplay($request, $replay);
+
+            return back();
+        }
+
+        return abort(404);
     }
 
     /**
