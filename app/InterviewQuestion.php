@@ -62,7 +62,7 @@ class InterviewQuestion extends Model
         $favorite = $data->where('is_favorite')->sortBy('created_at')->last();
 
         if ($favorite){
-            return $favorite->load('answers');
+            return $favorite?$favorite->load('answers'):[];
         }
 
         $id = rand(0, $data->max('id'));

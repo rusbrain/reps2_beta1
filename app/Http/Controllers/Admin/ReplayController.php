@@ -158,7 +158,7 @@ class ReplayController extends Controller
     private function getReplayObject($replay_id)
     {
         return Replay::where('id', $replay_id)->with(['comments' => function($q){
-            $q->with('user.avatar')->orderBy('created_at', 'desc')->paginate(50);
+            $q->with('user.avatar')->orderBy('created_at', 'desc')->paginate(20);
         }])
             ->withCount('positive', 'negative', 'comments', 'user_rating')
             ->with('user.avatar', 'type', 'map', 'file', 'first_country', 'second_country')->first();
