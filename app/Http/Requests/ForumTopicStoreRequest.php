@@ -30,6 +30,7 @@ class ForumTopicStoreRequest extends FormRequest
             'content'         =>'required|min:3',
             'start_on'        =>'nullable|date',
             'preview_img'     =>'nullable|image',
+            'icon'            =>'nullable|string|max:255'
         ];
     }
 

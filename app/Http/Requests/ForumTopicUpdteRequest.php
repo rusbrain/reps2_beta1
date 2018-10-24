@@ -27,7 +27,8 @@ class ForumTopicUpdteRequest extends FormRequest
             'title'           =>'required|min:3|max:255',
             'preview_content' =>'nullable|max:1000',
             'content'         =>'required|min:3',
-            'start_on'        =>'nullable|date'
+            'start_on'        =>'nullable|date',
+            'icon'            =>'nullable|string|max:255'
         ];
     }
 
