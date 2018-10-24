@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Comment;
 use App\File;
 use App\Http\Requests\CommentUpdateRequest;
+use App\Http\Requests\ReplaySearchAdminRequest;
 use App\Http\Requests\ReplayStoreRequest;
 use App\Http\Requests\ReplayUpdateRequest;
 use App\Replay;
@@ -19,12 +20,15 @@ use Illuminate\Support\Facades\Auth;
 class ReplayController extends Controller
 {
     /**
+     * @param ReplaySearchAdminRequest $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index(ReplaySearchAdminRequest $request)
     {
-        $data = Replay::withCount('positive', 'negative', 'comments', 'user_rating')->with('user', 'type', 'map', 'file', 'first_country', 'second_country')->paginate(50);
-        return view('admin.replay.replays')->with('data' , $data);
+        $data = Replay::search($request,Replay::withCount('positive', 'negative', 'comments', 'user_rating'))
+            ->with('user', 'type', 'map', 'file', 'first_country', 'second_country')->paginate(50);
+
+        return view('admin.replay.replays')->with(['data' => $data, 'request_data' => $request->validated()]);
     }
 
     /**
