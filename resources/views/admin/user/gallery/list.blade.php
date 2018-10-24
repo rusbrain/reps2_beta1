@@ -152,8 +152,8 @@
         </div>
         <!-- /.col -->
     </div>
-    @foreach($data->items() as $role)
-        <div class="modal fade" id="modal-default_{{$role->id}}">
+    @foreach($data->items() as $gallery)
+        <div class="modal fade" id="modal-default_{{$gallery->id}}">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">

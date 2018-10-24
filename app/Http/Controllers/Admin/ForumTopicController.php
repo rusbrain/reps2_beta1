@@ -195,12 +195,10 @@ class ForumTopicController extends Controller
         $data = $request->validated();
 
         if($request->file('preview_img')){
-            if ($request->file('preview_img')){
                 $title = 'Превью '.$request->has('title')?$request->get('title'):'';
                 $file = File::storeFile($request->file('preview_img'), 'preview_img', $title);
 
                 $data['preview_file_id'] = $file->id;
-            }
         }
 
         $data['user_id'] = Auth::id();

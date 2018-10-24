@@ -236,6 +236,15 @@ Route::group(['middleware' => ['auth', 'admin_panel'], 'prefix' => 'admin_panel'
         Route::post('/create', 'ReplayController@create')                               ->name('admin.replay.create');
         Route::post('/{id}/edit', 'ReplayController@save')                              ->name('admin.replay.save');
         Route::post('/{id}/send_comment', 'ReplayController@sendComment')               ->name('admin.replay.comment_send');
+
+        Route::group(['prefix' => 'map'], function () {
+            Route::get('/', 'ReplayMapController@index')                                ->name('admin.replay.map');
+            Route::get('/{id}/remove', 'ReplayMapController@remove')                    ->name('admin.replay.map.remove');
+            Route::get('/{id}/edit', 'ReplayMapController@edit')                        ->name('admin.replay.map.edit');
+            Route::post('/{id}/update', 'ReplayMapController@update')                   ->name('admin.replay.map.update');
+            Route::get('/add', 'ReplayMapController@add')                               ->name('admin.replay.map.add');
+            Route::post('/create', 'ReplayMapController@create')                        ->name('admin.replay.map.create');
+        });
     });
 });
 

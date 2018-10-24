@@ -21,10 +21,17 @@ class ReplayMap extends Model
     protected $fillable = ['name', 'url'];
 
     /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function replay()
     {
-        return $this->hasMany('App\Replay');
+        return $this->hasMany('App\Replay', 'map_id');
     }
 }

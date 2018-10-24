@@ -34,4 +34,5 @@ $menu_name = $admin_helper->getMenuName();
     <li class="header">Replay</li>
     <!-- Optionally, you can add icons to the links -->
     <li @if($menu_name == 'replay') class="active" @endif><a href="{{route('admin.replay')}}"><i class="fa fa-film"></i> <span>Replays</span></a></li>
+    <li @if($menu_name == 'replay/map') class="active" @endif><a href="{{route('admin.replay.map')}}"><i class="fa fa-map-o"></i> <span>Карты</span></a></li>
 </ul>
