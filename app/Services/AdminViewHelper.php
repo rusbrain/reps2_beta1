@@ -12,6 +12,7 @@ namespace App\Services;
 use App\Country;
 use App\ForumTopic;
 use App\Replay;
+use App\ReplayMap;
 use App\UserMessage;
 use App\UserRole;
 use Carbon\Carbon;
@@ -25,6 +26,7 @@ class AdminViewHelper
     protected $role;
     protected $countries;
     protected $user_role;
+    protected $maps;
 
     /**
      * Get URI name for admin panel
@@ -96,5 +98,14 @@ class AdminViewHelper
     {
         $this->user_role = $this->user_role??UserRole::all();
         return $this->user_role;
+    }
+
+    /**
+     * @return ReplayMap[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public function getMaps()
+    {
+        $this->maps = $this->maps??ReplayMap::all();
+        return $this->maps;
     }
 }

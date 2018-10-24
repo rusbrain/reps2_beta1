@@ -179,6 +179,17 @@ Route::group(['middleware' => ['auth', 'admin_panel'], 'prefix' => 'admin_panel'
             Route::post('/create', 'UserRoleController@create')                         ->name('admin.user.role.create');
             Route::post('/{id}/save', 'UserRoleController@save')                        ->name('admin.user.role.save');
         });
+
+        Route::group(['prefix' => 'gallery'], function () {
+            Route::get('/', 'UserGalleryController@index')                              ->name('admin.users.gallery');
+            Route::get('/{id}/view', 'UserGalleryController@view')                      ->name('admin.users.gallery.view');
+            Route::get('/{id}/for_adults', 'UserGalleryController@forAdults')           ->name('admin.users.gallery.for_adults');
+            Route::get('/{id}/not_for_adults', 'UserGalleryController@notForAdults')    ->name('admin.users.gallery.not_for_adults');
+            Route::get('/{id}/remove', 'UserGalleryController@remove')                  ->name('admin.users.gallery.remove');
+            Route::post('/{id}/send_comment', 'UserGalleryController@sendComment')      ->name('admin.user.gallery.comment_send');
+            Route::get('/{id}/edit', 'UserGalleryController@edit')                      ->name('admin.user.gallery.edit');
+            Route::post('/{id}/update', 'UserGalleryController@update')                 ->name('admin.user.gallery.update');
+        });
     });
 
     Route::group(['prefix' => 'forum'], function (){

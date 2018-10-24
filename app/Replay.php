@@ -197,4 +197,46 @@ class Replay extends Model
 
         Replay::where('id', $replay->id)->update($replay_data);
     }
+
+    public static function search(Request $request, $query)
+    {
+        $request_data = $request->validated();
+
+        if(isset($request_data['search']) && $request_data['search']){
+            $query->where(function ($q) use ($request_data){
+                $q->where('id', 'like', "%{$request_data['search']}%")
+                    ->orWhere('title', 'like', "%{$request_data['search']}%")
+                    ->orWhere('championship', 'like', "%{$request_data['search']}%");
+            });
+        }
+        if(isset($request_data['map']) && $request_data['map']){
+            $query->where('map_id', $request_data['map']);
+        }
+        if(isset($request_data['type']) && $request_data['type']){
+            $query->where('type_id', $request_data['type']);
+        }
+        if(isset($request_data['users']) && $request_data['users'] !== null){
+            $query->where('user_replay', $request_data['users']);
+        }
+        if(isset($request_data['approved']) && $request_data['approved'] !== null){
+            $query->where('approved', $request_data['approved']);
+        }
+        if(isset($request_data['country']) && $request_data['country']){
+            $query->where(function ($q) use ($request_data){
+                $q->where('first_country_id', $request_data['country'])
+                    ->orWhere('second_country_id', $request_data['country']);
+            });
+        }
+        if(isset($request_data['race']) && $request_data['race']){
+            $query->where(function ($q) use ($request_data){
+                $q->where('first_race', $request_data['race'])
+                    ->orWhere('second_race', $request_data['race']);
+            });
+        }
+        if(isset($request_data['sort']) && $request_data['sort']){
+            $query->orderBy($request_data['sort']);
+        }
+
+        return $query;
+    }
 }

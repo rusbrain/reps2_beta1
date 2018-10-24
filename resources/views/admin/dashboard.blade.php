@@ -27,7 +27,7 @@
                     <div class="icon">
                         <i class="ion ion-ios-list-outline"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a> {{--TODO: Add URL to forum topic--}}
+                    <a href="{{route('admin.forum_topic')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a> {{--TODO: Add URL to forum topic--}}
                 </div>
             </div>
             <!-- ./col -->

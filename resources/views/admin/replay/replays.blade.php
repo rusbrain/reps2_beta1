@@ -1,4 +1,5 @@
 @extends('admin.layouts.admin')
+@inject('admin_helper', 'App\Services\AdminViewHelper')
 
 @section('css')
     <link rel="stylesheet" href="{{route('home')}}/bower_components/select2/dist/css/select2.min.css">
@@ -23,58 +24,81 @@
                 </div>
                 <div class="box-body">
                     <div class="box-tools col-md-12">
-                        {{--<form>--}}
-                            {{--<div class="row">--}}
-                                {{--<div class="form-group col-md-3">--}}
-                                    {{--<label>Поиск(id, имя, почта):</label>--}}
-                                    {{--<input type="text" class="form-control" name="search" placeholder="Enter ..." value="{{$request_data['search']??''}}">--}}
-                                {{--</div>--}}
-                                {{--<div class="form-group col-md-3">--}}
-                                    {{--<label>Страна:</label>--}}
-                                    {{--<select class="form-control select2" style="width: 100%;" name="country">--}}
-                                        {{--<option value="">Select...</option>--}}
-                                        {{--@foreach($countries as $country)--}}
-                                            {{--<option value="{{$country->id}}" @if(isset($request_data['country']) && $request_data['country'] == $country->id) selected @endif>{{$country->name}}</option>--}}
-                                        {{--@endforeach--}}
-                                    {{--</select>--}}
-                                {{--</div>--}}
-                                {{--<div class="form-group col-md-3">--}}
-                                    {{--<label>Роль:</label>--}}
-                                    {{--<select class="form-control select2" style="width: 100%;" name="role">--}}
-                                        {{--<option value="">Select...</option>--}}
-                                        {{--<option value="0"  @if(isset($request_data['role']) && $request_data['role'] == '0') selected @endif>Пользователь</option>--}}
-                                        {{--@foreach(\App\UserRole::all() as $role)--}}
-                                            {{--<option value="{{$role->id}}"  @if(isset($request_data['role']) && $request_data['role'] === $role->id) selected @endif>{{$role->title}}</option>--}}
-                                        {{--@endforeach--}}
-                                    {{--</select>--}}
-                                {{--</div>--}}
-                                {{--<div class="form-group col-md-3">--}}
-                                    {{--<label>Почта подтверждена:</label>--}}
-                                    {{--<select class="form-control select2" style="width: 100%;" name="email_verified">--}}
-                                        {{--<option value="">Select...</option>--}}
-
-                                        {{--<option value="0"  @if(isset($request_data['email_verified']) && $request_data['email_verified'] == '0') selected @endif>Нет</option>--}}
-                                        {{--<option value="1" @if(isset($request_data['email_verified']) && $request_data['email_verified'] == '1') selected @endif>Да</option>--}}
-                                    {{--</select>--}}
-                                {{--</div>--}}
-                                {{--<div class="form-group col-md-3 col-md-offset-9">--}}
-                                    {{--<label>Сортировать по:</label>--}}
-                                    {{--<select class="form-control select2" style="width: 100%;" name="sort">--}}
-                                        {{--<option value="">Select...</option>--}}
-                                        {{--<option value="id" @if(isset($request_data['sort']) && $request_data['sort'] == 'id') selected @endif>ID</option>--}}
-                                        {{--<option value="name" @if(isset($request_data['sort']) && $request_data['sort'] == 'name') selected @endif>Имя</option>--}}
-                                        {{--<option value="email" @if(isset($request_data['sort']) && $request_data['sort'] == 'email') selected @endif>Почта</option>--}}
-                                        {{--<option value="rating" @if(isset($request_data['sort']) && $request_data['sort'] == 'rating') selected @endif>Рейтинг</option>--}}
-                                    {{--</select>--}}
-                                {{--</div>--}}
-                                {{--<div class="form-group col-md-12">--}}
-                                    {{--<div class="text-right">--}}
-                                        {{--<button type="submit" class="btn btn-primary">Поиск</button>--}}
-                                    {{--</div>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                        {{--</form>--}}
-
+                        <form>
+                            <div class="row">
+                                <div class="form-group col-md-3">
+                                    <label>Поиск(id, название, чемпионат):</label>
+                                    <input type="text" class="form-control" name="search" placeholder="Enter ..." value="{{$request_data['search']??''}}">
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label>Карта:</label>
+                                    <select class="form-control" style="width: 100%;" name="map">
+                                        <option value="">Select...</option>
+                                        @foreach($admin_helper->getMaps() as $map)
+                                            <option value="{{$map->id}}" @if(isset($map['map']) && $map['map'] == $map->id) selected @endif>{{$map->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label>Страна:</label>
+                                    <select class="form-control" style="width: 100%;" name="country">
+                                        <option value="">Select...</option>
+                                        @foreach($admin_helper->getCountries() as $country)
+                                            <option value="{{$country->id}}"  @if(isset($request_data['country']) && $request_data['country'] == $country->id) selected @endif>{{$country->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label>Тип:</label>
+                                    <select class="form-control" style="width: 100%;" name="type">
+                                        <option value="">Select...</option>
+                                        @foreach(\App\ReplayType::all() as $type)
+                                            <option value="{{$type->id}}"  @if(isset($request_data['type']) && $request_data['type'] == $type->id) selected @endif>{{$type->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label>Gosu/Пользоватлеьский:</label>
+                                    <select class="form-control" style="width: 100%;" name="users">
+                                        <option value="">Select...</option>
+                                        <option value="1"  @if(isset($request_data['users']) && $request_data['users'] == 1) selected @endif>Пользовательский</option>
+                                        <option value="0"  @if(isset($request_data['users']) && $request_data['users'] == 0) selected @endif>Gosu</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label>Подтвержденные:</label>
+                                    <select class="form-control" style="width: 100%;" name="approved">
+                                        <option value="">Select...</option>
+                                        <option value="1"  @if(isset($request_data['approved']) && $request_data['approved'] == 1) selected @endif>Да</option>
+                                        <option value="0"  @if(isset($request_data['approved']) && $request_data['approved'] == 0) selected @endif>Нет</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label>Раса</label>:</label>
+                                    <select class="form-control" style="width: 100%;" name="race">
+                                        <option value="">Select...</option>
+                                        @foreach(\App\Replay::$races as $race)
+                                            <option value="{{$race}}"  @if(isset($request_data['race']) && $request_data['race'] == $race) selected @endif>{{$race}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label>Сортировать по:</label>
+                                    <select class="form-control" style="width: 100%;" name="sort">
+                                        <option value="">Select...</option>
+                                        <option value="id" @if(isset($request_data['sort']) && $request_data['sort'] == 'id') selected @endif>ID</option>
+                                        <option value="title" @if(isset($request_data['sort']) && $request_data['sort'] == 'title') selected @endif>Название</option>
+                                        <option value="user_rating" @if(isset($request_data['sort']) && $request_data['sort'] == 'user_rating') selected @endif>Оценка пользователей</option>
+                                        <option value="rating" @if(isset($request_data['sort']) && $request_data['sort'] == 'rating') selected @endif>Рейтинг</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <div class="text-right">
+                                        <button type="submit" class="btn btn-primary">Поиск</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
