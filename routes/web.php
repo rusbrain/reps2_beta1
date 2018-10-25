@@ -258,6 +258,15 @@ Route::group(['middleware' => ['auth', 'admin_panel'], 'prefix' => 'admin_panel'
             Route::post('/{id}/save', 'ReplayTypeController@save')                        ->name('admin.replay.type.save');
         });
     });
+
+    Route::group(['prefix' => 'country'], function () {
+        Route::get('/', 'CountryController@index')                                 ->name('admin.country');
+        Route::get('/{id}/edit', 'CountryController@edit')                         ->name('admin.country.edit');
+        Route::get('/{id}/remove', 'CountryController@remove')                     ->name('admin.country.remove');
+        Route::get('/add', 'CountryController@add')                                ->name('admin.country.add');
+        Route::post('/create', 'CountryController@create')                         ->name('admin.country.create');
+        Route::post('/{id}/save', 'CountryController@save')                        ->name('admin.country.save');
+    });
 });
 
 //

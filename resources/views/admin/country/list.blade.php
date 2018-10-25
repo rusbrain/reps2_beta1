@@ -20,15 +20,15 @@
         <div class="box">
             <div class="box-header with-border">
                 <h3 class="box-title">Роли ({{$data->total()}})</h3>
-                <a class="btn btn-info" data-toggle="modal" data-target="#modal-default-1" href="{{route('admin.replay.type.add')}}">Создать</a>
+                <a class="btn btn-info" data-toggle="modal" data-target="#modal-default-1" href="{{route('admin.country.add')}}">Создать</a>
                 @if ($errors->has('name'))
                     <span class="invalid-feedback text-red" role="alert">
                                 <strong>{{ $errors->first('name') }}</strong>
                             </span>
                 @endif
-                @if ($errors->has('title'))
+                @if ($errors->has('code'))
                     <span class="invalid-feedback text-red" role="alert">
-                                <strong>{{ $errors->first('title') }}</strong>
+                                <strong>{{ $errors->first('code') }}</strong>
                             </span>
                 @endif
                 <div class="box-tools">
@@ -41,24 +41,23 @@
                     <thead>
                     <tr>
                         <th style="width: 30px">ID</th>
-                        <th>Имя</th>
                         <th>Название</th>
-                        <th>Replays</th>
+                        <th>Код</th>
+                        <th>Используется</th>
                         <th style="width: 135px">Действия</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($data->items() as $type)
+                    @foreach($data->items() as $country)
                     <tr>
-                        <td>{{$type->id}}</td>
-                        <td>{{$type->name}}</td>
-                        <td>{{$type->title}}</td>
-                        <td>{{$type->replay_count}}</td>
+                        <td>{{$country->id}}</td>
+                        <td>{{$country->name}}</td>
+                        <td>{{$country->code}}</td>
+                        <td>{{$country->replay1_count + $country->replay2_count +$country->users_count}}</td>
                         <td>
                             <div class="btn-group">
-                                <a type="button" class="btn btn-default text-fuchsia"  title="Просмотреть профиль пользователя" href="{{route('admin.replay', ['type' => $type->id])}}"><i class="fa fa-eye"></i></a>
-                                <a type="button" class="btn btn-default text-orange"  title="Править профиль пользователя"  data-toggle="modal" data-target="#modal-default_{{$type->id}}" href="{{route('admin.replay.type.edit', ['id' => $type->id])}}"><i class="fa fa-edit"></i></a>
-                                <a type="button" class="btn btn-default text-red"  title="Удалить пользователя" href="{{route('admin.replay.type.remove', ['id' => $type->id])}}"><i class="fa fa-trash"></i></a>
+                                <a type="button" class="btn btn-default text-orange"  title="Править профиль пользователя"  data-toggle="modal" data-target="#modal-default_{{$country->id}}" href="{{route('admin.country.edit', ['id' => $country->id])}}"><i class="fa fa-edit"></i></a>
+                                <a type="button" class="btn btn-default text-red"  title="Удалить пользователя" href="{{route('admin.country.remove', ['id' => $country->id])}}"><i class="fa fa-trash"></i></a>
                             </div>
                         </td>
                     </tr>
@@ -74,8 +73,8 @@
     </div>
     <!-- /.col -->
 </div>
-@foreach($data->items() as $type)
-<div class="modal fade" id="modal-default_{{$type->id}}">
+@foreach($data->items() as $country)
+<div class="modal fade" id="modal-default_{{$country->id}}">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
