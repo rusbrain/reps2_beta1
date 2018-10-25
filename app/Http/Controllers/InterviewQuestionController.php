@@ -39,9 +39,7 @@ class InterviewQuestionController extends Controller
 
         InterviewUserAnswers::create($data);
 
-        return InterviewQuestion::where('id',$question_id)->with(['answers' => function($query){
-            $query->withCount('user_answers');
-        }])->first();
+        return  view('answers_result')->with('answers',InterviewQuestion::getAnswerQuestion($question_id));
     }
 
     /**
@@ -52,8 +50,6 @@ class InterviewQuestionController extends Controller
      */
     public function getResult($question_id)
     {
-        return view('answers_result')->with('answers', InterviewQuestion::where('id',$question_id)->with(['answers' => function($query){
-            $query->withCount('user_answers');
-        }])->first());
+        return view('answers_result')->with('answers', InterviewQuestion::getAnswerQuestion($question_id));
     }
 }

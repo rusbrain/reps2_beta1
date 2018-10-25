@@ -9,10 +9,12 @@
 namespace App\Services;
 
 
+use App\Banner;
 use App\Country;
 use App\ForumSection;
 use App\InterviewQuestion;
 use App\Replay;
+use App\ReplayType;
 use App\User;
 use App\UserGallery;
 use App\UserMessage;
@@ -29,6 +31,8 @@ class GeneralViewHelper
     protected $user_roles;
     protected $bd_users;
     protected $all_sections;
+    protected $replay_type;
+    protected $general_sections;
 
     /**
      * Get random user gallery images
@@ -146,6 +150,33 @@ class GeneralViewHelper
             }])->orderBy('position')->get();
         return $this->all_sections;
     }
+
+    /**
+     * @return ReplayType[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public function getReplayTypes()
+    {
+        $this->replay_type = $this->replay_type??ReplayType::all();
+        return $this->replay_type;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGeneralSectionsForum()
+    {
+        $this->general_sections = $this->general_sections??ForumSection::where('is_general', 1)->get();
+        return $this->general_sections;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRandomBanner()
+    {
+        return Banner::getRandomBanner();
+    }
+
     public function getTopReplayAll()
     {
 

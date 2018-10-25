@@ -409,7 +409,7 @@ class UserTestDataSeeding extends Seeder
         }
     }
 
-    private static function getIds($objects, $inp_array)
+    public static function getIds($objects, $inp_array)
     {
         foreach ($objects as $object){
             $inp_array[] = $object->id;

@@ -48,7 +48,7 @@ class InterviewQuestion extends Model
      */
     public static function getRandomQuestion()
     {
-        $data = InterviewQuestion::where('is_active', 1);
+        $data = InterviewQuestion::where('is_active', 1)->has('answers');
 
         if(Auth::user()){
             $data->whereDoesntHave('user_answers', function ($query){
@@ -59,16 +59,28 @@ class InterviewQuestion extends Model
         }
 
         $data = $data->get();
-        $favorite = $data->where('is_favorite')->sortBy('created_at')->last();
 
+        $favorite = clone $data;
+        $favorite = $favorite->where('is_favorite')->sortBy('created_at')->last();
         if ($favorite){
             return $favorite?$favorite->load('answers'):[];
         }
 
-        $id = rand(0, $data->max('id'));
+        $ids = [];
+        foreach ($data as $datum){
+            $ids[] = $datum->id;
+        }
+        $id = array_rand($ids);
 
-        $data =  $data->where('id', '=>', $id)->first();
+        $data =  $data->where('id', $ids[$id])->first();
 
         return $data?$data->load('answers'):[];
+    }
+
+    public static function getAnswerQuestion($id)
+    {
+        return InterviewQuestion::where('id',$id)->with(['answers' => function($query){
+            $query->withCount('user_answers');
+        }])->first();
     }
 }

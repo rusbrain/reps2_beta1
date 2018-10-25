@@ -66,6 +66,8 @@ Route::group(['prefix' => 'user'], function () {
     Route::get('{id}/get_rating', 'RatingController@getRatingUser')                     ->name('user.get_rating');
     Route::get('{id}/replay', 'ReplayUsersController@getUserReplay')                    ->name('user.user_replay');
     Route::get('{id}/gosu_replay', 'ReplayGosuController@getUserReplay')                ->name('user.gosu_replay');
+    Route::get('{id}/topic', 'ForumTopicController@getUserTopic')                       ->name('user.forum_topic');
+
 });
 
 Route::group(['prefix' => 'forum'], function () {
@@ -79,6 +81,7 @@ Route::group(['prefix' => 'forum'], function () {
         Route::post('{id}/get_rating', 'TopicRatingController@getRating')               ->name('forum.topic.get_rating');
 
         Route::group(['middleware' => 'auth'], function () {
+            Route::get('/my', 'ForumTopicController@getUserTopic')                      ->name('forum.topic.my_list');
             Route::get('/create', 'ForumTopicController@create')                        ->name('forum.topic.create');
             Route::post('/store', 'ForumTopicController@store')                         ->name('forum.topic.store');
             Route::get('{id}/delete', 'ForumTopicController@destroy')                   ->name('forum.topic.delete');

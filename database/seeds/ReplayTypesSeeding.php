@@ -12,10 +12,10 @@ class ReplayTypesSeeding extends Seeder
     public function run()
     {
         $replay_type = [
-            [ 'name' => 'duel',],
-            [ 'name' => 'pack',],
-            [ 'name' => 'rotw',],
-            [ 'name' => 'team',],
+            [ 'name' => 'duel', 'title' => '1 на 1 игра'],
+            [ 'name' => 'pack', 'title' => 'Replay паки'],
+            [ 'name' => 'rotw', 'title' => 'Replay недели'],
+            [ 'name' => 'team', 'title' => 'Коммандная игра'],
         ];
 
         \App\ReplayType::insert($replay_type);

@@ -10,6 +10,7 @@ use App\Http\Requests\ForumTopicStoreRequest;
 use App\Http\Requests\ForumTopicUpdteRequest;
 use App\User;
 use App\UserReputation;
+use Carbon\Carbon;
 use foo\bar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -209,5 +210,29 @@ class ForumTopicController extends Controller
         UserReputation::refreshUserRating(Auth::id());
 
         return redirect()->route('forum.index');
+    }
+
+    public function getUserTopic($user_id = 0)
+    {
+        if ($user_id == 0){
+            $user_id = Auth::id();
+        }
+
+        $data = ForumTopic::where('user_id',$user_id)->whereHas(['section' => function ($q){
+            $q->where('is_active', 1);
+        }])->with(['user'=> function($q){
+            $q->withTrashed();
+        }])
+            ->where(function ($q){
+                $q->whereNull('start_on')
+                    ->orWhere('start_on', Carbon::now()->format('Y-M-d'));
+            })
+            ->with(['comments' => function($query){
+                $query->orderBy('created_at', 'desc')->first();
+            }])
+            ->withCount(['positive', 'negative', 'comments'])
+            ->orderBy('created_at', 'desc')->paginate(20);
+
+        return view('forum.section')->with('topics', $data);
     }
 }

@@ -108,7 +108,7 @@ class RatingController extends Controller
      */
     public function getRatingUser($id)
     {
-        return UserReputation::where('recipient_id', $id)->with('topic', 'sender')->paginate(10);
+        return $this->getRatingView(UserReputation::where('recipient_id', $id));
     }
 
     /**
