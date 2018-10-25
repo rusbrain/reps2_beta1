@@ -248,6 +248,15 @@ Route::group(['middleware' => ['auth', 'admin_panel'], 'prefix' => 'admin_panel'
             Route::get('/add', 'ReplayMapController@add')                               ->name('admin.replay.map.add');
             Route::post('/create', 'ReplayMapController@create')                        ->name('admin.replay.map.create');
         });
+
+        Route::group(['prefix' => 'type'], function () {
+            Route::get('/', 'ReplayTypeController@index')                                 ->name('admin.replay.type');
+            Route::get('/{id}/edit', 'ReplayTypeController@edit')                         ->name('admin.replay.type.edit');
+            Route::get('/{id}/remove', 'ReplayTypeController@remove')                     ->name('admin.replay.type.remove');
+            Route::get('/add', 'ReplayTypeController@add')                                ->name('admin.replay.type.add');
+            Route::post('/create', 'ReplayTypeController@create')                         ->name('admin.replay.type.create');
+            Route::post('/{id}/save', 'ReplayTypeController@save')                        ->name('admin.replay.type.save');
+        });
     });
 });
 

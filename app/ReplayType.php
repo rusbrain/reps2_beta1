@@ -18,13 +18,20 @@ class ReplayType extends Model
      *
      * @var array
      */
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'title'];
+
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function replay()
     {
-        return $this->hasMany('App\Replay');
+        return $this->hasMany('App\Replay', 'type_id');
     }
 }

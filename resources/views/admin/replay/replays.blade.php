@@ -139,7 +139,7 @@
                                 <td>{{($replay->map != null)? $replay->map->name:"Нет" }}</td>
                                 <td>{{($replay->first_country->name??"Нет")}} vs {{($replay->second_country->name??"Нет")}}</td>
                                 <td>{{$replay->first_race}} vs {{$replay->second_race}}</td>
-                                <td>{{$replay->type->name}}</td>
+                                <td>{{$replay->type->title}}({{$replay->type->name}})</td>
                                 <td>{{($replay->user_replay == 1)?"Пользоватлеьский":"Gosu"}}</td>
                                 <td>{{$replay->comments_count}}</td>
                                 <td>
