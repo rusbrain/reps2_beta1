@@ -22,7 +22,8 @@ class InterviewQuestion extends Model
     protected $fillable = [
         'question',
         'is_active',
-        'is_favorite'
+        'is_favorite',
+        'for_login'
     ];
 
     /**

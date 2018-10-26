@@ -5,13 +5,13 @@
 @endsection
 
 @section('page_header')
-Пользователи
-<small>Роли</small>
+    Replay
+<small>Типы Replay</small>
 @endsection
 
 @section('breadcrumb')
 <li><a href="{{route('admin.home')}}"><i class="fa fa-dashboard"></i>Главная панель</a></li>
-<li class="active">Роли</li>
+<li class="active">Типы Replay</li>
 @endsection
 
 @section('content')
@@ -19,7 +19,7 @@
     <div class="col-md-12">
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">Роли ({{$data->total()}})</h3>
+                <h3 class="box-title">Типы Replay ({{$data->total()}})</h3>
                 <a class="btn btn-info" data-toggle="modal" data-target="#modal-default-1" href="{{route('admin.replay.type.add')}}">Создать</a>
                 @if ($errors->has('name'))
                     <span class="invalid-feedback text-red" role="alert">

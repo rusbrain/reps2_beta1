@@ -250,22 +250,38 @@ Route::group(['middleware' => ['auth', 'admin_panel'], 'prefix' => 'admin_panel'
         });
 
         Route::group(['prefix' => 'type'], function () {
-            Route::get('/', 'ReplayTypeController@index')                                 ->name('admin.replay.type');
-            Route::get('/{id}/edit', 'ReplayTypeController@edit')                         ->name('admin.replay.type.edit');
-            Route::get('/{id}/remove', 'ReplayTypeController@remove')                     ->name('admin.replay.type.remove');
-            Route::get('/add', 'ReplayTypeController@add')                                ->name('admin.replay.type.add');
-            Route::post('/create', 'ReplayTypeController@create')                         ->name('admin.replay.type.create');
-            Route::post('/{id}/save', 'ReplayTypeController@save')                        ->name('admin.replay.type.save');
+            Route::get('/', 'ReplayTypeController@index')                               ->name('admin.replay.type');
+            Route::get('/{id}/edit', 'ReplayTypeController@edit')                       ->name('admin.replay.type.edit');
+            Route::get('/{id}/remove', 'ReplayTypeController@remove')                   ->name('admin.replay.type.remove');
+            Route::get('/add', 'ReplayTypeController@add')                              ->name('admin.replay.type.add');
+            Route::post('/create', 'ReplayTypeController@create')                       ->name('admin.replay.type.create');
+            Route::post('/{id}/save', 'ReplayTypeController@save')                      ->name('admin.replay.type.save');
         });
     });
 
     Route::group(['prefix' => 'country'], function () {
-        Route::get('/', 'CountryController@index')                                 ->name('admin.country');
-        Route::get('/{id}/edit', 'CountryController@edit')                         ->name('admin.country.edit');
-        Route::get('/{id}/remove', 'CountryController@remove')                     ->name('admin.country.remove');
-        Route::get('/add', 'CountryController@add')                                ->name('admin.country.add');
-        Route::post('/create', 'CountryController@create')                         ->name('admin.country.create');
-        Route::post('/{id}/save', 'CountryController@save')                        ->name('admin.country.save');
+        Route::get('/', 'CountryController@index')                                      ->name('admin.country');
+        Route::get('/{id}/edit', 'CountryController@edit')                              ->name('admin.country.edit');
+        Route::get('/{id}/remove', 'CountryController@remove')                          ->name('admin.country.remove');
+        Route::get('/add', 'CountryController@add')                                     ->name('admin.country.add');
+        Route::post('/create', 'CountryController@create')                              ->name('admin.country.create');
+        Route::post('/{id}/save', 'CountryController@save')                             ->name('admin.country.save');
+    });
+
+    Route::group(['prefix' => 'question'], function () {
+        Route::get('/', 'InterviewQuestionController@index')                            ->name('admin.question');
+        Route::get('/{id}/active', 'InterviewQuestionController@active')                ->name('admin.question.active');
+        Route::get('/{id}/not_active', 'InterviewQuestionController@notActive')         ->name('admin.question.not_active');
+        Route::get('/{id}/for_login', 'InterviewQuestionController@forLogin')           ->name('admin.question.for_login');
+        Route::get('/{id}/not_for_login', 'InterviewQuestionController@notForLogin')    ->name('admin.question.not_for_login');
+        Route::get('/{id}/favorite', 'InterviewQuestionController@favorite')            ->name('admin.question.favorite');
+        Route::get('/{id}/not_favorite', 'InterviewQuestionController@notFavorite')     ->name('admin.question.not_favorite');
+        Route::get('/{id}/view', 'InterviewQuestionController@view')                    ->name('admin.question.view');
+        Route::get('/{id}/edit', 'InterviewQuestionController@edit')                    ->name('admin.question.edit');
+        Route::get('/{id}/remove', 'InterviewQuestionController@remove')                ->name('admin.question.remove');
+        Route::get('/add', 'InterviewQuestionController@add')                           ->name('admin.question.add');
+        Route::post('/create', 'InterviewQuestionController@create')                    ->name('admin.question.create');
+        Route::post('/{id}/save', 'InterviewQuestionController@save')                   ->name('admin.question.save');
     });
 });
 
