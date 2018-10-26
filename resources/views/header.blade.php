@@ -1,14 +1,13 @@
 <div class="row header">
     <div class="col">
-        <a href="/"><img src="/images/header.gif" alt=""></a>
-    </div>
-    <div class="col">
+        <a href="/"><img src="/images/header.gif" class="header-logo" alt=""></a>
         <div class="header-social">
             <a href="#"><i class="fab fa-facebook-square"></i></a>
             <a href="#"><i class="fab fa-instagram"></i></a>
             <a href="#"><i class="fab fa-vk"></i></a>
         </div>
     </div>
+
     @if(Route::currentRouteName() !== 'registration_form')
         @if(!Auth::user())
             <div class="col-3">
@@ -43,7 +42,7 @@
         @else
             <div class="col-3 header-profile">
                 <p class="hello">
-                    @if((Auth::user()->view_avatars))
+                    @if(Auth::user()->view_avatars)
                         @if(Auth::user()->avatar)
                             <img class="img-responsive profile-avatar-header" src="{{Auth::user()->avatar->link}}"
                                  alt="">
@@ -58,10 +57,26 @@
                             <a class="profile-link" href="{{route('user_profile',['id' =>Auth::user()->id])}}">Профиль
                                 пользователя</a>
                             <a class="profile-link" href="{{route('edit_profile')}}">Настройки</a>
-                            <a class="profile-link" href="{{route('user.message.get_list')}}">Новые сообщения
-                                ({{$new_user_message}})</a>
+
+                            <a class="profile-link" href="{{route('gallery.list_user', ['id' => Auth::user()->id])}}">Галлерея</a>
+
+                            <a class="profile-link" href="{{route('user.get_rating', ['id' => Auth::user()->id])}}">Репутация</a>
+
+
+                            {{--<a class="profile-link" href="{{route('gallery.list_user', ['id' => Auth::user()->id])}}">Мои темы</a>--}}
+                            {{--<a class="profile-link" href="{{route('gallery.list_user', ['id' => Auth::user()->id])}}">Мои посты</a>--}}
+
+                            <a class="profile-link" href="{{route('replay.create')}}">Отправить свой/госу реплей</a>
+
+                            <a class="profile-link" href="{{route('replay.my_user')}}">Мои реплеи</a>
+                            <a class="profile-link" href="{{route('replay.my_gosu')}}">Мои госу реплеи</a>
+
+                            <a class="profile-link" href="{{route('user.message.get_list')}}">Новые сообщения()</a>
+                            {{--                            {{$general_helper->getNewUserMessage()}}--}}
+
                             <a class="profile-link" href="{{route('user.friends_list')}}">Список друзей</a>
                             <a class="profile-link" href="{{route('user.ignore_list')}}">Игнор лист</a>
+
                             <a class="profile-link" href="{{route('logout',['id' =>Auth::user()->id])}}">Выход</a>
                         </div>
                     </div>

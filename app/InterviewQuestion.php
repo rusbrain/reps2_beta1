@@ -74,9 +74,7 @@ class InterviewQuestion extends Model
 
         if($ids){
             $id = array_rand($ids);
-
             $data =  $data->where('id', $ids[$id])->first();
-
             return $data?$data->load('answers'):[];
         }
 
