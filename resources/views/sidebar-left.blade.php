@@ -1,10 +1,9 @@
 <div class="sidebar-left">
-{{--    {{dd($last_forum)}}--}}
-    @if($last_forum)
+    @if($general_helper->getLastForum())
         <div class="sidebar-widget">
             <div class="sidebar-widget-title">Последние темы форума</div>
             <div class="sidebar-widget-content">
-                @foreach($last_forum as $forum)
+                @foreach($general_helper->getLastForum() as $forum)
                     <div class="sidebar-widget-forum-section">
                         <div class="forum-section-title">
                             <a href="{{route('forum.section.index',['name' => $forum->name])}}">{{$forum->title}}:</a>

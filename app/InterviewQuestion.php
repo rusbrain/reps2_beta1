@@ -70,11 +70,13 @@ class InterviewQuestion extends Model
         foreach ($data as $datum){
             $ids[] = $datum->id;
         }
-        $id = array_rand($ids);
 
-        $data =  $data->where('id', $ids[$id])->first();
-
-        return $data?$data->load('answers'):[];
+        if($ids){
+            $id = array_rand($ids);
+            $data =  $data->where('id', $ids[$id])->first();
+            return $data?$data->load('answers'):[];
+        }
+        return [];
     }
 
     public static function getAnswerQuestion($id)

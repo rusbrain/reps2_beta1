@@ -1,48 +1,69 @@
 <div class="sidebar-right">
     <div class="sidebar-widget random-image">
-        <div class="sidebar-widget-title">Случайные картинки</div>
+        <div class="sidebar-widget-title">Банеры</div>
         <div class="sidebar-widget-content">
-            @if(!empty($random_img))
-                @foreach($random_img as $img)
-                    <img src="{{$img['file']['link']}}" alt="">
-                @endforeach
+            @if($general_helper->getRandomBanner())
+                {{--{{dd($general_helper->getRandomBanner())}}--}}
+                @php $banner = $general_helper->getRandomBanner(); @endphp
+                <a href="#" class="random-banner">
+                    <img src="{{$banner->file->link}}" alt="">
+                </a>
             @else
-                <p class="sidebar-widget-no-results">There is no Random images</p>
+                <p class="sidebar-widget-no-results">В данный момент банеров нет</p>
             @endif
+
         </div>
     </div>
 
+    <div class="sidebar-widget random-image">
+        <div class="sidebar-widget-title">Случайные картинки</div>
+        <div class="sidebar-widget-content">
+            @if(!empty($general_helper->getRandomImg()))
+                @foreach($general_helper->getRandomImg() as $img)
+                    <img src="{{$img['file']['link']}}" alt="">
+                @endforeach
+            @else
+                <p class="sidebar-widget-no-results">В данный момент случайных картинок нет</p>
+            @endif
+        </div>
+    </div>
+    <?php $random_question = $general_helper->getRandomQuestion() ?>
+    @if(isset($random_question) && !empty($random_question))
 
-    @if(!empty($random_question))
         <div class="sidebar-widget">
-            <div class="sidebar-widget-title">Случайные вопрос</div>
-            <div class="sidebar-widget-content">
-                {{--                {{dd($random_question)}}--}}
-                <p class="sidebar-widget-subtitle">{{$random_question->question}}</p>
-                @if(!empty($random_question->answers))
-                    <form action="{{route('question.set_answer',['id' => $random_question->id])}}" method="post">
-                        @csrf
-                        @foreach($random_question->answers as $answer)
-                            <div class="form-group">
-                                <input type="radio" id="answer_{{$answer->id}}" value="{{$answer->id}}">
-                                <label for="answer_0">{{$answer->answer}}</label>
-                            </div>
-                        @endforeach
-                        <button type="submit">Vote</button>
-                    </form>
-                    <a class="view-results" href="{{route('question.view_answer',['id' => $random_question->id])}}">View
-                        results</a>
-                @endif
+            <div class="sidebar-widget-title">Голосование</div>
+            <div class="sidebar-widget-content ">
+                <div class="sidebar-widget-subtitle">{{$random_question->question}}</div>
+                <div id="view-results-response" class="view-results-response">
+                    @if(isset($random_question->answers) && !empty($random_question->answers))
+                        <form action="{{route('question.set_answer',['id' => $random_question->id])}}" id="vote-form"
+                              method="post">
+                            @csrf
+                            <div id="vote-form-error"></div>
+                            @foreach($random_question->answers as $answer)
+                                <div class="form-group">
+                                    <input type="radio" id="answer_{{$answer->id}}" value="{{$answer->id}}"
+                                           name="answer_id">
+                                    <label for="answer_{{$answer->id}}">{{$answer->answer}}</label>
+                                </div>
+                            @endforeach
+                            <button type="submit" class="vote-button btn btn-primary">Vote</button>
+                        </form>
+                        <a class="view-results"
+                           id="view-answer-results"
+                           data-url="{{route('question.view_answer',['id'=>$random_question->id])}}"
+                           href="#">View results</a>
+                    @endif
+                </div>
             </div>
         </div>
     @endif
 
-
     <div class="sidebar-widget">
         <div class="sidebar-widget-title">Новые пользователи</div>
         <div class="sidebar-widget-content">
-            @if(!empty($new_users))
-                @foreach($new_users as $new_user)
+            @if(!empty($general_helper->getNewUsers()))
+                @foreach($general_helper->getNewUsers() as $new_user)
                     <div>
                         <span>#{{$new_user->id}}</span>
                         <span class="flag-icon flag-icon-{{mb_strtolower($new_user->country->code)}}"></span>
@@ -56,13 +77,14 @@
     <div class="sidebar-widget">
         <div class="sidebar-widget-title">Юзерские реплеи</div>
         <div class="sidebar-widget-content">
-
-            @if(!empty($last_user_replay))
-                @foreach($last_user_replay as $replay)
+            @if(!empty($general_helper->getLastUserReplay()))
+                @foreach($general_helper->getLastUserReplay() as $replay)
                     <div class="replays-wrapper">
                         <a class="replay"
-                           href="{{route('replay.get',['id' => $replay->id])}}"><span>{{$replay->title}}</span><span
-                                    class="qty-downloaded">{{$replay->downloaded}}</span></a>
+                           href="{{route('replay.get',['id' => $replay->id])}}">
+                            <span>{{$replay->title}}</span>
+                            <span class="qty-downloaded">{{$replay->downloaded}}</span>
+                        </a>
                     </div>
                 @endforeach
                 <a class="view-results" href="{{route('replay.users')}}">Ещё</a>

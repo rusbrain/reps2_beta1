@@ -137,7 +137,7 @@ html, body {
 }
 body {
   font-family: "Ubuntu-Regular", sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   color: #303030;
   font-weight: 300;
   background: #d8dce0;
@@ -189,6 +189,9 @@ body {
   padding-bottom: 20px;
   padding-top: 20px;
   background: #717171 url("../images/bg_reps.gif") repeat-x
+}
+.header-logo{
+  margin-bottom: 20px;
 }
 .login-form {
 }
@@ -306,8 +309,30 @@ body {
 /**------ FOOTER -----------*/
 /**---------------------*/
 .footer {
-  height: 40px;
+  border: 1px solid #17a2b8;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.footer-widget{
+  border: 1px solid #717171;
+  min-height: 60px;
+}
+.footer-widget-title{
   background: #717171;
+  font-size: 14px;
+  color: #fff;
+  padding-left: 5px;
+}
+.footer-widget-content{
+  padding: 5px;
+}
+.footer-widget-content.birthday{
+  display: flex;
+  font-size: 12px;
+  flex-wrap: wrap;
+}
+.footer-widget-content.birthday a{
+  margin-right: 3px;
 }
 /**---------------------*/
 /**------ LEFT SIDEBAR -----------*/
@@ -333,6 +358,7 @@ body {
   display: flex;
   flex-direction: column;
 }
+
 .sidebar-widget.random-image img {
   border: 1px solid #efefef;
   max-width: 60%;
@@ -348,14 +374,15 @@ body {
 .sidebar-widget-subtitle {
   background: lightgray;
   color: #222;
-  margin: -5px 0px 10px 0px;
   padding: 4px;
   font-size: 12px;
   text-align: center;
+  width: 100%;
 }
 .sidebar-widget-no-results {
   margin-top: 15px;
   margin-bottom: 40px;
+  text-align: center;
 }
 .sidebar-widget .form-group {
   display: flex;
@@ -376,10 +403,7 @@ body {
   justify-content: center;
   color: #222;
   padding: 5px;
-  position: absolute;
   width: 100%;
-  bottom: 0;
-  left: 0;
   background: lightgray;
 }
 .sidebar-widget .view-results:hover {
@@ -409,6 +433,16 @@ body {
 .forum-section-content{
   padding: 2px 5px;
 }
+
+.sidebar-widget-content .random-banner{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.sidebar-widget-content .random-banner img{
+
+}
+
 /**---------------------*/
 /**------ RIGHT SIDEBAR ----------*/
 /**---------------------*/
@@ -422,6 +456,33 @@ body {
   margin-bottom: 5px;
 }
 .sidebar-widget .replays-wrapper {
+}
+.vote-button{
+  margin: 5px auto;
+  display: block;
+  font-size: 12px;
+  padding: 4px 20px;
+}
+.vote-response{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 5px;
+}
+.view-results-response{
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+}
+.view-results-response form{
+  width: 100%;
+  padding: 0 5px;
+}
+.vote-response span{
+  min-width: 5px;
 }
 /**---------------------*/
 /**------USER IGNORED LIST PAGE ----------*/

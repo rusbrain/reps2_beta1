@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <meta name="csrf-token" content="{{csrf_token()}}">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
 
@@ -23,7 +23,7 @@
 </head>
 <body>
 <div class="wrapper">
-
+@inject('general_helper', 'App\Services\GeneralViewHelper')
     <!--SECTION HEADER-->
     <section>
         <div class="container">
@@ -53,7 +53,7 @@
                 <!--END LEFT SIDEBAR -->
 
                 <!--CONTENT CENTER-->
-                <div class="col-md-7 content-center">
+                <div class="col-md-8 content-center">
                     @yield('content')
                 </div>
                 <!--END CONTENT CENTER-->
@@ -71,9 +71,7 @@
     <!--FOOTER-->
     <section>
         <div class="container">
-            @section('footer')
-                @include('footer')
-            @endsection
+            @include('footer')
         </div>
     </section>
     <!--END FOOTER-->

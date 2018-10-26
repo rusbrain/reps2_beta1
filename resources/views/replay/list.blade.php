@@ -17,7 +17,7 @@
                         </span>
                         <span>({{$replay->downloaded}})</span>
                     </div>
-                    <a href="{{route('replay.download', ['id' => $replay->id])}}"><i class="fas fa-download"></i></a>
+                    <a href="{{route('replay.download', ['id' => $replay->id])}}"><i class="fas fa-download"></i> {{$replay->downloaded}}</a>
                 </div>
             </div>
             <div class="row page-replays-subtitle">

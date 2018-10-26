@@ -1,1 +1,1 @@
-{{$photos}}
+{{dd($photos)}}

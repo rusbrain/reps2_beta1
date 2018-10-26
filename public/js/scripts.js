@@ -83,3 +83,66 @@ $(function () {
         });
     }
 });
+
+/**Vote Form*/
+$(function () {
+    var voteForm = $('#vote-form');
+    if (voteForm.length > 0) {
+        console.log('hi');
+        /**Validation*/
+        voteForm.validate({
+            rules: {
+                answer_id: {required: true}
+            },
+            messages: {
+                answer_id: {
+                    required : "Выберете вариант ответа"
+                }
+            },
+            errorPlacement: function (error, element) {
+                if (element.attr("name") === "answer_id") {
+                    error.appendTo(voteForm.find("#vote-form-error"))
+                }
+            },
+            errorElement: "div",
+            submitHandler: function (form) {
+                var selectData = $(form).serialize();
+
+                $.ajax({
+                    type: 'POST',
+                    url: $(form).attr('action'),
+                    data: selectData,
+                    success: function (html) {
+                        $('#view-results-response').html(html)
+                    },
+                    error: function () {
+
+                    }
+                });
+            }
+        });
+    }
+});
+
+/**View vote results ->  Right SideBar */
+$(function () {
+    $.ajaxSetup({
+       headers:{
+           'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+       }
+    });
+    $('#view-answer-results').on('click', function (e) {
+        e.preventDefault();
+        var url = $(this).attr('data-url');
+        $.ajax({
+            type: 'POST',
+            url: url,
+            success: function (html) {
+                $('#view-results-response').html(html)
+            },
+            error: function () {
+
+            }
+        });
+    });
+});

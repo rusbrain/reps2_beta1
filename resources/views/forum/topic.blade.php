@@ -8,7 +8,7 @@
         <div class="topic-info">
 
         </div>
-        {{dd( $topic)}}
+        {{dd($topic)}}
 
         <div class="topic-comments">{{dd($comments)}}</div>
     </div>

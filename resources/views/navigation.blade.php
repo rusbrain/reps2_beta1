@@ -10,17 +10,25 @@
                 <a class="nav-link" href="\">Главная <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                <a class="nav-link dropdown-toggle" href="{{route('forum.index')}}" id="navbarDropdown" role="button"
                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Форум
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="#">Колонки</a></li>
-                    <li><a class="dropdown-item" href="#">Интервью</a></li>
-                    <li><a class="dropdown-item" href="#">Статьи</a></li>
-                    <li><a class="dropdown-item" href="#">Стратегии</a></li>
-                    <li><a class="dropdown-item" href="#">Репортажи</a></li>
-                    <li><a class="dropdown-item" href="#">Чемпионаты</a></li>
+                    @if($general_helper->getGeneralSectionsForum())
+                        @foreach($general_helper->getGeneralSectionsForum() as $item)
+                            <li>
+                                <a class="dropdown-item"
+                                   href="{{route('forum.section.index',['name' => $item->name])}}">
+                                    {{$item->title}}
+                                </a>
+                            </li>
+                        @endforeach
+                    @else
+                        <li>
+                            В данные момент основные разделы форума не определены
+                        </li>
+                    @endif
                 </ul>
             </li>
             <li class="nav-item dropdown">
@@ -30,31 +38,30 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li>
-                        <a href="#" class="dropdown-item">Реплеи Юзеров <b class="caret"></b></a>
+                        <a href="{{route('replay.users')}}" class="dropdown-item">Реплеи Юзеров <b
+                                    class="caret"></b></a>
                     </li>
                     <li class="dropdown-submenu">
-                        <a href="#" class="dropdown-item dropdown-toggle" data-toggle="dropdown">Gosu Replays <b
+                        <a href="{{route('replay.gosus')}}" class="dropdown-item dropdown-toggle"
+                           data-toggle="dropdown">Госу реплеи <b
                                     class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">1:1 games</a></li>
-                            <li><a class="dropdown-item" href="#">Team Plays</a></li>
-                            <li><a class="dropdown-item" href="#">Реплей паки</a></li>
-                            <li><a class="dropdown-item" href="#">Реплеи недели</a></li>
+                            @if($general_helper->getReplayTypes())
+                                @foreach($general_helper->getReplayTypes() as $replayType)
+                                    <li>
+                                        <a class="dropdown-item"
+                                           href="{{route('replay.gosu_type', ['type' => $replayType->name])}}">
+                                            {{$replayType->title}}
+                                        </a>
+                                    </li>
+                                @endforeach
+                            @endif
                         </ul>
                     </li>
                 </ul>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Файлы</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">StarCraft 2</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Топ пользователей</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Репс Донат</a>
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0" id="search-form">
