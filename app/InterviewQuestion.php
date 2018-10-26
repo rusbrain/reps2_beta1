@@ -22,7 +22,8 @@ class InterviewQuestion extends Model
     protected $fillable = [
         'question',
         'is_active',
-        'is_favorite'
+        'is_favorite',
+        'for_login'
     ];
 
     /**
@@ -70,11 +71,16 @@ class InterviewQuestion extends Model
         foreach ($data as $datum){
             $ids[] = $datum->id;
         }
-        $id = array_rand($ids);
 
-        $data =  $data->where('id', $ids[$id])->first();
+        if($ids){
+            $id = array_rand($ids);
 
-        return $data?$data->load('answers'):[];
+            $data =  $data->where('id', $ids[$id])->first();
+
+            return $data?$data->load('answers'):[];
+        }
+
+        return [];
     }
 
     public static function getAnswerQuestion($id)
