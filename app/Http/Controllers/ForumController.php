@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\ForumSection;
 use App\ForumTopic;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ForumController extends Controller
