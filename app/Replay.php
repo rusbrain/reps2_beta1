@@ -198,6 +198,11 @@ class Replay extends Model
         Replay::where('id', $replay->id)->update($replay_data);
     }
 
+    /**
+     * @param Request $request
+     * @param $query
+     * @return mixed
+     */
     public static function search(Request $request, $query)
     {
         $request_data = $request->validated();
