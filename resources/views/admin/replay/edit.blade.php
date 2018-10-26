@@ -66,7 +66,7 @@
                                     <div class="form-group">
                                         <select class="form-control" name="type_id">
                                             @foreach($types as $type)
-                                                <option value="{{$type->id}}" {{$type->id == $replay->type_id?'selected':''}}>{{$type->name}}</option>
+                                                <option value="{{$type->id}}" {{$type->id == $replay->type_id?'selected':''}}>{{$type->title}}({{$type->name}})</option>
                                             @endforeach
                                         </select>
                                         @if ($errors->has('type_id'))

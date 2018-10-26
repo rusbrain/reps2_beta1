@@ -62,7 +62,7 @@
                                             Тип:
                                         </div>
                                         <div class="col-md-6">
-                                            {{$replay->type->name}}
+                                            {{$replay->type->title}} ({{$replay->type->name}})
                                         </div>
                                     </div>
                                     <div class="row">
