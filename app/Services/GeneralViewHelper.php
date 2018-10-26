@@ -136,7 +136,7 @@ class GeneralViewHelper
      */
     public function getBirthdayUsers()
     {
-        $this->bd_users = $this->bd_users??User::where('birthday', Carbon::now()->format('Y-m-d'))->get();
+        $this->bd_users = $this->bd_users??User::where('birthday', 'like',"%".Carbon::now()->format('m-d'))->get();
         return $this->bd_users;
     }
 
