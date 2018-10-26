@@ -12,6 +12,7 @@ namespace App\Services;
 use App\Banner;
 use App\Country;
 use App\ForumSection;
+use App\ForumTopic;
 use App\InterviewQuestion;
 use App\Replay;
 use App\ReplayType;
@@ -25,6 +26,7 @@ use Illuminate\Support\Facades\Auth;
 class GeneralViewHelper
 {
     protected $last_forum;
+    protected $last_forum_home;
     protected $last_gosu_replay;
     protected $last_user_replay;
     protected $countries;
@@ -190,5 +192,20 @@ class GeneralViewHelper
     public function getTopReplayMonth()
     {
 
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastForumHome()
+    {
+        $this->last_forum_home = $this->last_forum_home??ForumTopic::has(['section' => function($q){
+                $q->where('is_active',1)->where('is_general',1);
+            }])
+                ->with('section', 'user', 'preview_image')
+                ->withCount('comments', 'positive', 'negative')
+                ->limit(5)->get();
+        
+        return $this->last_forum_home;
     }
 }
