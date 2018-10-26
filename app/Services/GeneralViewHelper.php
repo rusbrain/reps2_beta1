@@ -205,7 +205,7 @@ class GeneralViewHelper
                 ->with('section', 'user', 'preview_image')
                 ->withCount('comments', 'positive', 'negative')
                 ->limit(5)->get();
-        
+
         return $this->last_forum_home;
     }
 }
