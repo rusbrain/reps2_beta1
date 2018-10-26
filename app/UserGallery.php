@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class UserGallery extends Model
 {
@@ -71,5 +72,24 @@ class UserGallery extends Model
     public static function updateRating($rating, $user_gallery_id)
     {
         \DB::update('update user_galleries set rating = rating + (?) where id = ?', [$rating, $user_gallery_id]);
+    }
+
+    /**
+     * Store image file
+     *
+     * @param $gallery_data
+     * @return mixed
+     */
+    public static function saveImage($gallery_data)
+    {
+        $title = 'Gallery Photo of user '.Auth::user()->name;
+
+        $file = File::storeFile($gallery_data['image'], 'gallery', $title);
+
+        $gallery_data['file_id'] = $file->id;
+
+        unset($gallery_data['image']);
+
+        return $gallery_data;
     }
 }

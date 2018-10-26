@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Comment;
 use App\File;
 use App\Http\Requests\CommentUpdateRequest;
+use App\Http\Requests\UserGalleryStoreRequest;
 use App\User;
 use App\UserGallery;
 use App\UserMessage;
@@ -19,7 +20,7 @@ class UserGalleryController extends Controller
      */
     public function index()
     {
-        $data = UserGallery::with('user', 'file')->withCount('positive', 'negative', 'comments')->paginate(50);
+        $data = UserGallery::with('user', 'file')->withCount('positive', 'negative', 'comments')->orderBy('id', 'desc')->paginate(50);
         return view('admin.user.gallery.list')->with(['data' => $data]);
     }
 
@@ -117,5 +118,28 @@ class UserGalleryController extends Controller
 
             return back();
         }
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function add()
+    {
+        return view('admin.user.gallery.add');
+    }
+
+    /**
+     * @param UserGalleryStoreRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function create(UserGalleryStoreRequest $request)
+    {
+        $data = $request->validated();
+        $data = UserGallery::saveImage($data);
+        $data['user_id'] = Auth::id();
+
+        $gallery = UserGallery::create($data);
+
+        return redirect()->route('admin.users.gallery.view', ['id' => $gallery->id]);
     }
 }

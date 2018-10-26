@@ -192,6 +192,8 @@ Route::group(['middleware' => ['auth', 'admin_panel'], 'prefix' => 'admin_panel'
             Route::post('/{id}/send_comment', 'UserGalleryController@sendComment')      ->name('admin.user.gallery.comment_send');
             Route::get('/{id}/edit', 'UserGalleryController@edit')                      ->name('admin.user.gallery.edit');
             Route::post('/{id}/update', 'UserGalleryController@update')                 ->name('admin.user.gallery.update');
+            Route::get('/add', 'UserGalleryController@add')                             ->name('admin.user.gallery.add');
+            Route::post('/create', 'UserGalleryController@create')                      ->name('admin.user.gallery.create');
         });
     });
 

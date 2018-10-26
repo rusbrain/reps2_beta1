@@ -80,7 +80,7 @@ class ReplayController extends Controller
             ->orderBy('created_at')
             ->paginate(20);
 
-        return view('replay.list')->with(['replays' => $data, 'title'=>($title?$title:$this->replay_group)]);
+        return view('replay.list')->with(['replays' => $data, 'title'=>($title !== false?$title:$this->replay_group)]);
     }
 
     /**
@@ -223,7 +223,7 @@ class ReplayController extends Controller
         }
 
         $method = $this->method_get;
-        return $this->getList(Replay::$method()->where('type_id',$type->id), $this->replay_group.' '.$type);
+        return $this->getList(Replay::$method()->where('type_id',$type->id), $this->replay_group.': '.$type->title);
     }
 
     /**
