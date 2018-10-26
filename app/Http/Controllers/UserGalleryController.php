@@ -73,7 +73,7 @@ class UserGalleryController extends Controller
     public function store(UserGalleryStoreRequest $request)
     {
         $data = $request->validated();
-        $data = self::saveImage($data);
+        $data = UserGallery::saveImage($data);
         $data['user_id'] = Auth::id();
 
         $gallery = UserGallery::create($data);
@@ -150,25 +150,6 @@ class UserGalleryController extends Controller
         }
 
         return abort(404);
-    }
-
-    /**
-     * Store image file
-     *
-     * @param $gallery_data
-     * @return mixed
-     */
-    private static function saveImage($gallery_data)
-    {
-        $title = 'Gallery Photo of user '.Auth::user()->name;
-
-        $file = File::storeFile($gallery_data['image'], 'gallery', $title);
-
-        $gallery_data['file_id'] = $file->id;
-
-        unset($gallery_data['image']);
-
-        return $gallery_data;
     }
 
     /**
