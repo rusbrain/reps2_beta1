@@ -19,37 +19,77 @@
 @endsection
 
 @section('content')
-        {{--<div class="col-md-12">--}}
-            {{--<div class="box">--}}
-                {{--<div class="box-header with-border">--}}
-                    {{--<h3 class="box-title">Поиск файлов</h3>--}}
-                {{--</div>--}}
-                {{--<div class="box-body">--}}
-                    {{--<div class="box-tools col-md-12">--}}
-                        {{--<form>--}}
-                            {{--<div class="row">--}}
-                                {{--<div class="form-group col-md-3">--}}
-                                    {{--<label>Поиск(Название, id):</label>--}}
-                                    {{--<input type="text" class="form-control" name="text" placeholder="Enter ..." value="{{$request_data['text']??''}}">--}}
-                                {{--</div>--}}
-                                {{--<div class="form-group col-md-3 col-md-offset-6">--}}
-                                    {{--<label>Сортировать по:</label>--}}
-                                    {{--<select class="form-control" style="width: 100%;" name="sort">--}}
-                                        {{--<option value="">Select...</option>--}}
-                                        {{--<option value="id" @if(isset($request_data['sort']) && $request_data['sort'] == 'id') selected @endif>ID</option>--}}
-                                        {{--<option value="name" @if(isset($request_data['sort']) && $request_data['sort'] == 'name') selected @endif>Название</option>--}}
-                                    {{--</select>--}}
-                                {{--</div>--}}
-                                {{--<div class="form-group col-md-12">--}}
-                                    {{--<div class="text-right">--}}
-                                        {{--<button type="submit" class="btn btn-primary">Поиск</button>--}}
-                                    {{--</div>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                        {{--</form>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-            {{--</div>--}}
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Поиск файлов</h3>
+                </div>
+                <div class="box-body">
+                    <div class="box-tools col-md-12">
+                        <form>
+                            <div class="row">
+                                <div class="form-group col-md-3">
+                                    <label>Поиск(Название, id, MimeType):</label>
+                                    <input type="text" class="form-control" name="text" placeholder="Enter ..." value="{{$request_data['text']??''}}">
+                                    @if ($errors->has('text'))
+                                        <span class="invalid-feedback text-red" role="alert">
+                                <strong>{{ $errors->first('text') }}</strong>
+                            </span>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <div class="col-md-12">
+                                        <label>Размер (в Kb):</label>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <select class="form-control" style="width: 100%;" name="size_to">
+                                            <option value="">Select...</option>
+                                            <option value="1" @if(isset($request_data['size_to']) && $request_data['size_to'] == '1') selected @endif>Больше</option>
+                                            <option value="0" @if(isset($request_data['size_to']) && $request_data['size_to'] == '0') selected @endif>Меньше</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <input type="text" class="form-control" name="size" placeholder="Enter ..." value="{{$request_data['size']??''}}">
+                                    </div>
+                                    <div class="col-md-12">
+                                    @if ($errors->has('size_to'))
+                                        <span class="invalid-feedback text-red" role="alert">
+                                <strong>{{ $errors->first('size_to') }}</strong>
+                            </span>
+                                    @endif
+                                    @if ($errors->has('size'))
+                                        <span class="invalid-feedback text-red" role="alert">
+                                <strong>{{ $errors->first('size') }}</strong>
+                            </span>
+                                    @endif
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3 ">
+                                    <label>Сортировать по:</label>
+                                    <select class="form-control" style="width: 100%;" name="sort">
+                                        <option value="">Select...</option>
+                                        <option value="id" @if(isset($request_data['sort']) && $request_data['sort'] == 'id') selected @endif>ID</option>
+                                        <option value="title" @if(isset($request_data['sort']) && $request_data['sort'] == 'title') selected @endif>Название</option>
+                                        <option value="type" @if(isset($request_data['sort']) && $request_data['sort'] == 'type') selected @endif>MimeType</option>
+                                        <option value="size" @if(isset($request_data['sort']) && $request_data['sort'] == 'size') selected @endif>Размер</option>
+                                        <option value="created_at" @if(isset($request_data['sort']) && $request_data['sort'] == 'created_at') selected @endif>Дате добавленя</option>
+                                    </select>
+                                    @if ($errors->has('sort'))
+                                        <span class="invalid-feedback text-red" role="alert">
+                                <strong>{{ $errors->first('sort') }}</strong>
+                            </span>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <div class="text-right">
+                                        <button type="submit" class="btn btn-primary">Поиск</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
             <div class="box">
                 <div class="box-header with-border">
                     <h3 class="box-title">Карты Replay ({{$data->total()}})</h3>

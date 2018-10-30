@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\File;
+use App\Http\Requests\FileSearchAdminRequest;
 use App\Http\Requests\FileUpdateAdminRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -14,12 +15,34 @@ class FileManagementController extends Controller
     /**
      * Get list of file
      *
+     * @param FileSearchAdminRequest $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index(FileSearchAdminRequest $request)
     {
-        $data = File::withCount('banner', 'country', 'forum_topic', 'replay', 'avatar', 'user_gallery')->with('user')->paginate(20);
-        return view('admin.file.list')->with(['data' => $data]);
+        $data = File::withCount('banner', 'country', 'forum_topic', 'replay', 'avatar', 'user_gallery')->with('user');
+        $data_req = $request->validated();
+
+        if (isset($data_req['size_to'])){
+            $data->where('size', ($data_req['size_to']?'>=':'<='), $data_req['size']);
+        } elseif (isset($data_req['size'])){
+            $data->where('size', '>=', $data_req['size']);
+        }
+
+        if (isset($data_req['text'])){
+            $data->where(function ($q) use ($data_req){
+                $q->where('title', 'like', "%{$data_req['text']}%")
+                ->orWhere('type', 'like', "%{$data_req['text']}%")
+                ->orWhere('id', 'like', "%{$data_req['text']}%");
+            });
+        }
+
+        if(isset($data_req['sort'])){
+            $data->orderBy($data_req['sort']);
+        }
+
+        $data = $data->paginate(20);
+        return view('admin.file.list')->with(['data' => $data, 'request_data' => $request->validated()]);
     }
 
     /**
