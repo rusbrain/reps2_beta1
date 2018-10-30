@@ -285,6 +285,14 @@ Route::group(['middleware' => ['auth', 'admin_panel'], 'prefix' => 'admin_panel'
         Route::post('/create', 'InterviewQuestionController@create')                    ->name('admin.question.create');
         Route::post('/{id}/save', 'InterviewQuestionController@save')                   ->name('admin.question.save');
     });
+
+    Route::group(['prefix' => 'file'], function () {
+        Route::get('/', 'FileManagementController@index')                               ->name('admin.file');
+        Route::get('/{id}/edit', 'FileManagementController@edit')                       ->name('admin.file.edit');
+        Route::get('/{id}/remove', 'FileManagementController@remove')                   ->name('admin.file.remove');
+        Route::post('/{id}/update', 'FileManagementController@update')                  ->name('admin.file.update');
+        Route::get('/{id}/download', 'FileManagementController@download')               ->name('admin.file.download');
+    });
 });
 
 //

@@ -9,6 +9,7 @@ $menu_name = $admin_helper->getMenuName();
     <li @if($menu_name == 'admin_panel') class="active" @endif><a href="{{route('admin.home')}}"><i class="fa fa-home"></i> <span>Главная панель</span></a></li>
     <li @if($menu_name == 'country') class="active" @endif><a href="{{route('admin.country')}}"><i class="fa fa-map-signs"></i> <span>Страны</span></a></li>
     <li @if($menu_name == 'question') class="active" @endif><a href="{{route('admin.question')}}"><i class="fa fa-question-circle"></i> <span>Опросы</span></a></li>
+    <li @if($menu_name == 'file') class="active" @endif><a href="{{route('admin.file')}}"><i class="fa fa-files-o"></i> <span>Файлы</span></a></li>
 
     <li class="header">ПОЛЬЗОВАТЕЛИ</li>
     <!-- Optionally, you can add icons to the links -->
