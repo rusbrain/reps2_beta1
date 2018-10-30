@@ -135,6 +135,7 @@ class UserGalleryController extends Controller
     public function create(UserGalleryStoreRequest $request)
     {
         $data = $request->validated();
+
         $data = UserGallery::saveImage($data);
         $data['user_id'] = Auth::id();
 

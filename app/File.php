@@ -24,7 +24,9 @@ class File extends Model
     protected $fillable = [
         'user_id',
         'title',
-        'link'
+        'link',
+        'size',
+        'type'
     ];
 
     /**
@@ -49,13 +51,15 @@ class File extends Model
     {
         $path = str_replace('public', '/storage',$file->store('public/'.$dir_name));
 
-        $file = File::create([
+        $file_boj = File::create([
             'user_id' => Auth::id(),
             'title' => $file_title,
-            'link' => $path
+            'link' => $path,
+            'size' => $file->getSize(),
+            'type' => $file->getMimeType(),
         ]);
 
-        return $file;
+        return $file_boj;
     }
 
     /**
@@ -67,10 +71,64 @@ class File extends Model
     {
         $file = File::find($file_id);
 
+        $file->user_gallery()->delete();
+        $file->banner()->delete();
+        $file->country()->update(['flag_file_id' => null]);
+        $file->forum_topic()->update(['preview_file_id' => null]);
+        $file->replay()->delete();
+        $file->avatar()->update(['file_id' => null]);
         if ($file){
             Storage::delete(str_replace('/storage','public', $file->link));
 
             File::where('id', $file_id)->delete();
         }
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function user_gallery()
+    {
+        return $this->hasOne('App\UserGallery', 'file_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function banner()
+    {
+        return $this->hasOne('App\Banner', 'file_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function country()
+    {
+        return $this->hasOne('App\Country', 'flag_file_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function forum_topic()
+    {
+        return $this->hasOne('App\ForumTopic', 'preview_file_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function replay()
+    {
+        return $this->hasOne('App\Replay', 'file_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function avatar()
+    {
+        return $this->hasOne('App\User', 'file_id');
     }
 }
