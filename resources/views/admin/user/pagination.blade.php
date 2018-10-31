@@ -19,7 +19,7 @@
                     <li><a href="{{$data->url($data->currentPage()+2)}}">...</a></li>
                 @endif
                 @if(($data->lastPage()-$data->currentPage())>1)
-                    <li><a href="{{$data->lastPage()}}">{{$data->lastPage()}}</a></li>
+                    <li><a href="{{$data->url($data->lastPage())}}">{{$data->lastPage()}}</a></li>
                 @endif
         @else
             @for($i = 1; $i <= $data->lastPage(); $i++)

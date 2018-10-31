@@ -15,6 +15,7 @@ use App\ForumSection;
 use App\ForumTopic;
 use App\InterviewQuestion;
 use App\Replay;
+use App\ReplayMap;
 use App\ReplayType;
 use App\User;
 use App\UserGallery;
@@ -35,6 +36,7 @@ class GeneralViewHelper
     protected $all_sections;
     protected $replay_type;
     protected $general_sections;
+    protected $replay_maps;
 
     /**
      * Get random user gallery images
@@ -199,13 +201,24 @@ class GeneralViewHelper
      */
     public function getLastForumHome()
     {
-        $this->last_forum_home = $this->last_forum_home??ForumTopic::has(['section' => function($q){
-                $q->where('is_active',1)->where('is_general',1);
-            }])
+        $this->last_forum_home = $this->last_forum_home??ForumTopic::whereHas('section', function($query){
+                $query->where('is_active',1)->where('is_general',1);
+            })
                 ->with('section', 'user', 'preview_image')
                 ->withCount('comments', 'positive', 'negative')
                 ->limit(5)->get();
 
         return $this->last_forum_home;
+    }
+
+    /**
+     * Get Replay Maps
+     *
+     * @return ReplayMap[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public function getReplayMaps()
+    {
+        $this->replay_maps = $this->replay_maps??ReplayMap::all();
+        return $this->replay_maps;
     }
 }
