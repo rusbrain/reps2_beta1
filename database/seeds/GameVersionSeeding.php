@@ -21,7 +21,8 @@ class GameVersionSeeding extends Seeder
             ["version"=>'1.15'],
             ["version"=>'1.16'],
             ["version"=>'1.16'],
-            ["version"=>'1.17']];
+            ["version"=>'1.17'],
+            ["version"=>'All']];
 
         \App\GameVersion::insert($game_versions);
     }

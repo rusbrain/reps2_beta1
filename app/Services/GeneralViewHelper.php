@@ -8,7 +8,6 @@
 
 namespace App\Services;
 
-
 use App\Banner;
 use App\Country;
 use App\ForumSection;
@@ -204,7 +203,7 @@ class GeneralViewHelper
         $this->last_forum_home = $this->last_forum_home??ForumTopic::whereHas('section', function($query){
                 $query->where('is_active',1)->where('is_general',1);
             })
-                ->with('section', 'user', 'preview_image')
+                ->with('section', 'user', 'preview_image', 'icon')
                 ->withCount('comments', 'positive', 'negative')
                 ->limit(5)->get();
 

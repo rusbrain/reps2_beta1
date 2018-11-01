@@ -32,11 +32,11 @@ class HomeController extends Controller
             ->with(['user'=> function($q){
                 $q->withTrashed()->with('country', 'avatar');
             }])
-            ->with('preview_image')
+            ->with('preview_image', 'icon')
             ->withCount('comments', 'positive', 'negative')
             ->limit(5);
 
-        $new_forum_topics = ForumTopic::news()->limit(5)->get();
+        $new_forum_topics = ForumTopic::news()->with('icon')->limit(5)->get();
         $popular_forum_topics = $forum_topic_query
             ->where('created_at', '<=', Carbon::now()->addMonth(-1)->startOfDay())
             ->orderBy('rating', 'desc')->get();
@@ -57,7 +57,7 @@ class HomeController extends Controller
                     $q->withTrashed()->with('country', 'avatar');
                 }])
                     ->where('title', 'like', "%$search%")
-                    ->with('preview_image')
+                    ->with('preview_image', 'icon')
                     ->withCount('comments', 'positive', 'negative')->paginate(20);
                 return view('forum.section')->with('topics', $data);
                 break;
@@ -65,6 +65,7 @@ class HomeController extends Controller
                 $data = ForumTopic::with(['user'=> function($q){
                     $q->withTrashed();
                 }])
+                    ->with('icon')
                     ->where(function ($q){
                         $q->whereNull('start_on')
                             ->orWhere('start_on', Carbon::now()->format('Y-M-d'));

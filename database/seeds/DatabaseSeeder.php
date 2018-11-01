@@ -16,7 +16,8 @@ class DatabaseSeeder extends Seeder
 //         $this->call(ReplayTypesSeeding::class);
 //         $this->call(ForumSectionSeeding::class);
 //         $this->call(UserRoleSeeding::class);
-         $this->call(GameVersionSeeding::class);
+//         $this->call(GameVersionSeeding::class);
+//         $this->call(ForumIconSeed::class);
 //         $this->call(UserTestDataSeeding::class);
 //         $this->call(TestBannerSedding::class);
          $this->call(DBRelocationDataSeed::class);

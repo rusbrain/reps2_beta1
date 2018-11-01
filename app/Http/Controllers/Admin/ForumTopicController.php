@@ -22,7 +22,7 @@ class ForumTopicController extends Controller
      */
     public function topics(SearchForumTopicRequest $request)
     {
-        $data = ForumTopic::search(ForumTopic::with('user', 'section')->withCount('negative','positive','comments'), $request->validated())->where(function ($q){
+        $data = ForumTopic::search(ForumTopic::with('user', 'section', 'icon')->withCount('negative','positive','comments'), $request->validated())->where(function ($q){
             $q->whereNull('start_on')
                 ->orWhere('start_on', Carbon::now()->format('Y-M-d'));
         })->paginate(50);
