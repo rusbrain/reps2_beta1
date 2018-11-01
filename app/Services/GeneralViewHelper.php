@@ -221,4 +221,15 @@ class GeneralViewHelper
         $this->replay_maps = $this->replay_maps??ReplayMap::all();
         return $this->replay_maps;
     }
+
+    /**
+     * @param $user
+     * @return bool
+     */
+    public function isOnline($user)
+    {
+        $time = (Carbon::now()->getTimestamp() - Carbon::parse($user->activity_at)->getTimestamp())/60;
+
+        return $time <= 15;
+    }
 }
