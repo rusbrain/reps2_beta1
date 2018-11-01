@@ -9,6 +9,9 @@ use \App\File;
 use \App\UserGallery;
 use \App\Comment;
 use \App\UserFriend;
+use \App\ForumSection;
+use \App\ForumTopic;
+use \App\ForumIcon;
 
 class DBRelocationDataSeed extends Seeder
 {
@@ -22,6 +25,9 @@ class DBRelocationDataSeed extends Seeder
      */
     protected static $country;
 
+    /**
+     * @var array
+     */
     protected static $revert_dates;
 
     /**
@@ -122,30 +128,51 @@ class DBRelocationDataSeed extends Seeder
      */
     public function run()
     {
-        // Old users seeding
-        echo "1. Users and Avatars seed start \n";
-        $this->seedUser(self::$country);
-        echo "Users and Avatars seed finished \n\n";
+//        // Old users seeding
+//        echo "1. Users and Avatars seed start \n";
+//        $this->seedUser(self::$country);
+//        echo "Users and Avatars seed finished \n\n";
+//
+//        //Update users avatars file
+//        echo "2. Update users avatars file start \n";
+//        $this->updateAvatarFile();
+//        echo "Update users avatars file finished \n\n";
+//
+//        //User Gallery seeding
+//        echo "3. User Gallery seed start \n";
+//        $this->seedUserGallery();
+//        echo "User Gallery seed finished \n\n";
+//
+//        //User Gallery Comments seeding
+//        echo "4. User Gallery Comments seed start \n";
+//        $this->seedUserGalleryComments();
+//        echo "User Gallery Comments seed finished \n\n";
+//
+//        //User Friends seeding
+//        echo "5. User Friends seed start \n";
+//        $this->seedUserFriends();
+//        echo "User Friends seed finished \n\n";
 
-        //Update users avatars file
-        echo "2. Update users avatars file start \n";
-        $this->updateAvatarFile();
-        echo "Update users avatars file finished \n\n";
+        //new
+        //Forum Topic seeding
+        echo "6. Forum Topic seed start \n";
+        $this->seedForumTopic('rusforum');
+        echo "Forum Topic seed finished \n\n";
 
-        //User Gallery seeding
-        echo "3. User Gallery seed start \n";
-        $this->seedUserGallery();
-        echo "User Gallery seed finished \n\n";
+        //Forum Topic Eng seeding
+        echo "7. Forum Topic Eng seed start \n";
+        $this->seedForumTopic('engforum');
+        echo "Forum Topic Eng seed finished \n\n";
 
-        //User Gallery seeding
-        echo "4. User Gallery Comments seed start \n";
-        $this->seedUserGalleryComments();
-        echo "User Gallery Comments seed finished \n\n";
+        //Forum Topic Comment seeding
+        echo "8. Forum Topic Comment seed start \n";
+        $this->seedTopicComments('rusforumreply');
+        echo "Forum Topic Comment seed finished \n\n";
 
-        //User Gallery seeding
-        echo "4. User Friends seed start \n";
-        $this->seedUserFriends();
-        echo "User Friends seed finished \n\n";
+        //Forum Topic Comment Eng seeding
+        echo "9. Forum Topic Comment Eng seed start \n";
+        $this->seedTopicComments('rusforumreply');
+        echo "Forum Topic Comment Eng seed finished \n\n";
     }
 
     /**
@@ -301,10 +328,10 @@ class DBRelocationDataSeed extends Seeder
         $cycles = self::getCycles(DB::table(env('DB_DATABASE_OLD') . '.rusnewscomments')->where('type', 'userphoto')->count());
 
         for ($i = 0; $i < $cycles; $i++) {
-            $old_gallery_comment_comments = DB::table(env('DB_DATABASE_OLD') . '.rusnewscomments')->where('type', 'userphoto')->orderBy('comment_id')->offset(1000 * $i)->limit(1000)->get();
+            $old_gallery_comments = DB::table(env('DB_DATABASE_OLD') . '.rusnewscomments')->where('type', 'userphoto')->orderBy('comment_id')->offset(1000 * $i)->limit(1000)->get();
 
             $new_gallery_comment = [];
-            foreach ($old_gallery_comment_comments as $old_gallery_comment) {
+            foreach ($old_gallery_comments as $old_gallery_comment) {
                 $user = User::where('reps_id', $old_gallery_comment->user_id)->first();
                 $user_gallery = UserGallery::where('reps_id', $old_gallery_comment->news_id)->first();
 
@@ -321,7 +348,39 @@ class DBRelocationDataSeed extends Seeder
             Comment::insert($new_gallery_comment);
 
             $j = $i +1;
-            echo "User Gallery comments seeded ($j/$cycles)\n";
+            echo "Gallery comments seeded ($j/$cycles)\n";
+        }
+    }
+
+    /**
+     * seed Topic Comments
+     */
+    protected function seedTopicComments($table)
+    {
+        $cycles = self::getCycles(DB::table(env('DB_DATABASE_OLD') .'.'.  $table)->count());
+
+        for ($i = 0; $i < $cycles; $i++) {
+            $old_topic_comments = DB::table(env('DB_DATABASE_OLD') .'.'.  $table)->orderBy('reply_id')->offset(1000 * $i)->limit(1000)->get();
+
+            $new_topic_comment = [];
+            foreach ($old_topic_comments as $old_topic_comment) {
+                $user = User::where('reps_id', $old_topic_comment->user_id)->first();
+                $forum_topic = ForumTopic::where('reps_id', $old_topic_comment->forum_id)->first();
+
+                $new_topic_comment[] = [
+                    'user_id' => $user->id ?? 1,
+                    'object_id' => $forum_topic->id ?? 0,
+                    'relation' => Comment::RELATION_FORUM_TOPIC,
+                    'title' => $old_topic_comment->reply_title,
+                    'content' => mb_convert_encoding(substr($old_topic_comment->reply_text,0,10000), "UTF-8"),
+                    'created_at' =>  self::correctDate(Carbon::parse($old_topic_comment->reply_date.' '. $old_topic_comment->reply_time)),
+                ];
+            }
+
+            Comment::insert($new_topic_comment);
+
+            $j = $i +1;
+            echo "Forum Topic comments seeded ($j/$cycles)\n";
         }
     }
 
@@ -356,10 +415,48 @@ class DBRelocationDataSeed extends Seeder
     }
 
     /**
+     * Seed Forum Topic
+     */
+    protected function seedForumTopic($table)
+    {
+        $forum_section = ForumSection::all();
+        $forum_icons = ForumIcon::all();
+        $cycles = self::getCycles(DB::table(env('DB_DATABASE_OLD') . '.'. $table)->count());
+
+        for ($i = 0; $i < $cycles; $i++) {
+            $rusforums = DB::table(env('DB_DATABASE_OLD') . '.'. $table)->orderBy('forum_id')->offset(1000 * $i)->limit(1000)->get();
+            $new_forum_topics = [];
+
+            foreach ($rusforums as $rusforum) {
+                $section_id = $forum_section->where('reps_id', $rusforum->rub_id)->first()->id ?? 1;
+                $user = User::where('reps_id', $rusforum->user_id)->first();
+
+                $new_forum_topics[] = [
+                    'reps_id' => $rusforum->forum_id,
+                    'section_id' => $section_id,
+                    'title' => $rusforum->forum_title,
+                    'content' => mb_convert_encoding(substr($rusforum->forum_text, 0, 10000), "UTF-8"),
+                    'user_id' => $user->id ?? 1,
+                    'reviews' => $rusforum->forum_view,
+                    'created_at' => self::correctDate($rusforum->forum_date && $rusforum->forum_time ? Carbon::parse($rusforum->forum_date . ' ' . $rusforum->forum_time) : Carbon::now()),
+                    'approved' => $rusforum->forum_open,
+                    'news' => 0,
+                    'forum_icon_id' => $forum_icons->where('id', $rusforum->forum_icon)->first()->id ?? $forum_icons->first()->id,
+                ];
+            }
+
+            \App\ForumTopic::insert($new_forum_topics);
+
+            $j = $i +1;
+            echo "Forum Topic seeded ($j/$cycles)\n";
+        }
+    }
+
+    /**
      * @param $count
      * @return int
      */
-    protected static function getCycles($count)
+    public static function getCycles($count)
     {
         return ((int)($count / 1000)) + (($count % 1000 > 0) ? 1 : 0);
     }
@@ -368,7 +465,7 @@ class DBRelocationDataSeed extends Seeder
      * @param $user
      * @return int
      */
-    protected static function getUserRole($user)
+    public static function getUserRole($user)
     {
         $user_roles = self::$user_roles;
 
@@ -389,7 +486,7 @@ class DBRelocationDataSeed extends Seeder
      * @param Carbon $date
      * @return Carbon
      */
-    protected static function correctDate(Carbon $date)
+    public static function correctDate(Carbon $date)
     {
         foreach (self::$revert_dates as $revert_date) {
             if ($revert_date['start'] <= $date && $date < $revert_date['end']){

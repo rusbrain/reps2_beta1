@@ -110,6 +110,7 @@
                             <th>Коментарии</th>
                             <th>Почта</th>
                             <th>Бан</th>
+                            <th>Активность</th>
                             <th style="width: 330px">Действия</th>
                         </tr>
                         </thead>
@@ -131,6 +132,7 @@
                                 <td>{{$user->comments_count}}</td>
                                 <td>{!! $user->email_verified_at?'<i class="fa fa-check text-green"></i>':'<i class="fa fa-ban text-red"></i>' !!}</td>
                                 <td>{!! $user->is_ban?'<i class="fa fa-ban text-red"></i>' : '<i class="fa fa-circle-o text-green"></i>'!!}</td>
+                                <td>{{$user->activity_at??"Нет"}}</td>
                                 <td>
                                     <div class="btn-group">
                                         @if(Auth::id() != $user->id)

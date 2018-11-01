@@ -15,7 +15,7 @@ class NewsController extends Controller
     public function index(SearchForumTopicRequest $request)
     {
         $news = ForumTopic::news()
-            ->with('section', 'preview_image')
+            ->with('section', 'preview_image', 'icon')
             ->withCount('comments', 'positive', 'negative')
             ->with(['user'=> function($q){
                 $q->withTrashed();

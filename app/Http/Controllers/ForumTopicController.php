@@ -31,6 +31,7 @@ class ForumTopicController extends Controller
                     ->orWhere('start_on', Carbon::now()->format('Y-M-d'));
             })
             ->with(User::getUserWithReputationQuery())
+            ->with('icon')
             ->withCount('comments', 'positive','negative')->first();
 
         if(!$topic){
@@ -121,7 +122,7 @@ class ForumTopicController extends Controller
      */
     public function edit($id)
     {
-        $topic = ForumTopic::where('id', $id)->withCount('comments', 'positive','negative')->first();
+        $topic = ForumTopic::where('id', $id)->with('icon')->withCount('comments', 'positive','negative')->first();
 
         if(!$topic){
             return abort(404);
@@ -218,7 +219,9 @@ class ForumTopicController extends Controller
             $user_id = Auth::id();
         }
 
-        $data = ForumTopic::where('user_id',$user_id)->whereHas(['section' => function ($q){
+        $data = ForumTopic::where('user_id',$user_id)
+            ->with('icon')
+            ->whereHas(['section' => function ($q){
             $q->where('is_active', 1);
         }])->with(['user'=> function($q){
             $q->withTrashed();

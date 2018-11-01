@@ -34,6 +34,14 @@ class ForumTopic extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function icon()
+    {
+        return $this->belongsTo('App\ForumIcon');
+    }
+
+    /**
      * Relations. Topic comments
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -167,7 +175,7 @@ class ForumTopic extends Model
     {
         return ForumTopic::where('id', $topic_id)
             ->withCount('comments', 'positive', 'negative')
-            ->with('section', 'user.avatar','preview_image')
+            ->with('section', 'user.avatar','preview_image', 'icon')
             ->with(['comments' => function($q) {
                 $q->with('user.avatar')->orderBy('created_at', 'desc')->paginate(20);
             }])

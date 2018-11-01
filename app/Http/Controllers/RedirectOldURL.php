@@ -102,7 +102,7 @@ class RedirectOldURL extends Controller
 
         if ($request->has('news')){
             if ($request->has('id')){
-                $topic = ForumTopic::where('reps_id', $request->get('id'))->where('reps_section', $request->get('news'))->first();
+                $topic = ForumTopic::where('reps_id', $request->get('id'))->where('reps_section', 'like', "%".$request->get('news')."%")->first();
 
                 if($topic){
                     $topic_id = $topic->id;

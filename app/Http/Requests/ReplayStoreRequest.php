@@ -25,6 +25,7 @@ class ReplayStoreRequest extends FormRequest
     public function rules()
     {
         $races = implode(",", Replay::$races);
+        $creating_rates = implode(",", Replay::$creating_rates);
 
         return [
             'user_replay'           => 'nullable|in:1,0',
@@ -33,13 +34,13 @@ class ReplayStoreRequest extends FormRequest
             'content'               => 'required|string|min:3|max:1000',
             'map_id'                => 'nullable|exists:replay_maps,id',
             'replay'                => 'required|file|max:1024',
-            'game_version'          => 'required',
+            'game_version_id'       => 'required|exists:game_versions,id',
             'championship'          => 'nullable|string|max:255',
             'first_country_id'      => 'required|exists:countries,id',
             'second_country_id'     => 'required|exists:countries,id',
             'first_race'            => 'required|in:'.$races,
             'second_race'           => 'required|in:'.$races,
-            'evaluation'            => 'nullable',
+            'creating_rate'         => 'nullable|in:'.$creating_rates,
             'length'                => 'nullable',
             'first_location'        => 'nullable|integer',
             'second_location'       => 'nullable|integer',
@@ -67,7 +68,8 @@ class ReplayStoreRequest extends FormRequest
             'replay.required'               => 'Не указан файл с replay',
             'replay.file'                   => 'Replay должн быть файлом',
             'replay.max'                    => 'Максимальный размер файла replay 1mb',
-            'game_version.required'         => 'Не указана версия игры',
+            'game_version_id.required'      => 'Не указана версия игры',
+            'game_version_id.exists'        => 'Не верно указана версия игры',
             'championship.max'              => 'Название чемпионала должено быть не больше 255 символов',
             'first_country_id.required'     => 'Не выбрана страна первого играка',
             'first_country_id.exists'       => 'Не верно указана страна первого играка',
@@ -79,6 +81,7 @@ class ReplayStoreRequest extends FormRequest
             'second_race.in'                => 'Не верно указана расса второго игрока',
             'first_location.integer'        => 'Локация должна быть указана в виде целого числа',
             'second_location.integer'       => 'Локация должна быть указана в виде целого числа',
+            'creating_rate.in'              => 'Не верно указана оценка'
         ];
     }
 }

@@ -40,7 +40,7 @@ class ReplayRatingController extends RatingController
             ->with(['user'=> function($q){
                 $q->withTrashed();
             }])
-            ->with('type','user', 'map','first_country','second_country')
+            ->with('type','user', 'map','first_country','second_country', 'game_version')
             ->first();
 
 
