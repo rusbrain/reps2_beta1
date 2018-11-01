@@ -26,7 +26,7 @@ class ReplayController extends Controller
     public function index(ReplaySearchAdminRequest $request)
     {
         $data = Replay::search($request,Replay::withCount('positive', 'negative', 'comments', 'user_rating'))
-            ->with('user', 'type', 'map', 'file', 'first_country', 'second_country')->paginate(50);
+            ->with('user', 'type', 'map', 'file', 'first_country', 'second_country', 'game_version')->paginate(50);
 
         return view('admin.replay.replays')->with(['data' => $data, 'request_data' => $request->validated()]);
     }
@@ -161,7 +161,7 @@ class ReplayController extends Controller
             $q->with('user.avatar')->orderBy('created_at', 'desc')->paginate(20);
         }])
             ->withCount('positive', 'negative', 'comments', 'user_rating')
-            ->with('user.avatar', 'type', 'map', 'file', 'first_country', 'second_country')->first();
+            ->with('user.avatar', 'type', 'map', 'file', 'first_country', 'second_country', 'game_version')->first();
     }
 
     /**

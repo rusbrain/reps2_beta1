@@ -22,6 +22,9 @@ class DBRelocationDataSeed extends Seeder
      */
     protected static $country;
 
+    /**
+     * @var array
+     */
     protected static $revert_dates;
 
     /**

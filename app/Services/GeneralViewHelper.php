@@ -82,7 +82,7 @@ class GeneralViewHelper
      */
     public function getLastGosuReplay()
     {
-        $this->last_gosu_replay = $this->last_gosu_replay??Replay::gosuReplay()->withCount('comments', 'positive', 'negative')->with('user', 'map', 'type', 'first_country','second_country')->orderBy('created_at', 'desc')->limit(5)->get();
+        $this->last_gosu_replay = $this->last_gosu_replay??Replay::gosuReplay()->withCount('comments', 'positive', 'negative')->with('user', 'map', 'type', 'first_country','second_country', 'game_version')->orderBy('created_at', 'desc')->limit(5)->get();
         return $this->last_gosu_replay;
     }
 
@@ -91,7 +91,7 @@ class GeneralViewHelper
      */
     public function getLastUserReplay()
     {
-        $this->last_user_replay = $this->last_user_replay??Replay::userReplay()->withCount('comments', 'positive', 'negative')->with('user', 'map', 'type', 'first_country','second_country')->orderBy('created_at', 'desc')->limit(5)->get();
+        $this->last_user_replay = $this->last_user_replay??Replay::userReplay()->withCount('comments', 'positive', 'negative')->with('user', 'map', 'type', 'first_country','second_country', 'game_version')->orderBy('created_at', 'desc')->limit(5)->get();
         return $this->last_user_replay;
     }
 

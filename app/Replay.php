@@ -17,6 +17,15 @@ class Replay extends Model
         4 => 'P',
     ];
 
+    public static $creating_rates = [
+        1 => '7',
+        2 => '8',
+        3 => '9',
+        4 => '10',
+        5 => 'Cool',
+        6 => 'Best'
+    ];
+
     /**
      * Using table name
      *
@@ -31,9 +40,9 @@ class Replay extends Model
      */
     protected $fillable = [
         'user_id', 'user_replay', 'type_id','title', 'content', 'map_id', 'file_id',
-        'game_version', 'championship', 'first_country_id', 'second_country_id',
+        'game_version_id', 'championship', 'first_country_id', 'second_country_id',
         'first_matchup', 'second_matchup', 'rating', 'user_rating', 'first_race',
-        'second_race', 'first_location', 'second_location', 'evaluation' ];
+        'second_race', 'first_location', 'second_location', 'creating_rate' ];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -41,6 +50,14 @@ class Replay extends Model
     public function user()
     {
         return $this->belongsTo('App\User');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function game_version()
+    {
+        return $this->belongsTo('App\GameVersion', 'game_version_id');
     }
 
     /**
