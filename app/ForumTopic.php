@@ -21,7 +21,9 @@ class ForumTopic extends Model
      *
      * @var array
      */
-    protected $fillable = ['icon', 'reps_id', 'reps_section', 'section_id', 'title', 'preview_content', 'content', 'user_id', 'reviews', 'start_on', 'preview_file_id', 'news'];
+    protected $fillable = ['icon', 'reps_id', 'reps_section', 'section_id', 'title', 'preview_content',
+        'content', 'user_id', 'reviews', 'start_on', 'preview_file_id', 'news','negative_count',
+        'positive_count', 'comments_count'];
 
     /**
      * Relations. Topics section
@@ -174,7 +176,6 @@ class ForumTopic extends Model
     public static function getTopicById($topic_id)
     {
         return ForumTopic::where('id', $topic_id)
-            ->withCount('comments', 'positive', 'negative')
             ->with('section', 'user.avatar','preview_image', 'icon')
             ->with(['comments' => function($q) {
                 $q->with('user.avatar')->orderBy('created_at', 'desc')->paginate(20);

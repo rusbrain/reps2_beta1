@@ -30,10 +30,9 @@ class HomeController extends Controller
                 })
             ->has('preview_image')
             ->with(['user'=> function($q){
-                $q->withTrashed()->with('country', 'avatar');
+                $q->withTrashed()->with('avatar');
             }])
             ->with('preview_image', 'icon')
-            ->withCount('comments', 'positive', 'negative')
             ->limit(5);
 
         $new_forum_topics = ForumTopic::news()->with('icon')->limit(5)->get();
@@ -54,11 +53,10 @@ class HomeController extends Controller
         switch ($request->get('section')){
             case 'news':
                 $data = ForumTopic::news()->where('approved',1)->with(['user'=> function($q){
-                    $q->withTrashed()->with('country', 'avatar');
+                    $q->withTrashed()->with('avatar');
                 }])
                     ->where('title', 'like', "%$search%")
-                    ->with('preview_image', 'icon')
-                    ->withCount('comments', 'positive', 'negative')->paginate(20);
+                    ->with('preview_image', 'icon')->paginate(20);
                 return view('forum.section')->with('topics', $data);
                 break;
             case 'forum':
@@ -70,7 +68,6 @@ class HomeController extends Controller
                         $q->whereNull('start_on')
                             ->orWhere('start_on', Carbon::now()->format('Y-M-d'));
                     })
-                    ->withCount(['positive', 'negative', 'comments'])
                     ->where('title', 'like', "%$search%")
                     ->orderBy('created_at', 'desc')->paginate(20);
                 return view('forum.section')->with('topics', $data);

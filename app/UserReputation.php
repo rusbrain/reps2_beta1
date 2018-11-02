@@ -2,10 +2,27 @@
 
 namespace App;
 
+use App\Observers\UserReputationObserver;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class UserReputation extends Model
 {
+    use Notifiable;
+
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'created' => UserReputationObserver::class,
+        'deleting' => UserReputationObserver::class,
+        'deleted' => UserReputationObserver::class,
+        'restored' => UserReputationObserver::class,
+        'updated' => UserReputationObserver::class,
+    ];
+
     const RELATION_FORUM_TOPIC  = 1;
     const RELATION_REPLAY       = 2;
     const RELATION_USER_GALLERY = 3;

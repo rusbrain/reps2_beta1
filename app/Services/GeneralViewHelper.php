@@ -10,8 +10,10 @@ namespace App\Services;
 
 use App\Banner;
 use App\Country;
+use App\File;
 use App\ForumSection;
 use App\ForumTopic;
+use App\GameVersion;
 use App\InterviewQuestion;
 use App\Replay;
 use App\ReplayMap;
@@ -36,6 +38,10 @@ class GeneralViewHelper
     protected $replay_type;
     protected $general_sections;
     protected $replay_maps;
+    protected $banner;
+    protected $question;
+    protected $new_users;
+    protected $game_version;
 
     /**
      * Get random user gallery images
@@ -44,12 +50,14 @@ class GeneralViewHelper
      */
     public function getRandomImg()
     {
-        $data_img = UserGallery::with('file')->orderBy('created_at', 'desc')->limit(5000)->get()->toArray();
+        $data_img = UserGallery::orderBy('created_at', 'desc')->limit(5000)->get(['id'])->toArray();
         $random_img_ids = $data_img?array_rand($data_img,(count($data_img)>4?4:count($data_img))):[];
         $random_img = [];
         foreach ($random_img_ids as $item){
-            $random_img[] = $data_img[$item];
+            $data = $data_img[$item]['id'];
+            $random_img[] = $data;
         }
+        $random_img = UserGallery::whereIn('id', $random_img)->with('file')->get()->toArray();
 
         return $random_img;
     }
@@ -61,7 +69,8 @@ class GeneralViewHelper
      */
     public function getRandomQuestion()
     {
-        return  InterviewQuestion::getRandomQuestion();
+        $this->question = $this->question??InterviewQuestion::getRandomQuestion();
+        return  $this->question;
     }
 
     /**
@@ -70,7 +79,7 @@ class GeneralViewHelper
     public function getLastForum()
     {
         $this->last_forum =  $this->last_forum??ForumSection::general_active()->with(['topics' =>function($query){
-                $query->withCount('comments', 'positive', 'negative')->with('user')->orderBy('created_at', 'desc')->limit(5);
+                $query->with('user')->orderBy('created_at', 'desc')->limit(5);
             }])->get();
 
         return $this->last_forum;
@@ -81,7 +90,11 @@ class GeneralViewHelper
      */
     public function getLastGosuReplay()
     {
-        $this->last_gosu_replay = $this->last_gosu_replay??Replay::gosuReplay()->withCount('comments', 'positive', 'negative')->with('user', 'map', 'type', 'first_country','second_country', 'game_version')->orderBy('created_at', 'desc')->limit(5)->get();
+        if(!$this->last_gosu_replay){
+            $this->last_gosu_replay=Replay::gosuReplay()->orderBy('created_at', 'desc')->limit(5)->get();
+            $this->last_gosu_replay->load('user', 'map', 'game_version');
+        }
+
         return $this->last_gosu_replay;
     }
 
@@ -90,7 +103,7 @@ class GeneralViewHelper
      */
     public function getLastUserReplay()
     {
-        $this->last_user_replay = $this->last_user_replay??Replay::userReplay()->withCount('comments', 'positive', 'negative')->with('user', 'map', 'type', 'first_country','second_country', 'game_version')->orderBy('created_at', 'desc')->limit(5)->get();
+        $this->last_user_replay = $this->last_user_replay??Replay::userReplay()->with('user')->orderBy('created_at', 'desc')->limit(5)->get();
         return $this->last_user_replay;
     }
 
@@ -113,7 +126,8 @@ class GeneralViewHelper
      */
     public function getNewUsers()
     {
-        return  User::where('is_ban',0)->orderBy('created_at', 'desc')->limit(10)->get();
+        $new_users = $new_users??User::where('is_ban',0)->orderBy('created_at', 'desc')->limit(10)->get();
+        return  $new_users;
     }
 
     /**
@@ -121,7 +135,14 @@ class GeneralViewHelper
      */
     public function getCountries()
     {
-        $this->countries = $this->countries??Country::all();
+        if(!$this->countries){
+            $countries = Country::all();
+
+            foreach ($countries as $country){
+                $this->countries[$country->id] = $country;
+            }
+        }
+
         return $this->countries;
     }
 
@@ -149,7 +170,7 @@ class GeneralViewHelper
     public function getAllForumSections()
     {
         $this->all_sections = $this->all_sections??ForumSection::with(['topics' =>function($q){
-            $q->orderBy('created_at', 'desc')->withCount('comments')->limit(5);
+            $q->orderBy('created_at', 'desc')->limit(5);
             }])->orderBy('position')->get();
         return $this->all_sections;
     }
@@ -159,7 +180,14 @@ class GeneralViewHelper
      */
     public function getReplayTypes()
     {
-        $this->replay_type = $this->replay_type??ReplayType::all();
+        if(!$this->replay_type){
+            $types = ReplayType::all();
+
+            foreach ($types as $type){
+                $this->replay_type[$type->id] = $type;
+            }
+        }
+
         return $this->replay_type;
     }
 
@@ -177,7 +205,8 @@ class GeneralViewHelper
      */
     public function getRandomBanner()
     {
-        return Banner::getRandomBanner();
+        $this->banner = $this->banner??Banner::getRandomBanner();
+        return $this->banner;
     }
 
     public function getTopReplayAll()
@@ -204,7 +233,6 @@ class GeneralViewHelper
                 $query->where('is_active',1)->where('is_general',1);
             })
                 ->with('section', 'user', 'preview_image', 'icon')
-                ->withCount('comments', 'positive', 'negative')
                 ->limit(5)->get();
 
         return $this->last_forum_home;
@@ -217,8 +245,33 @@ class GeneralViewHelper
      */
     public function getReplayMaps()
     {
-        $this->replay_maps = $this->replay_maps??ReplayMap::all();
+        if(!$this->replay_maps){
+            $types = ReplayMap::all();
+
+            foreach ($types as $type){
+                $this->replay_maps[$type->id] = $type;
+            }
+        }
+
         return $this->replay_maps;
+    }
+
+    /**
+     * Get Replay Maps
+     *
+     * @return ReplayMap[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public function getGAmeVersion()
+    {
+        if(!$this->game_version){
+            $types = GameVersion::all();
+
+            foreach ($types as $type){
+                $this->game_version[$type->id] = $type;
+            }
+        }
+
+        return $this->game_version;
     }
 
     /**

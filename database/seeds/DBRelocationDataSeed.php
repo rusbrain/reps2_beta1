@@ -12,6 +12,10 @@ use \App\UserFriend;
 use \App\ForumSection;
 use \App\ForumTopic;
 use \App\ForumIcon;
+use App\ReplayMap;
+use App\ReplayType;
+use App\GameVersion;
+use App\Replay;
 
 class DBRelocationDataSeed extends Seeder
 {
@@ -128,32 +132,31 @@ class DBRelocationDataSeed extends Seeder
      */
     public function run()
     {
-//        // Old users seeding
-//        echo "1. Users and Avatars seed start \n";
-//        $this->seedUser(self::$country);
-//        echo "Users and Avatars seed finished \n\n";
-//
-//        //Update users avatars file
-//        echo "2. Update users avatars file start \n";
-//        $this->updateAvatarFile();
-//        echo "Update users avatars file finished \n\n";
-//
-//        //User Gallery seeding
-//        echo "3. User Gallery seed start \n";
-//        $this->seedUserGallery();
-//        echo "User Gallery seed finished \n\n";
-//
-//        //User Gallery Comments seeding
-//        echo "4. User Gallery Comments seed start \n";
-//        $this->seedUserGalleryComments();
-//        echo "User Gallery Comments seed finished \n\n";
-//
-//        //User Friends seeding
-//        echo "5. User Friends seed start \n";
-//        $this->seedUserFriends();
-//        echo "User Friends seed finished \n\n";
+        // Old users seeding
+        echo "1. Users and Avatars seed start \n";
+        $this->seedUser(self::$country);
+        echo "Users and Avatars seed finished \n\n";
 
-        //new
+        //Update users avatars file
+        echo "2. Update users avatars file start \n";
+        $this->updateAvatarFile();
+        echo "Update users avatars file finished \n\n";
+
+        //User Gallery seeding
+        echo "3. User Gallery seed start \n";
+        $this->seedUserGallery();
+        echo "User Gallery seed finished \n\n";
+
+        //User Gallery Comments seeding
+        echo "4. User Gallery Comments seed start \n";
+        $this->seedUserGalleryComments();
+        echo "User Gallery Comments seed finished \n\n";
+
+        //User Friends seeding
+        echo "5. User Friends seed start \n";
+        $this->seedUserFriends();
+        echo "User Friends seed finished \n\n";
+
         //Forum Topic seeding
         echo "6. Forum Topic seed start \n";
         $this->seedForumTopic('rusforum');
@@ -171,8 +174,33 @@ class DBRelocationDataSeed extends Seeder
 
         //Forum Topic Comment Eng seeding
         echo "9. Forum Topic Comment Eng seed start \n";
-        $this->seedTopicComments('rusforumreply');
+        $this->seedTopicComments('engforumreply');
         echo "Forum Topic Comment Eng seed finished \n\n";
+
+        //News seeding
+        echo "10. News seed start \n";
+        $this->seedNews('rusnews');
+        echo "News seed finished \n\n";
+
+        //News Eng seeding
+        echo "11. News Eng seed start \n";
+        $this->seedNews('engnews');
+        echo "News Eng seed finished \n\n";
+
+        //News Comments seeding
+        echo "12. News Comments seed start \n";
+        $this->seedNewsComments('rusnewscomments');
+        echo "News Comments seed finished \n\n";
+
+        //News Comments Eng seeding
+        echo "13. News Comments Eng seed start \n";
+        $this->seedNewsComments('engnewscomments');
+        echo "News Comments Eng seed finished \n\n";
+        //News Comments Eng seeding
+
+        echo "14. Replay seed start \n";
+        $this->seedReplay();
+        echo "Replay seed finished \n\n";
     }
 
     /**
@@ -385,6 +413,49 @@ class DBRelocationDataSeed extends Seeder
     }
 
     /**
+     * Seed News
+     *
+     * @param $table
+     */
+    protected function seedNews($table)
+    {
+        $forum_icons = ForumIcon::first();
+        $cycles = self::getCycles(DB::table(env('DB_DATABASE_OLD') . '.'.$table)->count());
+
+        for ($i = 0; $i < $cycles; $i++) {
+            $rusforums = DB::table(env('DB_DATABASE_OLD') . '.'.$table)->orderBy('news_id')->offset(1000 * $i)->limit(1000)->get();
+
+            $new_forum_topics = [];
+            foreach ($rusforums as $rusforum) {
+                $section_id = ForumSection::where('name', 'like', "%".$rusforum->news_type."%")->first()->id??\App\ForumSection::where('name', 'article')->first()->id;
+                $user = User::where('reps_id', $rusforum->user_id)->first();
+                $s_text = mb_convert_encoding(substr($rusforum->news_stext,0,10000), "UTF-8");
+
+                $new_forum_topics[] = [
+                    'reps_id' => $rusforum->news_id,
+                    'reps_section' => $rusforum->news_type,
+                    'section_id' => $section_id,
+                    'title' => $rusforum->news_title,
+                    'preview_content' => $s_text,
+                    'content' => 	$rusforum->news_long?mb_convert_encoding(substr($rusforum->news_text,0,10000), "UTF-8"):$s_text,
+                    'user_id' => $user->id??1,
+                    'reviews' => $rusforum->news_show,
+                    'start_on' => $rusforum->news_start?(Carbon::parse($rusforum->news_start) > Carbon::now()?Carbon::parse($rusforum->news_start):null) :null,
+                    'created_at' => $rusforum->news_date&&$rusforum->news_time?Carbon::parse($rusforum->news_date.' '.$rusforum->news_time):Carbon::now(),
+                    'approved' => $table == 'rusnews'?$rusforum->denyview:1,
+                    'news' => 1,
+                    'forum_icon_id' => $forum_icons->id,
+                ];
+            }
+
+            \App\ForumTopic::insert($new_forum_topics);
+
+            $j = $i +1;
+            echo "News seeded ($j/$cycles) \n";
+        }
+    }
+
+    /**
      * seed User Friends
      */
     protected function seedUserFriends()
@@ -449,6 +520,115 @@ class DBRelocationDataSeed extends Seeder
 
             $j = $i +1;
             echo "Forum Topic seeded ($j/$cycles)\n";
+        }
+    }
+
+    /**
+     * Seed News Comments
+     *
+     * @param $table
+     */
+    protected function seedNewsComments($table)
+    {
+        $cycles = self::getCycles(DB::table(env('DB_DATABASE_OLD') .'.'.$table)->where('type', 'news')->count());
+
+        for ($i = 0; $i < $cycles; $i++) {
+            $old_topic_comments = DB::table(env('DB_DATABASE_OLD') .'.'.$table)->where('type', 'news')->orderBy('comment_id')->offset(1000 * $i)->limit(1000)->get();
+
+            $new_topic_comment = [];
+            foreach ($old_topic_comments as $old_topic_comment) {
+                $user = User::where('reps_id', $old_topic_comment->user_id)->first();
+                $forum_topic = ForumTopic::where('reps_id', $old_topic_comment->news_id)->where('news', 1)->first();
+
+                $new_topic_comment[] = [
+                    'user_id' => $user->id ?? 1,
+                    'object_id' => $forum_topic->id ?? 0,
+                    'relation' => Comment::RELATION_FORUM_TOPIC,
+                    'title' => $old_topic_comment->comment_title,
+                    'content' => mb_convert_encoding(substr($old_topic_comment->comment_text,0,10000), "UTF-8"),
+                'created_at' =>  self::correctDate(Carbon::parse($old_topic_comment->comment_date.' '. $old_topic_comment->comment_time)),
+                ];
+            }
+
+            Comment::insert($new_topic_comment);
+
+            $j = $i +1;
+            echo "News comments seeded ($j/$cycles)\n";
+        }
+    }
+
+    protected function seedReplay()
+    {
+        $cycles = self::getCycles(\DB::table(env('DB_DATABASE_OLD') . '.replays')->count());
+
+        $countries = Country::all();
+        $maps = ReplayMap::all();
+        $game_versions = GameVersion::all();
+        $types = ReplayType::all();
+        $replay_n = 0;
+
+        for ($i = 0; $i < $cycles; $i++) {
+            $old_replays = DB::table(env('DB_DATABASE_OLD') . '.replays')->orderBy('replay_id')->offset(1000 * $i)->limit(1000)->get();
+
+            $new_replays = [];
+            foreach ($old_replays as $old_replay) {
+                if ($old_replay->replay_file) {
+                    $user = User::where('reps_id', $old_replay->user_id)->first();
+
+
+                    $file_id = 0;
+                    $r = substr($old_replay->replay_file, -4);
+
+                    $path_from = "http://reps.ru/replays.php?replay=get&id={$old_replay->replay_id}";
+                    $path_to = "./public/storage/replays/{$replay_n}{$r}";
+
+                    if (@fopen($path_from, 'r')) {
+                        if (copy($path_from, $path_to)) {
+
+                            $file_data = [
+                                'user_id' => $user->id ?? 1,
+                                'title' => "Replay {$old_replay->replay_name}",
+                                'link' => "/storage/replays/{$replay_n}{$r}",
+                                'type' => 'rep/*',
+                                'size' => filesize($path_to),
+                            ];
+
+                            $replay_n++;
+                            $file = App\File::create($file_data);
+                            $file_id = $file->id;
+                        }
+                    }
+
+                    $new_replays[] = [
+                        'user_id' => $user->id ?? 1,
+                        'user_replay' => in_array($old_replay->replay_type, ['uduel', 'upack', 'uteam']),
+                        'type_id' => $types->where('name', substr($old_replay->replay_type, 1))->first()->id ?? $types->first()->id,
+                        'title' => $old_replay->replay_name,
+                        'content' => $old_replay->replay_rustext . "\n\n" . $old_replay->replay_engtext,
+                        'map_id' => $old_replay->replay_map ? $maps->where('name', $old_replay->replay_map)->first()->id ?? null : null,
+                        'file_id' => $file_id,
+                        'championship' => $old_replay->replay_event,
+                        'first_country_id' => $countries->where('name', $old_replay->replay_countryv)->first()->id ?? 0,
+                        'second_country_id' => $countries->where('name', $old_replay->replay_countryd)->first()->id ?? 0,
+                        'first_race' => $old_replay->replay_racev,
+                        'second_race' => $old_replay->replay_raced,
+                        'downloaded' => $old_replay->replay_dl,
+                        'length' => $old_replay->replay_lenghth && $old_replay->replay_lenghtm && $old_replay->replay_lenghts ? "{$old_replay->replay_lenghth}:{$old_replay->replay_lenghtm}:{$old_replay->replay_lenghts}" : null,
+                        'created_at' => self::correctDate(Carbon::parse($old_replay->replay_date . ' ' . $old_replay->replay_time)),
+                        'reps_id' => $old_replay->replay_id,
+                        'first_location' => $old_replay->replay_expv,
+                        'second_location' => $old_replay->replay_expd,
+                        'creating_rate' => $old_replay->replay_rating,
+                        'game_version_id' => $game_versions->where('version', $old_replay->replay_version)->first()->id,
+                        'approved' => 1,
+                    ];
+                }
+                echo $i . "\n";
+            }
+            Replay::insert($new_replays);
+
+            $j = $i + 1;
+            echo "Replay seeded ($j/$cycles)\n";
         }
     }
 

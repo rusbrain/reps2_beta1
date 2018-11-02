@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Comment;
 use App\Http\Requests\ReplayCommentStoreRequest;
+use App\Replay;
 
 class ReplayCommentController extends CommentController
 {
@@ -27,6 +28,14 @@ class ReplayCommentController extends CommentController
      * @var string
      */
     protected $name_id = 'replay_id';
+
+    /**
+     * Model class
+     *
+     * @var string
+     */
+    protected $model = Replay::class;
+
     /**
      * Store a newly created resource in storage.
      *

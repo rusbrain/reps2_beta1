@@ -3,13 +3,42 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Comment;
+use App\ForumTopic;
+use App\Http\Controllers\CommentController;
 use App\Http\Requests\CommentUpdateRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
-class TopicCommentController extends Controller
+class TopicCommentController extends CommentController
 {
+    /**
+     * Relation id
+     *
+     * @var string
+     */
+    protected  $relation = Comment::RELATION_FORUM_TOPIC;
 
+    /**
+     * View name
+     *
+     * @var string
+     */
+    protected  $view_name = 'forum.topic.index';
+
+    /**
+     * object name with 'id'
+     *
+     * @var string
+     */
+    protected  $name_id = 'topic_id';
+
+    /**
+     * Model class
+     *
+     * @var string
+     */
+    protected $model = ForumTopic::class;
 
     /**
      * Save comment to forum topic from admin panel
@@ -21,11 +50,8 @@ class TopicCommentController extends Controller
     public function sendComment(CommentUpdateRequest $request, $topic_id)
     {
         $data = $request->validated();
-        $data['user_id'] = Auth::id();
-        $data['relation'] = Comment::RELATION_FORUM_TOPIC;
-        $data['object_id'] = $topic_id;
 
-        Comment::create($data);
+        $this->createComment($data, $topic_id);
 
         return back();
     }
@@ -38,7 +64,7 @@ class TopicCommentController extends Controller
      */
     public function commentRemove($comment_id)
     {
-        Comment::where('id', $comment_id)->delete();
+        Comment::find($comment_id)->delete();
 
         return back();
     }

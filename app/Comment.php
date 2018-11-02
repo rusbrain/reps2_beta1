@@ -2,10 +2,26 @@
 
 namespace App;
 
+use App\Observers\CommentObserver;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+
 
 class Comment extends Model
 {
+    use Notifiable;
+
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'created' => CommentObserver::class,
+        'deleted' => CommentObserver::class,
+        'restored' => CommentObserver::class,
+    ];
+
     const RELATION_FORUM_TOPIC  = 1;
     const RELATION_REPLAY       = 2;
     const RELATION_USER_GALLERY = 3;

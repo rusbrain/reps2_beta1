@@ -20,7 +20,7 @@ class UserGalleryController extends Controller
      */
     public function index()
     {
-        $data = UserGallery::with('user', 'file')->withCount('positive', 'negative', 'comments')->orderBy('id', 'desc')->paginate(50);
+        $data = UserGallery::with('user', 'file')->orderBy('id', 'desc')->paginate(50);
         return view('admin.user.gallery.list')->with(['data' => $data]);
     }
 
@@ -32,7 +32,6 @@ class UserGalleryController extends Controller
     {
         $data = UserGallery::where('id', $id)
             ->with('user.avatar', 'file')
-            ->withCount('positive', 'negative', 'comments')
             ->with(['comments' =>function($q){
             $q->with('user')->paginate(20);
         }])->first();

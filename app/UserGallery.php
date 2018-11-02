@@ -21,7 +21,8 @@ class UserGallery extends Model
      *
      * @var array
      */
-    protected $fillable = ['user_id', 'file_id', 'reps_id', 'rating', 'comment', 'for_adults'];
+    protected $fillable = ['user_id', 'file_id', 'reps_id', 'rating', 'comment', 'for_adults',
+        'negative_count', 'positive_count', 'comments_count'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

@@ -31,6 +31,13 @@ class CommentController extends Controller
     protected $name_id = 'topic_id';
 
     /**
+     * Model class
+     *
+     * @var string
+     */
+    protected $model;
+
+    /**
      * Update the specified resource in storage.
      *
      * @param CommentUpdateRequest $request
@@ -60,13 +67,11 @@ class CommentController extends Controller
         if (!$object){
             return abort(404);
         }
-
-        $object_id = $object->object_id;
-
         if ($object->user_id != Auth::id()){
             return abort(403);
         }
 
+        $object_id = $object->object_id;
         $object->delete();
 
         return redirect()->route($this->view_name, ['id' => $object_id]);
@@ -80,15 +85,26 @@ class CommentController extends Controller
     public function storeComment(Request $request)
     {
         $data = $request->validated();
-        $data['user_id'] = Auth::id();
-        $data['relation'] = $this->relation;
-        $data['object_id'] = $data[$this->name_id];
 
-        unset($data[$this->name_id]);
-
-        Comment::create($data);
+        $this->createComment($data, $data[$this->name_id]);
 
         redirect()->route($this->view_name, ['id' => $data['object_id']]);
+    }
+
+    /**
+     * @param $data
+     * @param $object_id
+     */
+    protected function createComment($data, $object_id){
+        $data['user_id'] = Auth::id();
+        $data['relation'] = $this->relation;
+        $data['object_id'] = $object_id;
+
+        if(isset($data[$this->name_id])){
+            unset($data[$this->name_id]);
+        }
+
+        Comment::create($data);
     }
 
     /**

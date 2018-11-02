@@ -15,22 +15,28 @@ class UserGalleryCommentController extends CommentController
      *
      * @var string
      */
-    protected static $relation = Comment::RELATION_USER_GALLERY;
+    protected $relation = Comment::RELATION_USER_GALLERY;
 
     /**
      * View name
      *
      * @var string
      */
-    protected static $view_name = 'gallery.photo';
+    protected $view_name = 'gallery.photo';
 
     /**
      * object name with 'id'
      *
      * @var string
      */
-    protected static $name_id = 'gallery_id';
+    protected $name_id = 'gallery_id';
 
+    /**
+     * Model class
+     *
+     * @var string
+     */
+    protected $model = UserGallery::class;
     /**
      * Store a newly created resource in storage.
      *
@@ -39,9 +45,9 @@ class UserGalleryCommentController extends CommentController
      */
     public function store(UserGalleryStoreCommentRequest $request)
     {
-        $user_id = UserGallery::find('gallery_id')->user_id;
+        $user_gallery = UserGallery::find($request->get($this->name_id));
 
-        if (IgnoreUser::me_ignore($user_id)){
+        if (IgnoreUser::me_ignore($user_gallery->user_id)){
             return abort(403);
         }
 

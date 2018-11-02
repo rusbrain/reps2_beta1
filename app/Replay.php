@@ -42,7 +42,8 @@ class Replay extends Model
         'user_id', 'user_replay', 'type_id','title', 'content', 'map_id', 'file_id',
         'game_version_id', 'championship', 'first_country_id', 'second_country_id',
         'first_matchup', 'second_matchup', 'rating', 'user_rating', 'first_race',
-        'second_race', 'first_location', 'second_location', 'creating_rate' ];
+        'second_race', 'first_location', 'second_location', 'creating_rate' ,'negative_count',
+        'positive_count', 'comments_count'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

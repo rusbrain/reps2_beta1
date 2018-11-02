@@ -17,7 +17,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $users = User::with('role', 'country')->withCount('topics', 'replays', 'comments', 'user_galleries');
+        $users = User::with('role')->withCount('topics', 'replays','user_galleries');
 
         if ($request->has('search') && null !==$request->get('search')){
             $users->where(function ($query) use ($request)

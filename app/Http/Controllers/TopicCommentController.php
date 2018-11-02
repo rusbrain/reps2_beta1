@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Comment;
+use App\ForumTopic;
 use App\Http\Requests\TopicCommentStoreRequest;
 
 class TopicCommentController extends CommentController
@@ -12,21 +13,28 @@ class TopicCommentController extends CommentController
      *
      * @var string
      */
-    protected static $relation = Comment::RELATION_FORUM_TOPIC;
+    protected  $relation = Comment::RELATION_FORUM_TOPIC;
 
     /**
      * View name
      *
      * @var string
      */
-    protected static $view_name = 'forum.topic.index';
+    protected  $view_name = 'forum.topic.index';
 
     /**
      * object name with 'id'
      *
      * @var string
      */
-    protected static $name_id = 'topic_id';
+    protected  $name_id = 'topic_id';
+
+    /**
+     * Model class
+     *
+     * @var string
+     */
+    protected $model = ForumTopic::class;
 
     /**
      * Store a newly created resource in storage.
