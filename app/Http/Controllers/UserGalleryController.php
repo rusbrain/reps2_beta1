@@ -52,7 +52,7 @@ class UserGalleryController extends Controller
      */
     private static function getList($gallery)
     {
-        return $gallery->with('file')->withCount('positive', 'negative', 'comments')->orderBy('created_at')->paginate(50);
+        return $gallery->with('file')->orderBy('created_at')->paginate(50);
     }
     /**
      * Show the form for creating a new resource.
@@ -91,7 +91,7 @@ class UserGalleryController extends Controller
      */
     public function show($id)
     {
-        $photo = UserGallery::where('id', $id)->with('file', 'user')->withCount('positive', 'negative', 'comments')->with(['comments'=>function($query){
+        $photo = UserGallery::where('id', $id)->with('file', 'user')->with(['comments'=>function($query){
             $query->orderBy('created_at')->paginate(20);
         }])->first();
 
@@ -177,8 +177,6 @@ class UserGalleryController extends Controller
         $gallery->positive()->delete();
         $gallery->negative()->delete();
         $gallery->delete();
-
-        UserReputation::refreshUserRating(Auth::id());
 
         return redirect()->route('gallery.list_my');
     }

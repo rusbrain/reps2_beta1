@@ -62,11 +62,6 @@ class RatingController extends Controller
                 ['comment' => $comment, 'rating'=>  $request->get('rating')]
             );
 
-            UserReputation::refreshUserRating($object->user_id);
-            UserReputation::refreshObjectRating($this->model, $object->id, $this->relation);
-
-            $this->model::updateRating($request->get('rating'), $object->id);
-
             return ['rating' => self::getRatingValue($object)];
         }
 

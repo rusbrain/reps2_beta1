@@ -77,7 +77,6 @@ class ReplayController extends Controller
     public function getList($query, $title = false)
     {
         $data = $this->getReplay($query)
-            ->with('game_version')
             ->orderBy('created_at')
             ->paginate(20);
 
@@ -93,11 +92,10 @@ class ReplayController extends Controller
     private function getReplay(Builder $replay)
     {
         return $replay->with(User::getUserWithReputationQuery())
-                ->withCount('comments', 'positive','negative')
                 ->with(['user'=> function($q){
                 $q->withTrashed();
             }])
-                ->with('type','user', 'map','first_country','second_country', 'game_version')
+                ->with('user')
                 ->with(['user_rating' => function($query){
                     $query->where('user_id', Auth::id());
                 }]);
@@ -165,7 +163,7 @@ class ReplayController extends Controller
      */
     public function edit($id)
     {
-        $replay = Replay::where('id', $id)->with('game_version')->withCount('comments', 'positive','negative')->first();
+        $replay = Replay::where('id', $id)->first();
 
         if(!$replay){
             return abort(404);
@@ -274,7 +272,6 @@ class ReplayController extends Controller
         $replay->comments()->delete();
         $replay->delete();
 
-        UserReputation::refreshUserRating(Auth::id());
 
         return redirect()->route('replay.gosus');
     }

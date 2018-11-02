@@ -146,7 +146,6 @@ class User extends Authenticatable
     {
         return ['user' => function($query){
             $query->withTrashed()
-                ->with('country')
                 ->withCount([
                 'reputation as rep_positive' => function($query){
                     $query->where('rating', 1);
@@ -316,24 +315,21 @@ class User extends Authenticatable
      */
     public static function getAllUserProfile($user_id)
     {
-        return User::where('id', $user_id)->with('country', 'role', 'avatar', 'user_friends.friend_user.avatar',
+        return User::where('id', $user_id)->with('role', 'avatar', 'user_friends.friend_user.avatar',
             'user_friendly.user.avatar', 'answers_to_questions.question.answers')
             ->with(['topics' => function($query){
                 $query->with('section', 'preview_image')
-                    ->withCount('positive', 'negative', 'comments')
                     ->orderBy('created_at', 'desc')->limit(5);
             }])
             ->with(['replays' => function($query){
                 $query->with('map', 'type','first_country','second_country')
-                    ->withCount('positive', 'negative', 'comments')
                     ->orderBy('created_at', 'desc')->limit(5);
             }])
             ->with(['user_galleries' => function($query){
-                $query->withCount('positive', 'negative', 'comments')
-                    ->with('file')
+                $query->with('file')
                     ->orderBy('created_at', 'desc')->limit(9);
             }])
-            ->withCount('positive', 'negative', 'topics','user_galleries', 'files',
+            ->withCount('topics','user_galleries', 'files',
                 'user_friends', 'user_friendly', 'ignore_users', 'ignored_users', 'gallery_comments', 'replay_comments',
                 'topic_comments', 'gosu_replay', 'replay', 'answers_to_questions')
             ->first();
@@ -347,7 +343,7 @@ class User extends Authenticatable
      */
     public static function getUserProfile($user_id)
     {
-        return User::find($user_id)->load('country', 'role', 'avatar');
+        return User::find($user_id)->load('role', 'avatar');
     }
 
     /**

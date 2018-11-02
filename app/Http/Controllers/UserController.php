@@ -34,15 +34,15 @@ class UserController extends Controller
         }
 
         $user = User::where('id',$id)
-            ->with('role', 'avatar', 'country')
-            ->withCount('positive', 'negative', 'user_galleries', 'topics', 'replay', 'gosu_replay', 'topic_comments', 'replay_comments', 'gallery_comments')
+            ->with('role', 'avatar')
+            ->withCount('user_galleries', 'topics', 'replay', 'gosu_replay', 'topic_comments', 'replay_comments', 'gallery_comments')
             ->first();
 
         if (!$user){
             abort(404);
         }
 
-        return view('user.profile')->with('user', $user->load('country', 'avatar'));
+        return view('user.profile')->with('user', $user->load('avatar'));
     }
 
     /**

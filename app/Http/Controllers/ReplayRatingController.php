@@ -36,11 +36,9 @@ class ReplayRatingController extends RatingController
     {
         $replay = Replay::where('id', $id)
             ->with(User::getUserWithReputationQuery())
-            ->withCount('comments', 'positive','negative')
             ->with(['user'=> function($q){
                 $q->withTrashed();
             }])
-            ->with('type','user', 'map','first_country','second_country', 'game_version')
             ->first();
 
 
