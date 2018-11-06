@@ -49,18 +49,13 @@ Route::get('test', function () {
 //                    'dialogue_id' => $dialogue->id,
 //                ];
 //            }
-//
-//
-//
-//
-//
 //        }
-//
 //        \App\UserFriend::insert($new_messages);
 //    }
 //    dd('ok');
 
 });
+
 Route::group(['middleware' => 'activity'], function () {
     Route::get('/', 'HomeController@index')->name('home');
     Route::get('/search', 'HomeController@search')->name('home.search');
@@ -118,7 +113,6 @@ Route::group(['middleware' => 'activity'], function () {
         Route::get('{id}/replay', 'ReplayUsersController@getUserReplay')->name('user.user_replay');
         Route::get('{id}/gosu_replay', 'ReplayGosuController@getUserReplay')->name('user.gosu_replay');
         Route::get('{id}/topic', 'ForumTopicController@getUserTopic')->name('user.forum_topic');
-
     });
 
     Route::group(['prefix' => 'forum'], function () {
@@ -187,7 +181,7 @@ Route::group(['middleware' => 'activity'], function () {
         Route::get('/user/{id}', 'UserGalleryController@indexUser')->name('gallery.list_user');
 
 
-        Route::get('/{id}/get_rating', 'UserGalleryRatingController@getRating')->name('gallery.ger_rating');
+        Route::get('/{id}/get_rating', 'UserGalleryRatingController@getRating')->name('gallery.get_rating');
 
         Route::group(['middleware' => 'auth', 'prefix' => 'photo'], function () {
             Route::get('/create', 'UserGalleryController@create')->name('gallery.create');

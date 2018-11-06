@@ -20,7 +20,9 @@
         <div class="sidebar-widget-content">
             @if(!empty($general_helper->getRandomImg()))
                 @foreach($general_helper->getRandomImg() as $img)
-                    <img src="{{$img['file']['link']}}" alt="">
+                    <a href="{{route('gallery.view', ['id'=>$img['id']])}}">
+                        <img src="{{$img['file']['link']}}" alt="">
+                    </a>
                 @endforeach
             @else
                 <p class="sidebar-widget-no-results">В данный момент случайных картинок нет</p>
@@ -65,9 +67,11 @@
             @if(!empty($general_helper->getNewUsers()))
                 @foreach($general_helper->getNewUsers() as $new_user)
                     <div>
-                        <span>#{{$new_user->id}}</span>
-                        <span class="flag-icon flag-icon-{{mb_strtolower($new_user->country->code)}}"></span>
-                        <span>{{$new_user->name}}</span>
+                        <a href="{{route('user_profile',['id'=>$new_user->id])}}">
+                            <span>#{{$new_user->id}}</span>
+                            <span class="flag-icon flag-icon-{{mb_strtolower($new_user->country->code)}}"></span>
+                            <span class="name">{{$new_user->name}}</span>
+                        </a>
                     </div>
                 @endforeach
             @endif
@@ -82,7 +86,7 @@
                     <div class="replays-wrapper">
                         <a class="replay"
                            href="{{route('replay.get',['id' => $replay->id])}}">
-                            <span>{{$replay->title}}</span>
+                            <span class="name">{{$replay->title}}</span>
                             <span class="qty-downloaded">{{$replay->downloaded}}</span>
                         </a>
                     </div>

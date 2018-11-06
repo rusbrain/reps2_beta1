@@ -11,7 +11,7 @@ class Replay extends Model
      * @var array
      */
     public static $races = [
-        1 => 'All',
+        1 => 'Все',
         2 => 'Z',
         3 => 'T',
         4 => 'P',

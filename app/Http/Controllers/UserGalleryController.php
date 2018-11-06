@@ -81,8 +81,6 @@ class UserGalleryController extends Controller
         return redirect()->route('gallery.view', ['id' => $gallery->id]);
     }
 
-
-
     /**
      * Display the specified resource.
      *
@@ -95,11 +93,20 @@ class UserGalleryController extends Controller
             $query->orderBy('created_at')->paginate(20);
         }])->first();
 
+        $gallery = UserGallery::where('user_id',$photo->user_id)->with('file')->get();
+        $prev = UserGallery::where('user_id',$photo->user_id)->where('id', '<', $photo->id)->first();
+        $next = UserGallery::where('user_id',$photo->user_id)->where('id', '>', $photo->id)->first();
+
         if (IgnoreUser::me_ignore($photo->user_id)){
             return abort(403);
         }
 
-        return view('gallery.photo')->with('photo', $photo);
+        return view('gallery.photo')->with([
+            'photo' => $photo,
+            'gallery' => $gallery,
+            'prev' => $prev,
+            'next' => $next
+        ]);
     }
 
     /**

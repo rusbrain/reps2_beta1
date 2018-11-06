@@ -1,4 +1,6 @@
 @extends('layouts.site')
+@inject('general_helper', 'App\Services\GeneralViewHelper')
+@php $countries = $general_helper->getCountries();@endphp
 @section('content')
     <div class="">
         <div class="row">
@@ -23,8 +25,8 @@
             <div class="row page-replays-subtitle">
                 <div class="col-md-12">
                     <p>
-                        <span class="flag-icon flag-icon-{{mb_strtolower($replay->first_country->code)}}"></span> vs
-                        <span class="flag-icon flag-icon-{{mb_strtolower($replay->second_country->code)}}"></span>
+                        <span class="flag-icon flag-icon-{{mb_strtolower($countries[$replay->first_country_id]->code)}}"></span> vs
+                        <span class="flag-icon flag-icon-{{mb_strtolower($countries[$replay->second_country_id]->code)}}"></span>
                     </p>
                     <p><span>{{$replay->first_race}}</span> vs <span>{{$replay->second_race}}</span></p>
                     <p>{{$replay->created_at}}</p>
