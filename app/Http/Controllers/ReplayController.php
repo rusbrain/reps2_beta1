@@ -58,7 +58,7 @@ class ReplayController extends Controller
                             ->orWhere('championship', 'like', "%$request_datum%");
                     });
                 }elseif($key == 'sort_by'){
-                    $query->orderBy($request_datum, ($request_data['sort_type']??'desc'));
+                    $query->orderBy($request_datum, 'desc');
                 }else{
                     $query->where($key, $request_datum);
                 }

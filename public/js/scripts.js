@@ -22,10 +22,10 @@ $(function () {
             },
             errorPlacement: function (error, element) {
                 if (element.attr("name") === "email") {
-                    error.insertBefore(loginForm.find("input[name=email]"))
+                    error.insertBefore(loginForm.find("input[name=email]"));
                 }
                 if (element.attr("name") === "password") {
-                    error.insertBefore(loginForm.find("input[name=password]"))
+                    error.insertBefore(loginForm.find("input[name=password]"));
                 }
             },
             errorElement: "div",
@@ -64,16 +64,16 @@ $(function () {
             },
             errorPlacement: function (error, element) {
                 if (element.attr("name") === "name") {
-                    error.insertBefore(registrationForm.find("input[name=name]"))
+                    error.insertBefore(registrationForm.find("input[name=name]"));
                 }
                 if (element.attr("name") === "email") {
-                    error.insertBefore(registrationForm.find("input[name=email]"))
+                    error.insertBefore(registrationForm.find("input[name=email]"));
                 }
                 if (element.attr("name") === "password") {
-                    error.insertBefore(registrationForm.find("input[name=password]"))
+                    error.insertBefore(registrationForm.find("input[name=password]"));
                 }
                 if (element.attr("name") === "password_confirmation") {
-                    error.insertBefore(registrationForm.find("input[name=password_confirmation]"))
+                    error.insertBefore(registrationForm.find("input[name=password_confirmation]"));
                 }
             },
             errorElement: "div",
@@ -84,11 +84,10 @@ $(function () {
     }
 });
 
-/**Vote Form*/
+/**Vote Form - Right Sidebar*/
 $(function () {
     var voteForm = $('#vote-form');
     if (voteForm.length > 0) {
-        console.log('hi');
         /**Validation*/
         voteForm.validate({
             rules: {
@@ -101,7 +100,7 @@ $(function () {
             },
             errorPlacement: function (error, element) {
                 if (element.attr("name") === "answer_id") {
-                    error.appendTo(voteForm.find("#vote-form-error"))
+                    error.appendTo(voteForm.find("#vote-form-error"));
                 }
             },
             errorElement: "div",
@@ -113,7 +112,7 @@ $(function () {
                     url: $(form).attr('action'),
                     data: selectData,
                     success: function (html) {
-                        $('#view-results-response').html(html)
+                        $('#view-results-response').html(html);
                     },
                     error: function () {
 
@@ -138,11 +137,31 @@ $(function () {
             type: 'POST',
             url: url,
             success: function (html) {
-                $('#view-results-response').html(html)
+                $('#view-results-response').html(html);
             },
             error: function () {
 
             }
         });
     });
+});
+
+/**Vote - positive / negative vote - Separate Replay Page*/
+$(function () {
+   $('a.vote-replay-up, a.vote-replay-down').on('click',function (e) {
+       e.preventDefault();
+       var url = $(this).attr('href');
+       var voteSpan = $(this).attr('data-span');
+       $.ajax({
+           type: 'GET',
+           url: url,
+           success: function (response) {
+               console.log(response);
+               $('#'+voteSpan).html(response.rating);
+           },
+           error: function () {
+
+           }
+       });
+   })
 });

@@ -1,5 +1,6 @@
 @extends('layouts.site')
 @section('content')
+    {{--{{dd($friends)}}--}}
     <div class="">
         <div class="row">
             <div class="page-title w-100">Список Ваших друзей</div>
@@ -10,6 +11,7 @@
                         <div class="col-md-2">name</div>
                         <div class="col-md-4">email</div>
                         <div class="col-md-3">Дата</div>
+
                         <div class="col-md-2">action</div>
                     </div>
                     @foreach($friends as $k => $item)

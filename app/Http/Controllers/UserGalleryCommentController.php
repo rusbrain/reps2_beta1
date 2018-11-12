@@ -22,7 +22,7 @@ class UserGalleryCommentController extends CommentController
      *
      * @var string
      */
-    protected $view_name = 'gallery.photo';
+    protected $view_name = 'gallery.view';
 
     /**
      * Route name

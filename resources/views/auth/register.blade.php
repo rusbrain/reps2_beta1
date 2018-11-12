@@ -9,7 +9,7 @@
                    autofocus>
             @if ($errors->has('name'))
                 <div class="error">
-                    <strong>{{ $errors->first('email') }}</strong>
+                    <strong>{{ $errors->first('name') }}</strong>
                 </div>
             @endif
         </div>
@@ -34,7 +34,7 @@
             </select>
             @if ($errors->has('country'))
                 <div class="error">
-                    <strong>{{ $errors->first('email') }}</strong>
+                    <strong>{{ $errors->first('country') }}</strong>
                 </div>
             @endif
         </div>
@@ -42,7 +42,7 @@
         <div class="form-group">
             <label for="password">Пароль:</label>
             <input id="password" class="form-control" type="password" name="password" required>
-            @if ($errors->has('email'))
+            @if ($errors->has('password'))
                 <div class="error">
                     <strong>{{ $errors->first('password') }}</strong>
                 </div>
@@ -54,7 +54,7 @@
                    required>
             @if ($errors->has('password_confirmation'))
                 <div class="error">
-                    <strong>{{ $errors->first('email') }}</strong>
+                    <strong>{{ $errors->first('password_confirmation') }}</strong>
                 </div>
             @endif
         </div>

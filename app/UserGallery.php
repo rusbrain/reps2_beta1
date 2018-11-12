@@ -24,12 +24,15 @@ class UserGallery extends Model
     protected $fillable = ['user_id', 'file_id', 'reps_id', 'rating', 'comment', 'for_adults',
         'negative_count', 'positive_count', 'comments_count'];
 
+    const USER_GALLERY_FOR_ADULTS  = 1;
+    const USER_GALLERY_FOR_ALL  = 0;
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user()
     {
-        return $this->belongsTo('App\user');
+        return $this->belongsTo('App\User');
     }
 
     /**
