@@ -23,6 +23,13 @@ class TopicCommentController extends CommentController
     protected  $view_name = 'forum.topic.index';
 
     /**
+     * Route name
+     *
+     * @var string
+     */
+    protected $route_name = 'forum.topic.index';
+
+    /**
      * object name with 'id'
      *
      * @var string

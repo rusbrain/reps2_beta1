@@ -43,7 +43,7 @@ class Replay extends Model
         'game_version_id', 'championship', 'first_country_id', 'second_country_id',
         'first_matchup', 'second_matchup', 'rating', 'user_rating', 'first_race',
         'second_race', 'first_location', 'second_location', 'creating_rate' ,'negative_count',
-        'positive_count', 'comments_count'];
+        'positive_count', 'comments_count', 'downloaded', 'length'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

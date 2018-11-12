@@ -33,6 +33,7 @@ class ReplaySearchRequest extends FormRequest
             'type_id'               => 'nullable|exists:replay_types,id',
             'sort_by'               => 'nullable|in_array:[game_version,rating,user_rating,evaluation,length,title,created_at]',
             'sort_type'             => 'nullable|in_array:[asc,desc]',
+            'user_replay'           => 'nullable|in_array:[0,1]',
         ];
     }
 
@@ -52,6 +53,7 @@ class ReplaySearchRequest extends FormRequest
             'map_id.exists'             => 'Не верно указана карта',
             'sort_by.in_array'          => 'Не верно указан параметр сортиовки',
             'sort_type.in_array'        => 'Не верно указан тип сортиовки',
+            'user_replay.in_array'      => 'Не верно указан вид replay',
             'type_id.exists'            => 'Не верно указан тип replay',
         ];
     }

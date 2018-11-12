@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Comment;
 use App\File;
 use App\Http\Requests\UserGalleryStoreRequest;
 use App\Http\Requests\UserGalleryUpdateRequest;
@@ -54,6 +55,7 @@ class UserGalleryController extends Controller
     {
         return $gallery->with('file')->orderBy('created_at')->paginate(50);
     }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -81,8 +83,6 @@ class UserGalleryController extends Controller
         return redirect()->route('gallery.view', ['id' => $gallery->id]);
     }
 
-
-
     /**
      * Display the specified resource.
      *
@@ -91,13 +91,16 @@ class UserGalleryController extends Controller
      */
     public function show($id)
     {
-        $photo = UserGallery::where('id', $id)->with('file', 'user')->with(['comments'=>function($query){
-            $query->orderBy('created_at')->paginate(20);
-        }])->first();
+        $photo = UserGallery::find($id);
 
         if (IgnoreUser::me_ignore($photo->user_id)){
             return abort(403);
         }
+
+        $photo = $photo->load('file', 'user');
+        $photo->comments = Comment::where('relation', Comment::RELATION_USER_GALLERY)->where('object_id',$id)->paginate(20);
+        $photo->photo_next = UserGallery::where('relation', Comment::RELATION_USER_GALLERY)->where('id', '>', $id)->orderBy('id', 'asc')->first();
+        $photo->photo_befor = UserGallery::where('relation', Comment::RELATION_USER_GALLERY)->where('id', '<', $id)->orderBy('id', 'desc')->first();
 
         return view('gallery.photo')->with('photo', $photo);
     }

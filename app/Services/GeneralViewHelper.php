@@ -42,6 +42,7 @@ class GeneralViewHelper
     protected $question;
     protected $new_users;
     protected $game_version;
+    protected $user_gallery;
 
     /**
      * Get random user gallery images
@@ -283,5 +284,15 @@ class GeneralViewHelper
         $time = (Carbon::now()->getTimestamp() - Carbon::parse($user->activity_at)->getTimestamp())/60;
 
         return $time <= 15;
+    }
+
+    /**
+     * @param $user_id
+     * @return mixed
+     */
+    public function getUserGallery($user_id)
+    {
+        $this->user_gallery = $this->user_gallery??UserGallery::where('user_id', $user_id)->get();
+        return $this->user_gallery;
     }
 }

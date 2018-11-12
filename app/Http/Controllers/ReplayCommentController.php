@@ -23,6 +23,13 @@ class ReplayCommentController extends CommentController
     protected $view_name = 'replay.get';
 
     /**
+     * Route name
+     *
+     * @var string
+     */
+    protected $route_name = 'replay.get';
+
+    /**
      * object name with 'id'
      *
      * @var string

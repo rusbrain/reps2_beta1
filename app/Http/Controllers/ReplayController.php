@@ -48,7 +48,7 @@ class ReplayController extends Controller
         $query = Replay::$method();
 
         $request_data = $request->validated();
-        unset($request_data['sort_type']);
+
         if ($request_data)
             foreach ($request_data as $key=>$request_datum) {
                 if ($key == 'text'){

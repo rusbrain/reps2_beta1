@@ -11,56 +11,6 @@
 |
 */
 
-Route::get('test', function () {
-//    $count = \DB::table(env('DB_DATABASE_OLD') . '.messages')->count();
-//    $cycles = ((int)($count / 1000)) + (($count % 1000 > 0) ? 1 : 0);
-//
-//    for ($i = 0; $i < $cycles; $i++) {
-//        $users_messages = \DB::table(env('DB_DATABASE_OLD') . '.messages')->orderBy('id')->offset(1000 * $i)->limit(1000)->get();
-//
-//        $new_messages = [];
-//        $time = Carbon\Carbon::now();
-//        foreach ($users_messages as $users_message) {
-//            $user_from = \App\User::where('reps_id', $users_message->user_id)->first();
-//            $user_to = \App\User::where('reps_id', $users_message->friend_id)->first();
-//
-//            if($user_from && $user_to){
-//                $dialogue = App\Dialogue::where(function ($q) use ($user_from, $user_to){
-//                    $q->whereHas('users',function ($query) use ($user_from){
-//                        $query->where('users.id', $user_from->id);
-//                    })->whereHas('users',function ($query) use ( $user_to){
-//                        $query->where('users.id', $user_to->id);
-//                    });
-//                })->with('users')->first();
-//
-//                if(!$dialogue){
-//                    $dialogue = new App\Dialogue();
-//                    $dialogue->name = "{$user_from->name} и {$user_to->name}";
-//                    $dialogue->save();
-//
-//                    $dialogue->users()->attach([$user_from->id, $user_to->id]);
-//                }
-//
-//                $new_messages[] = [
-//                    'user_id' => $user_from->name,
-//                    'message' => $users_message->text,
-//                    'is_read' => $users_message->read,
-//                    'created_at' => Carbon\Carbon::createFromTimestamp($users_message->date),
-//                    'dialogue_id' => $dialogue->id,
-//                ];
-//            }
-//
-//
-//
-//
-//
-//        }
-//
-//        \App\UserFriend::insert($new_messages);
-//    }
-//    dd('ok');
-
-});
 Route::group(['middleware' => 'activity'], function () {
     Route::get('/', 'HomeController@index')->name('home');
     Route::get('/search', 'HomeController@search')->name('home.search');
@@ -92,6 +42,8 @@ Route::group(['middleware' => 'activity'], function () {
     Route::group(['prefix' => 'user'], function () {
         Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('registration_form');
         Route::post('/register', 'Auth\RegisterController@register')->name('registration');
+        Route::get('{id}/friends_list', 'UserFriendController@getFriendsList')->name('user.friends_list.by_id');
+
 
         Route::group(['middleware' => 'auth'], function () {
             Route::get('{id}/ignore', 'IgnoreController@setIgnore')->name('user.set_ignore');

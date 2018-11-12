@@ -25,6 +25,13 @@ class UserGalleryCommentController extends CommentController
     protected $view_name = 'gallery.photo';
 
     /**
+     * Route name
+     *
+     * @var string
+     */
+    protected $route_name = 'gallery.view';
+
+    /**
      * object name with 'id'
      *
      * @var string

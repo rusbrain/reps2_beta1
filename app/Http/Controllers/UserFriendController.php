@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\IgnoreUser;
+use App\User;
 use App\UserFriend;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -45,16 +46,23 @@ class UserFriendController extends Controller
     /**
      * Get user friend list
      *
+     * @param bool $user_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getFriendsList()
+    public function getFriendsList($user_id = false)
     {
-        $friends = Auth::user()->user_friends()->with('friend_user')->get()->transform(function ($friend){
+        if ($user_id){
+            $user = User::find($user_id);
+        } else {
+            $user = Auth::user();
+        }
+
+        $friends = $user->user_friends()->with('friend_user')->get()->transform(function ($friend){
             $friend->friend_user->friendly_data = $friend->created_at;
             return $friend->friend_user;
         });
 
-        $friendly = Auth::user()->user_friendly()->with('user')->get()->transform(function ($friend){
+        $friendly = $user->user_friendly()->with('user')->get()->transform(function ($friend){
             $friend->user->friendly_data = $friend->created_at;
             return $friend->user;
         });

@@ -24,6 +24,13 @@ class CommentController extends Controller
     protected $view_name;
 
     /**
+     * Route name
+     *
+     * @var string
+     */
+    protected $route_name;
+
+    /**
      * object name with 'id'
      *
      * @var string
@@ -81,6 +88,7 @@ class CommentController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function storeComment(Request $request)
     {
@@ -88,7 +96,7 @@ class CommentController extends Controller
 
         $this->createComment($data, $data[$this->name_id]);
 
-        redirect()->route($this->view_name, ['id' => $data['object_id']]);
+        return redirect()->route($this->route_name, ['id' => $data['object_id']]);
     }
 
     /**
@@ -98,7 +106,7 @@ class CommentController extends Controller
     protected function createComment($data, $object_id){
         $data['user_id'] = Auth::id();
         $data['relation'] = $this->relation;
-        $data['object_id'] = $object_id;
+        $data['object_id'] = (int)$object_id;
 
         if(isset($data[$this->name_id])){
             unset($data[$this->name_id]);
