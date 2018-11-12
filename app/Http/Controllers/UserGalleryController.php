@@ -99,8 +99,8 @@ class UserGalleryController extends Controller
 
         $photo = $photo->load('file', 'user');
         $photo->comments = Comment::where('relation', Comment::RELATION_USER_GALLERY)->where('object_id',$id)->paginate(20);
-        $photo->photo_next = UserGallery::where('relation', Comment::RELATION_USER_GALLERY)->where('id', '>', $id)->orderBy('id', 'asc')->first();
-        $photo->photo_befor = UserGallery::where('relation', Comment::RELATION_USER_GALLERY)->where('id', '<', $id)->orderBy('id', 'desc')->first();
+        $photo->photo_next = UserGallery::where('user_id', $photo->user_id)->where('id', '>', $id)->orderBy('id', 'asc')->first();
+        $photo->photo_befor = UserGallery::where('user_id', $photo->user_id)->where('id', '<', $id)->orderBy('id', 'desc')->first();
 
         return view('gallery.photo')->with('photo', $photo);
     }

@@ -62,17 +62,19 @@
 
                             <a class="profile-link" href="{{route('user.get_rating', ['id' => Auth::user()->id])}}">Репутация</a>
 
-
                             {{--<a class="profile-link" href="{{route('gallery.list_user', ['id' => Auth::user()->id])}}">Мои темы</a>--}}
-                            {{--<a class="profile-link" href="{{route('gallery.list_user', ['id' => Auth::user()->id])}}">Мои посты</a>--}}
+
+                            {{--<a class="profile-link" href="{{route('forum.topic.my_list')}}">Мои посты</a>--}}
 
                             <a class="profile-link" href="{{route('replay.create')}}">Отправить свой/госу реплей</a>
 
                             <a class="profile-link" href="{{route('replay.my_user')}}">Мои реплеи</a>
                             <a class="profile-link" href="{{route('replay.my_gosu')}}">Мои госу реплеи</a>
 
-                            <a class="profile-link" href="{{route('user.message.get_list')}}">Новые сообщения()</a>
-                            {{--                            {{$general_helper->getNewUserMessage()}}--}}
+                            <a class="profile-link" href="{{route('user.message.get_list')}}">
+                                Новые сообщения()
+                            </a>
+                            {{--{{$general_helper->getNewUserMessage()}}--}}
 
                             <a class="profile-link" href="{{route('user.friends_list')}}">Список друзей</a>
                             <a class="profile-link" href="{{route('user.ignore_list')}}">Игнор лист</a>

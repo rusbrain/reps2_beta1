@@ -2,10 +2,9 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-4 sidebar-inner-profile">
-            <a href="{{route('user.friends_list',['id'=> $user->id])}}" class="profile-link">Список друзей</a>
-            <a href="{{route('user.ignore_list',['id'=> $user->id])}}" class="profile-link">Игнор лист</a>
-        </div>
+        @if(Auth::user()->id != $user->id)
+            @include('user.inner_user_sidebar')
+        @endif
         <div class="col-md-8">
             <div class="profile-page">
                 <div class="page-title row">Профайл пользователя</div>
@@ -170,6 +169,14 @@
                     </div>
                 </div>
             </div>
+            @if(Auth::user()->id != $user->id)
+                <div class="user-profile-actions">
+                    <a href="">Отправить личное сообщение</a>
+                    <a href="{{route('user.add_friend',['id'=>$user->id])}}">Добавить в друзья</a>
+                    <a href="{{route('user.set_ignore',['id'=>$user->id])}}">Добавить в игнор лист</a>
+                </div>
+            @endif
+
         </div>
     </div>
 @endsection

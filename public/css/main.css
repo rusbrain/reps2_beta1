@@ -417,6 +417,15 @@ a.read-more {
 .sidebar-inner-profile .profile-link:hover {
   color: #fff;
 }
+.user-profile-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #717171;
+  margin-top: 20px;
+}
+
 /**---------------------*/
 /**------ FOOTER -----------*/
 /**---------------------*/
@@ -815,4 +824,28 @@ a.read-more {
 .comment-navigation ul {
   justify-content: center;
   align-items: center;
+}
+/**---------------------*/
+/**------ News Page ----*/
+/**---------------------*/
+.news-wrapper{
+  margin-bottom: 5px;
+}
+.news-wrapper > div{
+  padding: 5px;
+}
+.news-title {
+  background: #efefef;
+}
+.news-title a {
+  color: #000;
+}
+.read-more{
+  text-align:right;
+}
+.news-content{
+
+}
+.news-preview-img{
+
 }

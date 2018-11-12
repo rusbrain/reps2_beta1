@@ -1,6 +1,9 @@
 @extends('layouts.site')
 @inject('general_helper', 'App\Services\GeneralViewHelper')
-@php $countries = $general_helper->getCountries(); @endphp
+@php
+    $countries = $general_helper->getCountries();
+    $gallery = $general_helper->getUserGallery($photo->user_id);
+@endphp
 @section('content')
     <div class="row">
         <div class="col-md-3 left-inner-gallery-sidebar">
@@ -14,11 +17,11 @@
         <div class="col-md-9 border-gray">
             <div class="row">
                 <div class="gallery-links col">
-                    @if($prev)
-                        <a href="{{route('gallery.view', ['id' => $prev->id])}}"><< назад</a>
+                    @if($photo->photo_prev)
+                        <a href="{{route('gallery.view', ['id' => $photo->photo_prev->id])}}"><< назад</a>
                     @endif
-                    @if($next)
-                        <a href="{{route('gallery.view', ['id' => $next->id])}}"> вперед >></a>
+                    @if($photo->photo_next)
+                        <a href="{{route('gallery.view', ['id' => $photo->photo_next->id])}}"> вперед >></a>
                     @endif
                 </div>
             </div>
@@ -39,9 +42,9 @@
                 <div class="col">
                     <div class="comments-wrapper">
                         <div class="comments-block-title">Комментарии:</div>
-                        @if($comments)
+                        @if($photo->comments)
                             @php $i = 1; @endphp
-                            @foreach($comments as $comment)
+                            @foreach($photo->comments as $comment)
                                 <div class="comment">
                                     <div class="comment-title">
                                         <span>#{{$i}} </span>
@@ -57,7 +60,7 @@
                                 @php $i++; @endphp
                             @endforeach
                             <nav class="comment-navigation">
-                                @php  $data = $comments @endphp
+                                @php  $data = $photo->comments @endphp
                                 @include('comment-pagination')
                             </nav>
                         @else

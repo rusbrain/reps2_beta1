@@ -61,7 +61,7 @@
                 </ul>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="">Новости</a>
+                <a class="nav-link" href="{{route('news')}}">Новости</a>
             </li>
         </ul>
         @include('search-home')
