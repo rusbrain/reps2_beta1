@@ -1,27 +1,37 @@
+@php
+    $banner = $general_helper->getRandomBanner();
+    $rand_images = $general_helper->getRandomImg();
+    $random_question = $general_helper->getRandomQuestion();
+    $last_user_replays = $general_helper->getLastUserReplay();
+    $new_users = $general_helper->getNewUsers();
+@endphp
+
 <div class="sidebar-right">
     <div class="sidebar-widget random-image">
         <div class="sidebar-widget-title">Банеры</div>
         <div class="sidebar-widget-content">
-            @if($general_helper->getRandomBanner())
-                {{--{{dd($general_helper->getRandomBanner())}}--}}
-                @php $banner = $general_helper->getRandomBanner(); @endphp
+            @if($banner)
+                @php  @endphp
                 <a href="#" class="random-banner">
                     <img src="{{$banner->file->link}}" alt="">
                 </a>
             @else
                 <p class="sidebar-widget-no-results">В данный момент банеров нет</p>
             @endif
-
         </div>
     </div>
 
     <div class="sidebar-widget random-image">
         <div class="sidebar-widget-title">Случайные картинки</div>
         <div class="sidebar-widget-content">
-            @if(!empty($general_helper->getRandomImg()))
-                @foreach($general_helper->getRandomImg() as $img)
-                    <a href="{{route('gallery.view', ['id'=>$img['id']])}}">
-                        <img src="{{$img['file']['link']}}" alt="">
+            @if($rand_images)
+                @foreach($rand_images as $rand_image)
+                    <a href="{{route('gallery.view', ['id'=>$rand_image['id']])}}">
+                        @if($rand_image['for_adults'] == \App\UserGallery::USER_GALLERY_FOR_ADULTS && !Auth::user())
+                            [18+]
+                        @else
+                            <img src="{{$rand_image['file']['link']}}" alt="">
+                        @endif
                     </a>
                 @endforeach
             @else
@@ -29,9 +39,7 @@
             @endif
         </div>
     </div>
-    <?php $random_question = $general_helper->getRandomQuestion() ?>
     @if(isset($random_question) && !empty($random_question))
-
         <div class="sidebar-widget">
             <div class="sidebar-widget-title">Голосование</div>
             <div class="sidebar-widget-content ">
@@ -60,12 +68,11 @@
             </div>
         </div>
     @endif
-
     <div class="sidebar-widget">
         <div class="sidebar-widget-title">Новые пользователи</div>
         <div class="sidebar-widget-content">
-            @if(!empty($general_helper->getNewUsers()))
-                @foreach($general_helper->getNewUsers() as $new_user)
+            @if(!empty($new_users))
+                @foreach($new_users as $new_user)
                     <div>
                         <a href="{{route('user_profile',['id'=>$new_user->id])}}">
                             <span>#{{$new_user->id}}</span>
@@ -77,12 +84,11 @@
             @endif
         </div>
     </div>
-
     <div class="sidebar-widget">
         <div class="sidebar-widget-title">Юзерские реплеи</div>
         <div class="sidebar-widget-content">
-            @if(!empty($general_helper->getLastUserReplay()))
-                @foreach($general_helper->getLastUserReplay() as $replay)
+            @if(!empty($last_user_replays))
+                @foreach($last_user_replays as $replay)
                     <div class="replays-wrapper">
                         <a class="replay"
                            href="{{route('replay.get',['id' => $replay->id])}}">

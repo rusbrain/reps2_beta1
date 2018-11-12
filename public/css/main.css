@@ -94,6 +94,9 @@ img {
   margin-right: -15px;
   margin-left: -15px;
 }
+.display-block {
+  display: block;
+}
 .error {
   color: red;
 }
@@ -389,7 +392,6 @@ a.read-more {
   background: #717171;
   padding: 4px;
   font-size: 14px;
-  text-align: center;
 }
 .profile-avatar {
   width: 300px;
@@ -401,6 +403,19 @@ a.read-more {
   border-bottom: 1px solid #eee;
   padding-top: 5px;
   padding-bottom: 5px;
+}
+.sidebar-inner-profile {
+  border: 1px solid #717171;
+}
+.sidebar-inner-profile .profile-link {
+  background: #717171;
+  color: #fff;
+  margin-bottom: 5px;
+  display: block;
+  text-align: center;
+}
+.sidebar-inner-profile .profile-link:hover {
+  color: #fff;
 }
 /**---------------------*/
 /**------ FOOTER -----------*/
@@ -432,6 +447,17 @@ a.read-more {
   margin-right: 3px;
 }
 /**---------------------*/
+/**------ FORUM SECTION TOPIC LIST PAGE -----------*/
+/**---------------------*/
+.section-topic-date {
+  float: right;
+}
+.separator {
+  margin-right: 5px;
+  margin-left: 5px;
+  color: #717171;
+}
+/**---------------------*/
 /**------ LEFT SIDEBAR -----------*/
 /**---------------------*/
 .sidebar-left {
@@ -442,7 +468,7 @@ a.read-more {
   margin-bottom: 5px;
   font-size: 12px;
   position: relative;
-  min-height: 100px;
+  min-height: 60px;
 }
 .sidebar-widget-title {
   color: #fff;
@@ -538,6 +564,9 @@ a.read-more {
 .forum-section-content {
   padding: 2px 5px;
 }
+.forum-section-content .topic-wrapper {
+  border: none;
+}
 .sidebar-widget-content .random-banner {
   display: flex;
   justify-content: center;
@@ -613,6 +642,8 @@ a.read-more {
   padding-top: 20px;
 }
 .comments-wrapper {
+  border: 1px solid #717171;
+  margin-bottom: 20px;
 }
 .comment-title {
   display: flex;
@@ -635,12 +666,18 @@ a.read-more {
 }
 .comment-rating-minus {
 }
+.add-comment {
+}
+.comment-form {
+  border: 1px solid #717171;
+}
 .comment-content {
   background: #fff;
   padding-top: 5px;
   padding-bottom: 5px;
 }
-.comments-wrapper {
+.add-comment-form-wrapper {
+  margin-top: 20px;
 }
 .evolution-replay {
 }
@@ -717,53 +754,65 @@ a.read-more {
 .sidebar-inner-widget-content {
   padding: 0 5px;
 }
+.pagination {
+  margin: 0 auto;
+}
 /**---------------------*/
 /**------TOPIC PAGE ----------*/
 /**---------------------*/
+.topic-wrapper {
+  border: 1px solid #717171;
+}
 .topic-title {
-
 }
 .topic-content {
-
 }
 .topic-comments {
-
 }
 .topic-author {
-
 }
 .topic-info {
-
+  padding-left: 10px;
+  background: #efefef;
+}
+.topic-content-wrapper {
+  padding: 5px;
 }
 /**---------------------*/
 /**------ Gallery page ----*/
 /**---------------------*/
 .left-inner-gallery-sidebar {
-
+  padding-right: 0;
+  border: 1px solid #717171;
 }
-.gallery-links{
+.gallery-links {
   display: flex;
   justify-content: space-between;
   padding: 10px 15px;
 }
-.gallery-links a{
-
+.gallery-links a {
 }
-.gallery-wrapper{
+.gallery-wrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.gallery-img-wrapper{
+.gallery-img-wrapper {
   text-align: center;
   margin-bottom: 20px;
 }
-.gallery-img-wrapper img{
+.gallery-img-wrapper img {
   margin: 0 auto;
 }
-.comments-block-title{
+.comments-block-title {
   background: #717171;
   color: #fff;
-  margin-bottom: 20px;
   padding-left: 15px;
+}
+.comment-navigation {
+  margin-top: 20px;
+}
+.comment-navigation ul {
+  justify-content: center;
+  align-items: center;
 }

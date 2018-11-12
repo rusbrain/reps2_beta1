@@ -8,6 +8,7 @@ use App\Http\Requests\UserGalleryStoreRequest;
 use App\Http\Requests\UserGalleryUpdateRequest;
 use App\IgnoreUser;
 use App\UserGallery;
+use App\Comment;
 use App\UserReputation;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -89,10 +90,12 @@ class UserGalleryController extends Controller
      */
     public function show($id)
     {
-        $photo = UserGallery::where('id', $id)->with('file', 'user')->with(['comments'=>function($query){
-            $query->orderBy('created_at')->paginate(20);
-        }])->first();
+//        $photo = UserGallery::where('id', $id)->with('file', 'user')->with(['comments'=>function($query){
+//            $query->orderBy('created_at')->with('user')->paginate(15);
+//        }])->first();
 
+        $photo = UserGallery::where('id', $id)->with('file', 'user')->first();
+        $comments = Comment::where('object_id', $photo->id)->orderBy('created_at')->with('user')->paginate(15);
         $gallery = UserGallery::where('user_id',$photo->user_id)->with('file')->get();
         $prev = UserGallery::where('user_id',$photo->user_id)->where('id', '<', $photo->id)->first();
         $next = UserGallery::where('user_id',$photo->user_id)->where('id', '>', $photo->id)->first();
@@ -105,7 +108,8 @@ class UserGalleryController extends Controller
             'photo' => $photo,
             'gallery' => $gallery,
             'prev' => $prev,
-            'next' => $next
+            'next' => $next,
+            'comments' => $comments
         ]);
     }
 

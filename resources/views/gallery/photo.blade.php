@@ -2,11 +2,8 @@
 @inject('general_helper', 'App\Services\GeneralViewHelper')
 @php $countries = $general_helper->getCountries(); @endphp
 @section('content')
-    {{--    {{dd($photo)}}--}}
-    {{--    {{dd($gallery)}}--}}
-    {{--    {{dd($photo)}}--}}
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-3 left-inner-gallery-sidebar">
             @foreach($gallery as $item)
                 <a href="{{route('gallery.view',['id'=> $item->id])}}" class="user-gallery-images"
                    style="font-size: 12px; color: grey">
@@ -14,7 +11,7 @@
                 </a>
             @endforeach
         </div>
-        <div class="col-md-8 border-gray">
+        <div class="col-md-9 border-gray">
             <div class="row">
                 <div class="gallery-links col">
                     @if($prev)
@@ -27,70 +24,59 @@
             </div>
             <div class="row">
                 <div class="gallery-img-wrapper col">
-                    @if($photo->for_adults == 1)
-                        @if(!Auth::user())
-                            <p>
-                                <span>{{$photo->file}}</span><br>
-                                Фотография с рейтингом 18+
-                                Доступно только зарегистрированным пользователям
-                            </p>
-                        @else
-                            <img src="{{$photo->file->link}}" alt="">
-                        @endif
+                    @if($photo->for_adults == \App\UserGallery::USER_GALLERY_FOR_ADULTS && !Auth::user())
+                        <p>
+                            <span>{{$photo->file}}</span><br>
+                            Фотография с рейтингом 18+
+                            Доступно только зарегистрированным пользователям
+                        </p>
                     @else
                         <img src="{{$photo->file->link}}" alt="">
                     @endif
                 </div>
             </div>
             <div class="row">
-                <div class="col comments-wrapper">
-                    <div class="comments-block-title">Комментарии:</div>
-                    @if($photo->comments)
-                        @php $i = 1; @endphp
-                        @foreach($photo->comments as $comment)
-                            <div class="comment">
-                                <div class="comment-title">
-                                    <span>#{{$i}}</span> -
-                                    <span class="flag-icon flag-icon-{{$comment->user_id}}"></span>
-                                    <span>user_name</span>
-                                    <span>user kg</span>
-                                    <br>
-                                    <span>{{$comment->create_at}}</span>
+                <div class="col">
+                    <div class="comments-wrapper">
+                        <div class="comments-block-title">Комментарии:</div>
+                        @if($comments)
+                            @php $i = 1; @endphp
+                            @foreach($comments as $comment)
+                                <div class="comment">
+                                    <div class="comment-title">
+                                        <span>#{{$i}} </span>
+                                        <span class="flag-icon flag-icon-{{mb_strtolower($countries[$comment->user->country_id]->code)}}"></span>
+                                        <span>{{$comment->user->name}}</span>
+                                        <a href="">{{$comment->user->rating}}<span>кг</span></a>
+                                    </div>
+                                    <div class="comment-title">{{$comment->created_at}}</div>
+                                    <div class="comment-content">
+                                        {{$comment->content}}
+                                    </div>
                                 </div>
-                                <div class="comment-content">
-                                    {{$comment->content}}
-                                </div>
-                            </div>
-                            @php $i++; @endphp
-                        @endforeach
-                        {{dd($photo->comments)}}
-                    @else
-                        <p>комментарии отсутствуют</p>
-                    @endif
+                                @php $i++; @endphp
+                            @endforeach
+                            <nav class="comment-navigation">
+                                @php  $data = $comments @endphp
+                                @include('comment-pagination')
+                            </nav>
+                        @else
+                            <p>комментарии отсутствуют</p>
+                        @endif
+                    </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col add-comment-form-wrapper">
+                <div class="add-comment-form-wrapper col">
                     <div class="comments-block-title">Добавить комментарий</div>
                     @if(Auth::user())
-                        <div class="comment-form">
-                            <form action="" method="post">
-                                @csrf
-                                <div class="form-group">
-                                    <label for="title">Заголовок</label>
-                                    <input class="form-control" type="text" id="title" value="" name="title">
-                                </div>
-                                <div class="form-group">
-                                    <label for="content">Комментарий</label>
-                                    <textarea class="form-control" name="content" id="content" cols="30"
-                                              rows="10"></textarea>
-                                    <input type="hidden" name="relation"
-                                           value="{{\App\Comment::RELATION_USER_GALLERY}}">
-                                    <input type="hidden" name="gallery_id" value="{{$photo->id}}">
-                                </div>
-                                <button class="btn btn-primary" type="submit">Отправить</button>
-                            </form>
-                        </div>
+                        @php
+                            $route = route('gallery.comment.store');
+                            $relation =  \App\Comment::RELATION_USER_GALLERY;
+                            $comment_type = 'gallery_id';
+                            $object_id = $photo->id;
+                        @endphp
+                        @include('comment-form')
                     @else
                         <p>
                             <span class="flag-icon flag-icon-ru"></span>

@@ -3,7 +3,7 @@
 @section('content')
     <div class="row">
         <div class="col-md-3">
-            @include('left_inner_forum_sidebar')
+            @include('inner_forum_sidebar')
         </div>
         <div class="col-md-9 content-center-main-wrapper">
             <div class="content-center-main">
@@ -13,8 +13,9 @@
                         <a class="w-100" href="{{route('forum.topic.index',['id' => $topic->id])}}">
                             <span>{!! $topic->icon??'<i class="fas fa-file-alt"></i>' !!}</span>
                             <span>{{$topic->title}}</span>
+                            <span class="separator">|</span>
                             <span>({{$topic->comments_count}}\{{$topic->reviews}})</span>
-                            <span>{{$topic->created_at}}</span>
+                            <span class="section-topic-date">{{\Carbon\Carbon::parse($topic->created_at)->format('d.m.Y')}}</span>
                         </a>
                         <a href="{{route('forum.topic.index',['id' => $topic->id])}}/#comment">
                             <i class="far fa-comment-alt"></i>

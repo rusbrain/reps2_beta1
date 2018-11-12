@@ -64,9 +64,6 @@
                 <a class="nav-link" href="">Новости</a>
             </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0" id="search-form">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
-        </form>
+        @include('search-home')
     </div>
 </nav>

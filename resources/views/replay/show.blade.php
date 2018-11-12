@@ -1,19 +1,21 @@
 @extends('layouts.site')
 @inject('general_helper', 'App\Services\GeneralViewHelper')
+@php
+    $countries = $general_helper->getCountries()
+@endphp
 @section('content')
     <div class="row">
-        <div class="col-md-4">
-            @include('left_inner_replay_sidebar')
+        <div class="col-md-3">
+            @include('replay.inner_replay_sidebar')
         </div>
-        <div class="col-md-8 border-gray">
+        <div class="col-md-9 border-gray">
             <div class="row">
-
                 <div class="page-title w-100">{{$replay->title}}</div>
                 <div class="col-md-6">
                     <div class="replay-desc-wrapper">
                         <p>Страны:
-                            <span class="flag-icon flag-icon-{{mb_strtolower($general_helper->getCountries()[$replay->first_country_id]->code)}}"></span> vs
-                            <span class="flag-icon flag-icon-{{mb_strtolower($replay->second_country->code)}}"></span>
+                            <span class="flag-icon flag-icon-{{mb_strtolower($countries[$replay->first_country_id]->code)}}"></span> vs
+                            <span class="flag-icon flag-icon-{{mb_strtolower($countries[$replay->second_country_id]->code)}}"></span>
                         </p>
                         <p>Матчап: <span>{{$replay->first_race}}</span> vs <span>{{$replay->second_race}}</span></p>
                         <p>Локации: <span>{{($replay->first_location)?$replay->first_location : 'no'}}</span> vs
@@ -32,10 +34,16 @@
                         <img src="/{{$replay->map->url}}" alt="">
                     </div>
                     <div class="vote-replay">
-                        <a href="{{route('replay.set_rating',['id'=>$replay->id, 'rating'=>1])}}" class="vote-replay-up"><i
-                                    class="fas fa-thumbs-up"></i>({{$replay->positive_count}})</a>
-                        <a href="{{route('replay.set_rating',['id'=>$replay->id, 'rating'=>-1])}}" class="vote-replay-down"><i
-                                    class="fas fa-thumbs-down"></i> ({{$replay->negative_count}})</a>
+                        <a href="{{route('replay.set_rating',['id'=>$replay->id, 'rating'=>1])}}"
+                           class="vote-replay-up" data-span="positive-vote">
+                            <i class="fas fa-thumbs-up"></i>
+                            (<span id="positive-vote">{{$replay->positive_count}}</span>)
+                        </a>
+                        <a href="{{route('replay.set_rating',['id'=>$replay->id, 'rating'=>-1])}}"
+                           class="vote-replay-down" data-span="negative-vote">
+                            <i class="fas fa-thumbs-down"></i>
+                            (<span id="negative-vote">{{$replay->negative_count}}</span>)
+                        </a>
                     </div>
                 </div>
             </div>
@@ -69,9 +77,7 @@
                     </div>
                 </form>
             </div>
-
             <div class="row comments-wrapper">
-{{--                                        {{dd($comments)}}--}}
                 <div class="page-title w-100">Коментанрии</div>
                 @foreach($comments as $item => $comment)
                     <div class="comment-title col-md-12">
@@ -80,37 +86,39 @@
                         <a href="{{route('user_profile',['id' => $comment->user->id])}}"><span
                                     class="comment-user">{{$comment->user->name}}</span></a>
                         <span class="comment-flag">
-                        <span class="flag-icon flag-icon-{{mb_strtolower($comment->user->country->code)}}"></span>
-                    </span>
+                            <span class="flag-icon flag-icon-{{mb_strtolower($comment->user->country->code)}}"></span>
+                        </span>
+                        <a href="">{{$comment->user->rating}} <span>кг</span></a>
                     </div>
                     <div class="col-md-12 comment-content">{{$comment->content}}</div>
                 @endforeach
+                <nav class="comment-navigation">
+                    @php  $data = $comments @endphp
+                    @include('comment-pagination')
+                </nav>
             </div>
-
-            @if(Auth::user())
-                <div class="row add-comment">
-                    <div class="page-title w-100">Добавить комментарий</div>
-                    <form action="" method="post">
-                        @csrf
-                        <div class="form-group">
-                            <label for="title">Заголовок</label>
-                            <input type="text" class="form-control" name="title" id="title">
-                        </div>
-                        <div class="form-group">
-                            <label for="text">Текст</label>
-                            <textarea name="content" class="form-control" id="text" cols="30" rows="10">
-
-                    </textarea>
-                        </div>
-                        <div class="form-group">
-                            <input type="hidden" name="user_id" value="">
-                            <input type="hidden" name="object_id" value="">
-                            <input type="hidden" name="relation" value="">
-                            <button class="form-control" type="submit">Добавить</button>
-                        </div>
-                    </form>
+            <div class="row">
+                <div class="add-comment-form-wrapper col">
+                    <div class="comments-block-title">Добавить комментарий</div>
+                    @if(Auth::user())
+                        @php
+                            $route = route('replay.comment.store');
+                            $relation =  \App\Comment::RELATION_REPLAY;
+                            $comment_type = 'replay_id';
+                            $object_id = $replay->id;
+                        @endphp
+                        @include('comment-form')
+                    @else
+                        <p>
+                            <span class="flag-icon flag-icon-ru"></span>
+                            Вы не зарегистрированы на сайте, поэтому данная
+                            функция отсутствует.</p>
+                        <p>
+                            <span class="flag-icon flag-icon-gb"></span>
+                            You are not register on the site and this function is disabled.</p>
+                    @endif
                 </div>
-            @endif
+            </div>
         </div>
     </div>
 @endsection

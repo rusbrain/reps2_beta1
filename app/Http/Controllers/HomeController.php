@@ -11,6 +11,16 @@ use App\Replay;
 
 class HomeController extends Controller
 {
+    const SEARCH_REPLAY = 'replay';
+    const SEARCH_NEWS = 'news';
+    const SEARCH_FORUM = 'forum';
+
+    public static $search_types = [
+        self::SEARCH_FORUM => 'Форум',
+        self::SEARCH_REPLAY => 'Реплеи',
+        self::SEARCH_NEWS => 'Новости'
+    ];
+
     /**
      * Show the application dashboard.
      *
