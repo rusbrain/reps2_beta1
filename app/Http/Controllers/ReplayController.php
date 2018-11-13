@@ -207,6 +207,15 @@ class ReplayController extends Controller
         $this->getList(Replay::$method()->where('user_id',$user_id));
     }
 
+    public function getAllUserReplay($user_id = 0)
+    {
+        if (!$user_id){
+            $user_id = Auth::id();
+        }
+
+        $this->getList(Replay::where('user_id',$user_id));
+    }
+
     /**
      * Get Replay by type
      *
