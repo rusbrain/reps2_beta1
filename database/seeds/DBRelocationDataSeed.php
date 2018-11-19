@@ -235,7 +235,7 @@ class DBRelocationDataSeed extends Seeder
         $this->seedIgnoreList();
         echo "Ignore List seed finished \n\n";
 
-        Dialogs seeding
+        //Dialogs seeding
         echo "21. Dialogs seed start \n";
         $this->seedMessages();
         echo "Dialogs seed finished \n\n";
