@@ -47,7 +47,7 @@
         <div class="container">
             <div class="row page">
                 <!--LEFT SIDEBAR-->
-                <div class="col">
+                <div class="col-md-2">
                     @include('sidebar-left')
                 </div>
                 <!--END LEFT SIDEBAR -->
@@ -59,7 +59,7 @@
                 <!--END CONTENT CENTER-->
 
                 <!--RIGHT SIDEBAR-->
-                <div class="col">
+                <div class="col-md-2">
                     @include('sidebar-right')
                 </div>
                 <!--END RIGHT SIDEBAR-->

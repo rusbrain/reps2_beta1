@@ -10,8 +10,6 @@
         <div class="page-title row">Home page</div>
         <div class="row">
             <div class="col w-100">
-                {{--                {{dd($last_forums)}}--}}
-
                 @if($last_forums)
                     @php $i=0; @endphp
                     @foreach($last_forums as $last_forum)
@@ -79,7 +77,7 @@
                                     </div>
                                     <div>Матчап: {{$replay->first_race??'No'}} vs {{$replay->second_race??'No'}}</div>
                                     <div>Тип: {{$replay->type->title}}</div>
-                                    <div>{{$replay->content}}</div>
+                                    <div>{!! $replay->content !!}</div>
                                 </div>
                             </div>
                         @endforeach

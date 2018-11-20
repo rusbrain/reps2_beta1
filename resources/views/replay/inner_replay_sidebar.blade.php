@@ -60,7 +60,7 @@
                     <select size=1 id="map_id" name="map_id" class="form-control country">
                         <option value="">Все</option>
                         @foreach($maps as $map)
-                            <option value="{{$map->id}}">{{$map->name}}</option>
+                            <option value="{{$map->id}}">{!! $map->name !!}</option>
                         @endforeach
                     </select>
                 </div>

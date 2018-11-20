@@ -100,7 +100,7 @@ class UserGalleryController extends Controller
         $photo = $photo->load('file', 'user');
         $photo->comments = Comment::where('relation', Comment::RELATION_USER_GALLERY)->where('object_id',$id)->paginate(20);
         $photo->photo_next = UserGallery::where('user_id', $photo->user_id)->where('id', '>', $id)->orderBy('id', 'asc')->first();
-        $photo->photo_befor = UserGallery::where('user_id', $photo->user_id)->where('id', '<', $id)->orderBy('id', 'desc')->first();
+        $photo->photo_before = UserGallery::where('user_id', $photo->user_id)->where('id', '<', $id)->orderBy('id', 'desc')->first();
 
         return view('gallery.photo')->with('photo', $photo);
     }
@@ -145,11 +145,9 @@ class UserGalleryController extends Controller
                 $gallery_data['content'] = '';
             }
 
-            $gallery_data = self::checkComment($gallery_data);
-
             $gallery = UserGallery::where('id', $id)->update($gallery_data);
 
-            return redirect()->route('gallery.view', ['id' => $gallery->id]);
+            return redirect()->route('gallery.view', ['id' => $id]);
         }
 
         return abort(404);

@@ -172,12 +172,19 @@ class GeneralViewHelper
      */
     public function getAllForumSections()
     {
-        if(!$this->all_sections){
-            $this->all_sections=ForumSection::orderBy('position')->get();
-            $this->all_sections = $this->all_sections->load(['topics' =>function($q){
-                $q->orderBy('created_at', 'desc')->limit(5);
-            }]);
-        }
+//        if(!$this->all_sections){
+//            $this->all_sections=ForumSection::orderBy('position')->get();
+//            $this->all_sections = $this->all_sections->load(['topics' =>function($q){
+//                $q->orderBy('created_at', 'desc')->limit(5);
+//            }]);
+//        }
+//        return $this->all_sections;
+
+        $this->all_sections =  $this->all_sections??ForumSection::active()->with(['topics' =>function($query){
+                $query->orderBy('created_at', 'desc')->limit(5);
+            }])->get();
+
+
         return $this->all_sections;
     }
 
@@ -267,7 +274,7 @@ class GeneralViewHelper
      *
      * @return ReplayMap[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function getGAmeVersion()
+    public function getGameVersion()
     {
         if(!$this->game_version){
             $types = GameVersion::all();

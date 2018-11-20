@@ -90,12 +90,21 @@ img {
 .margin-top-0 {
   margin-top: 0 !important;
 }
+.margin-right-15 {
+  margin-right: 15px;
+}
 .remove-padding {
   margin-right: -15px;
   margin-left: -15px;
 }
 .display-block {
   display: block;
+}
+.positive {
+  color: green;
+}
+.negative {
+  color: red;
 }
 .error {
   color: red;
@@ -176,8 +185,8 @@ body {
   text-decoration: underline;
 }
 .page {
-  border-left: 1px solid #17a2b8;
-  border-right: 1px solid #17a2b8;
+  border-left: 1px solid #717171;
+  border-right: 1px solid #717171;
 }
 /**** END Breadcrumb******/
 
@@ -274,8 +283,6 @@ body {
 
 /**Content - CENTER*/
 .content-center {
-  border-right: 1px solid #17a2b8;
-  border-left: 1px solid #17a2b8;
   min-height: 100vh;
   padding-top: 10px;
 }
@@ -425,7 +432,6 @@ a.read-more {
   border: 1px solid #717171;
   margin-top: 20px;
 }
-
 /**---------------------*/
 /**------ FOOTER -----------*/
 /**---------------------*/
@@ -465,6 +471,10 @@ a.read-more {
   margin-right: 5px;
   margin-left: 5px;
   color: #717171;
+}
+.no-logged-user-message{
+  padding: 5px 15px;
+  border:1px solid #717171;
 }
 /**---------------------*/
 /**------ LEFT SIDEBAR -----------*/
@@ -646,7 +656,8 @@ a.read-more {
 }
 /**---------------------*/
 /**------SINGLE REPLAY PAGE ----------*/
-/**---------------------*/
+box-header
+  /**---------------------*/
 .map-wrapper {
   padding-top: 20px;
 }
@@ -679,16 +690,22 @@ a.read-more {
 }
 .comment-form {
   border: 1px solid #717171;
+  padding: 0 15px;
 }
 .comment-content {
   background: #fff;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding: 5px 15px;
 }
 .add-comment-form-wrapper {
   margin-top: 20px;
+  margin-bottom: 20px;
 }
 .evolution-replay {
+}
+.replay-list-wrapper{
+  border: 1px solid #717171;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
 }
 .evolution-replay-form-content {
   justify-content: center;
@@ -717,6 +734,20 @@ a.read-more {
 }
 .vote-replay-down {
   color: red;
+}
+.download-btn-wrapper {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+}
+.download-btn {
+}
+.edit-btn-wrapper {
+  position: absolute;
+  bottom: 15px;
+}
+.edit-btn {
+  margin-right: 5px;
 }
 /**---------------------*/
 /**------REPLAYS PAGE ----------*/
@@ -766,9 +797,31 @@ a.read-more {
 .pagination {
   margin: 0 auto;
 }
+.sidebar-inner-widget-content form{
+  padding-bottom: 0;
+}
+/**---------------------*/
+/**------USER REPLAY PAGE ----------*/
+/**---------------------*/
+.box-header {
+  margin-top: 10px;
+}
+.box-header label {
+  font-weight: bold;
+  margin-bottom: 0;
+}
+.create-file label.box-title {
+  font-weight: bold;
+  margin-bottom: 0;
+  margin-top: 15px;
+}
 /**---------------------*/
 /**------TOPIC PAGE ----------*/
 /**---------------------*/
+.topic-comments-wrapper{
+  border: 1px solid #717171;
+  margin-top: 20px;
+}
 .topic-wrapper {
   border: 1px solid #717171;
 }
@@ -792,7 +845,9 @@ a.read-more {
 /**---------------------*/
 .left-inner-gallery-sidebar {
   padding-right: 0;
-  border: 1px solid #717171;
+  border-left: 1px solid #717171;
+  border-top: 1px solid #717171;
+  border-bottom: 1px solid #717171;
 }
 .gallery-links {
   display: flex;
@@ -819,19 +874,30 @@ a.read-more {
   padding-left: 15px;
 }
 .comment-navigation {
-  margin-top: 20px;
+  margin: 20px auto;
 }
 .comment-navigation ul {
   justify-content: center;
   align-items: center;
 }
 /**---------------------*/
+/**------ User Gallery page ----*/
+/**---------------------**/
+.user-gallery-img-wrapper {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.img-wrapper {
+  width: 25%;
+}
+/**---------------------*/
 /**------ News Page ----*/
 /**---------------------*/
-.news-wrapper{
+.news-wrapper {
   margin-bottom: 5px;
 }
-.news-wrapper > div{
+.news-wrapper > div {
   padding: 5px;
 }
 .news-title {
@@ -840,12 +906,22 @@ a.read-more {
 .news-title a {
   color: #000;
 }
-.read-more{
-  text-align:right;
+.read-more {
+  text-align: right;
 }
-.news-content{
-
+.news-content {
 }
-.news-preview-img{
-
+.news-preview-img {
+}
+/**---------------------*/
+/**------ User Reputation history Page ----*/
+/**---------------------*/
+.reputation-title {
+  background: #efefef;
+}
+.reputation-comment-wrapper {
+  background: #fff;
+  min-height: 50px;
+  align-items: center;
+  display: flex;
 }
