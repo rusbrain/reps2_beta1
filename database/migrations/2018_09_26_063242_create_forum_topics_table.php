@@ -19,9 +19,9 @@ class CreateForumTopicsTable extends Migration
             $table->string('reps_section')->nullable();
             $table->integer('section_id');
             $table->string('title');
-            $table->text('preview_content')->nullable();
+            $table->text('preview_content')->charset('cp1251')->nullable();
             $table->text('preview_file_id')->nullable();
-            $table->text('content');
+            $table->longText('content')->charset('cp1251');
             $table->integer('user_id');
             $table->integer('reviews')->default(0);
             $table->dateTime('start_on')->nullable();

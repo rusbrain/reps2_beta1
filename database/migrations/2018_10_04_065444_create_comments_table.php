@@ -19,7 +19,7 @@ class CreateCommentsTable extends Migration
             $table->integer('object_id');
             $table->integer('relation');
             $table->string('title')->nullable();
-            $table->text('content');
+            $table->longText('content')->charset('cp1251');
             $table->timestamps();
         });
 

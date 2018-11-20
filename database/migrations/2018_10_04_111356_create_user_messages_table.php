@@ -17,7 +17,7 @@ class CreateUserMessagesTable extends Migration
             $table->increments('id');
             $table->integer('user_sender_id');
             $table->integer('user_recipient_id');
-            $table->text('message');
+            $table->longText('message')->charset('cp1251');
             $table->boolean('is_read')->default(0);
             $table->timestamps();
         });

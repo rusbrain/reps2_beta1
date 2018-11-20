@@ -36,6 +36,7 @@ class ForumSection extends Model
     {
         return $this->hasMany('App\ForumTopic', 'section_id');
     }
+
     /**
      * Relations. Sections topics
      *

@@ -69,6 +69,8 @@ Route::group(['middleware' => 'activity'], function () {
         Route::get('{id}/get_rating', 'RatingController@getRatingUser')->name('user.get_rating');
         Route::get('{id}/replay', 'ReplayUsersController@getUserReplay')->name('user.user_replay');
         Route::get('{id}/gosu_replay', 'ReplayGosuController@getUserReplay')->name('user.gosu_replay');
+        Route::get('{id}/all_replay', 'ReplayController@getAllUserReplay')->name('user.all_replay');
+        Route::get('{id}/topic', 'ForumTopicController@getUserTopic')->name('user.forum_topic');
         Route::get('{id}/topic', 'ForumTopicController@getUserTopic')->name('user.forum_topic');
 
     });
