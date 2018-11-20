@@ -81,7 +81,6 @@ class RatingController extends Controller
         if($request->has('comment')){
             $comment = $request->get('comment');
         }
-
         return $comment;
     }
 
@@ -103,7 +102,7 @@ class RatingController extends Controller
      */
     public function getRatingUser($id)
     {
-        return $this->getRatingView(UserReputation::where('recipient_id', $id));
+        return $this->getRatingView(UserReputation::where('recipient_id', $id), $id);
     }
 
     /**
@@ -112,8 +111,10 @@ class RatingController extends Controller
      * @param UserReputation $user_reputation
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    protected function getRatingView(UserReputation $user_reputation)
+    protected function getRatingView($user_reputation, $id)
     {
-        return view('reputation_list')->with('list', $user_reputation->with('sender')->paginate(20));
+        $list = $user_reputation->with('sender')->paginate(20);
+        $user = User::where('id',$id)->first();
+        return view('reputation_list')->with(['list'=>$list, 'user' => $user] );
     }
 }

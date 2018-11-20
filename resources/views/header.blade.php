@@ -42,11 +42,9 @@
         @else
             <div class="col-3 header-profile">
                 <p class="hello">
-                    @if(Auth::user()->view_avatars)
-                        @if(Auth::user()->avatar)
-                            <img class="img-responsive profile-avatar-header" src="{{Auth::user()->avatar->link}}"
-                                 alt="">
-                        @endif
+                    @if(Auth::user()->view_avatars == 1)
+                        <img class="img-responsive profile-avatar-header" src="{{Auth::user()->avatar->link}}"
+                             alt="">
                     @endif
                     Hello {{Auth::user()->name}}
                 </p>
@@ -62,9 +60,7 @@
 
                             <a class="profile-link" href="{{route('user.get_rating', ['id' => Auth::user()->id])}}">Репутация</a>
 
-                            {{--<a class="profile-link" href="{{route('gallery.list_user', ['id' => Auth::user()->id])}}">Мои темы</a>--}}
-
-                            {{--<a class="profile-link" href="{{route('forum.topic.my_list')}}">Мои посты</a>--}}
+                            <a class="profile-link" href="{{route('forum.topic.my_list')}}">Мои посты</a>
 
                             <a class="profile-link" href="{{route('replay.create')}}">Отправить свой/госу реплей</a>
 

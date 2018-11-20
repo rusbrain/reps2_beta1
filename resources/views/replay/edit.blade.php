@@ -1,19 +1,24 @@
 @extends('layouts.site')
 @inject('general_helper', 'App\Services\GeneralViewHelper')
 @php
+    $countries = $general_helper->getCountries();
+    $maps = $general_helper->getReplayMaps();
+    $types = $general_helper->getReplayTypes();
     $game_versions = $general_helper->getGameVersion();
 @endphp
 @section('content')
     <div class="row create-file">
         <div class="col-md-10">
+{{--            {{dd($replay)}}--}}
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title text-blue">Создать новый Replay</h3>
+                    <h3 class="box-title text-blue">{{$replay->user_replay?"Пользовательский Replay":"Gosu Replay"}}
+                        / {{$replay->title}}</h3>
                 </div>
                 <div class="box-body">
                     <div class="box-tools col-md-12">
                         <div class="post">
-                            <form method="post" enctype="multipart/form-data" action="{{route('replay.store')}}">
+                            <form method="post" enctype="multipart/form-data" action="{{route('replay.update',['id'=> $replay->id])}}">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-12">
@@ -22,7 +27,7 @@
                                             <!-- /. tools -->
                                         </div>
                                         <input type="text" name="title" class="form-control" placeholder="Название..."
-                                               value="{{old('title')}}">
+                                               value="{{old('title')??$replay->title}}">
                                         @if ($errors->has('title'))
                                             <span class="invalid-feedback text-red" role="alert">
                                         <strong>{{ $errors->first('title') }}</strong>
@@ -36,9 +41,9 @@
                                         </div>
                                         <div class="form-group">
                                             <select class="form-control" name="user_replay">
-                                                <option value="0" {{0 == old('user_replay')?'selected':''}}>Gosy
+                                                <option value="0" {{0 == $replay->user_replay?'selected':''}}>Gosy
                                                 </option>
-                                                <option value="1" {{1 == old('user_replay')?'selected':''}}>
+                                                <option value="1" {{1 == $replay->user_replay?'selected':''}}>
                                                     Пользовательский
                                                 </option>
                                             </select>
@@ -57,7 +62,7 @@
                                         <div class="form-group">
                                             <select class="form-control" name="type_id">
                                                 @foreach($types as $type)
-                                                    <option value="{{$type->id}}" {{$type->id == old('type_id')?'selected':''}}>
+                                                    <option value="{{$type->id}}" {{$type->id == $replay->type_id?'selected':''}}>
                                                         {{$type->name}}
                                                     </option>
                                                 @endforeach
@@ -77,7 +82,7 @@
                                         <div class="form-group">
                                             <select class="form-control" name="map_id">
                                                 @foreach($maps as $map)
-                                                    <option value="{{$map->id}}" {{$map->id == old('map_id')?'selected':''}}>
+                                                    <option value="{{$map->id}}" {{$map->id == $replay->map_id?'selected':''}}>
                                                         {{$map->name}}
                                                     </option>
                                                 @endforeach
@@ -99,7 +104,7 @@
                                                 <div class="form-group">
                                                     <select class="form-control" name="first_race">
                                                         @foreach(\App\Replay::$races as $race)
-                                                            <option value="{{$race}}" {{$race == old('first_race')?'selected':''}}>
+                                                            <option value="{{$race}}" {{$race == $replay->first_race?'selected':''}}>
                                                                 {{$race}}
                                                             </option>
                                                         @endforeach
@@ -120,7 +125,7 @@
                                                     <select class="form-control" name="first_country_id">
                                                         @foreach($countries as $country)
                                                             <option
-                                                                    value="{{$country->id}}" {{$country->id == old('first_country_id')?'selected':''}}>
+                                                                    value="{{$country->id}}" {{$country->id == $replay->first_country_id?'selected':''}}>
                                                                 {{$country->name}}</option>
                                                         @endforeach
                                                     </select>
@@ -137,7 +142,8 @@
                                                     <!-- /. tools -->
                                                 </div>
                                                 <input type="text" name="first_location" class="form-control"
-                                                       placeholder="Локация..." value="{{old('first_location')}}">
+                                                       placeholder="Локация..."
+                                                       value="{{old('first_location')??$replay->first_location}}">
                                                 @if ($errors->has('first_location'))
                                                     <span class="invalid-feedback text-red" role="alert">
                                         <strong>{{ $errors->first('first_location') }}</strong>
@@ -154,7 +160,7 @@
                                                 <div class="form-group">
                                                     <select class="form-control" name="second_race">
                                                         @foreach(\App\Replay::$races as $race)
-                                                            <option value="{{$race}}" {{$race == old('second_race')?'selected':''}}>
+                                                            <option value="{{$race}}" {{$race == $replay->second_race?'selected':''}}>
                                                                 {{$race}}
                                                             </option>
                                                         @endforeach
@@ -174,7 +180,7 @@
                                                 <div class="form-group">
                                                     <select class="form-control" name="second_country_id">
                                                         @foreach($countries as $country)
-                                                            <option value="{{$country->id}}" {{$country->id == old('second_country_id')?'selected':''}}>
+                                                            <option value="{{$country->id}}" {{$country->id == $replay->second_country_id?'selected':''}}>
                                                                 {{$country->name}}
                                                             </option>
                                                         @endforeach
@@ -192,7 +198,8 @@
                                                     <!-- /. tools -->
                                                 </div>
                                                 <input type="text" name="second_location" class="form-control"
-                                                       placeholder="Локация..." value="{{old('second_location')}}">
+                                                       placeholder="Локация..."
+                                                       value="{{old('second_location')??$replay->second_location}}">
                                                 @if ($errors->has('second_location'))
                                                     <span class="invalid-feedback text-red" role="alert">
                                         <strong>{{ $errors->first('second_location') }}</strong>
@@ -208,7 +215,7 @@
                                         </div>
                                         <select class="form-control" name="game_version_id">
                                             @foreach($game_versions as $game_version)
-                                                <option value="{{$game_version->id}}" {{$game_version->id == old('game_version_id')?'selected':''}}>
+                                                <option value="{{$game_version->id}}" {{old('game_version_id')??$replay->game_version_id}}>
                                                     {{$game_version->version}}
                                                 </option>
                                             @endforeach
@@ -226,7 +233,7 @@
                                         </div>
                                         <input type="text" name="championship" class="form-control"
                                                placeholder="Локация..."
-                                               value="{{old('championship')}}">
+                                               value="{{old('championship')??$replay->championship}}">
                                         @if ($errors->has('championship'))
                                             <span class="invalid-feedback text-red" role="alert">
                                         <strong>{{ $errors->first('championship') }}</strong>
@@ -240,7 +247,7 @@
                                         </div>
                                         <select class="form-control" name="creating_rate">
                                             @foreach(\App\Replay::$creating_rates as $creating_rate)
-                                                <option value="{{$creating_rate}}" {{$creating_rate == old('creating_rate')?'selected':''}}>
+                                                <option value="{{$creating_rate}}" {{old('creating_rate')??$replay->creating_rate}}>
                                                     {{$creating_rate}}
                                                 </option>
                                             @endforeach
@@ -255,6 +262,9 @@
                                         <div class="form-group">
                                             <label class="box-title">Загрузить новый Replay:</label>
                                             <input type="file" id="replay" name="replay" class="filestyle">
+                                            <p>
+                                                <span>Имя загруженого файла:</span> {{$replay->file->title}}<br>
+                                                <span>Тип загруженого файла:</span> {{$replay->file->type}}</p>
                                         </div>
                                         @if ($errors->has('replay'))
                                             <span class="invalid-feedback text-red" role="alert">
@@ -272,7 +282,8 @@
                                         <!-- /.box-header -->
                                         <div class="box-body pad">
                                         <textarea id="content" class="form-control"
-                                                  name="content" rows="5" cols="80">{!! old('content') !!}</textarea>
+                                                  name="content" rows="5"
+                                                  cols="80">{!! old('content')??$replay->content !!}</textarea>
                                         </div>
                                         @if ($errors->has('content'))
                                             <span class="invalid-feedback text-red" role="alert">

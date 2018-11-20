@@ -27,13 +27,13 @@ class ReplayUpdateRequest extends FormRequest
         $races = implode(",", Replay::$races);
 
         return [
-            'user_replay'           => 'nullable|in:1,0',
+            'user_replay'           => 'required|in:1,0',
             'type_id'               => 'required|exists:replay_types,id',
             'title'                 => 'required|string|min:3|max:255',
             'content'               => 'required|string|min:3|max:1000',
             'map_id'                => 'nullable|exists:replay_maps,id',
             'replay'                => 'nullable|file|max:1024',
-            'game_version'          => 'required',
+            'game_version_id'       => 'required',
             'championship'          => 'nullable|string|max:255',
             'first_country_id'      => 'required|exists:countries,id',
             'second_country_id'     => 'required|exists:countries,id',

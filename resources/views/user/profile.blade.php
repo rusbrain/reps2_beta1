@@ -42,18 +42,10 @@
                 </div>
                 <div class="row">
                     <div class="col-4">
-                        <span class="key">Темы:</span>
-                    </div>
-                    <div class="col-8">
-                        <span class="value"></span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-4">
                         <span class="key">Посты:</span>
                     </div>
                     <div class="col-8">
-                        <span class="value"></span>
+                        <span class="value">{{$user->topics_count}}</span>
                     </div>
                 </div>
                 <div class="row">
@@ -61,7 +53,7 @@
                         <span class="key">Госу реплеи:</span>
                     </div>
                     <div class="col-8">
-                        <span class="value"></span>
+                        <span class="value">{{$user->gosu_replay_count}}</span>
                     </div>
                 </div>
                 <div class="row">
@@ -69,7 +61,15 @@
                         <span class="key">Пользовательские реплеи:</span>
                     </div>
                     <div class="col-8">
-                        <span class="value"></span>
+                        <span class="value">{{$user->replay_count}}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <span class="key">Госу реплеи:</span>
+                    </div>
+                    <div class="col-8">
+                        <span class="value">{{$user->gosu_replay_count}}</span>
                     </div>
                 </div>
                 <div class="row">
@@ -77,7 +77,15 @@
                         <span class="key">Посты к реплеям:</span>
                     </div>
                     <div class="col-8">
-                        <span class="value"></span>
+                        <span class="value">{{$user->replay_comments_count}}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <span class="key">Посты к реплеям:</span>
+                    </div>
+                    <div class="col-8">
+                        <span class="value">{{$user->replay_comments_count}}</span>
                     </div>
                 </div>
                 <div class="row">

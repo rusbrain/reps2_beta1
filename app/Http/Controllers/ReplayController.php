@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 
 use App\Country;
 use App\File;
+use App\GameVersion;
 use App\Http\Requests\ReplaySearchRequest;
 use App\Http\Requests\ReplayStoreRequest;
 use App\Http\Requests\ReplayUpdateRequest;
 use App\Replay;
 use App\ReplayMap;
 use App\ReplayType;
+use App\ReplayUserRating;
 use App\User;
 use App\UserReputation;
 use Illuminate\Database\Eloquent\Builder;
@@ -44,11 +46,8 @@ class ReplayController extends Controller
     public function list(ReplaySearchRequest $request)
     {
         $method = $this->method_get;
-
         $query = Replay::$method();
-
         $request_data = $request->validated();
-
         if ($request_data)
             foreach ($request_data as $key=>$request_datum) {
                 if ($key == 'text'){
@@ -63,7 +62,6 @@ class ReplayController extends Controller
                     $query->where($key, $request_datum);
                 }
             }
-
         return $this->getList($query);
     }
 
@@ -129,7 +127,11 @@ class ReplayController extends Controller
      */
     public function create()
     {
-        return view('replay.create')->with(['types' => ReplayType::all(), 'maps' => ReplayMap::all(), 'countries' => Country::all(), 'races' => Replay::$races]);
+        return view('replay.create')->with([
+            'types' => ReplayType::all(),
+            'maps' => ReplayMap::all(),
+            'countries' => Country::all(),
+        ]);
     }
 
     /**
@@ -163,7 +165,7 @@ class ReplayController extends Controller
      */
     public function edit($id)
     {
-        $replay = Replay::where('id', $id)->first();
+        $replay = Replay::where('id', $id)->with('file')->first();
 
         if(!$replay){
             return abort(404);
@@ -192,10 +194,12 @@ class ReplayController extends Controller
         return abort(404);
     }
 
+
     /**
      * Get replay by user
      *
      * @param int $user_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getUserReplay($user_id = 0)
     {
@@ -204,7 +208,7 @@ class ReplayController extends Controller
         }
 
         $method = $this->method_get;
-        $this->getList(Replay::$method()->where('user_id',$user_id));
+        return $this->getList(Replay::$method()->where('user_id',$user_id));
     }
 
     public function getAllUserReplay($user_id = 0)

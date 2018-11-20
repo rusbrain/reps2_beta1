@@ -28,7 +28,7 @@ class ReplayStoreRequest extends FormRequest
         $creating_rates = implode(",", Replay::$creating_rates);
 
         return [
-            'user_replay'           => 'nullable|in:1,0',
+            'user_replay'           => 'required|in:1,0',
             'type_id'               => 'required|exists:replay_types,id',
             'title'                 => 'required|string|min:3|max:255',
             'content'               => 'required|string|min:3|max:1000',

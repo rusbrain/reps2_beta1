@@ -15,7 +15,7 @@
                                 <div class="news-title">
                                     <a class="w-100" href="{{route('forum.topic.index',['id' => $single_news->id])}}">
                                         <span>#{{$single_news->id}}</span>
-                                        <span>{{$single_news->title}}</span>
+                                        <span>{!! $single_news->title !!}</span>
                                     </a>
                                     <div>
                                         <span>{{$single_news->user->name}}</span>
@@ -33,7 +33,7 @@
                                     </a>
                                 </div>
                                 <div class="news-content">
-                                    {{$single_news->preview_content}}
+                                    {!! $single_news->preview_content !!}
                                 </div>
                                 <div class="read-more">
                                     <a href="{{route('forum.topic.index',['id' => $single_news->id])}}">

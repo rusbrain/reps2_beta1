@@ -3,10 +3,10 @@
 @section('content')
     {{--{{dd($topic)}}--}}
     <div class="row">
-        <div class="col-md-3">
-            @include('inner_forum_sidebar')
-        </div>
-        <div class="col-md-9">
+        {{--<div class="col-md-3">--}}
+            {{--@include('inner_forum_sidebar')--}}
+        {{--</div>--}}
+        <div class="col-md-12">
             <div class="topic-wrapper">
                 <div class="page-title w-100">{{$topic->title}}</div>
                 <div class="topic-info">
@@ -23,11 +23,6 @@
                     <span>Прочитано:{{$topic->reviews}}</span>
                 </div>
                 <div class="topic-content-wrapper">
-                    @if($topic->preview_file_id)
-                        <div class="topic-preview-img">
-                            <img src="{{$topic->preview_file_id??''}}" alt="">
-                        </div>
-                    @endif
                     <div class="topic-content">
                         {!! $topic->content !!}
                     </div>
