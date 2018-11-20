@@ -48,12 +48,12 @@ class UserGalleryController extends Controller
     }
 
     /**
-     * @param Builder $gallery
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     * @param $gallery
+     * @return mixed
      */
     private static function getList($gallery)
     {
-        return $gallery->with('file')->orderBy('created_at')->paginate(50);
+        return $gallery->with('file', 'user')->orderBy('created_at')->paginate(50);
     }
 
     /**

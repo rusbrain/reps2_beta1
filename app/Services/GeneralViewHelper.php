@@ -116,7 +116,9 @@ class GeneralViewHelper
         $new_user_message = 0;
 
         if (Auth::user()){
-            $new_user_message = UserMessage::where('user_recipient_id', Auth::id())->where('is_read',0)->count();
+            $new_user_message = UserMessage::whereHas('dialogue.users', function ($query){
+                $query->where('users.id', Auth::id());
+            })->where('user_id', '<>', Auth::id())->where('is_read',0)->count();
         }
 
         return $new_user_message;
@@ -170,9 +172,12 @@ class GeneralViewHelper
      */
     public function getAllForumSections()
     {
-        $this->all_sections = $this->all_sections??ForumSection::with(['topics' =>function($q){
-            $q->orderBy('created_at', 'desc')->limit(5);
-            }])->orderBy('position')->get();
+        if(!$this->all_sections){
+            $this->all_sections=ForumSection::orderBy('position')->get();
+            $this->all_sections = $this->all_sections->load(['topics' =>function($q){
+                $q->orderBy('created_at', 'desc')->limit(5);
+            }]);
+        }
         return $this->all_sections;
     }
 
