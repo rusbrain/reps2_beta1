@@ -19,7 +19,7 @@ class CreateReplaysTable extends Migration
             $table->boolean('user_replay')->default(true);
             $table->boolean('type_id');
             $table->string('title');
-            $table->text('content');
+            $table->longText('content')->charset('cp1251');
             $table->integer('map_id')->default(0);
             $table->integer('file_id');
             $table->string('game_version');

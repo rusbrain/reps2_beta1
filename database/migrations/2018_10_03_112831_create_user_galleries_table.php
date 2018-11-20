@@ -19,7 +19,7 @@ class CreateUserGalleriesTable extends Migration
             $table->integer('file_id');
             $table->integer('reps_id')->nullable();
             $table->integer('rating')->default(0);
-            $table->string('comment')->nullable();
+            $table->longText('comment')->charset('cp1251')->nullable();
             $table->timestamps();
         });
     }

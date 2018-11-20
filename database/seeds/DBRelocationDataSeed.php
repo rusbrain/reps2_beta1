@@ -430,7 +430,7 @@ class DBRelocationDataSeed extends Seeder
                     'object_id' => $user_gallery->id ?? 0,
                     'relation' => Comment::RELATION_USER_GALLERY,
                     'title' => $old_gallery_comment->comment_title,
-                    'content' => mb_convert_encoding(substr($old_gallery_comment->comment_text,0,10000), "UTF-8"),
+                    'content' => (string)$old_gallery_comment->comment_text,
                     'created_at' =>  self::correctDate(Carbon::parse($old_gallery_comment->comment_date.' '. $old_gallery_comment->comment_time)),
                 ];
             }
@@ -485,7 +485,7 @@ class DBRelocationDataSeed extends Seeder
                     'object_id' => $forum_topic->id ?? 0,
                     'relation' => Comment::RELATION_FORUM_TOPIC,
                     'title' => $old_topic_comment->reply_title,
-                    'content' => mb_convert_encoding(substr($old_topic_comment->reply_text,0,10000), "UTF-8"),
+                    'content' => $old_topic_comment->reply_text,
                     'created_at' =>  self::correctDate(Carbon::parse($old_topic_comment->reply_date.' '. $old_topic_comment->reply_time)),
                 ];
             }
@@ -514,11 +514,14 @@ class DBRelocationDataSeed extends Seeder
 
         $users = [];
         $users_id = [];
-        $section_id = [];
+        $section_ids = [];
         $section_id_key = [];
 
         for ($i = 0; $i < $cycles; $i++) {
-            $rusforums = DB::table(env('DB_DATABASE_OLD') . '.'.$table)->orderBy('news_id')->offset(1000 * $i)->limit(1000)->get();
+            $rusforums = DB::table(env('DB_DATABASE_OLD') . '.'.$table)
+//                ->select(DB::raw('news_stext COLLATE utf8mb4_unicode_ci AS news_stext1, news_title COLLATE utf8mb4_unicode_ci AS news_title1, news_date, news_time'))
+//                ->select(DB::raw('news_text COLLATE utf8mb4_unicode_ci AS news_text1, user_id, news_type, news_id, news_long, news_show, news_start, denyview'))
+                ->orderBy('news_id')->offset(1000 * $i)->limit(1000)->get();
 
             $new_forum_topics = [];
             foreach ($rusforums as $rusforum) {
@@ -531,29 +534,29 @@ class DBRelocationDataSeed extends Seeder
                 }
 
                 if(in_array($rusforum->news_type, $section_id_key)){
-                    $section_id = $section_id[$rusforum->news_type];
+                    $section_id = $section_ids[$rusforum->news_type];
                 } else{
                     $section_id = ForumSection::where('name', 'like', "%".$rusforum->news_type."%")->first()->id??\App\ForumSection::where('name', 'article')->first()->id;
-                    $section_id[$rusforum->news_type] = $section_id;
+                    $section_ids[$rusforum->news_type] = $section_id;
                     $section_id_key[] = $rusforum->news_type;
                 }
 
-                $s_text = mb_convert_encoding(substr($rusforum->news_stext,0,10000), "UTF-8");
+                $s_text = $rusforum->news_stext;
 
                 $new_forum_topics[] = [
-                    'reps_id' => $rusforum->news_id,
-                    'reps_section' => $rusforum->news_type,
-                    'section_id' => $section_id,
-                    'title' => $rusforum->news_title,
-                    'preview_content' => $s_text,
-                    'content' => 	$rusforum->news_long?mb_convert_encoding(substr($rusforum->news_text,0,10000), "UTF-8"):$s_text,
-                    'user_id' => $user->id??1,
-                    'reviews' => $rusforum->news_show,
-                    'start_on' => $rusforum->news_start?(Carbon::parse($rusforum->news_start) > Carbon::now()?Carbon::parse($rusforum->news_start):null) :null,
-                    'created_at' => $rusforum->news_date&&$rusforum->news_time?Carbon::parse($rusforum->news_date.' '.$rusforum->news_time):Carbon::now(),
-                    'approved' => $table == 'rusnews'?$rusforum->denyview:1,
-                    'news' => 1,
-                    'forum_icon_id' => $forum_icons->id,
+                    'reps_id'           => $rusforum->news_id,
+                    'reps_section'      => $rusforum->news_type,
+                    'section_id'        => $section_id,
+                    'title'             => $rusforum->news_title,
+                    'preview_content'   => $s_text,
+                    'content'           => (string)($rusforum->news_long?$rusforum->news_text:$s_text),
+                    'user_id'           => $user->id??1,
+                    'reviews'           => $rusforum->news_show,
+                    'start_on'          => $rusforum->news_start?(Carbon::parse($rusforum->news_start) > Carbon::now()?Carbon::parse($rusforum->news_start):null) :null,
+                    'created_at'        => $rusforum->news_date&&$rusforum->news_time?Carbon::parse($rusforum->news_date.' '.$rusforum->news_time):Carbon::now(),
+                    'approved'          => $table == 'rusnews'?$rusforum->denyview:1,
+                    'news'              => 1,
+                    'forum_icon_id'     => $forum_icons->id,
                 ];
             }
 
@@ -595,7 +598,7 @@ class DBRelocationDataSeed extends Seeder
                     $users_id[] = $rusforum->user_id;
                 }
 
-                $s_text = mb_convert_encoding(substr($rusforum->columns_stext,0,10000), "UTF-8");
+                $s_text = $rusforum->columns_stext;
 
                 $new_forum_topics[] = [
                     'reps_id' => $rusforum->columns_id,
@@ -603,7 +606,7 @@ class DBRelocationDataSeed extends Seeder
                     'section_id' => $section_id,
                     'title' => $rusforum->columns_title,
                     'preview_content' => $s_text,
-                    'content' => 	$rusforum->columns_long?mb_convert_encoding(substr($rusforum->columns_text,0,10000), "UTF-8"):$s_text,
+                    'content' => 	$rusforum->columns_long?($rusforum->columns_text):$s_text,
                     'user_id' => $user->id??1,
                     'reviews' => $rusforum->columns_show,
                     'start_on' => $rusforum->columns_start?(Carbon::parse($rusforum->columns_start) > Carbon::now()?Carbon::parse($rusforum->columns_start):null) :null,
@@ -705,7 +708,7 @@ class DBRelocationDataSeed extends Seeder
                     'reps_id' => $rusforum->forum_id,
                     'section_id' => $section_id,
                     'title' => $rusforum->forum_title,
-                    'content' => mb_convert_encoding(substr($rusforum->forum_text, 0, 10000), "UTF-8"),
+                    'content' => $rusforum->forum_text,
                     'user_id' => $user->id ?? 1,
                     'reviews' => $rusforum->forum_view,
                     'created_at' => self::correctDate($rusforum->forum_date && $rusforum->forum_time ? Carbon::parse($rusforum->forum_date . ' ' . $rusforum->forum_time) : Carbon::now()),
@@ -731,7 +734,13 @@ class DBRelocationDataSeed extends Seeder
      */
     protected function seedNewsComments($table)
     {
-        $cycles = self::getCycles(DB::table(env('DB_DATABASE_OLD') .'.'.$table)->where('type', 'news')->count());
+        $data = DB::table(env('DB_DATABASE_OLD') .'.'.$table);
+
+        if ($table != 'engnewscomments'){
+            $data->where('type', 'news');
+        }
+
+        $cycles = self::getCycles($data->count());
 
         $users = [];
         $users_id = [];
@@ -739,7 +748,13 @@ class DBRelocationDataSeed extends Seeder
         $topics_id = [];
 
         for ($i = 0; $i < $cycles; $i++) {
-            $old_topic_comments = DB::table(env('DB_DATABASE_OLD') .'.'.$table)->where('type', 'news')->orderBy('comment_id')->offset(1000 * $i)->limit(1000)->get();
+            $old_topic_comments = DB::table(env('DB_DATABASE_OLD') .'.'.$table);
+
+            if ($table != 'engnewscomments'){
+                $old_topic_comments->where('type', 'news');
+            }
+
+            $old_topic_comments = $old_topic_comments->orderBy('comment_id')->offset(1000 * $i)->limit(1000)->get();
 
             $new_topic_comment = [];
             foreach ($old_topic_comments as $old_topic_comment) {
@@ -764,7 +779,7 @@ class DBRelocationDataSeed extends Seeder
                     'object_id' => $forum_topic->id ?? 0,
                     'relation' => Comment::RELATION_FORUM_TOPIC,
                     'title' => $old_topic_comment->comment_title,
-                    'content' => mb_convert_encoding(substr($old_topic_comment->comment_text,0,10000), "UTF-8"),
+                    'content' => $old_topic_comment->comment_text,
                 'created_at' =>  self::correctDate(Carbon::parse($old_topic_comment->comment_date.' '. $old_topic_comment->comment_time)),
                 ];
             }
@@ -821,7 +836,7 @@ class DBRelocationDataSeed extends Seeder
                     'object_id' => $forum_topic->id ?? 0,
                     'relation' => Comment::RELATION_FORUM_TOPIC,
                     'title' => $old_topic_comment->comment_title,
-                    'content' => mb_convert_encoding(substr($old_topic_comment->comment_text,0,10000), "UTF-8"),
+                    'content' => $old_topic_comment->comment_text,
                     'created_at' =>  self::correctDate(Carbon::parse($old_topic_comment->comment_date.' '. $old_topic_comment->comment_time)),
                 ];
             }
@@ -877,7 +892,7 @@ class DBRelocationDataSeed extends Seeder
                     'object_id' => $replay->id ?? 0,
                     'relation' => Comment::RELATION_REPLAY,
                     'title' => $old_replay_comment->comment_title,
-                    'content' => mb_convert_encoding(substr($old_replay_comment->comment_text,0,10000), "UTF-8"),
+                    'content' => $old_replay_comment->comment_text,
                     'created_at' =>  self::correctDate(Carbon::parse($old_replay_comment->comment_date.' '. $old_replay_comment->comment_time)),
                 ];
             }
@@ -944,11 +959,11 @@ class DBRelocationDataSeed extends Seeder
                         'user_id'           => $user->id ?? 1,
                         'user_replay'       => in_array($old_replay->replay_type, ['uduel', 'upack', 'uteam']),
                         'type_id'           => $types->where('name', substr($old_replay->replay_type, 1))->first()->id ?? $types->first()->id,
-                        'title'             => mb_convert_encoding(substr($old_replay->replay_name,0,10000), "UTF-8"),
-                        'content'           => mb_convert_encoding(substr($old_replay->replay_rustext,0,10000), "UTF-8"),
+                        'title'             => $old_replay->replay_name,
+                        'content'           => $old_replay->replay_rustext,
                         'map_id'            => $old_replay->replay_map ? $maps->where('name', $old_replay->replay_map)->first()->id ?? 0 : 0,
                         'file_id'           => $file_id,
-                        'championship'      =>  mb_convert_encoding(substr($old_replay->replay_event,0,10000), "UTF-8"),
+                        'championship'      => $old_replay->replay_event,
                         'first_country_id'  => $countries->where('name', $old_replay->replay_countryv)->first()->id ?? 0,
                         'second_country_id' => $countries->where('name', $old_replay->replay_countryd)->first()->id ?? 0,
                         'first_race'        => $old_replay->replay_racev??'0',
@@ -1077,7 +1092,7 @@ class DBRelocationDataSeed extends Seeder
 
                         $new_messages[] = [
                             'user_id'       => $from->id??0,
-                            'message'       => mb_convert_encoding(substr($dialog->text, 0, 10000), "UTF-8"),
+                            'message'       => $dialog->text,
                             'is_read'       => $dialog->read,
                             'dialogue_id'   => $new_dialog->id,
                             'created_at'   => self::correctDate(Carbon::createFromTimestamp($dialog->date)),
