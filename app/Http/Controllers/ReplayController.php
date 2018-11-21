@@ -48,6 +48,13 @@ class ReplayController extends Controller
         $method = $this->method_get;
         $query = Replay::$method();
         $request_data = $request->validated();
+
+        foreach ($request_data as $key=>$datum){
+            if (is_null($datum)){
+                unset($request_data[$key]);
+            }
+        }
+
         if ($request_data)
             foreach ($request_data as $key=>$request_datum) {
                 if ($key == 'text'){

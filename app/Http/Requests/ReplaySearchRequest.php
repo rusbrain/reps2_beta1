@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ReplaySearchRequest extends FormRequest
 {
@@ -27,8 +28,10 @@ class ReplaySearchRequest extends FormRequest
             'text'                  => 'nullable|string|max:255',
             'first_country_id'      => 'nullable|exists:countries,id',
             'second_country_id'     => 'nullable|exists:countries,id',
-            'first_race'            => 'nullable|in_array:[All,Z,T,P]',
-            'second_race'           => 'nullable|in_array:[All,Z,T,P]',
+            'first_race'            => ['nullable',
+                                        Rule::in(['All','Z','T','P'])],
+            'second_race'           => ['nullable',
+                                        Rule::in(['All','Z','T','P'])],
             'map_id'                => 'nullable|exists:replay_maps,id',
             'type_id'               => 'nullable|exists:replay_types,id',
             'sort_by'               => 'nullable|in_array:[game_version,rating,user_rating,evaluation,length,title,created_at]',
@@ -48,8 +51,8 @@ class ReplaySearchRequest extends FormRequest
             'text.max'                  => 'Максимальная длина фразы для поиска 255 символов',
             'first_country_id.exists'   => 'Не верно указана страна',
             'second_country_id.exists'  => 'Не верно указана страна',
-            'first_race.in_array'       => 'Не верно указана раса',
-            'second_race.in_array'      => 'Не верно указана раса',
+            'first_race.in'             => 'Не верно указана раса',
+            'second_race.in'            => 'Не верно указана раса',
             'map_id.exists'             => 'Не верно указана карта',
             'sort_by.in_array'          => 'Не верно указан параметр сортиовки',
             'sort_type.in_array'        => 'Не верно указан тип сортиовки',

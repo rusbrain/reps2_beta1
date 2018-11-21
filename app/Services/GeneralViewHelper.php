@@ -79,9 +79,13 @@ class GeneralViewHelper
      */
     public function getLastForum()
     {
-        $this->last_forum =  $this->last_forum??ForumSection::general_active()->with(['topics' =>function($query){
-                $query->with('user')->orderBy('created_at', 'desc')->limit(5);
-            }])->get();
+        $this->last_forum =  $this->last_forum??ForumSection::general_active()->with('topics')->get()
+                ->transform(function ($item, $key) {
+                $topics = $item->topics;
+                unset($item->topics);
+                $item->topics = $topics->take(5);
+                return $item;
+            });
 
         return $this->last_forum;
     }
@@ -172,17 +176,13 @@ class GeneralViewHelper
      */
     public function getAllForumSections()
     {
-//        if(!$this->all_sections){
-//            $this->all_sections=ForumSection::orderBy('position')->get();
-//            $this->all_sections = $this->all_sections->load(['topics' =>function($q){
-//                $q->orderBy('created_at', 'desc')->limit(5);
-//            }]);
-//        }
-//        return $this->all_sections;
-
-        $this->all_sections =  $this->all_sections??ForumSection::active()->with(['topics' =>function($query){
-                $query->orderBy('created_at', 'desc')->limit(5);
-            }])->get();
+        $this->all_sections =  $this->all_sections??ForumSection::active()->with('topics')->get()
+                ->transform(function ($item, $key) {
+                    $topics = $item->topics;
+                    unset($item->topics);
+                    $item->topics = $topics->take(5);
+                    return $item;
+                });
 
 
         return $this->all_sections;

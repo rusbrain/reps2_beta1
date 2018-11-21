@@ -44,13 +44,12 @@ class ForumController extends Controller
         }])
             ->where(function ($q){
                 $q->whereNull('start_on')
-                    ->orWhere('start_on', Carbon::now()->format('Y-M-d'));
+                    ->orWhere('start_on','<=', Carbon::now()->format('Y-M-d'));
             })
             ->with(['comments' => function($query){
                 $query->orderBy('created_at', 'desc')->get();
             }])
-            //->withCount('comments')
-
+            ->with('comments')
             ->orderBy('created_at', 'desc')->paginate(20);
 
         return view('forum.section')->with('topics', $data);
