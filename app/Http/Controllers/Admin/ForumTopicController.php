@@ -25,7 +25,8 @@ class ForumTopicController extends Controller
         $data = ForumTopic::search(ForumTopic::with('user', 'section', 'icon'), $request->validated())->where(function ($q){
             $q->whereNull('start_on')
                 ->orWhere('start_on', Carbon::now()->format('Y-M-d'));
-        })->paginate(50);
+        })
+            ->withCount('comments', 'positive', 'negative')->paginate(50);
 
         return view('admin.forum.topic.list')->with(['data' => $data, 'request_data' => $request->validated(), 'sections' => ForumSection::all()]);
     }

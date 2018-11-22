@@ -12,7 +12,7 @@ class QuickEmail extends Mailable
     use Queueable, SerializesModels;
 
     private $content;
-    private $subject;
+    public $subject;
 
     /**
      * Create a new message instance.

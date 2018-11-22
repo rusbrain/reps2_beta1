@@ -249,6 +249,21 @@ class DBRelocationDataSeed extends Seeder
         echo "23. Start Update Coverage \n";
         $this->updateCoverage();
         echo "Update Coverage finished \n\n";
+
+        //Dialogs seeding
+        echo "24. Start Update Topic \n";
+        $this->updateCommentsCount();
+        echo "Update Topic finished \n\n";
+
+        //Dialogs seeding
+        echo "25. Start Update Replay \n";
+        $this->updateReplaysCount();
+        echo "Update Replay finished \n\n";
+
+        //Dialogs seeding
+        echo "26. Start Update Gallery \n";
+        $this->updateGalleryCount();
+        echo "Update Gallery finished \n\n";
     }
 
     /**
@@ -357,8 +372,8 @@ class DBRelocationDataSeed extends Seeder
             $new_gallery = [];
 
             foreach ($old_galleries as $old_gallery) {
-                $path_to = "./public/storage/gallery/{$old_gallery->photo_id}.jpg";
-
+                $path_to = "./storage/app/public/gallery/{$old_gallery->photo_id}.jpg";
+                echo (string)!@fopen($path_to, 'r');
                 if (@fopen($path_to, 'r')) {
                     if(in_array($old_gallery->user_id, $users_id)){
                         $user = $users[$old_gallery->user_id];
@@ -436,8 +451,8 @@ class DBRelocationDataSeed extends Seeder
                 }
 
                 $new_gallery_comment[] = [
-                    'user_id' => (int)$user->id ?? 1,
-                    'object_id' => (int)$user_gallery->id ?? 0,
+                    'user_id' => (int)($user->id ?? 1),
+                    'object_id' => (int)($user_gallery->id ?? 0),
                     'relation' => Comment::RELATION_USER_GALLERY,
                     'title' => $old_gallery_comment->comment_title,
                     'content' => (string)$old_gallery_comment->comment_text,
@@ -1124,7 +1139,8 @@ class DBRelocationDataSeed extends Seeder
     /**
      * Update section for Interview
      */
-    protected function updateInterview(){
+    protected function updateInterview()
+    {
         $section_id = ForumSection::where('name', 'interview')->first()->id??3;
         ForumTopic::where('reps_section', 'like', '%interview%')->update(['section_id' => $section_id]);
     }
@@ -1132,9 +1148,67 @@ class DBRelocationDataSeed extends Seeder
     /**
      * Update section for Coverage
      */
-    protected function updateCoverage(){
+    protected function updateCoverage()
+    {
         $section_id = ForumSection::where('name', 'coverage')->first()->id??7;
         ForumTopic::where('reps_section', 'like', '%coverage%')->update(['section_id' => $section_id]);
+    }
+
+    /**
+     * Update Topic Comments Count
+     */
+    protected function updateCommentsCount()
+    {
+        $cycles = self::getCycles(ForumTopic::count());
+
+        for ($i = 0; $i < $cycles; $i++) {
+            $topics = ForumTopic::orderBy('id')->offset(1000 * $i)->limit(1000)->get();
+            foreach ($topics as $topic) {
+                $topic->comments_count = $topic->comments()->count();
+                $topic->save();
+            }
+
+            $j = $i + 1;
+            echo "Update Topic ($j/$cycles)\n";
+        }
+    }
+
+    /**
+     * Update Replay Comments Count
+     */
+    protected function updateReplaysCount()
+    {
+        $cycles = self::getCycles(Replay::count());
+
+        for ($i = 0; $i < $cycles; $i++) {
+            $replays = Replay::orderBy('id')->offset(1000 * $i)->limit(1000)->get();
+            foreach ($replays as $replay) {
+                $replay->comments_count = $replay->comments()->count();
+                $replay->save();
+            }
+
+            $j = $i + 1;
+            echo "Update Replay ($j/$cycles)\n";
+        }
+    }
+
+    /**
+     * Update Gallery Comments Count
+     */
+    protected function updateGalleryCount()
+    {
+        $cycles = self::getCycles(UserGallery::count());
+
+        for ($i = 0; $i < $cycles; $i++) {
+            $gallerys = UserGallery::orderBy('id')->offset(1000 * $i)->limit(1000)->get();
+            foreach ($gallerys as $gallery) {
+                $gallery->comments_count = $gallery->comments()->count();
+                $gallery->save();
+            }
+
+            $j = $i + 1;
+            echo "Update Gallery ($j/$cycles)\n";
+        }
     }
 
     /**
