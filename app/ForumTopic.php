@@ -32,7 +32,11 @@ class ForumTopic extends Model
      */
     public function section()
     {
-        return $this->belongsTo('App\ForumSection');
+        return $this->belongsTo('App\ForumSection','section_id');
+    }
+    public function sectionActive()
+    {
+        return $this->belongsTo('App\ForumSection','section_id')->where('is_active', 1);
     }
 
     /**

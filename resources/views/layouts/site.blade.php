@@ -6,18 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{csrf_token()}}">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{route('home')}}/css/bootstrap.min.css">
 
     <!-- font-awesome-->
-    <link rel="stylesheet" href="/css/all.css">
+    <link rel="stylesheet" href="{{route('home')}}/css/all.css">
     <!--Flags CSS-->
-    <link rel="stylesheet" href="/css/flag-icon.css">
+    <link rel="stylesheet" href="{{route('home')}}/css/flag-icon.css">
     <!--Main CSS-->
-    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="{{route('home')}}/css/main.css">
 
-    <script src="/js/jquery-3.2.1.min.js"></script>
-    <!-- CkEditor -->
-    <script src="/js/ckeditor/ckeditor.js"></script>
+
 
     <title>Главная | Reps.ru</title>
 </head>
@@ -83,15 +81,19 @@
 <!-- ========== END ALL MODAL WINDOWS ============ -->
 
 <!-- Optional JavaScript -->
+<script src="{{route('home')}}/js/jquery-3.2.1.min.js"></script>
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="/js/popper.min.js"></script>
-<script src="/js/bootstrap.min.js"></script>
-<script src="/js/bootstrap-filestyle.min.js"></script>
+<script src="{{route('home')}}/js/popper.min.js"></script>
+<script src="{{route('home')}}/js/bootstrap.min.js"></script>
+<script src="{{route('home')}}/js/bootstrap-filestyle.min.js"></script>
 
+<!-- CkEditor -->
+<script src="{{route('home')}}/js/ckeditor/ckeditor.js"></script>
 <!-- jQuery Validate -->
-<script src="/js/jquery.validate.min.js"></script>
+<script src="{{route('home')}}/js/jquery.validate.min.js"></script>
 
+@yield('js')
 <!--Custom scripts-->
-<script src="/js/scripts.js"></script>
+<script src="{{route('home')}}/js/scripts.js"></script>
 </body>
 </html>

@@ -5,7 +5,7 @@
         @if(Auth::user()->id != $user->id)
             @include('user.inner_user_sidebar')
         @endif
-        <div class="col-md-8">
+        <div class="col-md-9">
             <div class="profile-page">
                 <div class="page-title row">Профайл пользователя</div>
                 <div class="row">

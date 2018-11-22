@@ -67,11 +67,9 @@
                             <a class="profile-link" href="{{route('replay.my_user')}}">Мои реплеи</a>
                             <a class="profile-link" href="{{route('replay.my_gosu')}}">Мои госу реплеи</a>
 
-                            <a class="profile-link" href="{{route('user.message.get_list')}}">
-                                Новые сообщения()
+                            <a class="profile-link" href="{{route('user.messages_all')}}">
+                                Новые сообщения({{$general_helper->getNewUserMessage()}})
                             </a>
-                            {{--{{$general_helper->getNewUserMessage()}}--}}
-
                             <a class="profile-link" href="{{route('user.friends_list')}}">Список друзей</a>
                             <a class="profile-link" href="{{route('user.ignore_list')}}">Игнор лист</a>
 
