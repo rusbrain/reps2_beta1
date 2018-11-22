@@ -4,25 +4,61 @@ namespace App\Http\Controllers;
 
 use App\Dialogue;
 use App\Http\Requests\SendUserMessageRequest;
-use App\IgnoreUser;
 use App\UserMessage;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class UserMessagingController extends Controller
+class UserMessagingController extends BaseUserMessageController
 {
-    public function sendMessage(SendUserMessageRequest $request, $user_id){
-
-        if (IgnoreUser::me_ignore($user_id)){
-            return abort(403);
+    /**
+     * Get message list for user
+     *
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getUser($id = false)
+    {
+        if($id == Auth::id()){
+            return redirect()->route('user.message.get_list');
         }
 
-        $dialogue = Dialogue::getDialogUser($user_id);
-
-        $message = UserMessage::createMessage($request, $dialogue->id);
-
-        return $message->load('recipient', 'sender');
+        return view('admin.user.messages')->with(self::getMessageData($id));
     }
+
+    /**
+     * Seva new message to user
+     *
+     * @param SendUserMessageRequest $request
+     * @param $dialog_id
+     * @return array
+     */
+    public function send(SendUserMessageRequest $request, $dialog_id)
+    {
+        parent::send($request, $dialog_id);
+
+        return redirect()->route('admin.user.message_load', ['id'=>$dialog_id]);
+    }
+
+    /**
+     * Load messages of user
+     *
+     * @param $dialog_id
+     * @return array
+     */
+    public function load($dialog_id)
+    {
+        return view('admin.user.message_parse')->with(parent::load($dialog_id));
+    }
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
