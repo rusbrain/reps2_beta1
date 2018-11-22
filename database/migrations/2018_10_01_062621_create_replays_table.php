@@ -17,7 +17,7 @@ class CreateReplaysTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->boolean('user_replay')->default(true);
-            $table->boolean('type_id');
+            $table->integer('type_id');
             $table->string('title');
             $table->longText('content')->charset('cp1251');
             $table->integer('map_id')->default(0);

@@ -239,6 +239,16 @@ class DBRelocationDataSeed extends Seeder
         echo "21. Dialogs seed start \n";
         $this->seedMessages();
         echo "Dialogs seed finished \n\n";
+
+        //Dialogs seeding
+        echo "22. Start Update Interview \n";
+        $this->updateInterview();
+        echo "Update Interview finished \n\n";
+
+        //Dialogs seeding
+        echo "23. Start Update Coverage \n";
+        $this->updateCoverage();
+        echo "Update Coverage finished \n\n";
     }
 
     /**
@@ -1109,6 +1119,22 @@ class DBRelocationDataSeed extends Seeder
 
         $users = null;
         $users_id = null;
+    }
+
+    /**
+     * Update section for Interview
+     */
+    protected function updateInterview(){
+        $section_id = ForumSection::where('name', 'interview')->first()->id??3;
+        ForumTopic::where('reps_section', 'like', '%interview%')->update(['section_id' => $section_id]);
+    }
+
+    /**
+     * Update section for Coverage
+     */
+    protected function updateCoverage(){
+        $section_id = ForumSection::where('name', 'coverage')->first()->id??7;
+        ForumTopic::where('reps_section', 'like', '%coverage%')->update(['section_id' => $section_id]);
     }
 
     /**
