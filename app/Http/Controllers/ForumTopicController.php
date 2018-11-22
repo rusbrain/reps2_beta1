@@ -51,16 +51,12 @@ class ForumTopicController extends Controller
     /**
      * Display form for create new topic
      *
-     * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
-    public function create(Request $request)
+    public function create()
     {
-        if($request->has('section_id')){
-            return view('forum.create_topic')->with('section', ForumSection::find($request->get('section_id')));
-        }
+        return view('forum.create_topic')->with('sections', ForumSection::all());
 
-        return back();
     }
 
     /**
@@ -218,9 +214,8 @@ class ForumTopicController extends Controller
 
         $data = ForumTopic::where('user_id',$user_id)
             ->with('icon')
-            ->whereHas(['section' => function ($q){
-            $q->where('is_active', 1);
-        }])->with(['user'=> function($q){
+            ->has('sectionActive')
+            ->with(['user'=> function($q){
             $q->withTrashed();
         }])
             ->where(function ($q){
@@ -232,6 +227,6 @@ class ForumTopicController extends Controller
             }])
             ->orderBy('created_at', 'desc')->paginate(20);
 
-        return view('forum.section')->with('topics', $data);
+        return view('forum.my_topics')->with('topics', $data);
     }
 }

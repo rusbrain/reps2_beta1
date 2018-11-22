@@ -44,7 +44,6 @@ Route::group(['middleware' => 'activity'], function () {
         Route::post('/register', 'Auth\RegisterController@register')->name('registration');
         Route::get('{id}/friends_list', 'UserFriendController@getFriendsList')->name('user.friends_list.by_id');
 
-
         Route::group(['middleware' => 'auth'], function () {
             Route::get('{id}/ignore', 'IgnoreController@setIgnore')->name('user.set_ignore');
             Route::get('{id}/not_ignore', 'IgnoreController@setNotIgnore')->name('user.set_not_ignore');
@@ -55,13 +54,12 @@ Route::group(['middleware' => 'activity'], function () {
             Route::get('/edit', 'UserController@edit')->name('edit_profile');
             Route::post('/save', 'UserController@update')->name('save_profile');
 
-            Route::post('{id}/send_message', 'UserMessagingController@sendMessage')->name('user.message.send');
-            Route::get('messages', 'UserMessagingController@getCorrespList')->name('user.message.get_list');
-            Route::get('{id}/messages', 'UserMessagingController@getMessages')->name('user.message.get_user_list');
-            Route::post('{id}/messages', 'UserMessagingController@loadMessages')->name('user.message.load_user_list');
-            Route::post('messages/{id}', 'UserMessagingController@getMessage')->name('user.message.get');
             Route::post('messages/{id}/update', 'UserMessagingController@updateMessage')->name('user.message.update');
             Route::post('messages/{id}/delete', 'UserMessagingController@removeMessage')->name('user.message.delete');
+            Route::get('{id}/messages', 'UserMessagingController@getUser')->name('user.messages');
+            Route::get('messages', 'UserMessagingController@getUser')->name('user.messages_all');
+            Route::get('/message/{dialog_id}/load', 'UserMessagingController@load')->name('user.message_load');
+            Route::post('/message/{dialog_id}/send', 'UserMessagingController@send')->name('user.message.send');
         });
 
         Route::get('/{id}', 'UserController@show')->name('user_profile');
@@ -174,6 +172,7 @@ Route::group(['middleware' => 'activity'], function () {
             Route::get('{id}/profile/edit', 'UserController@getEditUserProfile')->name('admin.user.profile.edit');
             Route::post('{id}/profile/save', 'UserController@saveUserProfile')->name('admin.user.profile.save');
             Route::get('/', 'UserController@index')->name('admin.users');
+
             Route::get('{id}/message', 'UserMessageController@getUser')->name('admin.user.messages');
             Route::get('message', 'UserMessageController@getUser')->name('admin.user.messages_all');
             Route::get('/message/{dialog_id}/load', 'UserMessageController@load')->name('admin.user.message_load');

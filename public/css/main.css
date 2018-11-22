@@ -316,7 +316,7 @@ a.read-more {
 }
 .forum-section-row a {
   display: block;
-  padding: 2px 15px;
+  padding: 2px 5px;
   background: #efefef;
   color: #000;
 }
@@ -412,7 +412,13 @@ a.read-more {
   padding-bottom: 5px;
 }
 .sidebar-inner-profile {
+}
+.profile-sidebar-widget {
   border: 1px solid #717171;
+}
+.friend-list-wrapper {
+  padding: 5px 10px;
+  font-size: 12px;
 }
 .sidebar-inner-profile .profile-link {
   background: #717171;
@@ -472,9 +478,9 @@ a.read-more {
   margin-left: 5px;
   color: #717171;
 }
-.no-logged-user-message{
+.no-logged-user-message {
   padding: 5px 15px;
-  border:1px solid #717171;
+  border: 1px solid #717171;
 }
 /**---------------------*/
 /**------ LEFT SIDEBAR -----------*/
@@ -702,7 +708,7 @@ box-header
 }
 .evolution-replay {
 }
-.replay-list-wrapper{
+.replay-list-wrapper {
   border: 1px solid #717171;
   padding-bottom: 20px;
   margin-bottom: 20px;
@@ -797,7 +803,7 @@ box-header
 .pagination {
   margin: 0 auto;
 }
-.sidebar-inner-widget-content form{
+.sidebar-inner-widget-content form {
   padding-bottom: 0;
 }
 /**---------------------*/
@@ -818,7 +824,7 @@ box-header
 /**---------------------*/
 /**------TOPIC PAGE ----------*/
 /**---------------------*/
-.topic-comments-wrapper{
+.topic-comments-wrapper {
   border: 1px solid #717171;
   margin-top: 20px;
 }
@@ -924,4 +930,226 @@ box-header
   min-height: 50px;
   align-items: center;
   display: flex;
+}
+.date i {
+  margin-right: 10px;
+  margin-top: 10px;
+}
+/**---------------------*/
+/**------ User Topics Page ----*/
+/**---------------------*/
+.create-top-btn {
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+/**---------------------*/
+/**------ User Messages Page ----*/
+/**---------------------*/
+.direct-chat-text {
+  border-radius: 5px;
+  position: relative;
+  padding: 5px 10px;
+  background: #d2d6de;
+  border: 1px solid #d2d6de;
+  margin: 5px 0 0 50px;
+  color: #444;
+}
+.direct-chat-img {
+  border-radius: 50%;
+  float: left;
+  width: 40px;
+  height: 40px;
+}
+.direct-chat-info {
+  display: block;
+  margin-bottom: 2px;
+  font-size: 12px;
+}
+.direct-chat-timestamp {
+  color: #999;
+}
+.users-list {
+  flex-direction: column;
+}
+.users-list > li img {
+  width: auto;
+  max-width: 150px;
+  height: 60px;
+  border-radius: 0;
+}
+.list-unstyled, .chart-legend, .contacts-list, .users-list, .mailbox-attachments {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.users-list-date {
+  color: #999;
+  font-size: 12px;
+}
+.users-list-name, .users-list-date {
+  display: block;
+}
+.users-list-name {
+  font-weight: 600;
+  color: #444;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.users-list-name, .users-list-date {
+  display: block;
+}
+.user_message_list li {
+  width: 100%;
+}
+.user_message_list{
+  display: flex;
+  flex-direction: column;
+}
+.users-list > li {
+  float: left;
+  padding: 10px;
+  text-align: center;
+}
+.box-header > .fa, .box-header > .glyphicon, .box-header > .ion, .box-header .box-title {
+  display: inline-block;
+  font-size: 18px;
+  margin: 0;
+  line-height: 1;
+}
+.box-header.with-border {
+  border-bottom: 1px solid #f4f4f4;
+}
+.box-header {
+  color: #444;
+  display: block;
+  padding: 10px;
+  position: relative;
+}
+.direct-chat-messages {
+  -webkit-transform: translate(0, 0);
+  -ms-transform: translate(0, 0);
+  -o-transform: translate(0, 0);
+  transform: translate(0, 0);
+  padding: 10px;
+  height: 250px;
+  overflow: auto;
+}
+.direct-chat-messages, .direct-chat-contacts {
+  -webkit-transition: -webkit-transform .5s ease-in-out;
+  -moz-transition: -moz-transform .5s ease-in-out;
+  -o-transition: -o-transform .5s ease-in-out;
+  transition: transform .5s ease-in-out;
+}
+.box.box-primary {
+  border-top-color: #3c8dbc;
+}
+.box {
+  position: relative;
+  border-radius: 3px;
+  background: #fff;
+  border-top: 3px solid #d2d6de;
+  border-top-color: rgb(210, 214, 222);
+  margin-bottom: 20px;
+  width: 100%;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+.direct-chat-primary .right > .direct-chat-text {
+  background: #3c8dbc;
+  border-color: #3c8dbc;
+  color: #fff;
+}
+.right .direct-chat-img {
+  float: right;
+}
+.direct-chat-img {
+  border-radius: 50%;
+  float: left;
+  width: 40px;
+  height: 40px;
+}
+.direct-chat-timestamp {
+  color: #999;
+}
+.direct-chat-info {
+  display: block;
+  margin-bottom: 2px;
+  font-size: 12px;
+}
+.direct-chat-text::before {
+  border-width: 6px;
+  margin-top: -6px;
+}
+.direct-chat-text::after, .direct-chat-text::before {
+  position: absolute;
+  right: 100%;
+  top: 15px;
+  border: solid transparent;
+  border-top-width: medium;
+  border-right-color: transparent;
+  border-right-width: medium;
+  border-bottom-width: medium;
+  border-left-width: medium;
+  border-right-color: #d2d6de;
+  content: ' ';
+  height: 0;
+  width: 0;
+  pointer-events: none;
+}
+.direct-chat-msg {
+  margin-bottom: 10px;
+}
+.direct-chat-msg, .direct-chat-text {
+  display: block;
+}
+.direct-chat-name {
+  font-weight: 600;
+}
+.pull-right {
+  float: right !important;
+}
+.direct-chat-primary .right > .direct-chat-text::after, .direct-chat-primary .right > .direct-chat-text::before {
+  border-left-color: #3c8dbc;
+}
+.right .direct-chat-text::after, .right .direct-chat-text::before {
+  right: auto;
+  left: 100.4%;
+  border-right-color: transparent;
+  border-left-color: #d2d6de;
+}
+.direct-chat-text::after {
+  border-width: 5px;
+  margin-top: -5px;
+}
+.direct-chat-text::after, .direct-chat-text::before {
+  position: absolute;
+  right: 100.3%;
+  top: 15px;
+  border: solid transparent;
+  border-top-width: medium;
+  border-right-color: transparent;
+  border-right-width: medium;
+  border-bottom-width: medium;
+  border-left-color: transparent;
+  border-left-width: medium;
+  border-right-color: #d2d6de;
+  content: ' ';
+  height: 0;
+  width: 0;
+  pointer-events: none;
+}
+::after, ::before {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.direct-chat-primary .right > .direct-chat-text {
+  color: #fff;
+}
+.direct-chat-text {
+  color: #444;
+}
+.right .direct-chat-text {
+  margin-right: 50px;
+  margin-left: 0;
 }

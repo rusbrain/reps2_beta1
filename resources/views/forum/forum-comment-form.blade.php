@@ -16,9 +16,11 @@
         <button class="btn btn-primary" type="submit">Отправить</button>
     </form>
 </div>
+@section('js')
 <script>
     /**ckeditor for User profile editing*/
     $(function () {
         CKEDITOR.replace('forum-comment-content');
     });
 </script>
+@endsection

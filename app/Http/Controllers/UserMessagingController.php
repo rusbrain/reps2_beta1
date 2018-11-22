@@ -18,10 +18,10 @@ class UserMessagingController extends BaseUserMessageController
     public function getUser($id = false)
     {
         if($id == Auth::id()){
-            return redirect()->route('user.message.get_list');
+            return redirect()->route('user.messages_all');
         }
 
-        return view('admin.user.messages')->with(self::getMessageData($id));
+        return view('user.messages')->with(self::getMessageData($id));
     }
 
     /**
@@ -35,7 +35,7 @@ class UserMessagingController extends BaseUserMessageController
     {
         parent::send($request, $dialog_id);
 
-        return redirect()->route('admin.user.message_load', ['id'=>$dialog_id]);
+        return redirect()->route('user.message_load', ['id'=>$dialog_id]);
     }
 
     /**
@@ -46,19 +46,8 @@ class UserMessagingController extends BaseUserMessageController
      */
     public function load($dialog_id)
     {
-        return view('admin.user.message_parse')->with(parent::load($dialog_id));
+        return view('user.message_parse')->with(parent::load($dialog_id));
     }
-
-
-
-
-
-
-
-
-
-
-
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -79,6 +68,18 @@ class UserMessagingController extends BaseUserMessageController
         $dialog_id = Dialogue::getDialogUser($user_id)->id;
 
         return view('user.messages')->with(['messages'=>Dialogue::getUserDialogueContent($user_id), 'dialog_id'=>$dialog_id]);
+    }
+
+    /**
+     * Load messages of user
+     *
+     * @param $user_id
+     * @return array
+     */
+    public function loadMessages($user_id)
+    {
+
+        return view('user.message_parse')->with(self::getMessageData($user_id));
     }
 
     /**

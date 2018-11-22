@@ -7,18 +7,23 @@
             $maps = $general_helper->getReplayMaps();
             $types = $general_helper->getReplayTypes();
         @endphp
+        @php //dd($errors); @endphp
 
         <div class="sidebar-inner-widget-content">
             <form action="{{route('replay.users')}}" method="GET">
                 @csrf
                 <div class="form-group">
                     <label for="text">Имя/Чемпионат/Описание</label>
-                    <div class="error-country"></div>
-                    <input type="text" id="text" name="text" class="form-control">
+                    @if ($errors->has('text'))
+                        <div class="error-country"></div>
+                    @endif
+                    <input type="text" id="text" name="text" class="form-control" value="">
                 </div>
                 <div class="form-group">
                     <label for="first_country_id">Победившая страна:</label>
-                    <div class="error-country"></div>
+                    @if ($errors->has('first_country_id'))
+                        <div class="error-country"></div>
+                    @endif
                     <select size=1 id="first_country_id" name="first_country_id" class="form-control country">
                         <option value="">Все</option>
                         @foreach($countries as $country)
@@ -28,7 +33,9 @@
                 </div>
                 <div class="form-group">
                     <label for="second_country_id">Проигравшая страна:</label>
-                    <div class="error-country"></div>
+                    @if ($errors->has('second_country_id'))
+                        <div class="error-country"></div>
+                    @endif
                     <select size=1 id="second_country_id" name="second_country_id" class="form-control country">
                         <option value="">Все</option>
                         @foreach($countries as $country)
@@ -38,25 +45,33 @@
                 </div>
                 <div class="form-group">
                     <label for="first_race">Победившая раса:</label>
-                    <div class="error-country"></div>
+                    @if ($errors->has('first_race'))
+                        <div class="error-country"></div>
+                    @endif
                     <select size=1 id="first_race" name="first_race" class="form-control country">
-                        @foreach($races as $key => $race)
-                            <option value="{{$key}}">{{$race}}</option>
+                        <option value="">Any</option>
+                        @foreach($races as $race)
+                            <option value="{{$race}}">{{$race}}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="second_race">Проигравшая раса:</label>
-                    <div class="error-country"></div>
+                    @if ($errors->has('second_race'))
+                        <div class="error-country"></div>
+                    @endif
                     <select size=1 id="second_race" name="second_race" class="form-control country">
-                        @foreach($races as $key => $race)
-                            <option value="{{$key}}">{{$race}}</option>
+                        <option value="">Any</option>
+                        @foreach($races as $race)
+                            <option value="{{$race}}">{{$race}}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="second_race">Карта:</label>
-                    <div class="error-country"></div>
+                    <label for="map_id">Карта:</label>
+                    @if ($errors->has('map_id'))
+                        <div class="error-country"></div>
+                    @endif
                     <select size=1 id="map_id" name="map_id" class="form-control country">
                         <option value="">Все</option>
                         @foreach($maps as $map)
@@ -65,8 +80,10 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="second_race">Тип:</label>
-                    <div class="error-country"></div>
+                    <label for="type_id">Тип:</label>
+                    @if ($errors->has('type_id'))
+                        <div class="error-country"></div>
+                    @endif
                     <select size=1 id="type_id" name="type_id" class="form-control country">
                         <option value="">Все</option>
                         @foreach($types as $type)
@@ -79,6 +96,7 @@
                     <button type="submit" class="btn btn-primary">Поиск</button>
                 </div>
             </form>
+
         </div>
     </div>
 </div>

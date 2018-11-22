@@ -164,6 +164,8 @@
             </div>
         </form>
     </div>
+@endsection
+@section('js')
     <script>
         /**ckeditor for User profile editing*/
         $(function () {

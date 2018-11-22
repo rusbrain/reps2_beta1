@@ -1,8 +1,6 @@
 @extends('layouts.site')
 @inject('general_helper', 'App\Services\GeneralViewHelper')
-@php $countries = $general_helper->getCountries();
-
-@endphp
+@php $countries = $general_helper->getCountries();@endphp
 @section('content')
     <div class="row">
         <div class="col-md-3">
