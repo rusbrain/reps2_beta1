@@ -15,13 +15,16 @@
                             <span>{!! $topic->title !!}</span>
                             <span class="separator">|</span>
                             <span>({{count($topic->comments)}}\{{$topic->reviews}})</span>
-                            <span class="section-topic-date">{{\Carbon\Carbon::parse($topic->created_at)->format('d.m.Y')}}</span>
+
+                            @if(Auth::user() && Auth::id() == $topic->user_id)
+                                <a href="{{route('forum.topic.edit',['id'=>$topic->id])}}" class="topic-edit" title="Редактировать">
+                                    <i class="fas fa-pen"></i>
+                                </a>
+                            @endif
+
+                            <span class="section-topic-date">
+                                {{\Carbon\Carbon::parse($topic->created_at)->format('d.m.Y')}}</span>
                         </a>
-                        @if(Auth::user() && Auth::id() == $topic->user_id)
-                            <a href="{{route('forum.topic.edit',['id'=>$topic->id])}}" title="Редактировать">
-                                <i class="far fa-pen"></i> Редактировать
-                            </a>
-                        @endif
                         <a href="{{route('forum.topic.index',['id' => $topic->id])}}/#comment">
                             <i class="far fa-comment-alt"></i>
                         </a>
@@ -30,4 +33,8 @@
             </div>
         </div>
     </div>
+    {{--@php $data = $topics @endphp--}}
+    {{--<div class="row margin-top-20">--}}
+        {{--@include('pagination')--}}
+    {{--</div>--}}
 @endsection

@@ -277,6 +277,9 @@ body {
   text-decoration: underline;
   transform: rotate(-90deg);
 }
+.search-select{
+  margin-right: 5px;
+}
 /**---------------------*/
 /**------HOME PAGE-----------*/
 /**---------------------*/
@@ -289,6 +292,7 @@ body {
 .content-center form {
   padding-top: 20px;
   padding-bottom: 20px;
+  margin-bottom: 30px;
 }
 .content-center-main-wrapper {
 }
@@ -319,6 +323,14 @@ a.read-more {
   padding: 2px 5px;
   background: #efefef;
   color: #000;
+}
+.topic-edit{
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+}
+.topic-edit i{
+  margin-right: 5px;
 }
 .forum-section-row a:hover {
   text-decoration: underline;
@@ -435,7 +447,7 @@ a.read-more {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border: 1px solid #717171;
+  border-top: 1px solid #717171;
   margin-top: 20px;
 }
 /**---------------------*/
@@ -472,6 +484,7 @@ a.read-more {
 /**---------------------*/
 .section-topic-date {
   float: right;
+  background: #efefef;
 }
 .separator {
   margin-right: 5px;
@@ -680,22 +693,28 @@ box-header
 .comment-title span {
   margin-right: 10px;
 }
-.comment-date {
+#vote-modal .positive{
+  color: green;
 }
-.comment-user {
+#vote-modal .negative{
+  color: red;
 }
-.comment-flag {
+#vote-modal .positive,
+#vote-modal .negative{
+  display: none;
 }
-.comment-rating {
+#vote-modal .positive.active,
+#vote-modal .negative.active{
+  display: block;
 }
-.comment-rating-plus {
+#vote-form label{
+  display: flex;
+  align-items: center;
 }
-.comment-rating-minus {
-}
-.add-comment {
+#vote-form label div{
+  margin-left: 10px;
 }
 .comment-form {
-  border: 1px solid #717171;
   padding: 0 15px;
 }
 .comment-content {
@@ -707,6 +726,7 @@ box-header
   margin-bottom: 20px;
 }
 .evolution-replay {
+  border: 1px solid #717171;
 }
 .replay-list-wrapper {
   border: 1px solid #717171;
@@ -819,7 +839,7 @@ box-header
 .create-file label.box-title {
   font-weight: bold;
   margin-bottom: 0;
-  margin-top: 15px;
+  margin-top: 0;
 }
 /**---------------------*/
 /**------TOPIC PAGE ----------*/
@@ -854,6 +874,9 @@ box-header
   border-left: 1px solid #717171;
   border-top: 1px solid #717171;
   border-bottom: 1px solid #717171;
+  display: flex;
+  flex-direction: column;
+  justify-items: left;
 }
 .gallery-links {
   display: flex;
@@ -1002,7 +1025,7 @@ box-header
 .user_message_list li {
   width: 100%;
 }
-.user_message_list{
+.user_message_list {
   display: flex;
   flex-direction: column;
 }
@@ -1013,7 +1036,7 @@ box-header
 }
 .box-header > .fa, .box-header > .glyphicon, .box-header > .ion, .box-header .box-title {
   display: inline-block;
-  font-size: 18px;
+  font-size: 14px;
   margin: 0;
   line-height: 1;
 }
@@ -1152,4 +1175,7 @@ box-header
 .right .direct-chat-text {
   margin-right: 50px;
   margin-left: 0;
+}
+.input-group {
+  padding: 5px;
 }

@@ -54,13 +54,14 @@
                     </div>
                     @if(Auth::user())
                         <div class="vote-replay">
-                            <a href="{{route('replay.set_rating',['id'=>$replay->id, 'rating'=>1])}}"
-                               class="vote-replay-up" data-span="positive-vote">
+                            <a href="#vote-modal"
+                               class="vote-replay-up" data-toggle="modal" data-rating="1">
                                 <i class="fas fa-thumbs-up"></i>
                                 (<span id="positive-vote">{{$replay->positive_count}}</span>)
                             </a>
-                            <a href="{{route('replay.set_rating',['id'=>$replay->id, 'rating'=>-1])}}"
-                               class="vote-replay-down" data-span="negative-vote">
+
+                            <a href="#vote-modal"
+                               class="vote-replay-down" data-toggle="modal" data-rating="-1">
                                 <i class="fas fa-thumbs-down"></i>
                                 (<span id="negative-vote">{{$replay->negative_count}}</span>)
                             </a>
@@ -150,7 +151,7 @@
                 @endif
             </div>
             <div class="row">
-                <div class="add-comment-form-wrapper col">
+                <div class="add-comment-form-wrapper col border-gray">
                     <div class="comments-block-title row">Добавить комментарий</div>
                     @if(Auth::user())
                         @php
@@ -171,6 +172,42 @@
                                 You are not register on the site and this function is disabled.</p>
                         </div>
                     @endif
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="vote-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Оставте комментарий</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="vote-form" action="{{route('replay.set_rating',['id'=>$replay->id])}}">
+                        @csrf
+                        <div class="form-group">
+                            <label for="rating">Голос:
+                                <div class="positive">
+                                    <i class="fas fa-thumbs-up"></i>
+                                </div>
+                                <div class="negative">
+                                    <i class="fas fa-thumbs-down"></i>
+                                </div>
+                            </label>
+                            <input type="hidden" name="rating" id="rating" value="">
+                        </div>
+                        <div class="form-group">
+                            <label for="comment">Комментарий</label>
+                            <input type="text" class="form-control" name="comment" id="comment" value="">
+                        </div>
+                        <button class="btn btn-primary pull-right" type="submit">Проголосовать</button>
+                    </form>
                 </div>
             </div>
         </div>

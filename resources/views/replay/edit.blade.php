@@ -8,8 +8,10 @@
 @endphp
 @section('content')
     <div class="row create-file">
-        <div class="col-md-10">
-{{--            {{dd($replay)}}--}}
+        <div class="col-md-3">
+            @include('replay.inner_replay_sidebar')
+        </div>
+        <div class="col-md-9">
             <div class="box">
                 <div class="box-header with-border">
                     <h3 class="box-title text-blue">{{$replay->user_replay?"Пользовательский Replay":"Gosu Replay"}}

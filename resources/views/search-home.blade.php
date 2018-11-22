@@ -1,7 +1,7 @@
 <form method="get" action="{{route('home.search')}}" class="form-inline my-2 my-lg-0" id="search-form">
     @csrf
     <input class="form-control mr-sm-2" name="search" type="search" placeholder="Search" aria-label="Search">
-    <select name="section" id="section" class="form-control">
+    <select name="section" id="section" class="form-control search-select">
         @foreach(\App\Http\Controllers\HomeController::$search_types as $search_type => $title)
             <option value="{{$search_type}}">{{$title}}</option>
         @endforeach

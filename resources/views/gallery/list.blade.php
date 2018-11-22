@@ -24,7 +24,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="box-header">
-                                    <h3 class="box-title">Загрузить изображение:</h3>
+                                    <h3 class="">Загрузить изображение:</h3>
                                     <!-- /. tools -->
                                 </div>
                                 <div class="form-group">
@@ -71,7 +71,7 @@
 
             @php $data = $photos @endphp
             <div class="row margin-top-20">
-                {{--                @include('pagination')--}}
+                @include('pagination')
             </div>
         </div>
     </div>

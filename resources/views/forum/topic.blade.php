@@ -1,11 +1,7 @@
 @extends('layouts.site')
 @inject('general_helper', 'App\Services\GeneralViewHelper')
 @section('content')
-    {{--{{dd($topic)}}--}}
     <div class="row">
-        {{--<div class="col-md-3">--}}
-            {{--@include('inner_forum_sidebar')--}}
-        {{--</div>--}}
         <div class="col-md-12">
             <div class="topic-wrapper">
                 <div class="page-title w-100">{{$topic->title}}</div>
@@ -45,7 +41,7 @@
                         <div class="col-md-12 comment-content">{!! $comment->content !!}</div>
                     @endforeach
                 @endif
-                <div class="row">
+                <div class="row" id="comment">
                     <div class="add-comment-form-wrapper col">
                         <div class="comments-block-title">Добавить комментарий</div>
 

@@ -9,7 +9,7 @@ $(function () {
         loginForm.validate({
             rules: {
                 email: {required: true, email: true},
-                password: {required:true}
+                password: {required: true}
             },
             messages: {
                 email: {
@@ -17,7 +17,7 @@ $(function () {
                     email: "Неверный формат электронной почты"
                 },
                 password: {
-                    required : "Заполните это поле"
+                    required: "Заполните это поле"
                 }
             },
             errorPlacement: function (error, element) {
@@ -95,7 +95,7 @@ $(function () {
             },
             messages: {
                 answer_id: {
-                    required : "Выберете вариант ответа"
+                    required: "Выберете вариант ответа"
                 }
             },
             errorPlacement: function (error, element) {
@@ -126,9 +126,9 @@ $(function () {
 /**View vote results ->  Right SideBar */
 $(function () {
     $.ajaxSetup({
-       headers:{
-           'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
-       }
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
     });
     $('#view-answer-results').on('click', function (e) {
         e.preventDefault();
@@ -148,20 +148,39 @@ $(function () {
 
 /**Vote - positive / negative vote - Separate Replay Page*/
 $(function () {
-   $('a.vote-replay-up, a.vote-replay-down').on('click',function (e) {
-       e.preventDefault();
-       var url = $(this).attr('href');
-       var voteSpan = $(this).attr('data-span');
-       $.ajax({
-           type: 'GET',
-           url: url,
-           success: function (response) {
-               console.log(response);
-               $('#'+voteSpan).html(response.rating);
-           },
-           error: function () {
+    $('a.vote-replay-up, a.vote-replay-down').on('click', function (e) {
+        var rating = $(this).attr('data-rating');
+        var modal = $('#vote-modal');
+        modal.find('form input#rating').val(rating);
 
-           }
-       });
-   })
+        if (rating === '1') {
+            modal.find('.negative').removeClass('active');
+            modal.find('.positive').addClass('active');
+        }
+        if (rating === '-1') {
+            modal.find('.negative').addClass('active');
+            modal.find('.positive').removeClass('active');
+        }
+    });
+
+    $('#vote-form').on('submit', function (e) {
+        e.preventDefault();
+        var url = $(this).attr('action');
+        var comment = $(this).find('input[name=comment]').val();
+        var rating = $(this).find('input[name=rating]').val();
+        $.ajax({
+            type: 'GET',
+            url: url,
+            data:{
+                comment : comment,
+                rating : rating
+            },
+            success: function (response) {
+                location.reload();
+            },
+            error: function () {
+
+            }
+        });
+    });
 });

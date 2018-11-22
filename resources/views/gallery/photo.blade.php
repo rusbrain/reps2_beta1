@@ -120,7 +120,9 @@
                             $comment_type = 'gallery_id';
                             $object_id = $photo->id;
                         @endphp
-                        @include('comment-form')
+                        <div class="border-gray">
+                            @include('comment-form')
+                        </div>
                     @else
                         <div class="no-logged-user-message">
                             <p>
