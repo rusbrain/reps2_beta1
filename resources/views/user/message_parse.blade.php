@@ -29,4 +29,3 @@
                 <!-- /.direct-chat-msg -->
         @endforeach
                 <div class="scroll-to"></div>
-        </div>
