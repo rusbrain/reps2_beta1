@@ -33,7 +33,7 @@ class QuickEmail extends Mailable
      */
     public function build()
     {
-        return $this->view('email.base')
+        return $this->view('emails.base')
             ->subject($this->subject)
             ->from(env('MAIL_FROM_EMAIL'), env('MAIL_FROM_NAME'))
             ->with('content',$this->content);

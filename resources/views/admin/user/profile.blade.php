@@ -282,7 +282,7 @@
                             @endif
                             @if($user->user_galleries->count())
                                 <div class="col-md-12">
-                                    <h3 class="text-blue"><a href="{{route('gallery.list_user', ['id'=>$user->id])}}">Галерея</a></h3>
+                                    <h3 class="text-blue"><a href="{{route('gallery.list_user', ['id'=>$user->id])}}">Галлерея</a></h3>
                                     <div class="post">
                                         <!-- /.user-block -->
                                         <div class="row margin-bottom">

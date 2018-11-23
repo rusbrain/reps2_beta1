@@ -26,7 +26,7 @@ class ForumTopicController extends Controller
             $q->whereNull('start_on')
                 ->orWhere('start_on', Carbon::now()->format('Y-M-d'));
         })
-            ->withCount('comments', 'positive', 'negative')->paginate(50);
+            ->withCount( 'positive', 'negative')->paginate(50);
 
         return view('admin.forum.topic.list')->with(['data' => $data, 'request_data' => $request->validated(), 'sections' => ForumSection::all()]);
     }

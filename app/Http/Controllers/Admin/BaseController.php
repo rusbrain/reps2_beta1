@@ -41,10 +41,12 @@ class BaseController extends Controller
      * Send quick email
      *
      * @param QuickEmailRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function sendQuickEmail(QuickEmailRequest $request)
     {
         Mail::to($request->get('emailto'))
             ->send(new QuickEmail($request->get('content'), $request->get('subject')));
+        return back();
     }
 }
