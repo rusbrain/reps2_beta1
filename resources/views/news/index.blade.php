@@ -22,7 +22,7 @@
                                         <span class="separator">|</span>
                                         <span>{{$single_news->created_at}}</span>
                                         <span class="separator">|</span>
-                                        <span class="bold">Комминтарии:{{$single_news->comments_count}}</span>
+                                        <span class="bold">Комментарии:{{$single_news->comments_count}}</span>
                                         <span class="separator">|</span>
                                         <span class="bold">Прочитано:{{$single_news->reviews}}</span>
                                     </div>

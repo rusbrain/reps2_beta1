@@ -164,7 +164,7 @@ Route::group(['middleware' => 'activity'], function () {
         Route::group(['prefix' => 'user'], function () {
             Route::get('{id}/email', 'UserEmailController@index')->name('admin.user.email');
             Route::get('{id}/replay', 'ReplayController@getReplayByUser')->name('admin.user.replay');
-            Route::get('{id}/topic', 'ForumController@getUsersTopics')->name('admin.user.topic');
+            Route::get('{id}/topic', 'ForumTopicController@getUsersTopics')->name('admin.user.topic');
             Route::get('{id}/profile', 'UserController@getUserProfile')->name('admin.user.profile');
             Route::get('{id}/ban', 'UserController@banUser')->name('admin.user.ban');
             Route::get('{id}/remove', 'UserController@removeUser')->name('admin.user.remove');

@@ -11,7 +11,7 @@
                     <li>{{$question->question}}:
                         <ul>
                             @foreach($question->answers as $answer)
-                                <li>{{$answer->answer}} ({{$answer->user_answers_count}} отвеов)</li>
+                                <li>{{$answer->answer}} ({{$answer->user_answers_count}} ответов)</li>
                             @endforeach
                         </ul>
                     </li>
