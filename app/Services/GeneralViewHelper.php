@@ -43,6 +43,14 @@ class GeneralViewHelper
     protected $new_users;
     protected $game_version;
     protected $user_gallery;
+    protected static $instance;
+
+    public function __construct()
+    {
+        if (!self::$instance){
+            self::$instance = $this;
+        }
+    }
 
     /**
      * Get random user gallery images
@@ -70,8 +78,8 @@ class GeneralViewHelper
      */
     public function getRandomQuestion()
     {
-        $this->question = $this->question??InterviewQuestion::getRandomQuestion();
-        return  $this->question;
+        self::$instance->question = self::$instance->question??InterviewQuestion::getRandomQuestion();
+        return  self::$instance->question;
     }
 
     /**
@@ -79,15 +87,15 @@ class GeneralViewHelper
      */
     public function getLastForum()
     {
-        if(!$this->last_forum){
-            if(!$this->all_sections){
-                $this->getAllForumSections();
+        if(!self::$instance->last_forum){
+            if(!self::$instance->all_sections){
+                self::$instance->getAllForumSections();
             }
 
-            $this->last_forum = $this->all_sections->where('is_general', 1);
+            self::$instance->last_forum = self::$instance->all_sections->where('is_general', 1);
         }
 
-        return $this->last_forum;
+        return self::$instance->last_forum;
     }
 
     /**
@@ -95,12 +103,12 @@ class GeneralViewHelper
      */
     public function getLastGosuReplay()
     {
-        if(!$this->last_gosu_replay){
-            $this->last_gosu_replay=Replay::gosuReplay()->orderBy('created_at', 'desc')->limit(5)->get();
-            $this->last_gosu_replay->load('user', 'map', 'game_version');
+        if(!self::$instance->last_gosu_replay){
+            self::$instance->last_gosu_replay=Replay::gosuReplay()->orderBy('created_at', 'desc')->limit(5)->get();
+            self::$instance->last_gosu_replay->load('user', 'map', 'game_version');
         }
 
-        return $this->last_gosu_replay;
+        return self::$instance->last_gosu_replay;
     }
 
     /**
@@ -108,8 +116,8 @@ class GeneralViewHelper
      */
     public function getLastUserReplay()
     {
-        $this->last_user_replay = $this->last_user_replay??Replay::userReplay()->with('user')->orderBy('created_at', 'desc')->limit(5)->get();
-        return $this->last_user_replay;
+        self::$instance->last_user_replay = self::$instance->last_user_replay??Replay::userReplay()->with('user')->orderBy('created_at', 'desc')->limit(5)->get();
+        return self::$instance->last_user_replay;
     }
 
     /**
@@ -142,15 +150,15 @@ class GeneralViewHelper
      */
     public function getCountries()
     {
-        if(!$this->countries){
+        if(!self::$instance->countries){
             $countries = Country::all();
 
             foreach ($countries as $country){
-                $this->countries[$country->id] = $country;
+                self::$instance->countries[$country->id] = $country;
             }
         }
 
-        return $this->countries;
+        return self::$instance->countries;
     }
 
     /**
@@ -158,8 +166,8 @@ class GeneralViewHelper
      */
     public function getUsersRole()
     {
-        $this->user_roles = $this->user_roles??UserRole::all();
-        return $this->user_roles;
+        self::$instance->user_roles = self::$instance->user_roles??UserRole::all();
+        return self::$instance->user_roles;
     }
 
     /**
@@ -167,8 +175,8 @@ class GeneralViewHelper
      */
     public function getBirthdayUsers()
     {
-        $this->bd_users = $this->bd_users??User::where('birthday', 'like',"%".Carbon::now()->format('m-d'))->get();
-        return $this->bd_users;
+        self::$instance->bd_users = self::$instance->bd_users??User::where('birthday', 'like',"%".Carbon::now()->format('m-d'))->get();
+        return self::$instance->bd_users;
     }
 
     /**
@@ -176,17 +184,20 @@ class GeneralViewHelper
      */
     public function getAllForumSections()
     {
-        if(!$this->all_sections){
-            $all_sections = ForumSection::active()->get();
+        if(!self::$instance->all_sections){
+            $all_sections = ForumSection::active()->with(['topics' => function($q) {
+                $q->orderBy('created_at', 'desc');
+            }])->get()->transform(function ($item) {
+                $topics = $item->topics;
+                unset($item->topics);
+                $item->topics = $topics->take(5);
+                return $item;
+            });
 
-            foreach ($all_sections as $key=>$section){
-                $all_sections[$key]->topics = ForumTopic::where('section_id',$section->id)->orderBy('created_at', 'desc')->limit(5)->get();
-            }
-
-            $this->all_sections = $all_sections;
+            self::$instance->all_sections = $all_sections;
         }
 
-        return $this->all_sections;
+        return self::$instance->all_sections;
     }
 
     /**
@@ -194,15 +205,15 @@ class GeneralViewHelper
      */
     public function getReplayTypes()
     {
-        if(!$this->replay_type){
+        if(!self::$instance->replay_type){
             $types = ReplayType::all();
 
             foreach ($types as $type){
-                $this->replay_type[$type->id] = $type;
+                self::$instance->replay_type[$type->id] = $type;
             }
         }
 
-        return $this->replay_type;
+        return self::$instance->replay_type;
     }
 
     /**
@@ -210,8 +221,15 @@ class GeneralViewHelper
      */
     public function getGeneralSectionsForum()
     {
-        $this->general_sections = $this->general_sections??ForumSection::where('is_general', 1)->get();
-        return $this->general_sections;
+        if(!self::$instance->general_sections){
+            if(!self::$instance->all_sections){
+                self::$instance->getAllForumSections();
+            }
+
+            self::$instance->general_sections = self::$instance->all_sections->where('is_general', 1);
+        }
+
+        return self::$instance->general_sections;
     }
 
     /**
@@ -219,8 +237,8 @@ class GeneralViewHelper
      */
     public function getRandomBanner()
     {
-        $this->banner = $this->banner??Banner::getRandomBanner();
-        return $this->banner;
+        self::$instance->banner = self::$instance->banner??Banner::getRandomBanner();
+        return self::$instance->banner;
     }
 
     public function getTopReplayAll()
@@ -243,13 +261,13 @@ class GeneralViewHelper
      */
     public function getLastForumHome()
     {
-        $this->last_forum_home = $this->last_forum_home??ForumTopic::whereHas('section', function($query){
+        self::$instance->last_forum_home = self::$instance->last_forum_home??ForumTopic::whereHas('section', function($query){
                 $query->where('is_active',1)->where('is_general',1);
             })
                 ->with('section', 'user', 'preview_image', 'icon')
                 ->limit(5)->get();
 
-        return $this->last_forum_home;
+        return self::$instance->last_forum_home;
     }
 
     /**
@@ -259,15 +277,15 @@ class GeneralViewHelper
      */
     public function getReplayMaps()
     {
-        if(!$this->replay_maps){
+        if(!self::$instance->replay_maps){
             $types = ReplayMap::all();
 
             foreach ($types as $type){
-                $this->replay_maps[$type->id] = $type;
+                self::$instance->replay_maps[$type->id] = $type;
             }
         }
 
-        return $this->replay_maps;
+        return self::$instance->replay_maps;
     }
 
     /**
@@ -277,15 +295,15 @@ class GeneralViewHelper
      */
     public function getGameVersion()
     {
-        if(!$this->game_version){
+        if(!self::$instance->game_version){
             $types = GameVersion::all();
 
             foreach ($types as $type){
-                $this->game_version[$type->id] = $type;
+                self::$instance->game_version[$type->id] = $type;
             }
         }
 
-        return $this->game_version;
+        return self::$instance->game_version;
     }
 
     /**
@@ -305,7 +323,7 @@ class GeneralViewHelper
      */
     public function getUserGallery($user_id)
     {
-        $this->user_gallery = $this->user_gallery??UserGallery::where('user_id', $user_id)->get();
-        return $this->user_gallery;
+        self::$instance->user_gallery = self::$instance->user_gallery??UserGallery::where('user_id', $user_id)->get();
+        return self::$instance->user_gallery;
     }
 }

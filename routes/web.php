@@ -304,21 +304,23 @@ Route::group(['middleware' => 'activity'], function () {
 //
 //});
 
+//Auth::routes();
+});
 
 //Redirect old URI
-    Route::get('news.php', 'RedirectOldURL@news');
-    Route::get('user.php', 'RedirectOldURL@user');
-    Route::get('columns.php', 'RedirectOldURL@columns');
-    Route::get('forum.php', 'RedirectOldURL@forum');
-    Route::get('info.php', 'RedirectOldURL@index');
-    Route::get('replays.php', 'RedirectOldURL@replays');
-    Route::get('freereplays.php', 'RedirectOldURL@freeReplays');
-    Route::get('files.php', 'RedirectOldURL@files');
-    Route::get('sc2.php', 'RedirectOldURL@sc2');
-    Route::get('rating.php', 'RedirectOldURL@rating');
-    Route::get('donate.php', 'RedirectOldURL@donate');
-    Route::get('userbars.php', 'RedirectOldURL@userBars');
-    Route::get('registration.php', 'RedirectOldURL@registration'); //TODO:: redirect for gallery
-
-//Auth::routes();
+Route::group(['prefix' => 'redirect'], function () {
+    Route::get('news', 'RedirectOldURL@news');
+    Route::get('user', 'RedirectOldURL@user');
+    Route::get('columns', 'RedirectOldURL@columns');
+    Route::get('forum', 'RedirectOldURL@forum');
+    Route::get('info', 'RedirectOldURL@index');
+    Route::get('replays', 'RedirectOldURL@replays');
+    Route::get('freereplays', 'RedirectOldURL@freeReplays');
+    Route::get('files', 'RedirectOldURL@files');
+    Route::get('sc2', 'RedirectOldURL@sc2');
+    Route::get('rating', 'RedirectOldURL@rating');
+    Route::get('donate', 'RedirectOldURL@donate');
+    Route::get('userbars', 'RedirectOldURL@userBars');
+    Route::get('home', 'RedirectOldURL@home');
+    Route::get('registration', 'RedirectOldURL@registration'); //TODO:: redirect for gallery
 });

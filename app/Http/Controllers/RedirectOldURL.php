@@ -42,7 +42,7 @@ class RedirectOldURL extends Controller
         $topic = ForumTopic::where('reps_id', $request->get('topic'))->orWhere('id', $request->get('topic'))->get();
 
         if(count($topic)>1){
-            $topic_id = $topic->where('reps_id', $request->get('forum'))->first()->id;
+            $topic_id = $topic->where('reps_id', $request->get('topic'))->first()->id;
         } elseif (count($topic) == 1){
             $topic_id = $topic->first()->id;
         }
@@ -82,17 +82,30 @@ class RedirectOldURL extends Controller
     /**
      * Redirect to forum section columns
      *
+     * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function columns()
+    public function columns(Request $request)
     {
+        if ($request->has('id')){
+            $comment = ForumTopic::where('reps_id', $request->get('id'))->where('reps_section', 'columns')->first();
+
+            if ($comment){
+                $comment_id = $comment->id;
+                return redirect()->route('forum.topic.index', ['id' => $comment_id]);
+            }
+
+
+        }
+
         return redirect()->route('forum.section.index', ['name' => 'columns']);
     }
 
     /**
      * Redirect to forum sections
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function news(Request $request)
     {
@@ -102,7 +115,15 @@ class RedirectOldURL extends Controller
 
         if ($request->has('news')){
             if ($request->has('id')){
-                $topic = ForumTopic::where('reps_id', $request->get('id'))->where('reps_section', 'like', "%".$request->get('news')."%")->first();
+                $topic = ForumTopic::where('reps_id', $request->get('id'))->where(function ($q) use ($request){
+                    $q-> where('reps_section', 'like', "%".$request->get('news')."%")
+                        ->orWhere('reps_section', 'like','%news%')
+                        ->orWhere('reps_section', 'like','%article%')
+                        ->orWhere('reps_section', 'like','%strategy%')
+                        ->orWhere('reps_section', 'like','%coverage%')
+                        ->orWhere('reps_section', 'like','%event%')
+                        ->orWhere('reps_section', 'like','%interview%');
+                })->first();
 
                 if($topic){
                     $topic_id = $topic->id;
@@ -186,7 +207,7 @@ class RedirectOldURL extends Controller
         }
 
         if($request->has('type')){
-            return redirect()->route('replay.gosu_type',['type', $request->get('type')]);
+            return redirect()->route('replay.gosu_type',['type'=> $request->get('type')]);
         }
 
         return redirect()->route('replay.gosus');
@@ -215,25 +236,25 @@ class RedirectOldURL extends Controller
 
     public function sc2(Request $request)
     {
-        return redirect('/');
     }
 
     public function userBars(Request $request)
     {
-        return redirect('/');
     }
 
     public function files(Request $request)
     {
-        return redirect('/');
     }
 
     public function donate(Request $request)
     {
-        return redirect('/');
     }
 
     public function rating(Request $request)
+    {
+    }
+
+    public function home(Request $request)
     {
         return redirect('/');
     }

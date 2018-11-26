@@ -45,8 +45,7 @@ class BaseController extends Controller
      */
     public function sendQuickEmail(QuickEmailRequest $request)
     {
-        Mail::to($request->get('emailto'))
-            ->send(new QuickEmail($request->get('content'), $request->get('subject')));
+        Mail::send(new QuickEmail($request->get('content'), $request->get('subject'), $request->get('emailto')));
         return back();
     }
 }

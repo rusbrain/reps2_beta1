@@ -39,7 +39,7 @@ class ForumController extends Controller
             return abort(404);
         }
 
-        $data->topics = $data->topics()->with(['user'=> function($q){
+        $topics = $data->topics()->with(['user'=> function($q){
             $q->withTrashed();
         }])
             ->where(function ($q){
@@ -49,9 +49,9 @@ class ForumController extends Controller
             ->with(['comments' => function($query){
                 $query->orderBy('created_at', 'desc')->get();
             }])
-            ->with('comments')
+            ->with('comments', 'icon')
             ->orderBy('created_at', 'desc')->paginate(20);
 
-        return view('forum.section')->with('topics', $data);
+        return view('forum.section')->with(['topics'=> $topics, 'title' => $data->title]);
     }
 }
