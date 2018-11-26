@@ -13,17 +13,20 @@ class QuickEmail extends Mailable
 
     private $content;
     public $subject;
+    public $mail_to;
 
     /**
      * Create a new message instance.
      *
      * @param $content
      * @param $subject
+     * @param $mail_to
      */
-    public function __construct($content, $subject)
+    public function __construct($content, $subject, $mail_to)
     {
         $this->content = $content;
         $this->subject = $subject;
+        $this->mail_to = $mail_to;
     }
 
     /**
@@ -35,6 +38,7 @@ class QuickEmail extends Mailable
     {
         return $this->view('emails.base')
             ->subject($this->subject)
+            ->to($this->mail_to)
             ->from(env('MAIL_FROM_EMAIL'), env('MAIL_FROM_NAME'))
             ->with('content',$this->content);
     }
