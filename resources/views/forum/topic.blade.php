@@ -36,7 +36,7 @@
                             <span class="comment-flag">
                             <span class="flag-icon flag-icon-{{mb_strtolower($comment->user->country->code)}}"></span>
                         </span>
-                            <a href="">{{$comment->user->rating}} <span>кг</span></a>
+                            <a href="{{route('user.get_rating',['id' => $comment->user->id])}}">{{$comment->user->rating}} <span>кг</span></a>
                         </div>
                         <div class="col-md-12 comment-content">{!! $comment->content !!}</div>
                     @endforeach

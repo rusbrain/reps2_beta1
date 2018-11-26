@@ -6,7 +6,7 @@
             <a href="{{route('forum.topic.create')}}" class="btn btn-primary create-top-btn">Добавить пост</a>
             <div class="content-center-main">
                 <div class="page-title w-100">Мои посты</div>
-                {{--                {{dd($topics)}}--}}
+                {{--{{dd($topics)}}--}}
                 @if($topics->total() > 0)
                     @foreach($topics as $topic)
                         <div class="forum-section-row">

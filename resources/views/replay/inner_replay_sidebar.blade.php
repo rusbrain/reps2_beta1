@@ -7,7 +7,6 @@
             $maps = $general_helper->getReplayMaps();
             $types = $general_helper->getReplayTypes();
         @endphp
-        @php //dd($errors); @endphp
 
         <div class="sidebar-inner-widget-content">
             <form action="{{route('replay.users')}}" method="GET">

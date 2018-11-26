@@ -52,13 +52,13 @@
                     <span>Меню пользователя</span>
                     <div class="user-menu-wrapper">
                         <div>
-                            <a class="profile-link" href="{{route('user_profile',['id' =>Auth::user()->id])}}">Профиль
+                            <a class="profile-link" href="{{route('user_profile',['id' =>Auth::id()])}}">Профиль
                                 пользователя</a>
                             <a class="profile-link" href="{{route('edit_profile')}}">Настройки</a>
 
-                            <a class="profile-link" href="{{route('gallery.list_user', ['id' => Auth::user()->id])}}">Галлерея</a>
+                            <a class="profile-link" href="{{route('gallery.list_user', ['id' => Auth::id()])}}">Галлерея</a>
 
-                            <a class="profile-link" href="{{route('user.get_rating', ['id' => Auth::user()->id])}}">Репутация</a>
+                            <a class="profile-link" href="{{route('user.get_rating', ['id' => Auth::id()])}}">Репутация</a>
 
                             <a class="profile-link" href="{{route('forum.topic.my_list')}}">Мои посты</a>
 
@@ -73,7 +73,7 @@
                             <a class="profile-link" href="{{route('user.friends_list')}}">Список друзей</a>
                             <a class="profile-link" href="{{route('user.ignore_list')}}">Игнор лист</a>
 
-                            <a class="profile-link" href="{{route('logout',['id' =>Auth::user()->id])}}">Выход</a>
+                            <a class="profile-link" href="{{route('logout',['id' =>Auth::id()])}}">Выход</a>
                         </div>
                     </div>
                 </div>

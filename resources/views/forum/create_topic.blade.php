@@ -21,7 +21,7 @@
                                         @endforeach
                                     </select>
                                     @if ($errors->has('section_id'))
-                                        <span class="invalid-feedback text-red" role="alert">
+                                        <span class="text-red" role="alert">
                                         <strong>{{ $errors->first('section_id') }}</strong>
                                     </span>
                                     @endif
@@ -32,7 +32,7 @@
                                 <input type="text" name="title" class="form-control" placeholder="Название..."
                                        value="{{old('title')}}">
                                 @if ($errors->has('title'))
-                                    <span class="invalid-feedback text-red" role="alert">
+                                    <span class="text-red" role="alert">
                                         <strong>{{ $errors->first('title') }}</strong>
                                     </span>
                                 @endif
@@ -48,12 +48,12 @@
                                      alt="Photo">
                                 <br>
                                 <div class="form-group">
-                                    <label for="exampleInputFile">Загрузить картинку</label>
+                                    <label for="preview_img">Загрузить картинку</label>
                                     <input type="file" id="preview_img" class="form-control filestyle"
                                            name="preview_img">
                                 </div>
                                 @if ($errors->has('preview_img'))
-                                    <span class="invalid-feedback text-red" role="alert">
+                                    <span class="text-red" role="alert">
                                         <strong>{{ $errors->first('preview_img') }}</strong>
                                     </span>
                                 @endif
@@ -68,7 +68,7 @@
                                               rows="5">{!! old('preview_content') !!}</textarea>
                                 </div>
                                 @if ($errors->has('preview_content'))
-                                    <span class="invalid-feedback text-red" role="alert">
+                                    <span class="text-red" role="alert">
                                         <strong>{{ $errors->first('preview_content') }}</strong>
                                     </span>
                                 @endif
@@ -82,7 +82,7 @@
                                               class="form-control" name="content"
                                               rows="10">{!! old('content') !!}</textarea>
                                     @if ($errors->has('content'))
-                                        <span class="invalid-feedback text-red" role="alert">
+                                        <span class=" text-red" role="alert">
                                                 <strong>{{ $errors->first('content') }}</strong>
                                             </span>
                                     @endif
@@ -99,7 +99,7 @@
                                         <input type="date" name="start_on" class="form-control pull-right"
                                                id="datepicker" value="{{old('start_on')}}">
                                         @if ($errors->has('start_on'))
-                                            <span class="invalid-feedback text-red" role="alert">
+                                            <span class=" text-red" role="alert">
                                                 <strong>{{ $errors->first('start_on') }}</strong>
                                             </span>
                                         @endif

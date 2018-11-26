@@ -1,10 +1,11 @@
 @extends('layouts.site')
 @inject('general_helper', 'App\Services\GeneralViewHelper')
-
+@php $countries = $general_helper->getCountries(); @endphp
 @section('content')
     @php
         $replays = $general_helper->getLastGosuReplay();
         $last_forums = $general_helper->getLastForumHome();
+        $types = $general_helper->getReplayTypes();
     @endphp
     <div class="">
         <div class="page-title row">Home page</div>
@@ -71,12 +72,12 @@
                                         <a href="{{route('replay.get', ['id' => $replay->id])}}">Название: {{$replay->title}}</a>
                                     </div>
                                     <div>Страны:
-                                        <span class="flag-icon flag-icon-{{mb_strtolower($replay->first_country->code)??'no'}}"></span>
+                                        <span class="flag-icon flag-icon-{{mb_strtolower($countries[$replay->first_country_id]->code)??'no'}}"></span>
                                         vs
-                                        <span class="flag-icon flag-icon-{{mb_strtolower($replay->second_country->code)??'no'}}"></span>
+                                        <span class="flag-icon flag-icon-{{mb_strtolower($countries[$replay->second_country_id]->code)??'no'}}"></span>
                                     </div>
                                     <div>Матчап: {{$replay->first_race??'No'}} vs {{$replay->second_race??'No'}}</div>
-                                    <div>Тип: {{$replay->type->title}}</div>
+                                    <div>Тип: {{$types[$replay->type_id]->title}}</div>
                                     <div>{!! $replay->content !!}</div>
                                 </div>
                             </div>
@@ -106,10 +107,10 @@
                                 <div class="forum-extract">
                                     {!! $last_forum->preview_content??substr($last_forum->content,0,45) !!}
                                 </div>
+                                <a class="pull-right" href="{{route('forum.topic.index',['id'=>$last_forum->id])}}">[читать полностью]</a>
                             </div>
                         @endforeach
                     @endif
-                    <a class="view-results read-more" href="{{route('forum.index')}}">[Ещё]</a>
                 </div>
             </div>
         </div>

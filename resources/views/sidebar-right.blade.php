@@ -4,6 +4,7 @@
     $random_question = $general_helper->getRandomQuestion();
     $last_user_replays = $general_helper->getLastUserReplay();
     $new_users = $general_helper->getNewUsers();
+    $countries = $general_helper->getCountries();
 @endphp
 
 <div class="sidebar-right">
@@ -76,7 +77,7 @@
                     <div>
                         <a href="{{route('user_profile',['id'=>$new_user->id])}}">
                             <span>#{{$new_user->id}}</span>
-                            <span class="flag-icon flag-icon-{{mb_strtolower($new_user->country->code)}}"></span>
+                            <span class="flag-icon flag-icon-{{mb_strtolower($countries[$new_user->country_id]->code)}}"></span>
                             <span class="name">{{$new_user->name}}</span>
                         </a>
                     </div>
