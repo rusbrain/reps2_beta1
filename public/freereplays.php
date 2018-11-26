@@ -1,2 +1,2 @@
 <?php
-header('Location:/redirect/replays?'.$_SERVER['QUERY_STRING']);
+header('Location:/redirect/freereplays?'.$_SERVER['QUERY_STRING']);

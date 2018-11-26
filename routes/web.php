@@ -321,5 +321,6 @@ Route::group(['prefix' => 'redirect'], function () {
     Route::get('rating', 'RedirectOldURL@rating');
     Route::get('donate', 'RedirectOldURL@donate');
     Route::get('userbars', 'RedirectOldURL@userBars');
+    Route::get('home', 'RedirectOldURL@home');
     Route::get('registration', 'RedirectOldURL@registration'); //TODO:: redirect for gallery
 });

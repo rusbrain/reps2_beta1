@@ -1,2 +1,2 @@
 <?php
-header('Location:/redirect/files?'.$_SERVER['QUERY_STRING']);
+header('Location:/redirect/home?'.$_SERVER['QUERY_STRING']);

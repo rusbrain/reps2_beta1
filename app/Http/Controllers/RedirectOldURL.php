@@ -236,25 +236,25 @@ class RedirectOldURL extends Controller
 
     public function sc2(Request $request)
     {
-        return redirect('/');
     }
 
     public function userBars(Request $request)
     {
-        return redirect('/');
     }
 
     public function files(Request $request)
     {
-        return redirect('/');
     }
 
     public function donate(Request $request)
     {
-        return redirect('/');
     }
 
     public function rating(Request $request)
+    {
+    }
+
+    public function home(Request $request)
     {
         return redirect('/');
     }

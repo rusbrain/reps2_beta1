@@ -980,9 +980,22 @@ class DBRelocationDataSeed extends Seeder
                         $file_id = $file->id;
                     }
 
+                    $user_replay = 0;
+                    switch ($old_replay->replay_type){
+                        case 'uduel':
+                            $user_replay = 1;
+                            break;
+                        case 'upack':
+                            $user_replay = 1;
+                            break;
+                        case 'uteam':
+                            $user_replay = 1;
+                            break;
+                    };
+
                     $new_replays[] = [
                         'user_id'           => (int)$user->id ?? 1,
-                        'user_replay'       => in_array($old_replay->replay_type, ['uduel', 'upack', 'uteam']),
+                        'user_replay'       => $user_replay,
                         'type_id'           => (int)$types->where('name', substr($old_replay->replay_type, 1))->first()->id ?? $types->first()->id,
                         'title'             => $old_replay->replay_name,
                         'content'           => $old_replay->replay_rustext,

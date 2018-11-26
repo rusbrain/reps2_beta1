@@ -49,7 +49,7 @@ class ForumController extends Controller
             ->with(['comments' => function($query){
                 $query->orderBy('created_at', 'desc')->get();
             }])
-            ->with('comments')
+            ->with('comments', 'icon')
             ->orderBy('created_at', 'desc')->paginate(20);
 
         return view('forum.section')->with('topics', $data);
