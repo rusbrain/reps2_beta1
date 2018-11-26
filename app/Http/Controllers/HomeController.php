@@ -80,7 +80,7 @@ class HomeController extends Controller
                     })
                     ->where('title', 'like', "%$search%")
                     ->orderBy('created_at', 'desc')->paginate(20);
-                return view('forum.section')->with('topics', $data);
+                return view('forum.section')->with(['topics'=> $data, 'title' => 'Поиск']);
                 break;
             case 'replay':
                 $replay = new ReplayController();
