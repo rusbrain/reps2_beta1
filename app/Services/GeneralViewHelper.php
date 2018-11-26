@@ -184,17 +184,14 @@ class GeneralViewHelper
      */
     public function getAllForumSections()
     {
-        if(!self::$instance->all_sections){
-            $all_sections = ForumSection::active()->with(['topics' => function($q) {
-                $q->orderBy('created_at', 'desc');
-            }])->get()->transform(function ($item) {
-                $topics = $item->topics;
-                unset($item->topics);
-                $item->topics = $topics->take(5);
-                return $item;
-            });
+        if(!$this->all_sections){
+            $all_sections = ForumSection::active()->get();
 
-            self::$instance->all_sections = $all_sections;
+            foreach ($all_sections as $key=>$section){
+                $all_sections[$key]->topics = ForumTopic::where('section_id',$section->id)->orderBy('created_at', 'desc')->limit(5)->get();
+            }
+
+            $this->all_sections = $all_sections;
         }
 
         return self::$instance->all_sections;
@@ -323,7 +320,7 @@ class GeneralViewHelper
      */
     public function getUserGallery($user_id)
     {
-        self::$instance->user_gallery = self::$instance->user_gallery??UserGallery::where('user_id', $user_id)->get();
+        self::$instance->user_gallery = self::$instance->user_gallery??UserGallery::where('user_id', $user_id)->with('file')->get();
         return self::$instance->user_gallery;
     }
 }
