@@ -53,7 +53,7 @@ class AdminViewHelper
         $new_messages       = $new_user_message_q->limit(5)->with('sender.avatar')->get();
         $new_topics         = ForumTopic::where('approved',0)->where(function ($q){
             $q->whereNull('start_on')
-                ->orWhere('start_on', Carbon::now()->format('Y-M-d'));
+                ->orWhere('start_on','<=', Carbon::now()->format('Y-M-d'));
         })->count();
         $new_gosu_replays   = Replay::gosuReplay()->where('approved',0)->count();
         $new_user_replays   = Replay::userReplay()->where('approved',0)->count();

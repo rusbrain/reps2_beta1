@@ -17,7 +17,7 @@ class CountryController extends Controller
      */
     public function index()
     {
-        return view('admin.country.list')->with('data', Country::withCount('users', 'replays1', 'replays2')->paginate(50));
+        return view('admin.country.list')->with(['data'=> Country::withCount('users', 'replays1', 'replays2')->paginate(50), 'request_data' => []]);
     }
 
     /**

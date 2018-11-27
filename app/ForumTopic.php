@@ -110,7 +110,7 @@ class ForumTopic extends Model
         return ForumTopic::where('news',1)
             ->where(function ($q){
                 $q->whereNull('start_on')
-                    ->orWhere('start_on', Carbon::now()->format('Y-M-d'));
+                    ->orWhere('start_on', '<=', Carbon::now()->format('Y-M-d'));
             })
             ->whereHas('section', function($q){
             $q->where('is_active', 1)->where('is_general', 1);

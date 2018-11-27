@@ -24,7 +24,7 @@ class ForumTopicController extends Controller
     {
         $data = ForumTopic::search(ForumTopic::with('user', 'section', 'icon'), $request->validated())->where(function ($q){
             $q->whereNull('start_on')
-                ->orWhere('start_on', Carbon::now()->format('Y-M-d'));
+                ->orWhere('start_on','<=', Carbon::now()->format('Y-M-d'));
         })
             ->withCount( 'positive', 'negative')->paginate(50);
 
@@ -205,6 +205,7 @@ class ForumTopicController extends Controller
         $data['user_id'] = Auth::id();
         $data['approved']   = $data['approved']??0;
         $data['news']       = $data['news']??0;
+        $data['commented_at'] = Carbon::now();
 
         unset($data['preview_img']);
 

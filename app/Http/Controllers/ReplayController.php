@@ -82,6 +82,7 @@ class ReplayController extends Controller
     public function getList($query, $title = false)
     {
         $data = $this->getReplay($query)
+            ->with('map')
             ->orderBy('created_at')
             ->paginate(20);
 

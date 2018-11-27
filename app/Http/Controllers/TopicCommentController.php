@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Comment;
 use App\ForumTopic;
 use App\Http\Requests\TopicCommentStoreRequest;
+use Carbon\Carbon;
 
 class TopicCommentController extends CommentController
 {
@@ -51,6 +52,7 @@ class TopicCommentController extends CommentController
      */
     public function store(TopicCommentStoreRequest $request)
     {
+        ForumTopic::where('id', $request->get('topic_id'))->update('commented_at', Carbon::now());
         return $this->storeComment($request);
     }
 }

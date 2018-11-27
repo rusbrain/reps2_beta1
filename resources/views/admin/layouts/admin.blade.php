@@ -7,7 +7,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>AdminLTE 2 | Starter</title>
+    <title>REPS.RU | Admin Panel</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" href="{{route('home')}}/bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -64,11 +64,11 @@ desired effect
     <header class="main-header">
 
         <!-- Logo -->
-        <a href="index2.html" class="logo">
+        <a href="{{route('home')}}" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini"><b>reps.ru</b></span>
+            <span class="logo-mini"><b>REPS.RU</b></span>
             <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><b>Admin</b> reps.ru</span>
+            <span class="logo-lg"><b>REPS.RU</b></span>
         </a>
 
         <!-- Header Navbar -->

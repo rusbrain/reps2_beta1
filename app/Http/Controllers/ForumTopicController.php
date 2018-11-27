@@ -28,7 +28,7 @@ class ForumTopicController extends Controller
         $topic = ForumTopic::where('id', $id)
             ->where(function ($q){
                 $q->whereNull('start_on')
-                    ->orWhere('start_on', Carbon::now()->format('Y-M-d'));
+                    ->orWhere('start_on', '<=', Carbon::now()->format('Y-M-d'));
             })
             ->with(User::getUserWithReputationQuery())
             ->with('icon')->first();
@@ -70,6 +70,7 @@ class ForumTopicController extends Controller
         $topic_data = $request->validated();
 
         $topic_data['user_id'] = Auth::id();
+        $topic_data['commented_at'] = Carbon::now();
 
         if ($request->file('preview_img')){
             $title = 'Превью '.$request->has('title')?$request->get('title'):'';
@@ -220,7 +221,7 @@ class ForumTopicController extends Controller
         }])
             ->where(function ($q){
                 $q->whereNull('start_on')
-                    ->orWhere('start_on', Carbon::now()->format('Y-M-d'));
+                    ->orWhere('start_on','<=', Carbon::now()->format('Y-M-d'));
             })
             ->with(['comments' => function($query){
                 $query->orderBy('created_at', 'desc')->first();

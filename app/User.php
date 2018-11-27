@@ -152,7 +152,8 @@ class User extends Authenticatable
                 },
                 'reputation as rep_negative' => function($query){
                     $query->where('rating', -1);
-                }]);
+                }])
+            ->with('country');
         }];
     }
 

@@ -186,9 +186,19 @@ class GeneralViewHelper
     {
         if(!$this->all_sections){
             $all_sections = ForumSection::active()->get();
+            $time = Carbon::now()->format('Y-M-d');
+            $sql = [];
+            foreach ($all_sections as $section){
+                $sql[] = "(
+        select * from `forum_topics` where `approved` = 1 and (`start_on` is null or `start_on` <= '$time') and `section_id` = $section->id ORDER BY `commented_at` limit 5
+        )";
+            }
 
-            foreach ($all_sections as $key=>$section){
-                $all_sections[$key]->topics = ForumTopic::where('section_id',$section->id)->orderBy('created_at', 'desc')->limit(5)->get();
+            $sql = implode(" UNION ALL ",$sql);
+            $topics = collect(\DB::select($sql))->groupBy('section_id');
+
+            foreach ( $all_sections as $key=>$section){
+                $all_sections[$key]->topics = $topics[$section->id];
             }
 
             $this->all_sections = $all_sections;

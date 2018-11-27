@@ -28,12 +28,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $general_gorum = ForumSection::general_active()->get();
-
-        $forum_topic_query = ForumTopic::where('approved',1)
+        $popular_forum_topics = ForumTopic::where('approved',1)
             ->where(function ($q){
                 $q->whereNull('start_on')
-                    ->orWhere('start_on', Carbon::now()->format('Y-M-d'));
+                    ->orWhere('start_on','<=', Carbon::now()->format('Y-M-d'));
             })
             ->whereHas('section', function ($query){
             $query->where('is_active',1)->where('is_general',1);
@@ -43,17 +41,12 @@ class HomeController extends Controller
                 $q->withTrashed()->with('avatar');
             }])
             ->with('preview_image', 'icon')
-            ->limit(5);
-
-        $new_forum_topics = ForumTopic::news()->with('icon')->limit(5)->get();
-        $popular_forum_topics = $forum_topic_query
-            ->where('created_at', '<=', Carbon::now()->addMonth(-1)->startOfDay())
+            ->limit(5)
+            ->where('created_at', '>=', Carbon::now()->addMonth(-1)->startOfDay())
             ->orderBy('rating', 'desc')->get();
 
         return view('home.index')->with([
-            'forum_menu'            => $general_gorum,
             'popular_forum_topics'  => $popular_forum_topics,
-            'new_forum_topics'      => $new_forum_topics
         ]);
     }
 
@@ -76,7 +69,7 @@ class HomeController extends Controller
                     ->with('icon')
                     ->where(function ($q){
                         $q->whereNull('start_on')
-                            ->orWhere('start_on', Carbon::now()->format('Y-M-d'));
+                            ->orWhere('start_on', '<=', Carbon::now()->format('Y-M-d'));
                     })
                     ->where('title', 'like', "%$search%")
                     ->orderBy('created_at', 'desc')->paginate(20);
