@@ -26,7 +26,7 @@ class ReplayController extends Controller
     public function index(ReplaySearchAdminRequest $request)
     {
         $data = Replay::search($request,Replay::withCount('user_rating'))
-            ->with('user',  'file')->paginate(50);
+            ->with('user',  'file', 'first_country', 'second_country', 'type', 'map')->paginate(50);
 
         return view('admin.replay.replays')->with(['data' => $data, 'request_data' => $request->validated()]);
     }

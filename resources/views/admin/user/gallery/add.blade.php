@@ -1,6 +1,6 @@
 <div class="box box-info">
     <div class="box-header with-border">
-        <h3 class="box-title">Добавить в свою галлерею</h3>
+        <h3 class="box-title">Добавить в свою галерею</h3>
     </div>
     <div class="box-body">
         <form action="{{route('admin.user.gallery.create')}}" method="post" enctype="multipart/form-data">

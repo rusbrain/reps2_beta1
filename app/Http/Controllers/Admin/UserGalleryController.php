@@ -21,7 +21,7 @@ class UserGalleryController extends Controller
     public function index()
     {
         $data = UserGallery::with('user', 'file')->orderBy('id', 'desc')->paginate(50);
-        return view('admin.user.gallery.list')->with(['data' => $data]);
+        return view('admin.user.gallery.list')->with(['data' => $data, 'request_data' =>[]]);
     }
 
     /**

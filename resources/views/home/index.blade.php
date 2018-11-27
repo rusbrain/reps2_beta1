@@ -3,17 +3,17 @@
 @php $countries = $general_helper->getCountries(); @endphp
 @section('content')
     @php
-        $replays = $general_helper->getLastGosuReplay();
-        $last_forums = $general_helper->getLastForumHome();
-        $types = $general_helper->getReplayTypes();
+            $replays = $general_helper->getLastGosuReplay();
+            $last_forums = $general_helper->getLastForumHome();
+            $types = $general_helper->getReplayTypes();
     @endphp
     <div class="">
         <div class="page-title row">Home page</div>
         <div class="row">
             <div class="col w-100">
-                @if($last_forums)
+                @if($popular_forum_topics)
                     @php $i=0; @endphp
-                    @foreach($last_forums as $last_forum)
+                    @foreach($popular_forum_topics as $last_forum)
                         @if($i == 0)
                             <div class="row top-forum-wrapper">
                                 <div class="col-5">

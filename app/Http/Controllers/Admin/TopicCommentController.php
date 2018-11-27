@@ -6,6 +6,7 @@ use App\Comment;
 use App\ForumTopic;
 use App\Http\Controllers\CommentController;
 use App\Http\Requests\CommentUpdateRequest;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -50,6 +51,7 @@ class TopicCommentController extends CommentController
     public function sendComment(CommentUpdateRequest $request, $topic_id)
     {
         $data = $request->validated();
+        ForumTopic::where('id', $topic_id)->update('commented_at', Carbon::now());
 
         $this->createComment($data, $topic_id);
 

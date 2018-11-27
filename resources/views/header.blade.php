@@ -56,7 +56,7 @@
                                 пользователя</a>
                             <a class="profile-link" href="{{route('edit_profile')}}">Настройки</a>
 
-                            <a class="profile-link" href="{{route('gallery.list_user', ['id' => Auth::id()])}}">Галлерея</a>
+                            <a class="profile-link" href="{{route('gallery.list_user', ['id' => Auth::id()])}}">Галерея</a>
 
                             <a class="profile-link" href="{{route('user.get_rating', ['id' => Auth::id()])}}">Репутация</a>
 

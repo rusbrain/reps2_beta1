@@ -86,7 +86,7 @@ class UserGallery extends Model
      */
     public static function saveImage($gallery_data)
     {
-        $title = 'Картинка галлереи пользователя '.Auth::user()->name;
+        $title = 'Картинка галереи пользователя '.Auth::user()->name;
 
         $file = File::storeFile($gallery_data['image'], 'gallery', $title);
 

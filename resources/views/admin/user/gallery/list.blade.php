@@ -12,12 +12,12 @@
 
 @section('page_header')
     Пользователи
-    <small>Галлерея пользователей</small>
+    <small>Галерея пользователей</small>
 @endsection
 
 @section('breadcrumb')
     <li><a href="{{route('admin.home')}}"><i class="fa fa-dashboard"></i>Главная панель</a></li>
-    <li class="active">Галлерея пользователей</li>
+    <li class="active">Галерея пользователей</li>
 @endsection
 
 @section('content')
@@ -93,7 +93,7 @@
             {{--</div>--}}
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Галлерея пользователей ({{$data->total()}})</h3>
+                    <h3 class="box-title">Галерея пользователей ({{$data->total()}})</h3>
                     <a class="btn btn-info" data-toggle="modal" data-target="#modal-default-add" href="{{route('admin.user.gallery.add')}}">Создать</a>
 
                     <div class="box-tools">
