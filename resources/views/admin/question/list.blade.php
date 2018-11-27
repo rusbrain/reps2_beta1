@@ -41,6 +41,16 @@
                                 <strong>{{ $errors->first('old_answers') }}</strong>
                             </span>
                 @endif
+                @if ($errors->has('new_answers.*'))
+                    <span class="invalid-feedback text-red" role="alert">
+                                <strong>{{ $errors->first('new_answers.*') }}</strong>
+                            </span>
+                @endif
+                @if ($errors->has('old_answers.*'))
+                    <span class="invalid-feedback text-red" role="alert">
+                                <strong>{{ $errors->first('old_answers.*') }}</strong>
+                            </span>
+                @endif
                 <div class="box-tools">
                     @include('admin.user.pagination')
                 </div>

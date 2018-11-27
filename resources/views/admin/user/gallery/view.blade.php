@@ -9,7 +9,7 @@
 
 @section('breadcrumb')
     <li><a href="{{route('admin.home')}}"><i class="fa fa-dashboard"></i>Главная панель</a></li>
-    <li><a href="{{route('admin.users.gallery')}}">Галлерея</a></li>
+    <li><a href="{{route('admin.users.gallery')}}">Галерея</a></li>
     <li class="active">{{$gallery->id}}</li>
 @endsection
 

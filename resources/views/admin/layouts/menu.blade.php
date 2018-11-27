@@ -17,7 +17,7 @@ $menu_name = $admin_helper->getMenuName();
     @if($admin_helper->admin())
         <li @if($menu_name == 'user/role') class="active" @endif><a href="{{route('admin.users.role')}}"><i class="fa fa-users"></i> <span>Роли пользователей</span></a></li>
     @endif
-    <li @if($menu_name == 'user/gallery') class="active" @endif><a href="{{route('admin.users.gallery')}}"><i class="fa fa-image"></i> <span>Галлерея</span></a></li>
+    <li @if($menu_name == 'user/gallery') class="active" @endif><a href="{{route('admin.users.gallery')}}"><i class="fa fa-image"></i> <span>Галерея</span></a></li>
 
     <li class="header">ФОРУМ</li>
     <!-- Optionally, you can add icons to the links -->

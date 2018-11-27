@@ -387,7 +387,7 @@ class DBRelocationDataSeed extends Seeder
 
                     $file_data = [
                         'user_id' => $user->id ?? 0,
-                        'title' => "Картинка галлереи пользователя {$user_name}",
+                        'title' => "Картинка галереи пользователя {$user_name}",
                         'link' => "/storage/gallery/{$old_gallery->photo_id}.jpg",
                         'type' => filetype($path_to),
                         'size' => filesize($path_to),
