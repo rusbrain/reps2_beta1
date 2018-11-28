@@ -19,7 +19,8 @@ class ForumController extends Controller
         $data = ForumSection::active()->with(['topics' => function($query){
             $query->with(['user'=> function($q){
                 $q->withTrashed();
-            }])->orderBy('created_at', 'desc')->limit(5);
+            }])->withCount( 'positive', 'negative', 'comments')
+                ->orderBy('created_at', 'desc')->limit(5);
         }])->withCount('topics')->get();
 
         return view('forum.forum')->with('sections', $data);
@@ -42,6 +43,7 @@ class ForumController extends Controller
         $topics = $data->topics()->with(['user'=> function($q){
             $q->withTrashed();
         }])
+            ->withCount( 'positive', 'negative', 'comments')
             ->where(function ($q){
                 $q->whereNull('start_on')
                     ->orWhere('start_on','<=', Carbon::now()->format('Y-M-d'));

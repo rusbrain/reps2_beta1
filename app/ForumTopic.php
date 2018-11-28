@@ -184,6 +184,7 @@ class ForumTopic extends Model
             ->with(['comments' => function($q) {
                 $q->with('user.avatar')->orderBy('created_at', 'desc')->paginate(20);
             }])
+            ->withCount( 'positive', 'negative', 'comments')
             ->first();
     }
 }

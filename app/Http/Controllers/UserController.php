@@ -35,6 +35,7 @@ class UserController extends Controller
 
         $user = User::where('id',$id)
             ->with('role', 'avatar', 'friends', 'friendly')
+            ->withCount( 'positive', 'negative', 'comments')
             ->withCount('user_galleries', 'topics', 'replay', 'gosu_replay', 'topic_comments', 'replay_comments', 'gallery_comments')
             ->first();
 
