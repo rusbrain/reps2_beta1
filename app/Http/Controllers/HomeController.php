@@ -37,10 +37,9 @@ class HomeController extends Controller
             ->whereHas('section', function ($query){
             $query->where('is_active',1)->where('is_general',1);
                 })
-            ->has('preview_image')
             ->with('preview_image')
             ->limit(5)
-            ->where('created_at', '>=', Carbon::now()->addMonth(-1)->startOfDay())
+            ->orderBy('created_at', 'desc')
             ->orderBy('rating', 'desc')->get();
 
         return view('home.index')->with([

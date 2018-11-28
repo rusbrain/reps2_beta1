@@ -104,7 +104,7 @@ class GeneralViewHelper
     public function getLastGosuReplay()
     {
         if(!self::$instance->last_gosu_replay){
-            self::$instance->last_gosu_replay=Replay::gosuReplay()->orderBy('created_at', 'desc')->limit(5)->get();
+            self::$instance->last_gosu_replay=Replay::gosuReplay()->where('approved',1)->orderBy('created_at', 'desc')->limit(5)->get();
             self::$instance->last_gosu_replay->load('map');
         }
 
@@ -116,7 +116,7 @@ class GeneralViewHelper
      */
     public function getLastUserReplay()
     {
-        self::$instance->last_user_replay = self::$instance->last_user_replay??Replay::userReplay()->orderBy('created_at', 'desc')->limit(5)->get();
+        self::$instance->last_user_replay = self::$instance->last_user_replay??Replay::userReplay()->where('approved',1)->orderBy('created_at', 'desc')->limit(5)->get();
         return self::$instance->last_user_replay;
     }
 
@@ -271,6 +271,7 @@ class GeneralViewHelper
         self::$instance->last_forum_home = self::$instance->last_forum_home??ForumTopic::whereHas('section', function($query){
                 $query->where('is_active',1)->where('is_general',1);
             })
+                ->where('approved',1)
                 ->with('preview_image')
                 ->withCount( 'positive', 'negative', 'comments')
                 ->limit(5)->get();
