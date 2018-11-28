@@ -83,6 +83,7 @@ class ReplayController extends Controller
     {
         $data = $this->getReplay($query)
             ->with('map')
+            ->withCount( 'positive', 'negative', 'comments')
             ->orderBy('created_at')
             ->paginate(20);
 
@@ -101,6 +102,7 @@ class ReplayController extends Controller
                 ->with(['user'=> function($q){
                 $q->withTrashed();
             }])
+            ->withCount( 'positive', 'negative', 'comments')
                 ->with('user')
                 ->with(['user_rating' => function($query){
                     $query->where('user_id', Auth::id());
@@ -250,6 +252,7 @@ class ReplayController extends Controller
      * Download replay file
      *
      * @param $id
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
      */
     public function download($id)
     {

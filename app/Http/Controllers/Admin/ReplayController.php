@@ -26,7 +26,7 @@ class ReplayController extends Controller
     public function index(ReplaySearchAdminRequest $request)
     {
         $data = Replay::search($request,Replay::withCount('user_rating'))
-            ->with('user',  'file', 'first_country', 'second_country', 'type', 'map')->paginate(50);
+            ->with('user',  'file', 'first_country', 'second_country', 'type', 'map')->withCount( 'positive', 'negative', 'comments')->paginate(50);
 
         return view('admin.replay.replays')->with(['data' => $data, 'request_data' => $request->validated()]);
     }
@@ -42,7 +42,7 @@ class ReplayController extends Controller
         $user = User::find($user_id);
         $replays = $user->replays()->with(['user'=> function($q){
             $q->withTrashed();
-        }])->paginate(50);
+        }])->withCount( 'positive', 'negative', 'comments')->paginate(50);
 
         return view('admin.replay.replays')->with(['data' => $replays, 'title' => "Replays $user->name", 'user' => $user]);
     }
@@ -161,6 +161,7 @@ class ReplayController extends Controller
             $q->with('user.avatar')->orderBy('created_at', 'desc')->paginate(20);
         }])
             ->withCount( 'user_rating')
+            ->withCount( 'positive', 'negative', 'comments')
             ->with('user.avatar', 'file')->first();
     }
 

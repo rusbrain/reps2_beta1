@@ -33,14 +33,12 @@ class HomeController extends Controller
                 $q->whereNull('start_on')
                     ->orWhere('start_on','<=', Carbon::now()->format('Y-M-d'));
             })
+            ->withCount( 'positive', 'negative', 'comments')
             ->whereHas('section', function ($query){
             $query->where('is_active',1)->where('is_general',1);
                 })
             ->has('preview_image')
-            ->with(['user'=> function($q){
-                $q->withTrashed()->with('avatar');
-            }])
-            ->with('preview_image', 'icon')
+            ->with('preview_image')
             ->limit(5)
             ->where('created_at', '>=', Carbon::now()->addMonth(-1)->startOfDay())
             ->orderBy('rating', 'desc')->get();
@@ -58,6 +56,7 @@ class HomeController extends Controller
                 $data = ForumTopic::news()->where('approved',1)->with(['user'=> function($q){
                     $q->withTrashed()->with('avatar');
                 }])
+                    ->withCount( 'positive', 'negative', 'comments')
                     ->where('title', 'like', "%$search%")
                     ->with('preview_image', 'icon')->paginate(20);
                 return view('forum.section')->with('topics', $data);
@@ -66,6 +65,7 @@ class HomeController extends Controller
                 $data = ForumTopic::with(['user'=> function($q){
                     $q->withTrashed();
                 }])
+                    ->withCount( 'positive', 'negative', 'comments')
                     ->with('icon')
                     ->where(function ($q){
                         $q->whereNull('start_on')

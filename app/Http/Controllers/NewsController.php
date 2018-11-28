@@ -16,6 +16,7 @@ class NewsController extends Controller
     {
         $news = ForumTopic::news()
             ->with('section', 'preview_image', 'icon')
+            ->withCount( 'positive', 'negative', 'comments')
             ->with(['user'=> function($q){
                 $q->withTrashed();
             }]);

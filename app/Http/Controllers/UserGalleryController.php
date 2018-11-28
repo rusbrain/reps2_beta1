@@ -53,7 +53,7 @@ class UserGalleryController extends Controller
      */
     private static function getList($gallery)
     {
-        return $gallery->with('file', 'user')->orderBy('created_at')->paginate(50);
+        return $gallery->with('file', 'user')->withCount( 'positive', 'negative', 'comments')->orderBy('created_at')->paginate(50);
     }
 
     /**

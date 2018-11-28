@@ -31,6 +31,7 @@ class ForumTopicController extends Controller
                     ->orWhere('start_on', '<=', Carbon::now()->format('Y-M-d'));
             })
             ->with(User::getUserWithReputationQuery())
+            ->withCount( 'positive', 'negative', 'comments')
             ->with('icon')->first();
 
         if(!$topic){
@@ -214,6 +215,7 @@ class ForumTopicController extends Controller
         }
 
         $data = ForumTopic::where('user_id',$user_id)
+            ->withCount( 'positive', 'negative', 'comments')
             ->with('icon')
             ->has('sectionActive')
             ->with(['user'=> function($q){

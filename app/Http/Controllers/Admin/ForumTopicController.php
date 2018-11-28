@@ -26,7 +26,7 @@ class ForumTopicController extends Controller
             $q->whereNull('start_on')
                 ->orWhere('start_on','<=', Carbon::now()->format('Y-M-d'));
         })
-            ->withCount( 'positive', 'negative')->paginate(50);
+            ->withCount( 'positive', 'negative', 'comments')->paginate(50);
 
         return view('admin.forum.topic.list')->with(['data' => $data, 'request_data' => $request->validated(), 'sections' => ForumSection::all()]);
     }
@@ -41,7 +41,7 @@ class ForumTopicController extends Controller
     {
         $user = User::find($user_id);
 
-        $topics  = $user->topics()->with('section')->with(['user'=> function($q){
+        $topics  = $user->topics()->with('section')->withCount( 'positive', 'negative', 'comments')->with(['user'=> function($q){
             $q->withTrashed();
         }])->paginate(50);
 
