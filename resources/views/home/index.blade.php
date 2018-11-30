@@ -3,9 +3,9 @@
 @php $countries = $general_helper->getCountries(); @endphp
 @section('content')
     @php
-            $replays = $general_helper->getLastGosuReplay();
-            $last_forums = $general_helper->getLastForumHome();
-            $types = $general_helper->getReplayTypes();
+        $replays = $general_helper->getLastGosuReplay();
+        $last_forums = $general_helper->getLastForumHome();
+        $types = $general_helper->getReplayTypes();
     @endphp
     <div class="">
         <div class="page-title row">Home page</div>
@@ -56,18 +56,18 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <div class="home-widget">
                     <div class="page-title w-100">Gosu реплеи</div>
                     @if($replays)
                         @foreach($replays as $replay)
                             <div class=" home-widget-inner-row gosu-replays">
-                                <div class="col-4 ">
+                                <div class="">
                                     <a href="{{route('replay.get', ['id' => $replay->id])}}">
                                         <img src="{{$replay->map->url??'/images/header.gif'}}" alt="">
                                     </a>
                                 </div>
-                                <div class="col-8">
+                                <div class="">
                                     <div>
                                         <a href="{{route('replay.get', ['id' => $replay->id])}}">Название: {{$replay->title}}</a>
                                     </div>
@@ -89,7 +89,7 @@
                 </div>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-7">
                 <div class="">
                     <div class="page-title w-100">Последние форумы</div>
                     @if($last_forums)
