@@ -19,7 +19,7 @@
                                     <div class="topic-wrapper">
                                         <p class="topic-title">
                                             <a href="{{route('forum.topic.index',['id'=>$topic->id])}}">
-                                                <span>{{$topic->title}}</span>
+                                                <span>{!! $topic->title !!}</span>
                                                 <span>({{$topic->comments_count}})</span>
                                             </a>
                                         </p>

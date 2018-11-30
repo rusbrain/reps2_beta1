@@ -6,12 +6,20 @@
             @include('inner_forum_sidebar')
         </div>
         <div class="col-md-9 content-center-main-wrapper">
-            <div class="content-center-main">
+            <div class="">
                 @foreach($sections as $section)
-                    <div class="forum-section-row row">
-                        <a class="w-100" href="{{route('forum.section.index', ['name' => $section->name])}}">
-                            {{$section->title}}
+                    <div class="forum-section">
+                        <a class="w-100 forum-section-title"
+                           href="{{route('forum.section.index', ['name' => $section->name])}}">
+                            <span>{{$section->title}}</span>
                         </a>
+                        <div class="forum-section-topics">
+                            Тем: {{$section->topics_count}}
+                        </div>
+                        <div class="forum-section-description">
+                            Описание: {!! $section->description !!}
+                            <a class="read-more" href="{{route('forum.section.index',['name' => $section->name])}}">[ещё]</a>
+                        </div>
                     </div>
                 @endforeach
             </div>

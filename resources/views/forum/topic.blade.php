@@ -1,5 +1,6 @@
 @extends('layouts.site')
 @inject('general_helper', 'App\Services\GeneralViewHelper')
+@php $countries = $general_helper->getCountries(); @endphp
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -20,7 +21,7 @@
                 </div>
                 <div class="topic-content-wrapper">
                     <div class="topic-content">
-                        {!! $topic->content !!}
+                        {!! $general_helper->oldContentFilter($topic->content) !!}
                     </div>
                 </div>
             </div>
@@ -29,16 +30,19 @@
                 @if($comments)
                     @foreach($comments as $item => $comment)
                         <div class="comment-title col-md-12">
-                            <span>#{{$item}}</span>
+                            @php $item++; @endphp
+                            <span><a name="#{{$item}}">#{{$item}}</a></span>
                             <span class="comment-date">{{$comment->created_at}}</span>
                             <a href="{{route('user_profile',['id' => $comment->user->id])}}"><span
                                         class="comment-user">{{$comment->user->name}}</span></a>
                             <span class="comment-flag">
-                            <span class="flag-icon flag-icon-{{mb_strtolower($comment->user->country->code)}}"></span>
+                            <span class="flag-icon flag-icon-{{mb_strtolower($countries[$comment->user->country_id]->code)}}"></span>
                         </span>
                             <a href="{{route('user.get_rating',['id' => $comment->user->id])}}">{{$comment->user->rating}} <span>кг</span></a>
                         </div>
-                        <div class="col-md-12 comment-content">{!! $comment->content !!}</div>
+                        <div class="col-md-12 comment-content">
+                            {!! $general_helper->oldContentFilter($comment->content) !!}
+                        </div>
                     @endforeach
                 @endif
                 <div class="row" id="comment">

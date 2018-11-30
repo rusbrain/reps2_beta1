@@ -37,6 +37,6 @@ CKEDITOR.editorConfig = function( config ) {
 	config.removeDialogTabs = 'image:advanced;link:advanced';
     config.defaultLanguage = 'ru';
     config.language = 'ru';
-    config.extraPlugins = 'emojione';
+    // config.extraPlugins = 'emojione';
 };
 

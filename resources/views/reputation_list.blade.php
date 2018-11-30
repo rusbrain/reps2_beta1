@@ -15,9 +15,8 @@
                         <div class="row">
                             <div class="info-title col-4">Страна:</div>
                             <div class="info-title col-8">
-                                <span class="flag-icon flag-icon-{{mb_strtolower($user->country->code)}}"></span>
-
-                                <span>{{$user->country->name}}</span>
+                                <span class="flag-icon flag-icon-{{mb_strtolower($countries[$user->country_id]->code)}}"></span>
+                                <span>{{$countries[$user->country_id]->name}}</span>
                             </div>
                         </div>
                         <div class="row">
@@ -37,8 +36,8 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="page-title row"> История репутации участника {{Auth::user()->name}}:
-                [+{{Auth::user()->positive_count}}/-{{Auth::user()->negative_count}}]
+            <div class="page-title row"> История репутации участника {{$user->name}}:
+                [+{{$user->positive_count}}/-{{$user->negative_count}}]
             </div>
             <div class="reputation-history row">
                 @if($list)

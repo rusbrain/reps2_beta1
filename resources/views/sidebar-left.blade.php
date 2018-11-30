@@ -1,7 +1,7 @@
 <div class="sidebar-left">
     @if($general_helper->getLastForum())
         <div class="sidebar-widget">
-            <div class="sidebar-widget-title">Последние темы форума</div>
+            <div class="sidebar-widget-title">Основные темы форума</div>
             <div class="sidebar-widget-content">
                 @foreach($general_helper->getLastForum() as $forum)
                     <div class="sidebar-widget-forum-section">
@@ -12,7 +12,9 @@
                             @foreach($forum->topics as $item => $topic)
                                 <div class="topic-wrapper">
                                     <p class="topic-title">
-                                        <a href="{{route('forum.topic.index',['id'=>$topic->id])}}"><span>{{$topic->title}}</span> <span>({{$topic->comments_count}})</span></a>
+                                        <a href="{{route('forum.topic.index',['id'=>$topic->id])}}">
+                                            <span>{{$topic->title}}</span> <span>({{$topic->comments_count}})</span>
+                                        </a>
                                     </p>
                                 </div>
                             @endforeach

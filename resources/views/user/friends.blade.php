@@ -1,6 +1,5 @@
 @extends('layouts.site')
 @section('content')
-    {{--{{dd($friends)}}--}}
     <div class="">
         <div class="row">
             <div class="page-title w-100">Список Ваших друзей</div>
@@ -17,12 +16,18 @@
                     @foreach($friends as $k => $item)
                         <div class="row ignored-user">
                             <div class="col-md-1">{{$k}}</div>
-                            <div class="col-md-2">{{$item->name}}</div>
+                            <div class="col-md-2">
+                                <a href="{{route('user_profile',['id'=>$item->id])}}">{{$item->name}}</a>
+                            </div>
                             <div class="col-md-4">{{$item->email}}</div>
                             <div class="col-md-3">{{$item->created_at}}</div>
                             <div class="col-md-2 ">
                                 <a class="error" href="{{route('user.remove_friend',['id' => $item->id])}}"
                                    title="удалить из друзей"><i class="far fa-trash-alt"></i></a>
+                                <a class="primery" title="написать сообщение"
+                                   href="{{route('user.messages',['id' => $item->id])}}">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
                             </div>
                         </div>
                     @endforeach
@@ -46,12 +51,18 @@
                     @foreach($friendly as $k => $item)
                         <div class="row ignored-user">
                             <div class="col-md-1">{{$k}}</div>
-                            <div class="col-md-2">{{$item->name}}</div>
+                            <div class="col-md-2">
+                                <a href="{{route('user_profile',['id'=>$item->id])}}">{{$item->name}}</a>
+                            </div>
                             <div class="col-md-4">{{$item->email}}</div>
                             <div class="col-md-3">{{$item->created_at}}</div>
                             <div class="col-md-2 ">
                                 <a class="success" href="{{route('user.add_friend',['id' => $item->id])}}"
                                    title="Добавить в друзья"><i class="fas fa-plus-circle"></i></a>
+                                <a class="primary" title="написать сообщение"
+                                   href="{{route('user.messages',['id' => $item->id])}}">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
                             </div>
                         </div>
                     @endforeach

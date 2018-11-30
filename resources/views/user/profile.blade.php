@@ -38,7 +38,7 @@
                     @if($user->avatar)
                         <img class="img-responsive profile-avatar" src="{{$user->avatar->link}}" alt="">
                     @else
-                        <span class="key">У Вас нет Аватара</span>
+                        <span class="key">Аватар отсутствует</span>
                     @endif
                 </span>
                     </div>
@@ -182,7 +182,7 @@
             </div>
             @if(Auth::user() && Auth::id() != $user->id)
                 <div class="user-profile-actions">
-                    <a href="{{route('user.messages_all')}}">Отправить личное сообщение</a>
+                    <a href="{{route('user.messages',['id' => $user->id])}}">Отправить личное сообщение</a>
                     <a href="{{route('user.add_friend',['id'=>$user->id])}}">Добавить в друзья</a>
                     <a href="{{route('user.set_ignore',['id'=>$user->id])}}">Добавить в игнор лист</a>
                 </div>

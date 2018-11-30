@@ -1,6 +1,6 @@
 <div class="row header">
     <div class="col">
-        <a href="/"><img src="/images/header.gif" class="header-logo" alt=""></a>
+        <a href="/"><img src="/images/header.jpg" class="header-logo" alt=""></a>
         <div class="header-social">
             <a href="#"><i class="fab fa-facebook-square"></i></a>
             <a href="#"><i class="fab fa-instagram"></i></a>
