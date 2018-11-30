@@ -26,8 +26,12 @@
                     </div>
                     <div class="col-md-4">
                         @if($user->view_avatars == 1)
-                            <img class="img-responsive " src="{{$user->avatar->link}}"
-                                 alt="">
+                            @if($user->avatar)
+                                <img class="img-responsive " src="{{$user->avatar->link??''}}" alt="Аватар">
+                            @else
+                                <span class="text-center">Аватар отсутствует</span>
+                            @endif
+
                         @endif
                     </div>
                 </div>

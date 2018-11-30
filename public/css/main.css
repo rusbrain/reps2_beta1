@@ -994,6 +994,10 @@ div.transbox img{
   margin-right: 10px;
   margin-top: 10px;
 }
+.info-wrapper{
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
 /**---------------------*/
 /**------ User Topics Page ----*/
 /**---------------------*/
