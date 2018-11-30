@@ -599,6 +599,8 @@ a.read-more {
 }
 .forum-section{
   font-size: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #717171;
 }
 .forum-section div{
   padding-left: 5px;
@@ -608,6 +610,7 @@ a.read-more {
   font-weight: bold;
   padding: 2px 5px;
   display: block;
+  color: #000;
 }
 .forum-section-title a {
   color: #000;
@@ -743,6 +746,9 @@ box-header
 .comment-content {
   background: #fff;
   padding: 5px 15px;
+}
+.comment-content a{
+  color: #000;
 }
 .add-comment-form-wrapper {
   margin-top: 20px;

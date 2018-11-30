@@ -6,8 +6,7 @@
             @include('inner_forum_sidebar')
         </div>
         <div class="col-md-9 content-center-main-wrapper">
-            <div class="content-center-main">
-{{--                {{dd($sections)}}--}}
+            <div class="">
                 @foreach($sections as $section)
                     <div class="forum-section">
                         <a class="w-100 forum-section-title"
@@ -19,6 +18,7 @@
                         </div>
                         <div class="forum-section-description">
                             Описание: {!! $section->description !!}
+                            <a class="read-more" href="{{route('forum.section.index',['name' => $section->name])}}">[ещё]</a>
                         </div>
                     </div>
                 @endforeach
