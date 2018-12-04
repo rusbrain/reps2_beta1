@@ -193,7 +193,7 @@ class GeneralViewHelper
             $sql = [];
             foreach ($all_sections as $section) {
                 $sql[] = "(
-        select * from `forum_topics` where `approved` = 1 and (`start_on` is null or `start_on` <= '$time') and `section_id` = $section->id ORDER BY `commented_at` limit 5
+        select * from `forum_topics` where `approved` = 1 and (`start_on` is null or `start_on` <= '$time') and `section_id` = $section->id ORDER BY `commented_at` DESC limit 5
         )";
             }
 
