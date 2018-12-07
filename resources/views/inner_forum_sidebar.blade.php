@@ -3,6 +3,9 @@
 @endphp
 <div class="left-inner-forum-sidebar">
 
+
+
+
     @if($forum_sections)
         @foreach($forum_sections as $forum_section)
             <div class="sidebar-widget">

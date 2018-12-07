@@ -184,3 +184,14 @@ $(function () {
         });
     });
 });
+
+/**
+ * Hidden text - hide/show
+ * */
+
+$(function () {
+    $('.quotetop').on('click', function (e) {
+        console.log('hi');
+        $(this).siblings('.spoilmain').toggleClass('active');
+    });
+});

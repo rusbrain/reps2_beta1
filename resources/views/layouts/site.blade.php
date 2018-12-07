@@ -34,7 +34,7 @@
     <section>
         <div class="container">
             <!-- MAIN NAVIGATION-->
-            @include('navigation')
+{{--            @include('navigation')--}}
         <!-- END MAIN NAVIGATION -->
         </div>
     </section>

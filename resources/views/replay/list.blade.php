@@ -1,6 +1,7 @@
 @extends('layouts.site')
 @inject('general_helper', 'App\Services\GeneralViewHelper')
 @php $countries = $general_helper->getCountries();@endphp
+{{--{{dd($replays)}}--}}
 @section('content')
     <div class="row">
         <div class="col-md-3">

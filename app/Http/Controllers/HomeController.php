@@ -42,8 +42,15 @@ class HomeController extends Controller
             ->orderBy('created_at', 'desc')
             ->orderBy('rating', 'desc')->get();
 
+        $last_news = ForumTopic::news()->where('approved',1)->with(['user'=> function($q){
+            $q->withTrashed()->with('avatar');
+        }])
+            ->withCount( 'positive', 'negative', 'comments')
+            ->with('preview_image', 'icon')->limit(5)->get();
+
         return view('home.index')->with([
             'popular_forum_topics'  => $popular_forum_topics,
+            'last_news'  => $last_news,
         ]);
     }
 
