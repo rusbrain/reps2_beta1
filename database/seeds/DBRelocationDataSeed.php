@@ -135,135 +135,135 @@ class DBRelocationDataSeed extends Seeder
      */
     public function run()
     {
-        // Old users seeding
-        echo "1. Users and Avatars seed start \n";
-        $this->seedUser(self::$country);
-        echo "Users and Avatars seed finished \n\n";
-
-        //Update users avatars file
-        echo "2. Update users avatars file start \n";
-        $this->updateAvatarFile();
-        echo "Update users avatars file finished \n\n";
-
-        //User Gallery seeding
-        echo "3. User Gallery seed start \n";
-        $this->seedUserGallery();
-        echo "User Gallery seed finished \n\n";
-
-        //User Gallery Comments seeding
-        echo "4. User Gallery Comments seed start \n";
-        $this->seedUserGalleryComments();
-        echo "User Gallery Comments seed finished \n\n";
-
-        //User Friends seeding
-        echo "5. User Friends seed start \n";
-        $this->seedUserFriends();
-        echo "User Friends seed finished \n\n";
-
-        //Forum Topic seeding
-        echo "6. Forum Topic seed start \n";
-        $this->seedForumTopic('rusforum');
-        echo "Forum Topic seed finished \n\n";
-
-        //Forum Topic Eng seeding
-        echo "7. Forum Topic Eng seed start \n";
-        $this->seedForumTopic('engforum');
-        echo "Forum Topic Eng seed finished \n\n";
-
-        //Forum Topic Comment seeding
-        echo "8. Forum Topic Comment seed start \n";
-        $this->seedTopicComments('rusforumreply');
-        echo "Forum Topic Comment seed finished \n\n";
-
-        //Forum Topic Comment Eng seeding
-        echo "9. Forum Topic Comment Eng seed start \n";
-        $this->seedTopicComments('engforumreply');
-        echo "Forum Topic Comment Eng seed finished \n\n";
-
-        //News seeding
-        echo "10. News seed start \n";
-        $this->seedNews('rusnews');
-        echo "News seed finished \n\n";
-
-        //News Eng seeding
-        echo "11. News Eng seed start \n";
-        $this->seedNews('engnews');
-        echo "News Eng seed finished \n\n";
-
-        //News Comments seeding
-        echo "12. News Comments seed start \n";
-        $this->seedNewsComments('rusnewscomments');
-        echo "News Comments seed finished \n\n";
-
-        //News Comments Eng seeding
-        echo "13. News Comments Eng seed start \n";
-        $this->seedNewsComments('engnewscomments');
-        echo "News Comments Eng seed finished \n\n";
-
-        //Replay seeding
-        echo "14. Replay seed start \n";
-        $this->seedReplay();
-        echo "Replay seed finished \n\n";
-
-        //Replay Comments seeding
-        echo "15. Replay Comments seed start \n";
-        $this->seedReplayComments();
-        echo "Replay Comments seed finished \n\n";
-
-        //Columns rus seeding
-        echo "16. Columns rus seed start \n";
-        $this->seedColumns('ruscolumns');
-        echo "Columns rus seed finished \n\n";
-
-        //Columns rus Comments seeding
-        echo "17. Columns rus Comments seed start \n";
-        $this->seedColumnComments('ruscolumnscomments');
-        echo "Columns rus Comments seed finished \n\n";
-
-        //Columns eng seeding
-        echo "18. Columns eng seed start \n";
-        $this->seedColumns('engcolumns');
-        echo "Columns eng seed finished \n\n";
-
-        //Columns eng Comments seeding
-        echo "19. Columns eng Comments seed start \n";
-        $this->seedColumnComments('engcolumnscomments');
-        echo "Columns eng Comments seed finished \n\n";
-
-        //Ignore List seeding
-        echo "20. Ignore List seed start \n";
-        $this->seedIgnoreList();
-        echo "Ignore List seed finished \n\n";
-
-        //Dialogs seeding
-        echo "21. Dialogs seed start \n";
-        $this->seedMessages();
-        echo "Dialogs seed finished \n\n";
-
-        //Dialogs seeding
-        echo "22. Start Update Interview \n";
-        $this->updateInterview();
-        echo "Update Interview finished \n\n";
-
-        //Dialogs seeding
-        echo "23. Start Update Coverage \n";
-        $this->updateCoverage();
-        echo "Update Coverage finished \n\n";
-
-        //Dialogs seeding
-        echo "24. Start Update Topic \n";
-        $this->updateCommentsCount();
-        echo "Update Topic finished \n\n";
-
-        //Dialogs seeding
-        echo "25. Start Update Replay \n";
-        $this->updateReplaysCount();
-        echo "Update Replay finished \n\n";
-
-        //Dialogs seeding
-        echo "26. Start Update Gallery \n";
-        $this->updateGalleryCount();
-        echo "Update Gallery finished \n\n";
+//        // Old users seeding
+//        echo "1. Users and Avatars seed start \n";
+//        $this->seedUser(self::$country);
+//        echo "Users and Avatars seed finished \n\n";
+//
+//        //Update users avatars file
+//        echo "2. Update users avatars file start \n";
+//        $this->updateAvatarFile();
+//        echo "Update users avatars file finished \n\n";
+//
+//        //User Gallery seeding
+//        echo "3. User Gallery seed start \n";
+//        $this->seedUserGallery();
+//        echo "User Gallery seed finished \n\n";
+//
+//        //User Gallery Comments seeding
+//        echo "4. User Gallery Comments seed start \n";
+//        $this->seedUserGalleryComments();
+//        echo "User Gallery Comments seed finished \n\n";
+//
+//        //User Friends seeding
+//        echo "5. User Friends seed start \n";
+//        $this->seedUserFriends();
+//        echo "User Friends seed finished \n\n";
+//
+//        //Forum Topic seeding
+//        echo "6. Forum Topic seed start \n";
+//        $this->seedForumTopic('rusforum');
+//        echo "Forum Topic seed finished \n\n";
+//
+//        //Forum Topic Eng seeding
+//        echo "7. Forum Topic Eng seed start \n";
+//        $this->seedForumTopic('engforum');
+//        echo "Forum Topic Eng seed finished \n\n";
+//
+//        //Forum Topic Comment seeding
+//        echo "8. Forum Topic Comment seed start \n";
+//        $this->seedTopicComments('rusforumreply');
+//        echo "Forum Topic Comment seed finished \n\n";
+//
+//        //Forum Topic Comment Eng seeding
+//        echo "9. Forum Topic Comment Eng seed start \n";
+//        $this->seedTopicComments('engforumreply');
+//        echo "Forum Topic Comment Eng seed finished \n\n";
+//
+//        //News seeding
+//        echo "10. News seed start \n";
+//        $this->seedNews('rusnews');
+//        echo "News seed finished \n\n";
+//
+//        //News Eng seeding
+//        echo "11. News Eng seed start \n";
+//        $this->seedNews('engnews');
+//        echo "News Eng seed finished \n\n";
+//
+//        //News Comments seeding
+//        echo "12. News Comments seed start \n";
+//        $this->seedNewsComments('rusnewscomments');
+//        echo "News Comments seed finished \n\n";
+//
+//        //News Comments Eng seeding
+//        echo "13. News Comments Eng seed start \n";
+//        $this->seedNewsComments('engnewscomments');
+//        echo "News Comments Eng seed finished \n\n";
+//
+//        //Replay seeding
+//        echo "14. Replay seed start \n";
+//        $this->seedReplay();
+//        echo "Replay seed finished \n\n";
+//
+//        //Replay Comments seeding
+//        echo "15. Replay Comments seed start \n";
+//        $this->seedReplayComments();
+//        echo "Replay Comments seed finished \n\n";
+//
+//        //Columns rus seeding
+//        echo "16. Columns rus seed start \n";
+//        $this->seedColumns('ruscolumns');
+//        echo "Columns rus seed finished \n\n";
+//
+//        //Columns rus Comments seeding
+//        echo "17. Columns rus Comments seed start \n";
+//        $this->seedColumnComments('ruscolumnscomments');
+//        echo "Columns rus Comments seed finished \n\n";
+//
+//        //Columns eng seeding
+//        echo "18. Columns eng seed start \n";
+//        $this->seedColumns('engcolumns');
+//        echo "Columns eng seed finished \n\n";
+//
+//        //Columns eng Comments seeding
+//        echo "19. Columns eng Comments seed start \n";
+//        $this->seedColumnComments('engcolumnscomments');
+//        echo "Columns eng Comments seed finished \n\n";
+//
+//        //Ignore List seeding
+//        echo "20. Ignore List seed start \n";
+//        $this->seedIgnoreList();
+//        echo "Ignore List seed finished \n\n";
+//
+//        //Dialogs seeding
+//        echo "21. Dialogs seed start \n";
+//        $this->seedMessages();
+//        echo "Dialogs seed finished \n\n";
+//
+//        //Dialogs seeding
+//        echo "22. Start Update Interview \n";
+//        $this->updateInterview();
+//        echo "Update Interview finished \n\n";
+//
+//        //Dialogs seeding
+//        echo "23. Start Update Coverage \n";
+//        $this->updateCoverage();
+//        echo "Update Coverage finished \n\n";
+//
+//        //Dialogs seeding
+//        echo "24. Start Update Topic \n";
+//        $this->updateCommentsCount();
+//        echo "Update Topic finished \n\n";
+//
+//        //Dialogs seeding
+//        echo "25. Start Update Replay \n";
+//        $this->updateReplaysCount();
+//        echo "Update Replay finished \n\n";
+//
+//        //Dialogs seeding
+//        echo "26. Start Update Gallery \n";
+//        $this->updateGalleryCount();
+//        echo "Update Gallery finished \n\n";
 
         //Dialogs seeding
         echo "27. Start Update Replay Pack Type \n";
