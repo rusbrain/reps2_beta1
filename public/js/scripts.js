@@ -171,9 +171,9 @@ $(function () {
         $.ajax({
             type: 'GET',
             url: url,
-            data:{
-                comment : comment,
-                rating : rating
+            data: {
+                comment: comment,
+                rating: rating
             },
             success: function (response) {
                 location.reload();
@@ -188,10 +188,8 @@ $(function () {
 /**
  * Hidden text - hide/show
  * */
-
 $(function () {
     $('.quotetop').on('click', function (e) {
-        console.log('hi');
         $(this).siblings('.spoilmain').toggleClass('active');
     });
 });
