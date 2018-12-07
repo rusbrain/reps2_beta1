@@ -1,10 +1,7 @@
 @extends('layouts.site')
 @inject('general_helper', 'App\Services\GeneralViewHelper')
-@php $countries = $general_helper->getCountries(); @endphp
 @section('content')
     @php
-        $replays = $general_helper->getLastGosuReplay();
-        $last_forums = $general_helper->getLastForumHome();
         $types = $general_helper->getReplayTypes();
     @endphp
     <div class="row">

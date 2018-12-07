@@ -1,6 +1,7 @@
 @php
     $random_question = $general_helper->getRandomQuestion();
     $last_user_replays = $general_helper->getLastUserReplay();
+    $replays = $general_helper->getLastGosuReplay();
 @endphp
 
 @if(isset($random_question) && !empty($random_question))
