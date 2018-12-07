@@ -264,6 +264,11 @@ class DBRelocationDataSeed extends Seeder
         echo "26. Start Update Gallery \n";
         $this->updateGalleryCount();
         echo "Update Gallery finished \n\n";
+
+        //Dialogs seeding
+        echo "27. Start Update Replay Pack Type \n";
+        $this->updateReplaysPackType();
+        echo "Update Replay Pack Type finished \n\n";
     }
 
     /**
@@ -1202,6 +1207,29 @@ class DBRelocationDataSeed extends Seeder
 
             $j = $i + 1;
             echo "Update Replay ($j/$cycles)\n";
+        }
+    }
+
+    /**
+     * Update Replay Comments Count
+     */
+    protected function updateReplaysPackType()
+    {
+        $replay_q = \DB::table(env('DB_DATABASE_OLD') . '.replays')->where('replay_type', 'pack')->orWhere('replay_type', 'upack');
+        $cycles = self::getCycles($replay_q->count());
+
+        for ($i = 0; $i < $cycles; $i++) {
+            $replays = $replay_q->orderBy('replay_id')->offset(1000 * $i)->limit(1000)->get(['replay_id']);
+
+            $ids = [];
+            foreach ($replays as $replay) {
+                $ids[] = $replay->replay_id;
+            }
+            $type_id = ReplayType::where('name', 'pack')->first()->id;
+            Replay::whereIn('reps_id', $ids)->update(['type_id' => $type_id]);
+
+            $j = $i + 1;
+            echo "Update Replay pack type($j/$cycles)\n";
         }
     }
 
