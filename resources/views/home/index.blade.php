@@ -87,35 +87,6 @@
                     @endif
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="">
-                        <div class="page-title w-100">Последние форумы</div>
-                        @if($last_forums)
-                            @foreach($last_forums as $last_forum)
-                                <div class="forum-wrapper clearfix">
-                                    <div class="forum-title">
-                                        <a href="{{route('forum.topic.index',['id'=>$last_forum->id])}}">
-                                            {!! $general_helper->oldContentFilter($last_forum->title??'название форума') !!}</a>
-                                    </div>
-                                    <div class="forum-image">
-                                        <a href="{{route('forum.topic.index',['id'=>$last_forum->id])}}">
-                                            <img src="{{$last_forum->preview_image->link??'/images/big-logo-header.jpg'}}"
-                                                 alt="">
-                                        </a>
-                                    </div>
-                                    <div class="forum-extract">
-                                        {!! $general_helper->oldContentFilter($last_forum->preview_content??substr($last_forum->content,0,300)) !!}
-                                    </div>
-                                    <a class="pull-right" href="{{route('forum.topic.index',['id'=>$last_forum->id])}}">[читать
-                                        полностью]</a>
-                                </div>
-
-                            @endforeach
-                        @endif
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 @endsection
