@@ -42,7 +42,7 @@
                 </div>
             @endif
 
-            <div class="page-title">Популярные формы</div>
+            <div class="page-title">Популярные форумы</div>
             <div class="row">
                 <div class="col w-100">
                     @if($popular_forum_topics)
