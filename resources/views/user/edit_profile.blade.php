@@ -1,5 +1,4 @@
 @extends('layouts.site')
-
 @section('content')
     <div>
         <div class="page-title row">Редактирование профайла пользователя</div>

@@ -52,7 +52,7 @@ class TopicCommentController extends CommentController
      */
     public function store(TopicCommentStoreRequest $request)
     {
-        ForumTopic::where('id', $request->get('topic_id'))->update('commented_at', Carbon::now());
+        ForumTopic::where('id', $request->get('topic_id'))->update(['commented_at' => Carbon::now()]);
         return $this->storeComment($request);
     }
 }

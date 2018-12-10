@@ -16,7 +16,6 @@
             @endif
         </div>
     </div>
-
     <div class="profile-sidebar-widget">
         <a href="" class="profile-link">В друзьях</a>
         <div class="friend-list-wrapper">
@@ -32,5 +31,4 @@
             @endif
         </div>
     </div>
-
 </div>

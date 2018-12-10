@@ -96,7 +96,7 @@ class CommentController extends Controller
 
         $this->createComment($data, $data[$this->name_id]);
 
-        return redirect()->route($this->route_name, ['id' => $data['object_id']]);
+        return redirect()->route($this->route_name, ['id' => $data[$this->name_id]]);
     }
 
     /**

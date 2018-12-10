@@ -116,6 +116,9 @@ textarea.error,
 input.error {
   border: 1px solid red;
 }
+.text-bold{
+  font-weight: bold;
+}
 .padding-top-20 {
   padding-top: 20px !important;
 }
@@ -281,6 +284,7 @@ body {
 /**search form*/
 .search-form{
   justify-content: right;
+  display: flex;
 }
 .search-form .search-input{
   width: 50%;
@@ -580,6 +584,7 @@ a.read-more {
   padding: 4px;
   align-items: center;
   justify-content: center;
+  font-size: 12px;
 }
 .sidebar-widget-title a {
   color: #fff;
@@ -588,6 +593,9 @@ a.read-more {
   display: flex;
   flex-direction: column;
   background: #eaebec;
+}
+.sidebar-widget-content form{
+  margin-bottom: 5px;
 }
 .sidebar-widget-content .name {
   color: #222;
@@ -603,8 +611,11 @@ a.read-more {
 .sidebar-widget span.flag-icon {
   font-size: 16px;
 }
+.qty-downloaded{
+  text-align: center;
+}
 .sidebar-widget span {
-  min-width: 30px;
+  min-width: 25px;
   display: inline-block;
 }
 .sidebar-widget-subtitle {
@@ -688,6 +699,15 @@ a.read-more {
   justify-content: center;
   align-items: center;
 }
+.sidebar-widget-content > div a{
+  padding-left: 5px;
+}
+.sidebar-widget-content > div:first-of-type{
+  margin-top: 5px;
+}
+.sidebar-widget-content > div:last-of-type{
+  margin-bottom: 5px;
+}
 .sidebar-widget-content .random-banner img {
 }
 /**---------------------*/
@@ -700,6 +720,8 @@ a.read-more {
   display: flex;
   justify-content: space-between;
   margin-bottom: 5px;
+  align-items: center;
+  padding-left: 5px;
 }
 .sidebar-widget .replays-wrapper {
 }

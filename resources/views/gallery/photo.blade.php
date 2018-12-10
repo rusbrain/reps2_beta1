@@ -83,7 +83,7 @@
                 <div class="col">
                     <div class="comments-wrapper">
                         <div class="comments-block-title ">Комментарии:</div>
-                        @if(!empty($photo->comments->items))
+                        @if($photo->comments->total() > 0)
                             @php $i = 1; @endphp
                             @foreach($photo->comments as $comment)
                                 <div class="comment">
@@ -95,7 +95,8 @@
                                     </div>
                                     <div class="comment-title">{{$comment->created_at}}</div>
                                     <div class="comment-content">
-                                        {!! $comment->content !!}
+                                        <div class="text-bold">{!! $general_helper->oldContentFilter($comment->title) !!}</div>
+                                        {!!  $general_helper->oldContentFilter($comment->content) !!}
                                     </div>
                                 </div>
                                 @php $i++; @endphp

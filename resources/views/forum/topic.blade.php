@@ -27,7 +27,7 @@
             </div>
             <div class="topic-comments-wrapper">
                 <div class="page-title w-100">Ответы:</div>
-                @if($comments)
+                @if($comments->total() > 0)
                     @foreach($comments as $item => $comment)
                         <div class="comment-title col-md-12">
                             @php $item++; @endphp
@@ -38,12 +38,18 @@
                             <span class="comment-flag">
                             <span class="flag-icon flag-icon-{{mb_strtolower($countries[$comment->user->country_id]->code)}}"></span>
                         </span>
-                            <a href="{{route('user.get_rating',['id' => $comment->user->id])}}">{{$comment->user->rating}} <span>кг</span></a>
+                            <a href="{{route('user.get_rating',['id' => $comment->user->id])}}">{{$comment->user->rating}}
+                                <span>кг</span></a>
                         </div>
                         <div class="col-md-12 comment-content">
+                            <div class="text-bold">{!! $general_helper->oldContentFilter($comment->title) !!}</div>
                             {!! $general_helper->oldContentFilter($comment->content) !!}
                         </div>
                     @endforeach
+                    <nav class="comment-navigation">
+                        @php  $data = $comments @endphp
+                        @include('pagination')
+                    </nav>
                 @endif
                 <div class="row" id="comment">
                     <div class="add-comment-form-wrapper col">

@@ -127,7 +127,7 @@
             </div>
             <div class="row comments-wrapper">
                 <div class="page-title w-100">Коментанрии</div>
-                @if($comments)
+                @if($comments->total() > 0)
                     @foreach($comments as $item => $comment)
                         <div class="comment-title col-md-12">
                             <span>#{{$item}}</span>
@@ -136,13 +136,14 @@
                                         class="comment-user">{{$comment->user->name}}</span></a>
                             <span class="comment-flag">
                             <span class="flag-icon flag-icon-{{mb_strtolower($countries[$comment->user->country_id]->code)}}"></span>
-
                         </span>
-
                             <a href="{{route('user.get_rating', ['id' => $comment->user->id])}}">{{$comment->user->rating}}
                                 <span>кг</span></a>
                         </div>
-                        <div class="col-md-12 comment-content">{!! $comment->content !!}</div>
+                        <div class="col-md-12 comment-content">
+                            <div class="text-bold">{!! $general_helper->oldContentFilter($comment->title) !!}</div>
+                            {!! $comment->content !!}
+                        </div>
                     @endforeach
                     <nav class="comment-navigation">
                         @php  $data = $comments @endphp
