@@ -42,8 +42,12 @@
                     <div class="col-md-8 header-profile">
                         <p class="hello">
                             @if(Auth::user()->view_avatars == 1)
-                                <img class="img-responsive profile-avatar-header" src="{{Auth::user()->avatar->link}}"
-                                     alt="">
+                                @if(Auth::user()->avatar)
+                                    <img class="img-responsive profile-avatar-header" src="{{Auth::user()->avatar->link}}" alt="">
+                                @else
+                                    <span class="key">Аватар отсутствует</span>
+                                @endif
+
                             @endif
                             Hello {{Auth::user()->name}}
                         </p>
