@@ -50,6 +50,8 @@
                         @php  $data = $comments @endphp
                         @include('pagination')
                     </nav>
+                @else
+                    <div class="comment-content">комментарии отсутствуют</div>
                 @endif
                 <div class="row" id="comment">
                     <div class="add-comment-form-wrapper col">
