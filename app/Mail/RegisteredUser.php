@@ -13,6 +13,7 @@ class RegisteredUser extends Mailable
     use Queueable, SerializesModels;
 
     private $token;
+    private $user;
 
     /**
      * Create a new message instance.
@@ -21,6 +22,7 @@ class RegisteredUser extends Mailable
      */
     public function __construct($user)
     {
+        $this->user = $user;
         $token = md5(time());
 
         UserEmailToken::create(
@@ -41,7 +43,8 @@ class RegisteredUser extends Mailable
      */
     public function build()
     {
-        return $this->from(env('MAIL_FROM_EMAIL'), env('MAIL_FROM_NAME'))
+        return $this->to($this->user->email)
+        ->from(env('MAIL_FROM_EMAIL'), env('MAIL_FROM_NAME'))
             ->subject('Вы зарегестрировались на Reps.ru')
             ->view('emails.registered')
             ->with('token',$this->token);

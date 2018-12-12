@@ -43,7 +43,8 @@
                         <p class="hello">
                             @if(Auth::user()->view_avatars == 1)
                                 @if(Auth::user()->avatar)
-                                    <img class="img-responsive profile-avatar-header" src="{{Auth::user()->avatar->link}}" alt="">
+                                    <img class="img-responsive profile-avatar-header"
+                                         src="{{Auth::user()->avatar->link}}" alt="">
                                 @else
                                     <span class="key">Аватар отсутствует</span>
                                 @endif
@@ -65,7 +66,8 @@
 
                                     <a class="profile-link" href="{{route('forum.topic.my_list')}}">Мои посты</a>
 
-                                    <a class="profile-link" href="{{route('replay.create')}}">Отправить свой/госу реплей</a>
+                                    <a class="profile-link" href="{{route('replay.create')}}">Отправить свой/госу
+                                        реплей</a>
 
                                     <a class="profile-link" href="{{route('replay.my_user')}}">Мои реплеи</a>
                                     <a class="profile-link" href="{{route('replay.my_gosu')}}">Мои госу реплеи</a>

@@ -110,7 +110,7 @@ class RegisterController extends Controller
      */
     protected function registered(Request $request, $user)
     {
-        Mail::to($user->email)->send(new RegisteredUser($user));
+        Mail::send(new RegisteredUser($user));
 
         return redirect()->route('edit_profile');
     }
