@@ -11,7 +11,7 @@
             <div class="row">
                 <div class="page-title w-100">{!! $title !!}</div>
             </div>
-            @if($replays)
+            @if($replays->total() > 0)
                 @foreach($replays as $item => $replay)
                     <div class="row page-replay-title">
                         <div class="col-md-12">
@@ -25,7 +25,8 @@
                             </div>
                             <div>
                                 @if(Auth::user() && Auth::id() == $replay->user_id)
-                                    <a class="edit-btn" title="Редактировать" href="{{route('replay.edit', ['id' => $replay->id])}}">
+                                    <a class="edit-btn" title="Редактировать"
+                                       href="{{route('replay.edit', ['id' => $replay->id])}}">
                                         <i class="fas fa-pen"></i>
 
                                     </a>
@@ -58,6 +59,8 @@
                 <div class="row margin-top-20">
                     @include('pagination')
                 </div>
+            @else
+                <p>Ваш список реплеев пуст</p>
             @endif
         </div>
     </div>

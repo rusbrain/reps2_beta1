@@ -29,19 +29,21 @@
                 <div class="page-title w-100">Ответы:</div>
                 @if($comments->total() > 0)
                     @foreach($comments as $item => $comment)
-                        <div class="comment-title col-md-12">
+                        <div class="comment-title col-md-12 clearfix">
                             @php $item++; @endphp
                             <span><a name="#{{$item}}">#{{$item}}</a></span>
                             <span class="comment-date">{{$comment->created_at}}</span>
                             <a href="{{route('user_profile',['id' => $comment->user->id])}}"><span
                                         class="comment-user">{{$comment->user->name}}</span></a>
                             <span class="comment-flag">
-                            <span class="flag-icon flag-icon-{{mb_strtolower($countries[$comment->user->country_id]->code)}}"></span>
+                            @if($comment->user->country_id)
+                                <span class="flag-icon flag-icon-{{mb_strtolower($countries[$comment->user->country_id]->code)}}"></span>
+                            @endif
                         </span>
                             <a href="{{route('user.get_rating',['id' => $comment->user->id])}}">{{$comment->user->rating}}
                                 <span>кг</span></a>
                         </div>
-                        <div class="col-md-12 comment-content">
+                        <div class="col-md-12 comment-content clearfix">
                             <div class="text-bold">{!! $general_helper->oldContentFilter($comment->title) !!}</div>
                             {!! $general_helper->oldContentFilter($comment->content) !!}
                         </div>

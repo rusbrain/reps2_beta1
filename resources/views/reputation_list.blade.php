@@ -15,8 +15,12 @@
                         <div class="row">
                             <div class="info-title col-4">Страна:</div>
                             <div class="info-title col-8">
-                                <span class="flag-icon flag-icon-{{mb_strtolower($countries[$user->country_id]->code)}}"></span>
-                                <span>{{$countries[$user->country_id]->name}}</span>
+                                @if($user->country_id)
+                                    <span class="flag-icon flag-icon-{{mb_strtolower($countries[$user->country_id]->code)}}"></span>
+                                    <span>{{$countries[$user->country_id]->name}}</span>
+                                @else
+                                    <span>не указано</span>
+                                @endif
                             </div>
                         </div>
                         <div class="row">

@@ -89,7 +89,9 @@
                                 <div class="comment">
                                     <div class="comment-title">
                                         <span>#{{$i}} </span>
-                                        <span class="flag-icon flag-icon-{{mb_strtolower($countries[$comment->user->country_id]->code)}}"></span>
+                                        @if($comment->user->country_id)
+                                            <span class="flag-icon flag-icon-{{mb_strtolower($countries[$comment->user->country_id]->code)}}"></span>
+                                        @endif
                                         <span>{{$comment->user->name}}</span>
                                         <a href="">{{$comment->user->rating}}<span>кг</span></a>
                                     </div>

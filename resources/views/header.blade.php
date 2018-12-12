@@ -46,7 +46,7 @@
                                     <img class="img-responsive profile-avatar-header"
                                          src="{{Auth::user()->avatar->link}}" alt="">
                                 @else
-                                    <span class="key">Аватар отсутствует</span>
+                                    <span class="key"></span>
                                 @endif
 
                             @endif
