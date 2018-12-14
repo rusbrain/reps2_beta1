@@ -44,7 +44,7 @@ class RegisteredUser extends Mailable
     public function build()
     {
         return $this->to($this->user->email)
-        ->from(env('MAIL_FROM_EMAIL'), env('MAIL_FROM_NAME'))
+            ->from(env('MAIL_FROM_EMAIL', 'info@reps.ru'), env('MAIL_FROM_NAME', 'REPS.RU'))
             ->subject('Вы зарегестрировались на Reps.ru')
             ->view('emails.registered')
             ->with('token',$this->token);
