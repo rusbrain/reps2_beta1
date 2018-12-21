@@ -28,7 +28,8 @@ class UserPasswordUpdated extends Mailable
      */
     public function build()
     {
-        return $this->from(env('MAIL_FROM_EMAIL'), env('MAIL_FROM_NAME'))
+        return $this
+            ->from(env('MAIL_FROM_EMAIL', 'info@reps.ru'), env('MAIL_FROM_NAME', 'REPS.RU'))
             ->subject('Ваш пароль на Reps.ru обновлен')
             ->view('emails.auth.password_updated');
     }

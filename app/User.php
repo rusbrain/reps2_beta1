@@ -394,7 +394,7 @@ class User extends Authenticatable
             $user_data['file_id'] = $file->id;
         }
 
-        if(Auth::user()->role->name != 'admin'){
+        if(Auth::user()->role?(Auth::user()->role->name != 'admin'):true){
             unset($user_data['user_role_id']);
         }
 

@@ -33,7 +33,8 @@ class UpdateOldUserPassword extends Mailable
      */
     public function build()
     {
-        return $this->from(env('MAIL_FROM_EMAIL'), env('MAIL_FROM_NAME'))
+        return $this
+            ->from(env('MAIL_FROM_EMAIL', 'info@reps.ru'), env('MAIL_FROM_NAME', 'REPS.RU'))
             ->subject('Обновите Ваш пароль на Reps.ru')
             ->view('emails.auth.update_old_password')
             ->with('token',$this->token);

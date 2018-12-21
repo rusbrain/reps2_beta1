@@ -77,7 +77,7 @@ class AdminViewHelper
      */
     public function admin()
     {
-        $this->role = $this->role??Auth::user()->role->name == 'admin';
+        $this->role = $this->role??(Auth::user()->role?(Auth::user()->role->name == 'admin'):false);
 
         return $this->role;
     }
