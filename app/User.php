@@ -402,4 +402,19 @@ class User extends Authenticatable
 
         return User::find($user_id);
     }
+
+    /**
+     * Update user points
+     *
+     * @param $user_id
+     * @param bool $point true - increment and false - decrement
+     */
+    public static function updatePoints($user_id, bool $point)
+    {
+        if($point){
+            User::where('id', $user_id)->increment('points',1);
+        } else{
+            User::where('id', $user_id)->decrement('points',1);
+        }
+    }
 }

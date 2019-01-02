@@ -2,13 +2,28 @@
 
 namespace App;
 
+use App\Observers\UserGalleryPointsObserver;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Notifications\Notifiable;
 
 class UserGallery extends Model
 {
     use SoftDeletes;
+    use Notifiable;
+
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'created'   => UserGalleryPointsObserver::class,
+        'deleted'   => UserGalleryPointsObserver::class,
+        'restored'  => UserGalleryPointsObserver::class,
+    ];
+
     /**
      * Using table name
      *

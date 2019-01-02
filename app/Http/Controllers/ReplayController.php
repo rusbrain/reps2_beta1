@@ -121,7 +121,7 @@ class ReplayController extends Controller
         $replay = $this->getReplay(Replay::where('id', $id))->first();
 
         if ($replay){
-            $comments = $replay->comments()->with(User::getUserWithReputationQuery())
+            $comments = $replay->comments()->with(User::getUserWithReputationQuery())->withCount('positive', 'negative')
                 ->orderBy('created_at')->paginate(20);
 
             return view('replay.show')->with(['replay' => $replay, 'comments' => $comments]);

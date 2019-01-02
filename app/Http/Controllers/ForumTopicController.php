@@ -38,7 +38,7 @@ class ForumTopicController extends Controller
             return abort(404);
         }
 
-        $comments = $topic->comments()->with(User::getUserWithReputationQuery())
+        $comments = $topic->comments()->with(User::getUserWithReputationQuery())->withCount('positive', 'negative')
             ->orderBy('created_at')->paginate(20);
 
         ForumTopic::where('id', $id)->update(['reviews' => $topic->reviews+1]);
@@ -226,7 +226,7 @@ class ForumTopicController extends Controller
                     ->orWhere('start_on','<=', Carbon::now()->format('Y-M-d'));
             })
             ->with(['comments' => function($query){
-                $query->orderBy('created_at', 'desc')->first();
+                $query->withCount('positive', 'negative')->orderBy('created_at', 'desc')->first();
             }])
             ->orderBy('created_at', 'desc')->paginate(20);
 

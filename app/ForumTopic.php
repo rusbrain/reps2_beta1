@@ -2,13 +2,28 @@
 
 namespace App;
 
+use App\Observers\ForumTopicPointsObserver;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Notifications\Notifiable;
 
 class ForumTopic extends Model
 {
+    use Notifiable;
+
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'created'   => ForumTopicPointsObserver::class,
+        'deleted'   => ForumTopicPointsObserver::class,
+        'restored'  => ForumTopicPointsObserver::class,
+    ];
+
     /**
      * Using table name
      *

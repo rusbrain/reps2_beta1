@@ -34,7 +34,7 @@ class UserGalleryController extends Controller
             ->with('user.avatar', 'file')
             ->withCount( 'positive', 'negative', 'comments')
             ->with(['comments' =>function($q){
-            $q->with('user')->paginate(20);
+            $q->withCount('positive', 'negative')->with('user')->paginate(20);
         }])->first();
 
         return view('admin.user.gallery.view')->with('gallery', $data);

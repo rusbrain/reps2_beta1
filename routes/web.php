@@ -37,6 +37,8 @@ Route::group(['middleware' => 'activity'], function () {
 
     Route::group(['middleware' => 'auth'], function () {
         Route::get('logout', 'Auth\LoginController@logout')->name('logout');
+        Route::get('comment/{id}/set_rating', 'CommentsRatingController@setRating')->name('comment.set_rating');
+        Route::get('comment/{id}/get_rating', 'CommentsRatingController@getRating')->name('comment.ger_rating');
     });
 
     Route::group(['prefix' => 'user'], function () {
@@ -313,7 +315,7 @@ Route::group(['prefix' => 'redirect'], function () {
     Route::get('user', 'RedirectOldURL@user');
     Route::get('columns', 'RedirectOldURL@columns');
     Route::get('forum', 'RedirectOldURL@forum');
-    Route::get('info', 'RedirectOldURL@index');
+    Route::get('info', 'RedirectOldURL@info');
     Route::get('replays', 'RedirectOldURL@replays');
     Route::get('freereplays', 'RedirectOldURL@freeReplays');
     Route::get('files', 'RedirectOldURL@files');

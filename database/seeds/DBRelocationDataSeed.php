@@ -19,6 +19,7 @@ use App\Replay;
 use \App\IgnoreUser;
 use \App\Dialogue;
 use \App\UserMessage;
+use \App\UserReputation;
 
 class DBRelocationDataSeed extends Seeder
 {
@@ -135,7 +136,7 @@ class DBRelocationDataSeed extends Seeder
      */
     public function run()
     {
-        // Old users seeding
+/*        // Old users seeding
         echo "1. Users and Avatars seed start \n";
         $this->seedUser(self::$country);
         echo "Users and Avatars seed finished \n\n";
@@ -240,35 +241,45 @@ class DBRelocationDataSeed extends Seeder
         $this->seedMessages();
         echo "Dialogs seed finished \n\n";
 
-        //Dialogs seeding
+        //Update Interview seeding
         echo "22. Start Update Interview \n";
         $this->updateInterview();
         echo "Update Interview finished \n\n";
 
-        //Dialogs seeding
+        //Update Coverage seeding
         echo "23. Start Update Coverage \n";
         $this->updateCoverage();
         echo "Update Coverage finished \n\n";
 
-        //Dialogs seeding
+        //Update Topic seeding
         echo "24. Start Update Topic \n";
         $this->updateCommentsCount();
         echo "Update Topic finished \n\n";
 
-        //Dialogs seeding
+        //Update Replay seeding
         echo "25. Start Update Replay \n";
         $this->updateReplaysCount();
         echo "Update Replay finished \n\n";
 
-        //Dialogs seeding
+        //Start Update Gallery  seeding
         echo "26. Start Update Gallery \n";
         $this->updateGalleryCount();
         echo "Update Gallery finished \n\n";
 
-        //Dialogs seeding
+        //Update Replay Pack seeding
         echo "27. Start Update Replay Pack Type \n";
         $this->updateReplaysPackType();
-        echo "Update Replay Pack Type finished \n\n";
+        echo "Update Replay Pack Type finished \n\n";*/
+
+        //User Reputation seeding
+        echo "28. Start User Reputation \n";
+        $this->userReputation();
+        echo "User Reputation finished \n\n";
+
+        //User Reputation seeding
+        echo "29. Start Update User Reputation and Points \n";
+        $this->updateUserRating();
+        echo "Update User Reputation and Points finished \n\n";
     }
 
     /**
@@ -549,8 +560,6 @@ class DBRelocationDataSeed extends Seeder
 
         for ($i = 0; $i < $cycles; $i++) {
             $rusforums = DB::table(env('DB_DATABASE_OLD') . '.'.$table)
-//                ->select(DB::raw('news_stext COLLATE utf8mb4_unicode_ci AS news_stext1, news_title COLLATE utf8mb4_unicode_ci AS news_title1, news_date, news_time'))
-//                ->select(DB::raw('news_text COLLATE utf8mb4_unicode_ci AS news_text1, user_id, news_type, news_id, news_long, news_show, news_start, denyview'))
                 ->orderBy('news_id')->offset(1000 * $i)->limit(1000)->get();
 
             $new_forum_topics = [];
@@ -969,13 +978,14 @@ class DBRelocationDataSeed extends Seeder
                     }
 
                     $file_id = 0;
-                    $path_to = "./public/storage/replays/{$old_replay->replay_file}";
+                    $sl = $old_replay->replay_file[0] == '/' ? '' : '/';
+                    $path_to = "./public/storage/replays$sl{$old_replay->replay_file}";
 
                     if (@fopen($path_to, 'r')) {
                         $file_data = [
-                            'user_id' => (int)$user->id ?? 1,
+                            'user_id' => (int)($user? $user->id : 1),
                             'title' => "Replay {$old_replay->replay_name}",
-                            'link' => "/storage/replays/{$old_replay->replay_file}",
+                            'link' => "/storage/replays$sl{$old_replay->replay_file}",
                             'type' => filetype($path_to),
                             'size' => filesize($path_to),
                         ];
@@ -998,27 +1008,33 @@ class DBRelocationDataSeed extends Seeder
                             break;
                     };
 
+                    $substring = strlen($old_replay->replay_type) > 4 ? substr($old_replay->replay_type, 1) : $old_replay->replay_type;
+                    $first_country = $countries->where('name', $old_replay->replay_countryv)->first();
+                    $second_country = $countries->where('name', $old_replay->replay_countryd)->first();
+
+//                    var_dump($first_country);
+//                    echo "\n";
                     $new_replays[] = [
-                        'user_id'           => (int)$user->id ?? 1,
+                        'user_id'           => (int)($user? $user->id : 1),
                         'user_replay'       => $user_replay,
-                        'type_id'           => (int)$types->where('name', substr($old_replay->replay_type, 1))->first()->id ?? $types->first()->id,
+                        'type_id'           => (int)($types->where('name', $substring)->first()->id ?? $types->first()->id),
                         'title'             => $old_replay->replay_name,
                         'content'           => $old_replay->replay_rustext,
-                        'map_id'            => (int)$old_replay->replay_map ? $maps->where('name', $old_replay->replay_map)->first()->id ?? 0 : 0,
+                        'map_id'            => (int)($old_replay->replay_map ? $maps->where('name', $old_replay->replay_map)->first()->id ?? 0 : 0),
                         'file_id'           => (int)$file_id,
                         'championship'      => $old_replay->replay_event,
-                        'first_country_id'  => (int)$countries->where('name', $old_replay->replay_countryv)->first()->id ?? 0,
-                        'second_country_id' => (int)$countries->where('name', $old_replay->replay_countryd)->first()->id ?? 0,
+                        'first_country_id'  => (int)($first_country? $first_country->id : 0),
+                        'second_country_id' => (int)($second_country? $second_country->id : 0),
                         'first_race'        => $old_replay->replay_racev??'0',
                         'second_race'       => $old_replay->replay_raced??'0',
                         'downloaded'        => $old_replay->replay_dl,
                         'length'            => '00:00:00',
                         'created_at'        => self::correctDate(Carbon::parse($old_replay->replay_date . ' ' . $old_replay->replay_time)),
-                        'reps_id'           => (int)$old_replay->replay_id,
-                        'first_location'    => (int)$old_replay->replay_expv??0,
-                        'second_location'   => (int)$old_replay->replay_expd??0,
+                        'reps_id'           => (int)($old_replay->replay_id),
+                        'first_location'    => (int)($old_replay->replay_expv??0),
+                        'second_location'   => (int)($old_replay->replay_expd??0),
                         'creating_rate'     => in_array((string)$old_replay->replay_rating,['7','8','9','10','Cool','Best'])?(string)$old_replay->replay_rating:'10',
-                        'game_version_id'   => (int)$game_versions->where('version', $old_replay->replay_version)->first()->id,
+                        'game_version_id'   => (int)($game_versions->where('version', $old_replay->replay_version)->first()->id),
                         'approved'          => 1,
                     ];
                 }
@@ -1295,5 +1311,76 @@ class DBRelocationDataSeed extends Seeder
         }
 
         return $date;
+    }
+
+    /**
+     * Seed user reputation
+     */
+    protected function userReputation()
+    {
+        $reputation_r = \DB::table(env('DB_DATABASE_OLD') . '.reputation');
+        $cycles = self::getCycles($reputation_r->count());
+
+        for ($i = 0; $i < $cycles; $i++) {
+            $reputations = $reputation_r->orderBy('message_date')->offset(1000 * $i)->limit(1000)->get();
+
+            $reputations_new = [];
+            foreach ($reputations as $reputation) {
+                $user_s = User::where('reps_id', $reputation->from_user)->first()->id ?? 0;
+                $user_r = User::where('reps_id', $reputation->to_user)->first()->id ?? 0;
+                $object_id = 0;
+                $relation = 0;
+
+                if ($reputation->module = 2) {
+                    $topic = ForumTopic::where('reps_id', $reputation->post)->first();
+
+                    if ($topic) {
+                        $object_id = $topic->id;
+                        $relation = UserReputation::RELATION_FORUM_TOPIC;
+                    }
+                }
+
+                $reputations_new[] = [
+                    'sender_id' => $user_s,
+                    'recipient_id' => $user_r,
+                    'comment' =>$reputation->message_text,
+                    'rating' => ($reputation->rating == -1 ? "-1" : "1"),
+                    'created_at' => $reputation->message_date,
+                    'object_id' => $object_id,
+                    'relation' => $relation,
+                ];
+            }
+
+            UserReputation::insert($reputations_new);
+
+            $j = $i + 1;
+            echo "Insert User Reputation($j/$cycles)\n";
+        }
+    }
+
+    /**
+     * Update user reputation and points
+     */
+    protected function updateUserRating()
+    {
+        $cycles = self::getCycles(User::count());
+
+        for ($i = 0; $i < $cycles; $i++) {
+            $users = User::orderBy('created_at')->offset(1000 * $i)->limit(1000)->get();
+
+            foreach ($users as $user) {
+                UserReputation::refreshUserRating($user->id);
+
+                $user_points = Comment::where('user_id', $user->id)->count();
+                $user_points += ForumTopic::where('user_id', $user->id)->count();
+                $user_points += Replay::where('user_id', $user->id)->count();
+                $user_points += UserGallery::where('user_id', $user->id)->count();
+
+                User::where('id', $user->id)->update(['points' => $user_points]);
+            }
+
+            $j = $i + 1;
+            echo "Update User Reputation and points($j/$cycles)\n";
+        }
     }
 }
