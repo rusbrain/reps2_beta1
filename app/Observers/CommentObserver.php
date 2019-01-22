@@ -8,7 +8,7 @@ use App\Replay;
 use App\ReplayType;
 use App\UserGallery;
 
-class CommentObserver
+class CommentObserver extends BasePointsObserver
 {
     /**
      * Handle the comment "created" event.
@@ -19,6 +19,7 @@ class CommentObserver
     public function created(Comment $comment)
     {
         $this->addCommentCount($comment);
+        $this->created_point($comment->user_id);
     }
 
     /**
@@ -30,6 +31,7 @@ class CommentObserver
     public function deleted(Comment $comment)
     {
         $this->removeCommentCount($comment);
+        $this->deleted_point($comment->user_id);
     }
 
     /**
@@ -41,7 +43,7 @@ class CommentObserver
     public function restored(Comment $comment)
     {
         $this->addCommentCount($comment);
-
+        $this->restored_point($comment->user_id);
     }
 
     /**

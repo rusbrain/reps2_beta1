@@ -17,9 +17,9 @@ class Comment extends Model
      * @var array
      */
     protected $dispatchesEvents = [
-        'created' => CommentObserver::class,
-        'deleted' => CommentObserver::class,
-        'restored' => CommentObserver::class,
+        'created'   => CommentObserver::class,
+        'deleted'   => CommentObserver::class,
+        'restored'  => CommentObserver::class,
     ];
 
     const RELATION_FORUM_TOPIC  = 1;
@@ -82,5 +82,21 @@ class Comment extends Model
     public function user()
     {
         return $this->belongsTo('App\User');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function positive()
+    {
+        return $this->hasMany('App\UserReputation', 'object_id')->where('relation', UserReputation::RELATION_COMMENT)->where('rating',1);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function negative()
+    {
+        return $this->hasMany('App\UserReputation', 'object_id')->where('relation', UserReputation::RELATION_COMMENT)->where('rating','-1');
     }
 }

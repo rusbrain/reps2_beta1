@@ -2,11 +2,26 @@
 
 namespace App;
 
+use App\Observers\ReplayPointsObserver;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\Notifiable;
 
 class Replay extends Model
 {
+    use Notifiable;
+
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'created'   => ReplayPointsObserver::class,
+        'deleted'   => ReplayPointsObserver::class,
+        'restored'  => ReplayPointsObserver::class,
+    ];
+
     /**
      * @var array
      */

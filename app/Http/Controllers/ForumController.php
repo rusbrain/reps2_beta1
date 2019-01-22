@@ -49,7 +49,7 @@ class ForumController extends Controller
                     ->orWhere('start_on','<=', Carbon::now()->format('Y-M-d'));
             })
             ->with(['comments' => function($query){
-                $query->orderBy('created_at', 'desc')->get();
+                $query->withCount('positive', 'negative')->orderBy('created_at', 'desc')->get();
             }])
             ->with('comments', 'icon')
             ->orderBy('created_at', 'desc')->paginate(20);
