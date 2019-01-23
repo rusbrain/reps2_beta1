@@ -1,195 +1,222 @@
 /**
- * Login Form
+ * Menu - plugin "metisMenu"
+ * https://www.jqueryscript.net/menu/jQuery-Accordion-Menu-Plugin-For-Bootstrap-3-metisMenu.html
+ * **/
+$(function () {
+    if ($('#menu').length > 0) {
+        var menu = $('#menu');
+        menu.metisMenu({
+            // enabled/disable the auto collapse.
+            toggle: true,
+
+            // prevent default event
+            preventDefault: true,
+
+            // default classes
+            activeClass: 'active',
+            collapseClass: 'collapse',
+            collapseInClass: 'in',
+            collapsingClass: 'collapsing',
+
+            // .nav-link for Bootstrap 4
+            triggerElement: 'a',
+
+            // .nav-item for Bootstrap 4
+            parentTrigger: 'li',
+
+            // .nav.flex-column for Bootstrap 4
+            subMenu: 'ul'
+        });
+    }
+});
+
+/**
+ * Comments box is the same for all pages
+ *SCEditor -  WYSIWYG BBCode editor
+ * https://www.sceditor.com/
  * */
 $(function () {
-    var loginForm = $('#login-form');
-    if (loginForm.length > 0) {
+    if ($('#comment-content').length > 0) {
+        var textarea = document.getElementById('comment-content');
 
-        /**Validation*/
-        loginForm.validate({
-            rules: {
-                email: {required: true, email: true},
-                password: {required: true}
-            },
-            messages: {
-                email: {
-                    required: "Заполните это поле",
-                    email: "Неверный формат электронной почты"
-                },
-                password: {
-                    required: "Заполните это поле"
-                }
-            },
-            errorPlacement: function (error, element) {
-                if (element.attr("name") === "email") {
-                    error.insertBefore(loginForm.find("input[name=email]"));
-                }
-                if (element.attr("name") === "password") {
-                    error.insertBefore(loginForm.find("input[name=password]"));
-                }
-            },
-            errorElement: "div",
-            submitHandler: function (form) {
-                form.submit();
+        sceditor.create(textarea, {
+            format: 'bbcode',
+            style: 'js/sceditor/minified/themes/content/default.min.css',
+            emoticonsRoot: 'js/sceditor/',
+            locale: 'ru'
+        });
+    }
+});
+
+/**
+ * Logged user menu
+ * Show by click on icon with class .logged-user-menu
+ * */
+$(function () {
+    if ($('.logged-user-menu').length > 0) {
+        $('.logged-user-menu').on('click', function (e) {
+            e.preventDefault();
+            $('.logged-user-menu-links').toggleClass('active');
+        });
+
+        $('body').on('click', function (e) {
+            var div = $('.logged-user-menu-links');
+            var link = $('.logged-user-menu');
+
+            if (!div.is(e.target) && !link.is(e.target)) {
+                div.removeClass('active');
             }
         });
     }
 });
 
 /**
- * Registration Form
+ * User Account edit page
+ *
+ * SCEditor -  WYSIWYG BBCode editor
+ * https://www.sceditor.com/
  * */
 $(function () {
-    var registrationForm = $('#register-form');
-    if (registrationForm.length > 0) {
+    if ($('.user-account-edit-form').length > 0) {
+        var textarea = document.getElementById('signature');
 
-        /**Validation*/
-        registrationForm.validate({
-            rules: {
-                name: "required",
-                email: {required: true, email: true},
-                password: "required",
-                password_confirmation: "required"
-            },
-            messages: {
-                name: {
-                    required: "Заполните это поле"
-                },
-                email: {
-                    required: "Заполните это поле",
-                    email: "Неверный формат электронной почты"
-                },
-                password: "Заполните это поле",
-                password_confirmation: "Заполните это поле"
-            },
-            errorPlacement: function (error, element) {
-                if (element.attr("name") === "name") {
-                    error.insertBefore(registrationForm.find("input[name=name]"));
-                }
-                if (element.attr("name") === "email") {
-                    error.insertBefore(registrationForm.find("input[name=email]"));
-                }
-                if (element.attr("name") === "password") {
-                    error.insertBefore(registrationForm.find("input[name=password]"));
-                }
-                if (element.attr("name") === "password_confirmation") {
-                    error.insertBefore(registrationForm.find("input[name=password_confirmation]"));
-                }
-            },
-            errorElement: "div",
-            submitHandler: function (form) {
-                form.submit();
-            }
+        sceditor.create(textarea, {
+            format: 'bbcode',
+            style: 'js/sceditor/minified/themes/content/default.min.css',
+            emoticonsRoot: 'js/sceditor/',
+            locale: 'ru'
         });
+
+        $("#avatar").filestyle(
+            {
+                input: true,
+                text: "Загрузить фото",
+                btnClass: 'btn-blue upload-avatar'
+            });
     }
-});
-
-/**Vote Form - Right Sidebar*/
-$(function () {
-    var voteForm = $('#vote-form');
-    if (voteForm.length > 0) {
-        /**Validation*/
-        voteForm.validate({
-            rules: {
-                answer_id: {required: true}
-            },
-            messages: {
-                answer_id: {
-                    required: "Выберете вариант ответа"
-                }
-            },
-            errorPlacement: function (error, element) {
-                if (element.attr("name") === "answer_id") {
-                    error.appendTo(voteForm.find("#vote-form-error"));
-                }
-            },
-            errorElement: "div",
-            submitHandler: function (form) {
-                var selectData = $(form).serialize();
-
-                $.ajax({
-                    type: 'POST',
-                    url: $(form).attr('action'),
-                    data: selectData,
-                    success: function (html) {
-                        $('#view-results-response').html(html);
-                    },
-                    error: function () {
-
-                    }
-                });
-            }
-        });
-    }
-});
-
-/**View vote results ->  Right SideBar */
-$(function () {
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-    $('#view-answer-results').on('click', function (e) {
-        e.preventDefault();
-        var url = $(this).attr('data-url');
-        $.ajax({
-            type: 'POST',
-            url: url,
-            success: function (html) {
-                $('#view-results-response').html(html);
-            },
-            error: function () {
-
-            }
-        });
-    });
-});
-
-/**Vote - positive / negative vote - Separate Replay Page*/
-$(function () {
-    $('a.vote-replay-up, a.vote-replay-down').on('click', function (e) {
-        var rating = $(this).attr('data-rating');
-        var modal = $('#vote-modal');
-        modal.find('form input#rating').val(rating);
-
-        if (rating === '1') {
-            modal.find('.negative').removeClass('active');
-            modal.find('.positive').addClass('active');
-        }
-        if (rating === '-1') {
-            modal.find('.negative').addClass('active');
-            modal.find('.positive').removeClass('active');
-        }
-    });
-
-    $('#vote-form').on('submit', function (e) {
-        e.preventDefault();
-        var url = $(this).attr('action');
-        var comment = $(this).find('input[name=comment]').val();
-        var rating = $(this).find('input[name=rating]').val();
-        $.ajax({
-            type: 'GET',
-            url: url,
-            data: {
-                comment: comment,
-                rating: rating
-            },
-            success: function (response) {
-                location.reload();
-            },
-            error: function () {
-
-            }
-        });
-    });
 });
 
 /**
- * Hidden text - hide/show
+ * User Gallery page
  * */
 $(function () {
-    $('.quotetop').on('click', function (e) {
-        $(this).siblings('.spoilmain').toggleClass('active');
-    });
+    if ($('.user-gallery-form').length > 0) {
+        $(".image").filestyle(
+            {
+                input: true,
+                text: "Выбрать файл",
+                btnClass: 'btn-blue upload-avatar'
+            });
+    }
+});
+
+/**
+ * User Post / Themes pages
+ * */
+$(function () {
+    if ($('#user-posts').length > 0) {
+        var accordion = $('#user-posts');
+        accordion.on('hide.bs.collapse', function (e) {
+            $('#' + e.target.id).prev('.card-header').find('a .icon_collapse').toggleClass('open');
+        });
+        accordion.on('show.bs.collapse', function (e) {
+            $('#' + e.target.id).prev('.card-header').find('a .icon_collapse').toggleClass('open');
+        });
+    }
+});
+
+/**
+ * User Create Theme page
+ * */
+$(function () {
+    if ($('.user-create-theme-form').length > 0) {
+        var preview_content = document.getElementById('preview_content');
+        var content = document.getElementById('content');
+
+        $("#preview_img").filestyle(
+            {
+                input: true,
+                text: "Выбрать файл",
+                btnClass: 'btn-blue upload-avatar'
+            });
+
+        sceditor.create(preview_content, {
+            format: 'bbcode',
+            style: 'js/sceditor/minified/themes/content/default.min.css',
+            emoticonsRoot: 'js/sceditor/',
+            locale: 'ru'
+        });
+        sceditor.create(content, {
+            format: 'bbcode',
+            style: 'js/sceditor/minified/themes/content/default.min.css',
+            emoticonsRoot: 'js/sceditor/',
+            locale: 'ru'
+        });
+    }
+});
+
+/**
+ * User Create Replay page
+ * */
+$(function () {
+    if ($('.user-create-replay-form').length > 0) {
+        var content = document.getElementById('content');
+        $("#replay").filestyle(
+            {
+                input: true,
+                text: "Выбрать файл",
+                btnClass: 'btn-blue upload-avatar'
+            });
+        sceditor.create(content, {
+            format: 'bbcode',
+            style: 'js/sceditor/minified/themes/content/default.min.css',
+            emoticonsRoot: 'js/sceditor/',
+            locale: 'ru'
+        });
+    }
+});
+
+/**
+ * User Messages Page
+ * */
+$(function () {
+    if ($('.user-message-form').length > 0) {
+        var content = document.getElementById('message');
+        $(".user-message-form button").filestyle(
+            {
+                input: true,
+                text: "Выбрать файл",
+                btnClass: 'btn-blue upload-avatar'
+            });
+        sceditor.create(content, {
+            format: 'bbcode',
+            style: 'js/sceditor/minified/themes/content/default.min.css',
+            emoticonsRoot: 'js/sceditor/',
+            locale: 'ru'
+        });
+    }
+});
+
+/**
+ * Single Replay page
+ * */
+$(function () {
+    if ($('.user-menu-link').length > 0) {
+        $('.user-menu-link').on('click', function (e) {
+            e.preventDefault();
+            $('.user-menu').each(function () {
+                $(this).removeClass('active');
+            });
+            $(this).next('.user-menu').toggleClass('active');
+        });
+
+        $('body').on('click', function (e) {
+            var menuDiv = $('.user-menu');
+            var userLink = $('.user-menu-link');
+
+            if (!menuDiv.is(e.target) && !userLink.is(e.target)) {
+                menuDiv.removeClass('active');
+            }
+        });
+    }
 });

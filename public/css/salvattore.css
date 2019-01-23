@@ -1,0 +1,21 @@
+/*Gallery Page - salvattore - image grid*/
+@media screen and (max-width: 767px) {
+  .masonry[data-columns]::before {
+    content: '2 .col-xs-6';
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .masonry[data-columns]::before {
+    content: '3 .col-xs-4';
+  }
+}
+@media screen and (min-width: 992px) and (max-width: 1199px) {
+  .masonry[data-columns]::before {
+    content: '4 .col-xs-3';
+  }
+}
+@media screen and (min-width: 1200px) {
+  .masonry[data-columns]::before {
+    content: '4 .col-xs-3';
+  }
+}

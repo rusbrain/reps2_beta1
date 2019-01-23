@@ -1,5 +1,6 @@
 @extends('layouts.site')
 @inject('general_helper', 'App\Services\GeneralViewHelper')
+
 @section('content')
     @php
         $types = $general_helper->getReplayTypes();
