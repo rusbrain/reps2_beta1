@@ -177,6 +177,9 @@ img {
 .padding-right-0 {
   padding-right: 0;
 }
+.padding-right-15{
+  padding-right: 15px;
+}
 .negative-vote {
   color: #a6a6a6 !important;
 }
@@ -995,6 +998,12 @@ form label {
 }
 .content-box-topic-extract {
   margin-bottom: 10px;
+}
+.content-box-forum-img-wrapper{
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
 }
 .content-box-forum-img {
   max-height: 170px;
