@@ -1410,11 +1410,20 @@ form label {
   color: #4d4d4d !important;
   font-family: "Roboto-Medium", sans-serif;
 }
+.news-info .logged-user-avatar{
+  width: 20px;
+  height: 20px;
+  font-size: 12px;
+  margin-right: 5px;
+}
 .news-info > span {
   color: #a6a6a6;
 }
 .news-content .read-more-link {
-  margin-left: 35px;
+  padding-right: 30px;
+  display: flex;
+  justify-content: right;
+  align-items: center;
 }
 .news-footer {
   color: #a6a6a6;

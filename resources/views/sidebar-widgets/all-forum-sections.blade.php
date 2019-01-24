@@ -1,4 +1,3 @@
-<!-- All Forum Topics -->
 @php $forum_sections = $general_helper->getAllForumSections(); @endphp
 @if($forum_sections)
     <div class="widget-wrapper">
@@ -25,4 +24,3 @@
         @endforeach
     </div>
 @endif
-<!-- END All Forum Topics -->

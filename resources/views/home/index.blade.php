@@ -39,7 +39,7 @@
                                     <h2 class="margin-bottom-10">{!! $last_forum->title??'название форума' !!}</h2>
                                 </a>
                                 <p class="content-box-topic-extract">
-                                    {!! $general_helper->oldContentFilter($last_forum->preview_content ?? substr($last_forum->content,0,45)) !!}
+                                    {!! $general_helper->oldContentFilter($last_forum->preview_content ?? mb_substr($last_forum->content,0,200,'UTF-8').' ...')!!}
                                 </p>
                                 <div class="content-box-topic-view">
                                     <span>{{$last_forum->reviews ?? '0'}} просмотров</span>
@@ -102,7 +102,7 @@
                                 <h2 class="margin-bottom-10">{!! $last_forum->title ?? 'название темы' !!}</h2>
                             </a>
                             <p class="content-box-topic-extract">
-                                {!! $general_helper->oldContentFilter($last_forum->preview_content ?? mb_substr($last_forum->content,0,200,'UTF-8')).' ...'!!}
+                                {!! $general_helper->oldContentFilter($last_forum->preview_content ?? mb_substr($last_forum->content,0,200,'UTF-8').' ...')!!}
                             </p>
                             <div class="content-box-topic-view">
                                 <span>{{$last_forum->reviews ?? '0'}} просмотров</span>
@@ -142,7 +142,7 @@
                                     <h2 class="margin-bottom-10">{!! $last_forum->title ?? 'Название темы' !!}</h2>
                                 </a>
                                 <p class="content-box-topic-extract">
-                                    {!! $general_helper->oldContentFilter($last_forum->preview_content ?? substr($last_forum->content,0,45)) !!}
+                                    {!! $general_helper->oldContentFilter($last_forum->preview_content ?? mb_substr($last_forum->content,0,200,'UTF-8').' ...')!!}
                                 </p>
                                 <div class="content-box-topic-view">
                                     <span>{{$last_forum->reviews ?? '0'}} просмотров</span>

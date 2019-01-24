@@ -47,13 +47,13 @@
                         @yield('sidebar-left')
 
                     </div><!-- close div /.left-sidebar-wrapper-->
-                </div><!-- close div /.col-md-3-->
+                </div>
                 <!--END SIDEBAR LEFT-->
 
                 <!--CONTENT-->
                 <div class="col-md-6">
                     @yield('content')
-                </div><!-- close div /.col-md-6 -->
+                </div>
                 <!--END CONTENT-->
 
                 <!--SIDEBAR RIGHT-->
