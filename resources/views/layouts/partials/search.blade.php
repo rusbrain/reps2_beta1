@@ -1,7 +1,7 @@
-<form method="GET" action="{{route('home.search')}}" class="search-form">
+<form method="GET" action="{{route('home.search')}}" class="search-form" id="search-form">
     @csrf
     <div>
-        <input type="text" class="form-control" value="" placeholder="Поиск">
+        <input type="text" class="form-control" value="" placeholder="Поиск" >
     </div>
     <div class="position-relative">
         <select name="section" class="custom-select">

@@ -22,7 +22,8 @@
                             @endphp
 
                             <a href="{{route('user_profile',['id' => $user->id])}}"
-                               class="footer-user-birthday">{{$user->name}}
+                               class="footer-user-birthday"
+                               title="{{$user->name}} ({{$user_birthday->diff($now)->format('%y')}})">{{$user->name}}
                                 ({{$user_birthday->diff($now)->format('%y')}})</a>
 
                         @endforeach
@@ -89,7 +90,8 @@
                     @if(isset($last_news))
                         @foreach($last_news as $last_forum)
                             <a href="{{route('forum.topic.index',['id'=>$last_forum->id])}}"
-                               class="footer-user-birthday">{!! $last_forum->title??'название новости' !!}</a>
+                               class="footer-user-birthday"
+                               title="{!! $last_forum->title??'название новости' !!}">{!! $last_forum->title??'название новости' !!}</a>
                         @endforeach
                     @endif
                 </div>

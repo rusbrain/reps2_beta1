@@ -52,6 +52,20 @@ class GeneralViewHelper
         }
     }
 
+    public function getReplaySortBy()
+    {
+        $sort_by = [
+            'game_version_id' => 'Версия',
+            'rating' => 'Рейтинг',
+            'user_rating' => 'Юзер Рейтинг',
+            'length' => 'Продолжительность',
+            'title' => 'Название',
+            'created_at' => 'Дата создания',
+            'type_id' => 'Тип игры'
+        ];
+        return $sort_by;
+    }
+
     /**
      * Get random user gallery images
      *

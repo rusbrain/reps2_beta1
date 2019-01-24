@@ -34,7 +34,7 @@ class ReplaySearchRequest extends FormRequest
                                         Rule::in(['All','Z','T','P'])],
             'map_id'                => 'nullable|exists:replay_maps,id',
             'type_id'               => 'nullable|exists:replay_types,id',
-            'sort_by'               => 'nullable|in_array:[game_version,rating,user_rating,evaluation,length,title,created_at]',
+            'sort_by'               => 'nullable|in_array:[game_version_id,rating,user_rating,length,title,created_at,type_id]',
             'sort_type'             => 'nullable|in_array:[asc,desc]',
             'user_replay'           => 'nullable|in_array:[0,1]',
         ];

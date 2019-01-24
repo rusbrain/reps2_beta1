@@ -651,6 +651,8 @@ form label {
 }
 .logged-user-avatar img {
   width: 100%;
+  height: 100%;
+  border-radius: 50%;
 }
 .logged-user-info {
   display: flex;
@@ -786,12 +788,13 @@ form label {
   font-size: 14px;
 }
 .widget-title {
-  color: #fff;
+  color: #fff !important;
   height: 30px;
   background: #4890af;
   display: flex;
   align-items: center;
   font-size: 12px;
+  padding-left: 15px;
 }
 .widget-footer {
   background: #f5f6f8;
@@ -834,6 +837,7 @@ form label {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
+  color: #737373!important;
 }
 .widget-forum-topic-comments {
   color: #4890af;
@@ -883,6 +887,7 @@ form label {
   align-items: center;
   justify-content: center;
   display: flex;
+  padding: 0 15px;
 }
 /*********END SIDEBAR RIGHT********/
 
@@ -914,7 +919,7 @@ form label {
   padding: 4px 8px;
   margin-right: 6px;
   margin-bottom: 6px;
-  max-width: 110px;
+  max-width: 95px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;

@@ -1,10 +1,22 @@
 @extends('layouts.site')
 @inject('general_helper', 'App\Services\GeneralViewHelper')
 
+@section('sidebar-left')
+    <!--Votes-->
+    @include('sidebar-widgets.votes')
+    <!-- END Vote -->
+
+    <!-- Gosu Replay -->
+    @include('sidebar-widgets.gosu-replays')
+    <!-- END Gosu Replay -->
+
+    <!-- Main Forum Topics -->
+    @include('sidebar-widgets.general-forum-sections')
+    <!-- END Main Forum Topics -->
+@endsection
+
 @section('content')
-    @php
-        $types = $general_helper->getReplayTypes();
-    @endphp
+    @php $types = $general_helper->getReplayTypes(); @endphp
     <div class="row">
         <div class="col-md-3">
             @include('left_inner_sidebar')
@@ -87,4 +99,22 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('sidebar-right')
+    <!--Banners-->
+    @include('sidebar-widgets.banner')
+    <!-- END Banners -->
+
+    <!-- New Users-->
+    @include('sidebar-widgets.new-users')
+    <!-- END New Users-->
+
+    <!-- User's Replays-->
+    @include('sidebar-widgets.users-replays')
+    <!-- END User's Replays-->
+
+    <!-- Gallery -->
+    @include('sidebar-widgets.random-gallery')
+    <!-- END Gallery -->
 @endsection
