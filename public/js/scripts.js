@@ -202,3 +202,12 @@ $(function () {
         });
     }
 });
+
+/**
+ * Hidden text - hide/show
+ * */
+$(function () {
+    $('.quotetop').on('click', function (e) {
+        $(this).siblings('.spoilmain').toggleClass('active');
+    });
+});

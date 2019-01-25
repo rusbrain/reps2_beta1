@@ -30,19 +30,20 @@
                         </div>
                         <div class="user-role">
                             @if($comment->user->user_role_id != 0)
-                                {{$comment->user->role->title}}
+                                {{$comment->user->role->title . ' | '}}
+                                {{$general_helper->getUserStatus($comment->user->score)}} {{$comment->user->score . ' pts | '}}
                             @else
-                                user
+                                {{$general_helper->getUserStatus($comment->user->score)}} {{$comment->user->score . ' pts | '}}
                             @endif
                         </div>
                         <div>
                             <a href="{{route('user.get_rating', ['id' => $comment->user->id])}}"
-                               class="user-rating">pst {{$comment->user->rating}}</a>
+                               class="user-rating"> {{$comment->user->rating}} кг</a>
                         </div>
                     </div>
                     <div class="comment-creating-date">
                         <img src="{{route('home')}}/images/icons/clock-white.png" alt="">
-                        {{$comment->create_at}}
+                        {{$comment->created_at}}
                         <span class="comment-id">#{{$item}}</span>
                     </div>
                 </div>
@@ -72,10 +73,8 @@
     @endforeach
 
     <!-- COMMENTS PAGINATION -->
-    <nav class="comment-navigation">
-        @php  $data = $comments @endphp
-        @include('pagination')
-    </nav>
+    @php  $data = $comments @endphp
+    @include('pagination')
     <!-- END COMMENTS PAGINATION -->
 
 @else

@@ -67,6 +67,32 @@ class GeneralViewHelper
     }
 
     /**
+     * Gets from OLD reps.ru files
+    */
+    public function getUserStatus($cs)
+    {
+        $title = '';
+        if ($cs >= 0 and $cs < 1000) $title = "Zim";
+        elseif ($cs >= 1000 and $cs < 2000) $title = "Fan of Barbie";
+        elseif ($cs >= 2000 and $cs < 3000) $title = "Zagoogli";
+        elseif ($cs >= 3000 and $cs < 4000) $title = "BIG SCV";
+        elseif ($cs >= 4000 and $cs < 5000) $title = "Hasu";
+        elseif ($cs >= 5000 and $cs < 6000) $title = "XaKaC";
+        elseif ($cs >= 6000 and $cs < 7000) $title = "Idra";
+        elseif ($cs >= 7000 and $cs < 8000) $title = "Trener";
+        elseif ($cs >= 8000 and $cs < 9000) $title = "[СО!]";
+        elseif ($cs >= 9000 and $cs < 10000) $title = "SuperHero";
+        elseif ($cs >= 10000 and $cs < 15000) $title = "Gosu";
+        elseif ($cs >= 15000 and $cs < 20000) $title = "IPXZerg";
+        elseif ($cs >= 20000 and $cs < 40000) $title = "Savior";
+        elseif ($cs >= 40000 and $cs < 70000) $title = "Lutshii";
+        elseif ($cs >= 70000 and $cs < 100000 ) $title = "Bonjva";
+        elseif ($cs >= 100000 ) $title = "Ebanutyi";
+
+        return $title;
+    }
+
+    /**
      * Get random user gallery images
      *
      * @return array

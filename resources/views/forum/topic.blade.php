@@ -2,7 +2,7 @@
 @inject('general_helper', 'App\Services\GeneralViewHelper')
 @section('sidebar-left')
     <!-- All Forum Topics -->
-{{--    @include('sidebar-widgets.all-forum-sections')--}}
+    @include('sidebar-widgets.all-forum-sections')
     <!-- END All Forum Topics -->
 @endsection
 

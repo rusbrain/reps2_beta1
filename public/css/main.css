@@ -135,6 +135,9 @@ img {
 .position-relative {
   position: relative;
 }
+.spoilmain.active{
+  display: block !important;
+}
 .text-bold {
   font-family: "Roboto-Bold", sans-serif;
 }
@@ -829,7 +832,7 @@ form label {
 }
 .widget-replay-title {
   font-family: "Roboto-Medium", sans-serif;
-  color: #4d4d4d;
+  color: #4d4d4d !important;
 }
 .widget-title img {
   margin-right: 15px;
@@ -1684,6 +1687,13 @@ form label {
   justify-content: space-between;
   padding: 10px 20px;
   border-bottom: 0.5px solid #f6f6f8;
+}
+.user-reputation-vote-info > div{
+  display: flex;
+  align-items: center;
+}
+.user-reputation-vote-info > div > img{
+  margin-right: 5px;
 }
 .user-reputation-vote-info a {
   color: #4890af;
