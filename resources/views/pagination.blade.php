@@ -5,8 +5,8 @@
             @if($data->lastPage() > 7)
                 @if($data->currentPage() <= 3)
                     @for($i = 1; $i <= ($data->currentPage()+1 > 3?$data->currentPage()+1:3); $i++)
-                        <li @if($data->currentPage() == $i) class="active"@endif>
-                            <a class="page-link"
+                        <li class="page-item">
+                            <a class="page-link @if($data->currentPage() == $i) active @endif"
                                href="{{$data->url($i)/*route('admin.users').'?'.$data->pageName().'='.$i*/}}">{{$i}}</a>
                         </li>
                     @endfor
@@ -18,8 +18,8 @@
                         <a class="page-link"
                            href="{{$data->url($data->currentPage()-1)}}">{{$data->currentPage()-1}}</a>
                     </li>
-                    <li class="active page-item">
-                        <a class="page-link"
+                    <li class="page-item">
+                        <a class="page-link active"
                            href="{{$data->url($data->currentPage())}}">{{$data->currentPage()}}</a>
                     </li>
                     @if($data->currentPage() != $data->lastPage())
@@ -41,8 +41,8 @@
                 @endif
             @else
                 @for($i = 1; $i <= $data->lastPage(); $i++)
-                    <li @if($data->currentPage() == $i) class="page-item active"@endif>
-                        <a class="page-link"
+                    <li class="page-item">
+                        <a class="page-link @if($data->currentPage() == $i) active @endif"
                            href="{{$data->url($i)}}">{{$i}}</a>
                     </li>
                 @endfor

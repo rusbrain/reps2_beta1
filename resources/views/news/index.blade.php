@@ -40,7 +40,7 @@
                 @endif
                 <div class="col-md-12 news-wrapper">
                     @if($single_news->preview_image)
-                        <img src="{{$single_news->preview_image->link ?? '/images/logo.png'}}"
+                        <img src="{{$single_news->preview_image->link ?? route('home').'/images/logo.png'}}"
                              class="" alt="">
                     @endif
                     <a href="{{route('forum.topic.index',['id' => $single_news->id])}}">
@@ -57,22 +57,22 @@
                         @endif
                         <a href="{{route('user_profile',['id' => $single_news->user->id])}}"
                            class="margin-right-30">{{$single_news->user->name}}</a>
-                        <img src="images/icons/clock.png" class="margin-right-5" alt="created at">
+                        <img src="{{route('home')}}/images/icons/clock.png" class="margin-right-5" alt="created at">
                         <span>20:12  Дек 21, 2018</span>
                     </div>
                     <div class="news-content">
                         {!! $general_helper->oldContentFilter($single_news->preview_content ?? mb_substr($single_news->content,0,150,'UTF-8').' ...')!!}
                         <a href="{{route('forum.topic.index',['id' => $single_news->id])}}" class="read-more-link">
-                            <img src="images/icons/arrow-right.png" alt="">
+                            <img src="{{route('home')}}/images/icons/arrow-right.png" alt="">
                         </a>
                     </div>
                     <div class="news-footer">
                         <div>
-                            <img src="images/icons/eye.png" class="margin-right-5" alt="">
+                            <img src="{{route('home')}}/images/icons/eye.png" class="margin-right-5" alt="">
                             <span class="margin-right-5">{{$single_news->reviews ?? '0'}}</span>
                             <span class="margin-right-30">просмотров</span>
 
-                            <img src="images/icons/message-square-empty.png" class="margin-right-5" alt="">
+                            <img src="{{route('home')}}/images/icons/message-square-empty.png" class="margin-right-5" alt="">
                             <span>{{$single_news->comments_count}}</span>
                         </div>
                         <div>

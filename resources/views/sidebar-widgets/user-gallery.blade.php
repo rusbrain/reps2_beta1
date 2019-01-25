@@ -21,24 +21,8 @@
         @endforeach
 
         <!--Pagination-->
-        <nav class="pagination-wrapper">
-            <ul class="pagination">
-                <li class="page-item">
-                    <a class="page-link" href="#">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li class="page-item"><a class="page-link active" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">11</a></li>
-                <li class="page-item"><a class="page-link" href="#">12</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
+        @php  $data = $gallery @endphp
+        @include('pagination')
         <!--END Pagination-->
     </div>
 </div>

@@ -39,7 +39,7 @@ class InterviewQuestionController extends Controller
 
         InterviewUserAnswers::create($data);
 
-        return  view('answers_result')->with('answers',InterviewQuestion::getAnswerQuestion($question_id));
+        return  view('sidebar-widgets.answers-result')->with('answers',InterviewQuestion::getAnswerQuestion($question_id));
     }
 
     /**
@@ -50,6 +50,6 @@ class InterviewQuestionController extends Controller
      */
     public function getResult($question_id)
     {
-        return view('answers_result')->with('answers', InterviewQuestion::getAnswerQuestion($question_id));
+        return view('sidebar-widgets.answers-result')->with('answers', InterviewQuestion::getAnswerQuestion($question_id));
     }
 }

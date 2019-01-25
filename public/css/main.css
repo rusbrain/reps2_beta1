@@ -554,6 +554,11 @@ form label {
   padding-left: 5px;
   border-left: 0.5px solid #2f6696;
 }
+.user-avatar{
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
 /**END Forum comments*/
 
 /**Add Comment FORM**/
@@ -1156,6 +1161,12 @@ form label {
   width: 30px;
   height: 30px;
   border-radius: 50%;
+}
+.no-header.logged-user-avatar{
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  font-size: 12px;
 }
 .article-title > div {
   display: flex;

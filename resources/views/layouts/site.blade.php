@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="{{route('home')}}/css/metisMenu.min.css">
 
     <!--CSS into View-->
-    @yield('js')
+    @yield('css')
 
     <!--Main CSS-->
     <link rel="stylesheet" href="{{route('home')}}/css/main.css">
@@ -89,6 +89,9 @@
 <script src="{{route('home')}}/js/metisMenu.min.js"></script>
 <!-- jQuery Validate -->
 <script src="{{route('home')}}/js/jquery.validate.min.js"></script>
+
+
+
 <!--js into View-->
 @yield('js')
 <!--Custom scripts-->

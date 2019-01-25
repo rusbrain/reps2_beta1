@@ -1,84 +1,144 @@
 @extends('layouts.site')
 @inject('general_helper', 'App\Services\GeneralViewHelper')
-@php $countries = $general_helper->getCountries(); @endphp
+@section('sidebar-left')
+    <!-- All Forum Topics -->
+{{--    @include('sidebar-widgets.all-forum-sections')--}}
+    <!-- END All Forum Topics -->
+@endsection
+
 @section('content')
+    <!-- Breadcrumbs -->
     <div class="row">
         <div class="col-md-12">
-            <div class="topic-wrapper">
-                <div class="page-title w-100">{{$topic->title}}</div>
-                <div class="topic-info">
-                <span>
-                    {{$topic->user->name}}
-                </span>
-                    <span class="separator">|</span>
-                    <span>{{$topic->user->rating}}</span>
-                    <span class="separator">|</span>
-                    <span>{{$topic->created_at}}</span>
-                    <span class="separator">|</span>
-                    <span>Ответов: {{$topic->comments_count}}</span>
-                    <span class="separator">|</span>
-                    <span>Прочитано:{{$topic->reviews}}</span>
-                </div>
-                <div class="topic-content-wrapper">
-                    <div class="topic-content">
-                        {!! $general_helper->oldContentFilter($topic->content) !!}
-                    </div>
-                </div>
-            </div>
-            <div class="topic-comments-wrapper">
-                <div class="page-title w-100">Ответы:</div>
-                @if($comments->total() > 0)
-                    @foreach($comments as $item => $comment)
-                        <div class="comment-title col-md-12 clearfix">
-                            @php $item++; @endphp
-                            <span><a name="#{{$item}}">#{{$item}}</a></span>
-                            <span class="comment-date">{{$comment->created_at}}</span>
-                            <a href="{{route('user_profile',['id' => $comment->user->id])}}"><span
-                                        class="comment-user">{{$comment->user->name}}</span></a>
-                            <span class="comment-flag">
-                            @if($comment->user->country_id)
-                                <span class="flag-icon flag-icon-{{mb_strtolower($countries[$comment->user->country_id]->code)}}"></span>
-                            @endif
-                        </span>
-                            <a href="{{route('user.get_rating',['id' => $comment->user->id])}}">{{$comment->user->rating}}
-                                <span>кг</span></a>
-                        </div>
-                        <div class="col-md-12 comment-content clearfix">
-                            <div class="text-bold">{!! $general_helper->oldContentFilter($comment->title) !!}</div>
-                            {!! $general_helper->oldContentFilter($comment->content) !!}
-                        </div>
-                    @endforeach
-                    <nav class="comment-navigation">
-                        @php  $data = $comments @endphp
-                        @include('pagination')
-                    </nav>
-                @else
-                    <div class="comment-content">комментарии отсутствуют</div>
-                @endif
-                <div class="row" id="comment">
-                    <div class="add-comment-form-wrapper col">
-                        <div class="comments-block-title">Добавить комментарий</div>
-
-                        @if(Auth::user())
-                            @php
-                                $route = route('forum.topic.comment.store');
-                                $relation =  \App\Comment::RELATION_FORUM_TOPIC;
-                                $comment_type = 'topic_id';
-                                $object_id = $topic->id;
-                            @endphp
-                            @include('forum.forum-comment-form')
-                        @else
-                            <p>
-                                <span class="flag-icon flag-icon-ru"></span>
-                                Вы не зарегистрированы на сайте, поэтому данная
-                                функция отсутствует.</p>
-                            <p>
-                                <span class="flag-icon flag-icon-gb"></span>
-                                You are not register on the site and this function is disabled.</p>
-                        @endif
-                    </div>
-                </div>
-            </div>
+            <ul class="breadcrumb">
+                <li>
+                    <a href="/">Главная</a>
+                </li>
+                <li>
+                    <a href="{{route('forum.index')}}">/ Форум</a>
+                </li>
+                <li>
+                    <a href="{{route('forum.section.index', ['name' => $topic->section->name])}}">/ {{$topic->section->title}}</a>
+                </li>
+                <li>
+                    <a href="{{route('forum.topic.index',['id'=>$topic->id])}}" class="active">/ {{$topic->title}}</a>
+                </li>
+            </ul>
         </div>
     </div>
+    <!-- END Breadcrumbs -->
+
+    <div class="content-box">
+        <div class="col-md-12 section-title">
+            <div>{{$topic->title}}</div>
+            <div>
+                @if(Auth::user())
+                    <a href="">
+                        <img src="{{route('home')}}/images/icons/arrow-right-white.png" alt="">
+                    </a>
+                    <a href="">
+                        Добавить новую тему
+                    </a>
+                @endif
+            </div>
+        </div>
+        <div class="col-md-12 section-info">
+        <span>Просмотров:
+            <span class="qty">{{$topic->reviews}}</span>
+        </span>
+            <span>Ответов:
+                <span class="qty">{{($topic->comments_count > 0) ? $topic->comments_count : $comments->total() }}</span>
+            </span>
+        </div>
+        <div class="article-wrapper">
+            <div class="col-md-12 article-title">
+                <div>
+                    @if($topic->user->avatar)
+                        <a href="{{route('user_profile',['id' => $topic->user->id])}}">
+                            <img src="{{$topic->user->avatar->link}}" class="user-avatar" alt="">
+                        </a>
+                    @else
+                        <a href="{{route('user_profile',['id' => $topic->user->id])}}"
+                           class="logged-user-avatar no-header">A</a>
+                    @endif
+                    <div class="user-nickname">
+                        <a href="{{route('user_profile',['id' => $topic->user->id])}}">{{$topic->user->name}}</a>
+                        <a href="" class="user-menu-link"></a>
+                        <div class="user-menu">
+                            <a href="{{route('user.add_friend',['id'=>$topic->user->id])}}">Добавить в друзья</a>
+                            <a href="{{route('user.messages',['id' => $topic->user->id])}}">Сообщение</a>
+                            <a href="{{route('user.set_ignore',['id'=>$topic->user->id])}}">Игнор-лист</a>
+                        </div>
+                    </div>
+                    <div class="user-role">
+                        @if($topic->user->user_role_id != 0)
+                            {{$topic->user->role->title}}
+                        @else
+                            user
+                        @endif
+                    </div>
+                    <div>
+                        <a href="{{route('user.get_rating', ['id' => $topic->user->id])}}"
+                           class="user-rating">pst {{$topic->user->rating}}</a>
+                    </div>
+                </div>
+                <div class="article-creating-date">
+                    <img src="{{route('home')}}/images/icons/clock-white.png" alt="">
+                    {{$topic->created_at}}
+                </div>
+            </div>
+            <div class="col-md-12 article-content-wrapper">
+                <div class="article-content">
+                    {!! $general_helper->oldContentFilter($topic->content) !!}
+                </div>
+                <div class="article-footer">
+                    <div class="quote">
+                        <img src="{{route('home')}}/images/icons/frame.png" alt="">
+                        Цитировать
+                    </div>
+                    <div class="article-rating">
+                        <a href="" class="positive-vote">
+                            <img src="{{route('home')}}/images/icons/thumbs-up.png" alt="">
+                            <span>{{$topic->positive_count}}</span>
+                        </a>
+                        <a href="" class="negative-vote">
+                            <img src="{{route('home')}}/images/icons/thumbs-down.png" alt="">
+                            <span>{{$topic->negative_count}}</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div><!-- close div /.section-article -->
+    </div><!-- close div /.content-box -->
+
+    <!--Comments-->
+    @include('comments.comments')
+    <!--END Comments-->
+
+    <!--ADD Comment-->
+    @include('comments.comment-add', [
+        'route' => route('forum.topic.comment.store'),
+        'relation' =>  \App\Comment::RELATION_FORUM_TOPIC,
+        'comment_type' => 'topic_id',
+        'object_id' => $topic->id
+    ])
+    <!--END ADD Comment-->
+@endsection
+
+@section('sidebar-right')
+    <!--Banners-->
+    @include('sidebar-widgets.banner')
+    <!-- END Banners -->
+
+    <!-- New Users-->
+    @include('sidebar-widgets.new-users')
+    <!-- END New Users-->
+
+    <!-- User's Replays-->
+    @include('sidebar-widgets.users-replays')
+    <!-- END User's Replays-->
+
+    <!-- Gallery -->
+    @include('sidebar-widgets.random-gallery')
+    <!-- END Gallery -->
 @endsection

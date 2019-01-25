@@ -1,6 +1,6 @@
 <div class="header-wrapper">
     <div class="logo-wrapper">
-        <a href="/"><img src="images/logo.png" class="logo-header" alt=""></a>
+        <a href="/"><img src="{{route('home')}}/images/logo.png" class="logo-header" alt=""></a>
     </div>
     <div>
         @include('layouts.partials.search')
@@ -10,7 +10,7 @@
     <!--IF user is NOT logged,  displays this view-->
         <div class="no-logged-user">
             <a href="{{route('registration_form')}}" class="registration-link">
-                <img src="images/icons/vector.png" alt="">
+                <img src="{{route('home')}}/images/icons/vector.png" alt="">
                 <span>Регистрация</span>
             </a>
             @if(Route::currentRouteName() !== 'registration_form'))
@@ -24,7 +24,7 @@
         <div class="logged-user">
             <div class="logged-user-info">
                 <a href="" class="user-new-messages">
-                    <img src="images/icons/new_message.png" alt="">
+                    <img src="{{route('home')}}/images/icons/new_message.png" alt="">
                     <div class="user-new-messages-qty">{{$general_helper->getNewUserMessage()}}</div>
                 </a>
 
@@ -44,7 +44,7 @@
             @if(Auth::user()->user_role_id == 1)
             <!--IF user is admin-->
             <a href="{{route('admin.home')}}" class="btn-blue admin-button">
-                <img src="images/icons/admin_icon.png" class="margin-right-5" alt="">
+                <img src="{{route('home')}}/images/icons/admin_icon.png" class="margin-right-5" alt="">
                 <span>Admin Panel</span>
             </a>
             <!--END IF user is admin-->

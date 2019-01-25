@@ -10,7 +10,7 @@
             @endforeach
         </select>
         <button type="submit" class="btn-search btn-blue">
-            <img src="images/icons/search.png" alt="">
+            <img src="{{route('home')}}/images/icons/search.png" alt="">
         </button>
     </div>
 </form>

@@ -31,24 +31,6 @@ $(function () {
 });
 
 /**
- * Comments box is the same for all pages
- *SCEditor -  WYSIWYG BBCode editor
- * https://www.sceditor.com/
- * */
-$(function () {
-    if ($('#comment-content').length > 0) {
-        var textarea = document.getElementById('comment-content');
-
-        sceditor.create(textarea, {
-            format: 'bbcode',
-            style: 'js/sceditor/minified/themes/content/default.min.css',
-            emoticonsRoot: 'js/sceditor/',
-            locale: 'ru'
-        });
-    }
-});
-
-/**
  * Logged user menu
  * Show by click on icon with class .logged-user-menu
  * */

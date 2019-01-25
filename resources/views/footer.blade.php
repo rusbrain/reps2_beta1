@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-3">
                 <a href="/">
-                    <img src="images/logo.png" alt="" class="margin-bottom-20">
+                    <img src="{{route('home')}}/images/logo.png" alt="" class="margin-bottom-20">
                 </a>
                 <div>
                     Everything about Starcraft Broodwar world Pro-gaming
@@ -67,15 +67,15 @@
                             По вопросам работы сайта, сотрудничества, ньюсмейкерства, спонсорства и размещения
                             рекламы, обращайтесь:
                             <div>
-                                <img src="images/icons/mail_icon.png" alt="">
+                                <img src="{{route('home')}}/images/icons/mail_icon.png" alt="">
                                 evil-2002@yandex.ru
                             </div>
                             <div>
-                                <img src="images/icons/icq.png" alt="">
+                                <img src="{{route('home')}}/images/icons/icq.png" alt="">
                                 864-000
                             </div>
                             <a href="">
-                                <img src="images/icons/pdf_icon.png" alt="">
+                                <img src="{{route('home')}}/images/icons/pdf_icon.png" alt="">
                                 скачать pdf
                             </a>
                         </div>
