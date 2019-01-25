@@ -1,6 +1,5 @@
 @extends('layouts.site')
 @inject('general_helper', 'App\Services\GeneralViewHelper')
-@php $countries = $general_helper->getCountries();@endphp
 
 @section('sidebar-left')
     @include('sidebar-widgets.votes')
