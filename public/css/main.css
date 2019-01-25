@@ -1758,6 +1758,10 @@ form label {
   font-family: "Roboto-Medium", sans-serif;
   color: #4890af;
 }
+.table-wrapper{
+  overflow-y: auto;
+  max-height: 500px;
+}
 /*----------------------------------------*/
 /*---END USER FRIEND LIST PAGE -------- */
 /*---------------------------------------*/
