@@ -1496,6 +1496,10 @@ form label {
   padding: 0 15px;
   font-family: "Roboto-Medium", sans-serif;
 }
+.user-account-widget .widget-new-user{
+  max-height: 200px;
+  overflow-y: auto;
+}
 .user-account-widget .widget-new-user a {
   color: #4890af !important;
   font-family: "Roboto-Medium", sans-serif;

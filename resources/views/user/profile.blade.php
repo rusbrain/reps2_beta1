@@ -1,193 +1,138 @@
 @extends('layouts.site')
+@inject('general_helper', 'App\Services\GeneralViewHelper')
+@php $countries = $general_helper->getCountries();@endphp
 
+@section('sidebar-left')
+    @include('sidebar-widgets.votes')
+
+    @include('sidebar-widgets.gosu-replays')
+@endsection
 @section('content')
+    <!-- Breadcrumbs -->
     <div class="row">
-        @if(Auth::user() && Auth::id() != $user->id)
-            @include('user.inner_user_sidebar')
-        @endif
-        @if(!Auth::user())
-            @include('user.inner_user_sidebar')
-        @endif
-        <div class="col-md-9 border-gray">
-            <div class="profile-page ">
-                <div class="page-title row">Профайл пользователя</div>
-                <div class="row">
-                    <div class="col-4">
-                        <span class="key">Имя:</span>
-                    </div>
-                    <div class="col-8">
-                        <span class="value">{{$user->name}}</span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-4">
-                        <span class="key">Страна:</span>
-                    </div>
-                    <div class="col-8">
-                        @if($user->country)
-                            <span class="value">{{$user->country->name}}</span>
-                        @endif
-                    </div>
-                </div>
-                <div class="row profile-avatar-row">
-                    <div class="col-4">
-                        <span class="key">Аватар:</span>
-                    </div>
-                    <div class="col-8">
-                <span class="value">
-                    @if($user->avatar)
-                        <img class="img-responsive profile-avatar" src="{{$user->avatar->link}}" alt="">
-                    @else
-                        <span class="key">Аватар отсутствует</span>
-                    @endif
-                </span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-4">
-                        <span class="key">Посты:</span>
-                    </div>
-                    <div class="col-8">
-                        <span class="value">{{$user->topics_count}}</span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-4">
-                        <span class="key">Госу реплеи:</span>
-                    </div>
-                    <div class="col-8">
-                        <span class="value">{{$user->gosu_replay_count}}</span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-4">
-                        <span class="key">Пользовательские реплеи:</span>
-                    </div>
-                    <div class="col-8">
-                        <span class="value">{{$user->replay_count}}</span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-4">
-                        <span class="key">Госу реплеи:</span>
-                    </div>
-                    <div class="col-8">
-                        <span class="value">{{$user->gosu_replay_count}}</span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-4">
-                        <span class="key">Посты к реплеям:</span>
-                    </div>
-                    <div class="col-8">
-                        <span class="value">{{$user->replay_comments_count}}</span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-4">
-                        <span class="key">Посты к реплеям:</span>
-                    </div>
-                    <div class="col-8">
-                        <span class="value">{{$user->replay_comments_count}}</span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-4">
-                        <span class="key">E-mail:</span>
-                    </div>
-                    <div class="col-8">
-                        <span class="value">{{$user->email}}</span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-4">
-                        <span class="key">Дата рождения:</span>
-                    </div>
-                    <div class="col-8">
-                        <span class="value">{{$user->birthday}}</span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-4">
-                        <span class="key">WWW:</span>
-                    </div>
-                    <div class="col-8">
-                        <span class="value">{{$user->homepage}}</span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-4">
-                        <span class="key">ICQ:</span>
-                    </div>
-                    <div class="col-8">
-                        <span class="value">{{$user->isq}}</span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-4">
-                        <span class="key">Skype:</span>
-                    </div>
-                    <div class="col-8">
-                        <span class="value">{{$user->skype}}</span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-4">
-                        <span class="key">Мышь:</span>
-                    </div>
-                    <div class="col-8">
-                        <span class="value">{{$user->mouse}}</span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-4">
-                        <span class="key">Коврик:</span>
-                    </div>
-                    <div class="col-8">
-                        <span class="value">{{$user->mousepad}}</span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-4">
-                        <span class="key">Клавиатура:</span>
-                    </div>
-                    <div class="col-8">
-                        <span class="value">{{$user->keyboard}}</span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-4">
-                        <span class="key">Наушники:</span>
-                    </div>
-                    <div class="col-8">
-                        <span class="value">{{$user->headphone}}</span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-4">
-                        <span class="key">Репутация:</span>
-                    </div>
-                    <div class="col-8">
-                        <span class="value">{{$user->rating}}</span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-4">
-                        <span class="key">Подпись:</span>
-                    </div>
-                    <div class="col-8">
-                        <span class="value">{!! $user->signature !!}</span>
-                    </div>
-                </div>
-            </div>
-            @if(Auth::user() && Auth::id() != $user->id)
-                <div class="user-profile-actions">
-                    <a href="{{route('user.messages',['id' => $user->id])}}">Отправить личное сообщение</a>
-                    <a href="{{route('user.add_friend',['id'=>$user->id])}}">Добавить в друзья</a>
-                    <a href="{{route('user.set_ignore',['id'=>$user->id])}}">Добавить в игнор лист</a>
-                </div>
-            @endif
-
+        <div class="col-md-12">
+            <ul class="breadcrumb">
+                <li>
+                    <a href="/">Главная</a>
+                </li>
+                @if(Auth::id() == $user->id)
+                    <li>
+                        <a href="" class="active">/ Мой Аккаунт</a>
+                    </li>
+                @else
+                    <li>
+                        <a href="#" class="active">/ {{$user->name}}</a>
+                    </li>
+                @endif
+            </ul>
         </div>
     </div>
+    <!-- END Breadcrumbs -->
+
+    <div class="content-box">
+        <div class="user-account-info-wrapper">
+            <div class="col-md-4">
+                @if($user->avatar)
+                    <img src="{{$user->avatar->link}}" class="user-account-avatar" alt="Аватар">
+                @else
+                    <img src="/images/avatars/avatar-big.png" class="user-account-avatar" alt="Аватар">
+                @endif
+                <div class="user-account-action-bar">
+                    @if(Auth::id() != $user->id)
+                        <a href="{{route('user.messages',['id' => $user->id])}}" title="Отправить сообщение">
+                            <img src="/images/icons/send_message.png" alt="">
+                        </a>
+                        <a href="{{route('user.add_friend',['id'=>$user->id])}}" title="Добавить в друзья">
+                            <img src="/images/icons/add_friend.png" alt="">
+                        </a>
+                        <a href="{{route('user.set_ignore',['id'=>$user->id])}}" title="Добавить в игнор">
+                            <img src="/images/icons/remove_user.png" alt="">
+                        </a>
+                    @else
+                        <a href="{{route('user.messages_all')}}" title="Мои сообщения">
+                            <img src="/images/icons/send_message.png" alt="">
+                        </a>
+                        <a href="{{route('user.friends_list')}}" title="Мои друзья">
+                            <img src="/images/icons/add_friend.png" alt="">
+                        </a>
+                        <a href="{{route('user.ignore_list')}}" title="Игнор лист">
+                            <img src="/images/icons/remove_user.png" alt="">
+                        </a>
+                    @endif
+                </div>
+            </div>
+            <div class="col-md-8">
+                <h2>{{$user->name}}</h2>
+
+                <!-- if online displays this -->
+                <div class="color-green text-bold margin-bottom-20 display-none">online</div>
+                <!-- if INACTIVE displays this -->
+                <div class="user-last-online">{{$user->activity_at}}</div>
+
+                <div class="user-account-info-row">
+                    <span>Статус:</span>
+                    <span>{{$general_helper->getUserStatus($user->score)}}
+                        <span class="text-bold">{{$user->score}}</span> pts
+                    </span>
+                </div>
+                <div class="user-account-info-row">
+                    <span>ДР:</span>
+                    <span>{{$user->birthday}}</span>
+                </div>
+                <div class="user-account-info-row">
+                    <span>Страна:</span>
+                    <span>{{$countries[$user->country_id]->name}}</span>
+                </div>
+                <div class="user-account-info-row">
+                    <span>Репутация:</span>
+                    <a href="{{route('user.get_rating', ['id' => $user->id])}}">{{$user->rating}} кг</a>
+                </div>
+            </div>
+        </div>
+    </div><!-- close div /.content-box -->
+
+    <div class="row">
+        <div class="col-md-4">
+            <!-- FRIEND LIST -->
+            @include('user.profile-partials.profile-friend-list')
+            <!-- END FRIEND LIST -->
+
+            <!-- FRIENDLY LIST -->
+            @include('user.profile-partials.profile-friendly-list')
+            <!-- END FRIENDLY LIST -->
+        </div><!-- close div /.col-md-4 -->
+
+        <div class="col-md-8">
+            <!-- PROFILE INFO -->
+            @include('user.profile-partials.profile-info')
+            <!-- END PROFILE INFO -->
+
+            <!-- PROFILE ARMORY -->
+            @include('user.profile-partials.profile-armory')
+            <!-- END PROFILE ARMORY -->
+
+            <!-- PROFILE CONTACTS -->
+            @include('user.profile-partials.profile-contacts')
+            <!-- END PROFILE CONTACTS -->
+
+        </div><!-- close div /.col-md-8 -->
+    </div><!-- close div /.row -->
+@endsection
+
+@section('sidebar-right')
+    <!--Banners-->
+    @include('sidebar-widgets.banner')
+    <!-- END Banners -->
+
+    <!-- New Users-->
+    @include('sidebar-widgets.new-users')
+    <!-- END New Users-->
+
+    <!-- User's Replays-->
+    @include('sidebar-widgets.users-replays')
+    <!-- END User's Replays-->
+
+    <!-- Gallery -->
+    @include('sidebar-widgets.random-gallery')
+    <!-- END Gallery -->
 @endsection

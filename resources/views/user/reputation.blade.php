@@ -3,9 +3,9 @@
 @php $countries = $general_helper->getCountries();@endphp
 
 @section('sidebar-left')
-    <!-- All Forum Topics -->
+    @include('sidebar-widgets.votes')
+
     @include('sidebar-widgets.gosu-replays')
-    <!-- END All Forum Topics -->
 @endsection
 
 @section('content')
@@ -39,12 +39,12 @@
                 <div class="user-avatar-wrapper">
                     @if($user->avatar)
                         <a href="{{route('user_profile',['id' => $user->id])}}">
-                            <img src="{{$user->avatar->link}}" class="r" alt="Аватар">
+                            <img src="{{$user->avatar->link}}" alt="Аватар">
                         </a>
                     @else
                         <a href="{{route('user_profile',['id' => $user->id])}}"
                            class="">
-                            <img src="{{route('home')}}/images/avatars/avatar-big.png" class="" alt="Аватар">
+                            <img src="{{route('home')}}/images/avatars/avatar-big.png" alt="Аватар">
                         </a>
                     @endif
                 </div>
