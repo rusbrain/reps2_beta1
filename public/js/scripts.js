@@ -60,14 +60,6 @@ $(function () {
  * */
 $(function () {
     if ($('.user-account-edit-form').length > 0) {
-        // var textarea = document.getElementById('signature');
-        //
-        // sceditor.create(textarea, {
-        //     format: 'bbcode',
-        //     style: 'js/sceditor/minified/themes/content/default.min.css',
-        //     emoticonsRoot: 'js/sceditor/',
-        //     locale: 'ru'
-        // });
 
         $("#avatar").filestyle(
             {
@@ -144,27 +136,6 @@ $(function () {
     if ($('.user-create-replay-form').length > 0) {
         var content = document.getElementById('content');
         $("#replay").filestyle(
-            {
-                input: true,
-                text: "Выбрать файл",
-                btnClass: 'btn-blue upload-avatar'
-            });
-        sceditor.create(content, {
-            format: 'bbcode',
-            style: 'js/sceditor/minified/themes/content/default.min.css',
-            emoticonsRoot: 'js/sceditor/',
-            locale: 'ru'
-        });
-    }
-});
-
-/**
- * User Messages Page
- * */
-$(function () {
-    if ($('.user-message-form').length > 0) {
-        var content = document.getElementById('message');
-        $(".user-message-form button").filestyle(
             {
                 input: true,
                 text: "Выбрать файл",

@@ -44,7 +44,13 @@ class BaseUserMessageController extends Controller
 
         $dialog_id = Dialogue::getDialogUser($id)->id;
 
-        return ['dialog_id' => $dialog_id,'messages'=> Dialogue::getUserDialogueContent($dialog_id), 'contacts' => $contacts, 'user' => User::find($id), 'page' => Input::has('page')?Input::get('page')+1:2];
+        return [
+            'dialog_id' => $dialog_id,
+            'messages' => Dialogue::getUserDialogueContent($dialog_id),
+            'contacts' => $contacts,
+            'user' => User::find($id),
+            'page' => Input::has('page') ? Input::get('page') + 1 : 2
+        ];
     }
 
     /**

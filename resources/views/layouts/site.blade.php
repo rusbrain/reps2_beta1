@@ -90,8 +90,6 @@
 <!-- jQuery Validate -->
 <script src="{{route('home')}}/js/jquery.validate.min.js"></script>
 
-
-
 <!--js into View-->
 @yield('js')
 <!--Custom scripts-->

@@ -40,8 +40,8 @@
 
                 sceditor.create(textarea, {
                     format: 'xhtml',
-                    style: '{{route("home")}}' + '/js/sceditor/minified/themes/content/default.min.css',
-                    emoticonsRoot: '{{route("home")}}' + '/js/sceditor/',
+                    style: '{{route('home')}}'+'/js/sceditor/minified/themes/content/default.min.css',
+                    emoticonsRoot: '{{route('home')}}'+'/js/sceditor/',
                     locale: 'ru',
                     toolbar: 'bold,italic,underline|' +
                     'left,center,right,justify|' +

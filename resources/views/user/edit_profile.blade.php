@@ -13,6 +13,25 @@
 @endsection
 
 @section('content')
+
+    <!-- Breadcrumbs -->
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="breadcrumb">
+                <li>
+                    <a href="/">Главная</a>
+                </li>
+                <li>
+                    <a href="{{route('user_profile',['id' =>Auth::id()])}}">/ Мой Аккаунт</a>
+                </li>
+                <li>
+                    <a href="#" class="active">/ Настройки пользователя</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- END Breadcrumbs -->
+
     <div class="content-box">
         <div class="col-md-12 section-title">
             <h1>настройки пользователя</h1>
