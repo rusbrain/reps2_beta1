@@ -14,7 +14,7 @@
             <input type="text" id="championship" name="championship" value="{{ old('text') }}"
                    class="form-control {{ $errors->has('text') ? ' is-invalid' : '' }}">
             @if ($errors->has('text'))
-                <span class="error">
+                <span class="invalid-feedback">
                     <strong>{{ $errors->first('text') }}</strong>
                 </span>
             @endif
@@ -29,7 +29,7 @@
                 @endforeach
             </select>
             @if ($errors->has('first_country_id'))
-                <span class="error">
+                <span class="invalid-feedback">
                     <strong>{{ $errors->first('first_country_id') }}</strong>
                 </span>
             @endif
@@ -44,7 +44,7 @@
                 @endforeach
             </select>
             @if ($errors->has('second_country_id'))
-                <span class="error">
+                <span class="invalid-feedback">
                     <strong>{{ $errors->first('second_country_id') }}</strong>
                 </span>
             @endif
@@ -59,7 +59,7 @@
                 @endforeach
             </select>
             @if ($errors->has('first_race'))
-                <span class="error">
+                <span class="invalid-feedback">
                     <strong>{{ $errors->first('first_race') }}</strong>
                 </span>
             @endif
@@ -74,7 +74,7 @@
                 @endforeach
             </select>
             @if ($errors->has('second_race'))
-                <span class="error">
+                <span class="invalid-feedback">
                     <strong>{{ $errors->first('second_race') }}</strong>
                 </span>
             @endif
@@ -88,7 +88,7 @@
                 @endforeach
             </select>
             @if ($errors->has('map_id'))
-                <span class="error">
+                <span class="invalid-feedback">
                     <strong>{{ $errors->first('map_id') }}</strong>
                 </span>
             @endif
@@ -103,7 +103,7 @@
                 @endforeach
             </select>
             @if ($errors->has('type_id'))
-                <span class="error">
+                <span class="invalid-feedback">
                     <strong>{{ $errors->first('type_id') }}</strong>
                 </span>
             @endif
@@ -117,7 +117,7 @@
                 @endforeach
             </select>
             @if ($errors->has('sort_by'))
-                <span class="error">
+                <span class="invalid-feedback">
                     <strong>{{ $errors->first('sort_by') }}</strong>
                 </span>
             @endif

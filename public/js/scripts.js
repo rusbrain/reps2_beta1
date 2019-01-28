@@ -60,14 +60,14 @@ $(function () {
  * */
 $(function () {
     if ($('.user-account-edit-form').length > 0) {
-        var textarea = document.getElementById('signature');
-
-        sceditor.create(textarea, {
-            format: 'bbcode',
-            style: 'js/sceditor/minified/themes/content/default.min.css',
-            emoticonsRoot: 'js/sceditor/',
-            locale: 'ru'
-        });
+        // var textarea = document.getElementById('signature');
+        //
+        // sceditor.create(textarea, {
+        //     format: 'bbcode',
+        //     style: 'js/sceditor/minified/themes/content/default.min.css',
+        //     emoticonsRoot: 'js/sceditor/',
+        //     locale: 'ru'
+        // });
 
         $("#avatar").filestyle(
             {

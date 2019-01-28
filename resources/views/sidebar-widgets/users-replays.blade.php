@@ -12,7 +12,7 @@
             </a>
         @endforeach
         <div class="justify-content-center display-flex">
-            <a href="{{route('replay.users')}}" class="btn-empty margin-top-10" type="submit">
+            <a href="{{route('replay.users')}}" class="btn-empty margin-top-10" >
                 Ещё
             </a>
         </div>
