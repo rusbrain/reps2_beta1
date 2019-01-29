@@ -4,7 +4,7 @@
         <div class="widget-header">Темы форума</div>
         @foreach($forum_sections as $forum_section)
             <a href="{{route('forum.section.index',['name' => $forum_section->name])}}" class="widget-title">
-                <img src="images/icons/icon_general.png" alt="">
+                <img src="{{route('home')}}/images/icons/icon_general.png" alt="">
                 {{$forum_section->title}}:
             </a>
             <div class="widget-forum-topics-wrapper">
