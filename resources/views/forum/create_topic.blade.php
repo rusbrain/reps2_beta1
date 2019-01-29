@@ -1,136 +1,211 @@
 @extends('layouts.site')
 @inject('general_helper', 'App\Services\GeneralViewHelper')
+
+@section('css')
+    <!--SCEditor -  WYSIWYG BBCode editor -->
+    <link rel="stylesheet" href="{{route('home')}}/js/sceditor/minified/themes/default.min.css"/>
+@endsection
+
+@section('sidebar-left')
+    <!-- All Forum Topics -->
+    @include('sidebar-widgets.all-forum-sections')
+    <!-- END All Forum Topics -->
+@endsection
+
 @section('content')
+
+    <!-- Breadcrumbs -->
     <div class="row">
         <div class="col-md-12">
-            <div class="content-center">
-                <div class="page-title w-100">Создание поста</div>
-                <div class="edit-topic-form">
-                    <form method="post" action="{{route('forum.topic.store')}}" enctype="multipart/form-data">
-                        @csrf
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="section_id">Раздел:</label>
-                                    <select class="form-control" id="section_id" name="section_id">
-                                        @foreach($sections as $section)
-                                            <option value="{{$section->id}}"
-                                                    {{$section->id == old('section_id')?'selected':''}}>
-                                                {{$section->title}}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @if ($errors->has('section_id'))
-                                        <span class="text-red" role="alert">
-                                        <strong>{{ $errors->first('section_id') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <label class="box-title">Название:</label>
-                                <input type="text" name="title" class="form-control" placeholder="Название..."
-                                       value="{{old('title')}}">
-                                @if ($errors->has('title'))
-                                    <span class="text-red" role="alert">
-                                        <strong>{{ $errors->first('title') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="box-header">
-                                    <label class="box-title">Превью:</label>
-                                </div>
-                                <img class="img-responsive"
-                                     src="{{route('home').('/dist/img/default-50x50.gif')}}"
-                                     alt="Photo">
-                                <br>
-                                <div class="form-group">
-                                    <label for="preview_img">Загрузить картинку</label>
-                                    <input type="file" id="preview_img" class="form-control filestyle"
-                                           name="preview_img">
-                                </div>
-                                @if ($errors->has('preview_img'))
-                                    <span class="text-red" role="alert">
-                                        <strong>{{ $errors->first('preview_img') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="preview_content" class="preview_content">Сокращенное содержание:</label>
-                                    <textarea id="preview_content"
-                                              class="form-control" name="preview_content"
-                                              rows="5">{!! old('preview_content') !!}</textarea>
-                                </div>
-                                @if ($errors->has('preview_content'))
-                                    <span class="text-red" role="alert">
-                                        <strong>{{ $errors->first('preview_content') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="content" class="box-title">Содержание:</label>
-                                    <textarea id="content"
-                                              class="form-control" name="content"
-                                              rows="10">{!! old('content') !!}</textarea>
-                                    @if ($errors->has('content'))
-                                        <span class=" text-red" role="alert">
-                                                <strong>{{ $errors->first('content') }}</strong>
-                                            </span>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Date -->
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="datepicker" class="box-title">Опубликовать с:</label>
-                                    <div class="input-group date">
-                                        <i class="fa fa-calendar"></i>
-                                        <input type="date" name="start_on" class="form-control pull-right"
-                                               id="datepicker" value="{{old('start_on')}}">
-                                        @if ($errors->has('start_on'))
-                                            <span class=" text-red" role="alert">
-                                                <strong>{{ $errors->first('start_on') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3 col-md-offset-11">
-                                <br>
-                                <button type="submit" class="btn btn-primary form-control">
-                                    Сохранить
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
+            <ul class="breadcrumb">
+                <li>
+                    <a href="/">Главная</a>
+                </li>
+                <li>
+                    <a href="{{route('user_profile',['id' =>Auth::id()])}}">/ Мой Аккаунт</a>
+                </li>
+                <li>
+                    <a href="{{route('forum.topic.my_list')}}">/ Мои Темы</a>
+                </li>
+                <li>
+                    <a href="#" class="active">/ Создать Тему</a>
+                </li>
+            </ul>
         </div>
     </div>
-@endsection
-@section('js')
-    <script>
-        /**ckeditor*/
-        $(function () {
-            CKEDITOR.replace( 'content' );
-        });
+    <!-- END Breadcrumbs -->
 
-        /**ckeditor*/
+    <div>
+        <a href="{{route('forum.topic.create')}}" class="btn-blue create-theme-btn">Создать тему</a>
+    </div>
+
+    <div class="content-box">
+        <div class="col-md-12 section-title">
+            <div>Создание темы</div>
+        </div>
+        <div class="row">
+            <div class="col"></div>
+            <div class="col-md-10">
+                <form action="{{route('forum.topic.store')}}" method="POST" enctype="multipart/form-data"
+                      class="user-create-theme-form">
+                    @csrf
+                    <div class="form-group margin-top-25">
+                        <label for="section_id">Раздел:</label>
+                        <select class="custom-select {{ $errors->has('section_id') ? ' is-invalid' : '' }}"
+                                id="section_id" name="section_id">
+                            @foreach($sections as $section)
+                                <option value="{{$section->id}}"
+                                        {{$section->id == old('section_id')?'selected':''}}>
+                                    {{$section->title}}
+                                </option>
+                            @endforeach
+                        </select>
+                        @if ($errors->has('section_id'))
+                            <span class="invalid-feedback">
+                                <strong>{{ $errors->first('section_id') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+
+                    <div class="form-group">
+                        <label for="title">* Название:</label>
+                        <input type="text" id="title" name="title" value="{{old('title')}}"
+                               class="form-control {{ $errors->has('title') ? ' is-invalid' : '' }}">
+                        @if ($errors->has('title'))
+                            <span class="invalid-feedback">
+                                <strong>{{ $errors->first('title') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+
+                    <div class="form-group">
+                        <label for="preview_img">Превью:
+                            <span class="preview-image-wrapper">
+                                <img src="{{route('home').('/dist/img/default-50x50.gif')}}" alt="">
+                            </span>
+                        </label>
+                        <input type="file" id="preview_img"
+                               class="form-control-file {{ $errors->has('preview_img') ? ' is-invalid' : '' }}"
+                               name="preview_img">
+                        @if ($errors->has('preview_img'))
+                            <span class="invalid-feedback">
+                                <strong>{{ $errors->first('preview_img') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+
+                    <div class="form-group">
+                        <label for="preview_content">* Сокращенное содержание:</label>
+                        <textarea name="preview_content" id="preview_content"
+                                  class="form-control {{ $errors->has('preview_content') ? ' is-invalid' : '' }}"
+                                  rows="15">{!! old('preview_content') !!}</textarea>
+                        @if ($errors->has('preview_content'))
+                            <span class="invalid-feedback">
+                                <strong>{{ $errors->first('preview_content') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+
+                    <div class="form-group">
+                        <label for="content">* Содержание:</label>
+                        <textarea name="content" id="content"
+                                  class="form-control {{ $errors->has('content') ? ' is-invalid' : '' }}"
+                                  rows="15">{!! old('content') !!}</textarea>
+                        @if ($errors->has('content'))
+                            <span class="invalid-feedback">
+                                <strong>{{ $errors->first('content') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+
+                    <div class="form-group form-group user-account-birthday">
+                        <label for="start_on">Опубликовать с:</label>
+                        <input type="date" id="start_on"
+                               class="form-control {{ $errors->has('start_on') ? ' is-invalid' : '' }}" name="start_on"
+                               value="{{old('start_on')}}">
+                        @if ($errors->has('start_on'))
+                            <span class="invalid-feedback">
+                                <strong>{{ $errors->first('start_on') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn-blue btn-form">Опубликовать</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col"></div>
+        </div><!-- close div /.row -->
+    </div><!-- close div /.content-box -->
+@endsection
+
+@section('sidebar-right')
+    <!--Banners-->
+    @include('sidebar-widgets.banner')
+    <!-- END Banners -->
+
+    <!-- New Users-->
+    @include('sidebar-widgets.new-users')
+    <!-- END New Users-->
+
+    <!-- User's Replays-->
+    @include('sidebar-widgets.users-replays')
+    <!-- END User's Replays-->
+
+    <!-- Gallery -->
+    @include('sidebar-widgets.random-gallery')
+    <!-- END Gallery -->
+@endsection
+
+@section('js')
+    <!--SCEditor -  WYSIWYG BBCode editor -->
+    <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.min.js"></script>
+    <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.xhtml.min.js"></script>
+    <script src="{{route('home')}}/js/sceditor/languages/ru.js"></script>
+
+    <script>
+        /**
+         * Comments box is the same for all pages
+         *SCEditor -  WYSIWYG BBCode editor
+         * https://www.sceditor.com/
+         * */
         $(function () {
-            CKEDITOR.replace( 'preview_content' );
+            if ($('#content').length > 0) {
+                var content = document.getElementById('content');
+
+                sceditor.create(content, {
+                    format: 'xhtml',
+                    style: '{{route("home")}}' + '/js/sceditor/minified/themes/content/default.min.css',
+                    emoticonsRoot: '{{route("home")}}' + '/js/sceditor/',
+                    locale: 'ru',
+                    toolbar: 'bold,italic,underline|' +
+                    'left,center,right,justify|' +
+                    'font,size,color,removeformat|' +
+                    'source,quote,code|' +
+                    'image,link,unlink|' +
+                    'emoticon|' +
+                    'date,time'
+                });
+            }
+
+            if ($('#preview_content').length > 0) {
+                var preview_content = document.getElementById('preview_content');
+
+                sceditor.create(preview_content, {
+                    format: 'xhtml',
+                    style: '{{route("home")}}' + '/js/sceditor/minified/themes/content/default.min.css',
+                    emoticonsRoot: '{{route("home")}}' + '/js/sceditor/',
+                    locale: 'ru',
+                    toolbar: 'bold,italic,underline|' +
+                    'left,center,right,justify|' +
+                    'font,size,color,removeformat|' +
+                    'source,quote,code|' +
+                    'image,link,unlink|' +
+                    'emoticon|' +
+                    'date,time'
+                });
+            }
         });
     </script>
 @endsection

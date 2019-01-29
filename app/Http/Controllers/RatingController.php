@@ -115,6 +115,6 @@ class RatingController extends Controller
     {
         $list = $user_reputation->with('sender')->paginate(20);
         $user = User::where('id',$id)->first();
-        return view('reputation_list')->with(['list'=>$list, 'user' => $user] );
+        return view('user.reputation')->with(['list'=>$list, 'user' => $user] );
     }
 }

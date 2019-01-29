@@ -1,33 +1,88 @@
 @extends('layouts.site')
+@inject('general_helper', 'App\Services\GeneralViewHelper')
+
+@section('sidebar-left')
+    @include('sidebar-widgets.votes')
+
+    @include('sidebar-widgets.gosu-replays')
+@endsection
+
 @section('content')
-    <div class="">
-        <div class="row">
-            <div class="page-title w-100">Список заигнорированых пользователей</div>
-            <div class="col-12">
-                @if($users->count() > 0)
-                    <div class="row ignored-user-header">
-                        <div class="col-md-1">#</div>
-                        <div class="col-md-2">name</div>
-                        <div class="col-md-4">email</div>
-                        <div class="col-md-3">Дата</div>
-                        <div class="col-md-2">action</div>
-                    </div>
-                    @foreach($users as $k => $item)
-                        <div class="row ignored-user">
-                            <div class="col-md-1">{{$k}}</div>
-                            <div class="col-md-2">{{$item->ignored_user->name}}</div>
-                            <div class="col-md-4">{{$item->ignored_user->email}}</div>
-                            <div class="col-md-3">{{$item->created_at}}</div>
-                            <div class="col-md-2 ">
-                                <a class="error" href="{{route('user.set_not_ignore',['id' => $item->ignored_user_id])}}"
-                                   title="удалить из игнор листа"><i class="far fa-trash-alt"></i></a>
-                            </div>
-                        </div>
-                    @endforeach
-                @else
-                    <p class="">Ваш игнор лист пуст</p>
-                @endif
-            </div>
+    <!-- Breadcrumbs -->
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="breadcrumb">
+                <li>
+                    <a href="/">Главная</a>
+                </li>
+                <li>
+                    <a href="{{route('user_profile',['id' =>Auth::id()])}}">/ Мой Аккаунт</a>
+                </li>
+                <li>
+                    <a href="" class="active">/ Список заигнорированых пользователей</a>
+                </li>
+            </ul>
         </div>
     </div>
+    <!-- END Breadcrumbs -->
+
+    <div class="content-box">
+        <div class="col-md-12 section-title">
+            <div>Список заигнорированых пользователей</div>
+        </div>
+        <div class="table-wrapper">
+            <table class="table user-friends-list-table">
+                <thead>
+                <tr>
+                    <td scope="col">#</td>
+                    <td scope="col">Имя</td>
+                    <td scope="col">Email</td>
+                    <td scope="col">Дата</td>
+                    <td scope="col">Действие</td>
+                </tr>
+                </thead>
+                <tbody>
+                @if($users->count() > 0)
+                    @foreach($users as $k => $item)
+                        <tr>
+                            <td scope="row">{{$k}}</td>
+                            <td>
+                                <a href="{{route('user_profile',['id'=>$item->id])}}">{{$item->ignored_user->name}}</a>
+                            </td>
+                            <td>
+                                <a href="">{{$item->ignored_user->email}}</a>
+                            </td>
+                            <td>{{$item->created_at}}</td>
+                            <td class="user-list-action">
+                                <a href="{{route('user.set_not_ignore',['id' => $item->ignored_user_id])}}" class="delete-friend"></a>
+                            </td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr class="">
+                        <td colspan="5">В данный момент список пуст</td>
+                    </tr>
+                @endif
+                </tbody>
+            </table>
+        </div>
+    </div><!-- close div /.content-box -->
+@endsection
+
+@section('sidebar-right')
+    <!--Banners-->
+    @include('sidebar-widgets.banner')
+    <!-- END Banners -->
+
+    <!-- New Users-->
+    @include('sidebar-widgets.new-users')
+    <!-- END New Users-->
+
+    <!-- User's Replays-->
+    @include('sidebar-widgets.users-replays')
+    <!-- END User's Replays-->
+
+    <!-- Gallery -->
+    @include('sidebar-widgets.random-gallery')
+    <!-- END Gallery -->
 @endsection

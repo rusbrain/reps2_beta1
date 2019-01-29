@@ -8,70 +8,68 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{route('home')}}/css/bootstrap.min.css">
 
-    <!-- font-awesome-->
-    <link rel="stylesheet" href="{{route('home')}}/css/all.css">
     <!--Flags CSS-->
     <link rel="stylesheet" href="{{route('home')}}/css/flag-icon.css">
+
+    <!--Menu-->
+    <link rel="stylesheet" href="{{route('home')}}/css/metisMenu.min.css">
+
+    <!--CSS into View-->
+    @yield('css')
+
     <!--Main CSS-->
     <link rel="stylesheet" href="{{route('home')}}/css/main.css">
-
-
-
+    <link rel="stylesheet" href="{{route('home')}}/css/responsive.css">
     <title>Главная | Reps.ru</title>
 </head>
 <body>
-<div class="wrapper">
 @inject('general_helper', 'App\Services\GeneralViewHelper')
+<div class="wrapper">
     <!--SECTION HEADER-->
-    <section>
+    <section class="section-header">
         <div class="container">
             @include('header')
         </div>
     </section>
     <!--END SECTION HEADER-->
 
-    <!-- SECTION NAVIGATION-->
+    <!--SECTION CONTENT-->
     <section>
         <div class="container">
-            <!-- MAIN NAVIGATION-->
-{{--            @include('navigation')--}}
-        <!-- END MAIN NAVIGATION -->
-        </div>
-    </section>
-    <!--END SECTION NAVIGATION-->
+            <div class="row">
+                <!--SIDEBAR LEFT-->
+                <div class="col-md-3">
+                    <div class="sidebar-wrapper">
+                        <!--Navigation-->
+                        @include('layouts.partials.navigation')
+                        <!--END Navigation-->
 
-    <!--CONTENT-->
-    <section>
-        <div class="container">
-            <div class="row page">
-                <!--LEFT SIDEBAR-->
-                <div class="col-md-2">
-                    @include('sidebar-left')
+                        @yield('sidebar-left')
+
+                    </div><!-- close div /.left-sidebar-wrapper-->
                 </div>
-                <!--END LEFT SIDEBAR -->
+                <!--END SIDEBAR LEFT-->
 
-                <!--CONTENT CENTER-->
-                <div class="col-md-8 content-center">
+                <!--CONTENT-->
+                <div class="col-md-6">
                     @yield('content')
                 </div>
-                <!--END CONTENT CENTER-->
+                <!--END CONTENT-->
 
-                <!--RIGHT SIDEBAR-->
-                <div class="col-md-2">
-                    @include('sidebar-right')
+                <!--SIDEBAR RIGHT-->
+                <div class="col-md-3">
+                    <div class="sidebar-wrapper">
+                        @yield('sidebar-right')
+                    </div>
                 </div>
-                <!--END RIGHT SIDEBAR-->
+                <!--END SIDEBAR RIGHT-->
             </div>
         </div>
     </section>
-    <!--END CONTENT-->
+    <!--END SECTION CONTENT-->
 
     <!--FOOTER-->
-    <section>
-        <div class="container">
-            @include('footer')
-        </div>
-    </section>
+    @include('footer')
     <!--END FOOTER-->
 
 </div><!--close div /.wrapper-->
@@ -87,11 +85,12 @@
 <script src="{{route('home')}}/js/bootstrap.min.js"></script>
 <script src="{{route('home')}}/js/bootstrap-filestyle.min.js"></script>
 
-<!-- CkEditor -->
-<script src="{{route('home')}}/js/ckeditor/ckeditor.js"></script>
+<!--Menu js-->
+<script src="{{route('home')}}/js/metisMenu.min.js"></script>
 <!-- jQuery Validate -->
 <script src="{{route('home')}}/js/jquery.validate.min.js"></script>
 
+<!--js into View-->
 @yield('js')
 <!--Custom scripts-->
 <script src="{{route('home')}}/js/scripts.js"></script>

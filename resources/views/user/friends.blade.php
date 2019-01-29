@@ -1,74 +1,134 @@
 @extends('layouts.site')
-@section('content')
-    <div class="">
-        <div class="row">
-            <div class="page-title w-100">Список Ваших друзей</div>
-            <div class="col-12">
-                @if($friends->count() > 0)
-                    <div class="row ignored-user-header">
-                        <div class="col-md-1">#</div>
-                        <div class="col-md-2">name</div>
-                        <div class="col-md-4">email</div>
-                        <div class="col-md-3">Дата</div>
-                        <div class="col-md-2">action</div>
-                    </div>
-                    @foreach($friends as $k => $item)
-                        <div class="row ignored-user">
-                            <div class="col-md-1">{{$k}}</div>
-                            <div class="col-md-2">
-                                <a href="{{route('user_profile',['id'=>$item->id])}}">{{$item->name}}</a>
-                            </div>
-                            <div class="col-md-4">{{$item->email}}</div>
-                            <div class="col-md-3">{{$item->created_at}}</div>
-                            <div class="col-md-2 ">
-                                <a class="error" href="{{route('user.remove_friend',['id' => $item->id])}}"
-                                   title="удалить из друзей"><i class="far fa-trash-alt"></i></a>
-                                <a class="primery" title="написать сообщение"
-                                   href="{{route('user.messages',['id' => $item->id])}}">
-                                    <i class="fas fa-envelope"></i>
-                                </a>
-                            </div>
-                        </div>
-                    @endforeach
-                @else
-                    <p class="">В данный момент список пуст</p>
-                @endif
-            </div>
-        </div>
+@inject('general_helper', 'App\Services\GeneralViewHelper')
 
-        <div class="row">
-            <div class="page-title w-100">Вас добавили в друзья</div>
-            <div class="col-12">
-                @if($friendly->count() > 0)
-                    <div class="row ignored-user-header">
-                        <div class="col-md-1">#</div>
-                        <div class="col-md-2">name</div>
-                        <div class="col-md-4">email</div>
-                        <div class="col-md-3">Дата</div>
-                        <div class="col-md-2">action</div>
-                    </div>
-                    @foreach($friendly as $k => $item)
-                        <div class="row ignored-user">
-                            <div class="col-md-1">{{$k}}</div>
-                            <div class="col-md-2">
-                                <a href="{{route('user_profile',['id'=>$item->id])}}">{{$item->name}}</a>
-                            </div>
-                            <div class="col-md-4">{{$item->email}}</div>
-                            <div class="col-md-3">{{$item->created_at}}</div>
-                            <div class="col-md-2 ">
-                                <a class="success" href="{{route('user.add_friend',['id' => $item->id])}}"
-                                   title="Добавить в друзья"><i class="fas fa-plus-circle"></i></a>
-                                <a class="primary" title="написать сообщение"
-                                   href="{{route('user.messages',['id' => $item->id])}}">
-                                    <i class="fas fa-envelope"></i>
-                                </a>
-                            </div>
-                        </div>
-                    @endforeach
-                @else
-                    <p class="">В данный момент список пуст</p>
-                @endif
-            </div>
+@section('sidebar-left')
+    @include('sidebar-widgets.votes')
+
+    @include('sidebar-widgets.gosu-replays')
+@endsection
+
+@section('content')
+    <!-- Breadcrumbs -->
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="breadcrumb">
+                <li>
+                    <a href="/">Главная</a>
+                </li>
+                <li>
+                    <a href="{{route('user_profile',['id' =>Auth::id()])}}">/ Мой Аккаунт</a>
+                </li>
+                <li>
+                    <a href="#" class="active">/ Список друзей</a>
+                </li>
+            </ul>
         </div>
     </div>
+    <!-- END Breadcrumbs -->
+
+    <!-- FRIENDS LIST TABLE -->
+    <div class="content-box">
+        <div class="col-md-12 section-title">
+            <div>Список Ваших друзей</div>
+        </div>
+        <div class="table-wrapper">
+            <table class="table user-friends-list-table">
+                <thead>
+                <tr>
+                    <td scope="col">#</td>
+                    <td scope="col">Имя</td>
+                    <td scope="col">Email</td>
+                    <td scope="col">Дата</td>
+                    <td scope="col">Действие</td>
+                </tr>
+                </thead>
+                <tbody>
+                @if($friends->count() > 0)
+                    @foreach($friends as $k => $item)
+                        <tr>
+                            <td scope="row">{{$k}}</td>
+                            <td>
+                                <a href="{{route('user_profile',['id'=>$item->id])}}">{{$item->name}}</a>
+                            </td>
+                            <td>
+                                <a href="">{{$item->email}}</a>
+                            </td>
+                            <td>{{$item->created_at}}</td>
+                            <td class="user-list-action">
+                                <a href="{{route('user.remove_friend',['id' => $item->id])}}" class="delete-friend"></a>
+                                <a href="{{route('user.messages',['id' => $item->id])}}" class="send-message"></a>
+                            </td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr class="">
+                        <td colspan="5">В данный момент список пуст</td>
+                    </tr>
+                @endif
+                </tbody>
+            </table>
+        </div>
+    </div><!-- close div /.content-box -->
+
+    <!-- FRIENDLY LIST TABLE -->
+    <div class="content-box">
+        <div class="col-md-12 section-title">
+            <div>Вас добавили в друзья</div>
+        </div>
+        <div class="table-wrapper">
+            <table class="table user-friends-list-table">
+                <thead>
+                <tr>
+                    <td scope="col">#</td>
+                    <td scope="col">Имя</td>
+                    <td scope="col">Email</td>
+                    <td scope="col">Дата</td>
+                    <td scope="col">Действие</td>
+                </tr>
+                </thead>
+                <tbody>
+                @if($friendly->count() > 0)
+                    @foreach($friendly as $k => $item)
+                        <tr>
+                            <td scope="row">{{$k}}</td>
+                            <td>
+                                <a href="{{route('user_profile',['id'=>$item->id])}}">{{$item->name}}</a>
+                            </td>
+                            <td>
+                                <a href="">{{$item->email}}</a>
+                            </td>
+                            <td>{{$item->created_at}}</td>
+                            <td class="user-list-action">
+                                <a href="{{route('user.add_friend',['id' => $item->id])}}" class="add-friend"></a>
+                                <a href="{{route('user.messages',['id' => $item->id])}}" class="send-message"></a>
+                            </td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr class="">
+                        <td colspan="5">В данный момент список пуст</td>
+                    </tr>
+                @endif
+                </tbody>
+            </table>
+        </div>
+    </div><!-- close div /.content-box -->
+@endsection
+
+@section('sidebar-right')
+    <!--Banners-->
+    @include('sidebar-widgets.banner')
+    <!-- END Banners -->
+
+    <!-- New Users-->
+    @include('sidebar-widgets.new-users')
+    <!-- END New Users-->
+
+    <!-- User's Replays-->
+    @include('sidebar-widgets.users-replays')
+    <!-- END User's Replays-->
+
+    <!-- Gallery -->
+    @include('sidebar-widgets.random-gallery')
+    <!-- END Gallery -->
 @endsection

@@ -18,7 +18,7 @@ class UserMessagingController extends BaseUserMessageController
     public function getUser($id = false)
     {
         if($id == Auth::id()){
-            return redirect()->route('user.messages_all');
+            return redirect()->route('user.messages');
         }
 
         return view('user.messages')->with(self::getMessageData($id));
@@ -46,7 +46,7 @@ class UserMessagingController extends BaseUserMessageController
      */
     public function load($dialog_id)
     {
-        return view('user.message_parse')->with(parent::load($dialog_id));
+        return view('user.messages-partials.message_parse')->with(parent::load($dialog_id));
     }
 
     /**

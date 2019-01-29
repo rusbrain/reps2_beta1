@@ -1,121 +1,77 @@
 @extends('layouts.site')
+@inject('general_helper', 'App\Services\GeneralViewHelper')
+
+@section('sidebar-left')
+    <!-- User messages widget -->
+    @include('sidebar-widgets.user-messages',['all_new_messages'=>collect($contacts->items())->sum('new_messages'),'contacts' => $contacts])
+    <!-- END User Messages widget -->
+@endsection
 
 @section('content')
-    @php
-        $all_new_messages = collect($contacts->items())->sum('new_messages');
-        $end = 'й';
-        $ost = $all_new_messages%10;
-        if(10 > $all_new_messages || $all_new_messages > 20){
-            if($ost == 1){
-                $end = 'е';
-            } elseif($ost > 1 && $ost < 5){
-                $end = 'я';
-            }
-        }
-    @endphp
+    <!-- Breadcrumbs -->
     <div class="row">
-        <div class="col-md-4 col-md-offset-1">
-            <!-- USERS LIST -->
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Переписки</h3>
-
-                    <div class="box-tools pull-right">
-                        @if($all_new_messages) <span class="badge bg-red">{{$all_new_messages}}
-                            Новых сообщени{{$end}}</span>@endif
-                    </div>
-                </div>
-                <!-- /.box-header -->
-                <div class="box-body no-padding" style="height: 73vh; overflow-y: auto; overflow-x: hidden;">
-                    <ul class="users-list clearfix user_message_list">
-                        @include('user.contact_parse')
-                    </ul>
-                    <!-- /.users-list -->
-                </div>
-                <!-- /.box-body -->
-                <div class="box-footer text-center">
-
-                </div>
-                <!-- /.box-footer -->
-            </div>
-            <!--/.box -->
+        <div class="col-md-12">
+            <ul class="breadcrumb">
+                <li>
+                    <a href="/">Главная</a>
+                </li>
+                <li>
+                    <a href="{{route('user_profile',['id' =>Auth::id()])}}">/ Мой Аккаунт</a>
+                </li>
+                <li>
+                    <a href="" class="active">/ Мои сообщения</a>
+                </li>
+            </ul>
         </div>
-        <div class="col-md-8 col-md-offset-1">
-            <!-- DIRECT CHAT PRIMARY -->
-            <div class="box box-primary direct-chat direct-chat-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title">{{$user->name}}</h3>
+    </div>
+    <!-- END Breadcrumbs -->
 
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
-                        </button>
-                    </div>
-                </div>
-                <!-- /.box-header -->
-                <div class="box-body">
-                    <!-- Conversations are loaded here -->
-                    <div class="direct-chat-messages messages-box" style="height: 70vh">
-                        @include('user.message_parse')
-                    </div>
-                    <!--/.direct-chat-messages-->
-                </div>
-                <!-- /.box-body -->
-                <div class="box-footer">
-                    {{--<form action="#" method="post">--}}
-                    <div class="input-group form-group">
-                        <input type="text" name="message" placeholder="Type Message ..."
-                               class="form-control send-message-text">
-                        <span class="input-group-btn">
-                        <button type="submit" class="btn btn-primary btn-flat send-message-btn">Отправить</button>
-                      </span>
-                    </div>
-                    {{--</form>--}}
-                </div>
-                <!-- /.box-footer-->
-            </div>
-            <!--/.direct-chat -->
+    <div class="content-box">
+        <div class="col-md-12 section-title">
+            <div>Мои сообщения</div>
         </div>
+        <div class="col-md-12">
+            <div class="row">
+                <div class="user-messages-info">
+                    <img src="{{route('home')}}/images/avatars/photo-container.png" alt="">
+                    <a href="{{route('user_profile',['id' =>$user->id])}}" class="user-name">{{$user->name}}</a>
+
+                    <!-- if online displays this -->
+                    <span class="user-online-status">online</span>
+                    <!-- if INACTIVE displays this -->
+                    <div class="user-last-online">{{$user->activity_at}}</div>
+
+                </div>
+            </div>
+            <!-- CHAT MESSAGES -->
+            <div class="messages-wrapper messages-box">
+                @include('user.messages-partials.message_parse')
+            </div>
+            <!--END CHAT MESSAGES -->
+        </div>
+
+        <!-- ADD MESSAGE FORM -->
+        <div class="col-md-12">
+            @include('user.messages-partials.add-message-form')
+        </div>
+        <!-- END ADD MESSAGE FORM -->
     </div>
 @endsection
 
-@section('js')
-    <script>
-        $(function () {
-            $('.messages-box').scrollTop($(".scroll-to").offset().top);
+@section('sidebar-right')
+    <!--Banners-->
+    @include('sidebar-widgets.banner')
+    <!-- END Banners -->
 
-            $('.send-message-btn').on('click', function () {
-                console.log('hi');
-                var message = $('.send-message-text').val();
-                var url = $('.load-more').attr('date-href');
-                $('.send-message-text').val('');
-                console.log(message, url);
-                $.post(
-                    '{{route('user.message.send', ['id'=>$dialog_id])}}',
-                    {
-                        message: message,
-                        _token: '{{csrf_token()}}'
-                    },
-                    function (data) {
-                        $('.messages-box').html(data);
-                        $('.messages-box').scrollTop($(".scroll-to").offset().top);
-                    }
-                );
-            });
+    <!-- New Users-->
+    @include('sidebar-widgets.new-users')
+    <!-- END New Users-->
 
-            $('.messages-box').on('click', '.load-more', function () {
-                var url = $('.load-more').attr('date-href');
-                console.log(url);
-                $.post(
-                    url,
-                    {
-                        _token: '{{csrf_token()}}'
-                    },
-                    function (data) {
-                        $('.load-more-box').remove();
-                        $('.messages-box').prepend(data);
-                    }
-                );
-            })
-        })
-    </script>
+    <!-- User's Replays-->
+    @include('sidebar-widgets.users-replays')
+    <!-- END User's Replays-->
+
+    <!-- Gallery -->
+    @include('sidebar-widgets.random-gallery')
+    <!-- END Gallery -->
 @endsection
