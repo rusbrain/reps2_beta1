@@ -589,7 +589,14 @@ form label {
 /**END Add Comment FORM**/
 
 /*****Modal Windows*****/
-
+#vote-modal .positive,
+#vote-modal .negative{
+  display: none;
+}
+#vote-modal .positive.active,
+#vote-modal .negative.active{
+  display: inline-block;
+}
 /*****END Modal Windows*****/
 
 /*******HEADER**********/
@@ -1344,7 +1351,7 @@ form label {
 .replay-content .replay-rating {
   display: flex;
   align-items: center;
-  justify-content: right;
+  justify-content: space-around;
   border-bottom: none !important;
 }
 .replay-rating a {
@@ -1357,6 +1364,7 @@ form label {
   border-bottom: 1px solid grey;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 .replay-content > div > div:last-of-type {
   border: none;
@@ -1377,7 +1385,7 @@ form label {
   color: #2f6696;
   position: absolute;
   bottom: 0;
-  left: 15%;
+  left: 20%;
 }
 .replay-download a {
   font-family: "Roboto-Medium", sans-serif;

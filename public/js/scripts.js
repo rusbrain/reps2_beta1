@@ -156,6 +156,43 @@ $(function () {
             }
         });
     }
+
+    /**Vote - positive / negative vote - Separate Replay Page*/
+    $('a.vote-replay-up, a.vote-replay-down').on('click', function (e) {
+        var rating = $(this).attr('data-rating');
+        var modal = $('#vote-modal');
+        modal.find('form input#rating').val(rating);
+
+        if (rating === '1') {
+            modal.find('.negative').removeClass('active');
+            modal.find('.positive').addClass('active');
+        }
+        if (rating === '-1') {
+            modal.find('.negative').addClass('active');
+            modal.find('.positive').removeClass('active');
+        }
+    });
+
+    $('#vote-form').on('submit', function (e) {
+        e.preventDefault();
+        var url = $(this).attr('action');
+        var comment = $(this).find('input[name=comment]').val();
+        var rating = $(this).find('input[name=rating]').val();
+        $.ajax({
+            type: 'GET',
+            url: url,
+            data: {
+                comment: comment,
+                rating: rating
+            },
+            success: function (response) {
+                location.reload();
+            },
+            error: function () {
+
+            }
+        });
+    });
 });
 
 /**
