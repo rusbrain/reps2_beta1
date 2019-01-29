@@ -104,28 +104,12 @@ $(function () {
  * */
 $(function () {
     if ($('.user-create-theme-form').length > 0) {
-        var preview_content = document.getElementById('preview_content');
-        var content = document.getElementById('content');
-
         $("#preview_img").filestyle(
             {
                 input: true,
                 text: "Выбрать файл",
                 btnClass: 'btn-blue upload-avatar'
             });
-
-        sceditor.create(preview_content, {
-            format: 'bbcode',
-            style: 'js/sceditor/minified/themes/content/default.min.css',
-            emoticonsRoot: 'js/sceditor/',
-            locale: 'ru'
-        });
-        sceditor.create(content, {
-            format: 'bbcode',
-            style: 'js/sceditor/minified/themes/content/default.min.css',
-            emoticonsRoot: 'js/sceditor/',
-            locale: 'ru'
-        });
     }
 });
 
