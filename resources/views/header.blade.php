@@ -5,7 +5,6 @@
     <div>
         @include('layouts.partials.search')
     </div>
-
     @if(!Auth::user())
     <!--IF user is NOT logged,  displays this view-->
         <div class="no-logged-user">

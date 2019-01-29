@@ -11,11 +11,11 @@
         @csrf
         <div class="form-group">
             <label for="championship">Имя / Чемпионат /Описание:</label>
-            <input type="text" id="championship" name="championship" value="{{ old('text') }}"
-                   class="form-control {{ $errors->has('text') ? ' is-invalid' : '' }}">
-            @if ($errors->has('text'))
+            <input type="text" id="championship" name="championship" value="{{ old('championship') }}"
+                   class="form-control {{ $errors->has('championship') ? ' is-invalid' : '' }}">
+            @if ($errors->has('championship'))
                 <span class="invalid-feedback">
-                    <strong>{{ $errors->first('text') }}</strong>
+                    <strong>{{ $errors->first('championship') }}</strong>
                 </span>
             @endif
         </div>
@@ -112,7 +112,7 @@
             <label for="sort_by">Сортировка:</label>
             <select name="sort_by" id="sort_by" class="custom-select {{ $errors->has('sort_by') ? ' is-invalid' : '' }}">
                 <option value="">Все</option>
-                @foreach($helper->getReplaySortBy() as $sort_by => $sort_title)
+                @foreach($general_helper->getReplaySortBy() as $sort_by => $sort_title)
                     <option value="{{$sort_by}}" {{$sort_by == old('sort_by') ? ' selected' : '' }}>{{$sort_title}}</option>
                 @endforeach
             </select>
