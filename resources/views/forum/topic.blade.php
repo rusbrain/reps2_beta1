@@ -41,12 +41,21 @@
             </div>
         </div>
         <div class="col-md-12 section-info">
-        <span>Просмотров:
-            <span class="qty">{{$topic->reviews}}</span>
-        </span>
-            <span>Ответов:
-                <span class="qty">{{($topic->comments_count > 0) ? $topic->comments_count : $comments->total() }}</span>
-            </span>
+            <div>
+                <span>Просмотров:
+                    <span class="qty">{{$topic->reviews}}</span>
+                </span>
+                    <span>Ответов:
+                    <span class="qty">{{($topic->comments_count > 0) ? $topic->comments_count : $comments->total() }}</span>
+                </span>
+            </div>
+
+            @if(Auth::id() == $topic->user->id)
+                <a href="{{route('forum.topic.edit',['id'=>$topic->id])}}" class="user-theme-edit">
+                    <img src="{{route('home')}}/images/icons/svg/edit_icon.svg" alt="">
+                    <span>Редактировать</span>
+                </a>
+            @endif
         </div>
         <div class="article-wrapper">
             <div class="col-md-12 article-title">

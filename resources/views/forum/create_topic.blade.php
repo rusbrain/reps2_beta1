@@ -46,10 +46,9 @@
         <div class="row">
             <div class="col"></div>
             <div class="col-md-10">
-                <form action="{{route('forum.topic.store')}}" method="POST"
-                      enctype="multipart/form-data"
+                <form action="{{route('forum.topic.store')}}" method="POST" enctype="multipart/form-data"
                       class="user-create-theme-form">
-
+                    @csrf
                     <div class="form-group margin-top-25">
                         <label for="section_id">Раздел:</label>
                         <select class="custom-select {{ $errors->has('section_id') ? ' is-invalid' : '' }}"
@@ -69,8 +68,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="name">* Название:</label>
-                        <input type="text" id="name" name="name" value="{{old('title')}}"
+                        <label for="title">* Название:</label>
+                        <input type="text" id="title" name="title" value="{{old('title')}}"
                                class="form-control {{ $errors->has('title') ? ' is-invalid' : '' }}">
                         @if ($errors->has('title'))
                             <span class="invalid-feedback">

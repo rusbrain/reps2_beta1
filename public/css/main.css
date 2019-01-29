@@ -1081,9 +1081,9 @@ form label {
   font-size: 14px;
 }
 .section-title div a {
-  font-size: 12px;
+  font-size: 10px;
   color: #fff;
-  margin-left: 15px;
+  margin-left: 10px;
 }
 .section-title div a img {
   margin-right: 15px;
@@ -1098,6 +1098,9 @@ form label {
   padding-top: 7px;
   padding-bottom: 7px;
   font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .section-info .qty {
   font-family: "Roboto-Medium", sans-serif;
