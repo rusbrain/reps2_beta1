@@ -33,10 +33,8 @@
             <div>{{$topic->title}}</div>
             <div>
                 @if(Auth::user())
-                    <a href="">
-                        <img src="{{route('home')}}/images/icons/arrow-right-white.png" alt="">
-                    </a>
-                    <a href="">
+                    <img src="{{route('home')}}/images/icons/arrow-right-white.png" alt="">
+                    <a href="{{route('forum.topic.create')}}">
                         Добавить новую тему
                     </a>
                 @endif

@@ -4,7 +4,7 @@
         <div class="content-box">
             @php $item++; @endphp
             @if($item == 1)
-                <div class="col-md-12 section-title">
+                <div class="col-md-12 section-title" id="comments">
                     <div>Комментарии:</div>
                 </div>
             @endif

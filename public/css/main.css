@@ -114,7 +114,7 @@ img {
 .margin-right-30 {
   margin-right: 30px;
 }
-.margin-left-40{
+.margin-left-40 {
   margin-left: 40px;
 }
 .margin-left-15 {
@@ -130,12 +130,12 @@ img {
   display: flex;
 }
 .display-none {
-  display: none;
+  display: none !important;
 }
 .position-relative {
   position: relative;
 }
-.spoilmain.active{
+.spoilmain.active {
   display: block !important;
 }
 .text-bold {
@@ -180,7 +180,7 @@ img {
 .padding-right-0 {
   padding-right: 0;
 }
-.padding-right-15{
+.padding-right-15 {
   padding-right: 15px;
 }
 .negative-vote {
@@ -557,7 +557,7 @@ form label {
   padding-left: 5px;
   border-left: 0.5px solid #2f6696;
 }
-.user-avatar{
+.user-avatar {
   width: 30px;
   height: 30px;
   border-radius: 50%;
@@ -848,7 +848,7 @@ form label {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
-  color: #737373!important;
+  color: #737373 !important;
 }
 .widget-forum-topic-comments {
   color: #4890af;
@@ -1007,7 +1007,7 @@ form label {
 .content-box-topic-extract {
   margin-bottom: 10px;
 }
-.content-box-forum-img-wrapper{
+.content-box-forum-img-wrapper {
   display: flex;
   height: 100%;
   align-items: center;
@@ -1083,6 +1083,7 @@ form label {
 .section-title div a {
   font-size: 12px;
   color: #fff;
+  margin-left: 15px;
 }
 .section-title div a img {
   margin-right: 15px;
@@ -1134,6 +1135,12 @@ form label {
   display: block;
   font-family: "Roboto-Medium", sans-serif;
 }
+.section-article-author > .logged-user-avatar {
+  width: 30px;
+  height: 30px;
+  margin: 0 auto;
+  font-size: 14px;
+}
 .section-article-info {
   margin-top: 5px;
 }
@@ -1165,7 +1172,7 @@ form label {
   height: 30px;
   border-radius: 50%;
 }
-.no-header.logged-user-avatar{
+.no-header.logged-user-avatar {
   width: 30px;
   height: 30px;
   border-radius: 50%;
@@ -1195,50 +1202,50 @@ form label {
   margin: 0 5px;
   display: inline-block;
 }
-.user-menu-link:hover{
+.user-menu-link:hover {
   border-top: 6px solid #2f6696;
 }
 .user-menu {
   display: none;
   position: absolute;
-  top:15px;
-  left:40px;
+  top: 15px;
+  left: 40px;
   width: 110px;
   height: 63px;
   border-radius: 3px;
-  border: 1px solid #DADADA;
+  border: 1px solid #dadada;
   font-size: 10px;
   background: #fff;
   z-index: 10;
 }
-.user-menu a{
-  background:#fff;
+.user-menu a {
+  background: #fff;
   display: flex;
   align-items: center;
   height: 20px;
   padding: 0 5px;
 }
-.user-nickname .user-menu a{
+.user-nickname .user-menu a {
   color: #737373;
 }
-.user-nickname .user-menu a:hover{
-  background:#2F6696;
+.user-nickname .user-menu a:hover {
+  background: #2f6696;
   color: #fff;
 }
-.user-menu.active{
+.user-menu.active {
   display: block;
 }
-.user-nickname{
+.user-nickname {
   position: relative;
 }
 .user-nickname a {
   color: #fff;
   position: relative;
 }
-.user-nickname a:hover{
+.user-nickname a:hover {
   color: #fff;
 }
-.user-nickname .user-menu a{
+.user-nickname .user-menu a {
   color: #737373;
 }
 .user-rating {
@@ -1379,14 +1386,14 @@ form label {
 .replay-download a {
   margin-right: 5px;
 }
-.replay-vote-form{
+.replay-vote-form {
   padding: 12px 15px;
 }
-.replay-vote-form > div > div{
+.replay-vote-form > div > div {
   align-items: center;
   display: flex;
 }
-.replay-vote-form label{
+.replay-vote-form label {
   margin: 0 30px 0 10px;
 }
 /*----------------------------------------*/
@@ -1424,7 +1431,7 @@ form label {
   color: #4d4d4d !important;
   font-family: "Roboto-Medium", sans-serif;
 }
-.news-info .logged-user-avatar{
+.news-info .logged-user-avatar {
   width: 20px;
   height: 20px;
   font-size: 12px;
@@ -1496,7 +1503,7 @@ form label {
   padding: 0 15px;
   font-family: "Roboto-Medium", sans-serif;
 }
-.user-account-widget .widget-new-user{
+.user-account-widget .widget-new-user {
   max-height: 200px;
   overflow-y: auto;
 }
@@ -1692,11 +1699,11 @@ form label {
   padding: 10px 20px;
   border-bottom: 0.5px solid #f6f6f8;
 }
-.user-reputation-vote-info > div{
+.user-reputation-vote-info > div {
   display: flex;
   align-items: center;
 }
-.user-reputation-vote-info > div > img{
+.user-reputation-vote-info > div > img {
   margin-right: 5px;
 }
 .user-reputation-vote-info a {
@@ -1758,7 +1765,7 @@ form label {
   font-family: "Roboto-Medium", sans-serif;
   color: #4890af;
 }
-.table-wrapper{
+.table-wrapper {
   overflow-y: auto;
   max-height: 500px;
 }
@@ -1868,7 +1875,7 @@ a.user-section-title {
   margin-top: 10px;
   margin-bottom: 5px;
 }
-.preview-image-wrapper img{
+.preview-image-wrapper img {
   max-height: 100%;
 }
 /*----------------------------------------*/
