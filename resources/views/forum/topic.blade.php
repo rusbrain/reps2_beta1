@@ -91,7 +91,7 @@
                 </div>
                 <div class="article-creating-date">
                     <img src="{{route('home')}}/images/icons/clock-white.png" alt="">
-                    {{$topic->created_at}}
+                    {{\Carbon\Carbon::parse($topic->created_at)->format('H:i d.m.Y')}}
                 </div>
             </div>
             <div class="col-md-12 article-content-wrapper">

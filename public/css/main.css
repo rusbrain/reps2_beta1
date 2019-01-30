@@ -132,6 +132,9 @@ img {
 .display-none {
   display: none !important;
 }
+.list-empty{
+  padding: 15px;
+}
 .position-relative {
   position: relative;
 }
@@ -589,7 +592,14 @@ form label {
 /**END Add Comment FORM**/
 
 /*****Modal Windows*****/
-
+#vote-modal .positive,
+#vote-modal .negative{
+  display: none;
+}
+#vote-modal .positive.active,
+#vote-modal .negative.active{
+  display: inline-block;
+}
 /*****END Modal Windows*****/
 
 /*******HEADER**********/
@@ -1290,17 +1300,20 @@ form label {
   justify-content: space-between;
   background: #4890af;
   color: #fff;
-  height: 30px;
+  padding: 4px 15px;
   font-family: "Roboto-Medium", sans-serif;
 }
 .user-replay-header .info a {
   color: #fff !important;
 }
 .user-replay-header .info a {
-  margin-right: 35px;
+  margin-right: 15px;
 }
 .user-replay-header .info a:last-of-type {
   margin-right: 0;
+}
+.user-replay-header .user-nickname{
+  flex: 0 0 70%;
 }
 .user-replay-info {
   display: flex;
@@ -1344,7 +1357,7 @@ form label {
 .replay-content .replay-rating {
   display: flex;
   align-items: center;
-  justify-content: right;
+  justify-content: space-around;
   border-bottom: none !important;
 }
 .replay-rating a {
@@ -1353,10 +1366,20 @@ form label {
 .replay-map {
   margin-bottom: 15px;
 }
+.replay-map-empty{
+  height: 100px;
+  width: 150px;
+  margin: 10px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid;
+}
 .replay-content > div > div {
   border-bottom: 1px solid grey;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 .replay-content > div > div:last-of-type {
   border: none;
@@ -1377,7 +1400,7 @@ form label {
   color: #2f6696;
   position: absolute;
   bottom: 0;
-  left: 15%;
+  left: 20%;
 }
 .replay-download a {
   font-family: "Roboto-Medium", sans-serif;
@@ -1940,7 +1963,7 @@ a.user-section-title {
   display: flex;
 }
 .my-message {
-  justify-content: end;
+  justify-content: flex-end;
 }
 .my-message .message-content,
 .user-message .message-content {

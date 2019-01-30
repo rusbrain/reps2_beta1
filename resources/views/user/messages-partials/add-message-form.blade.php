@@ -43,48 +43,45 @@
                     'emoticon|' +
                     'date,time'
                 });
+
+                $('.user-message-form').on('submit', function (e) {
+                    e.preventDefault();
+
+                    var message = $('.send-message-text').val();
+                    var url = $('input[name=load-more]').val();
+
+                    sceditor.instance(textarea).val('');
+
+                    $.post(
+                        '{{route('user.message.send', ['id'=>$dialog_id])}}',
+                        {
+                            message: message,
+                            _token: '{{csrf_token()}}'
+                        },
+                        function (data) {
+                            $('.messages-box').html(data);
+                            $('.messages-box').scrollTop($(".scroll-to").offset().top);
+                        }
+                    );
+                });
+
+                $('.messages-box').scrollTop($(".scroll-to").offset().top);
+
+                $('.messages-box').on('click', '.load-more', function () {
+                    var url = $('.load-more').attr('date-href');
+                    console.log(url);
+                    $.post(
+                        url,
+                        {
+                            _token: '{{csrf_token()}}'
+                        },
+                        function (data) {
+                            $('.load-more-box').remove();
+                            $('.messages-box').prepend(data);
+                        }
+                    );
+                })
             }
-
-            $('.user-message-form').on('submit', function (e) {
-                e.preventDefault();
-
-                var message = $('.send-message-text').val();
-                var url = $('input[name=load-more]').val();
-                console.log(message);
-                console.log(url);
-
-                $('.send-message-text').val('');
-                console.log(message, url);
-                $.post(
-                    '{{route('user.message.send', ['id'=>$dialog_id])}}',
-                    {
-                        message: message,
-                        _token: '{{csrf_token()}}'
-                    },
-                    function (data) {
-                        $('.messages-box').html(data);
-                        $('.messages-box').scrollTop($(".scroll-to").offset().top);
-                    }
-                );
-            });
-
-            $('.messages-box').scrollTop($(".scroll-to").offset().top);
-
-            $('.messages-box').on('click', '.load-more', function () {
-                var url = $('.load-more').attr('date-href');
-                console.log(url);
-                $.post(
-                    url,
-                    {
-                        _token: '{{csrf_token()}}'
-                    },
-                    function (data) {
-                        $('.load-more-box').remove();
-                        $('.messages-box').prepend(data);
-                    }
-                );
-            })
-
         });
     </script>
 @endsection
