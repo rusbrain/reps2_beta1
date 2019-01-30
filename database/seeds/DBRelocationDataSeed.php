@@ -272,14 +272,19 @@ class DBRelocationDataSeed extends Seeder
         echo "Update Replay Pack Type finished \n\n";*/
 
         //User Reputation seeding
-        echo "28. Start User Reputation \n";
-        $this->userReputation();
-        echo "User Reputation finished \n\n";
+//        echo "28. Start User Reputation \n";
+//        $this->userReputation();
+//        echo "User Reputation finished \n\n";
+//
+//        //User Reputation seeding
+//        echo "29. Start Update User Reputation and Points \n";
+//        $this->updateUserRating();
+//        echo "Update User Reputation and Points finished \n\n";
 
-        //User Reputation seeding
-        echo "29. Start Update User Reputation and Points \n";
-        $this->updateUserRating();
-        echo "Update User Reputation and Points finished \n\n";
+        //Update users avatars
+        echo "30. Start Update Users avatars \n";
+        $this->updateUserAvatar();
+        echo "Update Users avatars finished \n\n";
     }
 
     /**
@@ -1381,6 +1386,42 @@ class DBRelocationDataSeed extends Seeder
 
             $j = $i + 1;
             echo "Update User Reputation and points($j/$cycles)\n";
+        }
+    }
+
+    protected function updateUserAvatar()
+    {
+        $cycles = self::getCycles(DB::table(env('DB_DATABASE_OLD').'.users')->count());
+
+        $emails = [];
+        for ($i = 0; $i<$cycles; $i++){
+            $old_users = DB::table(env('DB_DATABASE_OLD').'.users')->orderBy('user_id')->offset(1000*$i)->limit(1000)->get();
+
+            foreach ($old_users as $old_user) {
+                if ($old_user->user_avatar) {
+                    $path_to = "./public/storage/avatars/{$old_user->user_avatar}";
+
+                    if (@fopen($path_to, 'r')) {
+                        $user = User::where('reps_id', $old_user->user_id)->first();
+
+                        if ($user && $user->file_id == 0){
+                            $file_data = [
+                                'user_id' => $user->id,
+                                'title' => "Аватар {$old_user->user_name}",
+                                'link' => "/storage/avatars/{$old_user->user_avatar}",
+                                'type' => filetype($path_to),
+                                'size' => filesize($path_to),
+                            ];
+
+                            $file = File::create($file_data);
+                            User::where('reps_id', $old_user->user_id)->update(['file_id' => $file->id]);
+                        }
+                    }
+                }
+            }
+
+            $j = $i + 1;
+            echo "Update User avatars ($j/$cycles)\n";
         }
     }
 }

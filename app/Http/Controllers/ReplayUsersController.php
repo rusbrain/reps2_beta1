@@ -11,7 +11,7 @@ class ReplayUsersController extends ReplayController
      *
      * @var string
      */
-    protected  $replay_group = 'Users Replay';
+    protected  $replay_group = 'Пользовательские реплаи';
 
     /**
      * Replay query function name

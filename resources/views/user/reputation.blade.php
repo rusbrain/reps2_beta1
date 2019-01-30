@@ -133,7 +133,7 @@
     </div><!-- close div /.content-box -->
 
     <!--Pagination-->
-    @php  $data = $list @endphp
+    @php  $data = $pagination_data @endphp
     @include('pagination')
     <!--END Pagination-->
 @endsection

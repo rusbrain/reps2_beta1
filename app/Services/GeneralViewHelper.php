@@ -18,6 +18,7 @@ use App\InterviewQuestion;
 use App\Replay;
 use App\ReplayMap;
 use App\ReplayType;
+use App\SectionIcon;
 use App\User;
 use App\UserGallery;
 use App\UserMessage;
@@ -43,6 +44,7 @@ class GeneralViewHelper
     protected $new_users;
     protected $game_version;
     protected $user_gallery;
+    protected $section_icons;
     protected static $instance;
 
     public function __construct()
@@ -52,9 +54,12 @@ class GeneralViewHelper
         }
     }
 
+    /**
+     * @return array
+     */
     public function getReplaySortBy()
     {
-        $sort_by = [
+        return [
             'game_version_id' => 'Версия',
             'rating' => 'Рейтинг',
             'user_rating' => 'Юзер Рейтинг',
@@ -63,7 +68,6 @@ class GeneralViewHelper
             'created_at' => 'Дата создания',
             'type_id' => 'Тип игры'
         ];
-        return $sort_by;
     }
 
     /**
@@ -71,25 +75,39 @@ class GeneralViewHelper
     */
     public function getUserStatus($cs)
     {
-        $title = '';
-        if ($cs >= 0 and $cs < 1000) $title = "Zim";
-        elseif ($cs >= 1000 and $cs < 2000) $title = "Fan of Barbie";
-        elseif ($cs >= 2000 and $cs < 3000) $title = "Zagoogli";
-        elseif ($cs >= 3000 and $cs < 4000) $title = "BIG SCV";
-        elseif ($cs >= 4000 and $cs < 5000) $title = "Hasu";
-        elseif ($cs >= 5000 and $cs < 6000) $title = "XaKaC";
-        elseif ($cs >= 6000 and $cs < 7000) $title = "Idra";
-        elseif ($cs >= 7000 and $cs < 8000) $title = "Trener";
-        elseif ($cs >= 8000 and $cs < 9000) $title = "[СО!]";
-        elseif ($cs >= 9000 and $cs < 10000) $title = "SuperHero";
-        elseif ($cs >= 10000 and $cs < 15000) $title = "Gosu";
-        elseif ($cs >= 15000 and $cs < 20000) $title = "IPXZerg";
-        elseif ($cs >= 20000 and $cs < 40000) $title = "Savior";
-        elseif ($cs >= 40000 and $cs < 70000) $title = "Lutshii";
-        elseif ($cs >= 70000 and $cs < 100000 ) $title = "Bonjva";
-        elseif ($cs >= 100000 ) $title = "Ebanutyi";
-
-        return $title;
+        if ($cs < 1000){
+            return "Zim";
+        } elseif ($cs < 2000){
+            return "Fan of Barbie";
+        } elseif ($cs < 3000) {
+            return "Zagoogli";
+        } elseif ($cs < 4000) {
+            return "BIG SCV";
+        } elseif ($cs < 5000) {
+            return "Hasu";
+        } elseif ($cs < 6000) {
+            return "XaKaC";
+        } elseif ($cs < 7000) {
+            return "Idra";
+        } elseif ($cs < 8000) {
+            return "Trener";
+        } elseif ($cs < 9000) {
+            return "[СО!]";
+        } elseif ($cs < 10000) {
+            return "SuperHero";
+        } elseif ($cs < 15000) {
+            return "Gosu";
+        } elseif ($cs < 20000) {
+            return "IPXZerg";
+        } elseif ($cs < 40000) {
+            return "Savior";
+        } elseif ($cs < 70000) {
+            return "Lutshii";
+        } elseif ($cs < 100000 ) {
+            return "Bonjva";
+        } elseif($cs >= 100000) {
+            return "Ebanutyi";
+        }
     }
 
     /**
@@ -289,21 +307,6 @@ class GeneralViewHelper
     {
         self::$instance->banner = self::$instance->banner ?? Banner::getRandomBanner();
         return self::$instance->banner;
-    }
-
-    public function getTopReplayAll()
-    {
-
-    }
-
-    public function getTopReplayWeek()
-    {
-
-    }
-
-    public function getTopReplayMonth()
-    {
-
     }
 
     /**
@@ -612,5 +615,23 @@ class GeneralViewHelper
         $result = (isset($url['st']) ? $url['st'] : '') . "<a rel=\"nofollow\" href=\"" . $url['html'] . "\" target=\"_blank\">" . $show . "</a>" . $url['end'];
 
         return $result;
+    }
+
+    /**
+     * Get icon url from Id
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function getSectionIcons($id)
+    {
+        if (!self::$instance->section_icons){
+            $icons = SectionIcon::all();
+            foreach ($icons as $icon) {
+                self::$instance->section_icons[$icon->id] = $icon->icon;
+            }
+
+            return self::$instance->section_icons[$id];
+        }
     }
 }

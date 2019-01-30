@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
 //         $this->call(ForumIconSeed::class);
 //         $this->call(UserTestDataSeeding::class);
 //         $this->call(TestBannerSedding::class);
-         $this->call(DBRelocationDataSeed::class);
+//         $this->call(DBRelocationDataSeed::class);
+         $this->call(ForumSectionIconsSeed::class);
 
     }
 }

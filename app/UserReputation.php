@@ -76,7 +76,7 @@ class UserReputation extends Model
      */
     public function topic()
     {
-        return $this->belongsTo('App\ForumTopic', 'object_id')->where('relation', self::RELATION_FORUM_TOPIC);
+        return $this->belongsTo('App\ForumTopic', 'object_id');
     }
 
     /**
@@ -86,7 +86,7 @@ class UserReputation extends Model
      */
     public function replay()
     {
-        return $this->belongsTo('App\Replay', 'object_id')->where('relation', self::RELATION_REPLAY);
+        return $this->belongsTo('App\Replay', 'object_id');
     }
 
     /**
@@ -96,7 +96,7 @@ class UserReputation extends Model
      */
     public function gallery()
     {
-        return $this->belongsTo('App\UserGallery', 'object_id')->where('relation', self::RELATION_USER_GALLERY);
+        return $this->belongsTo('App\UserGallery', 'object_id');
     }
 
     /**

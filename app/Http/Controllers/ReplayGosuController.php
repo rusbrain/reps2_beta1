@@ -11,7 +11,7 @@ class ReplayGosuController extends ReplayController
      *
      * @var string
      */
-    protected  $replay_group = 'Gosu Replay';
+    protected  $replay_group = 'Госу реплаи';
 
     /**
      * Replay query function name

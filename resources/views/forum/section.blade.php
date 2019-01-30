@@ -47,7 +47,7 @@
                     <span class="qty">{{$topics->total()}}</span>
                 </span>
                     <span>Ответов:
-                    <span class="qty">--</span>
+                    <span class="qty">{{$total_comment_count}}</span>
                 </span>
             </div>
             @foreach($topics as $topic)

@@ -213,14 +213,16 @@ class ForumTopicController extends Controller
         if ($user_id == 0){
             $user_id = Auth::id();
         }
-
-        $data = ForumTopic::where('user_id',$user_id)
+        $data = ForumSection::whereHas('topics', function ($query) use ($user_id){
+            $query->where('user_id', $user_id);
+        })->with(['topics' => function($query1) use ($user_id){
+            $query1->where('user_id',$user_id)
             ->withCount( 'positive', 'negative', 'comments')
             ->with('icon')
             ->has('sectionActive')
             ->with(['user'=> function($q){
-            $q->withTrashed();
-        }])
+                $q->with('avatar')->withTrashed();
+            }])
             ->where(function ($q){
                 $q->whereNull('start_on')
                     ->orWhere('start_on','<=', Carbon::now()->format('Y-M-d'));
@@ -228,7 +230,8 @@ class ForumTopicController extends Controller
             ->with(['comments' => function($query){
                 $query->withCount('positive', 'negative')->orderBy('created_at', 'desc')->first();
             }])
-            ->orderBy('created_at', 'desc')->paginate(20);
+            ->orderBy('created_at', 'desc');
+        }])->get();
 
         return view('forum.my_topics')->with('topics', $data);
     }

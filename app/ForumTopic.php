@@ -49,6 +49,10 @@ class ForumTopic extends Model
     {
         return $this->belongsTo('App\ForumSection','section_id');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function sectionActive()
     {
         return $this->belongsTo('App\ForumSection','section_id')->where('is_active', 1);
