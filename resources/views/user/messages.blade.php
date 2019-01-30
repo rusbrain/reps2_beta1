@@ -33,7 +33,12 @@
         <div class="col-md-12">
             <div class="row">
                 <div class="user-messages-info">
-                    <img src="{{route('home')}}/images/avatars/photo-container.png" alt="">
+                    @if($user->avatar)
+                        <img src="{{$user->avatar->link}}" alt="">
+                    @else
+                        <a href="{{route('user_profile',['id' => $user->id])}}"
+                           class="logged-user-avatar no-header">A</a>
+                    @endif
                     <a href="{{route('user_profile',['id' =>$user->id])}}" class="user-name">{{$user->name}}</a>
 
                     <!-- if online displays this -->

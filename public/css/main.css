@@ -132,6 +132,9 @@ img {
 .display-none {
   display: none !important;
 }
+.list-empty{
+  padding: 15px;
+}
 .position-relative {
   position: relative;
 }
@@ -1297,17 +1300,20 @@ form label {
   justify-content: space-between;
   background: #4890af;
   color: #fff;
-  height: 30px;
+  padding: 4px 15px;
   font-family: "Roboto-Medium", sans-serif;
 }
 .user-replay-header .info a {
   color: #fff !important;
 }
 .user-replay-header .info a {
-  margin-right: 35px;
+  margin-right: 15px;
 }
 .user-replay-header .info a:last-of-type {
   margin-right: 0;
+}
+.user-replay-header .user-nickname{
+  flex: 0 0 70%;
 }
 .user-replay-info {
   display: flex;
@@ -1359,6 +1365,15 @@ form label {
 }
 .replay-map {
   margin-bottom: 15px;
+}
+.replay-map-empty{
+  height: 100px;
+  width: 150px;
+  margin: 10px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid;
 }
 .replay-content > div > div {
   border-bottom: 1px solid grey;
@@ -1948,7 +1963,7 @@ a.user-section-title {
   display: flex;
 }
 .my-message {
-  justify-content: end;
+  justify-content: flex-end;
 }
 .my-message .message-content,
 .user-message .message-content {

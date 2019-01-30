@@ -118,19 +118,12 @@ $(function () {
  * */
 $(function () {
     if ($('.user-create-replay-form').length > 0) {
-        var content = document.getElementById('content');
         $("#replay").filestyle(
             {
                 input: true,
                 text: "Выбрать файл",
                 btnClass: 'btn-blue upload-avatar'
             });
-        sceditor.create(content, {
-            format: 'bbcode',
-            style: 'js/sceditor/minified/themes/content/default.min.css',
-            emoticonsRoot: 'js/sceditor/',
-            locale: 'ru'
-        });
     }
 });
 

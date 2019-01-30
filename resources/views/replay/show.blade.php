@@ -119,8 +119,15 @@
                     </div>
                 </div>
                 <div class="col-md-4 position-relative">
-                    <div>{{$replay->map->name}}</div>
-                    <img src="{{route('home')}}/{{$replay->map->url}}" class="replay-map" alt="{{$replay->map->name}}">
+                    <div>{{$replay->map->name??'не указано'}}</div>
+                    @if(isset($replay->map->url))
+                        <img src="{{route('home')}}/{{$replay->map->url}}" class="replay-map"
+                             alt="{{$replay->map->name??'не указано'}}">
+                    @else
+                        <div class="replay-map-empty">
+                            Не указано
+                        </div>
+                    @endif
                     <div class="replay-rating">
                         @if(Auth::user())
                             <a href="#vote-modal" class="positive-vote vote-replay-up" data-toggle="modal"

@@ -87,7 +87,7 @@
             @endforeach
         @else
             <div class="user-replay-wrapper">
-                <p>Cписок реплеев пуст</p>
+                <p class="list-empty">Cписок реплеев пуст</p>
             </div>
         @endif
     </div><!-- close div /.content-box -->
