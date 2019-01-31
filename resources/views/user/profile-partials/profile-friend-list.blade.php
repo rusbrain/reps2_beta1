@@ -14,7 +14,7 @@
                 </a>
             @endforeach
         @else
-            <p>Список пуст</p>
+            <p class="text-center">Список пуст</p>
         @endif
         {{--<div class="justify-content-center display-flex">--}}
             {{--@if(Auth::id() == $user->id)--}}

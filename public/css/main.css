@@ -895,13 +895,13 @@ form label {
   align-items: center;
   color: #737373;
 }
-.widget-new-user a > span:first-of-type{
+.widget-wrapper .widget-new-user a > span:first-of-type{
   flex: 0 0 90px;
 }
-.widget-new-user a > span:last-of-type{
+.widget-wrapper .widget-new-user a > span:last-of-type{
   margin-left: auto;
 }
-.widget-new-user a:hover {
+.widget-wrapper .widget-new-user a:hover {
   color: #737373;
 }
 .widget-user-replay {
@@ -1545,7 +1545,7 @@ div.author-info{
   color: #4d4d4d;
   font-family: "Roboto-Medium", sans-serif;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 .user-account-box-title {
   color: #2f6696;

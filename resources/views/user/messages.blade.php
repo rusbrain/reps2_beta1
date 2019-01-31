@@ -41,11 +41,14 @@
                     @endif
                     <a href="{{route('user_profile',['id' =>$user->id])}}" class="user-name">{{$user->name}}</a>
 
-                    <!-- if online displays this -->
-                    <span class="user-online-status">online</span>
-                    <!-- if INACTIVE displays this -->
-                    <div class="user-last-online">{{$user->activity_at}}</div>
 
+                    @if($general_helper->isOnline($user))
+                        <!-- if online displays this -->
+                        <span class="user-online-status">online</span>
+                    @else
+                        <!-- if INACTIVE displays this -->
+                        <div class="user-last-online">{{$user->activity_at}}</div>
+                    @endif
                 </div>
             </div>
             <!-- CHAT MESSAGES -->

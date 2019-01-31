@@ -52,10 +52,13 @@
             <div class="col-md-8">
                 <h2>{{$user->name}}</h2>
 
-                <!-- if online displays this -->
-                <div class="color-green text-bold margin-bottom-20 display-none">online</div>
-                <!-- if INACTIVE displays this -->
-                <div class="user-last-online">{{$user->activity_at}}</div>
+                @if($general_helper->isOnline($user))
+                    <!-- if online displays this -->
+                    <div class="color-green text-bold margin-bottom-20">online</div>
+                @else
+                    <!-- if INACTIVE displays this -->
+                    <div class="user-last-online">{{$user->activity_at}}</div>
+                @endif
 
                 <div class="user-info-row">
                     <span>Имя:</span>
