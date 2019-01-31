@@ -12,7 +12,7 @@
                     @if($new_user->country_id)
                         <span class="flag-icon flag-icon-{{mb_strtolower($countries[$new_user->country_id]->code)}}"></span>
                     @else
-                        <span></span>
+                        <span class="flag-icon"></span>
                     @endif
                     <span>{{$new_user->name}}</span>
                 </a>

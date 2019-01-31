@@ -123,6 +123,10 @@ img {
 .margin-left-10 {
   margin-left: 10px;
 }
+.margin-top-bottom-20{
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
 .display-block {
   display: block;
 }
@@ -185,6 +189,10 @@ img {
 }
 .padding-right-15 {
   padding-right: 15px;
+}
+.padding-top-bottom-10{
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 .negative-vote {
   color: #a6a6a6 !important;
@@ -885,8 +893,13 @@ form label {
   margin-top: 10px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   color: #737373;
+}
+.widget-new-user a > span:first-of-type{
+  flex: 0 0 90px;
+}
+.widget-new-user a > span:last-of-type{
+  margin-left: auto;
 }
 .widget-new-user a:hover {
   color: #737373;
@@ -1341,6 +1354,18 @@ form label {
   padding-bottom: 6px;
   padding-top: 6px;
   color: #4d4d4d;
+}
+div.author-info{
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.author-info > div{
+  font-size: 10px;
+}
+.author-info > a{
+  margin-right: 5px;
 }
 /*----------------------------------------*/
 /*--------- END USER REPLAY PAGE -------- */
