@@ -1101,10 +1101,13 @@ form label {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding-top: 4px;
+  padding-bottom: 4px;
   height: 30px;
 }
 .section-title div {
   font-size: 14px;
+  flex: 0 0 75%;
 }
 .section-title div a {
   font-size: 10px;

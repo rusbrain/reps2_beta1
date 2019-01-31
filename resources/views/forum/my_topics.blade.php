@@ -5,7 +5,7 @@
     @include('sidebar-widgets.all-forum-sections')
     <!-- END All Forum Topics -->
 @endsection
-{{dd($topics)}}
+{{--{{dd($topics)}}--}}
 @section('content')
 
     <!-- Breadcrumbs -->
@@ -26,111 +26,98 @@
     </div>
     <!-- END Breadcrumbs -->
 
-    <div>
-        <a href="" class="btn-blue create-theme-btn">Создать тему</a>
-    </div>
+    @if(Auth::user())
+        <div>
+            <a href="{{route('forum.topic.create')}}" class="btn-blue create-theme-btn">Создать тему</a>
+        </div>
+    @endif
 
     <div class="content-box">
         <div class="col-md-12 section-title">
             <div>Мои темы</div>
         </div>
 
-        {{--@if($topics->total() > 0)--}}
-
-            {{--@foreach()--}}
-            {{--@endforeach--}}
-        {{--@else--}}
-
-        {{--@endif--}}
-
-        <div class="accordion user-posts" id="user-posts">
-
-            <div class="card">
-                <div class="card-header" id="heading_post_id_1">
-                    <a class="user-section-title" data-toggle="collapse"
-                       data-target="#post_id_1" aria-expanded="true" aria-controls="post_id_1">
-                        Общий
-                        <span class="icon_collapse open"></span>
-                    </a>
-                </div>
-                <div id="post_id_1" class="collapse show user-section-post-wrapper"
-                     aria-labelledby="heading_post_id_1"
-                     data-parent="#user-posts">
-                    <div class="card-body">
-                        <div class="user-post-info">
-                            <div>
-                                <a href="" class="margin-right-10">Общий </a>
-                                <span>|</span>
-                                <a href="" class="margin-left-10">Лан в Москве 13.05.18</a>
-                            </div>
-                            <div>
-                                <img src="images/icons/eye.png" alt="">
-                                <span>20:12  Дек 21, 2018</span>
-                                <a href="" class="link-to-post margin-left-15">#342</a>
-                            </div>
-                        </div>
-                        <div class="user-post-content">
-                            молодцы )))) и Аркчек с оформлением и Терранмен за статью )))
-                            спасибо парни --
-                            <div class="user-post-content-footer">
-                                <div>
-                                    <img src="images/icons/eye.png" class="margin-right-5" alt="">
-                                    <span class="margin-right-20">11264</span>
-                                    <img src="images/icons/message-square-empty.png" class="margin-right-5" alt="">
-                                    <span>32</span>
-                                </div>
-                                <div>
-                                    <a href="">
-                                        <img src="images/icons/message-square-blue.png" alt="" class="margin-right-15">
-                                    </a>
-                                    <a href="" class="user-theme-edit">
-                                        <img src="images/icons/svg/edit_icon.svg" alt="">
-                                        <span>Редактировать</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div><!--close div /.card-body-->
-                </div>
-            </div>
-        </div>
-    </div><!-- close div /.content-box -->
-
-
-    <div class="row">
-        <div class="col-md-12 content-center-main-wrapper">
-            <a href="{{route('forum.topic.create')}}" class="btn btn-primary create-top-btn">Добавить пост</a>
-            <div class="content-center-main">
-                <div class="page-title w-100">Мои посты</div>
-
-                @if($topics->total() > 0)
-                    @foreach($topics as $topic)
-                        <div class="forum-section-row">
-                            <a class="w-100" href="{{route('forum.topic.index',['id' => $topic->id])}}">
-                                <span>{!! $topic->icon??'<i class="fas fa-file-alt"></i>' !!}</span>
-                                <span>{!! $topic->title !!}</span>
-                                <span class="separator">|</span>
-                                <span>({{count($topic->comments)}}\{{$topic->reviews}})</span>
-                                <span class="section-topic-date">{{\Carbon\Carbon::parse($topic->created_at)->format('d.m.Y')}}</span>
-                            </a>
-                            @if(Auth::user() && Auth::id() == $topic->user_id)
-                                <a href="{{route('forum.topic.edit',['id'=>$topic->id])}}" title="Редактировать">
-                                    <i class="fas fa-pen"></i>
-                                </a>
-                            @endif
-                            <a href="{{route('forum.topic.index',['id' => $topic->id])}}/#comment">
-                                <i class="far fa-comment-alt"></i>
+        @if($topics)
+            <div class="accordion user-posts" id="user-posts">
+                @php $s = 0 @endphp
+                @foreach($topics as $section)
+                    <div class="card">
+                        <div class="card-header" id="heading_post_id_{{$s}}">
+                            <a class="user-section-title {{$s != 0 ? 'collapsed' : ''}}" data-toggle="collapse"
+                               data-target="#post_id_{{$s}}" aria-expanded="{{$s != 0 ? 'false' : 'true'}}"
+                               aria-controls="post_id_{{$s}}">
+                                {{$section->title}}
+                                <span class="icon_collapse {{$s == 0 ? 'open' : 'close'}}"></span>
                             </a>
                         </div>
-                    @endforeach
-                @else
-                    <div class="no-logged-user-message">
-                        У Вас нет постов
+                        @if($section->topics)
+                            <div id="post_id_{{$s}}" class="collapse {{$s == 0 ? 'show' : ''}} user-section-post-wrapper"
+                                 aria-labelledby="heading_post_id_{{$s}}"
+                                 data-parent="#user-posts">
+                                @foreach($section->topics as $topic)
+                                    <div class="card-body">
+                                        <div class="user-post-info">
+                                            <div class="display-flex align-items-center">
+                                                <a href="{{route('forum.section.index', ['name' => $section->name])}}"
+                                                   class="margin-right-10">{{$section->title}} </a>
+                                                <span> | </span>
+                                                <a href="{{route('forum.topic.index',['id'=>$topic->id])}}"
+                                                   class="margin-left-10">{{$topic->title}}</a>
+                                            </div>
+                                            <div class="display-flex align-items-center">
+                                                <img src="{{route('home')}}/images/icons/eye.png" class="mr-1" alt="">
+                                                <span>{{\Carbon\Carbon::parse($topic->created_at)->format('H:i d.m.Y')}}</span>
+                                                <a href="{{route('forum.topic.index',['id'=>$topic->id])}}"
+                                                   class="link-to-post margin-left-15">#{{$topic->id}}</a>
+                                            </div>
+                                        </div>
+                                        <div class="user-post-content">
+                                            {!! $general_helper->oldContentFilter($topic->preview_content ?? mb_substr($topic->content,0,100,'UTF-8').' ...')!!}
+                                            <div class="user-post-content-footer">
+                                                <div>
+                                                    <img src="{{route('home')}}/images/icons/eye.png"
+                                                         class="margin-right-5" alt="">
+                                                    <span class="margin-right-20">{{$topic->reviews}}</span>
+                                                    <img src="{{route('home')}}/images/icons/message-square-empty.png"
+                                                         class="margin-right-5" alt="">
+                                                    <span>{{$topic->comments_count}}</span>
+                                                </div>
+                                                <div>
+                                                    <a href="{{route('forum.topic.index',['id'=>$topic->id])}}#comments">
+                                                        <img src="{{route('home')}}/images/icons/message-square-blue.png"
+                                                             alt="" class="margin-right-15">
+                                                    </a>
+                                                    <a href="{{route('forum.topic.edit',['id'=>$topic->id])}}"
+                                                       class="user-theme-edit">
+                                                        <img src="{{route('home')}}/images/icons/svg/edit_icon.svg"
+                                                             alt="">
+                                                        <span>Редактировать</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!-- close div /.card-body -->
+                                @endforeach
+                            </div><!-- close div /.user-section-post-wrapper -->
+                        @else
+                            <div id="post_id_{{$s}}" class="collapse show user-section-post-wrapper"
+                                 aria-labelledby="heading_post_id_{{$s}}"
+                                 data-parent="#user-posts">
+                                <div class="card-body">
+                                    Список пуст
+                                </div><!--close div /.card-body-->
+                            </div>
+                        @endif
                     </div>
-                @endif
+                    @php $s++; @endphp
+                @endforeach
             </div>
-        </div>
-    </div>
+        @else
+            <div class="col-md-12">
+                <div class="text-center padding-top-bottom-10">Список пуст</div>
+            </div>
+        @endif
+    </div><!-- close div /.content-box -->
 @endsection
 
 @section('sidebar-right')
