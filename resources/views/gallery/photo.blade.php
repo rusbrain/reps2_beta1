@@ -1,144 +1,135 @@
 @extends('layouts.site')
 @inject('general_helper', 'App\Services\GeneralViewHelper')
-@php
-    $countries = $general_helper->getCountries();
-    $gallery = $general_helper->getUserGallery($photo->user_id);
-@endphp
+@section('sidebar-left')
+    <!-- User Gallery widget -->
+    @include('sidebar-widgets.user-gallery',['user' => $photo->user,'gallery' => $general_helper->getUserGallery($photo->user->id)])
+    <!-- END User Gallery widget -->
+@endsection
+
 @section('content')
+
+    <!-- Breadcrumbs -->
     <div class="row">
-        <div class="col-md-3 left-inner-gallery-sidebar">
-            @foreach($gallery as $item)
-                <a href="{{route('gallery.view',['id'=> $item->id])}}" class="user-gallery-images"
-                   style="font-size: 12px; color: grey">
-                    {{$item->file->title}}
-                </a>
-            @endforeach
+        <div class="col-md-12">
+            <ul class="breadcrumb">
+                <li>
+                    <a href="/">Главная</a>
+                </li>
+                <li>
+                    <a href="#" class="active">/ {{$photo->comment != '' ? $general_helper->oldContentFilter($photo->comment) :'Без названия'}}</a>
+                </li>
+            </ul>
         </div>
-        <div class="col-md-9 border-gray">
-            @if(Auth::user() && Auth::id() == $photo->user_id)
-                <div class="row">
-                    <a href="{{route('gallery.list_user',['id'=>Auth::user()->id])}}">« Вернуться к управлению | </a>
-                    <a href="{{route('gallery.list_my',['id'=>Auth::user()->id])}}">« Просмотр галереи »</a>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <h3>Форма редактирования фотографии:</h3>
-                        <form action="{{route('gallery.update',['id'=>$photo->id])}}" method="post">
-                            @csrf
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="input-group ">
-                                        <label class="margin-right-15">Подпись:</label>
-                                        <input type="text" class="form-control "
-                                               value="{!! old('comment')??$photo->comment !!}"
-                                               placeholder="Подпись" name="comment">
-                                    </div>
-                                </div>
+    </div>
+    <!-- END Breadcrumbs -->
+
+    <div class="content-box">
+        <div class="col-md-12 section-title">
+            <div>Галерея</div>
+        </div>
+        <div class="col-md-12">
+            <div class="gallery-image-wrapper">
+                <div class="gallery-image-info-panel">
+                    <div>
+                        <div class="font-14">{{$photo->comment}}</div>
+                    @if(Auth::id() != $photo->user->id)
+                        <!--display if user is not author-->
+                            <div>
+                                <span>автор:</span>
+                                <a href="{{route('user_profile',['id' =>$photo->user->id])}}">{{$photo->user->name}}</a>
                             </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="input-group">
-                                        <label for="for_adults">
-                                            <input type="checkbox" name="for_adults" id="for_adults"
-                                                   class="flat-red"
-                                                   value="1"
-                                                   @if($photo->for_adults == 1) checked @endif
-                                            >
-                                            <span>18+</span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="box-footer">
-                                <button type="submit" class="btn btn-info pull-right">Обновить</button>
-                            </div>
-                        </form>
+                            <!-- -- -->
+                        @endif
                     </div>
-                </div>
-            @endif
-            <div class="row">
-                <div class="gallery-links col">
-                    @if($photo->photo_before)
-                        <a href="{{route('gallery.view', ['id' => $photo->photo_before->id])}}"><< назад</a>
-                    @endif
-                    @if($photo->photo_next)
-                        <a href="{{route('gallery.view', ['id' => $photo->photo_next->id])}}"> вперед >></a>
-                    @endif
-                </div>
-            </div>
-            <div class="row">
-                <div class="gallery-img-wrapper col">
-                    @if($photo->for_adults == \App\UserGallery::USER_GALLERY_FOR_ADULTS && !Auth::user())
-                        <p>
-                            <span>{{$photo->file->title}}</span><br>
-                            Фотография с рейтингом 18+
-                            Доступно только зарегистрированным пользователям
-                        </p>
-                    @else
-                        <img src="{{$photo->file->link}}" alt="">
-                    @endif
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <div class="comments-wrapper">
-                        <div class="comments-block-title ">Комментарии:</div>
-                        @if($photo->comments->total() > 0)
-                            @php $i = 1; @endphp
-                            @foreach($photo->comments as $comment)
-                                <div class="comment">
-                                    <div class="comment-title">
-                                        <span>#{{$i}} </span>
-                                        @if($comment->user->country_id)
-                                            <span class="flag-icon flag-icon-{{mb_strtolower($countries[$comment->user->country_id]->code)}}"></span>
-                                        @endif
-                                        <span>{{$comment->user->name}}</span>
-                                        <a href="">{{$comment->user->rating}}<span>кг</span></a>
-                                    </div>
-                                    <div class="comment-title">{{$comment->created_at}}</div>
-                                    <div class="comment-content">
-                                        <div class="text-bold">{!! $general_helper->oldContentFilter($comment->title) !!}</div>
-                                        {!!  $general_helper->oldContentFilter($comment->content) !!}
-                                    </div>
-                                </div>
-                                @php $i++; @endphp
-                            @endforeach
-                            <nav class="comment-navigation">
-                                @php  $data = $photo->comments @endphp
-                                @include('pagination')
-                            </nav>
-                        @else
-                            <div class="comment-content">комментарии отсутствуют</div>
+                    <div>
+                        @if($photo->photo_before)
+                            <a href="{{route('gallery.view', ['id' => $photo->photo_before->id])}}" class="prev-image">&laquo;</a>
+                        @endif
+                        @if($photo->photo_next)
+                            <a href="{{route('gallery.view', ['id' => $photo->photo_next->id])}}" class="next-image">&raquo;</a>
                         @endif
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="add-comment-form-wrapper col">
-                    <div class="comments-block-title">Добавить комментарий</div>
-                    @if(Auth::user())
-                        @php
-                            $route = route('gallery.comment.store');
-                            $relation =  \App\Comment::RELATION_USER_GALLERY;
-                            $comment_type = 'gallery_id';
-                            $object_id = $photo->id;
-                        @endphp
-                        <div class="border-gray">
-                            @include('comment-form')
-                        </div>
-                    @else
-                        <div class="no-logged-user-message">
-                            <p>
-                                <span class="flag-icon flag-icon-ru"></span>
-                                Вы не зарегистрированы на сайте, поэтому данная
-                                функция отсутствует.</p>
-                            <p>
-                                <span class="flag-icon flag-icon-gb"></span>
-                                You are not register on the site and this function is disabled.</p>
-                        </div>
-                    @endif
-                </div>
+                @if($photo->for_adults == \App\UserGallery::USER_GALLERY_FOR_ADULTS && !Auth::user())
+                    <div class="text-center padding-top-bottom-10 text-bold">
+                        Фотография с рейтингом 18+. <br>
+                        Доступно только зарегистрированным пользователям
+                    </div>
+                @else
+                    <img src="{{$photo->file->link}}" alt="" class="">
+                @endif
+
+
+                @if(Auth::id() == $photo->user->id)
+                <!--display if user is not author-->
+                    <div>
+                        <form action="{{route('gallery.update',['id'=>$photo->id])}}"
+                              class="edit-gallery-image-form" method="POST">
+                            @csrf
+                            <div class="form-group">
+                                <label for="comment">Подпись:</label>
+                                <input type="text" id="comment"
+                                       class="form-control {{ $errors->has('comment') ? ' is-invalid' : '' }}"
+                                       name="comment" value="{{old('comment')??$photo->comment}}">
+                                @if ($errors->has('comment'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('comment') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                            <div class="form-group">
+                                <label for="for_adults" class="display-flex align-items-center">
+                                    <input type="checkbox" name="for_adults" id="for_adults" class="margin-right-5"
+                                           value="1" @if(old('for_adults')??$photo->for_adults) checked @endif>
+                                    <span>18+</span>
+                                    @if ($errors->has('for_adults'))
+                                        <span class="invalid-feedback">
+                                            <strong>{{ $errors->first('for_adults') }}</strong>
+                                        </span>
+                                    @endif
+                                </label>
+                            </div>
+                            <div class="form-group bnt-form-wrapper">
+                                <a href="" class="btn-empty btn-empty-form">Удалить</a>
+                                <button type="submit" class="btn-blue btn-form">Обновить</button>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- -- -->
+                @endif
             </div>
         </div>
-    </div>
+    </div><!-- close div /.content-box -->
+
+    <!--Comments-->
+    @php $comments = $photo->comments @endphp
+    @include('comments.comments')
+    <!--END Comments-->
+
+    <!--ADD Comment-->
+    @include('comments.comment-add', [
+        'route' => route('gallery.comment.store'),
+        'relation' => \App\Comment::RELATION_USER_GALLERY,
+        'comment_type' => 'gallery_id',
+        'object_id' => $photo->id
+    ])
+    <!--END ADD Comment-->
+@endsection
+
+@section('sidebar-right')
+    <!--Banners-->
+    @include('sidebar-widgets.banner')
+    <!-- END Banners -->
+
+    <!-- New Users-->
+    @include('sidebar-widgets.new-users')
+    <!-- END New Users-->
+
+    <!-- User's Replays-->
+    @include('sidebar-widgets.users-replays')
+    <!-- END User's Replays-->
+
+    <!-- Gallery -->
+    @include('sidebar-widgets.random-gallery')
+    <!-- END Gallery -->
 @endsection

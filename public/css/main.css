@@ -883,6 +883,17 @@ form label {
   font-size: 14px;
   font-family: "Roboto-Medium", sans-serif;
 }
+.user-gallery-widget .widget-forum-topics-wrapper{
+  max-height: 300px;
+  overflow-y: auto;
+}
+.user-gallery-widget .photo-comment{
+  max-width: 175px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: inline-block;
+  overflow: hidden;
+}
 /*********END SIDEBAR LEFT*********/
 
 /*********SIDEBAR RIGHT********/
@@ -1105,9 +1116,9 @@ form label {
   padding-bottom: 4px;
   height: 30px;
 }
-.section-title div {
+.section-title > div:first-of-type {
   font-size: 14px;
-  flex: 0 0 75%;
+  max-width: 75%;
 }
 .section-title div a {
   font-size: 10px;

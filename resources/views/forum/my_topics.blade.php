@@ -5,7 +5,7 @@
     @include('sidebar-widgets.all-forum-sections')
     <!-- END All Forum Topics -->
 @endsection
-{{--{{dd($topics)}}--}}
+
 @section('content')
 
     <!-- Breadcrumbs -->

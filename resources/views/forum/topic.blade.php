@@ -70,7 +70,7 @@
                     @endif
                     <div class="user-nickname">
                         <a href="{{route('user_profile',['id' => $topic->user->id])}}">{{$topic->user->name}}</a>
-                        <a href="" class="user-menu-link"></a>
+                        <a href="" class="user-menu-link @if(!Auth::user()) display-none @endif "></a>
                         <div class="user-menu">
                             <a href="{{route('user.add_friend',['id'=>$topic->user->id])}}">Добавить в друзья</a>
                             <a href="{{route('user.messages',['id' => $topic->user->id])}}">Сообщение</a>
