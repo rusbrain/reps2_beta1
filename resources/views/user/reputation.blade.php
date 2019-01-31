@@ -111,10 +111,10 @@
                     </div>
                     <div class="user-reputation-vote-content">
                         <div class="col-md-11">
-                            <a href="" class="target-vote-link">
-                                <span>#1</span>
-                                Нужно добавить связь коммента с объектом комментирования
-                            </a>
+                            {{--<a href="" class="target-vote-link">--}}
+                                {{--<span>#1</span>--}}
+                                {{--Нужно добавить связь коммента с объектом комментирования--}}
+                            {{--</a>--}}
                             <div>{!! $general_helper->oldContentFilter($item->comment) !!}</div>
                         </div>
                         <div class="col-md-1">

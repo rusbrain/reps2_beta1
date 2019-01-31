@@ -1,11 +1,7 @@
 @extends('layouts.site')
 @inject('general_helper', 'App\Services\GeneralViewHelper')
 
-@section('sidebar-left')
-    <!-- All Forum Topics -->
-    @include('sidebar-widgets.all-forum-sections')
-    <!-- END All Forum Topics -->
-@endsection
+@php $section_icons = $general_helper->getSectionIcons(); @endphp
 
 @section('content')
     <!-- Breadcrumbs -->
@@ -31,19 +27,26 @@
                 <div class="row">
                     <div class="col-md-12 ">
                         <a href="{{route('forum.section.index', ['name' => $section->name])}}" class="forum-section-title">
+                            <img src="{{route('home').$section_icons[$section->id]}}" class="margin-right-15" alt="">
                             {{$section->title}}
                         </a>
                     </div>
                 </div>
                 <div class="row align-items-center">
-                    <div class="col-md-2 ">
+                    <div class="col-md-4 ">
                         <div class="forum-section-info">
-                            <span>Темы:</span>
-                            <span class="forum-section-topics">{{$section->topics_count}}</span>
+                            <div>
+                                <span>Темы:</span>
+                                <span class="forum-section-topics">{{$section->topics_count}}</span>
+                            </div>
+                            <div>
+                                <span>Комментариев:</span>
+                                <span class="forum-section-topics">{{$section->comment_count}}</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-10 padding-top-10">
-                        <div class="content-box-topic-desc padding-left-15 margin-bottom-15">
+                    <div class="col-md-8 padding-top-10">
+                        <div class="content-box-topic-desc margin-bottom-15">
                             <a href="{{route('forum.section.index', ['name' => $section->name])}}">
                                 <h2 class="margin-bottom-10">
                                     {!! $section->description !!}

@@ -1,10 +1,14 @@
-@php $forum_sections = $general_helper->getAllForumSections(); @endphp
+@php
+    $forum_sections = $general_helper->getAllForumSections();
+    $section_icons = $general_helper->getSectionIcons();
+@endphp
+
 @if($forum_sections)
     <div class="widget-wrapper">
         <div class="widget-header">Темы форума</div>
         @foreach($forum_sections as $forum_section)
             <a href="{{route('forum.section.index',['name' => $forum_section->name])}}" class="widget-title">
-                <img src="{{route('home')}}/images/icons/icon_general.png" alt="">
+                <img src="{{route('home').$section_icons[$forum_section->id]}}" alt="">
                 {{$forum_section->title}}:
             </a>
             <div class="widget-forum-topics-wrapper">

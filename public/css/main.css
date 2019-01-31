@@ -1050,12 +1050,16 @@ form label {
   font-size: 14px;
   display: flex;
   height: 30px;
-  color: #2f6696;
+  color: #fff;
   align-items: center;
   justify-content: left;
-  border-bottom: 0.5px solid #dadada;
+  border-bottom: 0.5px solid #fff;
   padding-left: 15px;
   font-family: "Roboto-Medium", sans-serif;
+  background: #4890af;
+}
+.forum-section-title:hover{
+  color: #fff;
 }
 .forum-section-img {
   border-radius: 3px;
@@ -1070,7 +1074,6 @@ form label {
   justify-content: left;
   text-align: left;
   padding-left: 10px;
-  margin-top: 10px;
 }
 .forum-section-topics {
   color: #2f6696;
