@@ -196,3 +196,50 @@ $(function () {
         $(this).siblings('.spoilmain').toggleClass('active');
     });
 });
+
+/**
+ * Registration Form Page
+ * */
+$(function () {
+    if ($('#register-form').length > 0) {
+        var registrationForm = $('#register-form');
+        /**Validation*/
+        registrationForm.validate({
+            rules: {
+                name: "required",
+                email: {required: true, email: true},
+                password: "required",
+                password_confirmation: "required"
+            },
+            messages: {
+                name: {
+                    required: "Заполните это поле"
+                },
+                email: {
+                    required: "Заполните это поле",
+                    email: "Неверный формат электронной почты"
+                },
+                password: "Заполните это поле",
+                password_confirmation: "Заполните это поле"
+            },
+            errorPlacement: function (error, element) {
+                if (element.attr("name") === "name") {
+                    error.insertAfter(registrationForm.find("input[name=name]"));
+                }
+                if (element.attr("name") === "email") {
+                    error.insertAfter(registrationForm.find("input[name=email]"));
+                }
+                if (element.attr("name") === "password") {
+                    error.insertAfter(registrationForm.find("input[name=password]"));
+                }
+                if (element.attr("name") === "password_confirmation") {
+                    error.insertAfter(registrationForm.find("input[name=password_confirmation]"));
+                }
+            },
+            errorElement: "div",
+            submitHandler: function (form) {
+                form.submit();
+            }
+        });
+    }
+});
