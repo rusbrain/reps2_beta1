@@ -1,6 +1,6 @@
 @if($messages->lastPage() > $messages->currentPage())
     <div class="text-center load-more-box">
-        <span class="badge bg-light-blue load-more"
+        <span class="btn-blue load-more"
               date-href="{{$messages->url($page??2)}}">Загрузить предыдущие сообщеня</span>
     </div>
 @endif
@@ -43,4 +43,3 @@
     @endif
 @endforeach
 <div class="scroll-to"></div>
-

@@ -2,7 +2,7 @@
     <!--SCEditor -  WYSIWYG BBCode editor -->
     <link rel="stylesheet" href="{{route('home')}}/js/sceditor/minified/themes/default.min.css"/>
 @endsection
-<form action=""  method="POST" class="user-message-form">
+<form action="" method="POST" class="user-message-form">
     <div class="form-group">
         <label for="message">Написать сообщение:</label>
         <textarea name="message" id="message" class="form-control send-message-text"
@@ -32,8 +32,8 @@
 
                 sceditor.create(textarea, {
                     format: 'xhtml',
-                    style: '{{route('home')}}'+'/js/sceditor/minified/themes/content/default.min.css',
-                    emoticonsRoot: '{{route('home')}}'+'/js/sceditor/',
+                    style: '{{route('home')}}' + '/js/sceditor/minified/themes/content/default.min.css',
+                    emoticonsRoot: '{{route('home')}}' + '/js/sceditor/',
                     locale: 'ru',
                     toolbar: 'bold,italic,underline|' +
                     'left,center,right,justify|' +
@@ -46,10 +46,9 @@
 
                 $('.user-message-form').on('submit', function (e) {
                     e.preventDefault();
-
                     var message = $('.send-message-text').val();
-                    var url = $('input[name=load-more]').val();
 
+                    /**clean textarea field*/
                     sceditor.instance(textarea).val('');
 
                     $.post(
@@ -69,7 +68,7 @@
 
                 $('.messages-box').on('click', '.load-more', function () {
                     var url = $('.load-more').attr('date-href');
-                    console.log(url);
+
                     $.post(
                         url,
                         {
