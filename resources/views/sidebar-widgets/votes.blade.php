@@ -1,7 +1,7 @@
 @php
     $random_question = $general_helper->getRandomQuestion();
 @endphp
-@if(!empty($random_question))
+@if(!empty($random_question) && Auth::user())
     <div class="widget-wrapper">
         <div class="widget-header">Голосование</div>
         <div class="widget-title">{{$random_question->question}}</div>

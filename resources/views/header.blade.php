@@ -16,11 +16,12 @@
                 <!-- LOGIN FORM-->
                 @include('layouts.partials.login-form')
                 <!-- END LOGIN FORM-->
-            @endif
-            <a href="" class="password-repairing">
+
+            <a href="{{route('password.request')}}" class="password-repairing">
                 <img src="{{route('home')}}/images/icons/lock icon.png" alt="">
                 Восстановление пароля
             </a>
+            @endif
         </div>
     @else
     <!--IF user is logged, displays this view-->

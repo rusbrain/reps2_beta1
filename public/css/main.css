@@ -386,7 +386,6 @@ form label {
 }
 .breadcrumb li a {
   color: #a6a6a6;
-  text-transform: capitalize;
 }
 .breadcrumb li a.active {
   color: #4d4d4d;
@@ -635,6 +634,7 @@ form label {
   text-decoration: underline;
   color: #fff;
 }
+password-repairing:visited,
 .password-repairing{
   font-family: "Roboto-Bold", sans-serif;
   color: #fff;

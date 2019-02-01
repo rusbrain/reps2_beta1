@@ -2,7 +2,6 @@
 @inject('general_helper', 'App\Services\GeneralViewHelper')
 
 @section('sidebar-left')
-    @include('sidebar-widgets.votes')
     @include('sidebar-widgets.gosu-replays')
 @endsection
 

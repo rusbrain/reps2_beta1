@@ -14,7 +14,7 @@
                     <a href="/">Главная</a>
                 </li>
                 <li>
-                    <a href="#" class="active">/ Восстановление пароля</a>
+                    <a href="#" class="active">/ Получение ссылки для восстановление пароля</a>
                 </li>
             </ul>
         </div>
@@ -22,21 +22,34 @@
     <!-- END Breadcrumbs -->
     <div class="content-box">
         <div class="col-md-12 section-title margin-bottom-15">
-            <h1>Восстановление пароля</h1>
+            <h1>Получение ссылки для восстановление пароля:</h1>
         </div>
         <div class="row">
             <div class="col"></div>
             <div class="col-md-10">
-                <h3 class="text-bold text-center padding-top-bottom-10">На указаный Вами email было отправлено письмо
-                    для восстановления пароля</h3>
-                <h4 class="text-bold text-center">Email: {{$email}}</h4>
-                <a href="/" class="btn-blue btn-form margin-top-20 margin-bottom-20">Вернутся на Главную</a>
+                <form method="POST" action="{{ route('password.email') }}">
+                    @csrf
+                    <div class="form-group">
+                        <label for="email">*E-Mail:</label>
+                        <input id="email" type="email" name="email" value="{{ old('email') }}"
+                               class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" required>
+                        @if ($errors->has('email'))
+                            <span class="invalid-feedback">
+                                <strong>{{ $errors->first('email') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn-blue btn-form">Отправить</button>
+                    </div>
+                </form>
             </div>
             <div class="col"></div>
         </div>
     </div><!-- close div /.content-box -->
-
 @endsection
+
 
 @section('sidebar-right')
     <!--Banners-->
