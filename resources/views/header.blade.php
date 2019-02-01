@@ -18,7 +18,7 @@
                 <!-- END LOGIN FORM-->
 
             <a href="{{route('password.request')}}" class="password-repairing">
-                <img src="{{route('home')}}/images/icons/lock icon.png" alt="">
+                <img src="{{route('home')}}/images/icons/lock_icon.png" alt="">
                 Восстановление пароля
             </a>
             @endif
