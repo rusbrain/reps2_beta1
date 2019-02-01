@@ -16,6 +16,7 @@
                             <label for="answer_{{$answer->id}}" >{{$answer->answer}}</label>
                         </div>
                     @endforeach
+                    <div class="display-error text-center padding-top-bottom-5"></div>
                     <div class="justify-content-center display-flex">
                         <button class="btn-empty vote-button" type="submit">Проголосовать</button>
                     </div>

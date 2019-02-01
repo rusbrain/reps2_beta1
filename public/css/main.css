@@ -194,6 +194,10 @@ img {
   padding-top: 10px;
   padding-bottom: 10px;
 }
+.padding-top-bottom-5{
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
 .negative-vote {
   color: #a6a6a6 !important;
 }
@@ -656,6 +660,11 @@ password-repairing:visited,
   position: absolute;
   top: 0;
   right: 0;
+}
+.login-form div.error{
+  color: yellow;
+  font-family: "Roboto-Bold",sans-serif;
+  text-shadow: 0 0 1px red;
 }
 .btn-login {
   width: 29px;

@@ -270,28 +270,80 @@ $(function () {
             });
         });
 
-        /**send vote form*/
-        $('#vote-question-form').on('submit', function (e) {
-            e.preventDefault();
-            var url = $(this).attr('action');
-            var answer_id = $(this).find('input[name=answer_id]').val();
-
-            console.log(url);
-            console.log(answer_id);
-
-            $.ajax({
-                type: 'GET',
-                url: url,
-                data: {
-                    answer_id: answer_id
+        /**Vote Form - Right Sidebar*/
+        var voteForm = $('#vote-question-form');
+        if (voteForm.length > 0) {
+            /**Validation*/
+            voteForm.validate({
+                rules: {
+                    answer_id: {required: true}
                 },
-                success: function (html) {
-                    $('#view-results-response').html(html);
+                messages: {
+                    answer_id: {
+                        required: "Выберите вариант ответа"
+                    }
                 },
-                error: function () {
+                errorPlacement: function (error, element) {
+                    if (element.attr("name") === "answer_id") {
+                        // error.appendTo(voteForm.find("#vote-form-error"));
+                        error.appendTo(voteForm.find(".display-error"));
+                    }
+                },
+                errorElement: "div",
+                submitHandler: function (form) {
+                    var selectData = $(form).serialize();
 
+                    $.ajax({
+                        type: 'POST',
+                        url: $(form).attr('action'),
+                        data: selectData,
+                        success: function (html) {
+                            $('#view-results-response').html(html);
+                        },
+                        error: function () {
+
+                        }
+                    });
                 }
             });
+        }
+    }
+});
+
+/**
+ * Login Form
+ * */
+$(function () {
+    var loginForm = $('#login-form');
+    if (loginForm.length > 0) {
+
+        /**Validation*/
+        loginForm.validate({
+            rules: {
+                email: {required: true, email: true},
+                password: {required: true}
+            },
+            messages: {
+                email: {
+                    required: "Заполните это поле",
+                    email: "Неверный формат электронной почты"
+                },
+                password: {
+                    required: "Заполните это поле"
+                }
+            },
+            errorPlacement: function (error, element) {
+                if (element.attr("name") === "email") {
+                    error.insertAfter(loginForm.find("input[name=email]"));
+                }
+                if (element.attr("name") === "password") {
+                    error.insertAfter(loginForm.find("input[name=password]"));
+                }
+            },
+            errorElement: "div",
+            submitHandler: function (form) {
+                form.submit();
+            }
         });
     }
 });
