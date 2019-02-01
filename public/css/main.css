@@ -625,14 +625,27 @@ form label {
   display: flex;
 }
 .registration-link {
-  font-family: "Roboto-Medium", sans-serif;
-  font-size: 11px;
+  font-family: "Roboto-Bold", sans-serif;
   color: #fff;
   margin-bottom: 24px;
   display: block;
   text-align: right;
 }
 .registration-link:hover {
+  text-decoration: underline;
+  color: #fff;
+}
+.password-repairing{
+  font-family: "Roboto-Bold", sans-serif;
+  color: #fff;
+  display: block;
+  text-align: right;
+  margin-top: 10px;
+}
+.password-repairing img{
+  margin-right: 10px;
+}
+.password-repairing:hover{
   text-decoration: underline;
   color: #fff;
 }
@@ -810,6 +823,27 @@ form label {
 }
 .vote-form label {
   font-family: "Roboto-Regular", sans-serif;
+  margin-bottom: 0;
+  font-size: 12px;
+  margin-left: 10px;
+}
+.vote-response{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.vote-response > span:first-of-type{
+  max-width: 200px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: inline-block;
+  overflow: hidden;
+  margin: 10px 0;
+}
+.sidebar-widget-subtitle{
+  margin-bottom: 10px;
+  font-family: "Roboto-Bold",sans-serif;
+  font-size: 14px;
 }
 .widget-header {
   background: #2f6696;

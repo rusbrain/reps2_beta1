@@ -243,3 +243,55 @@ $(function () {
         });
     }
 });
+
+/**View vote results ->  LEFT SIDEBAR */
+$(function () {
+    if($('#vote-question-form').length > 0){
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        /**view results*/
+        $('#view-answer-results').on('click', function (e) {
+            e.preventDefault();
+            var url = $(this).attr('data-url');
+            console.log(url);
+            $.ajax({
+                type: 'POST',
+                url: url,
+                success: function (html) {
+                    $('#view-results-response').html(html);
+                },
+                error: function () {
+
+                }
+            });
+        });
+
+        /**send vote form*/
+        $('#vote-question-form').on('submit', function (e) {
+            e.preventDefault();
+            var url = $(this).attr('action');
+            var answer_id = $(this).find('input[name=answer_id]').val();
+
+            console.log(url);
+            console.log(answer_id);
+
+            $.ajax({
+                type: 'GET',
+                url: url,
+                data: {
+                    answer_id: answer_id
+                },
+                success: function (html) {
+                    $('#view-results-response').html(html);
+                },
+                error: function () {
+
+                }
+            });
+        });
+    }
+});

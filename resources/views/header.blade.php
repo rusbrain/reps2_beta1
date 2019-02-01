@@ -13,10 +13,14 @@
                 <span>Регистрация</span>
             </a>
             @if(Route::currentRouteName() !== 'registration_form'))
-            <!-- LOGIN FORM-->
-            @include('layouts.partials.login-form')
-            <!-- END LOGIN FORM-->
-                @endif
+                <!-- LOGIN FORM-->
+                @include('layouts.partials.login-form')
+                <!-- END LOGIN FORM-->
+            @endif
+            <a href="" class="password-repairing">
+                <img src="{{route('home')}}/images/icons/lock icon.png" alt="">
+                Восстановление пароля
+            </a>
         </div>
     @else
     <!--IF user is logged, displays this view-->
