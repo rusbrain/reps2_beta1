@@ -620,18 +620,16 @@ class GeneralViewHelper
     /**
      * Get icon url from Id
      *
-     * @param $id
      * @return mixed
      */
-    public function getSectionIcons($id)
+    public function getSectionIcons()
     {
         if (!self::$instance->section_icons){
             $icons = SectionIcon::all();
             foreach ($icons as $icon) {
                 self::$instance->section_icons[$icon->id] = $icon->icon;
             }
-
-            return self::$instance->section_icons[$id];
+            return self::$instance->section_icons;
         }
     }
 }

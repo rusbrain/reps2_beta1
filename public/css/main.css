@@ -123,6 +123,10 @@ img {
 .margin-left-10 {
   margin-left: 10px;
 }
+.margin-top-bottom-20{
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
 .display-block {
   display: block;
 }
@@ -186,11 +190,22 @@ img {
 .padding-right-15 {
   padding-right: 15px;
 }
+.padding-top-bottom-10{
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.padding-top-bottom-5{
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
 .negative-vote {
   color: #a6a6a6 !important;
 }
 .positive-vote {
   color: #2f6696 !important;
+}
+.error{
+  color: #dc3545;
 }
 .font-14 {
   font-size: 14px !important;
@@ -375,7 +390,6 @@ form label {
 }
 .breadcrumb li a {
   color: #a6a6a6;
-  text-transform: capitalize;
 }
 .breadcrumb li a.active {
   color: #4d4d4d;
@@ -614,14 +628,28 @@ form label {
   display: flex;
 }
 .registration-link {
-  font-family: "Roboto-Medium", sans-serif;
-  font-size: 11px;
+  font-family: "Roboto-Bold", sans-serif;
   color: #fff;
   margin-bottom: 24px;
   display: block;
   text-align: right;
 }
 .registration-link:hover {
+  text-decoration: underline;
+  color: #fff;
+}
+password-repairing:visited,
+.password-repairing{
+  font-family: "Roboto-Bold", sans-serif;
+  color: #fff;
+  display: block;
+  text-align: right;
+  margin-top: 10px;
+}
+.password-repairing img{
+  margin-right: 10px;
+}
+.password-repairing:hover{
   text-decoration: underline;
   color: #fff;
 }
@@ -632,6 +660,11 @@ form label {
   position: absolute;
   top: 0;
   right: 0;
+}
+.login-form div.error{
+  color: yellow;
+  font-family: "Roboto-Bold",sans-serif;
+  text-shadow: 0 0 1px red;
 }
 .btn-login {
   width: 29px;
@@ -799,6 +832,27 @@ form label {
 }
 .vote-form label {
   font-family: "Roboto-Regular", sans-serif;
+  margin-bottom: 0;
+  font-size: 12px;
+  margin-left: 10px;
+}
+.vote-response{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.vote-response > span:first-of-type{
+  max-width: 200px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: inline-block;
+  overflow: hidden;
+  margin: 10px 0;
+}
+.sidebar-widget-subtitle{
+  margin-bottom: 10px;
+  font-family: "Roboto-Bold",sans-serif;
+  font-size: 14px;
 }
 .widget-header {
   background: #2f6696;
@@ -875,6 +929,17 @@ form label {
   font-size: 14px;
   font-family: "Roboto-Medium", sans-serif;
 }
+.user-gallery-widget .widget-forum-topics-wrapper{
+  max-height: 300px;
+  overflow-y: auto;
+}
+.user-gallery-widget .photo-comment{
+  max-width: 175px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: inline-block;
+  overflow: hidden;
+}
 /*********END SIDEBAR LEFT*********/
 
 /*********SIDEBAR RIGHT********/
@@ -885,10 +950,15 @@ form label {
   margin-top: 10px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   color: #737373;
 }
-.widget-new-user a:hover {
+.widget-wrapper .widget-new-user a > span:first-of-type{
+  flex: 0 0 90px;
+}
+.widget-wrapper .widget-new-user a > span:last-of-type{
+  margin-left: auto;
+}
+.widget-wrapper .widget-new-user a:hover {
   color: #737373;
 }
 .widget-user-replay {
@@ -1037,12 +1107,16 @@ form label {
   font-size: 14px;
   display: flex;
   height: 30px;
-  color: #2f6696;
+  color: #fff;
   align-items: center;
   justify-content: left;
-  border-bottom: 0.5px solid #dadada;
+  border-bottom: 0.5px solid #fff;
   padding-left: 15px;
   font-family: "Roboto-Medium", sans-serif;
+  background: #4890af;
+}
+.forum-section-title:hover{
+  color: #fff;
 }
 .forum-section-img {
   border-radius: 3px;
@@ -1057,7 +1131,6 @@ form label {
   justify-content: left;
   text-align: left;
   padding-left: 10px;
-  margin-top: 10px;
 }
 .forum-section-topics {
   color: #2f6696;
@@ -1085,10 +1158,13 @@ form label {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding-top: 4px;
+  padding-bottom: 4px;
   height: 30px;
 }
-.section-title div {
+.section-title > div:first-of-type {
   font-size: 14px;
+  max-width: 75%;
 }
 .section-title div a {
   font-size: 10px;
@@ -1342,6 +1418,18 @@ form label {
   padding-top: 6px;
   color: #4d4d4d;
 }
+div.author-info{
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.author-info > div{
+  font-size: 10px;
+}
+.author-info > a{
+  margin-right: 5px;
+}
 /*----------------------------------------*/
 /*--------- END USER REPLAY PAGE -------- */
 /*---------------------------------------*/
@@ -1517,7 +1605,7 @@ form label {
   color: #4d4d4d;
   font-family: "Roboto-Medium", sans-serif;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 .user-account-box-title {
   color: #2f6696;
@@ -1935,6 +2023,7 @@ a.user-section-title {
   border-bottom: 1px solid #ecedf0;
   padding: 5px 20px;
   margin-bottom: 20px;
+  width: 100%;
 }
 .user-messages-info img {
   width: 50px;
@@ -2032,6 +2121,14 @@ a.user-section-title {
   display: flex;
   justify-content: space-between;
   font-size: 14px;
+}
+.load-more{
+  cursor: pointer;
+  width: 190px;
+  border-radius: 6px;
+  font-size: 10px;
+  margin: 10px auto;
+  padding: 2px;
 }
 /*----------------------------------------*/
 /*---END USER MESSAGE PAGE -------- */

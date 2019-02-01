@@ -14,9 +14,7 @@
         <div class="col-md-12">
             <ul class="breadcrumb">
                 <li>
-                    <a href="/">
-                        Главная
-                    </a>
+                    <a href="/">Главная</a>
                 </li>
                 <li>
                     <a href="{{route('forum.index')}}">/ Форум</a>

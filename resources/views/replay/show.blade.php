@@ -32,8 +32,26 @@
     <!-- END Breadcrumbs -->
 
     <div class="content-box">
-        <div class="col-md-12 section-title">
+        <div class="col-md-12 section-title ">
             <div>{{$replay->title}}</div>
+
+            <div class="author-info">
+                <a href="{{route('user_profile',['id' => $replay->user->id])}}">
+                    {{$replay->user->name. ' | '}}
+                </a>
+                <div class="user-role">
+                    @if($replay->user->user_role_id != 0)
+                        {{$replay->user->role->title . ' | '}}
+                        {{$general_helper->getUserStatus($replay->user->score)}} {{$replay->user->score . ' pts | '}}
+                    @else
+                        {{$general_helper->getUserStatus($replay->user->score)}} {{$replay->user->score . ' pts | '}}
+                    @endif
+                </div>
+                <div>
+                    <a href="{{route('user.get_rating', ['id' => $replay->user->id])}}"
+                       class="user-rating"> {{$replay->user->rating}} кг</a>
+                </div>
+            </div>
         </div>
         <div class="user-replay-wrapper">
             <div class="col-md-12 user-replay-header">
@@ -195,7 +213,7 @@
                     </div>
                 </form>
             @else
-                <div class="text-center">
+                <div class="text-center padding-top-bottom-10">
                     Данная возможность доступна только зарегистрированным пользователям
                 </div>
             @endif

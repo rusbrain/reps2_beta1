@@ -52,10 +52,13 @@
             <div class="col-md-8">
                 <h2>{{$user->name}}</h2>
 
-                <!-- if online displays this -->
-                <div class="color-green text-bold margin-bottom-20 display-none">online</div>
-                <!-- if INACTIVE displays this -->
-                <div class="user-last-online">{{$user->activity_at}}</div>
+                @if($general_helper->isOnline($user))
+                    <!-- if online displays this -->
+                    <div class="color-green text-bold margin-bottom-20">online</div>
+                @else
+                    <!-- if INACTIVE displays this -->
+                    <div class="user-last-online">{{$user->activity_at}}</div>
+                @endif
 
                 <div class="user-info-row">
                     <span>Имя:</span>
@@ -111,10 +114,10 @@
                     </div>
                     <div class="user-reputation-vote-content">
                         <div class="col-md-11">
-                            <a href="" class="target-vote-link">
-                                <span>#1</span>
-                                Нужно добавить связь коммента с объектом комментирования
-                            </a>
+                            {{--<a href="" class="target-vote-link">--}}
+                                {{--<span>#1</span>--}}
+                                {{--Нужно добавить связь коммента с объектом комментирования--}}
+                            {{--</a>--}}
                             <div>{!! $general_helper->oldContentFilter($item->comment) !!}</div>
                         </div>
                         <div class="col-md-1">

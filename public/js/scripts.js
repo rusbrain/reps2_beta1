@@ -196,3 +196,154 @@ $(function () {
         $(this).siblings('.spoilmain').toggleClass('active');
     });
 });
+
+/**
+ * Registration Form Page
+ * */
+$(function () {
+    if ($('#register-form').length > 0) {
+        var registrationForm = $('#register-form');
+        /**Validation*/
+        registrationForm.validate({
+            rules: {
+                name: "required",
+                email: {required: true, email: true},
+                password: "required",
+                password_confirmation: "required"
+            },
+            messages: {
+                name: {
+                    required: "Заполните это поле"
+                },
+                email: {
+                    required: "Заполните это поле",
+                    email: "Неверный формат электронной почты"
+                },
+                password: "Заполните это поле",
+                password_confirmation: "Заполните это поле"
+            },
+            errorPlacement: function (error, element) {
+                if (element.attr("name") === "name") {
+                    error.insertAfter(registrationForm.find("input[name=name]"));
+                }
+                if (element.attr("name") === "email") {
+                    error.insertAfter(registrationForm.find("input[name=email]"));
+                }
+                if (element.attr("name") === "password") {
+                    error.insertAfter(registrationForm.find("input[name=password]"));
+                }
+                if (element.attr("name") === "password_confirmation") {
+                    error.insertAfter(registrationForm.find("input[name=password_confirmation]"));
+                }
+            },
+            errorElement: "div",
+            submitHandler: function (form) {
+                form.submit();
+            }
+        });
+    }
+});
+
+/**View vote results ->  LEFT SIDEBAR */
+$(function () {
+    if($('#vote-question-form').length > 0){
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        /**view results*/
+        $('#view-answer-results').on('click', function (e) {
+            e.preventDefault();
+            var url = $(this).attr('data-url');
+            console.log(url);
+            $.ajax({
+                type: 'POST',
+                url: url,
+                success: function (html) {
+                    $('#view-results-response').html(html);
+                },
+                error: function () {
+
+                }
+            });
+        });
+
+        /**Vote Form - Right Sidebar*/
+        var voteForm = $('#vote-question-form');
+        if (voteForm.length > 0) {
+            /**Validation*/
+            voteForm.validate({
+                rules: {
+                    answer_id: {required: true}
+                },
+                messages: {
+                    answer_id: {
+                        required: "Выберите вариант ответа"
+                    }
+                },
+                errorPlacement: function (error, element) {
+                    if (element.attr("name") === "answer_id") {
+                        // error.appendTo(voteForm.find("#vote-form-error"));
+                        error.appendTo(voteForm.find(".display-error"));
+                    }
+                },
+                errorElement: "div",
+                submitHandler: function (form) {
+                    var selectData = $(form).serialize();
+
+                    $.ajax({
+                        type: 'POST',
+                        url: $(form).attr('action'),
+                        data: selectData,
+                        success: function (html) {
+                            $('#view-results-response').html(html);
+                        },
+                        error: function () {
+
+                        }
+                    });
+                }
+            });
+        }
+    }
+});
+
+/**
+ * Login Form
+ * */
+$(function () {
+    var loginForm = $('#login-form');
+    if (loginForm.length > 0) {
+
+        /**Validation*/
+        loginForm.validate({
+            rules: {
+                email: {required: true, email: true},
+                password: {required: true}
+            },
+            messages: {
+                email: {
+                    required: "Заполните это поле",
+                    email: "Неверный формат электронной почты"
+                },
+                password: {
+                    required: "Заполните это поле"
+                }
+            },
+            errorPlacement: function (error, element) {
+                if (element.attr("name") === "email") {
+                    error.insertAfter(loginForm.find("input[name=email]"));
+                }
+                if (element.attr("name") === "password") {
+                    error.insertAfter(loginForm.find("input[name=password]"));
+                }
+            },
+            errorElement: "div",
+            submitHandler: function (form) {
+                form.submit();
+            }
+        });
+    }
+});

@@ -74,10 +74,10 @@
                                 <img src="{{route('home')}}/images/icons/icq.png" alt="">
                                 864-000
                             </div>
-                            <a href="">
-                                <img src="{{route('home')}}/images/icons/pdf_icon.png" alt="">
-                                скачать pdf
-                            </a>
+                            {{--<a href="">--}}
+                                {{--<img src="{{route('home')}}/images/icons/pdf_icon.png" alt="">--}}
+                                {{--скачать pdf--}}
+                            {{--</a>--}}
                         </div>
                     </div>
                 </div>

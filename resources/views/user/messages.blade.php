@@ -34,18 +34,20 @@
             <div class="row">
                 <div class="user-messages-info">
                     @if($user->avatar)
-                        <img src="{{$user->avatar->link}}" alt="">
+                        <img src="{{$user->avatar->link}}" alt="" class="margin-right-5">
                     @else
                         <a href="{{route('user_profile',['id' => $user->id])}}"
-                           class="logged-user-avatar no-header">A</a>
+                           class="logged-user-avatar no-header margin-right-5">A</a>
                     @endif
                     <a href="{{route('user_profile',['id' =>$user->id])}}" class="user-name">{{$user->name}}</a>
 
-                    <!-- if online displays this -->
-                    <span class="user-online-status">online</span>
-                    <!-- if INACTIVE displays this -->
-                    <div class="user-last-online">{{$user->activity_at}}</div>
-
+                    @if($general_helper->isOnline($user) && !is_null($user->activity_at))
+                        <!-- if online displays this -->
+                        <span class="user-online-status">online</span>
+                    @else
+                        <!-- if INACTIVE displays this -->
+                        <div class="user-last-online">{{$user->activity_at??'offline'}}</div>
+                    @endif
                 </div>
             </div>
             <!-- CHAT MESSAGES -->

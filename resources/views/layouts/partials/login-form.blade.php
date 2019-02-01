@@ -1,4 +1,4 @@
-<form action="{{ route('login') }}" method="POST" class="login-form">
+<form action="{{ route('login') }}" method="POST" class="login-form" id="login-form">
     @csrf
     <div>
         <input type="email" id="email" class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}"

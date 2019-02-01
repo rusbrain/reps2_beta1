@@ -64,10 +64,13 @@
             <div class="col-md-8">
                 <h2>{{$user->name}}</h2>
 
-                <!-- if online displays this -->
-                <div class="color-green text-bold margin-bottom-20 display-none">online</div>
-                <!-- if INACTIVE displays this -->
-                <div class="user-last-online">{{$user->activity_at}}</div>
+                @if($general_helper->isOnline($user))
+                    <!-- if online displays this -->
+                    <div class="color-green text-bold margin-bottom-20">online</div>
+                @else
+                    <!-- if INACTIVE displays this -->
+                    <div class="user-last-online">{{$user->activity_at}}</div>
+                @endif
 
                 <div class="user-account-info-row">
                     <span>Статус:</span>
@@ -94,26 +97,26 @@
     <div class="row">
         <div class="col-md-4">
             <!-- FRIEND LIST -->
-            @include('user.profile-partials.profile-friend-list')
-            <!-- END FRIEND LIST -->
+        @include('user.profile-partials.profile-friend-list')
+        <!-- END FRIEND LIST -->
 
             <!-- FRIENDLY LIST -->
-            @include('user.profile-partials.profile-friendly-list')
-            <!-- END FRIENDLY LIST -->
+        @include('user.profile-partials.profile-friendly-list')
+        <!-- END FRIENDLY LIST -->
         </div><!-- close div /.col-md-4 -->
 
         <div class="col-md-8">
             <!-- PROFILE INFO -->
-            @include('user.profile-partials.profile-info')
-            <!-- END PROFILE INFO -->
+        @include('user.profile-partials.profile-info')
+        <!-- END PROFILE INFO -->
 
             <!-- PROFILE ARMORY -->
-            @include('user.profile-partials.profile-armory')
-            <!-- END PROFILE ARMORY -->
+        @include('user.profile-partials.profile-armory')
+        <!-- END PROFILE ARMORY -->
 
             <!-- PROFILE CONTACTS -->
-            @include('user.profile-partials.profile-contacts')
-            <!-- END PROFILE CONTACTS -->
+        @include('user.profile-partials.profile-contacts')
+        <!-- END PROFILE CONTACTS -->
 
         </div><!-- close div /.col-md-8 -->
     </div><!-- close div /.row -->

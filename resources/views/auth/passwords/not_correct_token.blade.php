@@ -1,4 +1,56 @@
 @extends('layouts.site')
+@inject('general_helper', 'App\Services\GeneralViewHelper')
+
+@section('sidebar-left')
+    @include('sidebar-widgets.gosu-replays')
+@endsection
+
 @section('content')
-<h3>Не верный Token</h3>
+    <!-- Breadcrumbs -->
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="breadcrumb">
+                <li>
+                    <a href="/">Главная</a>
+                </li>
+                <li>
+                    <a href="#" class="active">/ Не верный токен</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- END Breadcrumbs -->
+
+    <div class="content-box">
+        <div class="col-md-12 section-title margin-bottom-15">
+            <h1>Ошибка</h1>
+        </div>
+        <div class="row">
+            <div class="col"></div>
+            <div class="col-md-10">
+                <h3 class="text-bold text-center padding-top-bottom-10">Не верный Токен</h3>
+                <a href="/" class="btn-blue btn-form margin-top-20 margin-bottom-20">Вернутся на Главную</a>
+            </div>
+            <div class="col"></div>
+        </div>
+    </div><!-- close div /.content-box -->
+
+@endsection
+
+@section('sidebar-right')
+    <!--Banners-->
+    @include('sidebar-widgets.banner')
+    <!-- END Banners -->
+
+    <!-- New Users-->
+    @include('sidebar-widgets.new-users')
+    <!-- END New Users-->
+
+    <!-- User's Replays-->
+    @include('sidebar-widgets.users-replays')
+    <!-- END User's Replays-->
+
+    <!-- Gallery -->
+    @include('sidebar-widgets.random-gallery')
+    <!-- END Gallery -->
 @endsection
