@@ -64,11 +64,11 @@
             <div class="col-md-8">
                 <h2>{{$user->name}}</h2>
 
-                @if($general_helper->isOnline($user))
-                    <!-- if online displays this -->
+            @if($general_helper->isOnline($user))
+                <!-- if online displays this -->
                     <div class="color-green text-bold margin-bottom-20">online</div>
-                @else
-                    <!-- if INACTIVE displays this -->
+            @else
+                <!-- if INACTIVE displays this -->
                     <div class="user-last-online">{{$user->activity_at}}</div>
                 @endif
 
@@ -84,7 +84,11 @@
                 </div>
                 <div class="user-account-info-row">
                     <span>Страна:</span>
-                    <span>{{$countries[$user->country_id]->name}}</span>
+                    @if($user->country_id)
+                        <span>{{$countries[$user->country_id]->name}}</span>
+                    @else
+                        <span>Не указано</span>
+                    @endif
                 </div>
                 <div class="user-account-info-row">
                     <span>Репутация:</span>

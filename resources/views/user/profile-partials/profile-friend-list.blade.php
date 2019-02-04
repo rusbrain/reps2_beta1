@@ -9,7 +9,6 @@
                     @else
                         <span>NO</span>
                     @endif
-                    <span class="flag-icon flag-icon-kr"></span>
                     <span>{{$friend->name}}</span>
                 </a>
             @endforeach
