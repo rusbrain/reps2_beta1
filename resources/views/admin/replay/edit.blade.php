@@ -205,7 +205,7 @@
 
                                     <select class="form-control" name="game_version_id">
                                         @foreach($admin_helper->getGameVersions() as $game_version)
-                                            <option value="{{$game_version->id}}" {{$game_version->id == $replay->game_version->version?'selected':''}}>{{$game_version->version}}</option>
+                                            <option value="{{$game_version->id}}" {{$game_version->id == $replay->game_version->id?'selected':''}}>{{$game_version->version}}</option>
                                         @endforeach
                                     </select>
                                     @if ($errors->has('game_version_id'))
