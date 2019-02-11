@@ -58,7 +58,7 @@ class Replay extends Model
         'game_version_id', 'championship', 'first_country_id', 'second_country_id',
         'first_matchup', 'second_matchup', 'rating', 'user_rating', 'first_race',
         'second_race', 'first_location', 'second_location', 'creating_rate' ,'negative_count',
-        'positive_count', 'comments_count', 'downloaded', 'length'];
+        'positive_count', 'comments_count', 'downloaded', 'length', 'approved'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -220,8 +220,12 @@ class Replay extends Model
             $replay_data['championship'] = '';
         }
 
-        if ($request->has('evaluation') && $request->get('evaluation') == ''){
-            $replay_data['evaluation'] = '';
+        if ($request->has('creating_rate') && $request->get('creating_rate') == ''){
+            $replay_data['creating_rate'] = '';
+        }
+
+        if (!$request->has('approved')){
+            $replay_data['approved'] = "0";
         }
 
         if ($request->has('length') && $request->get('length') == ''){

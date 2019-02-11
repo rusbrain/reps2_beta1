@@ -44,6 +44,7 @@ class ReplayStoreRequest extends FormRequest
             'length'                => 'nullable',
             'first_location'        => 'nullable|integer',
             'second_location'       => 'nullable|integer',
+            'approved'              => 'nullable|in:0,1',
         ];
     }
 

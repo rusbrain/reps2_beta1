@@ -9,7 +9,7 @@
 
 @section('breadcrumb')
     <li><a href="{{route('admin.home')}}"><i class="fa fa-dashboard"></i>Главная панель</a></li>
-    <li><a href="{{route('admin.forum_topic')}}">Replays</a></li>
+    <li><a href="{{route('admin.replay')}}">Replays</a></li>
     <li class="active">{{$replay->title}}</li>
 @endsection
 
@@ -70,7 +70,7 @@
                                             Версия игры:
                                         </div>
                                         <div class="col-md-6">
-                                            {{$replay->game_version}}
+                                            {{$replay->game_version->version}}
                                         </div>
                                     </div>
                                     <div class="row">
@@ -94,7 +94,7 @@
                                             Оценка:
                                         </div>
                                         <div class="col-md-6">
-                                            {{$replay->evaluation}}
+                                            {{$replay->creating_rate}}
                                         </div>
                                     </div>
                                     <div class="row">

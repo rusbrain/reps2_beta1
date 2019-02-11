@@ -11,6 +11,7 @@ namespace App\Services;
 
 use App\Country;
 use App\ForumTopic;
+use App\GameVersion;
 use App\Replay;
 use App\ReplayMap;
 use App\UserMessage;
@@ -27,6 +28,7 @@ class AdminViewHelper
     protected $countries;
     protected $user_role;
     protected $maps;
+    protected $game_versions;
 
     /**
      * Get URI name for admin panel
@@ -107,5 +109,14 @@ class AdminViewHelper
     {
         $this->maps = $this->maps??ReplayMap::all();
         return $this->maps;
+    }
+
+    /**
+     * @return GameVersion[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public function getGameVersions()
+    {
+        $this->game_versions = $this->game_versions??GameVersion::all();
+        return $this->game_versions;
     }
 }

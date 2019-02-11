@@ -162,7 +162,7 @@ class ReplayController extends Controller
         }])
             ->withCount( 'user_rating')
             ->withCount( 'positive', 'negative', 'comments')
-            ->with('user.avatar', 'file')->first();
+            ->with('user.avatar', 'file', 'game_version')->first();
     }
 
     /**

@@ -25,6 +25,7 @@ class ReplayUpdateRequest extends FormRequest
     public function rules()
     {
         $races = implode(",", Replay::$races);
+        $rates = implode(",", Replay::$creating_rates);
 
         return [
             'user_replay'           => 'required|in:1,0',
@@ -33,16 +34,17 @@ class ReplayUpdateRequest extends FormRequest
             'content'               => 'required|string|min:3|max:1000',
             'map_id'                => 'nullable|exists:replay_maps,id',
             'replay'                => 'nullable|file|max:1024',
-            'game_version_id'       => 'required',
+            'game_version_id'       => 'required|exists:game_versions,id',
             'championship'          => 'nullable|string|max:255',
             'first_country_id'      => 'required|exists:countries,id',
             'second_country_id'     => 'required|exists:countries,id',
             'first_race'            => 'required|in:'.$races,
             'second_race'           => 'required|in:'.$races,
-            'evaluation'            => 'nullable',
+            'creating_rate'         => 'nullable|in:'.$rates,
             'length'                => 'nullable',
             'first_location'        => 'nullable|integer',
             'second_location'       => 'nullable|integer',
+            'approved'              => 'nullable|in:0,1',
         ];
     }
 

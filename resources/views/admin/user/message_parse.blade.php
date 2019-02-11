@@ -22,7 +22,7 @@
                 <!-- /.direct-chat-info -->
                     <img class="direct-chat-img" src="{{route('home').($message->sender->avatar?$message->sender->avatar->link:'/dist/img/avatar.png')}}" alt="Message User Image"><!-- /.direct-chat-img -->
                     <div class="direct-chat-text">
-                        {{$message->message}}
+                        {!! $message->message!!}
                     </div>
                     <!-- /.direct-chat-text -->
                 </div>
