@@ -51,7 +51,7 @@ class UserController extends Controller
         if($request->has('sort') && null !==$request->get('sort')){
             $users->orderBy($request->get('sort'));
         } else{
-            $users->orderBy('created_at');
+            $users->orderBy('created_at', 'desc');
         }
 
         $users = $users->paginate(50)->appends($request->all());

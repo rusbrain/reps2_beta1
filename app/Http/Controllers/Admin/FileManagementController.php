@@ -39,6 +39,8 @@ class FileManagementController extends Controller
 
         if(isset($data_req['sort'])){
             $data->orderBy($data_req['sort']);
+        } else {
+            $data->orderBy('created_at', 'desc');
         }
 
         $data = $data->paginate(20);

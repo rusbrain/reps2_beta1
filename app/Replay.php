@@ -277,6 +277,8 @@ class Replay extends Model
         }
         if(isset($request_data['sort']) && $request_data['sort']){
             $query->orderBy($request_data['sort']);
+        } else {
+            $query->orderBy('created_at', 'desc');
         }
 
         return $query;

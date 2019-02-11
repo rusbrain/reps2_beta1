@@ -185,6 +185,8 @@ class ForumTopic extends Model
 
         if(Input::has('sort') && Input::get('sort')){
             $query->orderBy(Input::get('sort'), 'desc');
+        } else {
+            $query->orderBy('created_at', 'desc');
         }
 
         return $query;
