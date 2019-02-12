@@ -192,6 +192,7 @@ Route::group(['middleware' => 'activity'], function () {
 
             Route::group(['prefix' => 'gallery'], function () {
                 Route::get('/', 'UserGalleryController@index')->name('admin.users.gallery');
+                Route::get('/pagination', 'UserGalleryController@pagination')->name('admin.users.gallery.pagination');
                 Route::get('/{id}/view', 'UserGalleryController@view')->name('admin.users.gallery.view');
                 Route::get('/{id}/for_adults', 'UserGalleryController@forAdults')->name('admin.users.gallery.for_adults');
                 Route::get('/{id}/not_for_adults', 'UserGalleryController@notForAdults')->name('admin.users.gallery.not_for_adults');

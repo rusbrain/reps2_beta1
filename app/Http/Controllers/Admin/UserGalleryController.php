@@ -20,8 +20,19 @@ class UserGalleryController extends Controller
      */
     public function index()
     {
-        $data = UserGallery::with('user', 'file')->withCount( 'positive', 'negative', 'comments')->orderBy('id', 'desc')->paginate(50);
-        return view('admin.user.gallery.list')->with(['data' => $data, 'request_data' =>[]]);
+        $data = UserGallery::count();
+        return view('admin.user.gallery.list')->with(['gallery_count' => $data, 'request_data' =>[]]);
+    }
+
+    public function pagination()
+    {
+        $galleries = UserGallery::with('user', 'file')->withCount( 'positive', 'negative', 'comments')->orderBy('id', 'desc')->paginate(20);
+
+        $table      = (string) view('admin.user.gallery.list_table') ->with(['data' => $galleries]);
+        $pagination = (string) view('admin.user.pagination')    ->with(['data' => $galleries]);
+        $pop_up     = (string) view('admin.user.gallery.list_pop_up')->with(['data' => $galleries]);
+
+        return ['table' => $table, 'pagination' => $pagination, 'pop_up' => $pop_up];
     }
 
     /**
