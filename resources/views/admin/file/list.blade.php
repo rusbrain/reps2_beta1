@@ -20,6 +20,13 @@
 
 @section('content')
         <div class="col-md-12">
+            <div class="load-wrapp">
+                <div class="load-3">
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                </div>
+            </div>
             <div class="box">
                 <div class="box-header with-border">
                     <h3 class="box-title">Поиск файлов</h3>
@@ -92,7 +99,7 @@
             </div>
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Карты Replay ({{$data->total()}})</h3>
+                    <h3 class="box-title">Карты Replay ({{$file_count}})</h3>
                     @if ($errors->has('name'))
                         <span class="invalid-feedback text-red" role="alert">
                                 <strong>{{ $errors->first('name') }}</strong>
@@ -103,8 +110,7 @@
                                 <strong>{{ $errors->first('title') }}</strong>
                             </span>
                     @endif
-                    <div class="box-tools">
-                        @include('admin.user.pagination')
+                    <div class="box-tools pagination-content">
                     </div>
                 </div>
                 <!-- /.box-header -->
@@ -121,63 +127,36 @@
                             <th style="width: 100px">Действия</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        @foreach($data->items() as $file)
-                            @php
-                            $count = $file->banner_count + $file->country_count + $file->forum_topic_count + $file->replay_count + $file->avatar_count + $file->user_gallery_count;
-                            @endphp
-                            <tr>
-                                <td>{{$file->id}}</td>
-                                <td>
-                                    <a class="img-preview" href="{{route('admin.file.download', ['id' => $file->id])}}">Скачать/Просмотреть</a>
-                                </td>
-                                <td>{{$file->title}}</td>
-                                <td>{{$file->type??"Не определен"}}</td>
-                                <td>{{$file->size?round($file->size/1024):"Не определен"}}</td>
-                                <td>{!! $count > 0?'<i class="fa fa-check text-green"></i>':'<i class="fa fa-minus text-red"></i>' !!}</td>
-                                <td>
-                                    <div class="btn-group">
-                                        <a type="button" class="btn btn-default text-orange"  title="Править"  data-toggle="modal" data-target="#modal-default_{{$file->id}}" href="{{route('admin.file.edit', ['id' => $file->id])}}"><i class="fa fa-edit"></i></a>
-                                        <a type="button" class="btn btn-default text-red"  title="Удалить" href="{{route('admin.file.remove', ['id' => $file->id])}}"><i class="fa fa-trash"></i></a>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforeach
+                        <tbody class="table-content">
                         </tbody>
                     </table>
                 </div>
                 <!-- /.box-body -->
-                <div class="box-footer clearfix">
-                    @include('admin.user.pagination')
+                <div class="box-footer clearfix pagination-content">
                 </div>
             </div>
         </div>
-
-        @foreach($data->items() as $file)
-            <div class="modal fade" id="modal-default_{{$file->id}}">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title">Default Modal</h4>
-                        </div>
-                        <div class="modal-body">
-                            <p>One fine body&hellip;</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
-                        </div>
-                    </div>
-                    <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
-            </div>
-            <!-- /.modal -->
-        @endforeach
+<div class="pop-up-content"></div>
 @endsection
 
 @section('js')
+    <script>
+        $(function () {
+            getFiles(1);
+            $('.pagination-content').on('click', '.pagination-push', function () {
+                $('.load-wrapp').show();
+                let page = $(this).data('to-page');
+                getFiles(page);
+            })
+        });
 
+        function getFiles(page) {
+            $.get('{{route('admin.file.pagination')}}?page='+page, {!! json_encode($request_data) !!}, function (data) {
+                $('.table-content').html(data.table);
+                $('.pagination-content').html(data.pagination);
+                $('.pop-up-content').html(data.pop_up);
+                $('.load-wrapp').hide();
+            })
+        }
+    </script>
 @endsection

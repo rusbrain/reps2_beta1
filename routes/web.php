@@ -296,11 +296,12 @@ Route::group(['middleware' => 'activity'], function () {
         });
 
         Route::group(['prefix' => 'file'], function () {
-            Route::get('/', 'FileManagementController@index')->name('admin.file');
-            Route::get('/{id}/edit', 'FileManagementController@edit')->name('admin.file.edit');
-            Route::get('/{id}/remove', 'FileManagementController@remove')->name('admin.file.remove');
-            Route::post('/{id}/update', 'FileManagementController@update')->name('admin.file.update');
-            Route::get('/{id}/download', 'FileManagementController@download')->name('admin.file.download');
+            Route::get('/', 'FileManagementController@index')                   ->name('admin.file');
+            Route::get('/pagination', 'FileManagementController@pagination')    ->name('admin.file.pagination');
+            Route::get('/{id}/edit', 'FileManagementController@edit')           ->name('admin.file.edit');
+            Route::get('/{id}/remove', 'FileManagementController@remove')       ->name('admin.file.remove');
+            Route::post('/{id}/update', 'FileManagementController@update')      ->name('admin.file.update');
+            Route::get('/{id}/download', 'FileManagementController@download')   ->name('admin.file.download');
         });
     });
 

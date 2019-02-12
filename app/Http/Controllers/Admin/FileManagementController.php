@@ -20,31 +20,19 @@ class FileManagementController extends Controller
      */
     public function index(FileSearchAdminRequest $request)
     {
-        $data = File::withCount('banner', 'country', 'forum_topic', 'replay', 'avatar', 'user_gallery')->with('user');
-        $data_req = $request->validated();
+        $data = File::search($request)->count();
+        return view('admin.file.list')->with(['file_count' => $data, 'request_data' => $request->validated()]);
+    }
 
-        if (isset($data_req['size_to'])){
-            $data->where('size', ($data_req['size_to']?'>=':'<='), $data_req['size']);
-        } elseif (isset($data_req['size'])){
-            $data->where('size', '>=', $data_req['size']);
-        }
+    public function pagination(FileSearchAdminRequest $request)
+    {
+        $files = File::search($request)->paginate(20);
 
-        if (isset($data_req['text'])){
-            $data->where(function ($q) use ($data_req){
-                $q->where('title', 'like', "%{$data_req['text']}%")
-                ->orWhere('type', 'like', "%{$data_req['text']}%")
-                ->orWhere('id', 'like', "%{$data_req['text']}%");
-            });
-        }
+        $table      = (string) view('admin.file.list_table') ->with(['data' => $files]);
+        $pagination = (string) view('admin.user.pagination')    ->with(['data' => $files]);
+        $pop_up     = (string) view('admin.file.list_pop_up')->with(['data' => $files]);
 
-        if(isset($data_req['sort'])){
-            $data->orderBy($data_req['sort']);
-        } else {
-            $data->orderBy('created_at', 'desc');
-        }
-
-        $data = $data->paginate(20);
-        return view('admin.file.list')->with(['data' => $data, 'request_data' => $request->validated()]);
+        return ['table' => $table, 'pagination' => $pagination, 'pop_up' => $pop_up];
     }
 
     /**

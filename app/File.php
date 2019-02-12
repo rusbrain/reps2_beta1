@@ -2,8 +2,8 @@
 
 namespace App;
 
+use App\Http\Requests\FileSearchAdminRequest;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -130,5 +130,37 @@ class File extends Model
     public function avatar()
     {
         return $this->hasOne('App\User', 'file_id');
+    }
+
+    /**
+     * @param FileSearchAdminRequest $request
+     * @return mixed
+     */
+    public static function search(FileSearchAdminRequest $request)
+    {
+        $data = File::withCount('banner', 'country', 'forum_topic', 'replay', 'avatar', 'user_gallery')->with('user');
+        $data_req = $request->validated();
+
+        if (isset($data_req['size_to'])){
+            $data->where('size', ($data_req['size_to']?'>=':'<='), ($data_req['size']*1000));
+        } elseif (isset($data_req['size'])){
+            $data->where('size', '>=', ($data_req['size']*1000));
+        }
+
+        if (isset($data_req['text'])){
+            $data->where(function ($q) use ($data_req){
+                $q->where('title', 'like', "%{$data_req['text']}%")
+                    ->orWhere('type', 'like', "%{$data_req['text']}%")
+                    ->orWhere('id', 'like', "%{$data_req['text']}%");
+            });
+        }
+
+        if(isset($data_req['sort'])){
+            $data->orderBy($data_req['sort']);
+        } else {
+            $data->orderBy('created_at', 'desc');
+        }
+
+        return $data;
     }
 }
