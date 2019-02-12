@@ -280,6 +280,7 @@ Route::group(['middleware' => 'activity'], function () {
 
         Route::group(['prefix' => 'question'], function () {
             Route::get('/', 'InterviewQuestionController@index')->name('admin.question');
+            Route::get('/pagination', 'InterviewQuestionController@pagination')->name('admin.question.pagination');
             Route::get('/{id}/active', 'InterviewQuestionController@active')->name('admin.question.active');
             Route::get('/{id}/not_active', 'InterviewQuestionController@notActive')->name('admin.question.not_active');
             Route::get('/{id}/for_login', 'InterviewQuestionController@forLogin')->name('admin.question.for_login');

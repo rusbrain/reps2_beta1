@@ -23,10 +23,9 @@ class CountryController extends Controller
     /**
      * Get user list paginate
      *
-     * @param Request $request
      * @return array
      */
-    public function pagination(Request $request)
+    public function pagination()
     {
         $countries =Country::withCount('users', 'replays1', 'replays2')->paginate(50);
 

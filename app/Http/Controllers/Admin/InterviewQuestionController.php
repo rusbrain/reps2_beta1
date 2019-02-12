@@ -17,7 +17,21 @@ class InterviewQuestionController extends Controller
      */
     public function index()
     {
-        return view('admin.question.list')->with('data', InterviewQuestion::withCount('answers', 'user_answers')->paginate(50));
+        return view('admin.question.list')->with('question_count', InterviewQuestion::count());
+    }
+
+    /**
+     * @return array
+     */
+    public function pagination()
+    {
+        $questions = InterviewQuestion::withCount('answers', 'user_answers')->paginate(50);
+
+        $table      = (string) view('admin.question.list_table')    ->with(['data' => $questions]);
+        $pagination = (string) view('admin.user.pagination')        ->with(['data' => $questions]);
+        $pop_up     = (string) view('admin.question.list_pop_up')   ->with(['data' => $questions]);
+
+        return ['table' => $table, 'pagination' => $pagination, 'pop_up' => $pop_up];
     }
 
     /**
