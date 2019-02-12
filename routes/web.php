@@ -270,6 +270,7 @@ Route::group(['middleware' => 'activity'], function () {
 
         Route::group(['prefix' => 'country'], function () {
             Route::get('/', 'CountryController@index')->name('admin.country');
+            Route::get('/pagination', 'CountryController@pagination')->name('admin.country.pagination');
             Route::get('/{id}/edit', 'CountryController@edit')->name('admin.country.edit');
             Route::get('/{id}/remove', 'CountryController@remove')->name('admin.country.remove');
             Route::get('/add', 'CountryController@add')->name('admin.country.add');

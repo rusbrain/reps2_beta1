@@ -35,7 +35,7 @@ class UserController extends Controller
         $users = User::searchUser($request)->paginate(50)->appends($request->all());
 
         $table = (string) view('admin.user.user_list_table')->with(['data' => $users]);
-        $pagination = (string) view('admin.user.pagination')->with(['data' => $users, 'request_data' => $request->all()]);
+        $pagination = (string) view('admin.user.pagination')->with(['data' => $users]);
 
         return ['table' => $table, 'pagination' => $pagination];
     }

@@ -2,36 +2,6 @@
 @inject('admin_helper', 'App\Services\AdminViewHelper')
 
 @section('css')
-    <style>
-        .load-wrapp {
-            float: left;
-            width: 100%;
-            height: 50vh;
-            margin: 0;
-            padding-top: 49vh;
-            text-align: center;
-            position: absolute;
-            z-index: 1000;
-        }
-
-        .line {
-            display: inline-block;
-            width: 15px;
-            height: 15px;
-            border-radius: 15px;
-            background-color: #4b9cdb;
-        }
-
-        .load-3 .line:nth-last-child(1) {animation: loadingC .6s .1s linear infinite;}
-        .load-3 .line:nth-last-child(2) {animation: loadingC .6s .2s linear infinite;}
-        .load-3 .line:nth-last-child(3) {animation: loadingC .6s .3s linear infinite;}
-
-        @keyframes loadingC {
-            0 {transform: translate(0,0);}
-            50% {transform: translate(0,15px);}
-            100% {transform: translate(0,0);}
-        }
-    </style>
 @endsection
 
 @section('page_header')

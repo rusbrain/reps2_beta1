@@ -17,7 +17,24 @@ class CountryController extends Controller
      */
     public function index()
     {
-        return view('admin.country.list')->with(['data'=> Country::withCount('users', 'replays1', 'replays2')->paginate(50), 'request_data' => []]);
+        return view('admin.country.list')->with(['country_count'=> Country::count(), 'request_data' => []]);
+    }
+
+    /**
+     * Get user list paginate
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function pagination(Request $request)
+    {
+        $countries =Country::withCount('users', 'replays1', 'replays2')->paginate(50);
+
+        $table      = (string) view('admin.country.list_table') ->with(['data' => $countries]);
+        $pagination = (string) view('admin.user.pagination')    ->with(['data' => $countries]);
+        $pop_up     = (string) view('admin.country.list_pop_up')->with(['data' => $countries]);
+
+        return ['table' => $table, 'pagination' => $pagination, 'pop_up' => $pop_up];
     }
 
     /**
