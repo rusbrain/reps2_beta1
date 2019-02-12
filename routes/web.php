@@ -207,6 +207,7 @@ Route::group(['middleware' => 'activity'], function () {
 
         Route::group(['prefix' => 'forum'], function () {
             Route::get('/', 'ForumController@index')->name('admin.forum_sections');
+            Route::get('/pagination', 'ForumController@pagination')->name('admin.forum_sections.pagination');
             Route::get('/add', 'ForumController@getSectionAdd')->name('admin.forum.section.add');
             Route::post('/add', 'ForumController@createSection')->name('admin.forum.section.create');
             Route::get('{id}/active', 'ForumController@active')->name('admin.forum.section.active');

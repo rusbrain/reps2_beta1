@@ -16,9 +16,21 @@ class ForumController extends Controller
      */
     public function index()
     {
+        $data = ForumSection::count();
+        return view('admin.forum.section.list')->with(['sections_count' => $data]);
+    }
+
+    /**
+     * @return array
+     */
+    public function pagination()
+    {
         $data = ForumSection::withCount('topics')->orderBy('position')->paginate(20);
 
-        return view('admin.forum.section.list')->with(['data' => $data]);
+        $table      = (string) view('admin.forum.section.list_table') ->with(['data' => $data]);
+        $pagination = (string) view('admin.user.pagination')    ->with(['data' => $data]);
+
+        return ['table' => $table, 'pagination' => $pagination];
     }
 
     /**
