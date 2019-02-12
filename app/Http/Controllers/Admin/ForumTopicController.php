@@ -26,11 +26,28 @@ class ForumTopicController extends Controller
             $q->whereNull('start_on')
                 ->orWhere('start_on','<=', Carbon::now()->format('Y-M-d'));
         })
-            ->withCount( 'positive', 'negative', 'comments')->paginate(50);
+            ->count();
 
-        return view('admin.forum.topic.list')->with(['data' => $data, 'request_data' => $request->validated(), 'sections' => ForumSection::all()]);
+        return view('admin.forum.topic.list')->with(['topics_count' => $data, 'request_data' => $request->validated(), 'sections' => ForumSection::all()]);
     }
 
+    /**
+     * @param SearchForumTopicRequest $request
+     * @return array
+     */
+    public function pagination(SearchForumTopicRequest $request)
+    {
+        $data = ForumTopic::search(ForumTopic::with('user', 'section', 'icon'), $request->validated())->where(function ($q){
+            $q->whereNull('start_on')
+                ->orWhere('start_on','<=', Carbon::now()->format('Y-M-d'));
+        })
+            ->withCount( 'positive', 'negative', 'comments')->paginate(50);
+
+        $table = (string) view('admin.forum.topic.list_table')->with(['data' => $data]);
+        $pagination = (string) view('admin.user.pagination')->with(['data' => $data]);
+
+        return ['table' => $table, 'pagination' => $pagination];
+    }
     /**
      * Get Forum Topics by user
      *

@@ -223,6 +223,7 @@ Route::group(['middleware' => 'activity'], function () {
 
             Route::group(['prefix' => 'topic'], function () {
                 Route::get('/', 'ForumTopicController@topics')->name('admin.forum_topic');
+                Route::get('/pagination', 'ForumTopicController@pagination')->name('admin.forum_topic.pagination');
                 Route::get('/add', 'ForumTopicController@getTopicAdd')->name('admin.forum.topic.add');
                 Route::post('/add', 'ForumTopicController@createTopic')->name('admin.forum.topic.create');
                 Route::get('/{id}/news', 'ForumTopicController@news')->name('admin.forum.topic.news');
