@@ -417,4 +417,67 @@ class User extends Authenticatable
             User::where('id', $user_id)->decrement('points',1);
         }
     }
+
+    /**
+     * Search users
+     *
+     * @param Request $request
+     * @return User|\Illuminate\Database\Eloquent\Builder
+     */
+    public static function searchUser(Request $request)
+    {
+        $users = User::with('role','avatar', 'country')->withCount('topics', 'replays','user_galleries');
+
+        if ($request->has('search') && null !==$request->get('search')){
+            $users->where(function ($query) use ($request)
+            {
+                $query->where('id', $request->get('search'))
+                    ->orWhere('name', 'like', '%'.$request->get('search').'%')
+                    ->orWhere('email', 'like', '%'.$request->get('search').'%');
+            });
+        }
+
+        if ($request->has('country') && null !==$request->get('country')){
+            $users->where('country_id', $request->get('country'));
+        }
+
+        if ($request->has('email_verified') && null !==$request->get('email_verified')){
+            if ($request->get('email_verified') == 0){
+                $users->whereNull('email_verified_at');
+            } else{
+                $users->whereNotNull('email_verified_at');
+            }
+        }
+
+        if ($request->has('role') && null !==$request->get('role')){
+            $users->where('user_role_id', $request->get('role'));
+        }
+
+        if ($request->has('is_ban') && null !==$request->get('is_ban')){
+            $users->where('is_ban', $request->get('is_ban'));
+        }
+
+        if($request->has('sort') && null !==$request->get('sort')){
+            $users->orderBy($request->get('sort'));
+        } else{
+            $users->orderBy('created_at', 'desc');
+        }
+
+        return $users;
+    }
+
+    /**
+     * Remove user
+     *
+     * @param User $user
+     */
+    public static function removeUser(User $user)
+    {
+        $user->user_galleries()->delete();
+        $user->dialogues()->delete();
+        $user->user_friends()->delete();
+        $user->user_friendly()->delete();
+
+        User::where('id', $user->id)->delete();
+    }
 }

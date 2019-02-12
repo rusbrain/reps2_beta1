@@ -174,6 +174,7 @@ Route::group(['middleware' => 'activity'], function () {
             Route::get('{id}/profile/edit', 'UserController@getEditUserProfile')->name('admin.user.profile.edit');
             Route::post('{id}/profile/save', 'UserController@saveUserProfile')->name('admin.user.profile.save');
             Route::get('/', 'UserController@index')->name('admin.users');
+            Route::get('/pagination', 'UserController@pagination')->name('admin.users.pagination');
 
             Route::get('{id}/message', 'UserMessageController@getUser')->name('admin.user.messages');
             Route::get('message', 'UserMessageController@getUser')->name('admin.user.messages_all');

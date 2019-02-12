@@ -4,59 +4,40 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\User\UpdateProfileRequest;
 use App\User;
+use function GuzzleHttp\Psr7\str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
     /**
-     * Get user list
+     * Get user list page
      *
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(Request $request)
     {
-        $users = User::with('role','avatar', 'country')->withCount('topics', 'replays','user_galleries');
+        $users = User::searchUser($request);
+        $users_count = $users->count();
 
-        if ($request->has('search') && null !==$request->get('search')){
-            $users->where(function ($query) use ($request)
-            {
-                $query->where('id', $request->get('search'))
-                    ->orWhere('name', 'like', '%'.$request->get('search').'%')
-                    ->orWhere('email', 'like', '%'.$request->get('search').'%');
-            });
-        }
+        return view('admin.user.user_list')->with(['users_count' => $users_count, 'request_data' => $request->all()]);
+    }
 
-        if ($request->has('country') && null !==$request->get('country')){
-            $users->where('country_id', $request->get('country'));
-        }
+    /**
+     * Get user list paginate
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function pagination(Request $request)
+    {
+        $users = User::searchUser($request)->paginate(50)->appends($request->all());
 
-        if ($request->has('email_verified') && null !==$request->get('email_verified')){
-            if ($request->get('email_verified') == 0){
-                $users->whereNull('email_verified_at');
-            } else{
-                $users->whereNotNull('email_verified_at');
-            }
-        }
+        $table = (string) view('admin.user.user_list_table')->with(['data' => $users]);
+        $pagination = (string) view('admin.user.pagination')->with(['data' => $users, 'request_data' => $request->all()]);
 
-        if ($request->has('role') && null !==$request->get('role')){
-            $users->where('user_role_id', $request->get('role'));
-        }
-
-        if ($request->has('is_ban') && null !==$request->get('is_ban')){
-            $users->where('is_ban', $request->get('is_ban'));
-        }
-
-        if($request->has('sort') && null !==$request->get('sort')){
-            $users->orderBy($request->get('sort'));
-        } else{
-            $users->orderBy('created_at', 'desc');
-        }
-
-        $users = $users->paginate(50)->appends($request->all());
-
-        return view('admin.user.user_list')->with(['data'=> $users, 'request_data' => $request->all()]);
+        return ['table' => $table, 'pagination' => $pagination];
     }
 
     /**
@@ -91,7 +72,6 @@ class UserController extends Controller
     public function saveUserProfile(UpdateProfileRequest $request, $user_id)
     {
         User::updateData($request, $user_id);
-
         return redirect()->route('admin.user.profile.edit', ['id' => $user_id]);
     }
 
@@ -104,7 +84,6 @@ class UserController extends Controller
     public function banUser($user_id)
     {
         User::where('id', $user_id)->update(['is_ban' => 1]);
-
         return back();
     }
 
@@ -117,7 +96,6 @@ class UserController extends Controller
     public function notBanUser($user_id)
     {
         User::where('id', $user_id)->update(['is_ban' => 0]);
-
         return back();
     }
 
@@ -129,15 +107,7 @@ class UserController extends Controller
      */
     public function removeUser($user_id)
     {
-        $user = User::find($user_id);
-
-        $user->user_galleries()->delete();
-        $user->dialogues()->delete();
-        $user->user_friends()->delete();
-        $user->user_friendly()->delete();
-
-        User::where('id', $user_id)->delete();
-
+        User::removeUser(User::find($user_id));
         return back();
     }
 }
