@@ -48,6 +48,7 @@ class ForumTopicController extends Controller
 
         return ['table' => $table, 'pagination' => $pagination];
     }
+
     /**
      * Get Forum Topics by user
      *

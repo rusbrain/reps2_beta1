@@ -241,6 +241,7 @@ Route::group(['middleware' => 'activity'], function () {
         });
         Route::group(['prefix' => 'replay'], function () {
             Route::get('/', 'ReplayController@index')->name('admin.replay');
+            Route::get('/pagination', 'ReplayController@pagination')->name('admin.replay.pagination');
             Route::get('/{id}/user_rating', 'ReplayController@getUserRating')->name('admin.replay.user_rating');
             Route::get('/{id}/approve', 'ReplayController@approve')->name('admin.replay.approve');
             Route::get('/{id}/not_approve', 'ReplayController@notApprove')->name('admin.replay.not_approve');

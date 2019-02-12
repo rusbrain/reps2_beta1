@@ -25,10 +25,25 @@ class ReplayController extends Controller
      */
     public function index(ReplaySearchAdminRequest $request)
     {
-        $data = Replay::search($request,Replay::withCount('user_rating'))
+        $data = Replay::search($request,Replay::withCount('user_rating'))->count();
+
+        return view('admin.replay.replays')->with(['replay_count' => $data, 'request_data' => $request->validated()]);
+    }
+
+    /**
+     * @param ReplaySearchAdminRequest $request
+     * @return array
+     */
+    public function pagination(ReplaySearchAdminRequest $request)
+    {
+        $data = $data = Replay::search($request,Replay::withCount('user_rating'))
             ->with('user',  'file', 'first_country', 'second_country', 'type', 'map')->withCount( 'positive', 'negative', 'comments')->paginate(50);
 
-        return view('admin.replay.replays')->with(['data' => $data, 'request_data' => $request->validated()]);
+        $table      = (string) view('admin.replay.list_table')  ->with(['data' => $data]);
+        $pagination = (string) view('admin.user.pagination')    ->with(['data' => $data]);
+        $pop_up     = (string) view('admin.replay.list_pop_up') ->with(['data' => $data]);
+
+        return ['table' => $table, 'pagination' => $pagination, 'pop_up' => $pop_up];
     }
 
     /**
