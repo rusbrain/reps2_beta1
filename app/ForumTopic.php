@@ -139,12 +139,16 @@ class ForumTopic extends Model
     /**
      * Generate query with search request
      *
-     * @param Builder $query
      * @param array $data
+     * @param Builder $query
      * @return Builder
      */
-    public static function search(Builder $query, array $data)
+    public static function search(array $data, $query = false )
     {
+        if (!$query){
+            $query = ForumTopic::where('id', '>', 0);
+        }
+
         if (isset($data['user_id']) && null !== $data['user_id']){
             $query->where('user_id', $data['user_id']);
         }
@@ -202,9 +206,6 @@ class ForumTopic extends Model
     {
         return ForumTopic::where('id', $topic_id)
             ->with('section', 'user.avatar','preview_image', 'icon')
-            ->with(['comments' => function($q) {
-                $q->with('user.avatar')->orderBy('created_at', 'desc')->paginate(20);
-            }])
             ->withCount( 'positive', 'negative', 'comments')
             ->first();
     }

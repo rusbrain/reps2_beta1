@@ -22,10 +22,7 @@ class ForumTopicController extends Controller
      */
     public function topics(SearchForumTopicRequest $request)
     {
-        $data = ForumTopic::search(ForumTopic::with('user', 'section', 'icon'), $request->validated())->where(function ($q){
-            $q->whereNull('start_on')
-                ->orWhere('start_on','<=', Carbon::now()->format('Y-M-d'));
-        })
+        $data = ForumTopic::search($request->validated())
             ->count();
 
         return view('admin.forum.topic.list')->with(['topics_count' => $data, 'request_data' => $request->validated(), 'sections' => ForumSection::all()]);
@@ -37,10 +34,7 @@ class ForumTopicController extends Controller
      */
     public function pagination(SearchForumTopicRequest $request)
     {
-        $data = ForumTopic::search(ForumTopic::with('user', 'section', 'icon'), $request->validated())->where(function ($q){
-            $q->whereNull('start_on')
-                ->orWhere('start_on','<=', Carbon::now()->format('Y-M-d'));
-        })
+        $data = ForumTopic::search($request->validated(), ForumTopic::with('user', 'section', 'icon'))
             ->withCount( 'positive', 'negative', 'comments')->paginate(50);
 
         $table = (string) view('admin.forum.topic.list_table')->with(['data' => $data]);
@@ -52,18 +46,20 @@ class ForumTopicController extends Controller
     /**
      * Get Forum Topics by user
      *
+     * @param SearchForumTopicRequest $request
      * @param $user_id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View|mixed
      */
-    public function getUsersTopics($user_id)
+    public function getUsersTopics(SearchForumTopicRequest $request, $user_id)
     {
         $user = User::find($user_id);
 
-        $topics  = $user->topics()->with('section')->withCount( 'positive', 'negative', 'comments')->with(['user'=> function($q){
-            $q->withTrashed();
-        }])->paginate(50);
+        $topics  = ForumTopic::search($request->validated(), ForumTopic::where('user_id', $user_id))->count();
 
-        return view('admin.topics')->with(['topics' => $topics, 'title' => "Темы форума $user->name", 'user' => $user]);
+        $request_data = $request->validated();
+        $request_data['user_id'] = $user_id;
+
+        return view('admin.forum.topic.list')->with(['topics_count' => $topics, 'title' => "Темы форума $user->name", 'sections' => ForumSection::all(), 'request_data' => $request_data]);
     }
 
     /**

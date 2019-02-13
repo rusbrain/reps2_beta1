@@ -25,7 +25,7 @@ class ReplayController extends Controller
      */
     public function index(ReplaySearchAdminRequest $request)
     {
-        $data = Replay::search($request,Replay::withCount('user_rating'))->count();
+        $data = Replay::search($request)->count();
 
         return view('admin.replay.replays')->with(['replay_count' => $data, 'request_data' => $request->validated()]);
     }
@@ -52,14 +52,15 @@ class ReplayController extends Controller
      * @param $user_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getReplayByUser($user_id)
+    public function getReplayByUser(ReplaySearchAdminRequest $request, $user_id)
     {
         $user = User::find($user_id);
-        $replays = $user->replays()->with(['user'=> function($q){
-            $q->withTrashed();
-        }])->withCount( 'positive', 'negative', 'comments')->paginate(50);
+        $replays = $data = Replay::search($request,Replay::where('user_id', $user_id))->count();
 
-        return view('admin.replay.replays')->with(['data' => $replays, 'title' => "Replays $user->name", 'user' => $user]);
+        $request_data = $request->validated();
+        $request_data['user_id'] = $user_id;
+
+        return view('admin.replay.replays')->with(['replay_count' => $replays, 'title' => "Replays $user->name", 'user' => $user, 'request_data' => $request_data]);
     }
 
     /**
@@ -172,9 +173,7 @@ class ReplayController extends Controller
      */
     private function getReplayObject($replay_id)
     {
-        return Replay::where('id', $replay_id)->with(['comments' => function($q){
-            $q->withCount('positive', 'negative')->with('user.avatar')->orderBy('created_at', 'desc')->paginate(20);
-        }])
+        return Replay::where('id', $replay_id)
             ->withCount( 'user_rating')
             ->withCount( 'positive', 'negative', 'comments')
             ->with('user.avatar', 'file', 'game_version')->first();

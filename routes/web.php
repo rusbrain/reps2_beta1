@@ -162,7 +162,10 @@ Route::group(['middleware' => 'activity'], function () {
 
     Route::group(['middleware' => ['auth', 'admin_panel'], 'prefix' => 'admin_panel', 'namespace' => 'Admin'], function () {
         Route::get('/', 'BaseController@index')->name('admin.home');
+        Route::get('/comment/{object_name}/{id}', 'BaseController@getComments')->name('admin.comments');
+        Route::get('/comment/{id}', 'BaseController@removeComment')->name('admin.comments.remove');
         Route::post('send_quick_email', 'BaseController@sendQuickEmail')->name('admin.send_quick_email');
+
         Route::group(['prefix' => 'user'], function () {
             Route::get('{id}/email', 'UserEmailController@index')->name('admin.user.email');
             Route::get('{id}/replay', 'ReplayController@getReplayByUser')->name('admin.user.replay');
@@ -235,8 +238,6 @@ Route::group(['middleware' => 'activity'], function () {
                 Route::post('/{id}/edit', 'ForumTopicController@saveTopic')->name('admin.forum.topic.edit.save');
                 Route::get('/{id}', 'ForumTopicController@getTopic')->name('admin.forum.topic.get');
                 Route::post('/{id}/send_comment', 'TopicCommentController@sendComment')->name('admin.forum.topic.comment_send');
-                Route::get('comment/{id}/remove', 'TopicCommentController@commentRemove')->name('admin.forum.topic.comment.remove');
-
             });
         });
         Route::group(['prefix' => 'replay'], function () {
@@ -255,6 +256,7 @@ Route::group(['middleware' => 'activity'], function () {
 
             Route::group(['prefix' => 'map'], function () {
                 Route::get('/', 'ReplayMapController@index')->name('admin.replay.map');
+                Route::get('/pagination', 'ReplayMapController@pagination')->name('admin.replay.map.pagination');
                 Route::get('/{id}/remove', 'ReplayMapController@remove')->name('admin.replay.map.remove');
                 Route::get('/{id}/edit', 'ReplayMapController@edit')->name('admin.replay.map.edit');
                 Route::post('/{id}/update', 'ReplayMapController@update')->name('admin.replay.map.update');

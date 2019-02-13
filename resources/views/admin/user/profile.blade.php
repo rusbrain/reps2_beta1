@@ -211,183 +211,183 @@
                                                 <img class="img-responsive" src="{{route('home').$topic->preview_image->link}}" alt="Photo">
                                             @endif
                                             <!-- /.user-block -->
-                                            <p>
+                                            <p style="overflow: hidden">
                                                 @if($topic->preview_content)
-                                                    {{$topic->preview_content}}
+                                                    {!! $topic->preview_content !!}
                                                 @else
-                                                    {{mb_strimwidth($topic->content,0,1000, '...')}}
-                                                @endif
-                                            </p>
-                                            <ul class="list-inline">
-                                                <li class="pull-right">
-                                                    <p  class="link-black text-sm"><i class="fa fa-comments-o margin-r-5"></i>
-                                                        {{$topic->comments_count}}</p></li>
-                                                <li class="pull-right">
-                                                    <p  class="link-black text-sm"><i class="fa fa-thumbs-o-down margin-r-5 text-red"></i>
-                                                        {{$topic->negative_count}}</p></li>
-                                                <li class="pull-right">
-                                                    <p  class="link-black text-sm"><i class="fa fa-thumbs-o-up margin-r-5 text-green"></i>
-                                                        {{$topic->positive_count}}</p></li>
-                                            </ul>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            @endif
-                            @if($user->replays->count())
-                                <div class="col-md-{{$user->topics->count()?'6':'12'}}">
-                                    <h3 class="text-blue"><a href="{{route('admin.user.replay', ['id'=>$user->id])}}">Replay</a></h3>
-                                    @foreach($user->replays as $replay)
-                                        <div class="post">
-                                            <div class="user-block">
-                                                <span class="username">
-                                                    <a href="{{route('replay.get', ['id'=>$replay->id])}}">{{$replay->user_replay?"Пользовательский":"Gosu"}} Replay >> {{$replay->title}}({{$replay->type->name}})</a>
-                                                </span>
-                                                <span class="description">{{$replay->created_at->format('h:m d.m.y')}}</span>
-                                            </div>
-                                            <div class="row">
-                                                @if($replay->map)
-                                                    <div class="col-md-4">
-                                                        <img class="img-responsive" src="{{route('home').'/'.$replay->map->url}}" alt="Photo">
-                                                    </div>
-                                                @endif
-                                        <!--     /.user-block -->
-                                                <div class="col-md-{{$replay->map != null ?'8':'12'}}">
-                                                    <p>
-                                                        <b>Страны:</b> {{$replay->first_country->name??"NO"}} vs {{$replay->second_country->name??"NO"}} <br>
-                                                        <b>Матчап:</b> {{$replay->first_race??"NO"}} vs {{$replay->second_race??"NO"}} <br>
-                                                        <b>Локации:</b> {{$replay->first_location??"NO"}} vs {{$replay->second_location??"NO"}} <br>
-                                                        <b>Длительность:</b> {{$replay->length}} <br>
-                                                        <b>Чемпионат:</b> {{$replay->championship}} <br>
-                                                        <b>Версия:</b> {{$replay->game_version}} <br>
-                                                        <b>Рейтинг:</b> {{$replay->evaluation}} <br>
-                                                        <b>Юзер Рейтинг:</b> {{$replay->user_rating}} <br>
-                                                        {{mb_strimwidth($replay->content,0,1000, '...')}}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <ul class="list-inline">
-                                                <li class="pull-right">
-                                                    <p  class="link-black text-sm"><i class="fa fa-comments-o margin-r-5"></i>
-                                                        {{$replay->comments_count}}</p></li>
-                                                <li class="pull-right">
-                                                    <p  class="link-black text-sm"><i class="fa fa-thumbs-o-down margin-r-5 text-red"></i>
-                                                        {{$replay->negative_count}}</p></li>
-                                                <li class="pull-right">
-                                                    <p  class="link-black text-sm"><i class="fa fa-thumbs-o-up margin-r-5 text-green"></i>
-                                                        {{$replay->positive_count}}</p></li>
-                                            </ul>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            @endif
-                            @if($user->user_galleries->count())
-                                <div class="col-md-12">
-                                    <h3 class="text-blue"><a href="{{route('gallery.list_user', ['id'=>$user->id])}}">Галерея</a></h3>
-                                    <div class="post">
-                                        <!-- /.user-block -->
-                                        <div class="row margin-bottom">
-                                            @php $i = 0; @endphp
-                                            @foreach($user->user_galleries as $user_galleries)
-                                                @php $i++; @endphp
-                                                <div class="col-sm-4">
-                                                    <a href="{{route('gallery.view', ['id' => $user_galleries->id])}}"><img class="img-responsive" src="{{route('home').'/'.$user_galleries->file->link}}" alt="Photo"></a>
-                                                </div>
-                                                @if($i%3 == 0) <div class="row" style="margin: 30px"></div>@endif
-                                            @endforeach
-                                        </div>
-                                        <!-- /.row -->
-                                    </div>
-                                </div>
-                            @endif
-                        </div>
-                    </div>
-                    <!-- /.tab-pane -->
-                    <div class="tab-pane" id="friends">
-                        <!-- The timeline -->
-                        <div class="row">
-                            <div class="col-md-6">
-                                <h3 class="text-blue">{{$user->name}} дружит с:</h3>
-                                <table class="table table-condensed">
-                                    <thead>
-                                    <tr>
-                                        <th style="width: 30px">ID</th>
-                                        <th style="width: 50px">Аватар</th>
-                                        <th>Имя</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($user->user_friends as $friend)
-                                        <tr>
-                                            <td>{{$friend->friend_user->id}}</td>
-                                            <td>
-                                                <img class="direct-chat-img" src="{{route('home').($friend->friend_user->avatar?$friend->friend_user->avatar->link:'/dist/img/avatar.png')}}" alt="Аватар пользователя"><!-- /.direct-chat-img -->
-                                            </td>
-                                            <td><a href="{{route('admin.user.profile', ['id' => $friend->friend_user->id])}}">{{$friend->friend_user->name}}</a></td>
-                                        </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="col-md-6">
-                                <h3 class="text-blue">Дружат с {{$user->name}}:</h3>
-                                <table class="table table-condensed">
-                                    <thead>
-                                    <tr>
-                                        <th style="width: 30px">ID</th>
-                                        <th style="width: 50px">Аватар</th>
-                                        <th>Имя</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($user->user_friendly as $friend)
-                                        <tr>
-                                            <td>{{$friend->user->id}}</td>
-                                            <td>
-                                                <img class="direct-chat-img" src="{{route('home').($friend->user->avatar?$friend->user->avatar->link:'/dist/img/avatar.png')}}" alt="Аватар пользователя"><!-- /.direct-chat-img -->
-                                            </td>
-                                            <td><a href="{{route('admin.user.profile', ['id' => $friend->user->id])}}">{{$friend->user->name}}</a></td>
-                                        </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.tab-pane -->
-                    <div class="tab-pane" id="voting">
-                        <!-- The timeline -->
-                        <table class="table table-condensed">
-                        <thead>
-                        <tr>
-                            <th style="width: 30px">ID</th>
-                            <th>Вопрос</th>
-                            <th>Выбраный ответ</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($user->answers_to_questions as $answers_to_questions)
-                            <tr>
-                                <td>{{$answers_to_questions->question->id}}</td>
-                                <td>
-                                    <a href="#">{{$answers_to_questions->question->question}}</a>
-                                </td>
-                                <td>{{$answers_to_questions->question->answers->where('id', $answers_to_questions->answer_id)->first()->answer}}</td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                        </table>
-                    </div>
-
-                    </div>
-                    <!-- /.tab-pane -->
-                </div>
-                <!-- /.tab-content -->
-            </div>
-            <!-- /.nav-tabs-custom -->
+        {!! mb_strimwidth($topic->content,0,1000, '...') !!}
+    @endif
+</p>
+<ul class="list-inline">
+    <li class="pull-right">
+        <p  class="link-black text-sm"><i class="fa fa-comments-o margin-r-5"></i>
+            {{$topic->comments_count}}</p></li>
+    <li class="pull-right">
+        <p  class="link-black text-sm"><i class="fa fa-thumbs-o-down margin-r-5 text-red"></i>
+            {{$topic->negative_count}}</p></li>
+    <li class="pull-right">
+        <p  class="link-black text-sm"><i class="fa fa-thumbs-o-up margin-r-5 text-green"></i>
+            {{$topic->positive_count}}</p></li>
+</ul>
+</div>
+@endforeach
+</div>
+@endif
+@if($user->replays->count())
+<div class="col-md-{{$user->topics->count()?'6':'12'}}">
+<h3 class="text-blue"><a href="{{route('admin.user.replay', ['id'=>$user->id])}}">Replay</a></h3>
+@foreach($user->replays as $replay)
+<div class="post">
+<div class="user-block">
+    <span class="username">
+        <a href="{{route('replay.get', ['id'=>$replay->id])}}">{{$replay->user_replay?"Пользовательский":"Gosu"}} Replay >> {{$replay->title}}({{$replay->type->name}})</a>
+    </span>
+    <span class="description">{{$replay->created_at->format('h:m d.m.y')}}</span>
+</div>
+<div class="row">
+    @if($replay->map)
+        <div class="col-md-4">
+            <img class="img-responsive" src="{{route('home').'/'.$replay->map->url}}" alt="Photo">
         </div>
-        <!-- /.col -->
+    @endif
+<!--     /.user-block -->
+    <div class="col-md-{{$replay->map != null ?'8':'12'}}">
+        <p>
+            <b>Страны:</b> {{$replay->first_country->name??"NO"}} vs {{$replay->second_country->name??"NO"}} <br>
+            <b>Матчап:</b> {{$replay->first_race??"NO"}} vs {{$replay->second_race??"NO"}} <br>
+            <b>Локации:</b> {{$replay->first_location??"NO"}} vs {{$replay->second_location??"NO"}} <br>
+            <b>Длительность:</b> {{$replay->length}} <br>
+            <b>Чемпионат:</b> {{$replay->championship}} <br>
+            <b>Версия:</b> {{$replay->game_version}} <br>
+            <b>Рейтинг:</b> {{$replay->evaluation}} <br>
+            <b>Юзер Рейтинг:</b> {{$replay->user_rating}} <br>
+            {{mb_strimwidth($replay->content,0,1000, '...')}}
+        </p>
     </div>
+</div>
+<ul class="list-inline">
+    <li class="pull-right">
+        <p  class="link-black text-sm"><i class="fa fa-comments-o margin-r-5"></i>
+            {{$replay->comments_count}}</p></li>
+    <li class="pull-right">
+        <p  class="link-black text-sm"><i class="fa fa-thumbs-o-down margin-r-5 text-red"></i>
+            {{$replay->negative_count}}</p></li>
+    <li class="pull-right">
+        <p  class="link-black text-sm"><i class="fa fa-thumbs-o-up margin-r-5 text-green"></i>
+            {{$replay->positive_count}}</p></li>
+</ul>
+</div>
+@endforeach
+</div>
+@endif
+@if($user->user_galleries->count())
+<div class="col-md-12">
+<h3 class="text-blue"><a href="{{route('gallery.list_user', ['id'=>$user->id])}}">Галерея</a></h3>
+<div class="post">
+<!-- /.user-block -->
+<div class="row margin-bottom">
+@php $i = 0; @endphp
+@foreach($user->user_galleries as $user_galleries)
+    @php $i++; @endphp
+    <div class="col-sm-4">
+        <a href="{{route('gallery.view', ['id' => $user_galleries->id])}}"><img class="img-responsive" src="{{route('home').'/'.$user_galleries->file->link}}" alt="Photo"></a>
     </div>
+    @if($i%3 == 0) <div class="row" style="margin: 30px"></div>@endif
+@endforeach
+</div>
+<!-- /.row -->
+</div>
+</div>
+@endif
+</div>
+</div>
+<!-- /.tab-pane -->
+<div class="tab-pane" id="friends">
+<!-- The timeline -->
+<div class="row">
+<div class="col-md-6">
+<h3 class="text-blue">{{$user->name}} дружит с:</h3>
+<table class="table table-condensed">
+<thead>
+<tr>
+<th style="width: 30px">ID</th>
+<th style="width: 50px">Аватар</th>
+<th>Имя</th>
+</tr>
+</thead>
+<tbody>
+@foreach($user->user_friends as $friend)
+<tr>
+<td>{{$friend->friend_user->id}}</td>
+<td>
+    <img class="direct-chat-img" src="{{route('home').($friend->friend_user->avatar?$friend->friend_user->avatar->link:'/dist/img/avatar.png')}}" alt="Аватар пользователя"><!-- /.direct-chat-img -->
+</td>
+<td><a href="{{route('admin.user.profile', ['id' => $friend->friend_user->id])}}">{{$friend->friend_user->name}}</a></td>
+</tr>
+@endforeach
+</tbody>
+</table>
+</div>
+<div class="col-md-6">
+<h3 class="text-blue">Дружат с {{$user->name}}:</h3>
+<table class="table table-condensed">
+<thead>
+<tr>
+<th style="width: 30px">ID</th>
+<th style="width: 50px">Аватар</th>
+<th>Имя</th>
+</tr>
+</thead>
+<tbody>
+@foreach($user->user_friendly as $friend)
+<tr>
+<td>{{$friend->user->id}}</td>
+<td>
+    <img class="direct-chat-img" src="{{route('home').($friend->user->avatar?$friend->user->avatar->link:'/dist/img/avatar.png')}}" alt="Аватар пользователя"><!-- /.direct-chat-img -->
+</td>
+<td><a href="{{route('admin.user.profile', ['id' => $friend->user->id])}}">{{$friend->user->name}}</a></td>
+</tr>
+@endforeach
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- /.tab-pane -->
+<div class="tab-pane" id="voting">
+<!-- The timeline -->
+<table class="table table-condensed">
+<thead>
+<tr>
+<th style="width: 30px">ID</th>
+<th>Вопрос</th>
+<th>Выбраный ответ</th>
+</tr>
+</thead>
+<tbody>
+@foreach($user->answers_to_questions as $answers_to_questions)
+<tr>
+<td>{{$answers_to_questions->question->id}}</td>
+<td>
+<a href="#">{{$answers_to_questions->question->question}}</a>
+</td>
+<td>{{$answers_to_questions->question->answers->where('id', $answers_to_questions->answer_id)->first()->answer}}</td>
+</tr>
+@endforeach
+</tbody>
+</table>
+</div>
+
+</div>
+<!-- /.tab-pane -->
+</div>
+<!-- /.tab-content -->
+</div>
+<!-- /.nav-tabs-custom -->
+</div>
+<!-- /.col -->
+</div>
+</div>
 @endsection
 
 @section('js')

@@ -21,7 +21,7 @@ class NewsController extends Controller
                 $q->withTrashed();
             }]);
 
-        $news = ForumTopic::search($news, $request->validated());
+        $news = ForumTopic::search($request->validated(), $news);
 
         return view('news.index')->with('news', $news->paginate(20));
     }

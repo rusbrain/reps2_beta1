@@ -14,8 +14,14 @@
 @endsection
 
 @section('content')
-    {{--{{dd($topic)}}--}}
     <div class="col-md-10 col-md-offset-1">
+        <div class="load-wrapp">
+            <div class="load-3">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+        </div>
         <div class="box">
             <div class="box-header with-border">
                 <h3 class="box-title text-blue">{{$topic->section->title}} / {{$topic->title}}</h3>
@@ -83,37 +89,10 @@
                                             </div>
                                         </form>
                                     </div>
-                                    <!-- chat item -->
-                                    @foreach($topic->comments as $comment)
-                                        <div class="item row">
-                                            @if(isset($comment->user->avatar))
-                                                <img class="img-circle img-bordered-sm" src="{{route('home').$comment->user->avatar->link}}" alt="User img">
-                                            @else
-                                                <img class="img-circle img-bordered-sm" src="{{route('home').'/dist/img/avatar.png'}}" alt="User img">
-                                            @endif
-
-                                            <p class="message">
-                                                <a href="#" class="name">
-                                                    <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> {{$comment->created_at->format('h:m d-m-Y')}}</small>
-                                                    {{$comment->user->name}}
-                                                </a><a type="button" class="btn btn-default text-red"  title="Удалить запись" href="{{route('admin.forum.topic.comment.remove', ['id' => $comment->id])}}"><i class="fa fa-trash"></i></a>
-                                                {{$comment->content}}
-                                            </p>
-                                        </div>
-                                    @endforeach
-                                    <!-- /.item -->
+                                    <div class="table-content"></div>
                                 </div>
-                            @if($topic->comments_count > 20)
-                                @php
-                                    $last_page = ($topic->comments_count - ($topic->comments_count%20))/20 + ($topic->comments_count%20?1:0);
-                                @endphp
-                                <ul class="pagination pagination-sm no-margin pull-right">
-                                    @for($i = 1; $i <= $last_page; $i++)
-                                        <li><a href="{{route('admin.forum.topic.get', ['id' => $topic->id, 'page' => $i])}}">{{$i}}</a></li>
-                                    @endfor
-                                </ul>
-                            @endif
-                                <!-- /.chat -->
+                            <div class="box-footer clearfix pagination-content">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -124,4 +103,22 @@
 
 @section('js')
 
+    <script>
+        $(function () {
+            getUsers(1);
+            $('.pagination-content').on('click', '.pagination-push', function () {
+                $('.load-wrapp').show();
+                let page = $(this).data('to-page');
+                getUsers(page);
+            })
+        });
+
+        function getUsers(page) {
+            $.get('{{route('admin.comments', ['object_name' => 'topic', 'id' => $topic->id])}}?page='+page, {}, function (data) {
+                $('.table-content').html(data.table);
+                $('.pagination-content').html(data.pagination);
+                $('.load-wrapp').hide();
+            })
+        }
+    </script>
 @endsection

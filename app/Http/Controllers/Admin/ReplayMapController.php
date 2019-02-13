@@ -17,20 +17,23 @@ class ReplayMapController extends Controller
      */
     public function index(Request $request)
     {
-        $data = ReplayMap::withCount('replay');
+        $data =  ReplayMap::search($request)->count();
+        return view('admin.replay.map.list')->with(['maps_count' => $data, 'request_data' => $request->all()]);
+    }
 
-        if ($request->has('text') && $request->get('text')){
-            $data->where(function ($q) use ($request){
-                $q->where('id', 'like', "%{$request->get('text')}%")
-                    ->orWhere('name', 'like', "%{$request->get('text')}%");
-            });
-        }
-        if ($request->has('sort') && $request->get('sort')){
-            $data->orderBy($request->get('sort'));
-        }
+    /**
+     * @param Request $request
+     * @return array
+     */
+    public function pagination(Request $request)
+    {
+        $data = ReplayMap::search($request, ReplayMap::withCount('replay'))->paginate(20);
 
-        $data = $data->paginate(50);
-        return view('admin.replay.map.list')->with(['data' => $data, 'request_data' => $request->all()]);
+        $table      = (string) view('admin.replay.map.list_table')  ->with(['data' => $data]);
+        $pagination = (string) view('admin.user.pagination')        ->with(['data' => $data]);
+        $pop_up     = (string) view('admin.replay.map.list_pop_up') ->with(['data' => $data]);
+
+        return ['table' => $table, 'pagination' => $pagination, 'pop_up' => $pop_up];
     }
 
     /**

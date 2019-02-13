@@ -21,6 +21,13 @@
 @section('content')
         <div class="col-md-12">
             <div class="box">
+                <div class="load-wrapp">
+                    <div class="load-3">
+                        <div class="line"></div>
+                        <div class="line"></div>
+                        <div class="line"></div>
+                    </div>
+                </div>
                 <div class="box-header with-border">
                     <h3 class="box-title">Поиск карт</h3>
                 </div>
@@ -52,7 +59,7 @@
             </div>
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Карты Replay ({{$data->total()}})</h3>
+                    <h3 class="box-title">Карты Replay ({{$maps_count}})</h3>
                     <a class="btn btn-info" data-toggle="modal" data-target="#modal-default_add" href="{{route('admin.replay.map.add')}}">Создать</a>
                     @if ($errors->has('name'))
                         <span class="invalid-feedback text-red" role="alert">
@@ -64,8 +71,7 @@
                                 <strong>{{ $errors->first('title') }}</strong>
                             </span>
                     @endif
-                    <div class="box-tools">
-                        @include('admin.user.pagination')
+                    <div class="box-tools pagination-content">
                     </div>
                 </div>
                 <!-- /.box-header -->
@@ -81,56 +87,17 @@
                             <th style="width: 100px">Действия</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        @foreach($data->items() as $map)
-                            <tr>
-                                <td>{{$map->id}}</td>
-                                <td>
-                                    <img class="img-preview" src="{{route('home').'/'.$map->url}}" alt="Изображение">
-                                </td>
-                                <td>{{$map->name}}</td>
-                                <td>{{$map->replay_count}}</td>
-                                <td>
-                                    <div class="btn-group">
-                                        <a type="button" class="btn btn-default text-orange"  title="Править"  data-toggle="modal" data-target="#modal-default_{{$map->id}}" href="{{route('admin.replay.map.edit', ['id' => $map->id])}}"><i class="fa fa-edit"></i></a>
-                                        <a type="button" class="btn btn-default text-red"  title="Удалить" href="{{route('admin.replay.map.remove', ['id' => $map->id])}}"><i class="fa fa-trash"></i></a>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforeach
+                        <tbody class="table-content">
                         </tbody>
                     </table>
                 </div>
                 <!-- /.box-body -->
-                <div class="box-footer clearfix">
-                    @include('admin.user.pagination')
+                <div class="box-footer clearfix pagination-content">
                 </div>
             </div>
         </div>
 
-        @foreach($data->items() as $map)
-            <div class="modal fade" id="modal-default_{{$map->id}}">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title">Default Modal</h4>
-                        </div>
-                        <div class="modal-body">
-                            <p>One fine body&hellip;</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
-                        </div>
-                    </div>
-                    <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
-            </div>
-            <!-- /.modal -->
-        @endforeach
+    <div class="pop-up-content"></div>
 
         <div class="modal fade" id="modal-default_add">
             <div class="modal-dialog">
@@ -156,5 +123,23 @@
 @endsection
 
 @section('js')
+    <script>
+        $(function () {
+            getFiles(1);
+            $('.pagination-content').on('click', '.pagination-push', function () {
+                $('.load-wrapp').show();
+                let page = $(this).data('to-page');
+                getFiles(page);
+            })
+        });
 
+        function getFiles(page) {
+            $.get('{{route('admin.replay.map.pagination')}}?page='+page, {!! json_encode($request_data) !!}, function (data) {
+                $('.table-content').html(data.table);
+                $('.pagination-content').html(data.pagination);
+                $('.pop-up-content').html(data.pop_up);
+                $('.load-wrapp').hide();
+            })
+        }
+    </script>
 @endsection

@@ -99,4 +99,23 @@ class Comment extends Model
     {
         return $this->hasMany('App\UserReputation', 'object_id')->where('relation', UserReputation::RELATION_COMMENT)->where('rating','-1');
     }
+
+    /**
+     * @param $name
+     * @param $id
+     * @return int
+     */
+    public static function getObjectRelation($name)
+    {
+        switch ($name){
+            case 'replay':
+                return self::RELATION_REPLAY;
+            case 'topic':
+                return self::RELATION_FORUM_TOPIC;
+            case 'gallery':
+                return self::RELATION_USER_GALLERY;
+        }
+
+        return false;
+    }
 }

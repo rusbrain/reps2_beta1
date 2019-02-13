@@ -57,17 +57,4 @@ class TopicCommentController extends CommentController
 
         return back();
     }
-
-    /**
-     * Delete comment from id
-     *
-     * @param $comment_id
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function commentRemove($comment_id)
-    {
-        Comment::find($comment_id)->delete();
-
-        return back();
-    }
 }

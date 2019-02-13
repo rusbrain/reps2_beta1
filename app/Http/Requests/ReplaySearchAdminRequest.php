@@ -35,6 +35,7 @@ class ReplaySearchAdminRequest extends FormRequest
             'race'      => 'nullable|in:'.$races,
             'sort'      => 'nullable|in:id,title,user_rating,rating',
             'country'   => 'nullable|exists:countries,id',
+            'user_id'   => 'nullable|exists:users,id',
         ];
     }
 }
