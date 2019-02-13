@@ -100,7 +100,7 @@
         });
 
         function getGallery(page) {
-            $.get('{{route('admin.users.gallery.pagination')}}?page='+page, {}, function (data) {
+            $.get('{{route('admin.users.gallery.pagination')}}?page='+page, {!! json_encode($request_data) !!}, function (data) {
                 $('.table-content').html(data.table);
                 $('.pagination-content').html(data.pagination);
                 $('.pop-up-content').html(data.pop_up);

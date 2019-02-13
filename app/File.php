@@ -161,6 +161,10 @@ class File extends Model
             $data->orderBy('created_at', 'desc');
         }
 
+        if(isset($data_req['user_id'])){
+            $data->where('user_id',$data_req['user_id']);
+        }
+
         return $data;
     }
 }

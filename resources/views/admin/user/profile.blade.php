@@ -53,22 +53,22 @@
                         @endif
                         @if($user->topics_count)
                             <li class="list-group-item">
-                                <b>Записей на форуме</b> <a class="pull-right">{{$user->topics_count}}</a>
+                                <b>Записей на форуме</b> <a class="pull-right" href="{{route('admin.user.topic', ['id' => $user->id])}}">{{$user->topics_count}}</a>
                             </li>
                         @endif
                         @if($user->replay_count)
                             <li class="list-group-item">
-                                <b>Пользовательских Replays</b> <a class="pull-right">{{$user->replay_count}}</a>
+                                <b>Пользовательских Replays</b> <a class="pull-right" href="{{route('admin.user.replay', ['id' => $user->id, 'users' => 1])}}">{{$user->replay_count}}</a>
                             </li>
                         @endif
                         @if($user->gosu_replay_count)
                             <li class="list-group-item">
-                                <b>Gosu Replays</b> <a class="pull-right">{{$user->gosu_replay_count}}</a>
+                                <b>Gosu Replays</b> <a class="pull-right" href="{{route('admin.user.replay', ['id' => $user->id, 'users' => 0])}}">{{$user->gosu_replay_count}}</a>
                             </li>
                         @endif
                         @if($user->user_galleries_count)
                             <li class="list-group-item">
-                                <b>Изображений в галерее</b> <a class="pull-right">{{$user->user_galleries_count}}</a>
+                                <b>Изображений в галерее</b> <a class="pull-right" href="{{route('admin.users.gallery', ['user_id' => $user->id])}}">{{$user->user_galleries_count}}</a>
                             </li>
                         @endif
                         @if($user->topic_comments_count)
@@ -88,7 +88,7 @@
                         @endif
                         @if($user->files_count)
                             <li class="list-group-item">
-                                <b>Загруженных файлов всего</b> <a class="pull-right">{{$user->files_count}}</a>
+                                <b>Загруженных файлов всего</b> <a class="pull-right" href="{{route('admin.file', ['user_id' => $user->id])}}">{{$user->files_count}}</a>
                             </li>
                         @endif
                         @if($user->answers_to_questions_count)

@@ -10,7 +10,7 @@
 @endsection
 
 @section('page_header')
-    Карты Replay
+    Файлы
 @endsection
 
 @section('breadcrumb')

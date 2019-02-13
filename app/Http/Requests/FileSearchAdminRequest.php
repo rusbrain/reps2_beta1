@@ -28,6 +28,7 @@ class FileSearchAdminRequest extends FormRequest
             'size'      => 'nullable|numeric|min:0|required_with:size_to',
             'text'      => 'nullable|string|max:255',
             'sort'      => 'nullable|in:id,title,type,size,created_at',
+            'user_id'   => 'nullable|exists:users,id',
         ];
     }
 

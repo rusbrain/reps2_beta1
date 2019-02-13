@@ -16,20 +16,36 @@ use Illuminate\Support\Facades\Auth;
 class UserGalleryController extends Controller
 {
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param Request $request
+     * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View|mixed
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = UserGallery::count();
-        return view('admin.user.gallery.list')->with(['gallery_count' => $data, 'request_data' =>[]]);
+        if ($request->has('user_id')){
+            $data = UserGallery::where('user_id', $request->get('user_id'))->count();
+        } else{
+            $data = UserGallery::count();
+        }
+
+        return view('admin.user.gallery.list')->with(['gallery_count' => $data, 'request_data' => $request->all()]);
     }
 
-    public function pagination()
+    /**
+     * @param Request $request
+     * @return array
+     */
+    public function pagination(Request $request)
     {
-        $galleries = UserGallery::with('user', 'file')->withCount( 'positive', 'negative', 'comments')->orderBy('id', 'desc')->paginate(20);
+        $galleries = UserGallery::with('user', 'file')->withCount( 'positive', 'negative', 'comments')->orderBy('id', 'desc');
+
+        if ($request->has('user_id')){
+            $galleries->where('user_id', $request->get('user_id'));
+        }
+
+        $galleries = $galleries->paginate(20);
 
         $table      = (string) view('admin.user.gallery.list_table') ->with(['data' => $galleries]);
-        $pagination = (string) view('admin.user.pagination')    ->with(['data' => $galleries]);
+        $pagination = (string) view('admin.user.pagination')         ->with(['data' => $galleries]);
         $pop_up     = (string) view('admin.user.gallery.list_pop_up')->with(['data' => $galleries]);
 
         return ['table' => $table, 'pagination' => $pagination, 'pop_up' => $pop_up];

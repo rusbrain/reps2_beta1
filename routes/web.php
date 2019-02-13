@@ -165,6 +165,10 @@ Route::group(['middleware' => 'activity'], function () {
         Route::get('/comment/{object_name}/{id}', 'BaseController@getComments')->name('admin.comments');
         Route::get('/comment/{id}', 'BaseController@removeComment')->name('admin.comments.remove');
         Route::post('send_quick_email', 'BaseController@sendQuickEmail')->name('admin.send_quick_email');
+        Route::group(['prefix' => 'comment'], function () {
+            Route::get('/{object_name}/{id}', 'CommentController@getComments')->name('admin.comments');
+            Route::get('/{id}', 'CommentController@removeComment')->name('admin.comments.remove');
+        });
 
         Route::group(['prefix' => 'user'], function () {
             Route::get('{id}/email', 'UserEmailController@index')->name('admin.user.email');
