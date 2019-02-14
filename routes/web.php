@@ -210,6 +210,12 @@ Route::group(['middleware' => 'activity'], function () {
                 Route::get('/add', 'UserGalleryController@add')->name('admin.user.gallery.add');
                 Route::post('/create', 'UserGalleryController@create')->name('admin.user.gallery.create');
             });
+
+            Route::group(['prefix' => '{id}/reputation'], function(){
+                Route::get('/', 'ReputationController@index')->name('admin.user.reputation');
+                Route::get('/pagination', 'ReputationController@pagination')->name('admin.user.reputation.pagination');
+                Route::get('{reputation_id}/remove', 'ReputationController@removeReputation')->name('admin.user.reputation.remove');
+            });
         });
 
         Route::group(['prefix' => 'forum'], function () {

@@ -14,6 +14,8 @@
 @endsection
 
 @section('content')
+    @inject('general_helper', 'App\Services\GeneralViewHelper')
+
     <div class="col-md-10 col-md-offset-1">
         <div class="load-wrapp">
             <div class="load-3">
@@ -40,14 +42,14 @@
                         <div class="row">
                             <div class="col-md-10 col-md-offset-1">
                                 <p>
-                                    {!! $topic->preview_content !!}
+                                    {!! $general_helper->oldContentFilter($topic->preview_content) !!}
                                 </p>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-10 col-md-offset-1">
                                 <p>
-                                    {!! $topic->content !!}
+                                    {!! $general_helper->oldContentFilter($topic->content) !!}
                                 </p>
                             </div>
                         </div>

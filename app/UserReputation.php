@@ -100,6 +100,16 @@ class UserReputation extends Model
     }
 
     /**
+     * Relations. Reputations user sender
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function comment()
+    {
+        return $this->belongsTo('App\Comment', 'object_id');
+    }
+
+    /**
      * Refresh user Rating
      *
      * @param $user_id

@@ -339,7 +339,7 @@ class User extends Authenticatable
                     ->orderBy('created_at', 'desc')->limit(5);
             }])
             ->with(['replays' => function($query){
-                $query->with('map', 'type','first_country','second_country')
+                $query->with('map', 'type','first_country','second_country', 'game_version')
                     ->orderBy('created_at', 'desc')->limit(5);
             }])
             ->with(['user_galleries' => function($query){

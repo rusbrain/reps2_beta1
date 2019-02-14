@@ -15,7 +15,6 @@
 @endsection
 
 @section('content')
-    {{--{{dd($user)}}--}}
     <div class="row">
         <div class="col-lg-3">
             <!-- Profile Image -->
@@ -43,12 +42,12 @@
                     <ul class="list-group list-group-unbordered">
                         @if($user->positive_count)
                             <li class="list-group-item">
-                                <b>Положительные оценки</b> <a class="pull-right">{{$user->positive_count}}</a>
+                                <b>Положительные оценки</b> <a class="pull-right" href="{{route('admin.user.reputation', ['id' => $user->id])}}">{{$user->positive_count}}</a>
                             </li>
                         @endif
                         @if($user->negative_count)
                             <li class="list-group-item">
-                                <b>Отрицательные оценки</b> <a class="pull-right">{{$user->negative_count}}</a>
+                                <b>Отрицательные оценки</b> <a class="pull-right" href="{{route('admin.user.reputation', ['id' => $user->id])}}">{{$user->negative_count}}</a>
                             </li>
                         @endif
                         @if($user->topics_count)
@@ -196,6 +195,7 @@
                     <div class="active tab-pane" id="activity">
                         <div class="row">
                             @if($user->topics->count())
+                                @inject('general_helper', 'App\Services\GeneralViewHelper')
                                 <div class="col-md-{{$user->replays->count()?'6':'12'}}">
                                     <h3 class="text-blue"> <a href="{{route('admin.user.topic', ['id'=>$user->id])}}">Форум</a></h3>
                                     @foreach($user->topics as $topic)
@@ -215,7 +215,7 @@
                                                 @if($topic->preview_content)
                                                     {!! $topic->preview_content !!}
                                                 @else
-        {!! mb_strimwidth($topic->content,0,1000, '...') !!}
+        {!! $general_helper->oldContentFilter(mb_strimwidth($topic->content,0,1000, '...')) !!}
     @endif
 </p>
 <ul class="list-inline">
@@ -258,7 +258,7 @@
             <b>Локации:</b> {{$replay->first_location??"NO"}} vs {{$replay->second_location??"NO"}} <br>
             <b>Длительность:</b> {{$replay->length}} <br>
             <b>Чемпионат:</b> {{$replay->championship}} <br>
-            <b>Версия:</b> {{$replay->game_version}} <br>
+            <b>Версия:</b> {{$replay->game_version->version}} <br>
             <b>Рейтинг:</b> {{$replay->evaluation}} <br>
             <b>Юзер Рейтинг:</b> {{$replay->user_rating}} <br>
             {{mb_strimwidth($replay->content,0,1000, '...')}}
