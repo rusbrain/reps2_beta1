@@ -4,14 +4,14 @@
 @endsection
 
 @section('page_header')
-    Оценки пользователя <b>{{$user->name}}</b>
+    Комментарии пользователя <b>{{$user->name}}</b>
 @endsection
 
 @section('breadcrumb')
     <li><a href="{{route('admin.home')}}"><i class="fa fa-dashboard"></i>Главная панель</a></li>
     <li><a href="{{route('admin.users')}}"><i class="fa fa-dashboard"></i>Пользователи</a></li>
     <li><a href="{{route('admin.user.profile', ['id' => $user->id])}}"><i class="fa fa-dashboard"></i>{{$user->name}}</a></li>
-    <li class="active">Оценки</li>
+    <li class="active">Комментарии</li>
 @endsection
 
 @section('content')
@@ -27,7 +27,7 @@
         </div>
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">Оценки {{$user->name}} ({{$reputation_count}})</h3>
+                <h3 class="box-title">Комментарии {{$user->name}} ({{$comments_count}})</h3>
                 <div class="box-tools pagination-content">
                 </div>
             </div>
@@ -37,10 +37,9 @@
                     <thead>
                     <tr>
                         <th style="width: 30px">ID</th>
-                        <th>Пользователь</th>
                         <th>Объект</th>
-                        <th>Оценка</th>
-                        <th  style="max-width: 50%; width: 50%">Комментарий</th>
+                        <th>Заголовок</th>
+                        <th style="max-width: 70%; width: 70%">Комментарий</th>
                         <th style="min-width: 150px">Дата</th>
                         <th style="width: 50px">Действия</th>
                     </tr>
@@ -68,7 +67,7 @@
         });
 
         function getUsers(page) {
-            $.get('{{route('admin.user.reputation.pagination', ['id' => $user->id])}}?page='+page, {}, function (data) {
+            $.get('{{route('admin.user.comments.pagination', ['id' => $user->id])}}?page='+page, {}, function (data) {
                 $('.table-content').html(data.table);
                 $('.pagination-content').html(data.pagination);
                 $('.load-wrapp').hide();

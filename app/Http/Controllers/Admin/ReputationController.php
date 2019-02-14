@@ -38,7 +38,7 @@ class ReputationController extends Controller
      * @param $reputation_id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function removeReputation($user_id, $reputation_id)
+    public function remove($user_id, $reputation_id)
     {
         UserReputation::where('id', $reputation_id)->delete();
         return back();

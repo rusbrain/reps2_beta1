@@ -72,17 +72,17 @@
                         @endif
                         @if($user->topic_comments_count)
                         <li class="list-group-item">
-                            <b>Комментариев на форуме</b> <a class="pull-right">{{$user->topic_comments_count}}</a>
+                            <b>Комментариев на форуме</b> <a class="pull-right" href="{{route('admin.user.reputation', ['id' => $user->id])}}">{{$user->topic_comments_count}}</a>
                         </li>
                         @endif
                         @if($user->replay_comments_count)
                             <li class="list-group-item">
-                                <b>Комментариев к Replays</b> <a class="pull-right">{{$user->replay_comments_count}}</a>
+                                <b>Комментариев к Replays</b> <a class="pull-right" href="{{route('admin.user.reputation', ['id' => $user->id])}}">{{$user->replay_comments_count}}</a>
                             </li>
                         @endif
                         @if($user->gallery_comments_count)
                             <li class="list-group-item">
-                                <b>Комментариев в галерее</b> <a class="pull-right">{{$user->gallery_comments_count}}</a>
+                                <b>Комментариев в галерее</b> <a class="pull-right"  href="{{route('admin.user.reputation', ['id' => $user->id])}}">{{$user->gallery_comments_count}}</a>
                             </li>
                         @endif
                         @if($user->files_count)

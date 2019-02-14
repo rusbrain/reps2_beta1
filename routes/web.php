@@ -214,7 +214,13 @@ Route::group(['middleware' => 'activity'], function () {
             Route::group(['prefix' => '{id}/reputation'], function(){
                 Route::get('/', 'ReputationController@index')->name('admin.user.reputation');
                 Route::get('/pagination', 'ReputationController@pagination')->name('admin.user.reputation.pagination');
-                Route::get('{reputation_id}/remove', 'ReputationController@removeReputation')->name('admin.user.reputation.remove');
+                Route::get('{reputation_id}/remove', 'ReputationController@remove')->name('admin.user.reputation.remove');
+            });
+
+            Route::group(['prefix' => '{id}/comments'], function(){
+                Route::get('/', 'UserCommentController@index')->name('admin.user.reputation');
+                Route::get('/pagination', 'UserCommentController@pagination')->name('admin.user.comments.pagination');
+                Route::get('{comments_id}/remove', 'UserCommentController@remove')->name('admin.user.comments.remove');
             });
         });
 

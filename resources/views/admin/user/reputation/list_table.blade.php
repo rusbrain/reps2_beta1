@@ -30,4 +30,3 @@
         </td>
     </tr>
 @endforeach
-{{--{{dd($data)}}--}}
