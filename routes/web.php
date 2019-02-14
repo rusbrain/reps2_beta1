@@ -218,9 +218,15 @@ Route::group(['middleware' => 'activity'], function () {
             });
 
             Route::group(['prefix' => '{id}/comments'], function(){
-                Route::get('/', 'UserCommentController@index')->name('admin.user.reputation');
+                Route::get('/', 'UserCommentController@index')->name('admin.user.comments');
                 Route::get('/pagination', 'UserCommentController@pagination')->name('admin.user.comments.pagination');
                 Route::get('{comments_id}/remove', 'UserCommentController@remove')->name('admin.user.comments.remove');
+            });
+
+            Route::group(['prefix' => '{id}/answers'], function(){
+                Route::get('/', 'UserQuestionsController@index')->name('admin.user.answers');
+                Route::get('/pagination', 'UserQuestionsController@pagination')->name('admin.user.answers.pagination');
+                Route::get('{comments_id}/remove', 'UserQuestionsController@remove')->name('admin.user.answers.remove');
             });
         });
 
