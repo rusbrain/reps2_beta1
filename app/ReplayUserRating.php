@@ -2,10 +2,12 @@
 
 namespace App;
 
+use App\Traits\ModelRelations\ReplayUserRatingRelation;
 use Illuminate\Database\Eloquent\Model;
 
 class ReplayUserRating extends Model
 {
+    use ReplayUserRatingRelation;
     /**
      * Using table name
      *
@@ -20,19 +22,4 @@ class ReplayUserRating extends Model
      */
     protected $fillable = ['user_id', 'replay_id', 'comment', 'rating'];
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function replay()
-    {
-        return $this->belongsTo('App\Replay');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function user()
-    {
-        return $this->belongsTo('App\User');
-    }
 }

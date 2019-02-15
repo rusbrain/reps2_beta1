@@ -2,10 +2,13 @@
 
 namespace App;
 
+use App\Traits\ModelRelations\InterviewVariantsAnswersRelation;
 use Illuminate\Database\Eloquent\Model;
 
 class InterviewVariantsAnswers extends Model
 {
+    use InterviewVariantsAnswersRelation;
+
     /**
      * Using table name
      *
@@ -22,20 +25,4 @@ class InterviewVariantsAnswers extends Model
         'answer',
         'question_id',
     ];
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function question()
-    {
-        return $this->belongsTo('App\InterviewQuestion', 'question_id');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function user_answers()
-    {
-        return $this->hasMany('App\InterviewUserAnswers', 'answer_id');
-    }
 }

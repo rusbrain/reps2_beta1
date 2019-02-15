@@ -2,11 +2,13 @@
 
 namespace App;
 
+use App\Traits\ModelRelations\InterviewQuestionRelation;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
 class InterviewQuestion extends Model
 {
+    use InterviewQuestionRelation;
     /**
      * Using table name
      *
@@ -25,22 +27,6 @@ class InterviewQuestion extends Model
         'is_favorite',
         'for_login'
     ];
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function answers()
-    {
-        return $this->hasMany('App\InterviewVariantsAnswers', 'question_id');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function user_answers()
-    {
-        return $this->hasMany('App\InterviewUserAnswers', 'question_id');
-    }
 
     /**
      * Get random interview question for user

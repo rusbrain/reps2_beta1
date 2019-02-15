@@ -2,12 +2,14 @@
 
 namespace App;
 
+use App\Traits\ModelRelations\UserMessageRelation;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class UserMessage extends Model
 {
+    use UserMessageRelation;
     /**
      * Using table name
      *
@@ -28,14 +30,6 @@ class UserMessage extends Model
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function sender()
-    {
-        return $this->belongsTo('App\User', 'user_id');
-    }
-
-    /**
      * Save new message
      *
      * @param Request $request
@@ -49,13 +43,5 @@ class UserMessage extends Model
             'dialogue_id'   => $dialogue_id,
             'message'       => $request->get('message'),
         ]);
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function dialogue()
-    {
-        return $this->belongsTo('App\Dialogue', 'dialogue_id');
     }
 }

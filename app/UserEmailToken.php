@@ -2,10 +2,12 @@
 
 namespace App;
 
+use App\Traits\ModelRelations\UserEmailTokenRelation;
 use Illuminate\Database\Eloquent\Model;
 
 class UserEmailToken extends Model
 {
+    use UserEmailTokenRelation;
 
     const TOK_FUNC_UPDATE_PASSWORD = 'update_password';
     const TOK_FUNC_VERIFIED_EMAIL = 'verified_email';
@@ -25,14 +27,4 @@ class UserEmailToken extends Model
         'function',
         'token',
     ];
-
-    /**
-     * Relations. Tokens user
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function user()
-    {
-        return $this->belongsTo('App\User');
-    }
 }

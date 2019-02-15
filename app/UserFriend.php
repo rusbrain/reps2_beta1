@@ -2,12 +2,13 @@
 
 namespace App;
 
+use App\Traits\ModelRelations\UserFriendRelation;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class UserFriend extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, UserFriendRelation;
     /**
      * Using table name
      *
@@ -24,20 +25,4 @@ class UserFriend extends Model
         'user_id',
         'friend_user_id',
     ];
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function user()
-    {
-        return $this->belongsTo('App\User', 'user_id');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function friend_user()
-    {
-        return $this->belongsTo('App\User', 'friend_user_id');
-    }
 }

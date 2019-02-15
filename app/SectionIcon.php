@@ -2,10 +2,12 @@
 
 namespace App;
 
+use App\Traits\ModelRelations\SectionIconRelation;
 use Illuminate\Database\Eloquent\Model;
 
 class SectionIcon extends Model
 {
+    use SectionIconRelation;
     /**
      * Using table name
      *
@@ -28,12 +30,4 @@ class SectionIcon extends Model
      * @var bool
      */
     public $timestamps = false;
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function sections()
-    {
-        return $this->hasMany('App\ForumSection');
-    }
 }

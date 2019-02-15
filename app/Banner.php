@@ -2,10 +2,12 @@
 
 namespace App;
 
+use App\Traits\ModelRelations\BannerRelation;
 use Illuminate\Database\Eloquent\Model;
 
 class Banner extends Model
 {
+    use BannerRelation;
     /**
      * Using table name
      *
@@ -24,14 +26,6 @@ class Banner extends Model
         'url_redirect',
         'is_active',
     ];
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function file()
-    {
-        return $this->belongsTo('App\File', 'file_id');
-    }
 
     /**
      * @return mixed

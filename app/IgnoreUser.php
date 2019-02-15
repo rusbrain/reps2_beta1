@@ -2,11 +2,13 @@
 
 namespace App;
 
+use App\Traits\ModelRelations\IgnoreUserRelation;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
 class IgnoreUser extends Model
 {
+    use IgnoreUserRelation;
     /**
      * Using table name
      *
@@ -23,22 +25,6 @@ class IgnoreUser extends Model
         'user_id',
         'ignored_user_id',
     ];
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function user()
-    {
-        return $this->belongsTo('App\User', 'user_id');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function ignored_user()
-    {
-        return $this->belongsTo('App\User', 'ignored_user_id');
-    }
 
     /**
      * I ignore this user?

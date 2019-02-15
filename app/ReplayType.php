@@ -2,10 +2,12 @@
 
 namespace App;
 
+use App\Traits\ModelRelations\ReplayTypeRelation;
 use Illuminate\Database\Eloquent\Model;
 
 class ReplayType extends Model
 {
+    use ReplayTypeRelation;
     /**
      * Using table name
      *
@@ -26,12 +28,4 @@ class ReplayType extends Model
      * @var bool
      */
     public $timestamps = false;
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function replay()
-    {
-        return $this->hasMany('App\Replay', 'type_id');
-    }
 }

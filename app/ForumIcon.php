@@ -2,10 +2,12 @@
 
 namespace App;
 
+use App\Traits\ModelRelations\ForumIconRelation;
 use Illuminate\Database\Eloquent\Model;
 
 class ForumIcon extends Model
 {
+    use ForumIconRelation;
     /**
      * Using table name
      *
@@ -28,12 +30,4 @@ class ForumIcon extends Model
      * @var bool
      */
     public $timestamps = false;
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function forum_topics()
-    {
-        return $this->hasMany('App\ForumTopic');
-    }
 }

@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Observers\UserGalleryPointsObserver;
+use App\Traits\ModelRelations\UserGalleryRelation;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
@@ -10,8 +11,7 @@ use Illuminate\Notifications\Notifiable;
 
 class UserGallery extends Model
 {
-    use SoftDeletes;
-    use Notifiable;
+    use SoftDeletes, Notifiable, UserGalleryRelation;
 
     /**
      * The event map for the model.
@@ -41,48 +41,6 @@ class UserGallery extends Model
 
     const USER_GALLERY_FOR_ADULTS  = 1;
     const USER_GALLERY_FOR_ALL  = 0;
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function user()
-    {
-        return $this->belongsTo('App\User');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function file()
-    {
-        return $this->belongsTo('App\File');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function positive()
-    {
-        return $this->hasMany('App\UserReputation', 'object_id')->where('relation', UserReputation::RELATION_USER_GALLERY)->where('rating',1);
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function negative()
-    {
-        return $this->hasMany('App\UserReputation', 'object_id')->where('relation', UserReputation::RELATION_USER_GALLERY)->where('rating','-1');
-    }
-
-    /**
-     * Relations. User gallery comments
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function comments()
-    {
-        return $this->hasMany('App\Comment', 'object_id')->where('relation', Comment::RELATION_USER_GALLERY);
-    }
 
     /**
      * @param $rating

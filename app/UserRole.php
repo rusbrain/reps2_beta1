@@ -2,10 +2,13 @@
 
 namespace App;
 
+use App\Traits\ModelRelations\UserRoleRelation;
 use Illuminate\Database\Eloquent\Model;
 
 class UserRole extends Model
 {
+    use UserRoleRelation;
+
     /**
      * Using table name
      *
@@ -29,14 +32,4 @@ class UserRole extends Model
         'name',
         'title',
     ];
-
-    /**
-     * Relations. Roles users
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function users()
-    {
-        return $this->hasMany('App\User');
-    }
 }

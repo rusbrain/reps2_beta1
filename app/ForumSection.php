@@ -2,10 +2,12 @@
 
 namespace App;
 
+use App\Traits\ModelRelations\ForumSectionRelation;
 use Illuminate\Database\Eloquent\Model;
 
 class ForumSection extends Model
 {
+    use ForumSectionRelation;
     /**
      * Using table name
      *
@@ -28,35 +30,6 @@ class ForumSection extends Model
     public $timestamps = false;
 
     /**
-     * Relations. Sections topics
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function topics()
-    {
-        return $this->hasMany('App\ForumTopic', 'section_id');
-    }
-
-    /**
-     * Relations. Sections topics
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function forum_topics()
-    {
-        return $this->hasMany('App\ForumTopic', 'section_id');
-    }
-    /**
-     * Relations. Sections topics
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function news_topics()
-    {
-        return $this->hasMany('App\ForumTopic', 'section_id')->where('news',1);
-    }
-
-    /**
      * @return mixed
      */
     public static function active()
@@ -73,10 +46,11 @@ class ForumSection extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @param $name
+     * @return mixed
      */
-    public function icon()
+    public static function getSectionByName($name)
     {
-        return $this->belongsTo('App\SectionIcon');
+       return ForumSection::active()->where('name', $name)->first();
     }
 }

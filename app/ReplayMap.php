@@ -2,11 +2,13 @@
 
 namespace App;
 
+use App\Traits\ModelRelations\ReplayMapRelation;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
 class ReplayMap extends Model
 {
+    use ReplayMapRelation;
     /**
      * Using table name
      *
@@ -27,14 +29,6 @@ class ReplayMap extends Model
      * @var bool
      */
     public $timestamps = false;
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function replay()
-    {
-        return $this->hasMany('App\Replay', 'map_id');
-    }
 
     /**
      * @param Request $request

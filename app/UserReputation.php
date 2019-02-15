@@ -3,12 +3,13 @@
 namespace App;
 
 use App\Observers\UserReputationObserver;
+use App\Traits\ModelRelations\UserReputationRelation;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
 class UserReputation extends Model
 {
-    use Notifiable;
+    use Notifiable, UserReputationRelation;
 
     /**
      * The event map for the model.
@@ -48,66 +49,6 @@ class UserReputation extends Model
         'rating',
         'relation'
     ];
-
-    /**
-     * Relations. Reputations user sender
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function sender()
-    {
-        return $this->belongsTo('App\User', 'sender_id');
-    }
-
-    /**
-     * Relations. Reputations user sender
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function recipient()
-    {
-        return $this->belongsTo('App\User', 'recipient_id');
-    }
-
-    /**
-     * Relations. Reputations user sender
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function topic()
-    {
-        return $this->belongsTo('App\ForumTopic', 'object_id');
-    }
-
-    /**
-     * Relations. Reputations user sender
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function replay()
-    {
-        return $this->belongsTo('App\Replay', 'object_id');
-    }
-
-    /**
-     * Relations. Reputations user sender
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function gallery()
-    {
-        return $this->belongsTo('App\UserGallery', 'object_id');
-    }
-
-    /**
-     * Relations. Reputations user sender
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function comment()
-    {
-        return $this->belongsTo('App\Comment', 'object_id');
-    }
 
     /**
      * Refresh user Rating

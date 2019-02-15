@@ -2,13 +2,14 @@
 
 namespace App;
 
+use App\Traits\ModelRelations\DialogueRelation;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 
 class Dialogue extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, DialogueRelation;
     /**
      * Using table name
      *
@@ -22,22 +23,6 @@ class Dialogue extends Model
      * @var array
      */
     protected $fillable = ['name'];
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function users()
-    {
-        return $this->belongsToMany('App\User', 'dialogue_user');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function messages()
-    {
-        return $this->hasMany('App\UserMessage','dialogue_id');
-    }
 
     /**
      * Get User Dialogs

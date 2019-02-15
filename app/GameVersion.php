@@ -2,10 +2,12 @@
 
 namespace App;
 
+use App\Traits\ModelRelations\GameVersionRelation;
 use Illuminate\Database\Eloquent\Model;
 
 class GameVersion extends Model
 {
+    use GameVersionRelation;
     /**
      * Using table name
      *
@@ -29,11 +31,4 @@ class GameVersion extends Model
      */
     public $timestamps = false;
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function replays()
-    {
-        return $this->hasMany('App\Replay', 'game_version_id');
-    }
 }
