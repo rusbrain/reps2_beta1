@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\Comment\CommentService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Comment;
@@ -14,35 +15,35 @@ class CommentController extends Controller
      *
      * @var string
      */
-    protected $relation;
+    public $relation;
 
     /**
      * View name
      *
      * @var string
      */
-    protected $view_name;
+    public $view_name;
 
     /**
      * Route name
      *
      * @var string
      */
-    protected $route_name;
+    public $route_name;
 
     /**
      * object name with 'id'
      *
      * @var string
      */
-    protected $name_id = 'topic_id';
+    public $name_id = 'topic_id';
 
     /**
      * Model class
      *
      * @var string
      */
-    protected $model;
+    public $model;
 
     /**
      * Update the specified resource in storage.
@@ -92,27 +93,8 @@ class CommentController extends Controller
      */
     public function storeComment(Request $request)
     {
-        $data = $request->validated();
-
-        $this->createComment($data, $data[$this->name_id]);
-
-        return redirect()->route($this->route_name, ['id' => $data[$this->name_id]]);
-    }
-
-    /**
-     * @param $data
-     * @param $object_id
-     */
-    protected function createComment($data, $object_id){
-        $data['user_id'] = Auth::id();
-        $data['relation'] = $this->relation;
-        $data['object_id'] = (int)$object_id;
-
-        if(isset($data[$this->name_id])){
-            unset($data[$this->name_id]);
-        }
-
-        Comment::create($data);
+        $id = CommentService::create($request, $this);
+        return redirect()->route($this->route_name, ['id' => $id]);
     }
 
     /**
@@ -123,9 +105,6 @@ class CommentController extends Controller
      */
     public function updateComment(Request $request, $id)
     {
-         $replay_data = $request->validated();
-         $replay_data['title'] = $replay_data['title']??null;
-
-         Comment::where('id', $id)->where('relation', $this->relation)->update($replay_data);
+        CommentService::update($request, $id, $this->relation);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\IgnoreUser;
+use App\Services\User\IgnoreService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -32,8 +33,7 @@ class IgnoreController extends Controller
      */
     public function setNotIgnore($user_id)
     {
-        IgnoreUser::where('user_id', Auth::id())->where('ignored_user_id', $user_id)->delete();
-
+        IgnoreService::remove($user_id);
         return back();
     }
 
@@ -44,8 +44,6 @@ class IgnoreController extends Controller
      */
     public function getIgnoreList()
     {
-        $users = IgnoreUser::where('user_id', Auth::id())->with('user.avatar')->paginate(50);
-
-        return view('user.ignore_list')->with('users', $users);
+        return view('user.ignore_list')->with('users', IgnoreService::getIgnoreList());
     }
 }

@@ -1,6 +1,6 @@
 @if($messages->lastPage() > $messages->currentPage())
     <div class="text-center load-more-box">
-        <span title="" class="badge bg-light-blue load-more" date-href="{{$messages->url($page??2)}}">Загрузить предыдущие сообщеня</span>
+        <span title="" class="badge bg-light-blue load-more" date-href="{{route('admin.user.message_load',['dialog_id' => $dialog_id, 'page' => $page??2])/*$messages->url($page??2)*/}}">Загрузить предыдущие сообщеня</span>
     </div>
 @endif
 

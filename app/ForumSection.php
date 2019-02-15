@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Traits\ModelRelations\ForumSectionRelation;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class ForumSection extends Model
@@ -52,5 +53,32 @@ class ForumSection extends Model
     public static function getSectionByName($name)
     {
        return ForumSection::active()->where('name', $name)->first();
+    }
+
+    /**
+     * @param $user_id
+     * @return mixed
+     */
+    public static function getUserTopics($user_id)
+    {
+        return ForumSection::whereHas('topics', function ($query) use ($user_id){
+                    $query->where('user_id', $user_id);
+                })->with(['topics' => function($query1) use ($user_id){
+                    $query1->where('user_id',$user_id)
+                        ->withCount( 'positive', 'negative', 'comments')
+                        ->with('icon')
+                        ->has('sectionActive')
+                        ->with(['user'=> function($q){
+                            $q->with('avatar')->withTrashed();
+                        }])
+                        ->where(function ($q){
+                            $q->whereNull('start_on')
+                                ->orWhere('start_on','<=', Carbon::now()->format('Y-M-d'));
+                        })
+                        ->with(['comments' => function($query){
+                            $query->withCount('positive', 'negative')->orderBy('created_at', 'desc')->first();
+                        }])
+                        ->orderBy('created_at', 'desc');
+                }])->get();
     }
 }

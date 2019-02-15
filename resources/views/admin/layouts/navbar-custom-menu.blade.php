@@ -61,21 +61,21 @@
                 <ul class="menu">
                     @if($notification['new_topics'])
                     <li><!-- start notification -->
-                        <a href="{{route('admin.forum_topic')}}">
+                        <a href="{{route('admin.forum_topic', ['approved' => 0])}}">
                             <i class="fa fa-list text-aqua"></i> {{$notification['new_topics']}} новых записей на форуме
                         </a>
                     </li>
                     @endif
                     @if($notification['new_gosu_replays'])
                     <li><!-- start notification -->
-                        <a href="{{route('admin.replay', ['users' => '0'])}}">
+                        <a href="{{route('admin.replay', ['users' => '0', 'approved' => 0])}}">
                             <i class="fa fa-film text-aqua"></i> {{$notification['new_gosu_replays']}} новых Gosu replay(s)
                         </a>
                     </li>
                     @endif
                     @if($notification['new_user_replays'])
                     <li><!-- start notification -->
-                        <a href="{{route('admin.replay', ['users' => '1'])}}">
+                        <a href="{{route('admin.replay', ['users' => '1', 'approved' => 0])}}">
                             <i class="fa fa-film text-aqua"></i> {{$notification['new_user_replays']}} новых пользовательский replay(s)
                         </a>
                     </li>

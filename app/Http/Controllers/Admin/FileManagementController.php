@@ -7,6 +7,7 @@ use App\Http\Requests\FileSearchAdminRequest;
 use App\Http\Requests\FileUpdateAdminRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -86,7 +87,7 @@ class FileManagementController extends Controller
 
             if ($request->hasFile('file')){
                 Storage::delete(str_replace('/storage','public', $file->link));
-                $path = str_replace('public', '/storage',$date['file']->store('public/files'));
+                $path = str_replace('public', '/storage',$date['file']->storeAs('public/files', substr(md5(time()), 0, 5).$date['file']->getClientOriginalName()));
 
                 $date['link']       = $path;
                 $date['user_id']    = Auth::id();

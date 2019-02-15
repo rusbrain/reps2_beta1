@@ -114,7 +114,7 @@
 
 @section('js')
     <script>
-        $('.modal-default_edit').on('click', '.add_input', function () {
+        $('.pop-up-content').on('click', '.add_input', function () {
             console.log(this);
             $html = ' <div class="row">\n' +
                 '                                <div class="col-md-10">\n' +
@@ -130,7 +130,7 @@
             $("#"+this.dataset.question).append($html);
         });
 
-        $('.modal-default_edit').on('click', '.remove_input', function () {
+        $('.pop-up-content').on('click', '.remove_input', function () {
             console.log(this.dataset.answer);
             $('#'+this.dataset.answer).remove();
         });

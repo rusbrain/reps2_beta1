@@ -6,7 +6,6 @@ use App\Comment;
 use App\Http\Requests\UserGalleryStoreCommentRequest;
 use App\IgnoreUser;
 use App\UserGallery;
-use Illuminate\Http\Request;
 
 class UserGalleryCommentController extends CommentController
 {
@@ -15,35 +14,35 @@ class UserGalleryCommentController extends CommentController
      *
      * @var string
      */
-    protected $relation = Comment::RELATION_USER_GALLERY;
+    public $relation = Comment::RELATION_USER_GALLERY;
 
     /**
      * View name
      *
      * @var string
      */
-    protected $view_name = 'gallery.view';
+    public $view_name = 'gallery.view';
 
     /**
      * Route name
      *
      * @var string
      */
-    protected $route_name = 'gallery.view';
+    public $route_name = 'gallery.view';
 
     /**
      * object name with 'id'
      *
      * @var string
      */
-    protected $name_id = 'gallery_id';
+    public $name_id = 'gallery_id';
 
     /**
      * Model class
      *
      * @var string
      */
-    protected $model = UserGallery::class;
+    public $model = UserGallery::class;
     /**
      * Store a newly created resource in storage.
      *

@@ -155,7 +155,7 @@
                                 <div class="form-group">
                                     <label>Роль</label>
                                     <select class="form-control" name="user_role_id" @if(!$admin_helper->admin()) disabled @endif>
-                                        <option @if(!$user->user_role_id) selected @endif>Пользователь</option>
+                                        <option value="0" @if(!$user->user_role_id) selected @endif>Пользователь</option>
                                         @foreach($admin_helper->getUserRole() as $role)
                                             <option value="{{$role->id}}" @if($user->user_role_id == $role->id) selected @endif>{{$role->title}}</option>
                                         @endforeach

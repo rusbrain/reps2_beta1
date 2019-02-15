@@ -13,35 +13,35 @@ class ReplayCommentController extends CommentController
      *
      * @var string
      */
-    protected $relation = Comment::RELATION_REPLAY;
+    public $relation = Comment::RELATION_REPLAY;
 
     /**
      * View name
      *
      * @var string
      */
-    protected $view_name = 'replay.get';
+    public $view_name = 'replay.get';
 
     /**
      * Route name
      *
      * @var string
      */
-    protected $route_name = 'replay.get';
+    public $route_name = 'replay.get';
 
     /**
      * object name with 'id'
      *
      * @var string
      */
-    protected $name_id = 'replay_id';
+    public $name_id = 'replay_id';
 
     /**
      * Model class
      *
      * @var string
      */
-    protected $model = Replay::class;
+    public $model = Replay::class;
 
     /**
      * Store a newly created resource in storage.

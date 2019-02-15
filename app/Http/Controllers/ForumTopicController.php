@@ -2,17 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\File;
+use App\Comment;
 use App\ForumSection;
 use App\ForumTopic;
 use App\Http\Requests\ForumTopicRebaseRequest;
 use App\Http\Requests\ForumTopicStoreRequest;
 use App\Http\Requests\ForumTopicUpdteRequest;
-use App\User;
-use App\UserReputation;
-use Carbon\Carbon;
-use foo\bar;
-use Illuminate\Http\Request;
+use App\Services\Forum\TopicService;
 use Illuminate\Support\Facades\Auth;
 
 class ForumTopicController extends Controller
@@ -25,23 +21,13 @@ class ForumTopicController extends Controller
      */
     public function index($id)
     {
-        $topic = ForumTopic::where('id', $id)
-            ->where(function ($q){
-                $q->whereNull('start_on')
-                    ->orWhere('start_on', '<=', Carbon::now()->format('Y-M-d'));
-            })
-            ->with(User::getUserWithReputationQuery())
-            ->withCount( 'positive', 'negative', 'comments')
-            ->with('icon')->first();
-
+        $topic = ForumTopic::getTopicWithRelations($id);
         if(!$topic){
             return abort(404);
         }
+        $comments = Comment::getObjectComments($topic);
 
-        $comments = $topic->comments()->with(User::getUserWithReputationQuery())->withCount('positive', 'negative')
-            ->orderBy('created_at')->paginate(20);
-
-        ForumTopic::where('id', $id)->update(['reviews' => $topic->reviews+1]);
+        TopicService::updateReview($topic);
 
         return view('forum.topic')->with([
                 'topic' => $topic->load('section'),
@@ -57,7 +43,6 @@ class ForumTopicController extends Controller
     public function create()
     {
         return view('forum.create_topic')->with('sections', ForumSection::all());
-
     }
 
     /**
@@ -68,23 +53,7 @@ class ForumTopicController extends Controller
      */
     public function store(ForumTopicStoreRequest $request)
     {
-        $topic_data = $request->validated();
-
-        $topic_data['user_id'] = Auth::id();
-        $topic_data['commented_at'] = Carbon::now();
-
-        if ($request->file('preview_img')){
-            $title = 'Превью '.$request->has('title')?$request->get('title'):'';
-            $file = File::storeFile($request->file('preview_img'), 'preview_img', $title);
-
-            unset($topic_data['preview_img']);
-
-            $topic_data['preview_file_id'] = $file->id;
-        }
-
-        $topic = ForumTopic::create($topic_data);
-
-        return redirect()->route('forum.topic.index', ['id' => $topic->id]);
+        return redirect()->route('forum.topic.index', ['id' => TopicService::storeTopic($request)]);
     }
 
     /**
@@ -106,8 +75,7 @@ class ForumTopicController extends Controller
             return abort(403);
         }
 
-        ForumTopic::where('id', $id)->update(['section_id' => $request->get('section_id')]);
-
+        TopicService::rebaseTopic($request->get('section_id'), $id);
         return redirect()->route('forum.topic.index', ['id' => $id]);
     }
 
@@ -125,7 +93,10 @@ class ForumTopicController extends Controller
             return abort(404);
         }
 
-        return view('forum.edit_topic', ['topic' => $topic->load('section'), 'sections' => ForumSection::where('is_active', 1)->get(['id', 'title','name'])]);
+        return view('forum.edit_topic', [
+            'topic'     => $topic->load('section'),
+            'sections'  => ForumSection::where('is_active', 1)->get(['id', 'title','name'])
+        ]);
     }
 
     /**
@@ -138,51 +109,20 @@ class ForumTopicController extends Controller
     public function update(ForumTopicUpdteRequest $request, $id)
     {
         $topic = ForumTopic::find($id);
-
         if (!$topic){
             return abort(404);
         }
 
-        $topic_data = [
-            'title'=> $request->get('title'),
-            'content'=> $request->get('content')
-        ];
-
-        if ($request->has('preview_content') && $request->get('preview_content') != ''){
-            $topic_data['preview_content'] = $request->get('preview_content');
-        } else {
-            $topic_data['preview_content'] = null;
-        }
-
-        if ($request->has('start_on') && $request->get('start_on') != ''){
-            $topic_data['start_on'] = $request->get('start_on');
-        } else {
-            $topic_data['start_on'] = null;
-        }
-
-        if ($request->file('preview_img')){
-            if ($topic->preview_file_id){
-                File::removeFile($topic->preview_file_id);
-            }
-
-            $title = 'Превью '.$request->has('title')?$request->get('title'):'';
-            $file = File::storeFile($request->file('preview_img'), 'preview_img', $title);
-
-            unset($topic_data['preview_img']);
-
-            $topic_data['preview_file_id'] = $file->id;
-        }
-
-        ForumTopic::where('id', $id)->update($topic_data);
-
+        TopicService::update($request, $topic);
         return redirect()->route('forum.topic.index', ['id' => $id]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function destroy($id)
     {
@@ -196,43 +136,22 @@ class ForumTopicController extends Controller
             return abort(403);
         }
 
-        if ($topic->preview_file_id){
-            File::removeFile($topic->preview_file_id);
-        }
-
-        $topic->comments()->delete();
-        $topic->positive()->delete();
-        $topic->negative()->delete();
-        $topic->delete();
+        TopicService::remove($topic);
 
         return redirect()->route('forum.index');
     }
 
+    /**+
+     * @param int $user_id
+     * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View|mixed
+     */
     public function getUserTopic($user_id = 0)
     {
         if ($user_id == 0){
             $user_id = Auth::id();
         }
-        $data = ForumSection::whereHas('topics', function ($query) use ($user_id){
-            $query->where('user_id', $user_id);
-        })->with(['topics' => function($query1) use ($user_id){
-            $query1->where('user_id',$user_id)
-            ->withCount( 'positive', 'negative', 'comments')
-            ->with('icon')
-            ->has('sectionActive')
-            ->with(['user'=> function($q){
-                $q->with('avatar')->withTrashed();
-            }])
-            ->where(function ($q){
-                $q->whereNull('start_on')
-                    ->orWhere('start_on','<=', Carbon::now()->format('Y-M-d'));
-            })
-            ->with(['comments' => function($query){
-                $query->withCount('positive', 'negative')->orderBy('created_at', 'desc')->first();
-            }])
-            ->orderBy('created_at', 'desc');
-        }])->get();
 
+        $data = ForumSection::getUserTopics($user_id);
         return view('forum.my_topics')->with('topics', $data);
     }
 }

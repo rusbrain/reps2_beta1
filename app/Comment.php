@@ -65,4 +65,16 @@ class Comment extends Model
 
         return false;
     }
+
+    /**
+     * Get pagination comments of object with relations
+     *
+     * @param $object
+     * @return mixed
+     */
+    public static function getObjectComments($object)
+    {
+        return $object->comments()->with(User::getUserWithReputationQuery())->withCount('positive', 'negative')
+            ->orderBy('created_at')->paginate(20);
+    }
 }

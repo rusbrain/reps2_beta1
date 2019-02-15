@@ -14,35 +14,35 @@ class TopicCommentController extends CommentController
      *
      * @var string
      */
-    protected  $relation = Comment::RELATION_FORUM_TOPIC;
+    public  $relation = Comment::RELATION_FORUM_TOPIC;
 
     /**
      * View name
      *
      * @var string
      */
-    protected  $view_name = 'forum.topic.index';
+    public  $view_name = 'forum.topic.index';
 
     /**
      * Route name
      *
      * @var string
      */
-    protected $route_name = 'forum.topic.index';
+    public $route_name = 'forum.topic.index';
 
     /**
      * object name with 'id'
      *
      * @var string
      */
-    protected  $name_id = 'topic_id';
+    public  $name_id = 'topic_id';
 
     /**
      * Model class
      *
      * @var string
      */
-    protected $model = ForumTopic::class;
+    public $model = ForumTopic::class;
 
     /**
      * Store a newly created resource in storage.

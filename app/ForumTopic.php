@@ -165,4 +165,85 @@ class ForumTopic extends Model
             ->with('comments', 'icon')
             ->orderBy('created_at', 'desc')->paginate(20);
     }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public static function getTopicWithRelations($id)
+    {
+        return ForumTopic::where('id', $id)
+            ->where(function ($q){
+                $q->whereNull('start_on')
+                    ->orWhere('start_on', '<=', Carbon::now()->format('Y-M-d'));
+            })
+            ->with(User::getUserWithReputationQuery())
+            ->withCount( 'positive', 'negative', 'comments')
+            ->with('icon')->first();
+    }
+
+    /**
+     * @return mixed
+     */
+    public static function popularForumTopics()
+    {
+        return ForumTopic::where('approved',1)
+            ->where(function ($q){
+                $q->whereNull('start_on')
+                    ->orWhere('start_on','<=', Carbon::now()->format('Y-M-d'));
+            })
+            ->withCount( 'positive', 'negative', 'comments')
+            ->whereHas('section', function ($query){
+                $query->where('is_active',1)->where('is_general',1);
+            })
+            ->with('preview_image')
+            ->limit(5)
+            ->orderBy('created_at', 'desc')
+            ->orderBy('rating', 'desc')->get();
+    }
+
+    /**
+     * @return mixed
+     */
+    public static function lastNews()
+    {
+        return ForumTopic::news()->where('approved',1)->with(['user'=> function($q){
+            $q->withTrashed()->with('avatar');
+        }])
+            ->withCount( 'positive', 'negative', 'comments')
+            ->with('preview_image', 'icon')->limit(5)->get();
+    }
+
+    /**
+     * @param $search
+     * @return mixed
+     */
+    public static function getSearchTitleNews($search)
+    {
+        return ForumTopic::news()->where('approved',1)->with(['user'=> function($q){
+            $q->withTrashed()->with('avatar');
+        }])
+            ->withCount( 'positive', 'negative', 'comments')
+            ->where('title', 'like', "%$search%")
+            ->with('preview_image', 'icon')->paginate(20);
+    }
+
+    /**
+     * @param $search
+     * @return mixed
+     */
+    public static function getSearchTitle($search)
+    {
+        return ForumTopic::with(['user'=> function($q){
+            $q->withTrashed();
+        }])
+            ->withCount( 'positive', 'negative', 'comments')
+            ->with('icon')
+            ->where(function ($q){
+                $q->whereNull('start_on')
+                    ->orWhere('start_on', '<=', Carbon::now()->format('Y-M-d'));
+            })
+            ->where('title', 'like', "%$search%")
+            ->orderBy('created_at', 'desc')->paginate(20);
+    }
 }

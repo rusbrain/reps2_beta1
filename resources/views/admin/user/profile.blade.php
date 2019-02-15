@@ -187,12 +187,12 @@
         <div class="col-lg-6">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="#activity" data-toggle="tab">Последние публикации</a></li>
-                    <li><a href="#friends" data-toggle="tab">Друзья</a></li>
-                    <li><a href="#voting" data-toggle="tab">Голосование</a></li>
+                    @if($user->topics->count() || $user->replays->count() || $user->user_galleries->count())<li class="active"><a href="#activity" data-toggle="tab">Последние публикации</a></li>@endif
+                        @if($user->user_friends->count()) <li><a href="#friends" data-toggle="tab">Друзья</a></li> @endif
+                    @if($user->answers_to_questions->count())<li><a href="#voting" data-toggle="tab">Голосование</a></li> @endif
                 </ul>
                 <div class="tab-content">
-                    <div class="active tab-pane" id="activity">
+                    @if($user->topics->count() || $user->replays->count() || $user->user_galleries->count()) <div class="active tab-pane" id="activity">
                         <div class="row">
                             @if($user->topics->count())
                                 @inject('general_helper', 'App\Services\GeneralViewHelper')
@@ -300,9 +300,9 @@
 </div>
 @endif
 </div>
-</div>
+</div> @endif
 <!-- /.tab-pane -->
-<div class="tab-pane" id="friends">
+@if($user->user_friends->count())<div class="tab-pane" id="friends">
 <!-- The timeline -->
 <div class="row">
 <div class="col-md-6">
@@ -352,9 +352,9 @@
 </table>
 </div>
 </div>
-</div>
+</div> @endif
 <!-- /.tab-pane -->
-<div class="tab-pane" id="voting">
+                        @if($user->answers_to_questions->count())<div class="tab-pane" id="voting">
 <!-- The timeline -->
 <table class="table table-condensed">
 <thead>
@@ -376,7 +376,7 @@
 @endforeach
 </tbody>
 </table>
-</div>
+</div> @endif
 
 </div>
 <!-- /.tab-pane -->

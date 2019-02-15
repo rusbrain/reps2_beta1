@@ -28,58 +28,27 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $popular_forum_topics = ForumTopic::where('approved',1)
-            ->where(function ($q){
-                $q->whereNull('start_on')
-                    ->orWhere('start_on','<=', Carbon::now()->format('Y-M-d'));
-            })
-            ->withCount( 'positive', 'negative', 'comments')
-            ->whereHas('section', function ($query){
-            $query->where('is_active',1)->where('is_general',1);
-                })
-            ->with('preview_image')
-            ->limit(5)
-            ->orderBy('created_at', 'desc')
-            ->orderBy('rating', 'desc')->get();
-
-        $last_news = ForumTopic::news()->where('approved',1)->with(['user'=> function($q){
-            $q->withTrashed()->with('avatar');
-        }])
-            ->withCount( 'positive', 'negative', 'comments')
-            ->with('preview_image', 'icon')->limit(5)->get();
-
         return view('home.index')->with([
-            'popular_forum_topics'  => $popular_forum_topics,
-            'last_news'  => $last_news,
+            'popular_forum_topics'  => ForumTopic::popularForumTopics(),
+            'last_news'             => ForumTopic::lastNews(),
         ]);
     }
 
+    /**
+     * @param PortalSearchRequest $request
+     * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View|mixed
+     */
     public function search(PortalSearchRequest $request)
     {
         $search = $request->get('search');
         switch ($request->get('section')){
             case 'news':
-                $data = ForumTopic::news()->where('approved',1)->with(['user'=> function($q){
-                    $q->withTrashed()->with('avatar');
-                }])
-                    ->withCount( 'positive', 'negative', 'comments')
-                    ->where('title', 'like', "%$search%")
-                    ->with('preview_image', 'icon')->paginate(20);
-                return view('forum.section')->with('topics', $data);
+                return view('forum.section')
+                    ->with('topics', ForumTopic::getSearchTitleNews($search));
                 break;
             case 'forum':
-                $data = ForumTopic::with(['user'=> function($q){
-                    $q->withTrashed();
-                }])
-                    ->withCount( 'positive', 'negative', 'comments')
-                    ->with('icon')
-                    ->where(function ($q){
-                        $q->whereNull('start_on')
-                            ->orWhere('start_on', '<=', Carbon::now()->format('Y-M-d'));
-                    })
-                    ->where('title', 'like', "%$search%")
-                    ->orderBy('created_at', 'desc')->paginate(20);
-                return view('forum.section')->with(['topics'=> $data, 'title' => 'Поиск']);
+                return view('forum.section')
+                    ->with(['topics'=> ForumTopic::getSearchTitle($search), 'title' => 'Поиск']);
                 break;
             case 'replay':
                 $replay = new ReplayController();

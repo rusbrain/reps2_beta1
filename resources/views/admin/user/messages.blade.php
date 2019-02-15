@@ -126,7 +126,7 @@
                     $('.messages-box').on('click', '.load-more', function () {
                         var url = $('.load-more').attr('date-href');
                         console.log(url);
-                        $.post(
+                        $.get(
                             url,
                             {
                                 _token: '{{csrf_token()}}',
