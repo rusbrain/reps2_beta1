@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\ForumSection;
 use App\ForumTopic;
 use App\Http\Requests\PortalSearchRequest;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 use App\Replay;
+use App\Services\Replay\ReplayService;
 
 class HomeController extends Controller
 {
@@ -51,8 +49,7 @@ class HomeController extends Controller
                     ->with(['topics'=> ForumTopic::getSearchTitle($search), 'title' => 'Поиск']);
                 break;
             case 'replay':
-                $replay = new ReplayController();
-                return $replay->getList(Replay::where('title', 'like', "%$search%"));
+                return ReplayService::getList(Replay::where('title', 'like', "%$search%"), "Поиск реплаев");
                 break;
         }
     }

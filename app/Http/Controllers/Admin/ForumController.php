@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\ForumSection;
 use App\Http\Requests\ForumSectionUpdateAdminRequest;
-use Illuminate\Http\Request;
+use App\Services\Base\BaseDataService;
+use App\Services\Base\ViewService;
 use App\Http\Controllers\Controller;
 
 class ForumController extends Controller
@@ -26,11 +27,7 @@ class ForumController extends Controller
     public function pagination()
     {
         $data = ForumSection::withCount('topics')->orderBy('position')->paginate(20);
-
-        $table      = (string) view('admin.forum.section.list_table') ->with(['data' => $data]);
-        $pagination = (string) view('admin.user.pagination')    ->with(['data' => $data]);
-
-        return ['table' => $table, 'pagination' => $pagination];
+        return BaseDataService::getPaginationData(ViewService::getSections($data), ViewService::getPagination($data));
     }
 
     /**
@@ -42,7 +39,6 @@ class ForumController extends Controller
     public function unactive($section_id)
     {
         ForumSection::where('id', $section_id)->update(['is_active' => 0]);
-
         return back();
     }
 
@@ -55,7 +51,6 @@ class ForumController extends Controller
     public function active($section_id)
     {
         ForumSection::where('id', $section_id)->update(['is_active' => 1]);
-
         return back();
     }
 
@@ -68,7 +63,6 @@ class ForumController extends Controller
     public function general($section_id)
     {
         ForumSection::where('id', $section_id)->update(['is_general' => 1]);
-
         return back();
     }
 
@@ -81,7 +75,6 @@ class ForumController extends Controller
     public function notGeneral($section_id)
     {
         ForumSection::where('id', $section_id)->update(['is_general' => 0]);
-
         return back();
     }
 
@@ -94,7 +87,6 @@ class ForumController extends Controller
     public function userCan($section_id)
     {
         ForumSection::where('id', $section_id)->update(['user_can_add_topics' => 1]);
-
         return back();
     }
 
@@ -107,7 +99,6 @@ class ForumController extends Controller
     public function userNotCan($section_id)
     {
         ForumSection::where('id', $section_id)->update(['user_can_add_topics' => 0]);
-
         return back();
     }
 
@@ -119,19 +110,7 @@ class ForumController extends Controller
      */
     public function remove($section_id)
     {
-
-        $section = ForumSection::find($section_id);
-
-        foreach ($section->topics()->get() as $topic){
-            $topic->comments()->delete();
-            $topic->positive()->delete();
-            $topic->negative()->delete();
-        }
-
-        $section->topics()->delete();
-
-        ForumSection::where('id', $section_id)->delete();
-
+        ForumSection::removeSection($section_id);
         return back();
     }
 
@@ -165,14 +144,7 @@ class ForumController extends Controller
      */
     public function saveSection(ForumSectionUpdateAdminRequest $request, $section_id)
     {
-        $data = $request->validated();
-
-        $data['is_active']              = $data['is_active']??0;
-        $data['is_general']             = $data['is_general']??0;
-        $data['user_can_add_topics']    = $data['user_can_add_topics']??0;
-
-        ForumSection::where('id',$section_id)->update($data);
-
+        ForumSection::updateSection($request, $section_id);
         return back();
     }
 
@@ -185,7 +157,6 @@ class ForumController extends Controller
     public function createSection(ForumSectionUpdateAdminRequest $request)
     {
         $section = ForumSection::create($request->validated());
-
         return redirect()->route('admin.forum.section.edit', ['id' => $section->id]);
     }
 }

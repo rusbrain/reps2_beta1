@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\SetRatingRequest;
 use App\Http\Requests\SetReplayUserRatingRequest;
 use App\Replay;
 use App\ReplayUserRating;
-use App\User;
+use App\Services\Rating\ReplayUserRatingService;
+use App\Services\Replay\ReplayService;
 use App\UserReputation;
-use Illuminate\Support\Facades\Auth;
 
 class ReplayRatingController extends RatingController
 {
@@ -34,17 +33,8 @@ class ReplayRatingController extends RatingController
      */
     public function getEvaluation($id)
     {
-        $replay = Replay::where('id', $id)
-            ->with(User::getUserWithReputationQuery())
-            ->with(['user'=> function($q){
-                $q->withTrashed();
-            }])
-            ->first();
-
-
-        return view('replay.evaluation')->with(['replay' => $replay, 'list' => $replay->user_rating()->with(['user'=> function($q){
-            $q->withTrashed();
-        }])->paginate(20)]);
+        $replay = ReplayService::getReplay($id);
+        return view('replay.evaluation')->with(['replay' => $replay, 'list' => ReplayUserRating::getUserRatingPagination($replay)]);
     }
 
     /**
@@ -57,18 +47,9 @@ class ReplayRatingController extends RatingController
     public function setEvaluation(SetReplayUserRatingRequest $request, $id)
     {
         if (Replay::find($id)){
-            $comment = self::getComment($request);
-
-            ReplayUserRating::updateOrCreate(
-                ['user_id' => Auth::id(), 'replay_id' => $id],
-                ['comment' => $comment, 'rating'=> $request->get('rating')]
-            );
-
-            Replay::updateUserRating($id);
-
+            ReplayUserRatingService::setEvaluation($request, $id);
             return back();
         }
-
         return abort(404);
     }
 }

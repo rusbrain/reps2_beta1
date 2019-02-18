@@ -22,4 +22,14 @@ class ReplayUserRating extends Model
      */
     protected $fillable = ['user_id', 'replay_id', 'comment', 'rating'];
 
+    /**
+     * @param $object
+     * @return mixed
+     */
+    public static function getUserRatingPagination($object)
+    {
+        return $object->user_rating()->with(['user'=> function($q){
+            $q->withTrashed();
+        }])->paginate(20);
+    }
 }

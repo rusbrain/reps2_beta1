@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Comment;
-use Illuminate\Http\Request;
+use App\Services\Base\BaseDataService;
+use App\Services\Base\ViewService;
 use App\Http\Controllers\Controller;
 
 class CommentController extends Controller
@@ -15,17 +16,8 @@ class CommentController extends Controller
      */
     public function getComments($object_name, $id)
     {
-        $relation   = Comment::getObjectRelation($object_name);
-        $comments   = [];
-
-        if ($relation){
-            $comments = Comment::where('relation', $relation)->where('object_id', $id)->with('user.avatar')->orderBy('created_at', 'desc')->paginate(20);
-        }
-
-        $table      = (string) view('admin.comment')        ->with(['data' => $comments]);
-        $pagination = (string) view('admin.user.pagination')->with(['data' => $comments]);
-
-        return ['table' => $table, 'pagination' => $pagination];
+        $comments   = Comment::getComment($object_name, $id);
+        return BaseDataService::getPaginationData(ViewService::getComments($comments), ViewService::getPagination($comments));
     }
 
     /**

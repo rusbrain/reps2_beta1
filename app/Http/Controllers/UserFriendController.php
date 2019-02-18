@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\IgnoreUser;
 use App\User;
 use App\UserFriend;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class UserFriendController extends Controller
@@ -21,12 +20,7 @@ class UserFriendController extends Controller
         if (IgnoreUser::me_ignore($user_id)){
             return abort(403);
         }
-
-        UserFriend::create([
-            'user_id' => Auth::id(),
-            'friend_user_id' => $user_id
-        ]);
-
+        UserFriend::createFriend($user_id);
         return back();
     }
 
@@ -38,8 +32,7 @@ class UserFriendController extends Controller
      */
     public function removeFriend($user_id)
     {
-        UserFriend::where('user_id', Auth::id())->where('friend_user_id', $user_id)->delete();
-
+        UserFriend::removeFriend($user_id);
         return back();
     }
 
@@ -57,15 +50,8 @@ class UserFriendController extends Controller
             $user = Auth::user();
         }
 
-        $friends = $user->user_friends()->with('friend_user')->get()->transform(function ($friend){
-            $friend->friend_user->friendly_data = $friend->created_at;
-            return $friend->friend_user;
-        });
-
-        $friendly = $user->user_friendly()->with('user')->get()->transform(function ($friend){
-            $friend->user->friendly_data = $friend->created_at;
-            return $friend->user;
-        });
+        $friends = UserFriend::getFriends($user);
+        $friendly = UserFriend::getFriendlies($user);
 
         return view('user.friends')->with(['friends'=>$friends, 'friendly' => $friendly]);
     }

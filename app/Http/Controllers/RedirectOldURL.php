@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\ForumSection;
-use App\ForumTopic;
-use App\Replay;
+use App\Services\Base\RedirectOldUrlService;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -19,64 +17,13 @@ class RedirectOldURL extends Controller
     public function forum(Request $request)
     {
         if ($request->has('forum')){
-            return $this->initSection($request);
+            return RedirectOldUrlService::initSection($request);
         }
 
         if ($request->has('topic')){
-            return $this->initTopic($request);
+            return RedirectOldUrlService::initTopic($request);
         }
-
         return redirect()->route('forum.index');
-    }
-
-    /**
-     * Get topic for redirect
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    private function initTopic(Request $request)
-    {
-        $topic_id = false;
-
-        $topic = ForumTopic::where('reps_id', $request->get('topic'))->orWhere('id', $request->get('topic'))->get();
-
-        if(count($topic)>1){
-            $topic_id = $topic->where('reps_id', $request->get('topic'))->first()->id;
-        } elseif (count($topic) == 1){
-            $topic_id = $topic->first()->id;
-        }
-
-        if (!$topic_id){
-            return redirect('/');
-        }
-
-        return redirect()->route('forum.topic.index', ['id' => $topic_id]);
-    }
-
-    /**
-     * Get section for redirect
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    private function initSection(Request $request)
-    {
-        $section_name = false;
-
-        $section = ForumSection::where('reps_id', $request->get('forum'))->orWhere('id', $request->get('forum'))->get();
-
-        if(count($section)>1){
-            $section_name = $section->where('reps_id', $request->get('forum'))->first()->name;
-        } elseif (count($section) == 1){
-            $section_name = $section->first()->name;
-        }
-
-        if (!$section_name){
-            return redirect('/');
-        }
-
-        return redirect()->route('forum.section.index', ['name' => $section_name]);
     }
 
     /**
@@ -87,17 +34,11 @@ class RedirectOldURL extends Controller
      */
     public function columns(Request $request)
     {
-        if ($request->has('id')){
-            $comment = ForumTopic::where('reps_id', $request->get('id'))->where('reps_section', 'columns')->first();
+        $column_id = RedirectOldUrlService::getColumnsId($request);
 
-            if ($comment){
-                $comment_id = $comment->id;
-                return redirect()->route('forum.topic.index', ['id' => $comment_id]);
-            }
-
-
+        if ($column_id){
+                return redirect()->route('forum.topic.index', ['id' => $column_id]);
         }
-
         return redirect()->route('forum.section.index', ['name' => 'columns']);
     }
 
@@ -114,28 +55,9 @@ class RedirectOldURL extends Controller
         }
 
         if ($request->has('news')){
-            if ($request->has('id')){
-                $topic = ForumTopic::where('reps_id', $request->get('id'))->where(function ($q) use ($request){
-                    $q-> where('reps_section', 'like', "%".$request->get('news')."%")
-                        ->orWhere('reps_section', 'like','%news%')
-                        ->orWhere('reps_section', 'like','%article%')
-                        ->orWhere('reps_section', 'like','%strategy%')
-                        ->orWhere('reps_section', 'like','%coverage%')
-                        ->orWhere('reps_section', 'like','%event%')
-                        ->orWhere('reps_section', 'like','%interview%');
-                })->first();
-
-                if($topic){
-                    $topic_id = $topic->id;
-
-                    return redirect()->route('forum.topic.index', ['id' => $topic_id]);
-                }
-
-                return redirect('/');
-            }
-
-            return redirect()->route('forum.section.index', ['name' => $request->get('news')]);
+            return RedirectOldUrlService::getNewsRedirect($request);
         }
+        return redirect('/');
     }
 
     /**
@@ -154,7 +76,6 @@ class RedirectOldURL extends Controller
             } else {
                 $user_id = $user->id;
             }
-
             return redirect()->route('user_profile', ['id' => $user_id]);
         }
 
@@ -180,13 +101,12 @@ class RedirectOldURL extends Controller
     public function freeReplays(Request $request)
     {
         if($request->has('id')){
-            $replay_id = $this->getReplayId($request);
+            $replay_id = RedirectOldUrlService::getReplayId($request);
 
             if ($replay_id){
                 return redirect()->route('replay.get',['id'=> $replay_id]);
             }
         }
-
         return redirect()->route('replay.users');
     }
 
@@ -199,7 +119,7 @@ class RedirectOldURL extends Controller
     public function replays(Request $request)
     {
         if($request->has('id')){
-             $replay_id = $this->getReplayId($request);
+             $replay_id = RedirectOldUrlService::getReplayId($request);
 
              if ($replay_id){
                  return redirect()->route('replay.get',['id'=> $replay_id]);
@@ -209,52 +129,14 @@ class RedirectOldURL extends Controller
         if($request->has('type')){
             return redirect()->route('replay.gosu_type',['type'=> $request->get('type')]);
         }
-
         return redirect()->route('replay.gosus');
-    }
-
-    /**
-     * Get Id of replay for redirect
-     *
-     * @param Request $request
-     * @return bool
-     */
-    private function getReplayId(Request $request)
-    {
-        $replay_id = false;
-
-        $replays =Replay::where('id', $request->get('id'))->orWhere('reps_id', $request->get('id'))->get();
-
-        if(count($replays)>1){
-            $replay_id = $replays->where('reps_id', $request->get('id'))->first()->id;
-        } elseif (count($replays) == 1){
-            $replay_id = $replays->first()->id;
-        }
-
-        return $replay_id;
-    }
-
-    public function sc2(Request $request)
-    {
-    }
-
-    public function userBars(Request $request)
-    {
     }
 
     public function files(Request $request)
     {
     }
 
-    public function donate(Request $request)
-    {
-    }
-
-    public function rating(Request $request)
-    {
-    }
-
-    public function home(Request $request)
+    public function home()
     {
         return redirect('/');
     }

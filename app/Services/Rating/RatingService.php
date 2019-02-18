@@ -12,6 +12,7 @@ use App\Http\Requests\SetRatingRequest;
 use App\IgnoreUser;
 use App\User;
 use App\UserReputation;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class RatingService
@@ -74,5 +75,32 @@ class RatingService
         }
 
         return abort(404);
+    }
+
+    /**
+     * Get calculation of rating value
+     *
+     * @param $object
+     * @return mixed
+     */
+    protected static function getRatingValue($object)
+    {
+        return $object->positive()->count() - $object->negative()->count();
+    }
+
+    /**
+     * Get comment value
+     *
+     * @param Request $request
+     * @return mixed|null
+     */
+    public static function getComment(Request $request)
+    {
+        $comment = null;
+
+        if($request->has('comment')){
+            $comment = $request->get('comment');
+        }
+        return $comment;
     }
 }

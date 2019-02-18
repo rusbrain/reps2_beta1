@@ -2,24 +2,17 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Comment;
 use App\Country;
-use App\File;
-use App\GameVersion;
 use App\Http\Requests\ReplaySearchRequest;
 use App\Http\Requests\ReplayStoreRequest;
 use App\Http\Requests\ReplayUpdateRequest;
 use App\Replay;
 use App\ReplayMap;
 use App\ReplayType;
-use App\ReplayUserRating;
-use App\User;
-use App\UserReputation;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Request;
+use App\Services\Replay\ReplayService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use phpDocumentor\Reflection\Project;
 
 class ReplayController extends Controller
 {
@@ -28,14 +21,14 @@ class ReplayController extends Controller
      *
      * @var string
      */
-    protected $replay_group = "";
+    public $replay_group = "";
 
     /**
      * Replay query function name
      *
      * @var string
      */
-    protected $method_get = "";
+    public $method_get = "";
 
     /**
      * Get list of all Replay
@@ -45,68 +38,7 @@ class ReplayController extends Controller
      */
     public function list(ReplaySearchRequest $request)
     {
-        $method = $this->method_get;
-        $query = Replay::$method();
-        $request_data = $request->validated();
-
-        foreach ($request_data as $key=>$datum){
-            if (is_null($datum)){
-                unset($request_data[$key]);
-            }
-        }
-
-        if ($request_data)
-            foreach ($request_data as $key=>$request_datum) {
-                if ($key == 'text'){
-                    $query->where(function ($q) use ($request_datum){
-                        $q->where('title', 'like', "%$request_datum%")
-                            ->orWhere('content', 'like', "%$request_datum%")
-                            ->orWhere('championship', 'like', "%$request_datum%");
-                    });
-                }elseif($key == 'sort_by'){
-                    $query->orderBy($request_datum, 'desc');
-                }else{
-                    $query->where($key, $request_datum);
-                }
-            }
-        return $this->getList($query);
-    }
-
-    /**
-     * get Replay view list
-     *
-     * @param $query
-     * @param bool $title
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function getList($query, $title = false)
-    {
-        $data = $this->getReplay($query)
-            ->with('map')
-            ->withCount( 'positive', 'negative', 'comments')
-            ->orderBy('created_at')
-            ->paginate(20);
-
-        return view('replay.list')->with(['replays' => $data, 'title'=>($title !== false?$title:$this->replay_group)]);
-    }
-
-    /**
-     * get Replay query
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $replay
-     * @return Replay|\Illuminate\Database\Eloquent\Builder
-     */
-    private function getReplay(Builder $replay)
-    {
-        return $replay->with(User::getUserWithReputationQuery())
-                ->with(['user'=> function($q){
-                $q->withTrashed();
-            }])
-            ->withCount( 'positive', 'negative', 'comments')
-                ->with('user')
-                ->with(['user_rating' => function($query){
-                    $query->where('user_id', Auth::id());
-                }]);
+        return ReplayService::getList(ReplayService::listReplay($request,$this), $this->replay_group);
     }
 
     /**
@@ -117,16 +49,11 @@ class ReplayController extends Controller
      */
     public function show($id)
     {
-
-        $replay = $this->getReplay(Replay::where('id', $id))->first();
-
+        $replay =ReplayService::getReplayQuery(Replay::where('id', $id))->first();
         if ($replay){
-            $comments = $replay->comments()->with(User::getUserWithReputationQuery())->withCount('positive', 'negative')
-                ->orderBy('created_at')->paginate(20);
-
+            $comments = Comment::getObjectComments($replay);
             return view('replay.show')->with(['replay' => $replay, 'comments' => $comments]);
         }
-
         return abort(404);
     }
 
@@ -152,19 +79,7 @@ class ReplayController extends Controller
      */
     public function store(ReplayStoreRequest $request)
     {
-        $replay_data = $request->validated();
-
-        $title = 'Replay '.$request->has('title')?$request->get('title'):'';
-        $file = File::storeFile($replay_data['replay'], 'replays', $title);
-
-        $replay_data['file_id'] = $file->id;
-        $replay_data['user_id'] = Auth::id();
-
-        unset($replay_data['replay']);
-
-        $replay = Replay::create($replay_data);
-
-        return redirect()->route('replay.get', ['id' => $replay->id]);
+        return redirect()->route('replay.get', ['id' => ReplayService::store($request)]);
     }
 
     /**
@@ -176,11 +91,9 @@ class ReplayController extends Controller
     public function edit($id)
     {
         $replay = Replay::where('id', $id)->with('file')->first();
-
         if(!$replay){
             return abort(404);
         }
-
         return view('replay.edit', ['replay' => $replay]);
     }
 
@@ -194,13 +107,10 @@ class ReplayController extends Controller
     public function update(ReplayUpdateRequest $request, $id)
     {
         $replay = Replay::find($id);
-
         if($replay){
             Replay::updateReplay($request, $replay);
-
             return redirect()->route('replay.get', ['id' => $replay->id]);
         }
-
         return abort(404);
     }
 
@@ -216,9 +126,8 @@ class ReplayController extends Controller
         if (!$user_id){
             $user_id = Auth::id();
         }
-
         $method = $this->method_get;
-        return $this->getList(Replay::$method()->where('user_id',$user_id));
+        return ReplayService::getList(Replay::$method()->where('user_id',$user_id), $this->replay_group);
     }
 
     public function getAllUserReplay($user_id = 0)
@@ -226,8 +135,7 @@ class ReplayController extends Controller
         if (!$user_id){
             $user_id = Auth::id();
         }
-
-        $this->getList(Replay::where('user_id',$user_id));
+        return ReplayService::getList(Replay::where('user_id',$user_id), $this->replay_group);
     }
 
     /**
@@ -239,13 +147,11 @@ class ReplayController extends Controller
     public function getReplayByType($type)
     {
         $type = ReplayType::where('name', $type)->first();
-
         if(!$type){
             return abort(404);
         }
-
         $method = $this->method_get;
-        return $this->getList(Replay::$method()->where('type_id',$type->id), $this->replay_group.': '.$type->title);
+        return ReplayService::getList(Replay::$method()->where('type_id',$type->id), $this->replay_group.': '.$type->title);
     }
 
     /**
@@ -257,46 +163,29 @@ class ReplayController extends Controller
     public function download($id)
     {
         $replay = Replay::find($id);
-
         if(!$replay){
             return abort(404);
         }
-
-        $file = $replay->file()->first();
-        
-        $replay->downloaded = $replay->downloaded+1;
-        
-        $replay->save();
-
-        return Storage::download(str_replace('/storage','public', $file->link));
+        return Storage::download(str_replace('/storage','public', ReplayService::download($replay)));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function destroy($id)
     {
         $replay = Replay::find($id);
-
         if (!$replay){
             return abort(404);
         }
-
         if ($replay->user_id != Auth::id()){
             return abort(403);
         }
-
-        $file = $replay->file()->first();
-        File::removeFile($file->id);
-
-        $replay->user_rating()->delete();
-        $replay->comments()->delete();
-        $replay->delete();
-
-
+        ReplayService::destroy($replay);
         return redirect()->route('replay.gosus');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Http\Requests\SearchForumTopicRequest;
 use App\Observers\ForumTopicPointsObserver;
 use App\Traits\ModelRelations\ForumTopicRelation;
 use Carbon\Carbon;
@@ -67,6 +68,19 @@ class ForumTopic extends Model
             ->whereHas('section', function($q){
             $q->where('is_active', 1)->where('is_general', 1);
         })->orderBy('created_at', 'desc');
+    }
+
+    /**
+     * @param Builder $query
+     * @return Builder
+     */
+    public static function newsWithQuery(Builder $query)
+    {
+        return $query->with('section', 'preview_image', 'icon')
+            ->withCount( 'positive', 'negative', 'comments')
+            ->with(['user'=> function($q){
+                $q->withTrashed();
+            }]);
     }
 
     /**
@@ -245,5 +259,29 @@ class ForumTopic extends Model
             })
             ->where('title', 'like', "%$search%")
             ->orderBy('created_at', 'desc')->paginate(20);
+    }
+
+    /**
+     * @param SearchForumTopicRequest $request
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public static function getTopicPagination(SearchForumTopicRequest $request)
+    {
+        return self::search($request->validated(), self::with('user', 'section', 'icon'))
+            ->withCount( 'positive', 'negative', 'comments')->paginate(50);
+    }
+
+    /**
+     * @param $topic_id
+     */
+    public static function removeTopic($topic_id)
+    {
+        $topic = ForumTopic::find($topic_id);
+
+        $topic->comments()->delete();
+        $topic->positive()->delete();
+        $topic->negative()->delete();
+
+        ForumTopic::where('id', $topic_id)->delete();
     }
 }

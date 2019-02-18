@@ -4,10 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Country;
 use App\Http\Requests\CountrySaveRequest;
-use App\Http\Requests\RoleSaveRequest;
-use App\Replay;
-use App\User;
-use Illuminate\Http\Request;
+use App\Services\Base\BaseDataService;
+use App\Services\Base\CountryService;
+use App\Services\Base\ViewService;
 use App\Http\Controllers\Controller;
 
 class CountryController extends Controller
@@ -28,12 +27,7 @@ class CountryController extends Controller
     public function pagination()
     {
         $countries =Country::withCount('users', 'replays1', 'replays2')->paginate(50);
-
-        $table      = (string) view('admin.country.list_table') ->with(['data' => $countries]);
-        $pagination = (string) view('admin.user.pagination')    ->with(['data' => $countries]);
-        $pop_up     = (string) view('admin.country.list_pop_up')->with(['data' => $countries]);
-
-        return ['table' => $table, 'pagination' => $pagination, 'pop_up' => $pop_up];
+        return BaseDataService::getPaginationData(ViewService::getCountries($countries), ViewService::getPagination($countries), ViewService::getCountriesPopUp($countries));
     }
 
     /**
@@ -62,12 +56,7 @@ class CountryController extends Controller
      */
     public function remove($type_id)
     {
-        User::where('country_id', $type_id)->update(['country_id' => 0]);
-        Replay::where('first_country_id', $type_id)->update(['first_country_id' => 0]);
-        Replay::where('second_country_id', $type_id)->update(['second_country_id' => 0]);
-
-        Country::where('id', $type_id)->delete();
-
+        CountryService::remove($type_id);
         return back();
     }
 

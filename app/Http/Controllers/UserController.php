@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Country;
-use App\File;
 use App\Http\Requests\User\UpdateProfileRequest;
 use App\IgnoreUser;
 use App\User;
@@ -33,16 +32,10 @@ class UserController extends Controller
             return abort(403);
         }
 
-        $user = User::where('id',$id)
-            ->with('role', 'avatar', 'friends', 'friendly')
-            ->withCount( 'positive', 'negative', 'comments')
-            ->withCount('user_galleries', 'topics', 'replay', 'gosu_replay', 'topic_comments', 'replay_comments', 'gallery_comments')
-            ->first();
-
+        $user = User::getUserDataById($id);
         if (!$user){
             abort(404);
         }
-
         return view('user.profile')->with('user', $user->load('avatar'));
     }
 

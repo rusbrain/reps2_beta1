@@ -2,18 +2,12 @@
 
 namespace App\Http\Controllers;
 
-
-use App\Comment;
-use App\File;
 use App\Http\Requests\UserGalleryStoreRequest;
 use App\Http\Requests\UserGalleryUpdateRequest;
 use App\IgnoreUser;
+use App\Services\User\UserGalleryService;
 use App\UserGallery;
-use App\UserReputation;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 
 
 class UserGalleryController extends Controller
@@ -25,7 +19,7 @@ class UserGalleryController extends Controller
      */
     public function index()
     {
-        return view('gallery.list')->with('photos', self::getList(new UserGallery()));
+        return view('gallery.list')->with('photos', UserGalleryService::getList(new UserGallery()));
     }
 
     /**
@@ -44,16 +38,7 @@ class UserGalleryController extends Controller
             return abort(403);
         }
 
-        return view('gallery.list')->with('photos', self::getList(UserGallery::where('user_id',$id)));
-    }
-
-    /**
-     * @param $gallery
-     * @return mixed
-     */
-    private static function getList($gallery)
-    {
-        return $gallery->with('file', 'user')->withCount( 'positive', 'negative', 'comments')->orderBy('created_at')->paginate(50);
+        return view('gallery.list')->with('photos', UserGalleryService::getList(UserGallery::where('user_id',$id)));
     }
 
     /**
@@ -74,13 +59,7 @@ class UserGalleryController extends Controller
      */
     public function store(UserGalleryStoreRequest $request)
     {
-        $data = $request->validated();
-        $data = UserGallery::saveImage($data);
-        $data['user_id'] = Auth::id();
-
-        $gallery = UserGallery::create($data);
-
-        return redirect()->route('gallery.view', ['id' => $gallery->id]);
+        return redirect()->route('gallery.view', ['id' => UserGalleryService::store($request)]);
     }
 
     /**
@@ -96,13 +75,12 @@ class UserGalleryController extends Controller
         if (IgnoreUser::me_ignore($photo->user_id)){
             return abort(403);
         }
+        if (!$photo)
+        {
+            return abort(404);
+        }
 
-        $photo = $photo->load('file', 'user');
-        $photo->comments = Comment::where('relation', Comment::RELATION_USER_GALLERY)->where('object_id',$id)->withCount('positive', 'negative')->paginate(20);
-        $photo->photo_next = UserGallery::where('user_id', $photo->user_id)->where('id', '>', $id)->orderBy('id', 'asc')->first();
-        $photo->photo_before = UserGallery::where('user_id', $photo->user_id)->where('id', '<', $id)->orderBy('id', 'desc')->first();
-
-        return view('gallery.photo')->with('photo', $photo);
+        return view('gallery.photo')->with('photo', UserGalleryService::getPhotoData($photo));
     }
 
     /**
@@ -134,19 +112,7 @@ class UserGalleryController extends Controller
         $gallery = UserGallery::find($id);
 
         if($gallery){
-            $gallery_data = $request->validated();
-
-            if($request->has('image')){
-                File::removeFile($gallery->file_id);
-                $gallery_data = self::saveImage($gallery_data);
-            }
-
-            if ($request->has('content') && $request->get('content') === null){
-                $gallery_data['content'] = '';
-            }
-
-            $gallery = UserGallery::where('id', $id)->update($gallery_data);
-
+            UserGalleryService::update($request, $gallery);
             return redirect()->route('gallery.view', ['id' => $id]);
         }
 
@@ -166,19 +132,11 @@ class UserGalleryController extends Controller
         if (!$gallery){
             return abort(404);
         }
-
         if ($gallery->user_id != Auth::id()){
             return abort(403);
         }
 
-        $file = $gallery->file()->first();
-        File::removeFile($file->id);
-
-        $gallery->comments()->delete();
-        $gallery->positive()->delete();
-        $gallery->negative()->delete();
-        $gallery->delete();
-
+        UserGalleryService::destroy($gallery);
         return redirect()->route('gallery.list_my');
     }
 }

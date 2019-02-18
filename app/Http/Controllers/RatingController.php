@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SetRatingRequest;
 use App\Services\Rating\RatingService;
 use App\UserReputation;
-use Illuminate\Http\Request;
-
 
 class RatingController extends Controller
 {
@@ -45,33 +43,6 @@ class RatingController extends Controller
     public function setRating(SetRatingRequest $request, $id)
     {
         return RatingService::set($request, $id, $this->relation, $this->model);
-    }
-
-    /**
-     * Get comment value
-     *
-     * @param Request $request
-     * @return mixed|null
-     */
-    protected static function getComment(Request $request)
-    {
-        $comment = null;
-
-        if($request->has('comment')){
-            $comment = $request->get('comment');
-        }
-        return $comment;
-    }
-
-    /**
-     * Get calculation of rating value
-     *
-     * @param $object
-     * @return mixed
-     */
-    protected static function getRatingValue($object)
-    {
-        return $object->positive()->count()-$object->negative()->count();
     }
     /**
      * Get reputation of User

@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\File;
 use App\ForumSection;
 use App\ForumTopic;
+use App\Http\Requests\AdminTopicCreateRequest;
 use App\Http\Requests\ForumTopicUpdateAdminRequest;
 use App\Http\Requests\SearchForumTopicRequest;
-use App\User;
+use App\Services\Base\BaseDataService;
+use App\Services\Base\ViewService;
+use App\Services\Forum\TopicService;
 use App\Http\Controllers\Controller;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
 
 class ForumTopicController extends Controller
 {
@@ -22,9 +22,7 @@ class ForumTopicController extends Controller
      */
     public function topics(SearchForumTopicRequest $request)
     {
-        $data = ForumTopic::search($request->validated())
-            ->count();
-
+        $data = ForumTopic::search($request->validated())->count();
         return view('admin.forum.topic.list')->with(['topics_count' => $data, 'request_data' => $request->validated(), 'sections' => ForumSection::all()]);
     }
 
@@ -34,13 +32,8 @@ class ForumTopicController extends Controller
      */
     public function pagination(SearchForumTopicRequest $request)
     {
-        $data = ForumTopic::search($request->validated(), ForumTopic::with('user', 'section', 'icon'))
-            ->withCount( 'positive', 'negative', 'comments')->paginate(50);
-
-        $table = (string) view('admin.forum.topic.list_table')->with(['data' => $data]);
-        $pagination = (string) view('admin.user.pagination')->with(['data' => $data]);
-
-        return ['table' => $table, 'pagination' => $pagination];
+        $data = ForumTopic::getTopicPagination($request);
+        return BaseDataService::getPaginationData(ViewService::getTopics($data), ViewService::getPagination($data));
     }
 
     /**
@@ -52,14 +45,7 @@ class ForumTopicController extends Controller
      */
     public function getUsersTopics(SearchForumTopicRequest $request, $user_id)
     {
-        $user = User::find($user_id);
-
-        $topics  = ForumTopic::search($request->validated(), ForumTopic::where('user_id', $user_id))->count();
-
-        $request_data = $request->validated();
-        $request_data['user_id'] = $user_id;
-
-        return view('admin.forum.topic.list')->with(['topics_count' => $topics, 'title' => "Темы форума $user->name", 'sections' => ForumSection::all(), 'request_data' => $request_data]);
+        return view('admin.forum.topic.list')->with(TopicService::getUserTopic($request, $user_id));
     }
 
     /**
@@ -71,7 +57,6 @@ class ForumTopicController extends Controller
     public function approve($topic_id)
     {
         ForumTopic::where('id', $topic_id)->update(['approved' => 1]);
-
         return back();
     }
 
@@ -84,7 +69,6 @@ class ForumTopicController extends Controller
     public function unApprove($topic_id)
     {
         ForumTopic::where('id', $topic_id)->update(['approved' => 0]);
-
         return back();
     }
 
@@ -96,14 +80,7 @@ class ForumTopicController extends Controller
      */
     public function remove($topic_id)
     {
-        $topic = ForumTopic::find($topic_id);
-
-        $topic->comments()->delete();
-        $topic->positive()->delete();
-        $topic->negative()->delete();
-
-        ForumTopic::where('id', $topic_id)->delete();
-
+        ForumTopic::removeTopic($topic_id);
         return back();
     }
 
@@ -138,28 +115,7 @@ class ForumTopicController extends Controller
      */
     public function saveTopic(ForumTopicUpdateAdminRequest $request, $topic_id)
     {
-        $topic = ForumTopic::find($topic_id);
-        $data = $request->validated();
-
-        $data['approved']   = $data['approved']??0;
-        $data['news']       = $data['news']??0;
-
-        if($request->file('preview_img')){
-            if ($request->file('preview_img')){
-                if ($topic->preview_file_id){
-                    File::removeFile($topic->preview_file_id);
-                }
-
-                $title = 'Превью '.$request->has('title')?$request->get('title'):'';
-                $file = File::storeFile($request->file('preview_img'), 'preview_img', $title);
-
-                $data['preview_file_id'] = $file->id;
-            }
-        }
-
-        unset($data['preview_img']);
-        ForumTopic::where('id',$topic_id)->update($data);
-
+        TopicService::update($request, ForumTopic::find($topic_id), true);
         return back();
     }
 
@@ -172,7 +128,6 @@ class ForumTopicController extends Controller
     public function news($topic_id)
     {
         ForumTopic::where('id', $topic_id)->update(['news' => 1]);
-
         return back();
     }
 
@@ -185,7 +140,6 @@ class ForumTopicController extends Controller
     public function notNews($topic_id)
     {
         ForumTopic::where('id', $topic_id)->update(['news' => 0]);
-
         return back();
     }
 
@@ -202,29 +156,11 @@ class ForumTopicController extends Controller
     /**
      * Create new forum section
      *
-     * @param ForumTopicUpdateAdminRequest $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param AdminTopicCreateRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function createTopic(ForumTopicUpdateAdminRequest $request)
+    public function createTopic(AdminTopicCreateRequest $request)
     {
-        $data = $request->validated();
-
-        if($request->file('preview_img')){
-                $title = 'Превью '.$request->has('title')?$request->get('title'):'';
-                $file = File::storeFile($request->file('preview_img'), 'preview_img', $title);
-
-                $data['preview_file_id'] = $file->id;
-        }
-
-        $data['user_id'] = Auth::id();
-        $data['approved']   = $data['approved']??0;
-        $data['news']       = $data['news']??0;
-        $data['commented_at'] = Carbon::now();
-
-        unset($data['preview_img']);
-
-        $topic = ForumTopic::create($data);
-
-        return redirect()->route('admin.forum.topic.edit', ['id' => $topic->id]);
+        return redirect()->route('admin.forum.topic.edit', ['id' => TopicService::storeTopic($request, true)]);
     }
 }

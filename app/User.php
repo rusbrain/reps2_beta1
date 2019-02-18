@@ -249,4 +249,17 @@ class User extends Authenticatable
 
         User::where('id', $user->id)->delete();
     }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public static function getUserDataById($id)
+    {
+        return User::where('id',$id)
+            ->with('role', 'avatar', 'friends', 'friendly')
+            ->withCount( 'positive', 'negative', 'comments')
+            ->withCount('user_galleries', 'topics', 'replay', 'gosu_replay', 'topic_comments', 'replay_comments', 'gallery_comments')
+            ->first();
+    }
 }

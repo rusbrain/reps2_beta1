@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\ForumTopic;
 use App\Http\Requests\SearchForumTopicRequest;
-use Illuminate\Http\Request;
 
 class NewsController extends Controller
 {
@@ -14,15 +13,7 @@ class NewsController extends Controller
      */
     public function index(SearchForumTopicRequest $request)
     {
-        $news = ForumTopic::news()
-            ->with('section', 'preview_image', 'icon')
-            ->withCount( 'positive', 'negative', 'comments')
-            ->with(['user'=> function($q){
-                $q->withTrashed();
-            }]);
-
-        $news = ForumTopic::search($request->validated(), $news);
-
+        $news = ForumTopic::search($request->validated(), ForumTopic::newsWithQuery(ForumTopic::news()));
         return view('news.index')->with('news', $news->paginate(20));
     }
 }

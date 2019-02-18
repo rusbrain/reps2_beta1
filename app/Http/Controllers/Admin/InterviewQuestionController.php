@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\InterviewQuestionCreateRequest;
 use App\Http\Requests\InterviewQuestionRequest;
 use App\InterviewQuestion;
-use App\InterviewUserAnswers;
-use App\InterviewVariantsAnswers;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Services\Base\BaseDataService;
+use App\Services\Base\InterviewQuestionsService;
+use App\Services\Base\ViewService;
 
 class InterviewQuestionController extends Controller
 {
@@ -26,12 +26,7 @@ class InterviewQuestionController extends Controller
     public function pagination()
     {
         $questions = InterviewQuestion::withCount('answers', 'user_answers')->paginate(50);
-
-        $table      = (string) view('admin.question.list_table')    ->with(['data' => $questions]);
-        $pagination = (string) view('admin.user.pagination')        ->with(['data' => $questions]);
-        $pop_up     = (string) view('admin.question.list_pop_up')   ->with(['data' => $questions]);
-
-        return ['table' => $table, 'pagination' => $pagination, 'pop_up' => $pop_up];
+        return BaseDataService::getPaginationData(ViewService::getInterview($questions), ViewService::getPagination($questions), ViewService::getInterviewPopUp($questions));
     }
 
     /**
@@ -40,9 +35,7 @@ class InterviewQuestionController extends Controller
      */
     public function view($id)
     {
-        return view('admin.question.view')->with('question', InterviewQuestion::where('id',$id)->with(['answers' => function($q){
-            $q->withCount('user_answers');
-        }])->first());
+        return view('admin.question.view')->with('question', InterviewQuestion::getAnswerQuestion($id));
     }
 
     /**
@@ -61,37 +54,7 @@ class InterviewQuestionController extends Controller
      */
     public function save(InterviewQuestionRequest $request, $question_id)
     {
-        $data = $request->validated();
-
-        $old_ids = array_keys($data['old_answers']);
-
-        $question = InterviewQuestion::find($question_id);
-
-        $question->update(['question' => $data['question']]);
-        $question->answers()->whereNotIn('id', $old_ids)->delete();
-
-        foreach ($data['old_answers'] as $key=>$answer){
-            InterviewVariantsAnswers::where('id', $key)->update(['answer' => $answer]);
-        }
-
-        if($data['new_answers']){
-            $answers = [];
-
-            foreach ($data['new_answers'] as $new_answer) {
-                if($new_answer){
-                    $answers[] =[
-                        'answer' => $new_answer,
-                        'question_id' => $question_id,
-                    ];
-                }
-            }
-
-            if($answers){
-                InterviewVariantsAnswers::insert($answers);
-
-            }
-        }
-
+        InterviewQuestionsService::update($request, $question_id);
         return back();
     }
 
@@ -101,10 +64,7 @@ class InterviewQuestionController extends Controller
      */
     public function remove($id)
     {
-        InterviewQuestion::where('id', $id)->delete();
-        InterviewUserAnswers::where('question_id', $id)->delete();
-        InterviewVariantsAnswers::where('question_id', $id)->delete();
-
+        InterviewQuestionsService::remove($id);
         return back();
     }
 
@@ -122,31 +82,7 @@ class InterviewQuestionController extends Controller
      */
     public function create(InterviewQuestionCreateRequest $request)
     {
-        $data = $request->validated();
-
-        $question_data = $data;
-        unset($question_data['new_answers']);
-
-        $question = InterviewQuestion::create($question_data);
-
-        if($data['new_answers']){
-            $answers = [];
-
-            foreach ($data['new_answers'] as $new_answer) {
-                if($new_answer){
-                    $answers[] =[
-                        'answer' => $new_answer,
-                        'question_id' => $question->id,
-                    ];
-                }
-            }
-
-            if($answers){
-                InterviewVariantsAnswers::insert($answers);
-
-            }
-        }
-
+        InterviewQuestionsService::create($request);
         return back();
     }
 

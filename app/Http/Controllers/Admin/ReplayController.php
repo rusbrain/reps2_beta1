@@ -13,7 +13,6 @@ use App\ReplayMap;
 use App\ReplayType;
 use App\ReplayUserRating;
 use App\User;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,7 +25,6 @@ class ReplayController extends Controller
     public function index(ReplaySearchAdminRequest $request)
     {
         $data = Replay::search($request)->count();
-
         return view('admin.replay.replays')->with(['replay_count' => $data, 'request_data' => $request->validated()]);
     }
 
@@ -160,10 +158,8 @@ class ReplayController extends Controller
 
         if($replay){
             Replay::updateReplay($request, $replay);
-
             return back();
         }
-
         return abort(404);
     }
 

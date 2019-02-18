@@ -10,9 +10,12 @@ namespace App\Services\Forum;
 
 
 use App\File;
+use App\ForumSection;
 use App\ForumTopic;
 use App\Http\Requests\ForumTopicStoreRequest;
 use App\Http\Requests\ForumTopicUpdteRequest;
+use App\Http\Requests\SearchForumTopicRequest;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -41,9 +44,10 @@ class TopicService
 
     /**
      * @param ForumTopicStoreRequest $request
+     * @param bool $admin
      * @return mixed
      */
-    public static function storeTopic(ForumTopicStoreRequest $request)
+    public static function storeTopic(ForumTopicStoreRequest $request, $admin = false)
     {
         $topic_data = $request->validated();
 
@@ -53,6 +57,11 @@ class TopicService
         if ($request->file('preview_img')){
             unset($topic_data['preview_img']);
             $topic_data['preview_file_id'] = self::savePreview($request);
+        }
+
+        if ($admin){
+            $data['approved']   = $data['approved']??0;
+            $data['news']       = $data['news']??0;
         }
 
         $topic = ForumTopic::create($topic_data);
@@ -72,8 +81,9 @@ class TopicService
     /**
      * @param ForumTopicUpdteRequest $request
      * @param $topic
+     * @param bool $admin
      */
-    public static function update(ForumTopicUpdteRequest $request, $topic)
+    public static function update(ForumTopicUpdteRequest $request, $topic, $admin = false)
     {
         $topic_data = [
             'title'=> $request->get('title'),
@@ -90,6 +100,11 @@ class TopicService
             $topic_data['start_on'] = $request->get('start_on');
         } else {
             $topic_data['start_on'] = null;
+        }
+
+        if ($admin){
+            $topic_data['approved']   = $data['approved']??0;
+            $topic_data['news']       = $data['news']??0;
         }
 
         if ($request->file('preview_img')){
@@ -122,5 +137,25 @@ class TopicService
         $topic->positive()->delete();
         $topic->negative()->delete();
         $topic->delete();
+    }
+
+    /**
+     * @param SearchForumTopicRequest $request
+     * @param $user_id
+     * @return array
+     */
+    public static function getUserTopic(SearchForumTopicRequest $request, $user_id)
+    {
+        $user = User::find($user_id);
+        $topics  = ForumTopic::search($request->validated(), ForumTopic::where('user_id', $user_id))->count();
+        $request_data = $request->validated();
+        $request_data['user_id'] = $user_id;
+
+        return [
+            'topics_count' => $topics,
+            'title' => "Темы форума $user->name",
+            'sections' => ForumSection::all(),
+            'request_data' => $request_data
+        ];
     }
 }

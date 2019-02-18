@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 class ReplayUsersController extends ReplayController
 {
     /**
@@ -11,12 +9,12 @@ class ReplayUsersController extends ReplayController
      *
      * @var string
      */
-    protected  $replay_group = 'Пользовательские реплаи';
+    public  $replay_group = 'Пользовательские реплаи';
 
     /**
      * Replay query function name
      *
      * @var string
      */
-    protected  $method_get = "userReplay";
+    public  $method_get = "userReplay";
 }

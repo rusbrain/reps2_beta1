@@ -162,8 +162,6 @@ Route::group(['middleware' => 'activity'], function () {
 
     Route::group(['middleware' => ['auth', 'admin_panel'], 'prefix' => 'admin_panel', 'namespace' => 'Admin'], function () {
         Route::get('/', 'BaseController@index')->name('admin.home');
-        Route::get('/comment/{object_name}/{id}', 'BaseController@getComments')->name('admin.comments');
-        Route::get('/comment/{id}', 'BaseController@removeComment')->name('admin.comments.remove');
         Route::post('send_quick_email', 'BaseController@sendQuickEmail')->name('admin.send_quick_email');
         Route::group(['prefix' => 'comment'], function () {
             Route::get('/{object_name}/{id}', 'CommentController@getComments')->name('admin.comments');
@@ -351,10 +349,10 @@ Route::group(['prefix' => 'redirect'], function () {
     Route::get('replays', 'RedirectOldURL@replays');
     Route::get('freereplays', 'RedirectOldURL@freeReplays');
     Route::get('files', 'RedirectOldURL@files');
-    Route::get('sc2', 'RedirectOldURL@sc2');
-    Route::get('rating', 'RedirectOldURL@rating');
-    Route::get('donate', 'RedirectOldURL@donate');
-    Route::get('userbars', 'RedirectOldURL@userBars');
+    Route::get('sc2', 'RedirectOldURL@home');
+    Route::get('rating', 'RedirectOldURL@home');
+    Route::get('donate', 'RedirectOldURL@home');
+    Route::get('userbars', 'RedirectOldURL@home');
     Route::get('home', 'RedirectOldURL@home');
     Route::get('registration', 'RedirectOldURL@registration'); //TODO:: redirect for gallery
 });
