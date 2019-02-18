@@ -15,6 +15,7 @@ use App\Http\Requests\UserGalleryStoreRequest;
 use App\Http\Requests\UserGalleryUpdateRequest;
 use App\UserGallery;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class UserGalleryService
 {
@@ -76,8 +77,13 @@ class UserGalleryService
         UserGallery::where('id', $gallery->id)->update($gallery_data);
     }
 
+    /**
+     * @param UserGallery $gallery
+     * @throws \Exception
+     */
     public static function destroy(UserGallery $gallery)
     {
+        $user_id = $gallery->user_id;
         $file = $gallery->file()->first();
         File::removeFile($file->id);
 
@@ -85,5 +91,17 @@ class UserGalleryService
         $gallery->positive()->delete();
         $gallery->negative()->delete();
         $gallery->delete();
+        User::recountRating($user_id);
+    }
+
+    public static function getGalleries(Request $request)
+    {
+        $galleries = UserGallery::with('user', 'file')->withCount( 'positive', 'negative', 'comments')->orderBy('id', 'desc');
+
+        if ($request->has('user_id')){
+            $galleries->where('user_id', $request->get('user_id'));
+        }
+
+        return $galleries->paginate(20);
     }
 }

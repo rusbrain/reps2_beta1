@@ -17,24 +17,19 @@ use Illuminate\Support\Facades\Auth;
 class CommentService
 {
     /**
-     * @param Request $request
-     * @param CommentController $comment
+     * @param $data
+     * @param $relation
+     * @param $object_id
      * @return mixed
      */
-    public static function create(Request $request, CommentController $comment){
-        $data = $request->validated();
-
+    public static function create($data, $relation, $object_id){
         $data['user_id'] = Auth::id();
-        $data['relation'] = $comment->relation;
-        $data['object_id'] = (int)$data[$comment->name_id];
-
-        if(isset($data[$comment->name_id])){
-            unset($data[$comment->name_id]);
-        }
+        $data['relation'] = $relation;
+        $data['object_id'] = (int)$object_id;
 
         Comment::create($data);
 
-        return $data[$comment->name_id];
+        return $object_id;
     }
 
     /**

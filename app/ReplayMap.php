@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Http\Requests\ReplayMapCreateAdminRequest;
 use App\Traits\ModelRelations\ReplayMapRelation;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -53,5 +54,19 @@ class ReplayMap extends Model
         }
 
         return $query;
+    }
+
+    /**
+     * @param ReplayMapCreateAdminRequest $request
+     */
+    public static function createMap(ReplayMapCreateAdminRequest $request)
+    {
+        $data = $request->validated();
+
+        $path = str_replace('public', '/storage',$data['file']->store('public/maps'));
+        $data['url'] = $path;
+        unset($data['file']);
+
+        ReplayMap::create($data);
     }
 }

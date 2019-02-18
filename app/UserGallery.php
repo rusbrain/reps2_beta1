@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Http\Requests\UserGalleryStoreRequest;
 use App\Observers\UserGalleryPointsObserver;
 use App\Traits\ModelRelations\UserGalleryRelation;
 use Illuminate\Database\Eloquent\Model;
@@ -68,5 +69,31 @@ class UserGallery extends Model
         unset($gallery_data['image']);
 
         return $gallery_data;
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public static function getGalleryById($id)
+    {
+        return UserGallery::where('id', $id)
+            ->with('user.avatar', 'file')
+            ->withCount( 'positive', 'negative', 'comments')
+            ->first();
+    }
+
+    /**
+     * @param UserGalleryStoreRequest $request
+     * @return mixed
+     */
+    public static function createGallery(UserGalleryStoreRequest $request)
+    {
+        $data = $request->validated();
+        $data = UserGallery::saveImage($data);
+        $data['user_id'] = Auth::id();
+        $gallery = UserGallery::create($data);
+
+        return $gallery->id;
     }
 }

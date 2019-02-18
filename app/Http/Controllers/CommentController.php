@@ -93,7 +93,14 @@ class CommentController extends Controller
      */
     public function storeComment(Request $request)
     {
-        $id = CommentService::create($request, $this);
+        $data = $request->validated();
+        $id = $data[$this->name_id];
+
+        if(isset($data[$this->name_id])){
+            unset($data[$this->name_id]);
+        }
+
+        $id = CommentService::create($data, $this->relation, $id);
         return redirect()->route($this->route_name, ['id' => $id]);
     }
 

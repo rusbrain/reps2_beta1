@@ -10,6 +10,7 @@ namespace App\Services\Replay;
 
 use App\File;
 use App\Http\Controllers\ReplayController;
+use App\Http\Requests\ReplaySearchAdminRequest;
 use App\Http\Requests\ReplaySearchRequest;
 use App\Http\Requests\ReplayStoreRequest;
 use App\Replay;
@@ -159,5 +160,39 @@ class ReplayService
     {
         $data = ReplayService::replayWithPagination(ReplayService::getReplayQuery($query));
         return view('replay.list')->with(['replays' => $data, 'title' => $title]);
+    }
+
+    /**
+     * @param ReplaySearchAdminRequest $request
+     * @param $user_id
+     * @return array
+     */
+    public static function getReplayByUser(ReplaySearchAdminRequest $request, $user_id)
+    {
+        $user = User::find($user_id);
+        $replays = $data = Replay::search($request,Replay::where('user_id', $user_id))->count();
+
+        $request_data = $request->validated();
+        $request_data['user_id'] = $user_id;
+
+        return ['replay_count' => $replays, 'title' => "Replays $user->name", 'user' => $user, 'request_data' => $request_data];
+    }
+
+    /**
+     * @param $replay_id
+     */
+    public static function remove($replay_id)
+    {
+        $replay = Replay::find($replay_id);
+        $user_id = $replay->user_id;
+
+        File::removeFile($replay->file_id);
+        $replay->positive()->delete();
+        $replay->negative()->delete();
+        $replay->user_rating()->delete();
+        $replay->comments()->delete();
+
+        Replay::where('id', $replay_id)->delete();
+        User::recountRating($user_id);
     }
 }

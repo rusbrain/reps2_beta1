@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Services\Base\BaseDataService;
+use App\Services\Base\ViewService;
 use App\User;
 use App\UserReputation;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class ReputationController extends Controller
@@ -26,11 +27,7 @@ class ReputationController extends Controller
     {
         $user = User::find($id);
         $repuntation = $user->reputation()->orderBy('created_at', 'desc')->with('sender', 'topic', 'replay', 'gallery', 'comment')->paginate(50);
-
-        $table = (string) view('admin.user.reputation.list_table')->with(['data' => $repuntation]);
-        $pagination = (string) view('admin.user.pagination')->with(['data' => $repuntation]);
-
-        return ['table' => $table, 'pagination' => $pagination];
+        return BaseDataService::getPaginationData(ViewService::getReputation($repuntation), ViewService::getPagination($repuntation));
     }
 
     /**

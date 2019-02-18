@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Http\Requests\ReplaySearchAdminRequest;
 use App\Observers\ReplayPointsObserver;
 use App\Traits\ModelRelations\ReplayRelation;
 use Illuminate\Database\Eloquent\Model;
@@ -208,5 +209,27 @@ class Replay extends Model
         }
 
             return $query;
+    }
+
+    /**
+     * @param ReplaySearchAdminRequest $request
+     * @return mixed
+     */
+    public static function getReplay(ReplaySearchAdminRequest $request)
+    {
+        return self::search($request,Replay::withCount('user_rating'))
+            ->with('user',  'file', 'first_country', 'second_country', 'type', 'map')->withCount( 'positive', 'negative', 'comments')->paginate(50);
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public static function getreplayById($id)
+    {
+        return Replay::where('id', $id)
+            ->withCount( 'user_rating')
+            ->withCount( 'positive', 'negative', 'comments')
+            ->with('user.avatar', 'file', 'game_version')->first();
     }
 }

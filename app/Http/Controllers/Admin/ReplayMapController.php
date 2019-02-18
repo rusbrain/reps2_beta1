@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\File;
 use App\Http\Requests\ReplayMapCreateAdminRequest;
 use App\Replay;
 use App\ReplayMap;
+use App\Services\Base\BaseDataService;
+use App\Services\Base\ViewService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -28,12 +29,7 @@ class ReplayMapController extends Controller
     public function pagination(Request $request)
     {
         $data = ReplayMap::search($request, ReplayMap::withCount('replay'))->paginate(20);
-
-        $table      = (string) view('admin.replay.map.list_table')  ->with(['data' => $data]);
-        $pagination = (string) view('admin.user.pagination')        ->with(['data' => $data]);
-        $pop_up     = (string) view('admin.replay.map.list_pop_up') ->with(['data' => $data]);
-
-        return ['table' => $table, 'pagination' => $pagination, 'pop_up' => $pop_up];
+        return BaseDataService::getPaginationData(ViewService::getMap($data), ViewService::getMapPopUp($data), ViewService::getPagination($data));
     }
 
     /**
@@ -44,7 +40,6 @@ class ReplayMapController extends Controller
     {
         Replay::where('map_id', $id)->update(['map_id' => 0]);
         ReplayMap::where('id', $id)->delete();
-
         return back();
     }
 
@@ -67,7 +62,6 @@ class ReplayMapController extends Controller
         if($request->has('name')){
             ReplayMap::where('id', $id)->update(['name' => $request->get('name')]);
         }
-
         return back();
     }
 
@@ -85,14 +79,7 @@ class ReplayMapController extends Controller
      */
     public function create(ReplayMapCreateAdminRequest $request)
     {
-        $data = $request->validated();
-
-        $path = str_replace('public', '/storage',$data['file']->store('public/maps'));
-        $data['url'] = $path;
-        unset($data['file']);
-
-        ReplayMap::create($data);
-
+        ReplayMap::createMap($request);
         return back();
     }
 }

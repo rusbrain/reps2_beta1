@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\User\UpdateProfileRequest;
+use App\Services\Base\BaseDataService;
+use App\Services\Base\ViewService;
 use App\User;
-use function GuzzleHttp\Psr7\str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -33,11 +34,7 @@ class UserController extends Controller
     public function pagination(Request $request)
     {
         $users = User::searchUser($request)->paginate(50)->appends($request->all());
-
-        $table = (string) view('admin.user.user_list_table')->with(['data' => $users]);
-        $pagination = (string) view('admin.user.pagination')->with(['data' => $users]);
-
-        return ['table' => $table, 'pagination' => $pagination];
+        return BaseDataService::getPaginationData(ViewService::getUsers($users), ViewService::getPagination($users));
     }
 
     /**

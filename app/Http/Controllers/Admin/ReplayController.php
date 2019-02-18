@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Comment;
-use App\File;
 use App\Http\Requests\CommentUpdateRequest;
 use App\Http\Requests\ReplaySearchAdminRequest;
 use App\Http\Requests\ReplayStoreRequest;
@@ -12,9 +11,11 @@ use App\Replay;
 use App\ReplayMap;
 use App\ReplayType;
 use App\ReplayUserRating;
-use App\User;
+use App\Services\Base\BaseDataService;
+use App\Services\Base\ViewService;
+use App\Services\Comment\CommentService;
+use App\Services\Replay\ReplayService;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 
 class ReplayController extends Controller
 {
@@ -34,31 +35,20 @@ class ReplayController extends Controller
      */
     public function pagination(ReplaySearchAdminRequest $request)
     {
-        $data = $data = Replay::search($request,Replay::withCount('user_rating'))
-            ->with('user',  'file', 'first_country', 'second_country', 'type', 'map')->withCount( 'positive', 'negative', 'comments')->paginate(50);
-
-        $table      = (string) view('admin.replay.list_table')  ->with(['data' => $data]);
-        $pagination = (string) view('admin.user.pagination')    ->with(['data' => $data]);
-        $pop_up     = (string) view('admin.replay.list_pop_up') ->with(['data' => $data]);
-
-        return ['table' => $table, 'pagination' => $pagination, 'pop_up' => $pop_up];
+        $data = $data = Replay::getReplay($request);
+        return BaseDataService::getPaginationData(ViewService::getReplay($data), ViewService::getPagination($data), ViewService::getReplayPopUp($data));
     }
 
     /**
      * Get replays by user
      *
+     * @param ReplaySearchAdminRequest $request
      * @param $user_id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View|mixed
      */
     public function getReplayByUser(ReplaySearchAdminRequest $request, $user_id)
     {
-        $user = User::find($user_id);
-        $replays = $data = Replay::search($request,Replay::where('user_id', $user_id))->count();
-
-        $request_data = $request->validated();
-        $request_data['user_id'] = $user_id;
-
-        return view('admin.replay.replays')->with(['replay_count' => $replays, 'title' => "Replays $user->name", 'user' => $user, 'request_data' => $request_data]);
+        return view('admin.replay.replays')->with(ReplayService::getReplayByUser($request,$user_id));
     }
 
     /**
@@ -97,18 +87,7 @@ class ReplayController extends Controller
      */
     public function remove($replay_id)
     {
-        $replay = Replay::find($replay_id);
-        $user_id = $replay->user_id;
-
-        File::removeFile($replay->file_id);
-        $replay->positive()->delete();
-        $replay->negative()->delete();
-        $replay->user_rating()->delete();
-        $replay->comments()->delete();
-
-        Replay::where('id', $replay_id)->delete();
-        User::recountRating($user_id);
-
+       ReplayService::remove($replay_id);
         return back();
     }
 
@@ -129,12 +108,7 @@ class ReplayController extends Controller
     public function sendComment(CommentUpdateRequest $request, $replay_id)
     {
         $data = $request->validated();
-        $data['user_id'] = Auth::id();
-        $data['relation'] = Comment::RELATION_REPLAY;
-        $data['object_id'] = $replay_id;
-
-        Comment::create($data);
-
+        CommentService::create($data, Comment::RELATION_REPLAY, $replay_id);
         return back();
     }
 
@@ -169,10 +143,7 @@ class ReplayController extends Controller
      */
     private function getReplayObject($replay_id)
     {
-        return Replay::where('id', $replay_id)
-            ->withCount( 'user_rating')
-            ->withCount( 'positive', 'negative', 'comments')
-            ->with('user.avatar', 'file', 'game_version')->first();
+        return Replay::getreplayById($replay_id);
     }
 
     /**
@@ -189,18 +160,6 @@ class ReplayController extends Controller
      */
     public function create(ReplayStoreRequest $request)
     {
-        $replay_data = $request->validated();
-
-        $title = 'Replay '.$request->has('title')?$request->get('title'):'';
-        $file = File::storeFile($replay_data['replay'], 'replays', $title);
-
-        $replay_data['file_id'] = $file->id;
-        $replay_data['user_id'] = Auth::id();
-
-        unset($replay_data['replay']);
-
-        $replay = Replay::create($replay_data);
-
-        return redirect()->route('admin.replay.view', ['id' => $replay->id]);
+        return redirect()->route('admin.replay.view', ['id' => ReplayService::store($request)]);
     }
 }

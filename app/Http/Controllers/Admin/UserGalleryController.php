@@ -6,6 +6,10 @@ use App\Comment;
 use App\File;
 use App\Http\Requests\CommentUpdateRequest;
 use App\Http\Requests\UserGalleryStoreRequest;
+use App\Services\Base\BaseDataService;
+use App\Services\Base\ViewService;
+use App\Services\Comment\CommentService;
+use App\Services\User\UserGalleryService;
 use App\User;
 use App\UserGallery;
 use App\UserMessage;
@@ -36,19 +40,8 @@ class UserGalleryController extends Controller
      */
     public function pagination(Request $request)
     {
-        $galleries = UserGallery::with('user', 'file')->withCount( 'positive', 'negative', 'comments')->orderBy('id', 'desc');
-
-        if ($request->has('user_id')){
-            $galleries->where('user_id', $request->get('user_id'));
-        }
-
-        $galleries = $galleries->paginate(20);
-
-        $table      = (string) view('admin.user.gallery.list_table') ->with(['data' => $galleries]);
-        $pagination = (string) view('admin.user.pagination')         ->with(['data' => $galleries]);
-        $pop_up     = (string) view('admin.user.gallery.list_pop_up')->with(['data' => $galleries]);
-
-        return ['table' => $table, 'pagination' => $pagination, 'pop_up' => $pop_up];
+        $galleries = UserGalleryService::getGalleries($request);
+        return BaseDataService::getPaginationData(ViewService::getGallery($galleries), ViewService::getPagination($galleries), ViewService::getGalleryPopUp($galleries));
     }
 
     /**
@@ -57,12 +50,7 @@ class UserGalleryController extends Controller
      */
     public function view($id)
     {
-        $data = UserGallery::where('id', $id)
-            ->with('user.avatar', 'file')
-            ->withCount( 'positive', 'negative', 'comments')
-            ->first();
-
-        return view('admin.user.gallery.view')->with('gallery', $data);
+        return view('admin.user.gallery.view')->with('gallery', UserGallery::getGalleryById($id));
     }
 
     /**
@@ -72,13 +60,7 @@ class UserGalleryController extends Controller
      */
     public function sendComment(CommentUpdateRequest $request, $id)
     {
-        $data = $request->validated();
-        $data['user_id'] = Auth::id();
-        $data['relation'] = Comment::RELATION_USER_GALLERY;
-        $data['object_id'] = $id;
-
-        Comment::create($data);
-
+        CommentService::create($request->validated(),Comment::RELATION_USER_GALLERY,$id);
         return back();
     }
 
@@ -105,20 +87,11 @@ class UserGalleryController extends Controller
     /**
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function remove($id)
     {
-        $gallery = UserGallery::find($id);
-        $user_id = $gallery->user_id;
-
-        File::removeFile($gallery->file_id);
-        $gallery->positive()->delete();
-        $gallery->negative()->delete();
-        $gallery->comments()->delete();
-
-        UserGallery::where('id', $id)->delete();
-        User::recountRating($user_id);
-
+        UserGalleryService::destroy(UserGallery::find($id));
         return back();
     }
 
@@ -140,9 +113,8 @@ class UserGalleryController extends Controller
     {
         if($request->has('comment')){
             UserGallery::where('id', $id)->update(['comment' => $request->get('comment')]);
-
-            return back();
         }
+        return back();
     }
 
     /**
@@ -159,13 +131,6 @@ class UserGalleryController extends Controller
      */
     public function create(UserGalleryStoreRequest $request)
     {
-        $data = $request->validated();
-
-        $data = UserGallery::saveImage($data);
-        $data['user_id'] = Auth::id();
-
-        $gallery = UserGallery::create($data);
-
-        return redirect()->route('admin.users.gallery.view', ['id' => $gallery->id]);
+        return redirect()->route('admin.users.gallery.view', ['id' => UserGallery::createGallery($request)]);
     }
 }
