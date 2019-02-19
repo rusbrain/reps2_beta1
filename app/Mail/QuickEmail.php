@@ -39,7 +39,7 @@ class QuickEmail extends Mailable
         return $this->view('emails.base')
             ->subject($this->subject)
             ->to($this->mail_to)
-            ->from(env('MAIL_FROM_EMAIL', 'info@reps.ru'), env('MAIL_FROM_NAME', 'REPS.RU'))
+            ->from(config('mail.from.email'), config('mail.from.name'))
             ->with('content',$this->content);
     }
 }

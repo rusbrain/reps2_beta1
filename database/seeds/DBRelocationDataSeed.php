@@ -294,11 +294,11 @@ class DBRelocationDataSeed extends Seeder
      */
     protected function seedUser($country)
     {
-        $cycles = self::getCycles(DB::table(env('DB_DATABASE_OLD').'.users')->count());
+        $cycles = self::getCycles(DB::table(config('database.connections.mysql.database_old').'.users')->count());
 
         $emails = [];
         for ($i = 0; $i<$cycles; $i++){
-            $old_users = DB::table(env('DB_DATABASE_OLD').'.users')->orderBy('user_id')->offset(1000*$i)->limit(1000)->get();
+            $old_users = DB::table(config('database.connections.mysql.database_old').'.users')->orderBy('user_id')->offset(1000*$i)->limit(1000)->get();
 
             $new_users = [];
             foreach ($old_users as $old_user){
@@ -383,13 +383,13 @@ class DBRelocationDataSeed extends Seeder
      */
     protected function seedUserGallery()
     {
-        $cycles = self::getCycles(DB::table(env('DB_DATABASE_OLD') . '.usergallery')->count());
+        $cycles = self::getCycles(DB::table(config('database.connections.mysql.database_old') . '.usergallery')->count());
 
         $users = [];
         $users_id = [];
 
         for ($i = 0; $i < $cycles; $i++) {
-            $old_galleries = DB::table(env('DB_DATABASE_OLD') . '.usergallery')->orderBy('photo_id')->offset(1000 * $i)->limit(1000)->get();
+            $old_galleries = DB::table(config('database.connections.mysql.database_old') . '.usergallery')->orderBy('photo_id')->offset(1000 * $i)->limit(1000)->get();
             $new_gallery = [];
 
             foreach ($old_galleries as $old_gallery) {
@@ -443,7 +443,7 @@ class DBRelocationDataSeed extends Seeder
      */
     protected function seedUserGalleryComments()
     {
-        $cycles = self::getCycles(DB::table(env('DB_DATABASE_OLD') . '.rusnewscomments')->where('type', 'userphoto')->count());
+        $cycles = self::getCycles(DB::table(config('database.connections.mysql.database_old') . '.rusnewscomments')->where('type', 'userphoto')->count());
 
         $users = [];
         $users_id = [];
@@ -451,7 +451,7 @@ class DBRelocationDataSeed extends Seeder
         $galleries_id = [];
 
         for ($i = 0; $i < $cycles; $i++) {
-            $old_gallery_comments = DB::table(env('DB_DATABASE_OLD') . '.rusnewscomments')->where('type', 'userphoto')->orderBy('comment_id')->offset(1000 * $i)->limit(1000)->get();
+            $old_gallery_comments = DB::table(config('database.connections.mysql.database_old') . '.rusnewscomments')->where('type', 'userphoto')->orderBy('comment_id')->offset(1000 * $i)->limit(1000)->get();
 
             $new_gallery_comment = [];
             foreach ($old_gallery_comments as $old_gallery_comment) {
@@ -498,7 +498,7 @@ class DBRelocationDataSeed extends Seeder
      */
     protected function seedTopicComments($table)
     {
-        $cycles = self::getCycles(DB::table(env('DB_DATABASE_OLD') .'.'.  $table)->count());
+        $cycles = self::getCycles(DB::table(config('database.connections.mysql.database_old') .'.'.  $table)->count());
 
         $users = [];
         $users_id = [];
@@ -506,7 +506,7 @@ class DBRelocationDataSeed extends Seeder
         $topics_id = [];
 
         for ($i = 0; $i < $cycles; $i++) {
-            $old_topic_comments = DB::table(env('DB_DATABASE_OLD') .'.'.  $table)->orderBy('reply_id')->offset(1000 * $i)->limit(1000)->get();
+            $old_topic_comments = DB::table(config('database.connections.mysql.database_old') .'.'.  $table)->orderBy('reply_id')->offset(1000 * $i)->limit(1000)->get();
 
             $new_topic_comment = [];
             foreach ($old_topic_comments as $old_topic_comment) {
@@ -556,7 +556,7 @@ class DBRelocationDataSeed extends Seeder
     protected function seedNews($table)
     {
         $forum_icons = ForumIcon::first();
-        $cycles = self::getCycles(DB::table(env('DB_DATABASE_OLD') . '.'.$table)->count());
+        $cycles = self::getCycles(DB::table(config('database.connections.mysql.database_old') . '.'.$table)->count());
 
         $users = [];
         $users_id = [];
@@ -564,7 +564,7 @@ class DBRelocationDataSeed extends Seeder
         $section_id_key = [];
 
         for ($i = 0; $i < $cycles; $i++) {
-            $rusforums = DB::table(env('DB_DATABASE_OLD') . '.'.$table)
+            $rusforums = DB::table(config('database.connections.mysql.database_old') . '.'.$table)
                 ->orderBy('news_id')->offset(1000 * $i)->limit(1000)->get();
 
             $new_forum_topics = [];
@@ -624,13 +624,13 @@ class DBRelocationDataSeed extends Seeder
     protected function seedColumns($table)
     {
         $forum_icons = ForumIcon::first();
-        $cycles = self::getCycles(DB::table(env('DB_DATABASE_OLD') . '.'.$table)->count());
+        $cycles = self::getCycles(DB::table(config('database.connections.mysql.database_old') . '.'.$table)->count());
         $section_id = ForumSection::where('name', 'columns')->first()->id;
         $users = [];
         $users_id = [];
 
         for ($i = 0; $i < $cycles; $i++) {
-            $rusforums = DB::table(env('DB_DATABASE_OLD') . '.'.$table)->orderBy('columns_id')->offset(1000 * $i)->limit(1000)->get();
+            $rusforums = DB::table(config('database.connections.mysql.database_old') . '.'.$table)->orderBy('columns_id')->offset(1000 * $i)->limit(1000)->get();
 
             $new_forum_topics = [];
             foreach ($rusforums as $rusforum) {
@@ -676,13 +676,13 @@ class DBRelocationDataSeed extends Seeder
      */
     protected function seedUserFriends()
     {
-        $cycles = self::getCycles(DB::table(env('DB_DATABASE_OLD') . '.friends')->count());
+        $cycles = self::getCycles(DB::table(config('database.connections.mysql.database_old') . '.friends')->count());
 
         $users = [];
         $users_id = [];
 
         for ($i = 0; $i < $cycles; $i++) {
-            $users_friends = DB::table(env('DB_DATABASE_OLD') . '.friends')->orderBy('user_id')->offset(1000 * $i)->limit(1000)->get();
+            $users_friends = DB::table(config('database.connections.mysql.database_old') . '.friends')->orderBy('user_id')->offset(1000 * $i)->limit(1000)->get();
 
             $new_users_friends = [];
             $time = Carbon::now();
@@ -729,12 +729,12 @@ class DBRelocationDataSeed extends Seeder
     {
         $forum_section = ForumSection::all();
         $forum_icons = ForumIcon::all();
-        $cycles = self::getCycles(DB::table(env('DB_DATABASE_OLD') . '.'. $table)->count());
+        $cycles = self::getCycles(DB::table(config('database.connections.mysql.database_old') . '.'. $table)->count());
         $users = [];
         $users_id = [];
 
         for ($i = 0; $i < $cycles; $i++) {
-            $rusforums = DB::table(env('DB_DATABASE_OLD') . '.'. $table)->orderBy('forum_id')->offset(1000 * $i)->limit(1000)->get();
+            $rusforums = DB::table(config('database.connections.mysql.database_old') . '.'. $table)->orderBy('forum_id')->offset(1000 * $i)->limit(1000)->get();
             $new_forum_topics = [];
 
             foreach ($rusforums as $rusforum) {
@@ -778,7 +778,7 @@ class DBRelocationDataSeed extends Seeder
      */
     protected function seedNewsComments($table)
     {
-        $data = DB::table(env('DB_DATABASE_OLD') .'.'.$table);
+        $data = DB::table(config('database.connections.mysql.database_old') .'.'.$table);
 
         if ($table != 'engnewscomments'){
             $data->where('type', 'news');
@@ -792,7 +792,7 @@ class DBRelocationDataSeed extends Seeder
         $topics_id = [];
 
         for ($i = 0; $i < $cycles; $i++) {
-            $old_topic_comments = DB::table(env('DB_DATABASE_OLD') .'.'.$table);
+            $old_topic_comments = DB::table(config('database.connections.mysql.database_old') .'.'.$table);
 
             if ($table != 'engnewscomments'){
                 $old_topic_comments->where('type', 'news');
@@ -847,7 +847,7 @@ class DBRelocationDataSeed extends Seeder
      */
     protected function seedColumnComments($table)
     {
-        $cycles = self::getCycles(DB::table(env('DB_DATABASE_OLD') .'.'.$table)->count());
+        $cycles = self::getCycles(DB::table(config('database.connections.mysql.database_old') .'.'.$table)->count());
 
         $users = [];
         $users_id = [];
@@ -855,7 +855,7 @@ class DBRelocationDataSeed extends Seeder
         $topics_id = [];
 
         for ($i = 0; $i < $cycles; $i++) {
-            $old_topic_comments = DB::table(env('DB_DATABASE_OLD') .'.'.$table)->orderBy('comment_id')->offset(1000 * $i)->limit(1000)->get();
+            $old_topic_comments = DB::table(config('database.connections.mysql.database_old') .'.'.$table)->orderBy('comment_id')->offset(1000 * $i)->limit(1000)->get();
 
             $new_topic_comment = [];
             foreach ($old_topic_comments as $old_topic_comment) {
@@ -903,7 +903,7 @@ class DBRelocationDataSeed extends Seeder
      */
     protected function seedReplayComments()
     {
-        $cycles = self::getCycles(DB::table(env('DB_DATABASE_OLD') .'.rusreplaycomments')->count());
+        $cycles = self::getCycles(DB::table(config('database.connections.mysql.database_old') .'.rusreplaycomments')->count());
 
         $users = [];
         $users_id = [];
@@ -911,7 +911,7 @@ class DBRelocationDataSeed extends Seeder
         $replays_id = [];
 
         for ($i = 0; $i < $cycles; $i++) {
-            $old_replay_comments = DB::table(env('DB_DATABASE_OLD') .'.rusreplaycomments')->orderBy('comment_id')->offset(1000 * $i)->limit(1000)->get();
+            $old_replay_comments = DB::table(config('database.connections.mysql.database_old') .'.rusreplaycomments')->orderBy('comment_id')->offset(1000 * $i)->limit(1000)->get();
 
             $new_replay_comment = [];
             foreach ($old_replay_comments as $old_replay_comment) {
@@ -958,7 +958,7 @@ class DBRelocationDataSeed extends Seeder
      */
     protected function seedReplay()
     {
-        $cycles = self::getCycles(\DB::table(env('DB_DATABASE_OLD') . '.replays')->count());
+        $cycles = self::getCycles(\DB::table(config('database.connections.mysql.database_old') . '.replays')->count());
 
         $countries = Country::all();
         $maps = ReplayMap::all();
@@ -969,7 +969,7 @@ class DBRelocationDataSeed extends Seeder
         $users_id = [];
 
         for ($i = 0; $i < $cycles; $i++) {
-            $old_replays = DB::table(env('DB_DATABASE_OLD') . '.replays')->orderBy('replay_id')->offset(1000 * $i)->limit(1000)->get();
+            $old_replays = DB::table(config('database.connections.mysql.database_old') . '.replays')->orderBy('replay_id')->offset(1000 * $i)->limit(1000)->get();
 
             $new_replays = [];
             foreach ($old_replays as $old_replay) {
@@ -1058,13 +1058,13 @@ class DBRelocationDataSeed extends Seeder
      */
     protected function seedIgnoreList()
     {
-        $cycles = self::getCycles(\DB::table(env('DB_DATABASE_OLD') . '.ignore_list')->count());
+        $cycles = self::getCycles(\DB::table(config('database.connections.mysql.database_old') . '.ignore_list')->count());
 
         $users = [];
         $users_id = [];
 
         for ($i = 0; $i < $cycles; $i++) {
-            $old_ignores = DB::table(env('DB_DATABASE_OLD') . '.ignore_list')->orderBy('user_id')->offset(1000 * $i)->limit(1000)->get();
+            $old_ignores = DB::table(config('database.connections.mysql.database_old') . '.ignore_list')->orderBy('user_id')->offset(1000 * $i)->limit(1000)->get();
 
             $new_ignores = [];
             foreach ($old_ignores as $old_ignore) {
@@ -1103,14 +1103,14 @@ class DBRelocationDataSeed extends Seeder
      */
     protected function seedMessages()
     {
-        $cycles = self::getCycles(\DB::table(env('DB_DATABASE_OLD') . '.messages')->count());
+        $cycles = self::getCycles(\DB::table(config('database.connections.mysql.database_old') . '.messages')->count());
 
         $users = [];
         $users_id = [];
         $users_dialogs = [];
 
         for ($i = 0; $i < $cycles; $i++) {
-            $old_messages = DB::table(env('DB_DATABASE_OLD') . '.messages')->orderBy('id')->offset(1000 * $i)->limit(1000)->get();
+            $old_messages = DB::table(config('database.connections.mysql.database_old') . '.messages')->orderBy('id')->offset(1000 * $i)->limit(1000)->get();
 
             $new_messages = [];
             foreach ($old_messages as $old_message) {
@@ -1133,7 +1133,7 @@ class DBRelocationDataSeed extends Seeder
                         $users_id[] = $old_message->to_id;
                     }
 
-                    $old_dialogs = DB::table(env('DB_DATABASE_OLD') . '.messages')->where(
+                    $old_dialogs = DB::table(config('database.connections.mysql.database_old') . '.messages')->where(
                         function ($q) use ($old_message){
                             $q->where(function ($q1) use ($old_message){
                                 $q1->where('from_id', $old_message->from_id)
@@ -1236,7 +1236,7 @@ class DBRelocationDataSeed extends Seeder
      */
     protected function updateReplaysPackType()
     {
-        $replay_q = \DB::table(env('DB_DATABASE_OLD') . '.replays')->where('replay_type', 'pack')->orWhere('replay_type', 'upack');
+        $replay_q = \DB::table(config('database.connections.mysql.database_old') . '.replays')->where('replay_type', 'pack')->orWhere('replay_type', 'upack');
         $cycles = self::getCycles($replay_q->count());
 
         for ($i = 0; $i < $cycles; $i++) {
@@ -1323,7 +1323,7 @@ class DBRelocationDataSeed extends Seeder
      */
     protected function userReputation()
     {
-        $reputation_r = \DB::table(env('DB_DATABASE_OLD') . '.reputation');
+        $reputation_r = \DB::table(config('database.connections.mysql.database_old') . '.reputation');
         $cycles = self::getCycles($reputation_r->count());
 
         for ($i = 0; $i < $cycles; $i++) {
@@ -1391,11 +1391,11 @@ class DBRelocationDataSeed extends Seeder
 
     protected function updateUserAvatar()
     {
-        $cycles = self::getCycles(DB::table(env('DB_DATABASE_OLD').'.users')->count());
+        $cycles = self::getCycles(DB::table(config('database.connections.mysql.database_old').'.users')->count());
 
         $emails = [];
         for ($i = 0; $i<$cycles; $i++){
-            $old_users = DB::table(env('DB_DATABASE_OLD').'.users')->orderBy('user_id')->offset(1000*$i)->limit(1000)->get();
+            $old_users = DB::table(config('database.connections.mysql.database_old').'.users')->orderBy('user_id')->offset(1000*$i)->limit(1000)->get();
 
             foreach ($old_users as $old_user) {
                 if ($old_user->user_avatar) {
