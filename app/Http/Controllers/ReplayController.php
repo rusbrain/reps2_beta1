@@ -2,17 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Comment;
-use App\Country;
-use App\Http\Requests\ReplaySearchRequest;
-use App\Http\Requests\ReplayStoreRequest;
-use App\Http\Requests\ReplayUpdateRequest;
-use App\Replay;
-use App\ReplayMap;
-use App\ReplayType;
+use App\{Comment, Country, Replay, ReplayMap, ReplayType};
+use App\Http\Requests\{ReplaySearchRequest, ReplayStoreRequest, ReplayUpdateRequest};
 use App\Services\Replay\ReplayService;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\{Auth, Storage};
 
 class ReplayController extends Controller
 {

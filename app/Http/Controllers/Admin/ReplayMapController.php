@@ -3,10 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\ReplayMapCreateAdminRequest;
-use App\Replay;
-use App\ReplayMap;
-use App\Services\Base\BaseDataService;
-use App\Services\Base\AdminViewService;
+use App\{Replay, ReplayMap};
+use App\Services\Base\{BaseDataService, AdminViewService};
 use App\Services\Replay\ReplayMapService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;

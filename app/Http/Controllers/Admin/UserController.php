@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\User\UpdateProfileRequest;
-use App\Services\Base\BaseDataService;
-use App\Services\Base\AdminViewService;
+use App\Services\Base\{BaseDataService, AdminViewService};
 use App\Services\User\UserService;
 use App\User;
 use Illuminate\Http\Request;

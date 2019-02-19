@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Comment;
+use App\{Comment, IgnoreUser, UserGallery};
 use App\Http\Requests\UserGalleryStoreCommentRequest;
-use App\IgnoreUser;
-use App\UserGallery;
 
 class UserGalleryCommentController extends CommentController
 {

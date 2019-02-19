@@ -8,8 +8,7 @@
 
 namespace App\Services\User;
 
-use App\File;
-use App\User;
+use App\{File, User};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 

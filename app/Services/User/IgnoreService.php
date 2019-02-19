@@ -8,7 +8,6 @@
 
 namespace App\Services\User;
 
-
 use App\IgnoreUser;
 use Illuminate\Support\Facades\Auth;
 

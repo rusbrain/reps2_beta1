@@ -8,9 +8,7 @@
 
 namespace App\Services\User;
 
-
-use App\User;
-use App\UserRole;
+use App\{User, UserRole};
 
 class UserRoleService
 {

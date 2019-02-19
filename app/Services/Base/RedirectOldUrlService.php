@@ -8,8 +8,7 @@
 
 namespace App\Services\Base;
 
-use App\ForumSection;
-use App\ForumTopic;
+use App\{ForumSection, ForumTopic};
 use Illuminate\Http\Request;
 
 class RedirectOldUrlService

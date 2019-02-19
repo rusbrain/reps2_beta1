@@ -8,11 +8,9 @@
 
 namespace App\Services\Base;
 
-use App\ForumTopic;
+use App\{ForumTopic, Replay, User};
 use App\Http\Requests\QuickEmailRequest;
 use App\Mail\QuickEmail;
-use App\Replay;
-use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 

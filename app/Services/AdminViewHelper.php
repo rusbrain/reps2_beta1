@@ -8,14 +8,7 @@
 
 namespace App\Services;
 
-
-use App\Country;
-use App\ForumTopic;
-use App\GameVersion;
-use App\Replay;
-use App\ReplayMap;
-use App\UserMessage;
-use App\UserRole;
+use App\{Country, ForumTopic, GameVersion, Replay, ReplayMap, UserMessage, UserRole};
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -80,7 +73,6 @@ class AdminViewHelper
     public function admin()
     {
         $this->role = $this->role??(Auth::user()->role?(Auth::user()->role->name == 'admin'):false);
-
         return $this->role;
     }
 

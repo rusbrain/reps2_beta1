@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Services\Base\BaseDataService;
-use App\Services\Base\AdminViewService;
+use App\Services\Base\{BaseDataService, AdminViewService};
 use App\User;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class UserQuestionsController extends Controller

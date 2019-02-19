@@ -8,10 +8,7 @@
 
 namespace App\Services\Base;
 
-
-use App\Country;
-use App\Replay;
-use App\User;
+use App\{Country, Replay, User};
 
 class CountryService
 {

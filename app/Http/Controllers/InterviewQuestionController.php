@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\InterviewQuestion;
-use App\InterviewUserAnswers;
+use App\{InterviewQuestion, InterviewUserAnswers};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 

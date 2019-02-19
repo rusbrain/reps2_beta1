@@ -4,9 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Country;
 use App\Http\Requests\CountrySaveRequest;
-use App\Services\Base\BaseDataService;
-use App\Services\Base\CountryService;
-use App\Services\Base\AdminViewService;
+use App\Services\Base\{BaseDataService, CountryService, AdminViewService};
 use App\Http\Controllers\Controller;
 
 class CountryController extends Controller

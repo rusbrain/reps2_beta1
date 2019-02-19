@@ -4,9 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\RoleSaveRequest;
 use App\Services\User\UserRoleService;
-use App\User;
 use App\UserRole;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class UserRoleController extends Controller

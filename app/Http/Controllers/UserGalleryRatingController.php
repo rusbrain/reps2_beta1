@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\UserGallery;
-use App\UserReputation;
+use App\{UserGallery, UserReputation};
 
 class UserGalleryRatingController extends RatingController
 {

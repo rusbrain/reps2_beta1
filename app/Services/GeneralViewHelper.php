@@ -9,24 +9,14 @@
 namespace App\Services;
 
 use App\Country;
-use App\ForumSection;
-use App\ForumTopic;
-use App\GameVersion;
-use App\Replay;
-use App\ReplayMap;
-use App\ReplayType;
-use App\SectionIcon;
-use App\Services\Base\BaseDataService;
-use App\Services\Base\InterviewQuestionsService;
-use App\User;
+use App\Services\Base\{BaseDataService, InterviewQuestionsService};
+use App\Traits\ViewHelper\{ForumData, ReplayData, UserData};
 use App\UserGallery;
-use App\UserMessage;
-use App\UserRole;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
 
 class GeneralViewHelper
 {
+    use UserData, ReplayData, ForumData;
+
     protected $last_forum;
     protected $last_forum_home;
     protected $last_gosu_replay;
@@ -54,62 +44,6 @@ class GeneralViewHelper
     }
 
     /**
-     * @return array
-     */
-    public function getReplaySortBy()
-    {
-        return [
-            'game_version_id' => 'Версия',
-            'rating' => 'Рейтинг',
-            'user_rating' => 'Юзер Рейтинг',
-            'length' => 'Продолжительность',
-            'title' => 'Название',
-            'created_at' => 'Дата создания',
-            'type_id' => 'Тип игры'
-        ];
-    }
-
-    /**
-     * Gets from OLD reps.ru files
-    */
-    public function getUserStatus($cs)
-    {
-        if ($cs < 1000){
-            return "Zim";
-        } elseif ($cs < 2000){
-            return "Fan of Barbie";
-        } elseif ($cs < 3000) {
-            return "Zagoogli";
-        } elseif ($cs < 4000) {
-            return "BIG SCV";
-        } elseif ($cs < 5000) {
-            return "Hasu";
-        } elseif ($cs < 6000) {
-            return "XaKaC";
-        } elseif ($cs < 7000) {
-            return "Idra";
-        } elseif ($cs < 8000) {
-            return "Trener";
-        } elseif ($cs < 9000) {
-            return "[СО!]";
-        } elseif ($cs < 10000) {
-            return "SuperHero";
-        } elseif ($cs < 15000) {
-            return "Gosu";
-        } elseif ($cs < 20000) {
-            return "IPXZerg";
-        } elseif ($cs < 40000) {
-            return "Savior";
-        } elseif ($cs < 70000) {
-            return "Lutshii";
-        } elseif ($cs < 100000 ) {
-            return "Bonjva";
-        } elseif($cs >= 100000) {
-            return "Ebanutyi";
-        }
-    }
-
-    /**
      * Get random user gallery images
      *
      * @return array
@@ -119,6 +53,7 @@ class GeneralViewHelper
         $data_img = UserGallery::orderBy('created_at', 'desc')->limit(5000)->get(['id'])->toArray();
         $random_img_ids = $data_img ? array_rand($data_img, (count($data_img) > 4 ? 4 : count($data_img))) : [];
         $random_img = [];
+
         foreach ($random_img_ids as $item) {
             $data = $data_img[$item]['id'];
             $random_img[] = $data;
@@ -140,71 +75,6 @@ class GeneralViewHelper
     }
 
     /**
-     * @return mixed
-     */
-    public function getLastForum()
-    {
-        if (!self::$instance->last_forum) {
-            if (!self::$instance->all_sections) {
-                self::$instance->getAllForumSections();
-            }
-
-            self::$instance->last_forum = self::$instance->all_sections->where('is_general', 1);
-        }
-
-        return self::$instance->last_forum;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getLastGosuReplay()
-    {
-        if (!self::$instance->last_gosu_replay) {
-            self::$instance->last_gosu_replay = Replay::gosuReplay()->where('approved', 1)->orderBy('created_at',
-                'desc')->limit(5)->get();
-            self::$instance->last_gosu_replay->load('map');
-        }
-
-        return self::$instance->last_gosu_replay;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getLastUserReplay()
-    {
-        self::$instance->last_user_replay = self::$instance->last_user_replay ?? Replay::userReplay()->where('approved',
-                1)->orderBy('created_at', 'desc')->limit(5)->get();
-        return self::$instance->last_user_replay;
-    }
-
-    /**
-     * @return int
-     */
-    public function getNewUserMessage()
-    {
-        $new_user_message = 0;
-
-        if (Auth::user()) {
-            $new_user_message = UserMessage::whereHas('dialogue.users', function ($query) {
-                $query->where('users.id', Auth::id());
-            })->where('user_id', '<>', Auth::id())->where('is_read', 0)->count();
-        }
-
-        return $new_user_message;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getNewUsers()
-    {
-        $new_users = $new_users ?? User::where('is_ban', 0)->orderBy('created_at', 'desc')->limit(10)->get();
-        return $new_users;
-    }
-
-    /**
      * @return Country[]|\Illuminate\Database\Eloquent\Collection
      */
     public function getCountries()
@@ -216,87 +86,7 @@ class GeneralViewHelper
                 self::$instance->countries[$country->id] = $country;
             }
         }
-
         return self::$instance->countries;
-    }
-
-    /**
-     * @return UserRole[]|\Illuminate\Database\Eloquent\Collection
-     */
-    public function getUsersRole()
-    {
-        self::$instance->user_roles = self::$instance->user_roles ?? UserRole::all();
-        return self::$instance->user_roles;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getBirthdayUsers()
-    {
-        self::$instance->bd_users = self::$instance->bd_users ?? User::where('birthday', 'like',
-                "%" . Carbon::now()->format('m-d'))->get();
-        return self::$instance->bd_users;
-    }
-
-    /**
-     * @return ForumSection[]|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
-     */
-    public function getAllForumSections()
-    {
-        if (!$this->all_sections) {
-            $all_sections = ForumSection::active()->get();
-            $time = Carbon::now()->format('Y-M-d');
-            $sql = [];
-            foreach ($all_sections as $section) {
-                $sql[] = "(
-        select * from `forum_topics` where `approved` = 1 and (`start_on` is null or `start_on` <= '$time') and `section_id` = $section->id ORDER BY `commented_at` DESC limit 5
-        )";
-            }
-
-            $sql = implode(" UNION ALL ", $sql);
-            $topics = collect(\DB::select($sql))->groupBy('section_id');
-
-            foreach ($all_sections as $key => $section) {
-                $all_sections[$key]->topics = $topics[$section->id];
-            }
-
-            $this->all_sections = $all_sections;
-        }
-
-        return self::$instance->all_sections;
-    }
-
-    /**
-     * @return ReplayType[]|\Illuminate\Database\Eloquent\Collection
-     */
-    public function getReplayTypes()
-    {
-        if (!self::$instance->replay_type) {
-            $types = ReplayType::all();
-
-            foreach ($types as $type) {
-                self::$instance->replay_type[$type->id] = $type;
-            }
-        }
-
-        return self::$instance->replay_type;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getGeneralSectionsForum()
-    {
-        if (!self::$instance->general_sections) {
-            if (!self::$instance->all_sections) {
-                self::$instance->getAllForumSections();
-            }
-
-            self::$instance->general_sections = self::$instance->all_sections->where('is_general', 1);
-        }
-
-        return self::$instance->general_sections;
     }
 
     /**
@@ -308,81 +98,11 @@ class GeneralViewHelper
         return self::$instance->banner;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getLastForumHome()
-    {
-        self::$instance->last_forum_home = self::$instance->last_forum_home ?? ForumTopic::whereHas('section',
-                function ($query) {
-                    $query->where('is_active', 1)->where('is_general', 1);
-                })
-                ->where('approved', 1)
-                ->with('preview_image')
-                ->withCount('positive', 'negative', 'comments')
-                ->limit(5)->get();
-
-        return self::$instance->last_forum_home;
-    }
 
     /**
-     * Get Replay Maps
-     *
-     * @return ReplayMap[]|\Illuminate\Database\Eloquent\Collection
+     * @param $text
+     * @return mixed|null|string|string[]
      */
-    public function getReplayMaps()
-    {
-        if (!self::$instance->replay_maps) {
-            $types = ReplayMap::all();
-
-            foreach ($types as $type) {
-                self::$instance->replay_maps[$type->id] = $type;
-            }
-        }
-
-        return self::$instance->replay_maps;
-    }
-
-    /**
-     * Get Replay Maps
-     *
-     * @return ReplayMap[]|\Illuminate\Database\Eloquent\Collection
-     */
-    public function getGameVersion()
-    {
-        if (!self::$instance->game_version) {
-            $types = GameVersion::all();
-
-            foreach ($types as $type) {
-                self::$instance->game_version[$type->id] = $type;
-            }
-        }
-
-        return self::$instance->game_version;
-    }
-
-    /**
-     * @param $user
-     * @return bool
-     */
-    public function isOnline($user)
-    {
-        $time = (Carbon::now()->getTimestamp() - Carbon::parse($user->activity_at)->getTimestamp()) / 60;
-
-        return $time <= 15;
-    }
-
-    /**
-     * @param $user_id
-     * @return mixed
-     */
-    public function getUserGallery($user_id)
-    {
-        self::$instance->user_gallery = self::$instance->user_gallery ?? UserGallery::where('user_id',
-                $user_id)->with('file')->get();
-        return self::$instance->user_gallery;
-    }
-
     public function oldContentFilter($text)
     {
         $text = str_replace("%20", " ", $text);
@@ -430,6 +150,10 @@ class GeneralViewHelper
         return $text;
     }
 
+    /**
+     * @param $string
+     * @return string
+     */
     public function getEditorSmile($string)
     {
         $smile_map = array(
@@ -458,7 +182,6 @@ class GeneralViewHelper
      */
     public function _regex_build_url_manual($matches = array())
     {
-
         /**Send off to the correct function...*/
         return $this->regex_build_url(array(
             'st' => $matches[1],
@@ -466,7 +189,6 @@ class GeneralViewHelper
             'show' => $matches[2],
             'end' => ''
         ));
-
     }
 
     /**
@@ -485,7 +207,6 @@ class GeneralViewHelper
             'show' => $matches[2] ? $matches[2] : $matches[1],
             'end' => ''
         ));
-
     }
 
     /**
@@ -614,21 +335,5 @@ class GeneralViewHelper
         $result = (isset($url['st']) ? $url['st'] : '') . "<a rel=\"nofollow\" href=\"" . $url['html'] . "\" target=\"_blank\">" . $show . "</a>" . $url['end'];
 
         return $result;
-    }
-
-    /**
-     * Get icon url from Id
-     *
-     * @return mixed
-     */
-    public function getSectionIcons()
-    {
-        if (!self::$instance->section_icons){
-            $icons = SectionIcon::all();
-            foreach ($icons as $icon) {
-                self::$instance->section_icons[$icon->id] = $icon->icon;
-            }
-            return self::$instance->section_icons;
-        }
     }
 }

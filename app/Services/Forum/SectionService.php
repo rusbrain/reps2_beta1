@@ -8,8 +8,7 @@
 
 namespace App\Services\Forum;
 
-use App\Comment;
-use App\ForumSection;
+use App\{Comment, ForumSection};
 use App\Http\Requests\ForumSectionUpdateAdminRequest;
 
 class SectionService

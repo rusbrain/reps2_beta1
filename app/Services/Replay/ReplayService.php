@@ -8,15 +8,11 @@
 
 namespace App\Services\Replay;
 
-use App\File;
+use App\{File, Replay, User};
 use App\Http\Controllers\ReplayController;
-use App\Http\Requests\ReplaySearchAdminRequest;
-use App\Http\Requests\ReplaySearchRequest;
-use App\Http\Requests\ReplayStoreRequest;
-use App\Replay;
+use App\Http\Requests\{ReplaySearchAdminRequest, ReplaySearchRequest, ReplayStoreRequest};
 use App\Services\Base\FileService;
 use App\Services\Rating\RatingService;
-use App\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

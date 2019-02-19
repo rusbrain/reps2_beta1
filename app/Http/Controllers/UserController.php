@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Country;
+use App\{Country, IgnoreUser, User};
 use App\Http\Requests\User\UpdateProfileRequest;
-use App\IgnoreUser;
 use App\Services\User\UserService;
-use App\User;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller

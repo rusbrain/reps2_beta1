@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Dialogue;
+use App\{Dialogue, UserMessage};
 use App\Http\Requests\SendUserMessageRequest;
 use App\Services\User\UserDialogService;
-use App\UserMessage;
 use Illuminate\Support\Facades\Auth;
 
 class UserMessagingController extends BaseUserMessageController

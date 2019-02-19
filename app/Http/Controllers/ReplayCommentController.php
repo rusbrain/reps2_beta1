@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Comment;
+use App\{Comment, Replay};
 use App\Http\Requests\ReplayCommentStoreRequest;
-use App\Replay;
 
 class ReplayCommentController extends CommentController
 {

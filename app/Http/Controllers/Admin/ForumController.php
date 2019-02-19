@@ -4,8 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\ForumSection;
 use App\Http\Requests\ForumSectionUpdateAdminRequest;
-use App\Services\Base\BaseDataService;
-use App\Services\Base\AdminViewService;
+use App\Services\Base\{BaseDataService, AdminViewService};
 use App\Http\Controllers\Controller;
 use App\Services\Forum\SectionService;
 

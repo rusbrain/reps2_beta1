@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Comment;
-use App\Services\Base\BaseDataService;
-use App\Services\Base\AdminViewService;
-use App\User;
+use App\{Comment, User};
+use App\Services\Base\{BaseDataService, AdminViewService};
 use App\Http\Controllers\Controller;
 
 class UserCommentController extends Controller

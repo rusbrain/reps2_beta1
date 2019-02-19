@@ -8,14 +8,9 @@
 
 namespace App\Services\Forum;
 
-use App\File;
-use App\ForumSection;
-use App\ForumTopic;
-use App\Http\Requests\ForumTopicStoreRequest;
-use App\Http\Requests\ForumTopicUpdteRequest;
-use App\Http\Requests\SearchForumTopicRequest;
+use App\{File, ForumSection, ForumTopic, User};
+use App\Http\Requests\{ForumTopicStoreRequest, ForumTopicUpdteRequest, SearchForumTopicRequest};
 use App\Services\Base\FileService;
-use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

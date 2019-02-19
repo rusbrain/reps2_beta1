@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\IgnoreUser;
-use App\User;
-use App\UserFriend;
+use App\{IgnoreUser, User, UserFriend};
 use Illuminate\Support\Facades\Auth;
 
 class UserFriendController extends Controller

@@ -2,14 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Comment;
-use App\ForumTopic;
+use App\{Comment, ForumTopic};
 use App\Http\Controllers\CommentController;
 use App\Http\Requests\CommentUpdateRequest;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 
 class TopicCommentController extends CommentController
 {

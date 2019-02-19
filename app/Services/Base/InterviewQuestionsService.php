@@ -8,11 +8,8 @@
 
 namespace App\Services\Base;
 
-use App\Http\Requests\InterviewQuestionCreateRequest;
-use App\Http\Requests\InterviewQuestionRequest;
-use App\InterviewQuestion;
-use App\InterviewUserAnswers;
-use App\InterviewVariantsAnswers;
+use App\Http\Requests\{InterviewQuestionCreateRequest, InterviewQuestionRequest};
+use App\{InterviewQuestion, InterviewUserAnswers, InterviewVariantsAnswers};
 use Illuminate\Support\Facades\Auth;
 
 class InterviewQuestionsService

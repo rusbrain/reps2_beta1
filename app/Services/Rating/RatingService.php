@@ -8,14 +8,8 @@
 
 namespace App\Services\Rating;
 
-use App\Comment;
-use App\ForumTopic;
+use App\{Comment, ForumTopic, IgnoreUser, Replay, User, UserGallery, UserReputation};
 use App\Http\Requests\SetRatingRequest;
-use App\IgnoreUser;
-use App\Replay;
-use App\User;
-use App\UserGallery;
-use App\UserReputation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 

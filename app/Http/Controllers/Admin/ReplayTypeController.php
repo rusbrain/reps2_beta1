@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\RoleSaveRequest;
-use App\Replay;
-use App\ReplayType;
-use Illuminate\Http\Request;
+use App\{Replay, ReplayType};
 use App\Http\Controllers\Controller;
 
 class ReplayTypeController extends Controller

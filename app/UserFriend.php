@@ -3,8 +3,7 @@
 namespace App;
 
 use App\Traits\ModelRelations\UserFriendRelation;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\{Model, SoftDeletes};
 use Illuminate\Support\Facades\Auth;
 
 class UserFriend extends Model

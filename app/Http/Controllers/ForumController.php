@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\ForumSection;
-use App\ForumTopic;
+use App\{ForumSection, ForumTopic};
 use App\Services\Forum\SectionService;
 
 class ForumController extends Controller

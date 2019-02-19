@@ -4,8 +4,7 @@ namespace App;
 
 use App\Observers\UserGalleryPointsObserver;
 use App\Traits\ModelRelations\UserGalleryRelation;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\{Model, SoftDeletes};
 use Illuminate\Notifications\Notifiable;
 
 class UserGallery extends Model

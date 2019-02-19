@@ -2,12 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Comment;
-use App\ForumSection;
-use App\ForumTopic;
-use App\Http\Requests\ForumTopicRebaseRequest;
-use App\Http\Requests\ForumTopicStoreRequest;
-use App\Http\Requests\ForumTopicUpdteRequest;
+use App\{Comment, ForumSection, ForumTopic};
+use App\Http\Requests\{ForumTopicRebaseRequest, ForumTopicStoreRequest, ForumTopicUpdteRequest};
 use App\Services\Forum\TopicService;
 use Illuminate\Support\Facades\Auth;
 

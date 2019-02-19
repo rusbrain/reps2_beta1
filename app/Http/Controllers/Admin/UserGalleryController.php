@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Comment;
-use App\Http\Requests\CommentUpdateRequest;
-use App\Http\Requests\UserGalleryStoreRequest;
-use App\Services\Base\BaseDataService;
-use App\Services\Base\AdminViewService;
+use App\{Comment, UserGallery};
+use App\Http\Requests\{CommentUpdateRequest, UserGalleryStoreRequest};
+use App\Services\Base\{BaseDataService, AdminViewService};
 use App\Services\Comment\CommentService;
 use App\Services\User\UserGalleryService;
-use App\UserGallery;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 

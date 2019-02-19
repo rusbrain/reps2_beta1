@@ -8,10 +8,8 @@
 
 namespace App\Services\User;
 
-use App\Dialogue;
-use App\User;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Input;
+use App\{Dialogue, User};
+use Illuminate\Support\Facades\{Auth, Input};
 
 class MessageService
 {

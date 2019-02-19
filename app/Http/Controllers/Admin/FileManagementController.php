@@ -3,11 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\File;
-use App\Http\Requests\FileSearchAdminRequest;
-use App\Http\Requests\FileUpdateAdminRequest;
-use App\Services\Base\BaseDataService;
-use App\Services\Base\FileService;
-use App\Services\Base\AdminViewService;
+use App\Http\Requests\{FileSearchAdminRequest, FileUpdateAdminRequest};
+use App\Services\Base\{BaseDataService, FileService, AdminViewService};
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 

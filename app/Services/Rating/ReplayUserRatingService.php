@@ -9,8 +9,7 @@
 namespace App\Services\Rating;
 
 use App\Http\Requests\SetReplayUserRatingRequest;
-use App\Replay;
-use App\ReplayUserRating;
+use App\{Replay, ReplayUserRating};
 use Illuminate\Support\Facades\Auth;
 
 class ReplayUserRatingService

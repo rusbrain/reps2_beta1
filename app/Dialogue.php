@@ -3,8 +3,7 @@
 namespace App;
 
 use App\Traits\ModelRelations\DialogueRelation;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\{Model, SoftDeletes};
 
 class Dialogue extends Model
 {

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\IgnoreUser;
 use App\Services\User\IgnoreService;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class IgnoreController extends Controller

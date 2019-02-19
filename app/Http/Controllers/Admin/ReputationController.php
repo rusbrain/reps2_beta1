@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Services\Base\BaseDataService;
-use App\Services\Base\AdminViewService;
-use App\User;
-use App\UserReputation;
+use App\Services\Base\{BaseDataService, AdminViewService};
+use App\{User, UserReputation};
 use App\Http\Controllers\Controller;
 
 class ReputationController extends Controller

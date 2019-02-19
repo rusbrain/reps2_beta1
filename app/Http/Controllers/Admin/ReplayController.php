@@ -3,16 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Comment;
-use App\Http\Requests\CommentUpdateRequest;
-use App\Http\Requests\ReplaySearchAdminRequest;
-use App\Http\Requests\ReplayStoreRequest;
-use App\Http\Requests\ReplayUpdateRequest;
-use App\Replay;
-use App\ReplayMap;
-use App\ReplayType;
-use App\ReplayUserRating;
-use App\Services\Base\BaseDataService;
-use App\Services\Base\AdminViewService;
+use App\Http\Requests\{CommentUpdateRequest, ReplaySearchAdminRequest, ReplayStoreRequest, ReplayUpdateRequest};
+use App\{Replay, ReplayMap, ReplayType, ReplayUserRating};
+use App\Services\Base\{BaseDataService, AdminViewService};
 use App\Services\Comment\CommentService;
 use App\Services\Replay\ReplayService;
 use App\Http\Controllers\Controller;

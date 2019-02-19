@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Comment;
-use App\ForumTopic;
+use App\{Comment, ForumTopic};
 use App\Http\Requests\TopicCommentStoreRequest;
 use Carbon\Carbon;
 

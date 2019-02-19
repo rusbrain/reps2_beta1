@@ -2,13 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\ForumSection;
-use App\ForumTopic;
-use App\Http\Requests\AdminTopicCreateRequest;
-use App\Http\Requests\ForumTopicUpdateAdminRequest;
-use App\Http\Requests\SearchForumTopicRequest;
-use App\Services\Base\BaseDataService;
-use App\Services\Base\AdminViewService;
+use App\{ForumSection, ForumTopic};
+use App\Http\Requests\{AdminTopicCreateRequest, ForumTopicUpdateAdminRequest, SearchForumTopicRequest};
+use App\Services\Base\{BaseDataService, AdminViewService};
 use App\Services\Forum\TopicService;
 use App\Http\Controllers\Controller;
 

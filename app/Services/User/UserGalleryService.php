@@ -8,13 +8,9 @@
 
 namespace App\Services\User;
 
-use App\Comment;
-use App\File;
-use App\Http\Requests\UserGalleryStoreRequest;
-use App\Http\Requests\UserGalleryUpdateRequest;
+use App\{Comment, File, User, UserGallery};
+use App\Http\Requests\{UserGalleryStoreRequest, UserGalleryUpdateRequest};
 use App\Services\Base\FileService;
-use App\User;
-use App\UserGallery;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 

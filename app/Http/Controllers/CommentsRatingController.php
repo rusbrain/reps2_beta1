@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Comment;
-use App\UserReputation;
-use Illuminate\Http\Request;
+use App\{Comment, UserReputation};
 
 class CommentsRatingController extends RatingController
 {

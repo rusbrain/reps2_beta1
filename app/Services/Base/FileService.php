@@ -9,10 +9,8 @@
 namespace App\Services\Base;
 
 use App\File;
-use App\Http\Requests\FileSearchAdminRequest;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
-use App\Http\Requests\FileUpdateAdminRequest;
+use App\Http\Requests\{FileSearchAdminRequest, FileUpdateAdminRequest};
+use Illuminate\Support\Facades\{Auth, Storage};
 
 class FileService
 {

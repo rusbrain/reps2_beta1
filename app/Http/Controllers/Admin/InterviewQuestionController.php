@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\InterviewQuestionCreateRequest;
-use App\Http\Requests\InterviewQuestionRequest;
+use App\Http\Requests\{InterviewQuestionCreateRequest, InterviewQuestionRequest};
 use App\InterviewQuestion;
 use App\Http\Controllers\Controller;
-use App\Services\Base\BaseDataService;
-use App\Services\Base\InterviewQuestionsService;
-use App\Services\Base\AdminViewService;
+use App\Services\Base\{BaseDataService, InterviewQuestionsService, AdminViewService};
 
 class InterviewQuestionController extends Controller
 {

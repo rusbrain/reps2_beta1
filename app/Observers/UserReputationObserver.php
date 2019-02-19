@@ -2,12 +2,7 @@
 
 namespace App\Observers;
 
-use App\Comment;
-use App\ForumTopic;
-use App\Replay;
 use App\Services\Rating\RatingService;
-use App\User;
-use App\UserGallery;
 use App\UserReputation;
 
 class UserReputationObserver

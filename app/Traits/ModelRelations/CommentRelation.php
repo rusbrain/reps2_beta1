@@ -8,7 +8,6 @@
 
 namespace App\Traits\ModelRelations;
 
-
 use App\UserReputation;
 
 trait CommentRelation

@@ -3,7 +3,6 @@
 namespace App\Observers;
 
 use App\Services\User\UserService;
-use App\User;
 
 class BasePointsObserver
 {

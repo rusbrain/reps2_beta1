@@ -7,8 +7,7 @@ use App\Observers\ForumTopicPointsObserver;
 use App\Services\Forum\TopicService;
 use App\Traits\ModelRelations\ForumTopicRelation;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\{Model, Builder};
 use Illuminate\Notifications\Notifiable;
 
 class ForumTopic extends Model

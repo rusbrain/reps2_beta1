@@ -2,11 +2,7 @@
 
 namespace App\Observers;
 
-use App\Comment;
-use App\ForumTopic;
-use App\Replay;
-use App\ReplayType;
-use App\UserGallery;
+use App\{Comment, ForumTopic, Replay, UserGallery};
 
 class CommentObserver extends BasePointsObserver
 {

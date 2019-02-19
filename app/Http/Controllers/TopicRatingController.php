@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\ForumTopic;
-use App\Http\Requests\SetRatingRequest;
-use App\UserReputation;
+use App\{ForumTopic, UserReputation};
 
 class TopicRatingController extends RatingController
 {

@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UserGalleryStoreRequest;
-use App\Http\Requests\UserGalleryUpdateRequest;
-use App\IgnoreUser;
+use App\Http\Requests\{UserGalleryStoreRequest, UserGalleryUpdateRequest};
+use App\{IgnoreUser, UserGallery};
 use App\Services\User\UserGalleryService;
-use App\UserGallery;
 use Illuminate\Support\Facades\Auth;
-
 
 class UserGalleryController extends Controller
 {
