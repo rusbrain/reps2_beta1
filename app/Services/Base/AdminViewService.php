@@ -8,10 +8,9 @@
 
 namespace App\Services\Base;
 
-
 use Illuminate\Pagination\LengthAwarePaginator;
 
-class AdminViewService
+class AdminViewService extends ViewService
 {
     /**
      * @param $comments
@@ -19,7 +18,7 @@ class AdminViewService
      */
     public static function getComments(LengthAwarePaginator $comments)
     {
-        return (string) view('admin.comment')->with(['data' => $comments]);
+        return self::getView('admin.comment',$comments);
     }
 
     /**
@@ -28,7 +27,7 @@ class AdminViewService
      */
     public static function getPagination($data)
     {
-        return (string) view('admin.pagination')->with(['data' => $data]);
+        return self::getView('admin.pagination',$data);
     }
 
     /**
@@ -37,7 +36,7 @@ class AdminViewService
      */
     public static function getCountries(LengthAwarePaginator $countries)
     {
-        return (string) view('admin.country.list_table')->with(['data' => $countries]);
+        return self::getView('admin.country.list_table',$countries);
     }
 
     /**
@@ -46,7 +45,7 @@ class AdminViewService
      */
     public static function getCountriesPopUp(LengthAwarePaginator $countries)
     {
-        return (string) view('admin.country.list_pop_up')->with(['data' => $countries]);
+        return self::getView('admin.country.list_pop_up',$countries);
     }
 
     /**
@@ -55,7 +54,7 @@ class AdminViewService
      */
     public static function getFiles(LengthAwarePaginator $files)
     {
-        return (string) view('admin.file.list_table')->with(['data' => $files]);
+        return self::getView('admin.file.list_table',$files);
     }
 
     /**
@@ -64,7 +63,7 @@ class AdminViewService
      */
     public static function getFilesPopUp(LengthAwarePaginator $files)
     {
-        return (string) view('admin.file.list_pop_up')->with(['data' => $files]);
+        return self::getView('admin.file.list_pop_up',$files);
     }
 
     /**
@@ -73,7 +72,7 @@ class AdminViewService
      */
     public static function getSections(LengthAwarePaginator $data)
     {
-        return (string) view('admin.forum.section.list_table')->with(['data' => $data]);
+        return self::getView('admin.forum.section.list_table',$data);
     }
 
     /**
@@ -82,7 +81,7 @@ class AdminViewService
      */
     public static function getTopics(LengthAwarePaginator $data)
     {
-        return (string) view('admin.forum.topic.list_table')->with(['data' => $data]);
+        return self::getView('admin.forum.topic.list_table',$data);
     }
 
     /**
@@ -91,7 +90,7 @@ class AdminViewService
      */
     public static function getInterview(LengthAwarePaginator $questions)
     {
-        return (string) view('admin.question.list_table')->with(['data' => $questions]);
+        return self::getView('admin.question.list_table',$questions);
     }
 
     /**
@@ -100,7 +99,7 @@ class AdminViewService
      */
     public static function getInterviewPopUp(LengthAwarePaginator $questions)
     {
-        return (string) view('admin.question.list_pop_up')->with(['data' => $questions]);
+        return self::getView('admin.question.list_pop_up',$questions);
     }
 
     /**
@@ -109,7 +108,7 @@ class AdminViewService
      */
     public static function getReplay(LengthAwarePaginator $data)
     {
-        return (string) view('admin.replay.list_table')->with(['data' => $data]);
+        return self::getView('admin.replay.list_table',$data);
     }
 
     /**
@@ -118,7 +117,7 @@ class AdminViewService
      */
     public static function  getReplayPopUp(LengthAwarePaginator $data)
     {
-        return (string) view('admin.replay.list_pop_up')->with(['data' => $data]);
+        return self::getView('admin.replay.list_pop_up',$data);
     }
 
     /**
@@ -127,7 +126,7 @@ class AdminViewService
      */
     public static function getMap(LengthAwarePaginator $data)
     {
-        return (string) view('admin.replay.map.list_table')->with(['data' => $data]);
+        return self::getView('admin.replay.map.list_table',$data);
     }
 
     /**
@@ -136,7 +135,7 @@ class AdminViewService
      */
     public static function getMapPopUp(LengthAwarePaginator $data)
     {
-        return (string) view('admin.replay.map.list_pop_up')->with(['data' => $data]);
+        return self::getView('admin.replay.map.list_pop_up',$data);
     }
 
     /**
@@ -145,7 +144,7 @@ class AdminViewService
      */
     public static function getReputation(LengthAwarePaginator $repuntation)
     {
-        return (string) view('admin.user.reputation.list_table')->with(['data' => $repuntation]);
+        return self::getView('admin.user.reputation.list_table',$repuntation);
     }
 
     /**
@@ -154,7 +153,7 @@ class AdminViewService
      */
     public static function getUserComment(LengthAwarePaginator $comments)
     {
-        return (string) view('admin.user.comments.list_table')->with(['data' => $comments]);
+        return self::getView('admin.user.comments.list_table',$comments);
     }
 
     /**
@@ -163,7 +162,7 @@ class AdminViewService
      */
     public static function getUsers($users)
     {
-        return (string) view('admin.user.user_list_table')->with(['data' => $users]);
+        return self::getView('admin.user.user_list_table',$users);
     }
 
     /**
@@ -172,7 +171,7 @@ class AdminViewService
      */
     public static function getGallery(LengthAwarePaginator $galleries)
     {
-        return (string) view('admin.user.gallery.list_table')->with(['data' => $galleries]);
+        return self::getView('admin.user.gallery.list_table',$galleries);
     }
 
     /**
@@ -181,7 +180,7 @@ class AdminViewService
      */
     public static function getGalleryPopUp(LengthAwarePaginator $galleries)
     {
-        return (string) view('admin.user.gallery.list_pop_up')->with(['data' => $galleries]);
+        return self::getView('admin.user.gallery.list_pop_up',$galleries);
     }
 
     /**
@@ -190,6 +189,6 @@ class AdminViewService
      */
     public static function getQuestions(LengthAwarePaginator $questions)
     {
-        return (string) view('admin.user.questions.list_table')->with(['data' => $questions]);
+        return self::getView('admin.user.questions.list_table',$questions);
     }
 }

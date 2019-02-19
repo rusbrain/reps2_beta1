@@ -8,13 +8,13 @@
 
 namespace App\Services\Forum;
 
-
 use App\File;
 use App\ForumSection;
 use App\ForumTopic;
 use App\Http\Requests\ForumTopicStoreRequest;
 use App\Http\Requests\ForumTopicUpdteRequest;
 use App\Http\Requests\SearchForumTopicRequest;
+use App\Services\Base\FileService;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -109,7 +109,7 @@ class TopicService
 
         if ($request->file('preview_img')){
             if ($topic->preview_file_id){
-                File::removeFile($topic->preview_file_id);
+                FileService::removeFile($topic->preview_file_id);
             }
 
             $title = 'Превью '.$request->has('title')?$request->get('title'):'';
@@ -130,7 +130,7 @@ class TopicService
     public static function remove(ForumTopic $topic)
     {
         if ($topic->preview_file_id){
-            File::removeFile($topic->preview_file_id);
+            FileService::removeFile($topic->preview_file_id);
         }
 
         $topic->comments()->delete();
@@ -147,7 +147,7 @@ class TopicService
     public static function getUserTopic(SearchForumTopicRequest $request, $user_id)
     {
         $user = User::find($user_id);
-        $topics  = ForumTopic::search($request->validated(), ForumTopic::where('user_id', $user_id))->count();
+        $topics  = TopicService::search($request->validated(), ForumTopic::where('user_id', $user_id))->count();
         $request_data = $request->validated();
         $request_data['user_id'] = $user_id;
 
@@ -157,5 +157,65 @@ class TopicService
             'sections' => ForumSection::all(),
             'request_data' => $request_data
         ];
+    }
+
+    /**
+     * Generate query with search request
+     *
+     * @param array $data
+     * @param bool $query
+     * @return bool
+     */
+    public static function search(array $data, $query = false )
+    {
+        if (!$query){
+            $query = ForumTopic::where('id', '>', 0);
+        }
+
+        if (isset($data['user_id']) && null !== $data['user_id']){
+            $query->where('user_id', $data['user_id']);
+        }
+
+        if (isset($data['min_rating']) && null !== $data['min_rating']){
+            $query->where('rating','>=', $data['min_rating']);
+        }
+
+        if (isset($data['min_date']) && null !== $data['min_date']){
+            $query->where('created_at','>=', $data['min_date']);
+        }
+
+        if (isset($data['max_date']) && null !== $data['max_date']){
+            $query->where('created_at','<=', $data['max_date']);
+        }
+
+        if (isset($data['news']) && null !== $data['news']){
+            $query->where('news',$data['news']);
+        }
+
+        if (isset($data['approved']) && null !== $data['approved']){
+            $query->where('approved',$data['approved']);
+        }
+
+        if (isset($data['text']) && null !== $data['text']){
+            $query->where(function ($q) use ($data){
+                $q->where('title', 'like', "%{$data['text']}%")
+                    ->orWhere('preview_content', 'like', "%{$data['text']}%")
+                    ->orWhere('content', 'like', "%{$data['text']}%");
+            });
+        }
+
+        if (isset($data['section_id']) && null !== $data['section_id']){
+            $query->whereHas('section', function ($q) use ($data){
+                $q->where('id', $data['section_id']);
+            });
+        }
+
+        if(Input::has('sort') && Input::get('sort')){
+            $query->orderBy(Input::get('sort'), 'desc');
+        } else {
+            $query->orderBy('created_at', 'desc');
+        }
+
+        return $query;
     }
 }

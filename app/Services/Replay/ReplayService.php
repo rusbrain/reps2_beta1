@@ -14,8 +14,11 @@ use App\Http\Requests\ReplaySearchAdminRequest;
 use App\Http\Requests\ReplaySearchRequest;
 use App\Http\Requests\ReplayStoreRequest;
 use App\Replay;
+use App\Services\Base\FileService;
+use App\Services\Rating\RatingService;
 use App\User;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ReplayService
@@ -136,20 +139,6 @@ class ReplayService
     }
 
     /**
-     * @param Replay $replay
-     * @throws \Exception
-     */
-    public static function destroy(Replay $replay)
-    {
-        $file = $replay->file()->first();
-        File::removeFile($file->id);
-
-        $replay->user_rating()->delete();
-        $replay->comments()->delete();
-        $replay->delete();
-    }
-
-    /**
      * get Replay view list
      *
      * @param $query
@@ -170,7 +159,7 @@ class ReplayService
     public static function getReplayByUser(ReplaySearchAdminRequest $request, $user_id)
     {
         $user = User::find($user_id);
-        $replays = $data = Replay::search($request,Replay::where('user_id', $user_id))->count();
+        $replays = $data = ReplayService::search($request,Replay::where('user_id', $user_id))->count();
 
         $request_data = $request->validated();
         $request_data['user_id'] = $user_id;
@@ -186,13 +175,122 @@ class ReplayService
         $replay = Replay::find($replay_id);
         $user_id = $replay->user_id;
 
-        File::removeFile($replay->file_id);
+        FileService::removeFile($replay->file_id);
         $replay->positive()->delete();
         $replay->negative()->delete();
         $replay->user_rating()->delete();
         $replay->comments()->delete();
 
         Replay::where('id', $replay_id)->delete();
-        User::recountRating($user_id);
+        RatingService::recountRating($user_id);
+    }
+
+
+
+    /**
+     * @param Request $request
+     * @param Replay $replay
+     * @return bool|void
+     */
+    public static function updateReplay(Request $request, Replay $replay)
+    {
+        $replay_data = $request->validated();
+
+        if($request->has('replay')){
+            FileService::removeFile($replay->file_id);
+
+            $title = 'Replay '.$request->has('title')?$request->get('title'):'';
+            $file = File::storeFile($replay_data['replay'], 'replays', $title);
+
+            $replay_data['file_id'] = $file->id;
+
+            unset($replay_data['replay']);
+        }
+
+        if ($request->has('map_id') && $request->get('map_id') === null){
+            $replay_data['map_id'] = 0;
+        }
+
+        if ($request->has('championship') && $request->get('championship') == ''){
+            $replay_data['championship'] = '';
+        }
+
+        if ($request->has('creating_rate') && $request->get('creating_rate') == ''){
+            $replay_data['creating_rate'] = '';
+        }
+
+        if (!$request->has('approved')){
+            $replay_data['approved'] = "0";
+        }
+
+        if ($request->has('length') && $request->get('length') == ''){
+            $replay_data['length'] = '00:00:00';
+        }
+
+        Replay::where('id', $replay->id)->update($replay_data);
+    }
+
+    /**
+     * @param Request $request
+     * @param bool $query
+     * @return bool
+     */
+    public static function search(Request $request, $query = false)
+    {
+        if (!$query){
+            $query = Replay::where('id', '>', 0);
+        }
+
+        $request_data = $request->validated();
+
+        if(isset($request_data['search']) && $request_data['search']){
+            $query->where(function ($q) use ($request_data){
+                $q->where('id', 'like', "%{$request_data['search']}%")
+                    ->orWhere('title', 'like', "%{$request_data['search']}%")
+                    ->orWhere('championship', 'like', "%{$request_data['search']}%");
+            });
+        }
+
+        if(isset($request_data['map']) && $request_data['map']){
+            $query->where('map_id', $request_data['map']);
+        }
+
+        if(isset($request_data['type']) && $request_data['type']){
+            $query->where('type_id', $request_data['type']);
+        }
+
+        if(isset($request_data['users']) && $request_data['users'] !== null){
+            $query->where('user_replay', $request_data['users']);
+        }
+
+        if(isset($request_data['approved']) && $request_data['approved'] !== null){
+            $query->where('approved', $request_data['approved']);
+        }
+
+        if(isset($request_data['country']) && $request_data['country']){
+            $query->where(function ($q) use ($request_data){
+                $q->where('first_country_id', $request_data['country'])
+                    ->orWhere('second_country_id', $request_data['country']);
+            });
+        }
+
+        if(isset($request_data['race']) && $request_data['race']){
+            $query->where(function ($q) use ($request_data){
+                $q->where('first_race', $request_data['race'])
+                    ->orWhere('second_race', $request_data['race']);
+            });
+        }
+
+        if(isset($request_data['sort']) && $request_data['sort']){
+            $query->orderBy($request_data['sort']);
+        } else {
+            $query->orderBy('created_at', 'desc');
+        }
+
+        if (isset($request_data['user_id']) && $request_data['user_id']){
+            $query->where('user_id', $request['user_id']);
+        }
+
+        return $query;
     }
 }

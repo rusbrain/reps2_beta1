@@ -8,7 +8,6 @@
 
 namespace App\Services\Rating;
 
-
 use App\Http\Requests\SetReplayUserRatingRequest;
 use App\Replay;
 use App\ReplayUserRating;
@@ -29,6 +28,19 @@ class ReplayUserRatingService
             ['comment' => $comment, 'rating'=> $request->get('rating')]
         );
 
-        Replay::updateUserRating($id);
+        ReplayUserRatingService::updateUserRating($id);
+    }
+
+    /**
+     * Update value of user rating
+     *
+     * @param $replay_id
+     */
+    public static function updateUserRating($replay_id)
+    {
+        $count = ReplayUserRating::where('replay_id',[$replay_id])->count();
+        $rating = $count?(ReplayUserRating::where('replay_id',[$replay_id])->sum('rating')/$count):0;
+
+        Replay::where('id', $replay_id)->update(['user_rating'=>$rating]);
     }
 }

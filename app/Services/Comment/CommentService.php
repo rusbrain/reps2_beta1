@@ -8,9 +8,7 @@
 
 namespace App\Services\Comment;
 
-
 use App\Comment;
-use App\Http\Controllers\CommentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -43,5 +41,24 @@ class CommentService
         $replay_data['title'] = $replay_data['title']??null;
 
         Comment::where('id', $id)->where('relation', $relation)->update($replay_data);
+    }
+
+    /**
+     * @param $name
+     * @param $id
+     * @return int
+     */
+    public static function getObjectRelation($name)
+    {
+        switch ($name){
+            case 'replay':
+                return Comment::RELATION_REPLAY;
+            case 'topic':
+                return Comment::RELATION_FORUM_TOPIC;
+            case 'gallery':
+                return Comment::RELATION_USER_GALLERY;
+        }
+
+        return false;
     }
 }

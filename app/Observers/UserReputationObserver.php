@@ -5,6 +5,7 @@ namespace App\Observers;
 use App\Comment;
 use App\ForumTopic;
 use App\Replay;
+use App\Services\Rating\RatingService;
 use App\User;
 use App\UserGallery;
 use App\UserReputation;
@@ -19,8 +20,8 @@ class UserReputationObserver
      */
     public function created(UserReputation $userReputation)
     {
-        UserReputation::refreshUserRating($userReputation->recipient_id);
-        UserReputation::refreshObjectRating($userReputation->object_id, $userReputation->relation);
+        RatingService::refreshUserRating($userReputation->recipient_id);
+        RatingService::refreshObjectRating($userReputation->object_id, $userReputation->relation);
     }
 
     /**
@@ -31,7 +32,7 @@ class UserReputationObserver
      */
     public function updated(UserReputation $userReputation)
     {
-        UserReputation::refreshUserRating($userReputation->recipient_id);
+        RatingService::refreshUserRating($userReputation->recipient_id);
     }
 
     /**
@@ -42,7 +43,7 @@ class UserReputationObserver
      */
     public function deleting(UserReputation $userReputation)
     {
-        UserReputation::refreshUserRating($userReputation->recipient_id);
+        RatingService::refreshUserRating($userReputation->recipient_id);
 
     }
 
@@ -54,6 +55,6 @@ class UserReputationObserver
      */
     public function restored(UserReputation $userReputation)
     {
-        UserReputation::refreshUserRating($userReputation->recipient_id);
+        RatingService::refreshUserRating($userReputation->recipient_id);
     }
 }

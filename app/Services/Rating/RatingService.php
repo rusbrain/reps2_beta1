@@ -8,9 +8,13 @@
 
 namespace App\Services\Rating;
 
+use App\Comment;
+use App\ForumTopic;
 use App\Http\Requests\SetRatingRequest;
 use App\IgnoreUser;
+use App\Replay;
 use App\User;
+use App\UserGallery;
 use App\UserReputation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -102,5 +106,74 @@ class RatingService
             $comment = $request->get('comment');
         }
         return $comment;
+    }
+
+    /**
+     * @param $user_id
+     */
+    public static function recountRating($user_id)
+    {
+        $ratings = UserReputation::where('recipient_id', $user_id)->get();
+        $sum = 0;
+        foreach ($ratings as $rating){
+            $sum += $rating->rating;
+        }
+
+        User::where('id', $user_id)->update(['rating' => $sum]);
+    }
+
+    /**
+     * @param $relation_id
+     * @return null|string
+     */
+    public static function getModel($relation_id)
+    {
+        $model = null;
+        switch ($relation_id){
+            case UserReputation::RELATION_FORUM_TOPIC:
+                $model = ForumTopic::class;
+                break;
+            case UserReputation::RELATION_REPLAY:
+                $model = Replay::class;
+                break;
+            case UserReputation::RELATION_USER_GALLERY:
+                $model = UserGallery::class;
+                break;
+            case UserReputation::RELATION_COMMENT:
+                $model = Comment::class;
+                break;
+        }
+
+        return $model;
+    }
+
+    /**
+     * Refresh user Rating
+     *
+     * @param $user_id
+     */
+    public static function refreshUserRating($user_id)
+    {
+        $positive = UserReputation::where('recipient_id', $user_id)->where('rating', '1')->count();
+        $negative = UserReputation::where('recipient_id', $user_id)->where('rating', '-1')->count();
+        $val = $positive - $negative;
+
+        User::where('id', $user_id)->update(['rating'=>$val, 'negative_count' => $negative, 'positive_count' => $positive]);
+    }
+
+    /**
+     * Refresh object Rating
+     *
+     * @param $object_id
+     * @param $relation_id
+     */
+    public static function refreshObjectRating($object_id, $relation_id)
+    {
+        $class_name = RatingService::getModel($relation_id);
+        $positive = UserReputation::where('object_id', $object_id)->where('relation',$relation_id)->where('rating', '1')->count();
+        $negative = UserReputation::where('object_id', $object_id)->where('relation',$relation_id)->where('rating', '-1')->count();
+        $val = $positive - $negative;
+
+        $class_name::where('id', $object_id)->update(['rating'=>$val, 'negative_count' => $negative, 'positive_count' => $positive]);
     }
 }

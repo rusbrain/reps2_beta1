@@ -108,7 +108,7 @@ class ReplayController extends Controller
     {
         $replay = Replay::find($id);
         if($replay){
-            Replay::updateReplay($request, $replay);
+            ReplayService::updateReplay($request, $replay);
             return redirect()->route('replay.get', ['id' => $replay->id]);
         }
         return abort(404);
@@ -185,7 +185,7 @@ class ReplayController extends Controller
         if ($replay->user_id != Auth::id()){
             return abort(403);
         }
-        ReplayService::destroy($replay);
+        ReplayService::remove($id);
         return redirect()->route('replay.gosus');
     }
 }

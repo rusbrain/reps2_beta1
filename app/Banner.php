@@ -26,20 +26,4 @@ class Banner extends Model
         'url_redirect',
         'is_active',
     ];
-
-    /**
-     * @return mixed
-     */
-    public static function getRandomBanner()
-    {
-        $banners_id = Banner::where('is_active',1)->has('file')->get(['id']);
-
-        $ids = [];
-        foreach ($banners_id as $banner){
-            $ids[] = $banner->id;
-        }
-        $id = array_rand($ids);
-
-        return Banner::where('id', $ids[$id])->with('file')->first();
-    }
 }

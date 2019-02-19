@@ -7,6 +7,7 @@ use App\Replay;
 use App\ReplayMap;
 use App\Services\Base\BaseDataService;
 use App\Services\Base\AdminViewService;
+use App\Services\Replay\ReplayMapService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -18,7 +19,7 @@ class ReplayMapController extends Controller
      */
     public function index(Request $request)
     {
-        $data =  ReplayMap::search($request)->count();
+        $data =  ReplayMapService::search($request)->count();
         return view('admin.replay.map.list')->with(['maps_count' => $data, 'request_data' => $request->all()]);
     }
 
@@ -28,7 +29,7 @@ class ReplayMapController extends Controller
      */
     public function pagination(Request $request)
     {
-        $data = ReplayMap::search($request, ReplayMap::withCount('replay'))->paginate(20);
+        $data = ReplayMapService::search($request, ReplayMap::withCount('replay'))->paginate(20);
         return BaseDataService::getPaginationData(AdminViewService::getMap($data), AdminViewService::getMapPopUp($data), AdminViewService::getPagination($data));
     }
 
@@ -79,7 +80,7 @@ class ReplayMapController extends Controller
      */
     public function create(ReplayMapCreateAdminRequest $request)
     {
-        ReplayMap::createMap($request);
+        ReplayMapService::createMap($request);
         return back();
     }
 }

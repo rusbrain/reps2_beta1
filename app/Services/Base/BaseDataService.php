@@ -8,7 +8,6 @@
 
 namespace App\Services\Base;
 
-
 use App\ForumTopic;
 use App\Http\Requests\QuickEmailRequest;
 use App\Mail\QuickEmail;
@@ -58,5 +57,21 @@ class BaseDataService
     public static function getPaginationData($table, $pagination, $pop_up = '')
     {
        return ['table' => $table, 'pagination' => $pagination, 'pop_up' => $pop_up];
+    }
+
+    /**
+     * @return mixed
+     */
+    public static function getRandomBanner()
+    {
+        $banners_id = Banner::where('is_active',1)->has('file')->get(['id']);
+
+        $ids = [];
+        foreach ($banners_id as $banner){
+            $ids[] = $banner->id;
+        }
+        $id = array_rand($ids);
+
+        return Banner::where('id', $ids[$id])->with('file')->first();
     }
 }

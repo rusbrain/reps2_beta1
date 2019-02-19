@@ -7,6 +7,7 @@ use App\Http\Requests\ForumSectionUpdateAdminRequest;
 use App\Services\Base\BaseDataService;
 use App\Services\Base\AdminViewService;
 use App\Http\Controllers\Controller;
+use App\Services\Forum\SectionService;
 
 class ForumController extends Controller
 {
@@ -110,7 +111,7 @@ class ForumController extends Controller
      */
     public function remove($section_id)
     {
-        ForumSection::removeSection($section_id);
+        SectionService::removeSection($section_id);
         return back();
     }
 
@@ -144,7 +145,7 @@ class ForumController extends Controller
      */
     public function saveSection(ForumSectionUpdateAdminRequest $request, $section_id)
     {
-        ForumSection::updateSection($request, $section_id);
+        SectionService::updateSection($request, $section_id);
         return back();
     }
 

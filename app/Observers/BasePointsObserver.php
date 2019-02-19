@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Services\User\UserService;
 use App\User;
 
 class BasePointsObserver
@@ -11,7 +12,7 @@ class BasePointsObserver
      */
     protected function created_point($user_id)
     {
-        User::updatePoints($user_id, true);
+        UserService::updatePoints($user_id, true);
     }
 
     /**
@@ -19,7 +20,7 @@ class BasePointsObserver
      */
     protected function deleted_point($user_id)
     {
-        User::updatePoints($user_id, false);
+        UserService::updatePoints($user_id, false);
     }
 
     /**
@@ -27,6 +28,6 @@ class BasePointsObserver
      */
     protected function restored_point($user_id)
     {
-        User::updatePoints($user_id, false);
+        UserService::updatePoints($user_id, false);
     }
 }

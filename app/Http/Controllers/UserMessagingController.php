@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Dialogue;
 use App\Http\Requests\SendUserMessageRequest;
+use App\Services\User\UserDialogService;
 use App\UserMessage;
 use Illuminate\Support\Facades\Auth;
 
@@ -54,7 +55,7 @@ class UserMessagingController extends BaseUserMessageController
      */
     public function getCorrespList()
     {
-        return view('user.message_list')->with('messages_list', Dialogue::getUserDialogues());
+        return view('user.message_list')->with('messages_list', UserDialogService::getUserDialogues());
     }
 
     /**
@@ -65,7 +66,7 @@ class UserMessagingController extends BaseUserMessageController
      */
     public function getMessages($user_id)
     {
-        $dialog_id = Dialogue::getDialogUser($user_id)->id;
+        $dialog_id = UserDialogService::getDialogUser($user_id)->id;
 
         return view('user.messages')->with(['messages'=>Dialogue::getUserDialogueContent($user_id), 'dialog_id'=>$dialog_id]);
     }

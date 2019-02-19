@@ -8,17 +8,16 @@
 
 namespace App\Services;
 
-use App\Banner;
 use App\Country;
-use App\File;
 use App\ForumSection;
 use App\ForumTopic;
 use App\GameVersion;
-use App\InterviewQuestion;
 use App\Replay;
 use App\ReplayMap;
 use App\ReplayType;
 use App\SectionIcon;
+use App\Services\Base\BaseDataService;
+use App\Services\Base\InterviewQuestionsService;
 use App\User;
 use App\UserGallery;
 use App\UserMessage;
@@ -136,7 +135,7 @@ class GeneralViewHelper
      */
     public function getRandomQuestion()
     {
-        self::$instance->question = self::$instance->question ?? InterviewQuestion::getRandomQuestion();
+        self::$instance->question = self::$instance->question ?? InterviewQuestionsService::getRandomQuestion();
         return self::$instance->question;
     }
 
@@ -305,7 +304,7 @@ class GeneralViewHelper
      */
     public function getRandomBanner()
     {
-        self::$instance->banner = self::$instance->banner ?? Banner::getRandomBanner();
+        self::$instance->banner = self::$instance->banner ?? BaseDataService::getRandomBanner();
         return self::$instance->banner;
     }
 

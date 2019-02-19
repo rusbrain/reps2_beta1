@@ -405,7 +405,7 @@ class UserTestDataSeeding extends Seeder
         }
 
         foreach ($replay_ids as $replay_id){
-            \App\Replay::updateUserRating($replay_id);
+            \App\Services\Rating\ReplayUserRatingService::updateUserRating($replay_id);
         }
     }
 

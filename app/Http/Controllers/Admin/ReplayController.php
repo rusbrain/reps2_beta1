@@ -25,7 +25,7 @@ class ReplayController extends Controller
      */
     public function index(ReplaySearchAdminRequest $request)
     {
-        $data = Replay::search($request)->count();
+        $data = ReplayService::search($request)->count();
         return view('admin.replay.replays')->with(['replay_count' => $data, 'request_data' => $request->validated()]);
     }
 
@@ -131,7 +131,7 @@ class ReplayController extends Controller
         $replay = Replay::find($replay_id);
 
         if($replay){
-            Replay::updateReplay($request, $replay);
+            ReplayService::updateReplay($request, $replay);
             return back();
         }
         return abort(404);

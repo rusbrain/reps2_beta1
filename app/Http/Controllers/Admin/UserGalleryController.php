@@ -3,19 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Comment;
-use App\File;
 use App\Http\Requests\CommentUpdateRequest;
 use App\Http\Requests\UserGalleryStoreRequest;
 use App\Services\Base\BaseDataService;
 use App\Services\Base\AdminViewService;
 use App\Services\Comment\CommentService;
 use App\Services\User\UserGalleryService;
-use App\User;
 use App\UserGallery;
-use App\UserMessage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 
 class UserGalleryController extends Controller
 {
@@ -131,6 +127,6 @@ class UserGalleryController extends Controller
      */
     public function create(UserGalleryStoreRequest $request)
     {
-        return redirect()->route('admin.users.gallery.view', ['id' => UserGallery::createGallery($request)]);
+        return redirect()->route('admin.users.gallery.view', ['id' => UserGalleryService::store($request)]);
     }
 }

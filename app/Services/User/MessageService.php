@@ -8,12 +8,10 @@
 
 namespace App\Services\User;
 
-
 use App\Dialogue;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
-use phpDocumentor\Reflection\Types\Self_;
 
 class MessageService
 {
@@ -25,8 +23,7 @@ class MessageService
      */
     public static function getMessageData($id)
     {
-        $contacts = Dialogue::getUserDialogues();
-
+        $contacts = UserDialogService::getUserDialogues();
         return self::formMessageData($id, $contacts);
     }
 
@@ -37,7 +34,7 @@ class MessageService
      */
     protected static function formMessageData($id, $contacts)
     {
-        $dialog_id = Dialogue::getDialogUser($id)->id;
+        $dialog_id = UserDialogService::getDialogUser($id)->id;
 
         if(!$id){
             foreach ($contacts->first()->senders as $sender){

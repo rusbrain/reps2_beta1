@@ -21,13 +21,13 @@ class FileManagementController extends Controller
      */
     public function index(FileSearchAdminRequest $request)
     {
-        $data = File::search($request)->count();
+        $data = FileService::search($request)->count();
         return view('admin.file.list')->with(['file_count' => $data, 'request_data' => $request->validated()]);
     }
 
     public function pagination(FileSearchAdminRequest $request)
     {
-        $files = File::search($request)->paginate(20);
+        $files = FileService::search($request)->paginate(20);
         return BaseDataService::getPaginationData(AdminViewService::getFiles($files), AdminViewService::getPagination($files), AdminViewService::getFilesPopUp($files));
     }
 
@@ -56,7 +56,7 @@ class FileManagementController extends Controller
      */
     public function remove($id)
     {
-        File::removeFile($id);
+        FileService::removeFile($id);
         return back();
     }
 

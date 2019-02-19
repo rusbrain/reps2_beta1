@@ -1374,7 +1374,7 @@ class DBRelocationDataSeed extends Seeder
             $users = User::orderBy('created_at')->offset(1000 * $i)->limit(1000)->get();
 
             foreach ($users as $user) {
-                UserReputation::refreshUserRating($user->id);
+                \App\Services\Rating\RatingService::refreshUserRating($user->id);
 
                 $user_points = Comment::where('user_id', $user->id)->count();
                 $user_points += ForumTopic::where('user_id', $user->id)->count();

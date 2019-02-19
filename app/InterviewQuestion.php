@@ -4,7 +4,6 @@ namespace App;
 
 use App\Traits\ModelRelations\InterviewQuestionRelation;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
 
 class InterviewQuestion extends Model
 {
@@ -29,44 +28,9 @@ class InterviewQuestion extends Model
     ];
 
     /**
-     * Get random interview question for user
-     *
+     * @param $id
      * @return mixed
      */
-    public static function getRandomQuestion()
-    {
-        $data = InterviewQuestion::where('is_active', 1)->has('answers');
-
-        if(Auth::user()){
-            $data->whereDoesntHave('user_answers', function ($query){
-                $query->where('user_id', Auth::id());
-            });
-        } else{
-            $data->where('for_login', 0);
-        }
-
-        $data = $data->get();
-
-        $favorite = clone $data;
-        $favorite = $favorite->where('is_favorite')->sortBy('created_at')->last();
-        if ($favorite){
-            return $favorite?$favorite->load('answers'):[];
-        }
-
-        $ids = [];
-        foreach ($data as $datum){
-            $ids[] = $datum->id;
-        }
-
-        if($ids){
-            $id = array_rand($ids);
-            $data =  $data->where('id', $ids[$id])->first();
-            return $data?$data->load('answers'):[];
-        }
-
-        return [];
-    }
-
     public static function getAnswerQuestion($id)
     {
         return InterviewQuestion::where('id',$id)->with(['answers' => function($query){

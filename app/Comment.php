@@ -3,10 +3,10 @@
 namespace App;
 
 use App\Observers\CommentObserver;
+use App\Services\Comment\CommentService;
 use App\Traits\ModelRelations\CommentRelation;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
-
 
 class Comment extends Model
 {
@@ -48,25 +48,6 @@ class Comment extends Model
     ];
 
     /**
-     * @param $name
-     * @param $id
-     * @return int
-     */
-    public static function getObjectRelation($name)
-    {
-        switch ($name){
-            case 'replay':
-                return self::RELATION_REPLAY;
-            case 'topic':
-                return self::RELATION_FORUM_TOPIC;
-            case 'gallery':
-                return self::RELATION_USER_GALLERY;
-        }
-
-        return false;
-    }
-
-    /**
      * Get pagination comments of object with relations
      *
      * @param $object
@@ -85,7 +66,7 @@ class Comment extends Model
      */
     public static function getComment($object_name, $id)
     {
-        $relation   = Comment::getObjectRelation($object_name);
+        $relation   = CommentService::getObjectRelation($object_name);
 
         if ($relation){
             $comments = Comment::where('relation', $relation)->where('object_id', $id)->with('user.avatar')->orderBy('created_at', 'desc');

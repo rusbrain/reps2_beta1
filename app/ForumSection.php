@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\Http\Requests\ForumSectionUpdateAdminRequest;
 use App\Traits\ModelRelations\ForumSectionRelation;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -81,34 +80,5 @@ class ForumSection extends Model
                         }])
                         ->orderBy('created_at', 'desc');
                 }])->get();
-    }
-
-    /**
-     * @param $section_id
-     */
-    public static function removeSection($section_id)
-    {
-        $section = ForumSection::find($section_id);
-
-        foreach ($section->topics()->get() as $topic){
-            $topic->comments()->delete();
-            $topic->positive()->delete();
-            $topic->negative()->delete();
-        }
-
-        $section->topics()->delete();
-
-        ForumSection::where('id', $section_id)->delete();
-    }
-
-    public static function updateSection(ForumSectionUpdateAdminRequest $request, $section_id)
-    {
-        $data = $request->validated();
-
-        $data['is_active']              = $data['is_active']??0;
-        $data['is_general']             = $data['is_general']??0;
-        $data['user_can_add_topics']    = $data['user_can_add_topics']??0;
-
-        ForumSection::where('id',$section_id)->update($data);
     }
 }

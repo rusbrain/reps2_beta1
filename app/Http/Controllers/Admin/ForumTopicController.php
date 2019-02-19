@@ -22,7 +22,7 @@ class ForumTopicController extends Controller
      */
     public function topics(SearchForumTopicRequest $request)
     {
-        $data = ForumTopic::search($request->validated())->count();
+        $data = TopicService::search($request->validated())->count();
         return view('admin.forum.topic.list')->with(['topics_count' => $data, 'request_data' => $request->validated(), 'sections' => ForumSection::all()]);
     }
 
@@ -77,10 +77,11 @@ class ForumTopicController extends Controller
      *
      * @param $topic_id
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function remove($topic_id)
     {
-        ForumTopic::removeTopic($topic_id);
+        TopicService::remove(ForumTopic::find($topic_id));
         return back();
     }
 

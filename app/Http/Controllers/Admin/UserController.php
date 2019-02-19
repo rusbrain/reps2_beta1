@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\User\UpdateProfileRequest;
 use App\Services\Base\BaseDataService;
 use App\Services\Base\AdminViewService;
+use App\Services\User\UserService;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -19,7 +20,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $users = User::searchUser($request);
+        $users = UserService::searchUser($request);
         $users_count = $users->count();
 
         return view('admin.user.user_list')->with(['users_count' => $users_count, 'request_data' => $request->all()]);
@@ -33,7 +34,7 @@ class UserController extends Controller
      */
     public function pagination(Request $request)
     {
-        $users = User::searchUser($request)->paginate(50)->appends($request->all());
+        $users = UserService::searchUser($request)->paginate(50)->appends($request->all());
         return BaseDataService::getPaginationData(AdminViewService::getUsers($users), AdminViewService::getPagination($users));
     }
 
@@ -68,7 +69,7 @@ class UserController extends Controller
      */
     public function saveUserProfile(UpdateProfileRequest $request, $user_id)
     {
-        User::updateData($request, $user_id);
+        UserService::updateData($request, $user_id);
         return redirect()->route('admin.user.profile.edit', ['id' => $user_id]);
     }
 
@@ -104,7 +105,7 @@ class UserController extends Controller
      */
     public function removeUser($user_id)
     {
-        User::removeUser(User::find($user_id));
+        UserService::removeUser(User::find($user_id));
         return back();
     }
 }

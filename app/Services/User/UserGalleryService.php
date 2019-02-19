@@ -8,11 +8,12 @@
 
 namespace App\Services\User;
 
-
 use App\Comment;
 use App\File;
 use App\Http\Requests\UserGalleryStoreRequest;
 use App\Http\Requests\UserGalleryUpdateRequest;
+use App\Services\Base\FileService;
+use App\User;
 use App\UserGallery;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -35,9 +36,8 @@ class UserGalleryService
     public static function store(UserGalleryStoreRequest $request)
     {
         $data = $request->validated();
-        $data = UserGallery::saveImage($data);
+        $data = self::saveImage($data);
         $data['user_id'] = Auth::id();
-
         $gallery = UserGallery::create($data);
 
         return $gallery->id;
@@ -66,7 +66,7 @@ class UserGalleryService
         $gallery_data = $request->validated();
 
         if($request->has('image')){
-            File::removeFile($gallery->file_id);
+            FileService::removeFile($gallery->file_id);
             $gallery_data = self::saveImage($gallery_data);
         }
 
@@ -85,7 +85,7 @@ class UserGalleryService
     {
         $user_id = $gallery->user_id;
         $file = $gallery->file()->first();
-        File::removeFile($file->id);
+        FileService::removeFile($file->id);
 
         $gallery->comments()->delete();
         $gallery->positive()->delete();
@@ -94,6 +94,10 @@ class UserGalleryService
         User::recountRating($user_id);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
     public static function getGalleries(Request $request)
     {
         $galleries = UserGallery::with('user', 'file')->withCount( 'positive', 'negative', 'comments')->orderBy('id', 'desc');
@@ -103,5 +107,20 @@ class UserGalleryService
         }
 
         return $galleries->paginate(20);
+    }
+
+    /**
+     * Store image file
+     *
+     * @param $gallery_data
+     * @return mixed
+     */
+    public static function saveImage($gallery_data)
+    {
+        $title = 'Картинка галереи пользователя '.Auth::user()->name;
+        $file = File::storeFile($gallery_data['image'], 'gallery', $title);
+        $gallery_data['file_id'] = $file->id;
+        unset($gallery_data['image']);
+        return $gallery_data;
     }
 }
