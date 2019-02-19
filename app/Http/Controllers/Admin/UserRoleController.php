@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\RoleSaveRequest;
+use App\Services\User\UserRoleService;
 use App\User;
 use App\UserRole;
 use Illuminate\Http\Request;
@@ -44,9 +45,7 @@ class UserRoleController extends Controller
      */
     public function remove($role_id)
     {
-        User::where('user_role_id', $role_id)->update(['user_role_id' => 0]);
-        UserRole::where('id', $role_id)->delete();
-
+        UserRoleService::remove($role_id);
         return back();
     }
 

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Services\Base\BaseDataService;
+use App\Services\Base\ViewService;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -25,10 +27,6 @@ class UserQuestionsController extends Controller
     {
         $user = User::find($id);
         $questions = $user->answers_to_questions()->orderBy('created_at', 'desc')->with('question', 'answer')->paginate(50);
-
-        $table = (string) view('admin.user.questions.list_table')->with(['data' => $questions]);
-        $pagination = (string) view('admin.user.pagination')->with(['data' => $questions]);
-
-        return ['table' => $table, 'pagination' => $pagination];
+        return BaseDataService::getPaginationData(ViewService::getQuestions($questions), ViewService::getPagination($questions));
     }
 }

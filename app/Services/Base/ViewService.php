@@ -183,4 +183,13 @@ class ViewService
     {
         return (string) view('admin.user.gallery.list_pop_up')->with(['data' => $galleries]);
     }
+
+    /**
+     * @param LengthAwarePaginator $questions
+     * @return string
+     */
+    public static function getQuestions(LengthAwarePaginator $questions)
+    {
+        return (string) view('admin.user.questions.list_table')->with(['data' => $questions]);
+    }
 }
