@@ -31,7 +31,7 @@ trait ReplayData
     /**
      * @return mixed
      */
-    public function getLastGosuReplay()
+    public function getLastGosuReplay() //TODO:remove
     {
         if (!self::$instance->last_gosu_replay) {
             self::$instance->last_gosu_replay = Replay::gosuReplay()->where('approved', 1)->orderBy('created_at',

@@ -213,4 +213,19 @@ class TopicService
 
         return $query;
     }
+
+    /**
+     * @return mixed
+     */
+    public static function getLastForumHome()
+    {
+        return ForumTopic::whereHas('section',
+                function ($query) {
+                    $query->where('is_active', 1)->where('is_general', 1);
+                })
+                ->where('approved', 1)
+                ->with('preview_image')
+                ->withCount('positive', 'negative', 'comments')
+                ->limit(5)->get();
+    }
 }

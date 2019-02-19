@@ -10,6 +10,7 @@ namespace App\Services\Forum;
 
 use App\{Comment, ForumSection};
 use App\Http\Requests\ForumSectionUpdateAdminRequest;
+use Carbon\Carbon;
 
 class SectionService
 {
@@ -73,5 +74,38 @@ class SectionService
         $data['user_can_add_topics']    = $data['user_can_add_topics']??0;
 
         ForumSection::where('id',$section_id)->update($data);
+    }
+
+    /**
+     * @return ForumSection[]|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public static function getAllForumSections()
+    {
+            $all_sections = ForumSection::active()->get();
+            $time = Carbon::now()->format('Y-M-d');
+            $sql = [];
+            foreach ($all_sections as $section) {
+                $sql[] = "(
+        select * from `forum_topics` where `approved` = 1 and (`start_on` is null or `start_on` <= '$time') and `section_id` = $section->id ORDER BY `commented_at` DESC limit 5
+        )";
+            }
+
+            $sql = implode(" UNION ALL ", $sql);
+            $topics = collect(\DB::select($sql))->groupBy('section_id');
+
+            foreach ($all_sections as $key => $section) {
+                $all_sections[$key]->topics = $topics[$section->id];
+            }
+
+        return $all_sections;
+    }
+
+    /**
+     * @return mixed
+     */
+    public static function getGeneralSectionsForum()
+    {
+        $all_sections = self::getAllForumSections();
+        return $all_sections->where('is_general', 1);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\{ForumTopic, Replay};
+use App\{ForumTopic, Replay, Services\Forum\TopicService};
 use App\Http\Requests\PortalSearchRequest;
 use App\Services\Replay\ReplayService;
 
@@ -26,8 +26,8 @@ class HomeController extends Controller
     public function index()
     {
         return view('home.index')->with([
-            'popular_forum_topics'  => ForumTopic::popularForumTopics(),
-            'last_news'             => ForumTopic::lastNews(),
+            'popular_forum_topics'  => ForumTopic::popularForumTopics(), // TODO: remove
+            'last_news'             => ForumTopic::lastNews(), // TODO: remove
         ]);
     }
 
@@ -51,5 +51,29 @@ class HomeController extends Controller
                 return ReplayService::getList(Replay::where('title', 'like', "%$search%"), "Поиск реплаев");
                 break;
         }
+    }
+
+    /**
+     * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View|mixed
+     */
+    public function lastNews()
+    {
+        return view('home.last_news')->with(['last_news' => ForumTopic::lastNews()]);
+    }
+
+    /**
+     * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View|mixed
+     */
+    public function lastForums()
+    {
+        return view('home.last_forums')->with(['last_forum' => TopicService::getLastForumHome()]);
+    }
+
+    /**
+     * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View|mixed
+     */
+    public function topForums()
+    {
+        return view('home.top_forums')->with(['popular_forum_topics' => ForumTopic::popularForumTopics()]);
     }
 }

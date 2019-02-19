@@ -30,7 +30,7 @@ trait ForumData
     /**
      * @return ForumSection[]|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function getAllForumSections()
+    public function getAllForumSections() //TODO: remove
     {
         if (!$this->all_sections) {
             $all_sections = ForumSection::active()->get();
@@ -56,7 +56,7 @@ trait ForumData
     /**
      * @return mixed
      */
-    public function getGeneralSectionsForum()
+    public function getGeneralSectionsForum() //TODO: remove
     {
         if (!self::$instance->general_sections) {
             if (!self::$instance->all_sections) {
@@ -70,7 +70,7 @@ trait ForumData
     /**
      * @return mixed
      */
-    public function getLastForumHome()
+    public function getLastForumHome() //TODO: remove
     {
         self::$instance->last_forum_home = self::$instance->last_forum_home ?? ForumTopic::whereHas('section',
                 function ($query) {

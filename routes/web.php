@@ -13,6 +13,17 @@
 
 Route::group(['middleware' => 'activity'], function () {
     Route::get('/', 'HomeController@index')->name('home');
+
+    Route::get('/last_news', 'HomeController@lastNews')     ->name('home.last_news');
+    Route::get('/last_forums', 'HomeController@lastForums') ->name('home.last_forum');
+    Route::get('/top_forums', 'HomeController@topForums')   ->name('home.top_forum');
+
+    Route::group(['prefix' => 'widget'], function () {
+        Route::get('/all_forum_sections', 'WidgetController@allForumSections')->name('widgets.all_forum_sections');
+        Route::get('/general_forum_sections', 'WidgetController@generalForumSections')->name('widgets.general_forum_sections');
+        Route::get('/gosu_replays', 'WidgetController@gosuReplay')->name('widgets.gosu_replays');
+    });
+
     Route::get('/search', 'HomeController@search')->name('home.search');
     Route::get('/email/verified/{token}', 'Auth\RegisterController@emailVerified')->name('email_verified');
 

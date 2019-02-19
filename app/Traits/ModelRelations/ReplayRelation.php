@@ -8,8 +8,7 @@
 
 namespace App\Traits\ModelRelations;
 
-use App\Comment;
-use App\UserReputation;
+use App\{Comment,UserReputation};
 
 trait ReplayRelation
 {

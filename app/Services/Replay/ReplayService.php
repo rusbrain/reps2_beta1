@@ -289,4 +289,15 @@ class ReplayService
 
         return $query;
     }
+
+    /**
+     * @return mixed
+     */
+    public static function getLastGosuReplay() //TODO:remove
+    {
+            $last_gosu_replay = Replay::gosuReplay()->where('approved', 1)->orderBy('created_at',
+                'desc')->limit(5)->get();
+            $last_gosu_replay->load('map');
+        return $last_gosu_replay->load('map');
+    }
 }

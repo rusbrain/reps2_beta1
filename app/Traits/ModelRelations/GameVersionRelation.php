@@ -8,7 +8,6 @@
 
 namespace App\Traits\ModelRelations;
 
-
 trait GameVersionRelation
 {
     /**
