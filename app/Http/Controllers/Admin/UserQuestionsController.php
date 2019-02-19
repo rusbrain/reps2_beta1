@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Services\Base\BaseDataService;
-use App\Services\Base\ViewService;
+use App\Services\Base\AdminViewService;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -27,6 +27,6 @@ class UserQuestionsController extends Controller
     {
         $user = User::find($id);
         $questions = $user->answers_to_questions()->orderBy('created_at', 'desc')->with('question', 'answer')->paginate(50);
-        return BaseDataService::getPaginationData(ViewService::getQuestions($questions), ViewService::getPagination($questions));
+        return BaseDataService::getPaginationData(AdminViewService::getQuestions($questions), AdminViewService::getPagination($questions));
     }
 }

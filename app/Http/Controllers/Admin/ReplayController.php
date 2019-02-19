@@ -12,7 +12,7 @@ use App\ReplayMap;
 use App\ReplayType;
 use App\ReplayUserRating;
 use App\Services\Base\BaseDataService;
-use App\Services\Base\ViewService;
+use App\Services\Base\AdminViewService;
 use App\Services\Comment\CommentService;
 use App\Services\Replay\ReplayService;
 use App\Http\Controllers\Controller;
@@ -36,7 +36,7 @@ class ReplayController extends Controller
     public function pagination(ReplaySearchAdminRequest $request)
     {
         $data = $data = Replay::getReplay($request);
-        return BaseDataService::getPaginationData(ViewService::getReplay($data), ViewService::getPagination($data), ViewService::getReplayPopUp($data));
+        return BaseDataService::getPaginationData(AdminViewService::getReplay($data), AdminViewService::getPagination($data), AdminViewService::getReplayPopUp($data));
     }
 
     /**

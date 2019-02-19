@@ -8,7 +8,7 @@ use App\InterviewQuestion;
 use App\Http\Controllers\Controller;
 use App\Services\Base\BaseDataService;
 use App\Services\Base\InterviewQuestionsService;
-use App\Services\Base\ViewService;
+use App\Services\Base\AdminViewService;
 
 class InterviewQuestionController extends Controller
 {
@@ -26,7 +26,7 @@ class InterviewQuestionController extends Controller
     public function pagination()
     {
         $questions = InterviewQuestion::withCount('answers', 'user_answers')->paginate(50);
-        return BaseDataService::getPaginationData(ViewService::getInterview($questions), ViewService::getPagination($questions), ViewService::getInterviewPopUp($questions));
+        return BaseDataService::getPaginationData(AdminViewService::getInterview($questions), AdminViewService::getPagination($questions), AdminViewService::getInterviewPopUp($questions));
     }
 
     /**

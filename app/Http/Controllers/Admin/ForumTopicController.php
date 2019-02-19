@@ -8,7 +8,7 @@ use App\Http\Requests\AdminTopicCreateRequest;
 use App\Http\Requests\ForumTopicUpdateAdminRequest;
 use App\Http\Requests\SearchForumTopicRequest;
 use App\Services\Base\BaseDataService;
-use App\Services\Base\ViewService;
+use App\Services\Base\AdminViewService;
 use App\Services\Forum\TopicService;
 use App\Http\Controllers\Controller;
 
@@ -33,7 +33,7 @@ class ForumTopicController extends Controller
     public function pagination(SearchForumTopicRequest $request)
     {
         $data = ForumTopic::getTopicPagination($request);
-        return BaseDataService::getPaginationData(ViewService::getTopics($data), ViewService::getPagination($data));
+        return BaseDataService::getPaginationData(AdminViewService::getTopics($data), AdminViewService::getPagination($data));
     }
 
     /**

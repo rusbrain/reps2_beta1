@@ -6,7 +6,7 @@ use App\Country;
 use App\Http\Requests\CountrySaveRequest;
 use App\Services\Base\BaseDataService;
 use App\Services\Base\CountryService;
-use App\Services\Base\ViewService;
+use App\Services\Base\AdminViewService;
 use App\Http\Controllers\Controller;
 
 class CountryController extends Controller
@@ -27,7 +27,7 @@ class CountryController extends Controller
     public function pagination()
     {
         $countries =Country::withCount('users', 'replays1', 'replays2')->paginate(50);
-        return BaseDataService::getPaginationData(ViewService::getCountries($countries), ViewService::getPagination($countries), ViewService::getCountriesPopUp($countries));
+        return BaseDataService::getPaginationData(AdminViewService::getCountries($countries), AdminViewService::getPagination($countries), AdminViewService::getCountriesPopUp($countries));
     }
 
     /**

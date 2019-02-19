@@ -7,7 +7,7 @@ use App\File;
 use App\Http\Requests\CommentUpdateRequest;
 use App\Http\Requests\UserGalleryStoreRequest;
 use App\Services\Base\BaseDataService;
-use App\Services\Base\ViewService;
+use App\Services\Base\AdminViewService;
 use App\Services\Comment\CommentService;
 use App\Services\User\UserGalleryService;
 use App\User;
@@ -41,7 +41,7 @@ class UserGalleryController extends Controller
     public function pagination(Request $request)
     {
         $galleries = UserGalleryService::getGalleries($request);
-        return BaseDataService::getPaginationData(ViewService::getGallery($galleries), ViewService::getPagination($galleries), ViewService::getGalleryPopUp($galleries));
+        return BaseDataService::getPaginationData(AdminViewService::getGallery($galleries), AdminViewService::getPagination($galleries), AdminViewService::getGalleryPopUp($galleries));
     }
 
     /**

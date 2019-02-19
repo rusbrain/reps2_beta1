@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Services\Base\BaseDataService;
-use App\Services\Base\ViewService;
+use App\Services\Base\AdminViewService;
 use App\User;
 use App\UserReputation;
 use App\Http\Controllers\Controller;
@@ -27,7 +27,7 @@ class ReputationController extends Controller
     {
         $user = User::find($id);
         $repuntation = $user->reputation()->orderBy('created_at', 'desc')->with('sender', 'topic', 'replay', 'gallery', 'comment')->paginate(50);
-        return BaseDataService::getPaginationData(ViewService::getReputation($repuntation), ViewService::getPagination($repuntation));
+        return BaseDataService::getPaginationData(AdminViewService::getReputation($repuntation), AdminViewService::getPagination($repuntation));
     }
 
     /**

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Comment;
 use App\Services\Base\BaseDataService;
-use App\Services\Base\ViewService;
+use App\Services\Base\AdminViewService;
 use App\Http\Controllers\Controller;
 
 class CommentController extends Controller
@@ -17,7 +17,7 @@ class CommentController extends Controller
     public function getComments($object_name, $id)
     {
         $comments   = Comment::getComment($object_name, $id);
-        return BaseDataService::getPaginationData(ViewService::getComments($comments), ViewService::getPagination($comments));
+        return BaseDataService::getPaginationData(AdminViewService::getComments($comments), AdminViewService::getPagination($comments));
     }
 
     /**

@@ -7,7 +7,7 @@ use App\Http\Requests\FileSearchAdminRequest;
 use App\Http\Requests\FileUpdateAdminRequest;
 use App\Services\Base\BaseDataService;
 use App\Services\Base\FileService;
-use App\Services\Base\ViewService;
+use App\Services\Base\AdminViewService;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 
@@ -28,7 +28,7 @@ class FileManagementController extends Controller
     public function pagination(FileSearchAdminRequest $request)
     {
         $files = File::search($request)->paginate(20);
-        return BaseDataService::getPaginationData(ViewService::getFiles($files), ViewService::getPagination($files), ViewService::getFilesPopUp($files));
+        return BaseDataService::getPaginationData(AdminViewService::getFiles($files), AdminViewService::getPagination($files), AdminViewService::getFilesPopUp($files));
     }
 
     /**

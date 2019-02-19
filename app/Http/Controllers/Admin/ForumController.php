@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\ForumSection;
 use App\Http\Requests\ForumSectionUpdateAdminRequest;
 use App\Services\Base\BaseDataService;
-use App\Services\Base\ViewService;
+use App\Services\Base\AdminViewService;
 use App\Http\Controllers\Controller;
 
 class ForumController extends Controller
@@ -27,7 +27,7 @@ class ForumController extends Controller
     public function pagination()
     {
         $data = ForumSection::withCount('topics')->orderBy('position')->paginate(20);
-        return BaseDataService::getPaginationData(ViewService::getSections($data), ViewService::getPagination($data));
+        return BaseDataService::getPaginationData(AdminViewService::getSections($data), AdminViewService::getPagination($data));
     }
 
     /**

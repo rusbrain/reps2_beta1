@@ -6,7 +6,7 @@ use App\Http\Requests\ReplayMapCreateAdminRequest;
 use App\Replay;
 use App\ReplayMap;
 use App\Services\Base\BaseDataService;
-use App\Services\Base\ViewService;
+use App\Services\Base\AdminViewService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -29,7 +29,7 @@ class ReplayMapController extends Controller
     public function pagination(Request $request)
     {
         $data = ReplayMap::search($request, ReplayMap::withCount('replay'))->paginate(20);
-        return BaseDataService::getPaginationData(ViewService::getMap($data), ViewService::getMapPopUp($data), ViewService::getPagination($data));
+        return BaseDataService::getPaginationData(AdminViewService::getMap($data), AdminViewService::getMapPopUp($data), AdminViewService::getPagination($data));
     }
 
     /**

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Comment;
 use App\Services\Base\BaseDataService;
-use App\Services\Base\ViewService;
+use App\Services\Base\AdminViewService;
 use App\User;
 use App\Http\Controllers\Controller;
 
@@ -27,7 +27,7 @@ class UserCommentController extends Controller
     {
         $user = User::find($id);
         $comments = $user->comments()->orderBy('created_at', 'desc')->with('user', 'topic', 'replay', 'gallery')->paginate(20);
-        return BaseDataService::getPaginationData(ViewService::getUserComment($comments), ViewService::getPagination($comments));
+        return BaseDataService::getPaginationData(AdminViewService::getUserComment($comments), AdminViewService::getPagination($comments));
     }
 
     /**

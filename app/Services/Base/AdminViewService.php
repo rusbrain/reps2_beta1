@@ -11,7 +11,7 @@ namespace App\Services\Base;
 
 use Illuminate\Pagination\LengthAwarePaginator;
 
-class ViewService
+class AdminViewService
 {
     /**
      * @param $comments
