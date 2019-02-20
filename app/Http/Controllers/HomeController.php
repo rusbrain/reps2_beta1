@@ -51,6 +51,7 @@ class HomeController extends Controller
                 return ReplayService::getList(Replay::where('title', 'like', "%$search%"), "Поиск реплаев");
                 break;
         }
+        return back();
     }
 
     /**

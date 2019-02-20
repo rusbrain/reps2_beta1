@@ -13,22 +13,17 @@
 
 Route::group(['middleware' => 'activity'], function () {
     Route::get('/', 'HomeController@index')->name('home');
-
     Route::get('/last_news', 'HomeController@lastNews')     ->name('home.last_news');
     Route::get('/last_forums', 'HomeController@lastForums') ->name('home.last_forum');
     Route::get('/top_forums', 'HomeController@topForums')   ->name('home.top_forum');
-
     Route::group(['prefix' => 'widget'], function () {
         Route::get('/all_forum_sections', 'WidgetController@allForumSections')->name('widgets.all_forum_sections');
         Route::get('/general_forum_sections', 'WidgetController@generalForumSections')->name('widgets.general_forum_sections');
         Route::get('/gosu_replays', 'WidgetController@gosuReplay')->name('widgets.gosu_replays');
     });
-
     Route::get('/comments/{object}/{id}', 'CommentController@pagination')->name('comments.pagination');
-
     Route::get('/search', 'HomeController@search')->name('home.search');
     Route::get('/email/verified/{token}', 'Auth\RegisterController@emailVerified')->name('email_verified');
-
     Route::middleware(['guest'])->group(function () {
         Route::post('/login', 'Auth\LoginController@userLogin')->name('login');
 
@@ -42,23 +37,19 @@ Route::group(['middleware' => 'activity'], function () {
             Route::post('/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
         });
     });
-
     Route::get('news', 'NewsController@index')->name('news');
-
+    Route::get('news/pagination', 'NewsController@pagination')->name('news.pagination');
     Route::post('question/{id}/set_answer', 'InterviewQuestionController@setAnswer')->name('question.set_answer');
     Route::post('question/{id}/view_answer', 'InterviewQuestionController@getResult')->name('question.view_answer');
-
     Route::group(['middleware' => 'auth'], function () {
         Route::get('logout', 'Auth\LoginController@logout')->name('logout');
         Route::get('comment/{id}/set_rating', 'CommentsRatingController@setRating')->name('comment.set_rating');
         Route::get('comment/{id}/get_rating', 'CommentsRatingController@getRating')->name('comment.ger_rating');
     });
-
     Route::group(['prefix' => 'user'], function () {
         Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('registration_form');
         Route::post('/register', 'Auth\RegisterController@register')->name('registration');
         Route::get('{id}/friends_list', 'UserFriendController@getFriendsList')->name('user.friends_list.by_id');
-
         Route::group(['middleware' => 'auth'], function () {
             Route::get('{id}/ignore', 'IgnoreController@setIgnore')->name('user.set_ignore');
             Route::get('{id}/not_ignore', 'IgnoreController@setNotIgnore')->name('user.set_not_ignore');
@@ -76,29 +67,22 @@ Route::group(['middleware' => 'activity'], function () {
             Route::get('/message/{dialog_id}/load', 'UserMessagingController@load')->name('user.message_load');
             Route::post('/message/{dialog_id}/send', 'UserMessagingController@send')->name('user.message.send');
         });
-
         Route::get('/{id}', 'UserController@show')->name('user_profile');
-
         Route::get('{id}/get_rating', 'RatingController@getRatingUser')->name('user.get_rating');
         Route::get('{id}/replay', 'ReplayUsersController@getUserReplay')->name('user.user_replay');
         Route::get('{id}/gosu_replay', 'ReplayGosuController@getUserReplay')->name('user.gosu_replay');
         Route::get('{id}/all_replay', 'ReplayController@getAllUserReplay')->name('user.all_replay');
         Route::get('{id}/topic', 'ForumTopicController@getUserTopic')->name('user.forum_topic');
         Route::get('{id}/topic', 'ForumTopicController@getUserTopic')->name('user.forum_topic');
-
     });
-
     Route::group(['prefix' => 'forum'], function () {
         Route::get('/', 'ForumController@index')->name('forum.index');
-
         Route::group(['prefix' => 'section'], function () {
             Route::get('/{name}', 'ForumController@section')->name('forum.section.index');
             Route::get('/{name}/pagination', 'ForumController@sectionPagination')->name('forum.section.pagination');
         });
-
         Route::group(['prefix' => 'topic'], function () {
             Route::post('{id}/get_rating', 'TopicRatingController@getRating')->name('forum.topic.get_rating');
-
             Route::group(['middleware' => 'auth'], function () {
                 Route::get('/my', 'ForumTopicController@getUserTopic')->name('forum.topic.my_list');
                 Route::get('/create', 'ForumTopicController@create')->name('forum.topic.create');
@@ -115,12 +99,9 @@ Route::group(['middleware' => 'activity'], function () {
                     Route::post('{id}/update', 'TopicCommentController@update')->name('forum.topic.comment.update');
                 });
             });
-
             Route::get('/{id}', 'ForumTopicController@index')->name('forum.topic.index');
         });
-
     });
-
     Route::group(['prefix' => 'replay'], function () {
         Route::get('/users', 'ReplayUsersController@list')->name('replay.users');
         Route::get('/gosus', 'ReplayGosuController@list')->name('replay.gosus');
@@ -129,7 +110,6 @@ Route::group(['middleware' => 'activity'], function () {
         Route::get('/{id}/get_rating', 'ReplayRatingController@getRating')->name('replay.ger_rating');
         Route::get('/{id}/get_evaluation', 'ReplayRatingController@getEvaluation')->name('replay.get_evaluation');
         Route::get('/{id}/download', 'ReplayController@download')->name('replay.download');
-
         Route::group(['middleware' => 'auth'], function () {
             Route::get('/create', 'ReplayController@create')->name('replay.create');
             Route::post('/store', 'ReplayController@store')->name('replay.store');
@@ -148,15 +128,11 @@ Route::group(['middleware' => 'activity'], function () {
         });
         Route::get('/{id}', 'ReplayController@show')->name('replay.get');
     });
-
     Route::group(['prefix' => 'gallery'], function () {
         Route::get('/', 'UserGalleryController@index')->name('gallery.list');
         Route::get('/my', 'UserGalleryController@indexUser')->name('gallery.list_my');
         Route::get('/user/{id}', 'UserGalleryController@indexUser')->name('gallery.list_user');
-
-
         Route::get('/{id}/get_rating', 'UserGalleryRatingController@getRating')->name('gallery.ger_rating');
-
         Route::group(['middleware' => 'auth', 'prefix' => 'photo'], function () {
             Route::get('/create', 'UserGalleryController@create')->name('gallery.create');
             Route::get('/{id}/edit', 'UserGalleryController@edit')->name('gallery.edit');
@@ -170,10 +146,8 @@ Route::group(['middleware' => 'activity'], function () {
                 Route::post('{id}/update', 'UserGalleryCommentController@update')->name('gallery.comment.update');
             });
         });
-
         Route::get('/photo/{id}', 'UserGalleryController@show')->name('gallery.view');
     });
-
     Route::group(['middleware' => ['auth', 'admin_panel'], 'prefix' => 'admin_panel', 'namespace' => 'Admin'], function () {
         Route::get('/', 'BaseController@index')->name('admin.home');
         Route::post('send_quick_email', 'BaseController@sendQuickEmail')->name('admin.send_quick_email');
@@ -344,15 +318,7 @@ Route::group(['middleware' => 'activity'], function () {
             Route::get('/{id}/download', 'FileManagementController@download')   ->name('admin.file.download');
         });
     });
-
-//
-//Route::group(['prefix' => 'user', 'middleware' => 'auth'], function () {
-//
-//});
-
-//Auth::routes();
 });
-
 //Redirect old URI
 Route::group(['prefix' => 'redirect'], function () {
     Route::get('news', 'RedirectOldURL@news');
