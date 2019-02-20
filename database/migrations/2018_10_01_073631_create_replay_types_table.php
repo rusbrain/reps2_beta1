@@ -16,6 +16,7 @@ class CreateReplayTypesTable extends Migration
         Schema::create('replay_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('title')->nullable();
         });
     }
 

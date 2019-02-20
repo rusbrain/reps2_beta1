@@ -17,10 +17,17 @@ class CreateUserGalleriesTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->integer('file_id');
-            $table->integer('reps_id')->nullable();
-            $table->integer('rating')->default(0);
-            $table->longText('comment')->charset('cp1251')->nullable();
+            $table->integer('reps_id')          ->nullable();
+            $table->integer('rating')           ->default(0);
+            $table->longText('comment')         ->charset('cp1251')->nullable();
+            $table->boolean('for_adults')       ->default(false);
+            $table->integer('negative_count')   ->default(0);
+            $table->integer('positive_count')   ->default(0);
+            $table->integer('comments_count')   ->default(0);
             $table->timestamps();
+            $table->softDeletes();
+
+            $table->index('user_id');
         });
     }
 

@@ -17,6 +17,10 @@ class CreateDialoguesTable extends Migration
             $table->increments('id');
             $table->string('name')->nullable();
             $table->timestamps();
+            $table->softDeletes();
+
+            $table->index('user_id');
+            $table->index('dialogue_id');
         });
     }
 

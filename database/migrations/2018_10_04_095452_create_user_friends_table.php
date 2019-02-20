@@ -18,6 +18,10 @@ class CreateUserFriendsTable extends Migration
             $table->integer('user_id');
             $table->integer('friend_user_id');
             $table->timestamps();
+            $table->softDeletes();
+
+            $table->index('user_id');
+            $table->index('friend_user_id');
         });
     }
 

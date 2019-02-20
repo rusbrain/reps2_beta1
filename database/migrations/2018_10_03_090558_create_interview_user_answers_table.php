@@ -19,6 +19,10 @@ class CreateInterviewUserAnswersTable extends Migration
             $table->integer('question_id');
             $table->integer('answer_id');
             $table->timestamps();
+
+            $table->index('question_id');
+            $table->index('answer_id');
+            $table->index('user_id');
         });
     }
 

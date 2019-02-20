@@ -38,4 +38,13 @@ class UserViewService extends ViewService
    {
        return (string) view('comments.comments')->with(['data' => $data]);
    }
+
+    /**
+     * @param LengthAwarePaginator $data
+     * @return string
+     */
+   public static function getNews(LengthAwarePaginator $data)
+   {
+       return (string) view('news.news_list')->with(['data' => $data]);
+   }
 }

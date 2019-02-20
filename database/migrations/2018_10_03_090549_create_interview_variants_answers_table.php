@@ -18,6 +18,8 @@ class CreateInterviewVariantsAnswersTable extends Migration
             $table->string('answer');
             $table->integer('question_id');
             $table->timestamps();
+
+            $table->index('question_id');
         });
     }
 

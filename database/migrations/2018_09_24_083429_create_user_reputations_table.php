@@ -17,11 +17,20 @@ class CreateUserReputationsTable extends Migration
             $table->increments('id');
             $table->integer('sender_id');
             $table->integer('recipient_id');
-            $table->integer('replay_id')->nullale();
-            $table->integer('topic_id')->nullable();
-            $table->string('comment')->nullable();
-            $table->enum('rating',[1,-1])->default(1);
+            $table->integer('object_id');
+            $table->integer('relation');
+            $table->string('comment')       ->nullable();
+            $table->text('comment')         ->charset('cp1251')->nullable()->change();
+            $table->enum('rating',[1,-1])   ->default(1);
             $table->timestamps();
+
+            $table->index('sender_id');
+            $table->index('recipient_id');
+            $table->index('object_id');
+            $table->index('relation');
+            $table->index(['object_id', 'relation']);
+            $table->index('rating');
+
         });
     }
 

@@ -18,6 +18,9 @@ class CreateIgnoreUsersTable extends Migration
             $table->integer('user_id');
             $table->integer('ignored_user_id');
             $table->timestamps();
+
+            $table->index('user_id');
+            $table->index('ignored_user_id');
         });
     }
 

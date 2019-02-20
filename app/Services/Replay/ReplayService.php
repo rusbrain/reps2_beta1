@@ -19,6 +19,11 @@ use Illuminate\Support\Facades\Auth;
 
 class ReplayService
 {
+    /**
+     * @param ReplaySearchRequest $request
+     * @param ReplayController $object
+     * @return mixed
+     */
     public static function listReplay(ReplaySearchRequest $request, ReplayController $object)
     {
         $method = $object->method_get;

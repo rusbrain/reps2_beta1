@@ -16,13 +16,16 @@ class CreateForumSectionsTable extends Migration
         Schema::create('forum_sections', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('position');
-            $table->integer('reps_id')->nullable();
+            $table->integer('reps_id')              ->nullable();
             $table->string('name');
             $table->string('title');
             $table->string('description');
-            $table->boolean('is_active')->default(true);
-            $table->boolean('is_general')->default(false);
-            $table->boolean('user_can_add_topics')->default(true);
+            $table->boolean('is_active')            ->default(true);
+            $table->boolean('is_general')           ->default(false);
+            $table->boolean('user_can_add_topics')  ->default(true);
+
+            $table->index('is_active');
+            $table->index('is_general');
         });
     }
 

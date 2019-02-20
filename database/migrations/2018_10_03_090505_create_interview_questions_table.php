@@ -16,9 +16,9 @@ class CreateInterviewQuestionsTable extends Migration
         Schema::create('interview_questions', function (Blueprint $table) {
             $table->increments('id');
             $table->string('question');
-            $table->boolean('is_active')->default(true);
-            $table->boolean('is_favorite')->default(false);
-            $table->boolean('for_login')->default(false);
+            $table->boolean('is_active')    ->default(true);
+            $table->boolean('is_favorite')  ->default(false);
+            $table->boolean('for_login')    ->default(false);
             $table->timestamps();
         });
     }

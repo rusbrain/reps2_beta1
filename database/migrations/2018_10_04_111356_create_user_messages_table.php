@@ -15,11 +15,15 @@ class CreateUserMessagesTable extends Migration
     {
         Schema::create('user_messages', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_sender_id');
-            $table->integer('user_recipient_id');
-            $table->longText('message')->charset('cp1251');
-            $table->boolean('is_read')->default(0);
+            $table->integer('user_id');
+            $table->longText('message') ->charset('cp1251');
+            $table->boolean('is_read')  ->default(0);
+            $table->integer('dialogue_id');
             $table->timestamps();
+
+            $table->index('user_id');
+            $table->index('is_read');
+            $table->index('dialogue_id');
         });
     }
 

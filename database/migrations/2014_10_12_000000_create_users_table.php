@@ -15,7 +15,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('reps_id')->nullable();
+            $table->integer('reps_id')              ->nullable();
             $table->string('name');
             $table->string('email')                 ->unique();
             $table->timestamp('email_verified_at')  ->nullable();
@@ -43,8 +43,15 @@ class CreateUsersTable extends Migration
             $table->boolean('view_signs')           ->default(1);
             $table->boolean('view_avatars')         ->default(1);
             $table->boolean('updated_password')     ->default(0);
+            $table->integer('rating')               ->default(0);
+            $table->dateTime('activity_at')         ->nullable();
+            $table->integer('negative_count')       ->default(0);
+            $table->integer('positive_count')       ->default(0);
+            $table->unsignedInteger('points')       ->default(0);
+
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

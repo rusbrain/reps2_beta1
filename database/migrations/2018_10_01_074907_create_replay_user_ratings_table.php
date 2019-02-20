@@ -17,9 +17,12 @@ class CreateReplayUserRatingsTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->integer('replay_id');
-            $table->string('comment')->nullable();
-            $table->enum('rating',[1, 2, 3, 4, 5])->default(5);
+            $table->string('comment')               ->nullable();
+            $table->enum('rating',[1, 2, 3, 4, 5])  ->default(5);
             $table->timestamps();
+
+            $table->index('user_id');
+            $table->index('replay_id');
         });
     }
 

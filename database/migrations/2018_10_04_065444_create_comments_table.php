@@ -18,10 +18,18 @@ class CreateCommentsTable extends Migration
             $table->integer('user_id');
             $table->integer('object_id');
             $table->integer('relation');
-            $table->string('title')->nullable();
-            $table->longText('content')->charset('cp1251');
+            $table->string('title')     ->nullable();
+            $table->longText('content') ->charset('cp1251');
+            $table->integer('rating')   ->default(0);
             $table->timestamps();
+
+            $table->index('user_id');
+            $table->index('object_id');
+            $table->index('relation');
+            $table->index(['object_id', 'relation']);
+
         });
+
 
         Schema::dropIfExists('forum_topic_comments');
         Schema::dropIfExists('replay_comments');
