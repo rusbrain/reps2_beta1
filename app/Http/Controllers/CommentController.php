@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\Base\UserViewService;
 use App\Services\Comment\CommentService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -113,5 +114,16 @@ class CommentController extends Controller
     public function updateComment(Request $request, $id)
     {
         CommentService::update($request, $id, $this->relation);
+    }
+
+    /**
+     * @param $object
+     * @param $id
+     * @return array
+     */
+    public function pagination($object, $id)
+    {
+        $comments   = Comment::getComment($object, $id);
+        return ['comments' => UserViewService::getComments($comments), 'pagination' => UserViewService::getPagination($comments)];
     }
 }

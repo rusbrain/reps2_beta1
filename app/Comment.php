@@ -66,7 +66,7 @@ class Comment extends Model
      */
     public static function getComment($object_name, $id)
     {
-        $relation   = CommentService::getObjectRelation($object_name);
+        $relation = CommentService::getObjectRelation($object_name);
 
         if ($relation){
             $comments = Comment::where('relation', $relation)->where('object_id', $id)->with('user.avatar')->orderBy('created_at', 'desc');

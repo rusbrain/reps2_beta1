@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\{ForumSection, ForumTopic};
+use App\{ForumSection, ForumTopic, Services\Base\UserViewService};
 use App\Services\Forum\SectionService;
 
 class ForumController extends Controller
@@ -26,13 +26,17 @@ class ForumController extends Controller
     public function section($name)
     {
         $data = ForumSection::getSectionByName($name);
-
-        if (!$data){
-            return abort(404);
-        }
-
-        $topics = ForumTopic::getTopicsForSection($data);
-
+        $topics = ForumSection::getSectionTopicsByName($name);
         return view('forum.section')->with(SectionService::getSectionViewData($topics, $data->title));
+    }
+
+    /**
+     * @param $name
+     * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View|mixed
+     */
+    public function sectionPagination($name)
+    {
+        $topics = ForumSection::getSectionTopicsByName($name);
+        return ['topics' => UserViewService::getSection($topics), 'pagination' => UserViewService::getPagination($topics)];
     }
 }

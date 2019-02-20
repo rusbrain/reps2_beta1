@@ -24,6 +24,8 @@ Route::group(['middleware' => 'activity'], function () {
         Route::get('/gosu_replays', 'WidgetController@gosuReplay')->name('widgets.gosu_replays');
     });
 
+    Route::get('/comments/{object}/{id}', 'CommentController@pagination')->name('comments.pagination');
+
     Route::get('/search', 'HomeController@search')->name('home.search');
     Route::get('/email/verified/{token}', 'Auth\RegisterController@emailVerified')->name('email_verified');
 
@@ -91,6 +93,7 @@ Route::group(['middleware' => 'activity'], function () {
 
         Route::group(['prefix' => 'section'], function () {
             Route::get('/{name}', 'ForumController@section')->name('forum.section.index');
+            Route::get('/{name}/pagination', 'ForumController@sectionPagination')->name('forum.section.pagination');
         });
 
         Route::group(['prefix' => 'topic'], function () {

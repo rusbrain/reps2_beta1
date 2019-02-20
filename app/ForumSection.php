@@ -81,4 +81,19 @@ class ForumSection extends Model
                         ->orderBy('created_at', 'desc');
                 }])->get();
     }
+
+    /**
+     * @param $name
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public static function getSectionTopicsByName($name)
+    {
+        $data = ForumSection::getSectionByName($name);
+
+        if (!$data){
+            return abort(404);
+        }
+
+        return ForumTopic::getTopicsForSection($data);
+    }
 }
