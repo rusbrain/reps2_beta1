@@ -37,7 +37,6 @@ class HomeController extends Controller
      */
     public function search(PortalSearchRequest $request)
     {
-//        dd($request->all());
         switch ($request->get('section')){
             case 'news':
                 return redirect()->route('news', $request->all());
