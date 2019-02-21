@@ -85,6 +85,8 @@ Route::group(['middleware' => 'activity'], function () {
             Route::get('/{name}/pagination', 'ForumController@sectionPagination')->name('forum.section.pagination');
         });
         Route::group(['prefix' => 'topic'], function () {
+            Route::get('search', 'ForumController@searchTopic')->name('forum.topic.search');
+            Route::get('search/pagination', 'ForumController@searchPaginationTopic')->name('forum.topic.search.pagination');
             Route::post('{id}/get_rating', 'TopicRatingController@getRating')->name('forum.topic.get_rating');
             Route::group(['middleware' => 'auth'], function () {
                 Route::get('/my', 'ForumTopicController@getUserTopic')->name('forum.topic.my_list');
@@ -106,8 +108,11 @@ Route::group(['middleware' => 'activity'], function () {
         });
     });
     Route::group(['prefix' => 'replay'], function () {
-        Route::get('/users', 'ReplayUsersController@list')->name('replay.users');
-        Route::get('/gosus', 'ReplayGosuController@list')->name('replay.gosus');
+        Route::get('/', 'ReplayUsersController@index')->name('replay');
+        Route::get('/users', 'ReplayUsersController@index')->name('replay.users');
+        Route::get('/gosus', 'ReplayGosuController@index')->name('replay.gosus');
+        Route::get('/users/paginate', 'ReplayUsersController@paginate')->name('replay.users.paginate');
+        Route::get('/gosus/paginate', 'ReplayGosuController@paginate')->name('replay.gosus.paginate');
         Route::get('/user/{type}', 'ReplayUsersController@getReplayByType')->name('replay.user_type');
         Route::get('/gosu/{type}', 'ReplayGosuController@getReplayByType')->name('replay.gosu_type');
         Route::get('/{id}/get_rating', 'ReplayRatingController@getRating')->name('replay.ger_rating');

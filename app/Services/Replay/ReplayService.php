@@ -8,7 +8,7 @@
 
 namespace App\Services\Replay;
 
-use App\{File, Replay, User};
+use App\{File, Replay, Services\Base\UserViewService, User};
 use App\Http\Controllers\ReplayController;
 use App\Http\Requests\{ReplaySearchAdminRequest, ReplaySearchRequest, ReplayStoreRequest};
 use App\Services\Base\FileService;
@@ -131,25 +131,22 @@ class ReplayService
     public static function download(Replay $replay)
     {
         $file = $replay->file()->first();
-
         $replay->downloaded = $replay->downloaded+1;
-
         $replay->save();
-
         return $file->link;
     }
 
     /**
-     * get Replay view list
+     * get Replay data list with pagination
      *
      * @param $query
      * @param $title
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return array
      */
     public static function getList($query, $title)
     {
         $data = ReplayService::replayWithPagination(ReplayService::getReplayQuery($query));
-        return view('replay.list')->with(['replays' => $data, 'title' => $title]);
+        return ['replay' => UserViewService::getReplay($data), 'pagination' => UserViewService::getPagination($data)];
     }
 
     /**
@@ -161,10 +158,8 @@ class ReplayService
     {
         $user = User::find($user_id);
         $replays = $data = ReplayService::search($request,Replay::where('user_id', $user_id))->count();
-
         $request_data = $request->validated();
         $request_data['user_id'] = $user_id;
-
         return ['replay_count' => $replays, 'title' => "Replays $user->name", 'user' => $user, 'request_data' => $request_data];
     }
 

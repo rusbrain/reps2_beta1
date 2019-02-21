@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\{ForumSection, ForumTopic, Services\Base\UserViewService};
 use App\Services\Forum\SectionService;
+use foo\bar;
+use Illuminate\Http\Request;
 
 class ForumController extends Controller
 {
@@ -20,8 +22,9 @@ class ForumController extends Controller
     /**
      * get forum section page
      *
+     * @param Request $request
      * @param $name
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View|mixed
      */
     public function section($name)
     {
@@ -39,4 +42,32 @@ class ForumController extends Controller
         $topics = ForumSection::getSectionTopicsByName($name);
         return ['topics' => UserViewService::getSection($topics), 'pagination' => UserViewService::getPagination($topics)];
     }
+
+    /**
+     * @param Request $request
+     * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View|mixed
+     */
+    public function searchTopic(Request $request)
+    {
+        if ($request->has('text')){
+            $topics = ForumTopic::searchTopic($request->get('text')); //TODO: remove
+            return view('forum.section')->with(SectionService::getSectionViewData($topics, "Поиск Тем"));
+        }
+        return back();
+    }
+
+    /**
+     * @param Request $request
+     * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View|mixed
+     */
+    public function searchPaginationTopic(Request $request)
+    {
+        if ($request->has('text')){
+            $topics = ForumTopic::searchTopic($request->get('text'))->paginate(20);
+            return ['topics' => UserViewService::getSection($topics), 'pagination' => UserViewService::getPagination($topics)];
+        }
+        return back();
+    }
+
 }
+

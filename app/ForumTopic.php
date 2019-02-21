@@ -112,10 +112,10 @@ class ForumTopic extends Model
                 $q->whereNull('start_on')
                     ->orWhere('start_on','<=', Carbon::now()->format('Y-M-d'));
             })
-            ->with(['comments' => function($query){
+            ->with(['comments' => function($query){                                                             //TODO:remove "with comments"
                 $query->withCount('positive', 'negative')->orderBy('created_at', 'desc')->get();
             }])
-            ->with('comments', 'icon')
+            ->with('comments', 'icon')                                                                  //TODO:remove "with comments"
             ->orderBy('created_at', 'desc')->paginate(20);
     }
 
@@ -208,5 +208,14 @@ class ForumTopic extends Model
     {
         return TopicService::search($request->validated(), self::with('user', 'section', 'icon'))
             ->withCount( 'positive', 'negative', 'comments')->paginate(50);
+    }
+
+    /**
+     * @param $text
+     * @return mixed
+     */
+    public static function searchTopic($text)
+    {
+        return ForumTopic::where('preview_content', 'like', "%$text%")->orWhere('content', 'like', "%$text%")->orWhere('title', 'like', "%$text%");
     }
 }

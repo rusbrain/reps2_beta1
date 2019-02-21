@@ -24,12 +24,27 @@ class ReplayController extends Controller
     public $method_get = "";
 
     /**
+     * Get view list of all Replay
+     *
+     * @param ReplaySearchRequest $request
+     * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View|mixed
+     */
+    public function index(ReplaySearchRequest $request)
+    {
+        $data = ReplayService::replayWithPagination(ReplayService::getReplayQuery((ReplayService::listReplay($request,$this))));//TODO:remove
+        return view('replay.list')->with([
+            'replays' => $data, //TODO:remove
+            'title' => $this->replay_group
+        ]);
+    }
+
+    /**
      * Get list of all Replay
      *
      * @param ReplaySearchRequest $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return array
      */
-    public function list(ReplaySearchRequest $request)
+    public function paginate(ReplaySearchRequest $request)
     {
         return ReplayService::getList(ReplayService::listReplay($request,$this), $this->replay_group);
     }

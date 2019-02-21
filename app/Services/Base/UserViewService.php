@@ -65,4 +65,13 @@ class UserViewService extends ViewService
    {
        return (string) view('forum.my_topics_list')->with(['data' => $data]);
    }
+
+    /**
+     * @param LengthAwarePaginator $data
+     * @return string
+     */
+   public static function getReplay(LengthAwarePaginator $data)
+   {
+       return (string) view('replay.replays_list')->with(['data' => $data]);
+   }
 }

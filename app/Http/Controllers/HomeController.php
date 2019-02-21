@@ -37,18 +37,16 @@ class HomeController extends Controller
      */
     public function search(PortalSearchRequest $request)
     {
-        $search = $request->get('search');
+//        dd($request->all());
         switch ($request->get('section')){
             case 'news':
-                return view('forum.section')
-                    ->with('topics', ForumTopic::getSearchTitleNews($search));
+                return redirect()->route('news', $request->all());
                 break;
             case 'forum':
-                return view('forum.section')
-                    ->with(['topics'=> ForumTopic::getSearchTitle($search), 'title' => 'Поиск']);
+                return redirect()->route('forum.topic.search', $request->all());
                 break;
             case 'replay':
-                return ReplayService::getList(Replay::where('title', 'like', "%$search%"), "Поиск реплаев");
+                return redirect()->route('replay', $request->all());
                 break;
         }
         return back();

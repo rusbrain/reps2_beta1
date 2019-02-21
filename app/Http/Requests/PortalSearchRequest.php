@@ -24,7 +24,7 @@ class PortalSearchRequest extends FormRequest
     public function rules()
     {
         return [
-            'search' => 'required|string|min:3|max:255',
+            'text' => 'required|string|min:3|max:255',
             'section' => 'required|in:news,forum,replay'
         ];
     }
