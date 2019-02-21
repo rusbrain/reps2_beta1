@@ -19,8 +19,7 @@ class CreateUserReputationsTable extends Migration
             $table->integer('recipient_id');
             $table->integer('object_id');
             $table->integer('relation');
-            $table->string('comment')       ->nullable();
-            $table->text('comment')         ->charset('cp1251')->nullable()->change();
+            $table->text('comment')         ->charset('cp1251')->nullable();
             $table->enum('rating',[1,-1])   ->default(1);
             $table->timestamps();
 

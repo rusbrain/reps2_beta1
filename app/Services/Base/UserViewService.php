@@ -47,4 +47,22 @@ class UserViewService extends ViewService
    {
        return (string) view('news.news_list')->with(['data' => $data]);
    }
+
+    /**
+     * @param LengthAwarePaginator $data
+     * @return string
+     */
+   public static function getUserComments(LengthAwarePaginator $data)
+   {
+       return (string) view('comments.my_comments_list')->with(['data' => $data]);
+   }
+
+    /**
+     * @param LengthAwarePaginator $data
+     * @return string
+     */
+   public static function getTopics(LengthAwarePaginator $data)
+   {
+       return (string) view('forum.my_topics_list')->with(['data' => $data]);
+   }
 }

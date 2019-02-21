@@ -136,7 +136,7 @@ class DBRelocationDataSeed extends Seeder
      */
     public function run()
     {
-/*        // Old users seeding
+        // Old users seeding
         echo "1. Users and Avatars seed start \n";
         $this->seedUser(self::$country);
         echo "Users and Avatars seed finished \n\n";
@@ -269,17 +269,18 @@ class DBRelocationDataSeed extends Seeder
         //Update Replay Pack seeding
         echo "27. Start Update Replay Pack Type \n";
         $this->updateReplaysPackType();
-        echo "Update Replay Pack Type finished \n\n";*/
+        echo "Update Replay Pack Type finished \n\n";
 
         //User Reputation seeding
-//        echo "28. Start User Reputation \n";
-//        $this->userReputation();
-//        echo "User Reputation finished \n\n";
-//
-//        //User Reputation seeding
-//        echo "29. Start Update User Reputation and Points \n";
-//        $this->updateUserRating();
-//        echo "Update User Reputation and Points finished \n\n";
+        echo "28. Start User Reputation \n";
+        $this->userReputation();
+        echo "User Reputation finished \n\n";
+
+        //User Reputation seeding
+        echo "29. Start Update User Reputation and Points \n";
+        $this->updateUserRating();
+        echo "Update User Reputation and Points finished \n\n";
+
 
         //Update users avatars
         echo "30. Start Update Users avatars \n";
@@ -394,7 +395,6 @@ class DBRelocationDataSeed extends Seeder
 
             foreach ($old_galleries as $old_gallery) {
                 $path_to = "./storage/app/public/gallery/{$old_gallery->photo_id}.jpg";
-                echo (string)!@fopen($path_to, 'r');
                 if (@fopen($path_to, 'r')) {
                     if(in_array($old_gallery->user_id, $users_id)){
                         $user = $users[$old_gallery->user_id];
@@ -526,9 +526,18 @@ class DBRelocationDataSeed extends Seeder
                     $topics_id[] = $old_topic_comment->forum_id;
                 }
 
+                $object_id = 0;
+                if (is_object($forum_topic)){
+                    $object_id = $forum_topic->id;
+                }
+
+                $user_id = 1;
+                if (is_object($user)){
+                    $user_id = $user->id;
+                }
                 $new_topic_comment[] = [
-                    'user_id' => $user->id ?? 1,
-                    'object_id' => (int)$forum_topic->id ?? 0,
+                    'user_id' => $user_id,
+                    'object_id' => (int)$object_id,
                     'relation' => Comment::RELATION_FORUM_TOPIC,
                     'title' => $old_topic_comment->reply_title,
                     'content' => $old_topic_comment->reply_text,
@@ -587,6 +596,10 @@ class DBRelocationDataSeed extends Seeder
 
                 $s_text = $rusforum->news_stext;
 
+                $user_id = 1;
+                if (is_object($user)){
+                    $user_id = $user->id;
+                }
                 $new_forum_topics[] = [
                     'reps_id'           => (int)$rusforum->news_id,
                     'reps_section'      => $rusforum->news_type,
@@ -594,7 +607,7 @@ class DBRelocationDataSeed extends Seeder
                     'title'             => $rusforum->news_title,
                     'preview_content'   => $s_text,
                     'content'           => (string)($rusforum->news_long?$rusforum->news_text:$s_text),
-                    'user_id'           => (int)$user->id??1,
+                    'user_id'           => (int)$user_id,
                     'reviews'           => $rusforum->news_show,
                     'start_on'          => $rusforum->news_start?(Carbon::parse($rusforum->news_start) > Carbon::now()?Carbon::parse($rusforum->news_start):null) :null,
                     'created_at'        => $rusforum->news_date&&$rusforum->news_time?Carbon::parse($rusforum->news_date.' '.$rusforum->news_time):Carbon::now(),
@@ -703,9 +716,19 @@ class DBRelocationDataSeed extends Seeder
                     $users_id[] = $users_friend->friend_id;
                 }
 
+                $friend_user_id = 0;
+                if (is_object($friend)){
+                    $friend_user_id = (int)$friend->id;
+                }
+
+                $user_id = 0;
+                if (is_object($user)){
+                    $user_id = (int)$user->id;
+                }
+
                 $new_users_friends[] = [
-                    'user_id' => (int)$user->id ?? 0,
-                    'friend_user_id' => (int)$friend->id ?? 0,
+                    'user_id' => $user_id,
+                    'friend_user_id' => $friend_user_id,
                     'created_at' => $time,
                 ];
             }
@@ -748,17 +771,27 @@ class DBRelocationDataSeed extends Seeder
                     $users_id[] = $rusforum->user_id;
                 }
 
+                $forum_icon = $forum_icons->where('id', $rusforum->forum_icon)->first()->id ?? $forum_icons->first();
+                $forum_icon_id = 0;
+                if (is_object($forum_icon)){
+                    $forum_icon_id = $forum_icon->id;
+                }
+
+                $user_id = 0;
+                if (is_object($user)){
+                    $user_id = $user->id;
+                }
                 $new_forum_topics[] = [
                     'reps_id' => (int)$rusforum->forum_id,
                     'section_id' => (int)$section_id,
                     'title' => $rusforum->forum_title,
                     'content' => $rusforum->forum_text,
-                    'user_id' => (int)$user->id ?? 1,
+                    'user_id' => (int)$user_id,
                     'reviews' => $rusforum->forum_view,
                     'created_at' => self::correctDate($rusforum->forum_date && $rusforum->forum_time ? Carbon::parse($rusforum->forum_date . ' ' . $rusforum->forum_time) : Carbon::now()),
                     'approved' => $rusforum->forum_open,
                     'news' => 0,
-                    'forum_icon_id' => (int)$forum_icons->where('id', $rusforum->forum_icon)->first()->id ?? $forum_icons->first()->id,
+                    'forum_icon_id' => (int)$forum_icon_id,
                 ];
             }
 
@@ -818,9 +851,19 @@ class DBRelocationDataSeed extends Seeder
                     $topics_id[] = $old_topic_comment->news_id;
                 }
 
+                $user_id = 1;
+                if (is_object($user)){
+                    $user_id = $user->id;
+                }
+
+                $object_id = 0;
+                if (is_object($forum_topic)){
+                    $object_id = $forum_topic->id;
+                }
+
                 $new_topic_comment[] = [
-                    'user_id' => (int)$user->id ?? 1,
-                    'object_id' => (int)$forum_topic->id ?? 0,
+                    'user_id' => (int)$user_id,
+                    'object_id' => (int)$object_id,
                     'relation' => Comment::RELATION_FORUM_TOPIC,
                     'title' => $old_topic_comment->comment_title,
                     'content' => $old_topic_comment->comment_text,
@@ -875,9 +918,19 @@ class DBRelocationDataSeed extends Seeder
                     $topics_id[] = $old_topic_comment->columns_id;
                 }
 
+                $user_id = 1;
+                if (is_object($user)){
+                    $user_id = $user->id;
+                }
+
+                $forum_topic_id = 0;
+                if (is_object($forum_topic)){
+                    $forum_topic_id = $forum_topic->id;
+                }
+
                 $new_topic_comment[] = [
-                    'user_id' => (int)$user->id ?? 1,
-                    'object_id' => (int)$forum_topic->id ?? 0,
+                    'user_id' => (int)$user_id,
+                    'object_id' => (int)$forum_topic_id,
                     'relation' => Comment::RELATION_FORUM_TOPIC,
                     'title' => $old_topic_comment->comment_title,
                     'content' => $old_topic_comment->comment_text,
@@ -930,10 +983,17 @@ class DBRelocationDataSeed extends Seeder
                     $replays[$old_replay_comment->replay_id] = $replay;
                     $replays_id[] = $old_replay_comment->replay_id;
                 }
-
+                $user_id = 1;
+                if (is_object($user)){
+                    $user_id = $user->id;
+                }
+                $replay_id = 0;
+                if (is_object($replay)){
+                    $replay_id = $replay->id;
+                }
                 $new_replay_comment[] = [
-                    'user_id' => (int)$user->id ?? 1,
-                    'object_id' => (int)$replay->id ?? 0,
+                    'user_id' => (int)$user_id,
+                    'object_id' => (int)$replay_id,
                     'relation' => Comment::RELATION_REPLAY,
                     'title' => $old_replay_comment->comment_title,
                     'content' => $old_replay_comment->comment_text,
@@ -1017,8 +1077,6 @@ class DBRelocationDataSeed extends Seeder
                     $first_country = $countries->where('name', $old_replay->replay_countryv)->first();
                     $second_country = $countries->where('name', $old_replay->replay_countryd)->first();
 
-//                    var_dump($first_country);
-//                    echo "\n";
                     $new_replays[] = [
                         'user_id'           => (int)($user? $user->id : 1),
                         'user_replay'       => $user_replay,
@@ -1154,11 +1212,21 @@ class DBRelocationDataSeed extends Seeder
                     foreach ($old_dialogs as $dialog){
                         $from = $users[$dialog->from_id];
 
+                        $from_id = 0;
+                        if (is_object($from)){
+                            $from_id = $from->id;
+                        }
+
+                        $new_dialog_id = 0;
+                        if (is_object($new_dialog)){
+                            $new_dialog_id = $new_dialog->id;
+                        }
+
                         $new_messages[] = [
-                            'user_id'       => (int)$from->id??0,
+                            'user_id'       => (int)$from_id,
                             'message'       => $dialog->text,
                             'is_read'       => $dialog->read,
-                            'dialogue_id'   => (int)$new_dialog->id,
+                            'dialogue_id'   => (int)$new_dialog_id,
                             'created_at'   => self::correctDate(Carbon::createFromTimestamp($dialog->date)),
                         ];
                     }
@@ -1325,30 +1393,50 @@ class DBRelocationDataSeed extends Seeder
     {
         $reputation_r = \DB::table(config('database.connections.mysql.database_old') . '.reputation');
         $cycles = self::getCycles($reputation_r->count());
-
+        $reps_users = [];
+        $reps_topic = [];
         for ($i = 0; $i < $cycles; $i++) {
             $reputations = $reputation_r->orderBy('message_date')->offset(1000 * $i)->limit(1000)->get();
 
             $reputations_new = [];
             foreach ($reputations as $reputation) {
-                $user_s = User::where('reps_id', $reputation->from_user)->first()->id ?? 0;
-                $user_r = User::where('reps_id', $reputation->to_user)->first()->id ?? 0;
+                if (isset($reps_users[$reputation->from_user])){
+                    $user_s = $reps_users[$reputation->from_user];
+                } else{
+                    $user_s = User::where('reps_id', $reputation->from_user)->first()->id ?? 0;
+                    $reps_users[$reputation->from_user] = $user_s;
+                }
+
+                if (isset($reps_users[$reputation->to_user])){
+                    $user_r = $reps_users[$reputation->to_user];
+                } else{
+                    $user_r = User::where('reps_id', $reputation->to_user)->first()->id ?? 0;
+                    $reps_users[$reputation->to_user] = $user_r;
+                }
+
                 $object_id = 0;
                 $relation = 0;
 
                 if ($reputation->module = 2) {
-                    $topic = ForumTopic::where('reps_id', $reputation->post)->first();
-
-                    if ($topic) {
-                        $object_id = $topic->id;
+                    if (isset($reps_topic[$reputation->post])){
+                        $object_id = $reps_topic[$reputation->post];
                         $relation = UserReputation::RELATION_FORUM_TOPIC;
+                    } else{
+                        $topic = ForumTopic::where('reps_id', $reputation->post)->first();
+
+                        if ($topic) {
+                            $object_id = $topic->id;
+                            $relation = UserReputation::RELATION_FORUM_TOPIC;
+                        }
+
+                        $reps_topic[$reputation->post] = $object_id;
                     }
                 }
 
                 $reputations_new[] = [
                     'sender_id' => $user_s,
                     'recipient_id' => $user_r,
-                    'comment' =>$reputation->message_text,
+                    'comment' => $reputation->message_text,
                     'rating' => ($reputation->rating == -1 ? "-1" : "1"),
                     'created_at' => $reputation->message_date,
                     'object_id' => $object_id,

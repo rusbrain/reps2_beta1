@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\{Comment, ForumSection, ForumTopic};
+use App\{Comment, ForumSection, ForumTopic, Services\Base\UserViewService};
 use App\Http\Requests\{ForumTopicRebaseRequest, ForumTopicStoreRequest, ForumTopicUpdteRequest};
 use App\Services\Forum\TopicService;
 use Illuminate\Support\Facades\Auth;
@@ -147,7 +147,19 @@ class ForumTopicController extends Controller
             $user_id = Auth::id();
         }
 
+        $data = ForumSection::getUserTopics($user_id);//TODO: remove
+        return view('forum.my_topics')->with([
+            'topics' => $data, //TODO: remove
+            'user_id' => $user_id]);
+    }
+
+    /**
+     * @param $user_id
+     * @return array
+     */
+    public function userTopicPagination($user_id)
+    {
         $data = ForumSection::getUserTopics($user_id);
-        return view('forum.my_topics')->with('topics', $data);
+        return ['topics' => UserViewService::getTopics($data), 'pagination' => UserViewService::getPagination($data)];
     }
 }

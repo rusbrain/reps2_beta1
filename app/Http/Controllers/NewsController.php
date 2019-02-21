@@ -15,7 +15,7 @@ class NewsController extends Controller
      */
     public function index(SearchForumTopicRequest $request)
     {
-        $news = TopicService::search($request->validated(), ForumTopic::newsWithQuery(ForumTopic::news()));
+        $news = TopicService::search($request->validated(), ForumTopic::newsWithQuery(ForumTopic::news())); // TODO:remove
         return view('news.index')->with('news', $news->paginate(20));
     }
 

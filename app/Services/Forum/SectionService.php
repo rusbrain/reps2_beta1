@@ -40,7 +40,10 @@ class SectionService
      */
     public static function getSectionViewData($topics, $title)
     {
-        return ['topics'=> $topics, 'title' => $title, 'total_comment_count' => $topics->sum('comments_count')];
+        return [
+            'topics'=> $topics,
+            'title' => $title, //TODO: remove
+            'total_comment_count' => $topics->sum('comments_count')];
     }
 
     /**

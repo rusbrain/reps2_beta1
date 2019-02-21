@@ -26,7 +26,7 @@ class ForumController extends Controller
     public function section($name)
     {
         $data = ForumSection::getSectionByName($name);
-        $topics = ForumSection::getSectionTopicsByName($name);
+        $topics = ForumSection::getSectionTopicsByName($name); //TODO: remove
         return view('forum.section')->with(SectionService::getSectionViewData($topics, $data->title));
     }
 
