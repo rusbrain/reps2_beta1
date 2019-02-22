@@ -18,8 +18,8 @@ class DatabaseSeeder extends Seeder
          $this->call(UserRoleSeeding::class);
          $this->call(GameVersionSeeding::class);
          $this->call(ForumIconSeed::class);
-         $this->call(UserTestDataSeeding::class);
-         $this->call(TestBannerSedding::class);
+         $this->call(UserTestDataSeeding::class);//TODO: hide for production
+         $this->call(TestBannerSedding::class);//TODO: hide for production
          $this->call(ForumSectionIconsSeed::class);
          $this->call(DBRelocationDataSeed::class);
 
