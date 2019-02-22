@@ -34,7 +34,8 @@ class ReplayController extends Controller
         $data = ReplayService::replayWithPagination(ReplayService::getReplayQuery((ReplayService::listReplay($request,$this))));//TODO:remove
         return view('replay.list')->with([
             'replays' => $data, //TODO:remove
-            'title' => $this->replay_group
+            'title' => $this->replay_group,
+            'request_data' => $request->validated()//TODO: check request data for all Views Controllers
         ]);
     }
 
