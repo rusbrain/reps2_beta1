@@ -121,13 +121,25 @@
                                     </span>
                     @endif
                     <div class="box-footer clearfix">
-                        <button type="submit" class="pull-right btn btn-default" id="sendEmail">Send
-                            <i class="fa fa-arrow-circle-right"></i></button>
+                                <button type="submit" class="pull-right btn btn-default" id="sendEmail">Отправить
+                                    <i class="fa fa-arrow-circle-right"></i></button>
                     </div>
                 </form>
             </div>
         </div>
+        @if(session('status'))
+            <div class="callout callout-success message-send">
+                <h4>{{session('status')}}</h4>
+            </div>
+        @endif
 @endsection
 
 @section('js')
+    <script>
+        $(function () {
+            setTimeout(function () {
+                $('.message-send').hide();
+            }, 4000)
+        });
+    </script>
 @endsection

@@ -27,6 +27,6 @@ class BaseController extends Controller
     public function sendQuickEmail(QuickEmailRequest $request)
     {
         BaseDataService::sendQuickEmail($request);
-        return back();
+        return back()->with('status', 'Сообщение отправленно');
     }
 }
