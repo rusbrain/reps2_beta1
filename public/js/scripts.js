@@ -257,7 +257,6 @@ $(function () {
         $('#view-answer-results').on('click', function (e) {
             e.preventDefault();
             var url = $(this).attr('data-url');
-            console.log(url);
             $.ajax({
                 type: 'POST',
                 url: url,
@@ -285,7 +284,6 @@ $(function () {
                 },
                 errorPlacement: function (error, element) {
                     if (element.attr("name") === "answer_id") {
-                        // error.appendTo(voteForm.find("#vote-form-error"));
                         error.appendTo(voteForm.find(".display-error"));
                     }
                 },
