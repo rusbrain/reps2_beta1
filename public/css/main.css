@@ -218,6 +218,28 @@ img {
   color: #54c438;
 }
 /**buttons*/
+.button-up.fixed{
+  position: fixed;
+}
+.button-up{
+  padding: 0;
+  transition: all 0.5s ease 0s;
+  z-index: 100;
+  right: 50px;
+  top: 545px;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  background: #4890AF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.button-up:hover{
+  text-decoration: none;
+  box-shadow: 0 0 1em 0.5em rgba(0,0,0,0.3);
+}
 .btn-blue {
   background: #4890af;
   border-radius: 0px 3px 3px 0px;
@@ -527,6 +549,9 @@ form label {
 /**end search-replay-form - sidebar-widget*/
 
 /**Forum comments*/
+.move-to-add-comment span:hover{
+  text-decoration: underline;
+}
 .comment-header {
   background: #4890af;
   color: #fff;

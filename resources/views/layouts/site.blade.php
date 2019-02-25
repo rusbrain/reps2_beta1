@@ -51,7 +51,7 @@
                 <!--END SIDEBAR LEFT-->
 
                 <!--CONTENT-->
-                <div class="col-md-6">
+                <div class="col-md-6 main-content">
                     @yield('content')
                 </div>
                 <!--END CONTENT-->
@@ -73,6 +73,10 @@
     <!--END FOOTER-->
 
 </div><!--close div /.wrapper-->
+
+<div class="button-up">
+    <img src="{{route('home')}}/images/icons/arrow_up.png" alt="">
+</div>
 
 <!-- ========ALL MODAL WINDOWS ============== -->
 

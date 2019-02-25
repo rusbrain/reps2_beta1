@@ -5,6 +5,12 @@
         @if($item == 1)
             <div class="col-md-12 section-title" id="comments">
                 <div>Комментарии:</div>
+                @if(Auth::user())
+                    <div class="move-to-add-comment">
+                        <img src="{{route('home')}}/images/icons/arrow-right-white.png" alt="">
+                        <span>Добавить коментарий</span>
+                    </div>
+                @endif
             </div>
         @endif
         <div class="comment-wrapper">

@@ -7,8 +7,7 @@
     @csrf
     <div class="form-group">
         <label for="comment-title">Заголовок</label>
-        <input type="text" name="" id="comment-title" class="form-control" value="">
-
+        <input type="text" name="title" id="comment-title" class="form-control" value="">
     </div>
     <div class="form-group">
         <label for="comment-content">Комментарий</label>

@@ -345,3 +345,48 @@ $(function () {
         });
     }
 });
+
+/**
+ * Scroll page Up Button
+ * */
+$(function(){
+    var btnUp = $('.button-up');
+    var body = $("html, body");
+    var sc;
+    var content = $('.main-content');
+    var menuPosition = parseInt(content.offset().top);
+
+    /**start scroll function */
+    document.onscroll = my_func;
+    function my_func() {
+        sc = parseInt($(document).scrollTop());
+        if(sc > menuPosition){
+            btnUp.addClass('fixed in');
+        }else{
+            btnUp.removeClass('fixed in');
+        }
+    }
+    btnUp.on('click', function (e) {
+        e.preventDefault();
+        body.animate({scrollTop:0}, 800, 'swing', function() { });
+    });
+});
+
+/**
+ * Move to Comment Form
+ * */
+$(function(){
+    var moveForm = $('.move-to-add-comment');
+    var commentForm = $(".add-comment-form");
+    var moveFormPosition = parseInt(commentForm.offset().top);
+    var body = $("html, body");
+
+    moveForm.on('click', function () {
+        body.animate(
+            {
+                scrollTop: moveFormPosition
+            }, 1200, 'swing', function() { });
+
+        commentForm.find('input[name=title]').focus();
+    });
+});
