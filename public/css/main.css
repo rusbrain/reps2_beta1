@@ -432,8 +432,8 @@ form label {
   justify-content: center;
 }
 .pagination {
-  margin-top: 35px;
-  margin-bottom: 35px;
+  margin-top: 15px;
+  margin-bottom: 25px;
 }
 .pagination .page-item .page-link {
   outline: none;

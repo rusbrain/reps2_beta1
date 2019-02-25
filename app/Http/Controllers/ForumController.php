@@ -22,9 +22,8 @@ class ForumController extends Controller
     /**
      * get forum section page
      *
-     * @param Request $request
      * @param $name
-     * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View|mixed
+     * @return $this
      */
     public function section($name)
     {
