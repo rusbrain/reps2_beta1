@@ -92,8 +92,6 @@
 
 <!--js into View-->
 @yield('js')
-<!--Views AJAX scripts-->
-<script src="{{route('home')}}/js/views_ajax_scripts.js"></script>
 <!--Custom scripts-->
 <script src="{{route('home')}}/js/scripts.js"></script>
 </body>

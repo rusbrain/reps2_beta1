@@ -22,7 +22,7 @@
                     <a href="{{route('forum.index')}}">/ Форум</a>
                 </li>
                 <li>
-                    <a href="" class="active">/ Колонки</a>
+                    <a href="" class="active">/ {{$data->title}}</a>
                 </li>
             </ul>
         </div>
@@ -31,7 +31,7 @@
 
     <div class="content-box">
         <div class="col-md-12 section-title">
-            <div>Колонки</div>
+            <div>{{$data->title}}</div>
             <div>
                 @if(Auth::user())
                     <img src="{{route('home')}}/images/icons/arrow-right-white.png" alt="">
@@ -41,61 +41,22 @@
                 @endif
             </div>
         </div>
-        @if($topics)
-            <div class="col-md-12 section-info">
-                <span>Темы:
-                    <span class="qty">{{$topics->total()}}</span>
-                </span>
-                    <span>Ответов:
-                    <span class="qty">{{$total_comment_count}}</span>
-                </span>
-            </div>
-            @foreach($topics as $topic)
-                <div class="section-article">
-                    <div class="col-md-6">
-                        <a href="{{route('forum.topic.index',['id' => $topic->id])}}" class="section-article-title">
-                            {!! $topic->title !!}
-                        </a>
-                        <div class="section-article-info">
-                            <a href="" class="section-article-view">
-                                <img src="{{route('home')}}/images/icons/eye.png" alt="">
-                                <span>{{$topic->reviews}}</span>
-                            </a>
-                            <a href="" class="section-article-comments">
-                                <img src="{{route('home')}}/images/icons/message-square-empty.png" alt="">
-                                <span>{{$topic->comments_count}}</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <a href="{{route('user_profile',['id' =>$topic->user->id])}}" class="section-article-author">
-                            @if($topic->user->avatar)
-                                <img src="{{$topic->user->avatar->link}}" class="user-avatar" alt="">
-                            @else
-                                <span class="logged-user-avatar">A</span>
-                            @endif
-                            <span class="name">{{$topic->user->name}}</span>
-                        </a>
-                    </div>
-                    <div class="col-md-4 section-article-date">
-                        <img src="{{route('home')}}/images/icons/clock.png" alt="">
-                        <span>{{\Carbon\Carbon::parse($topic->created_at)->format('H:i d.m.Y')}}</span>
-                        <a href="{{route('forum.topic.index',['id' => $topic->id])}}#comments">
-                            <img src="{{route('home')}}/images/icons/message-square-blue.png" class="margin-left-15" alt="">
-                        </a>
-                    </div>
-                </div><!-- close div /.section-article -->
-            @endforeach
 
-            <!--  PAGINATION -->
-            @php  $data = $topics @endphp
-            @include('pagination')
-            <!-- END  PAGINATION -->
-        @else
-            <div class="col-md-12 section-info">
-                <h2>В данный момент в этом разделе нет активных тем</h2>
+        <!--  CONTENT -->
+        <div id="ajax_section_topics" data-comments="{{$total_comment_count}}">
+            <div class="load-wrapp">
+                <div class="load-3">
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                </div>
             </div>
-        @endif
+        </div>
+        <!-- END CONTENT -->
+
+        <!--  PAGINATION -->
+        <div class="pagination-content"></div>
+        <!-- END  PAGINATION -->
     </div><!-- close div /.content-box -->
 @endsection
 
@@ -115,4 +76,27 @@
     <!-- Gallery -->
     @include('sidebar-widgets.random-gallery')
     <!-- END Gallery -->
+@endsection
+
+@section('js')
+    <script>
+        $(function () {
+            getSections(1);
+            $('.pagination-content').on('click', '.page-link', function (e) {
+                e.preventDefault();
+                $('.load-wrapp').show();
+                var page = $(this).attr('data-page');
+                getSections(page);
+            })
+        });
+        function getSections(page) {
+            var comments_qty =$('#ajax_section_topics').attr('data-comments');
+            $.get('{{route('forum.section.pagination',['name' => $data->name])}}'+'?page='+page, {}, function (data) {
+                $('#ajax_section_topics').html(data.topics);
+                $('.qty').html(comments_qty);
+                $('.pagination-content').html(data.pagination);
+                $('.load-wrapp').hide();
+            })
+        }
+    </script>
 @endsection

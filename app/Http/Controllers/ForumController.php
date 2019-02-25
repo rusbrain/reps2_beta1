@@ -29,8 +29,11 @@ class ForumController extends Controller
     public function section($name)
     {
         $data = ForumSection::getSectionByName($name);
-        $topics = ForumSection::getSectionTopicsByName($name); //TODO: remove
-        return view('forum.section')->with(SectionService::getSectionViewData($topics, $data->title));
+        $topics = ForumSection::getSectionTopicsByName($name);
+        return view('forum.section')->with([
+            'total_comment_count' => $topics->sum('comments_count'),
+            'data' => $data
+        ]);
     }
 
     /**
