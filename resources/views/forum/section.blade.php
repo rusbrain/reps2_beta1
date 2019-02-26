@@ -45,11 +45,7 @@
         <!--  CONTENT -->
         <div id="ajax_section_topics" data-comments="{{$total_comment_count}}">
             <div class="load-wrapp">
-                <div class="load-3">
-                    <div class="line"></div>
-                    <div class="line"></div>
-                    <div class="line"></div>
-                </div>
+                <img src="/images/loader.gif" alt="">
             </div>
         </div>
         <!-- END CONTENT -->
@@ -90,13 +86,19 @@
             })
         });
         function getSections(page) {
-            var comments_qty =$('#ajax_section_topics').attr('data-comments');
+            var container = $('#ajax_section_topics');
+            var comments_qty = container.attr('data-comments');
+            var body = $("html, body");
+
             $.get('{{route('forum.section.pagination',['name' => $data->name])}}'+'?page='+page, {}, function (data) {
-                $('#ajax_section_topics').html(data.topics);
+                container.html(data.topics);
                 $('.qty').html(comments_qty);
                 $('.pagination-content').html(data.pagination);
                 $('.load-wrapp').hide();
-            })
+
+                /**move to top of page*/
+                moveToTop(body);
+            });
         }
     </script>
 @endsection

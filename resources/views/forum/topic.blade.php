@@ -119,7 +119,7 @@
     </div><!-- close div /.content-box -->
 
     <!--Comments-->
-    @include('comments.comments')
+    @include('comments.comments', ['object' => 'topic', 'id' => $topic->id])
     <!--END Comments-->
 
     <!--ADD Comment-->

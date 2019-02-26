@@ -7,11 +7,7 @@
     <!-- COMMENTS CONTENT -->
     <div id="ajax_section_comments">
         <div class="load-wrapp">
-            <div class="load-3">
-                <div class="line"></div>
-                <div class="line"></div>
-                <div class="line"></div>
-            </div>
+            <img src="/images/loader.gif" alt="">
         </div>
     </div>
     <!-- END COMMENTS CONTENT -->
@@ -46,12 +42,15 @@
         });
 
         function getSections(page) {
-            $.get('{{route('comments.pagination',['object' => 'topic', 'id' => $topic->id])}}' +
+            var container = $('#ajax_section_comments');
+            $.get('{{route('comments.pagination',['object' => $object, 'id' => $id])}}' +
                 '?page=' + page, {}, function (data) {
-
-                $('#ajax_section_comments').html(data.comments);
+                container.html(data.comments);
                 $('.pagination-content').html(data.pagination);
                 $('.load-wrapp').hide();
+
+                /**move to top of comments*/
+                // moveToTop(container);
             })
         }
     </script>

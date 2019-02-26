@@ -390,3 +390,16 @@ $(function(){
         commentForm.find('input[name=title]').focus();
     });
 });
+
+/**
+ * Move to top after load page data
+ * */
+function moveToTop(container){
+
+    var body = $("html, body");
+    var moveFormPosition = parseInt(container.offset().top);
+    body.animate(
+        {
+            scrollTop: moveFormPosition
+        }, 2000, 'swing', function() { });
+}

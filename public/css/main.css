@@ -60,6 +60,12 @@ img {
   font-size: 12px;
 }
 /*helpers*/
+.min-height-100 {
+  min-height: 100px;
+}
+.min-height-200 {
+  min-height: 200px;
+}
 .margin-bottom-5 {
   margin-bottom: 5px;
 }
@@ -123,7 +129,7 @@ img {
 .margin-left-10 {
   margin-left: 10px;
 }
-.margin-top-bottom-20{
+.margin-top-bottom-20 {
   margin-top: 20px;
   margin-bottom: 20px;
 }
@@ -136,7 +142,7 @@ img {
 .display-none {
   display: none !important;
 }
-.list-empty{
+.list-empty {
   padding: 15px;
 }
 .position-relative {
@@ -190,11 +196,11 @@ img {
 .padding-right-15 {
   padding-right: 15px;
 }
-.padding-top-bottom-10{
+.padding-top-bottom-10 {
   padding-top: 10px;
   padding-bottom: 10px;
 }
-.padding-top-bottom-5{
+.padding-top-bottom-5 {
   padding-top: 5px;
   padding-bottom: 5px;
 }
@@ -204,7 +210,7 @@ img {
 .positive-vote {
   color: #2f6696 !important;
 }
-.error{
+.error {
   color: #dc3545;
 }
 .font-14 {
@@ -218,27 +224,27 @@ img {
   color: #54c438;
 }
 /**buttons*/
-.button-up.fixed{
+.button-up.fixed {
   position: fixed;
 }
-.button-up{
+.button-up {
   padding: 0;
   transition: all 0.5s ease 0s;
   z-index: 100;
   right: 50px;
-  top: 545px;
+  bottom: 150px;
   cursor: pointer;
   border-radius: 50%;
   width: 60px;
   height: 60px;
-  background: #4890AF;
+  background: #4890af;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.button-up:hover{
+.button-up:hover {
   text-decoration: none;
-  box-shadow: 0 0 1em 0.5em rgba(0,0,0,0.3);
+  box-shadow: 0 0 1em 0.5em rgba(0, 0, 0, 0.3);
 }
 .btn-blue {
   background: #4890af;
@@ -306,30 +312,19 @@ img {
 }
 /**Loader*/
 .load-wrapp {
-  float: left;
   width: 100%;
-  height: 50vh;
+  height: 200px;
   margin: 0;
-  padding-top: 49vh;
   text-align: center;
-  position: absolute;
-  z-index: 1000;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.line {
-  display: inline-block;
-  width: 15px;
-  height: 15px;
-  border-radius: 15px;
-  background-color: #4b9cdb;
+.load-wrapp img{
+  width: 70px;
 }
-.load-3 .line:nth-last-child(1) {animation: loadingC .6s .1s linear infinite;}
-.load-3 .line:nth-last-child(2) {animation: loadingC .6s .2s linear infinite;}
-.load-3 .line:nth-last-child(3) {animation: loadingC .6s .3s linear infinite;}
-@keyframes loadingC {
-0 {transform: translate(0,0);}
-50% {transform: translate(0,15px);}
-100% {transform: translate(0,0);}
-}
+
 /*******Icons SVG*******/
 .add-friend,
 .send-message,
@@ -549,7 +544,7 @@ form label {
 /**end search-replay-form - sidebar-widget*/
 
 /**Forum comments*/
-.move-to-add-comment span:hover{
+.move-to-add-comment span:hover {
   text-decoration: underline;
 }
 .comment-header {
@@ -658,11 +653,11 @@ form label {
 
 /*****Modal Windows*****/
 #vote-modal .positive,
-#vote-modal .negative{
+#vote-modal .negative {
   display: none;
 }
 #vote-modal .positive.active,
-#vote-modal .negative.active{
+#vote-modal .negative.active {
   display: inline-block;
 }
 /*****END Modal Windows*****/
@@ -690,17 +685,17 @@ form label {
   color: #fff;
 }
 password-repairing:visited,
-.password-repairing{
+.password-repairing {
   font-family: "Roboto-Bold", sans-serif;
   color: #fff;
   display: block;
   text-align: right;
   margin-top: 10px;
 }
-.password-repairing img{
+.password-repairing img {
   margin-right: 10px;
 }
-.password-repairing:hover{
+.password-repairing:hover {
   text-decoration: underline;
   color: #fff;
 }
@@ -712,9 +707,9 @@ password-repairing:visited,
   top: 0;
   right: 0;
 }
-.login-form div.error{
+.login-form div.error {
   color: yellow;
-  font-family: "Roboto-Bold",sans-serif;
+  font-family: "Roboto-Bold", sans-serif;
   text-shadow: 0 0 1px red;
 }
 .btn-login {
@@ -887,12 +882,12 @@ password-repairing:visited,
   font-size: 12px;
   margin-left: 10px;
 }
-.vote-response{
+.vote-response {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-.vote-response > span:first-of-type{
+.vote-response > span:first-of-type {
   max-width: 200px;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -900,9 +895,9 @@ password-repairing:visited,
   overflow: hidden;
   margin: 10px 0;
 }
-.sidebar-widget-subtitle{
+.sidebar-widget-subtitle {
   margin-bottom: 10px;
-  font-family: "Roboto-Bold",sans-serif;
+  font-family: "Roboto-Bold", sans-serif;
   font-size: 14px;
 }
 .widget-header {
@@ -980,11 +975,11 @@ password-repairing:visited,
   font-size: 14px;
   font-family: "Roboto-Medium", sans-serif;
 }
-.user-gallery-widget .widget-forum-topics-wrapper{
+.user-gallery-widget .widget-forum-topics-wrapper {
   max-height: 300px;
   overflow-y: auto;
 }
-.user-gallery-widget .photo-comment{
+.user-gallery-widget .photo-comment {
   max-width: 175px;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -1003,10 +998,10 @@ password-repairing:visited,
   align-items: center;
   color: #737373;
 }
-.widget-wrapper .widget-new-user a > span:first-of-type{
+.widget-wrapper .widget-new-user a > span:first-of-type {
   flex: 0 0 90px;
 }
-.widget-wrapper .widget-new-user a > span:last-of-type{
+.widget-wrapper .widget-new-user a > span:last-of-type {
   margin-left: auto;
 }
 .widget-wrapper .widget-new-user a:hover {
@@ -1166,7 +1161,7 @@ password-repairing:visited,
   font-family: "Roboto-Medium", sans-serif;
   background: #4890af;
 }
-.forum-section-title:hover{
+.forum-section-title:hover {
   color: #fff;
 }
 .forum-section-img {
@@ -1439,7 +1434,7 @@ password-repairing:visited,
 .user-replay-header .info a:last-of-type {
   margin-right: 0;
 }
-.user-replay-header .user-nickname{
+.user-replay-header .user-nickname {
   flex: 0 0 70%;
 }
 .user-replay-info {
@@ -1469,16 +1464,16 @@ password-repairing:visited,
   padding-top: 6px;
   color: #4d4d4d;
 }
-div.author-info{
+div.author-info {
   font-size: 10px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
 }
-.author-info > div{
+.author-info > div {
   font-size: 10px;
 }
-.author-info > a{
+.author-info > a {
   margin-right: 5px;
 }
 /*----------------------------------------*/
@@ -1505,7 +1500,7 @@ div.author-info{
 .replay-map {
   margin-bottom: 15px;
 }
-.replay-map-empty{
+.replay-map-empty {
   height: 100px;
   width: 150px;
   margin: 10px auto;
@@ -2173,7 +2168,7 @@ a.user-section-title {
   justify-content: space-between;
   font-size: 14px;
 }
-.load-more{
+.load-more {
   cursor: pointer;
   width: 190px;
   border-radius: 6px;

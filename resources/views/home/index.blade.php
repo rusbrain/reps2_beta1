@@ -15,11 +15,7 @@
     <!--Last News-->
     <div id="ajax_last_news" data-path="{{route('home.last_news')}}">
         <div class="load-wrapp">
-            <div class="load-3">
-                <div class="line"></div>
-                <div class="line"></div>
-                <div class="line"></div>
-            </div>
+            <img src="/images/loader.gif" alt="">
         </div>
     </div>
     <!--END Last News-->
@@ -27,11 +23,7 @@
     <!--Last Forums-->
     <div id="ajax_last_forums" data-path="{{route('home.last_forum')}}">
         <div class="load-wrapp">
-            <div class="load-3">
-                <div class="line"></div>
-                <div class="line"></div>
-                <div class="line"></div>
-            </div>
+            <img src="/images/loader.gif" alt="">
         </div>
     </div>
     <!--END Last Forums-->
@@ -39,11 +31,7 @@
     <!--Popular Forums-->
     <div id="ajax_top_forums" data-path="{{route('home.top_forum')}}">
         <div class="load-wrapp">
-            <div class="load-3">
-                <div class="line"></div>
-                <div class="line"></div>
-                <div class="line"></div>
-            </div>
+            <img src="/images/loader.gif" alt="">
         </div>
     </div>
     <!--END Popular Forums-->
@@ -84,7 +72,7 @@
         function getLastNews(container) {
             $.get(container.attr('data-path'), {}, function (html) {
                 container.html(html);
-                $('.load-wrapp').hide();
+                container.find('.load-wrapp').hide();
             });
         }
     </script>
