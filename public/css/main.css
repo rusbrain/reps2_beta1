@@ -793,7 +793,7 @@ password-repairing:visited,
   z-index: 10;
   position: absolute;
   right: 0;
-  bottom: -10px;
+  bottom: 10px;
   border: 0.5px solid #e5e6eb;
 }
 .logged-user-action-bar > div:first-of-type {
@@ -804,14 +804,20 @@ password-repairing:visited,
 }
 .logged-user-menu-links {
   position: absolute;
-  background: rgba(229, 230, 235, 1);
+  background: #fff;
   border-radius: 0px 0px 3px 3px;
   z-index: 10;
   width: 256px;
-  display: none;
+  transition: height 1.5s;
+  height: 0;
+  overflow: hidden;
+  left: -1px;
+  border-left: 2px solid #efefef;
+  border-right: 2px solid #efefef;
+  border-bottom: 2px solid #efefef;
 }
 .logged-user-menu-links.active {
-  display: block;
+  height: 285px;
 }
 .logged-user-menu-links ul {
   list-style-type: none;
