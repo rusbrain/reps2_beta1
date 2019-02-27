@@ -8,7 +8,6 @@
     <!-- END All Forum Topics -->
 @endsection
 
-{{--{{dd($replays)}}--}}
 @section('content')
 
     <!-- Breadcrumbs -->
@@ -30,72 +29,20 @@
         <div class="col-md-12 section-title">
             <div>{!! $title !!}</div>
         </div>
-        @if($replays->total() > 0)
-            @foreach($replays as $item => $replay)
-                <div class="user-replay-wrapper">
-                    <div class="col-md-12 user-replay-header">
-                        <div class="user-nickname text-bold">
-                            <a href="{{route('replay.get',['id' => $replay->id])}}"> {{$replay->title}} </a>
-                        </div>
-                        <div class="info">
-                            <a href="{{route('replay.get',['id' => $replay->id])}}#comments">
-                                <img src="{{route('home')}}/images/icons/message-square-white.png" alt="">
-                                ({{$replay->comments_count}})
-                            </a>
-                            <a href="{{route('replay.download', ['id' => $replay->id])}}">
-                                <img src="{{route('home')}}/images/icons/download.png" alt="">
-                                {{$replay->downloaded}}
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-md-12 user-replay-info">
-                        <div>
-                            @if($replay->first_country_id)
-                                <span class="flag-icon flag-icon-{{mb_strtolower($countries[$replay->first_country_id]->code)}}"></span>
-                            @else
-                                <span>NO</span>
-                            @endif
-                            VS
-                            @if($replay->second_country_id)
-                                <span class="flag-icon flag-icon-{{mb_strtolower($countries[$replay->second_country_id]->code)}}"></span>
-                            @else
-                                <span>NO</span>
-                            @endif
-                        </div>
-                        <div class="race">
-                            {{$replay->first_race}} vs {{$replay->second_race}}
-                        </div>
-                        <div class="article-creating-date">
-                            <img src="{{route('home')}}/images/icons/clock.png" alt="">
-                            {{$replay->created_at}}
-                        </div>
-                        <div class="user-replay-map">
-                            Карта:
-                            <span>{{$replay->map->name??'не указано'}}</span>
-                        </div>
-                        <div class="user-replay-rating">
-                            <img src="{{route('home')}}/images/icons/icon_rate_blue.png" alt="">
-                            {{$replay->rating}}
-                        </div>
-                    </div>
-                    <div class="col-md-12 user-replay-content-wrapper">
-                        <div class="user-replay-content">
-                            {!! $replay->content !!}
-                        </div>
-                    </div>
-                </div><!-- close div /.user-replay-wrapper -->
-            @endforeach
-        @else
-            <div class="user-replay-wrapper">
-                <p class="list-empty">Cписок реплеев пуст</p>
+        <!--  REPLAY LIST -->
+        <div id="ajax_section_replays_list"
+             data-path="{{($type) ? route('replay.'.$replay_type.'_type.paginate', ['type' => $type]) : route('replay.'.$replay_type.'.paginate')}}">
+            <div class="load-wrapp">
+                <img src="/images/loader.gif" alt="">
             </div>
-        @endif
+        </div>
+        <!-- END REPLAY LIST -->
     </div><!-- close div /.content-box -->
 
     <!--  PAGINATION -->
-    @php  $data = $replays @endphp
-    @include('pagination')
+    <div class="pagination-content"></div>
     <!-- END  PAGINATION -->
+
 @endsection
 
 @section('sidebar-right')
@@ -114,4 +61,32 @@
     <!-- Gallery -->
     @include('sidebar-widgets.random-gallery')
     <!-- END Gallery -->
+@endsection
+
+@section('js')
+    <script>
+        $(function () {
+            getSections(1);
+            $('.pagination-content').on('click', '.page-link', function (e) {
+                e.preventDefault();
+                $('.load-wrapp').show();
+                var page = $(this).attr('data-page');
+                getSections(page);
+            })
+        });
+        function getSections(page) {
+            var container = $('#ajax_section_replays_list');
+            var path = container.attr('data-path');
+            var body = $("html, body");
+
+            $.get(path+'?page='+page, {}, function (data) {
+                container.html(data.replays);
+                $('.pagination-content').html(data.pagination);
+                $('.load-wrapp').hide();
+
+                /**move to top of page*/
+                moveToTop(body);
+            });
+        }
+    </script>
 @endsection

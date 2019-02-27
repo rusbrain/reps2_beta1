@@ -28,7 +28,7 @@
                         <ul class="sub submenu">
                             @foreach($general_helper->getReplayTypes() as $replayType)
                                 <li>
-                                    <a href="{{route('replay.gosu_type', ['type' => $replayType->name])}}" class="submenu-menu-link">{{$replayType->title}}</a>
+                                    <a href="{{route('replay.gosus_type', ['type' => $replayType->name])}}" class="submenu-menu-link">{{$replayType->title}}</a>
                                 </li>
                             @endforeach
                         </ul>

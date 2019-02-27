@@ -376,20 +376,25 @@ $(function(){
  * Move to Comment Form
  * */
 $(function(){
-    var moveForm = $('.move-to-add-comment');
+    $('body').on('click','.move-to-add-comment', function () {
+        moveToCommentForm();
+    });
+});
+
+/**
+ * Move to add comment form function
+ * */
+function moveToCommentForm() {
     var commentForm = $(".add-comment-form");
     var moveFormPosition = parseInt(commentForm.offset().top);
     var body = $("html, body");
+    body.animate(
+        {
+            scrollTop: moveFormPosition
+        }, 1200, 'swing', function() { });
 
-    moveForm.on('click', function () {
-        body.animate(
-            {
-                scrollTop: moveFormPosition
-            }, 1200, 'swing', function() { });
-
-        commentForm.find('input[name=title]').focus();
-    });
-});
+    commentForm.find('input[name=title]').focus();
+}
 
 /**
  * Move to top after load page data

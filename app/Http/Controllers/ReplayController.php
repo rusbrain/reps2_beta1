@@ -2,10 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\{Comment, Country, Replay, ReplayMap, ReplayType};
-use App\Http\Requests\{ReplaySearchRequest, ReplayStoreRequest, ReplayUpdateRequest};
+use App\{
+    Comment, Country, Replay, ReplayMap, ReplayType
+};
+use App\Http\Requests\{
+    ReplaySearchRequest, ReplayStoreRequest, ReplayUpdateRequest
+};
 use App\Services\Replay\ReplayService;
-use Illuminate\Support\Facades\{Auth, Storage};
+use Illuminate\Support\Facades\{
+    Auth, Storage
+};
 
 class ReplayController extends Controller
 {
@@ -17,6 +23,13 @@ class ReplayController extends Controller
     public $replay_group = "";
 
     /**
+     * Replay type
+     *
+     * @var string
+     */
+    public $replay_type = "";
+
+    /**
      * Replay query function name
      *
      * @var string
@@ -26,16 +39,18 @@ class ReplayController extends Controller
     /**
      * Get view list of all Replay
      *
-     * @param ReplaySearchRequest $request
-     * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View|mixed
+     * @param bool $type
+     * @return $this
      */
-    public function index(ReplaySearchRequest $request)
+    public function index($type = false)
     {
-        $data = ReplayService::replayWithPagination(ReplayService::getReplayQuery((ReplayService::listReplay($request,$this))));//TODO:remove
+        if ($type) {
+            $type = $this->checkReplayType($type);
+        }
         return view('replay.list')->with([
-            'replays' => $data, //TODO:remove
-            'title' => $this->replay_group,
-            'request_data' => $request->validated()//TODO: check request data for all Views Controllers
+            'title' => (!$type) ? $this->replay_group : $this->replay_group . ': ' . $type->title,
+            'replay_type' => $this->replay_type,
+            'type' => ($type) ? $type->name : $type
         ]);
     }
 
@@ -47,7 +62,7 @@ class ReplayController extends Controller
      */
     public function paginate(ReplaySearchRequest $request)
     {
-        return ReplayService::getList(ReplayService::listReplay($request,$this), $this->replay_group);
+        return ReplayService::getList(ReplayService::listReplay($request, $this), $this->replay_group);
     }
 
     /**
@@ -58,8 +73,8 @@ class ReplayController extends Controller
      */
     public function show($id)
     {
-        $replay =ReplayService::getReplayQuery(Replay::where('id', $id))->first();
-        if ($replay){
+        $replay = ReplayService::getReplayQuery(Replay::where('id', $id))->first();
+        if ($replay) {
             $comments = Comment::getObjectComments($replay);
             return view('replay.show')->with(['replay' => $replay, 'comments' => $comments]);
         }
@@ -100,7 +115,7 @@ class ReplayController extends Controller
     public function edit($id)
     {
         $replay = Replay::where('id', $id)->with('file')->first();
-        if(!$replay){
+        if (!$replay) {
             return abort(404);
         }
         return view('replay.edit', ['replay' => $replay]);
@@ -116,51 +131,48 @@ class ReplayController extends Controller
     public function update(ReplayUpdateRequest $request, $id)
     {
         $replay = Replay::find($id);
-        if($replay){
+        if ($replay) {
             ReplayService::updateReplay($request, $replay);
             return redirect()->route('replay.get', ['id' => $replay->id]);
         }
         return abort(404);
     }
 
-
     /**
      * Get replay by user
      *
      * @param int $user_id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return array
      */
     public function getUserReplay($user_id = 0)
     {
-        if (!$user_id){
+        if (!$user_id) {
             $user_id = Auth::id();
         }
         $method = $this->method_get;
-        return ReplayService::getList(Replay::$method()->where('user_id',$user_id), $this->replay_group);
+        return ReplayService::getList(Replay::$method()->where('user_id', $user_id), $this->replay_group);
     }
 
     public function getAllUserReplay($user_id = 0)
     {
-        if (!$user_id){
+        if (!$user_id) {
             $user_id = Auth::id();
         }
-        return ReplayService::getList(Replay::where('user_id',$user_id), $this->replay_group);
+        return ReplayService::getList(Replay::where('user_id', $user_id), $this->replay_group);
     }
 
     /**
-     * Get Replay by type
+     * Get Replay list by type
      *
      * @param $type
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return array
      */
     public function getReplayByType($type)
     {
-        $type = ReplayType::where('name', $type)->first();
-        if(!$type){
-            return abort(404);
-        }
+        $type = $this->checkReplayType($type);
         $method = $this->method_get;
-        return ReplayService::getList(Replay::$method()->where('type_id',$type->id), $this->replay_group.': '.$type->title);
+        return ReplayService::getList(Replay::$method()->where('type_id', $type->id),
+            $this->replay_group . ': ' . $type->title);
     }
 
     /**
@@ -172,10 +184,10 @@ class ReplayController extends Controller
     public function download($id)
     {
         $replay = Replay::find($id);
-        if(!$replay){
+        if (!$replay) {
             return abort(404);
         }
-        return Storage::download(str_replace('/storage','public', ReplayService::download($replay)));
+        return Storage::download(str_replace('/storage', 'public', ReplayService::download($replay)));
     }
 
     /**
@@ -188,13 +200,22 @@ class ReplayController extends Controller
     public function destroy($id)
     {
         $replay = Replay::find($id);
-        if (!$replay){
+        if (!$replay) {
             return abort(404);
         }
-        if ($replay->user_id != Auth::id()){
+        if ($replay->user_id != Auth::id()) {
             return abort(403);
         }
         ReplayService::remove($id);
         return redirect()->route('replay.gosus');
+    }
+
+    public function checkReplayType($type)
+    {
+        $type = ReplayType::where('name', $type)->first();
+        if (!$type) {
+            return abort(404);
+        }
+        return $type;
     }
 }

@@ -13,14 +13,16 @@
 
 Route::group(['middleware' => 'activity'], function () {
     Route::get('/', 'HomeController@index')->name('home');
-    Route::get('/last_news', 'HomeController@lastNews')     ->name('home.last_news');
-    Route::get('/last_forums', 'HomeController@lastForums') ->name('home.last_forum');
-    Route::get('/top_forums', 'HomeController@topForums')   ->name('home.top_forum');
+    Route::get('/last_news', 'HomeController@lastNews')->name('home.last_news');
+    Route::get('/last_forums', 'HomeController@lastForums')->name('home.last_forum');
+    Route::get('/top_forums', 'HomeController@topForums')->name('home.top_forum');
     Route::group(['prefix' => 'widget'], function () {
         Route::get('/all_forum_sections', 'WidgetController@allForumSections')->name('widgets.all_forum_sections');
-        Route::get('/general_forum_sections', 'WidgetController@generalForumSections')->name('widgets.general_forum_sections');
+        Route::get('/general_forum_sections',
+            'WidgetController@generalForumSections')->name('widgets.general_forum_sections');
         Route::get('/gosu_replays', 'WidgetController@gosuReplay')->name('widgets.gosu_replays');
     });
+
     Route::get('/comments/{object}/{id}', 'CommentController@pagination')->name('comments.pagination');
     Route::get('/search', 'HomeController@search')->name('home.search');
     Route::get('/email/verified/{token}', 'Auth\RegisterController@emailVerified')->name('email_verified');
@@ -37,6 +39,7 @@ Route::group(['middleware' => 'activity'], function () {
             Route::post('/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
         });
     });
+
     Route::get('news', 'NewsController@index')->name('news');
     Route::get('news/pagination', 'NewsController@pagination')->name('news.pagination');
     Route::post('question/{id}/set_answer', 'InterviewQuestionController@setAnswer')->name('question.set_answer');
@@ -46,6 +49,7 @@ Route::group(['middleware' => 'activity'], function () {
         Route::get('comment/{id}/set_rating', 'CommentsRatingController@setRating')->name('comment.set_rating');
         Route::get('comment/{id}/get_rating', 'CommentsRatingController@getRating')->name('comment.ger_rating');
     });
+
     Route::group(['prefix' => 'user'], function () {
         Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('registration_form');
         Route::post('/register', 'Auth\RegisterController@register')->name('registration');
@@ -70,14 +74,17 @@ Route::group(['middleware' => 'activity'], function () {
             Route::get('/message/{dialog_id}/load', 'UserMessagingController@load')->name('user.message_load');
             Route::post('/message/{dialog_id}/send', 'UserMessagingController@send')->name('user.message.send');
         });
+
         Route::get('/{id}', 'UserController@show')->name('user_profile');
         Route::get('{id}/get_rating', 'RatingController@getRatingUser')->name('user.get_rating');
         Route::get('{id}/replay', 'ReplayUsersController@getUserReplay')->name('user.user_replay');
         Route::get('{id}/gosu_replay', 'ReplayGosuController@getUserReplay')->name('user.gosu_replay');
         Route::get('{id}/all_replay', 'ReplayController@getAllUserReplay')->name('user.all_replay');
         Route::get('{id}/topic', 'ForumTopicController@getUserTopic')->name('user.forum_topic');
-        Route::get('{id}/topic/pagination', 'ForumTopicController@userTopicPagination')->name('user.forum_topic.pagination');
+        Route::get('{id}/topic/pagination',
+            'ForumTopicController@userTopicPagination')->name('user.forum_topic.pagination');
     });
+
     Route::group(['prefix' => 'forum'], function () {
         Route::get('/', 'ForumController@index')->name('forum.index');
         Route::group(['prefix' => 'section'], function () {
@@ -86,7 +93,8 @@ Route::group(['middleware' => 'activity'], function () {
         });
         Route::group(['prefix' => 'topic'], function () {
             Route::get('search', 'ForumController@searchTopic')->name('forum.topic.search');
-            Route::get('search/pagination', 'ForumController@searchPaginationTopic')->name('forum.topic.search.pagination');
+            Route::get('search/pagination',
+                'ForumController@searchPaginationTopic')->name('forum.topic.search.pagination');
             Route::post('{id}/get_rating', 'TopicRatingController@getRating')->name('forum.topic.get_rating');
             Route::group(['middleware' => 'auth'], function () {
                 Route::get('/my', 'ForumTopicController@getUserTopic')->name('forum.topic.my_list');
@@ -107,17 +115,28 @@ Route::group(['middleware' => 'activity'], function () {
             Route::get('/{id}', 'ForumTopicController@index')->name('forum.topic.index');
         });
     });
+
     Route::group(['prefix' => 'replay'], function () {
         Route::get('/', 'ReplayUsersController@index')->name('replay');
+
         Route::get('/users', 'ReplayUsersController@index')->name('replay.users');
         Route::get('/gosus', 'ReplayGosuController@index')->name('replay.gosus');
+
         Route::get('/users/paginate', 'ReplayUsersController@paginate')->name('replay.users.paginate');
         Route::get('/gosus/paginate', 'ReplayGosuController@paginate')->name('replay.gosus.paginate');
-        Route::get('/user/{type}', 'ReplayUsersController@getReplayByType')->name('replay.user_type');
-        Route::get('/gosu/{type}', 'ReplayGosuController@getReplayByType')->name('replay.gosu_type');
+
+        Route::get('/users/{type}', 'ReplayUsersController@index')->name('replay.users_type');
+        Route::get('/gosus/{type}', 'ReplayGosuController@index')->name('replay.gosus_type');
+
+        Route::get('/gosus/{type}/paginate',
+            'ReplayGosuController@getReplayByType')->name('replay.gosus_type.paginate');
+        Route::get('/users/{type}/paginate',
+            'ReplayGosuController@getReplayByType')->name('replay.users_type.paginate');
+
         Route::get('/{id}/get_rating', 'ReplayRatingController@getRating')->name('replay.ger_rating');
         Route::get('/{id}/get_evaluation', 'ReplayRatingController@getEvaluation')->name('replay.get_evaluation');
         Route::get('/{id}/download', 'ReplayController@download')->name('replay.download');
+
         Route::group(['middleware' => 'auth'], function () {
             Route::get('/create', 'ReplayController@create')->name('replay.create');
             Route::post('/store', 'ReplayController@store')->name('replay.store');
@@ -136,6 +155,7 @@ Route::group(['middleware' => 'activity'], function () {
         });
         Route::get('/{id}', 'ReplayController@show')->name('replay.get');
     });
+
     Route::group(['prefix' => 'gallery'], function () {
         Route::get('/', 'UserGalleryController@index')->name('gallery.list');
         Route::get('/my', 'UserGalleryController@indexUser')->name('gallery.list_my');
@@ -156,177 +176,195 @@ Route::group(['middleware' => 'activity'], function () {
         });
         Route::get('/photo/{id}', 'UserGalleryController@show')->name('gallery.view');
     });
-    Route::group(['middleware' => ['auth', 'admin_panel'], 'prefix' => 'admin_panel', 'namespace' => 'Admin'], function () {
-        Route::get('/', 'BaseController@index')->name('admin.home');
-        Route::post('send_quick_email', 'BaseController@sendQuickEmail')->name('admin.send_quick_email');
-        Route::group(['prefix' => 'comment'], function () {
-            Route::get('/{object_name}/{id}', 'CommentController@getComments')->name('admin.comments');
-            Route::get('/{id}', 'CommentController@removeComment')->name('admin.comments.remove');
+
+    Route::group(['middleware' => ['auth', 'admin_panel'], 'prefix' => 'admin_panel', 'namespace' => 'Admin'],
+        function () {
+            Route::get('/', 'BaseController@index')->name('admin.home');
+            Route::post('send_quick_email', 'BaseController@sendQuickEmail')->name('admin.send_quick_email');
+            Route::group(['prefix' => 'comment'], function () {
+                Route::get('/{object_name}/{id}', 'CommentController@getComments')->name('admin.comments');
+                Route::get('/{id}', 'CommentController@removeComment')->name('admin.comments.remove');
+            });
+
+            Route::group(['prefix' => 'user'], function () {
+                Route::get('{id}/email', 'UserEmailController@index')->name('admin.user.email');
+                Route::get('{id}/replay', 'ReplayController@getReplayByUser')->name('admin.user.replay');
+                Route::get('{id}/topic', 'ForumTopicController@getUsersTopics')->name('admin.user.topic');
+                Route::get('{id}/profile', 'UserController@getUserProfile')->name('admin.user.profile');
+                Route::get('{id}/ban', 'UserController@banUser')->name('admin.user.ban');
+                Route::get('{id}/remove', 'UserController@removeUser')->name('admin.user.remove');
+                Route::get('{id}/not_ban', 'UserController@notBanUser')->name('admin.user.not_ban');
+                Route::get('{id}/profile/edit', 'UserController@getEditUserProfile')->name('admin.user.profile.edit');
+                Route::post('{id}/profile/save', 'UserController@saveUserProfile')->name('admin.user.profile.save');
+                Route::get('/', 'UserController@index')->name('admin.users');
+                Route::get('/pagination', 'UserController@pagination')->name('admin.users.pagination');
+
+                Route::get('{id}/message', 'UserMessageController@getUser')->name('admin.user.messages');
+                Route::get('message', 'UserMessageController@getUser')->name('admin.user.messages_all');
+                Route::get('/message/{dialog_id}/load', 'UserMessageController@load')->name('admin.user.message_load');
+                Route::post('/message/{dialog_id}/send', 'UserMessageController@send')->name('admin.user.message.send');
+
+                Route::group(['prefix' => 'role'], function () {
+                    Route::get('/', 'UserRoleController@index')->name('admin.users.role');
+                    Route::get('/{id}/edit', 'UserRoleController@edit')->name('admin.user.role.edit');
+                    Route::get('/{id}/remove', 'UserRoleController@remove')->name('admin.user.role.remove');
+                    Route::get('/add', 'UserRoleController@add')->name('admin.user.role.add');
+                    Route::post('/create', 'UserRoleController@create')->name('admin.user.role.create');
+                    Route::post('/{id}/save', 'UserRoleController@save')->name('admin.user.role.save');
+                });
+
+                Route::group(['prefix' => 'gallery'], function () {
+                    Route::get('/', 'UserGalleryController@index')->name('admin.users.gallery');
+                    Route::get('/pagination',
+                        'UserGalleryController@pagination')->name('admin.users.gallery.pagination');
+                    Route::get('/{id}/view', 'UserGalleryController@view')->name('admin.users.gallery.view');
+                    Route::get('/{id}/for_adults',
+                        'UserGalleryController@forAdults')->name('admin.users.gallery.for_adults');
+                    Route::get('/{id}/not_for_adults',
+                        'UserGalleryController@notForAdults')->name('admin.users.gallery.not_for_adults');
+                    Route::get('/{id}/remove', 'UserGalleryController@remove')->name('admin.users.gallery.remove');
+                    Route::post('/{id}/send_comment',
+                        'UserGalleryController@sendComment')->name('admin.user.gallery.comment_send');
+                    Route::get('/{id}/edit', 'UserGalleryController@edit')->name('admin.user.gallery.edit');
+                    Route::post('/{id}/update', 'UserGalleryController@update')->name('admin.user.gallery.update');
+                    Route::get('/add', 'UserGalleryController@add')->name('admin.user.gallery.add');
+                    Route::post('/create', 'UserGalleryController@create')->name('admin.user.gallery.create');
+                });
+
+                Route::group(['prefix' => '{id}/reputation'], function () {
+                    Route::get('/', 'ReputationController@index')->name('admin.user.reputation');
+                    Route::get('/pagination',
+                        'ReputationController@pagination')->name('admin.user.reputation.pagination');
+                    Route::get('{reputation_id}/remove',
+                        'ReputationController@remove')->name('admin.user.reputation.remove');
+                });
+
+                Route::group(['prefix' => '{id}/comments'], function () {
+                    Route::get('/', 'UserCommentController@index')->name('admin.user.comments');
+                    Route::get('/pagination',
+                        'UserCommentController@pagination')->name('admin.user.comments.pagination');
+                    Route::get('{comments_id}/remove',
+                        'UserCommentController@remove')->name('admin.user.comments.remove');
+                });
+
+                Route::group(['prefix' => '{id}/answers'], function () {
+                    Route::get('/', 'UserQuestionsController@index')->name('admin.user.answers');
+                    Route::get('/pagination',
+                        'UserQuestionsController@pagination')->name('admin.user.answers.pagination');
+                    Route::get('{comments_id}/remove',
+                        'UserQuestionsController@remove')->name('admin.user.answers.remove');
+                });
+            });
+
+            Route::group(['prefix' => 'forum'], function () {
+                Route::get('/', 'ForumController@index')->name('admin.forum_sections');
+                Route::get('/pagination', 'ForumController@pagination')->name('admin.forum_sections.pagination');
+                Route::get('/add', 'ForumController@getSectionAdd')->name('admin.forum.section.add');
+                Route::post('/add', 'ForumController@createSection')->name('admin.forum.section.create');
+                Route::get('{id}/active', 'ForumController@active')->name('admin.forum.section.active');
+                Route::get('{id}/unactive', 'ForumController@unactive')->name('admin.forum.section.not_active');
+                Route::get('{id}/general', 'ForumController@general')->name('admin.forum.section.general');
+                Route::get('{id}/not_general', 'ForumController@notGeneral')->name('admin.forum.section.not_general');
+                Route::get('{id}/user_can', 'ForumController@userCan')->name('admin.forum.section.user_can');
+                Route::get('{id}/user_not_can', 'ForumController@userNotCan')->name('admin.forum.section.user_not_can');
+                Route::get('{id}/remove', 'ForumController@remove')->name('admin.forum.section.remove');
+                Route::get('{id}/edit', 'ForumController@getSectionEdit')->name('admin.forum.section.edit');
+                Route::post('{id}/edit', 'ForumController@saveSection')->name('admin.forum.section.edit.save');
+
+
+                Route::group(['prefix' => 'topic'], function () {
+                    Route::get('/', 'ForumTopicController@topics')->name('admin.forum_topic');
+                    Route::get('/pagination', 'ForumTopicController@pagination')->name('admin.forum_topic.pagination');
+                    Route::get('/add', 'ForumTopicController@getTopicAdd')->name('admin.forum.topic.add');
+                    Route::post('/add', 'ForumTopicController@createTopic')->name('admin.forum.topic.create');
+                    Route::get('/{id}/news', 'ForumTopicController@news')->name('admin.forum.topic.news');
+                    Route::get('/{id}/not_news', 'ForumTopicController@notNews')->name('admin.forum.topic.not_news');
+                    Route::get('/{id}/approve', 'ForumTopicController@approve')->name('admin.forum.topic.approve');
+                    Route::get('/{id}/unapprove',
+                        'ForumTopicController@unapprove')->name('admin.forum.topic.unapprove');
+                    Route::get('/{id}/remove', 'ForumTopicController@remove')->name('admin.forum.topic.remove');
+                    Route::get('/{id}/edit', 'ForumTopicController@getTopicEdit')->name('admin.forum.topic.edit');
+                    Route::post('/{id}/edit', 'ForumTopicController@saveTopic')->name('admin.forum.topic.edit.save');
+                    Route::get('/{id}', 'ForumTopicController@getTopic')->name('admin.forum.topic.get');
+                    Route::post('/{id}/send_comment',
+                        'TopicCommentController@sendComment')->name('admin.forum.topic.comment_send');
+                });
+            });
+            Route::group(['prefix' => 'replay'], function () {
+                Route::get('/', 'ReplayController@index')->name('admin.replay');
+                Route::get('/pagination', 'ReplayController@pagination')->name('admin.replay.pagination');
+                Route::get('/{id}/user_rating', 'ReplayController@getUserRating')->name('admin.replay.user_rating');
+                Route::get('/{id}/approve', 'ReplayController@approve')->name('admin.replay.approve');
+                Route::get('/{id}/not_approve', 'ReplayController@notApprove')->name('admin.replay.not_approve');
+                Route::get('/{id}/remove', 'ReplayController@remove')->name('admin.replay.remove');
+                Route::get('/{id}/view', 'ReplayController@getReplay')->name('admin.replay.view');
+                Route::get('/{id}/edit', 'ReplayController@edit')->name('admin.replay.edit');
+                Route::get('/add', 'ReplayController@add')->name('admin.replay.add');
+                Route::post('/create', 'ReplayController@create')->name('admin.replay.create');
+                Route::post('/{id}/edit', 'ReplayController@save')->name('admin.replay.save');
+                Route::post('/{id}/send_comment', 'ReplayController@sendComment')->name('admin.replay.comment_send');
+
+                Route::group(['prefix' => 'map'], function () {
+                    Route::get('/', 'ReplayMapController@index')->name('admin.replay.map');
+                    Route::get('/pagination', 'ReplayMapController@pagination')->name('admin.replay.map.pagination');
+                    Route::get('/{id}/remove', 'ReplayMapController@remove')->name('admin.replay.map.remove');
+                    Route::get('/{id}/edit', 'ReplayMapController@edit')->name('admin.replay.map.edit');
+                    Route::post('/{id}/update', 'ReplayMapController@update')->name('admin.replay.map.update');
+                    Route::get('/add', 'ReplayMapController@add')->name('admin.replay.map.add');
+                    Route::post('/create', 'ReplayMapController@create')->name('admin.replay.map.create');
+                });
+
+                Route::group(['prefix' => 'type'], function () {
+                    Route::get('/', 'ReplayTypeController@index')->name('admin.replay.type');
+                    Route::get('/{id}/edit', 'ReplayTypeController@edit')->name('admin.replay.type.edit');
+                    Route::get('/{id}/remove', 'ReplayTypeController@remove')->name('admin.replay.type.remove');
+                    Route::get('/add', 'ReplayTypeController@add')->name('admin.replay.type.add');
+                    Route::post('/create', 'ReplayTypeController@create')->name('admin.replay.type.create');
+                    Route::post('/{id}/save', 'ReplayTypeController@save')->name('admin.replay.type.save');
+                });
+            });
+
+            Route::group(['prefix' => 'country'], function () {
+                Route::get('/', 'CountryController@index')->name('admin.country');
+                Route::get('/pagination', 'CountryController@pagination')->name('admin.country.pagination');
+                Route::get('/{id}/edit', 'CountryController@edit')->name('admin.country.edit');
+                Route::get('/{id}/remove', 'CountryController@remove')->name('admin.country.remove');
+                Route::get('/add', 'CountryController@add')->name('admin.country.add');
+                Route::post('/create', 'CountryController@create')->name('admin.country.create');
+                Route::post('/{id}/save', 'CountryController@save')->name('admin.country.save');
+            });
+
+            Route::group(['prefix' => 'question'], function () {
+                Route::get('/', 'InterviewQuestionController@index')->name('admin.question');
+                Route::get('/pagination', 'InterviewQuestionController@pagination')->name('admin.question.pagination');
+                Route::get('/{id}/active', 'InterviewQuestionController@active')->name('admin.question.active');
+                Route::get('/{id}/not_active',
+                    'InterviewQuestionController@notActive')->name('admin.question.not_active');
+                Route::get('/{id}/for_login', 'InterviewQuestionController@forLogin')->name('admin.question.for_login');
+                Route::get('/{id}/not_for_login',
+                    'InterviewQuestionController@notForLogin')->name('admin.question.not_for_login');
+                Route::get('/{id}/favorite', 'InterviewQuestionController@favorite')->name('admin.question.favorite');
+                Route::get('/{id}/not_favorite',
+                    'InterviewQuestionController@notFavorite')->name('admin.question.not_favorite');
+                Route::get('/{id}/view', 'InterviewQuestionController@view')->name('admin.question.view');
+                Route::get('/{id}/edit', 'InterviewQuestionController@edit')->name('admin.question.edit');
+                Route::get('/{id}/remove', 'InterviewQuestionController@remove')->name('admin.question.remove');
+                Route::get('/add', 'InterviewQuestionController@add')->name('admin.question.add');
+                Route::post('/create', 'InterviewQuestionController@create')->name('admin.question.create');
+                Route::post('/{id}/save', 'InterviewQuestionController@save')->name('admin.question.save');
+            });
+
+            Route::group(['prefix' => 'file'], function () {
+                Route::get('/', 'FileManagementController@index')->name('admin.file');
+                Route::get('/pagination', 'FileManagementController@pagination')->name('admin.file.pagination');
+                Route::get('/{id}/edit', 'FileManagementController@edit')->name('admin.file.edit');
+                Route::get('/{id}/remove', 'FileManagementController@remove')->name('admin.file.remove');
+                Route::post('/{id}/update', 'FileManagementController@update')->name('admin.file.update');
+                Route::get('/{id}/download', 'FileManagementController@download')->name('admin.file.download');
+            });
         });
-
-        Route::group(['prefix' => 'user'], function () {
-            Route::get('{id}/email', 'UserEmailController@index')->name('admin.user.email');
-            Route::get('{id}/replay', 'ReplayController@getReplayByUser')->name('admin.user.replay');
-            Route::get('{id}/topic', 'ForumTopicController@getUsersTopics')->name('admin.user.topic');
-            Route::get('{id}/profile', 'UserController@getUserProfile')->name('admin.user.profile');
-            Route::get('{id}/ban', 'UserController@banUser')->name('admin.user.ban');
-            Route::get('{id}/remove', 'UserController@removeUser')->name('admin.user.remove');
-            Route::get('{id}/not_ban', 'UserController@notBanUser')->name('admin.user.not_ban');
-            Route::get('{id}/profile/edit', 'UserController@getEditUserProfile')->name('admin.user.profile.edit');
-            Route::post('{id}/profile/save', 'UserController@saveUserProfile')->name('admin.user.profile.save');
-            Route::get('/', 'UserController@index')->name('admin.users');
-            Route::get('/pagination', 'UserController@pagination')->name('admin.users.pagination');
-
-            Route::get('{id}/message', 'UserMessageController@getUser')->name('admin.user.messages');
-            Route::get('message', 'UserMessageController@getUser')->name('admin.user.messages_all');
-            Route::get('/message/{dialog_id}/load', 'UserMessageController@load')->name('admin.user.message_load');
-            Route::post('/message/{dialog_id}/send', 'UserMessageController@send')->name('admin.user.message.send');
-
-            Route::group(['prefix' => 'role'], function () {
-                Route::get('/', 'UserRoleController@index')->name('admin.users.role');
-                Route::get('/{id}/edit', 'UserRoleController@edit')->name('admin.user.role.edit');
-                Route::get('/{id}/remove', 'UserRoleController@remove')->name('admin.user.role.remove');
-                Route::get('/add', 'UserRoleController@add')->name('admin.user.role.add');
-                Route::post('/create', 'UserRoleController@create')->name('admin.user.role.create');
-                Route::post('/{id}/save', 'UserRoleController@save')->name('admin.user.role.save');
-            });
-
-            Route::group(['prefix' => 'gallery'], function () {
-                Route::get('/', 'UserGalleryController@index')->name('admin.users.gallery');
-                Route::get('/pagination', 'UserGalleryController@pagination')->name('admin.users.gallery.pagination');
-                Route::get('/{id}/view', 'UserGalleryController@view')->name('admin.users.gallery.view');
-                Route::get('/{id}/for_adults', 'UserGalleryController@forAdults')->name('admin.users.gallery.for_adults');
-                Route::get('/{id}/not_for_adults', 'UserGalleryController@notForAdults')->name('admin.users.gallery.not_for_adults');
-                Route::get('/{id}/remove', 'UserGalleryController@remove')->name('admin.users.gallery.remove');
-                Route::post('/{id}/send_comment', 'UserGalleryController@sendComment')->name('admin.user.gallery.comment_send');
-                Route::get('/{id}/edit', 'UserGalleryController@edit')->name('admin.user.gallery.edit');
-                Route::post('/{id}/update', 'UserGalleryController@update')->name('admin.user.gallery.update');
-                Route::get('/add', 'UserGalleryController@add')->name('admin.user.gallery.add');
-                Route::post('/create', 'UserGalleryController@create')->name('admin.user.gallery.create');
-            });
-
-            Route::group(['prefix' => '{id}/reputation'], function(){
-                Route::get('/', 'ReputationController@index')->name('admin.user.reputation');
-                Route::get('/pagination', 'ReputationController@pagination')->name('admin.user.reputation.pagination');
-                Route::get('{reputation_id}/remove', 'ReputationController@remove')->name('admin.user.reputation.remove');
-            });
-
-            Route::group(['prefix' => '{id}/comments'], function(){
-                Route::get('/', 'UserCommentController@index')->name('admin.user.comments');
-                Route::get('/pagination', 'UserCommentController@pagination')->name('admin.user.comments.pagination');
-                Route::get('{comments_id}/remove', 'UserCommentController@remove')->name('admin.user.comments.remove');
-            });
-
-            Route::group(['prefix' => '{id}/answers'], function(){
-                Route::get('/', 'UserQuestionsController@index')->name('admin.user.answers');
-                Route::get('/pagination', 'UserQuestionsController@pagination')->name('admin.user.answers.pagination');
-                Route::get('{comments_id}/remove', 'UserQuestionsController@remove')->name('admin.user.answers.remove');
-            });
-        });
-
-        Route::group(['prefix' => 'forum'], function () {
-            Route::get('/', 'ForumController@index')->name('admin.forum_sections');
-            Route::get('/pagination', 'ForumController@pagination')->name('admin.forum_sections.pagination');
-            Route::get('/add', 'ForumController@getSectionAdd')->name('admin.forum.section.add');
-            Route::post('/add', 'ForumController@createSection')->name('admin.forum.section.create');
-            Route::get('{id}/active', 'ForumController@active')->name('admin.forum.section.active');
-            Route::get('{id}/unactive', 'ForumController@unactive')->name('admin.forum.section.not_active');
-            Route::get('{id}/general', 'ForumController@general')->name('admin.forum.section.general');
-            Route::get('{id}/not_general', 'ForumController@notGeneral')->name('admin.forum.section.not_general');
-            Route::get('{id}/user_can', 'ForumController@userCan')->name('admin.forum.section.user_can');
-            Route::get('{id}/user_not_can', 'ForumController@userNotCan')->name('admin.forum.section.user_not_can');
-            Route::get('{id}/remove', 'ForumController@remove')->name('admin.forum.section.remove');
-            Route::get('{id}/edit', 'ForumController@getSectionEdit')->name('admin.forum.section.edit');
-            Route::post('{id}/edit', 'ForumController@saveSection')->name('admin.forum.section.edit.save');
-
-
-            Route::group(['prefix' => 'topic'], function () {
-                Route::get('/', 'ForumTopicController@topics')->name('admin.forum_topic');
-                Route::get('/pagination', 'ForumTopicController@pagination')->name('admin.forum_topic.pagination');
-                Route::get('/add', 'ForumTopicController@getTopicAdd')->name('admin.forum.topic.add');
-                Route::post('/add', 'ForumTopicController@createTopic')->name('admin.forum.topic.create');
-                Route::get('/{id}/news', 'ForumTopicController@news')->name('admin.forum.topic.news');
-                Route::get('/{id}/not_news', 'ForumTopicController@notNews')->name('admin.forum.topic.not_news');
-                Route::get('/{id}/approve', 'ForumTopicController@approve')->name('admin.forum.topic.approve');
-                Route::get('/{id}/unapprove', 'ForumTopicController@unapprove')->name('admin.forum.topic.unapprove');
-                Route::get('/{id}/remove', 'ForumTopicController@remove')->name('admin.forum.topic.remove');
-                Route::get('/{id}/edit', 'ForumTopicController@getTopicEdit')->name('admin.forum.topic.edit');
-                Route::post('/{id}/edit', 'ForumTopicController@saveTopic')->name('admin.forum.topic.edit.save');
-                Route::get('/{id}', 'ForumTopicController@getTopic')->name('admin.forum.topic.get');
-                Route::post('/{id}/send_comment', 'TopicCommentController@sendComment')->name('admin.forum.topic.comment_send');
-            });
-        });
-        Route::group(['prefix' => 'replay'], function () {
-            Route::get('/', 'ReplayController@index')->name('admin.replay');
-            Route::get('/pagination', 'ReplayController@pagination')->name('admin.replay.pagination');
-            Route::get('/{id}/user_rating', 'ReplayController@getUserRating')->name('admin.replay.user_rating');
-            Route::get('/{id}/approve', 'ReplayController@approve')->name('admin.replay.approve');
-            Route::get('/{id}/not_approve', 'ReplayController@notApprove')->name('admin.replay.not_approve');
-            Route::get('/{id}/remove', 'ReplayController@remove')->name('admin.replay.remove');
-            Route::get('/{id}/view', 'ReplayController@getReplay')->name('admin.replay.view');
-            Route::get('/{id}/edit', 'ReplayController@edit')->name('admin.replay.edit');
-            Route::get('/add', 'ReplayController@add')->name('admin.replay.add');
-            Route::post('/create', 'ReplayController@create')->name('admin.replay.create');
-            Route::post('/{id}/edit', 'ReplayController@save')->name('admin.replay.save');
-            Route::post('/{id}/send_comment', 'ReplayController@sendComment')->name('admin.replay.comment_send');
-
-            Route::group(['prefix' => 'map'], function () {
-                Route::get('/', 'ReplayMapController@index')->name('admin.replay.map');
-                Route::get('/pagination', 'ReplayMapController@pagination')->name('admin.replay.map.pagination');
-                Route::get('/{id}/remove', 'ReplayMapController@remove')->name('admin.replay.map.remove');
-                Route::get('/{id}/edit', 'ReplayMapController@edit')->name('admin.replay.map.edit');
-                Route::post('/{id}/update', 'ReplayMapController@update')->name('admin.replay.map.update');
-                Route::get('/add', 'ReplayMapController@add')->name('admin.replay.map.add');
-                Route::post('/create', 'ReplayMapController@create')->name('admin.replay.map.create');
-            });
-
-            Route::group(['prefix' => 'type'], function () {
-                Route::get('/', 'ReplayTypeController@index')->name('admin.replay.type');
-                Route::get('/{id}/edit', 'ReplayTypeController@edit')->name('admin.replay.type.edit');
-                Route::get('/{id}/remove', 'ReplayTypeController@remove')->name('admin.replay.type.remove');
-                Route::get('/add', 'ReplayTypeController@add')->name('admin.replay.type.add');
-                Route::post('/create', 'ReplayTypeController@create')->name('admin.replay.type.create');
-                Route::post('/{id}/save', 'ReplayTypeController@save')->name('admin.replay.type.save');
-            });
-        });
-
-        Route::group(['prefix' => 'country'], function () {
-            Route::get('/', 'CountryController@index')->name('admin.country');
-            Route::get('/pagination', 'CountryController@pagination')->name('admin.country.pagination');
-            Route::get('/{id}/edit', 'CountryController@edit')->name('admin.country.edit');
-            Route::get('/{id}/remove', 'CountryController@remove')->name('admin.country.remove');
-            Route::get('/add', 'CountryController@add')->name('admin.country.add');
-            Route::post('/create', 'CountryController@create')->name('admin.country.create');
-            Route::post('/{id}/save', 'CountryController@save')->name('admin.country.save');
-        });
-
-        Route::group(['prefix' => 'question'], function () {
-            Route::get('/', 'InterviewQuestionController@index')->name('admin.question');
-            Route::get('/pagination', 'InterviewQuestionController@pagination')->name('admin.question.pagination');
-            Route::get('/{id}/active', 'InterviewQuestionController@active')->name('admin.question.active');
-            Route::get('/{id}/not_active', 'InterviewQuestionController@notActive')->name('admin.question.not_active');
-            Route::get('/{id}/for_login', 'InterviewQuestionController@forLogin')->name('admin.question.for_login');
-            Route::get('/{id}/not_for_login', 'InterviewQuestionController@notForLogin')->name('admin.question.not_for_login');
-            Route::get('/{id}/favorite', 'InterviewQuestionController@favorite')->name('admin.question.favorite');
-            Route::get('/{id}/not_favorite', 'InterviewQuestionController@notFavorite')->name('admin.question.not_favorite');
-            Route::get('/{id}/view', 'InterviewQuestionController@view')->name('admin.question.view');
-            Route::get('/{id}/edit', 'InterviewQuestionController@edit')->name('admin.question.edit');
-            Route::get('/{id}/remove', 'InterviewQuestionController@remove')->name('admin.question.remove');
-            Route::get('/add', 'InterviewQuestionController@add')->name('admin.question.add');
-            Route::post('/create', 'InterviewQuestionController@create')->name('admin.question.create');
-            Route::post('/{id}/save', 'InterviewQuestionController@save')->name('admin.question.save');
-        });
-
-        Route::group(['prefix' => 'file'], function () {
-            Route::get('/', 'FileManagementController@index')                   ->name('admin.file');
-            Route::get('/pagination', 'FileManagementController@pagination')    ->name('admin.file.pagination');
-            Route::get('/{id}/edit', 'FileManagementController@edit')           ->name('admin.file.edit');
-            Route::get('/{id}/remove', 'FileManagementController@remove')       ->name('admin.file.remove');
-            Route::post('/{id}/update', 'FileManagementController@update')      ->name('admin.file.update');
-            Route::get('/{id}/download', 'FileManagementController@download')   ->name('admin.file.download');
-        });
-    });
 });
+
 //Redirect old URI
 Route::group(['prefix' => 'redirect'], function () {
     Route::get('news', 'RedirectOldURL@news');

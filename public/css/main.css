@@ -278,7 +278,7 @@ img {
   border-radius: 3px;
   position: absolute;
   right: 0;
-  bottom: 50px;
+  bottom: 60px;
 }
 .btn-empty {
   border: 0.5px solid #2f6696;
@@ -546,6 +546,7 @@ form label {
 /**Forum comments*/
 .move-to-add-comment span:hover {
   text-decoration: underline;
+  cursor: pointer;
 }
 .comment-header {
   background: #4890af;
@@ -793,7 +794,7 @@ password-repairing:visited,
   z-index: 10;
   position: absolute;
   right: 0;
-  bottom: 10px;
+  bottom: 5px;
   border: 0.5px solid #e5e6eb;
 }
 .logged-user-action-bar > div:first-of-type {

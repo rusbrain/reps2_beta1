@@ -50,7 +50,9 @@
                 $('.load-wrapp').hide();
 
                 /**move to top of comments*/
-                // moveToTop(container);
+                if(page !== 1){
+                    moveToTop(container);
+                }
             })
         }
     </script>

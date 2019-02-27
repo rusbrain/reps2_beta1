@@ -146,7 +146,7 @@ class ReplayService
     public static function getList($query, $title)
     {
         $data = ReplayService::replayWithPagination(ReplayService::getReplayQuery($query));
-        return ['replay' => UserViewService::getReplay($data), 'pagination' => UserViewService::getPagination($data)];
+        return ['replays' => UserViewService::getReplay($data), 'pagination' => UserViewService::getPagination($data)];
     }
 
     /**

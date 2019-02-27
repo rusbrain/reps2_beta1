@@ -72,6 +72,6 @@ class UserViewService extends ViewService
      */
    public static function getReplay(LengthAwarePaginator $data)
    {
-       return (string) view('replay.replays_list')->with(['data' => $data]);
+       return (string) view('replay.replays_list')->with(['replays' => $data]);
    }
 }
