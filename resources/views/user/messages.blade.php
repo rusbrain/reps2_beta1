@@ -82,3 +82,74 @@
     @include('sidebar-widgets.random-gallery')
     <!-- END Gallery -->
 @endsection
+
+@section('js')
+    <!--SCEditor -  WYSIWYG BBCode editor -->
+    <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.min.js"></script>
+
+    <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.xhtml.min.js"></script>
+    <script src="{{route('home')}}/js/sceditor/languages/ru.js"></script>
+    <script>
+        /**
+         * Comments box is the same for all pages
+         *SCEditor -  WYSIWYG BBCode editor
+         * https://www.sceditor.com/
+         * */
+        $(function () {
+            if ($('.user-message-form').length > 0) {
+                var textarea = document.getElementById('message');
+
+                sceditor.create(textarea, {
+                    format: 'xhtml',
+                    style: '{{route('home')}}' + '/js/sceditor/minified/themes/content/default.min.css',
+                    emoticonsRoot: '{{route('home')}}' + '/js/sceditor/',
+                    locale: 'ru',
+                    toolbar: 'bold,italic,underline|' +
+                    'left,center,right,justify|' +
+                    'font,size,color,removeformat|' +
+                    'source,quote,code|' +
+                    'image,link,unlink|' +
+                    'emoticon|' +
+                    'date,time'
+                });
+
+                $('body').on('submit','.user-message-form', function (e) {
+                    e.preventDefault();
+                    var message = $('.send-message-text').val();
+
+                    /**clean textarea field*/
+                    sceditor.instance(textarea).val('');
+
+                    $.post(
+                        '{{route('user.message.send', ['id'=>$dialog_id])}}',
+                        {
+                            message: message,
+                            _token: '{{csrf_token()}}'
+                        },
+                        function (data) {
+                            $('.messages-box').html(data);
+                            $('.messages-box').scrollTop($(".scroll-to").offset().top);
+                        }
+                    );
+                });
+
+                $('body').find('.messages-box').scrollTop($(".scroll-to").offset().top);
+
+                $('body').on('click', '.load-more', function () {
+                    var url = $('.load-more').attr('date-href');
+
+                    $.get(
+                        url,
+                        {
+                            _token: '{{csrf_token()}}'
+                        },
+                        function (data) {
+                            $('.load-more-box').remove();
+                            $('.messages-box').prepend(data);
+                        }
+                    );
+                })
+            }
+        });
+    </script>
+@endsection

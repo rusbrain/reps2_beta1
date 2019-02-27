@@ -114,7 +114,7 @@
                             '{{route('admin.user.message.send', ['id'=>$dialog_id])}}',
                             {
                                 message: message,
-                                _token: '{{csrf_token()}}',
+                                _token: '{{csrf_token()}}'
                             },
                             function (data) {
                                 $('.messages-box').html(data);
@@ -125,11 +125,10 @@
 
                     $('.messages-box').on('click', '.load-more', function () {
                         var url = $('.load-more').attr('date-href');
-                        console.log(url);
                         $.get(
                             url,
                             {
-                                _token: '{{csrf_token()}}',
+                                _token: '{{csrf_token()}}'
                             },
                             function (data) {
                                 $('.load-more-box').remove();

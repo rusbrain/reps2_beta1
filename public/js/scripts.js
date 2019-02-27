@@ -45,7 +45,7 @@ $(function () {
             var div = $('.logged-user-menu-links');
             var link = $('.logged-user-menu');
 
-            if (!div.is(e.target) && !link.is(e.target)) {
+            if (!div.is(e.target) && !link.is(e.target) && !div.find('a').is(e.target)) {
                 div.removeClass('active');
             }
         });
