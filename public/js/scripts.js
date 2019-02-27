@@ -131,24 +131,22 @@ $(function () {
  * Single Replay page
  * */
 $(function () {
-    if ($('.user-menu-link').length > 0) {
-        $('.user-menu-link').on('click', function (e) {
-            e.preventDefault();
-            $('.user-menu').each(function () {
-                $(this).removeClass('active');
-            });
-            $(this).next('.user-menu').toggleClass('active');
+    $('body').on('click','.user-menu-link ', function (e) {
+        e.preventDefault();
+        $('.user-menu').each(function () {
+            $(this).removeClass('active');
         });
+        $(this).next('.user-menu').toggleClass('active');
+    });
 
-        $('body').on('click', function (e) {
-            var menuDiv = $('.user-menu');
-            var userLink = $('.user-menu-link');
+    $('body').on('click', function (e) {
+        var menuDiv = $('.user-menu');
+        var userLink = $('.user-menu-link');
 
-            if (!menuDiv.is(e.target) && !userLink.is(e.target)) {
-                menuDiv.removeClass('active');
-            }
-        });
-    }
+        if (!menuDiv.is(e.target) && !userLink.is(e.target)) {
+            menuDiv.removeClass('active');
+        }
+    });
 
     /**Vote - positive / negative vote - Separate Replay Page*/
     $('a.vote-replay-up, a.vote-replay-down').on('click', function (e) {

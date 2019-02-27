@@ -977,6 +977,7 @@ password-repairing:visited,
 /**gallery widget*/
 .user-gallery-widget-link {
   color: #737373 !important;
+  position: relative;
 }
 .user-gallery-widget .widget-title {
   font-size: 14px;
@@ -992,6 +993,17 @@ password-repairing:visited,
   text-overflow: ellipsis;
   display: inline-block;
   overflow: hidden;
+}
+.widget-gallery-img-preview{
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 25px;
+  width: 100px;
+  z-index: 10;
+}
+.user-gallery-widget-link:hover .widget-gallery-img-preview{
+  display: block;
 }
 /*********END SIDEBAR LEFT*********/
 
@@ -1652,7 +1664,7 @@ div.author-info {
   padding: 0 15px 15px 15px;
 }
 .user-account-widget {
-  padding: 15px;
+  padding: 15px 5px 15px 15px;
 }
 .user-account-widget-title {
   color: #4d4d4d;
@@ -1924,9 +1936,15 @@ div.author-info {
   margin-bottom: 0;
 }
 .user-list-action {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  /*display: flex;*/
+  /*align-items: center;*/
+  /*justify-content: center;*/
+  text-align: center;
+}
+.user-friends-list-table .logged-user-avatar {
+  width: 36px;
+  height: 36px;
+  font-size: 20px;
 }
 .user-friends-list-table a {
   font-family: "Roboto-Medium", sans-serif;
@@ -1935,6 +1953,9 @@ div.author-info {
 .table-wrapper {
   overflow-y: auto;
   max-height: 500px;
+}
+.user-friends-list-table tr td{
+  vertical-align: middle;
 }
 /*----------------------------------------*/
 /*---END USER FRIEND LIST PAGE -------- */

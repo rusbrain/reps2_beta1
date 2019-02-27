@@ -159,8 +159,12 @@ Route::group(['middleware' => 'activity'], function () {
     Route::group(['prefix' => 'gallery'], function () {
         Route::get('/', 'UserGalleryController@index')->name('gallery.list');
         Route::get('/my', 'UserGalleryController@indexUser')->name('gallery.list_my');
+
         Route::get('/user/{id}', 'UserGalleryController@indexUser')->name('gallery.list_user');
+        Route::get('/user/{id}/paginate', 'UserGalleryController@indexUser')->name('gallery.list_user.paginate');
+
         Route::get('/{id}/get_rating', 'UserGalleryRatingController@getRating')->name('gallery.ger_rating');
+
         Route::group(['middleware' => 'auth', 'prefix' => 'photo'], function () {
             Route::get('/create', 'UserGalleryController@create')->name('gallery.create');
             Route::get('/{id}/edit', 'UserGalleryController@edit')->name('gallery.edit');

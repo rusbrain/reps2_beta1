@@ -36,8 +36,8 @@
                 <thead>
                 <tr>
                     <td scope="col">#</td>
+                    <td scope="col">Аватар</td>
                     <td scope="col">Имя</td>
-                    <td scope="col">Email</td>
                     <td scope="col">Дата</td>
                     <td scope="col">Действие</td>
                 </tr>
@@ -48,10 +48,20 @@
                         <tr>
                             <td scope="row">{{$k}}</td>
                             <td>
-                                <a href="{{route('user_profile',['id'=>$item->id])}}">{{$item->name}}</a>
+                                @if($item->view_avatars == 1)
+                                    @if($item->avatar)
+                                        <a href="" class="logged-user-avatar">
+                                            <img src="{{$item->avatar->link}}">
+                                        </a>
+                                    @else
+                                        <a href="" class="logged-user-avatar">A</a>
+                                    @endif
+                                @else
+                                    <a href="" class="logged-user-avatar">A</a>
+                                @endif
                             </td>
                             <td>
-                                <a href="">{{$item->email}}</a>
+                                <a href="{{route('user_profile',['id'=>$item->id])}}">{{$item->name}}</a>
                             </td>
                             <td>{{$item->created_at}}</td>
                             <td class="user-list-action">
@@ -80,8 +90,8 @@
                 <thead>
                 <tr>
                     <td scope="col">#</td>
+                    <td scope="col">Аватар</td>
                     <td scope="col">Имя</td>
-                    <td scope="col">Email</td>
                     <td scope="col">Дата</td>
                     <td scope="col">Действие</td>
                 </tr>
@@ -92,10 +102,20 @@
                         <tr>
                             <td scope="row">{{$k}}</td>
                             <td>
-                                <a href="{{route('user_profile',['id'=>$item->id])}}">{{$item->name}}</a>
+                                @if($item->view_avatars == 1)
+                                    @if($item->avatar)
+                                        <a href="" class="logged-user-avatar">
+                                            <img src="{{$item->avatar->link}}">
+                                        </a>
+                                    @else
+                                        <a href="" class="logged-user-avatar">A</a>
+                                    @endif
+                                @else
+                                    <a href="" class="logged-user-avatar">A</a>
+                                @endif
                             </td>
                             <td>
-                                <a href="">{{$item->email}}</a>
+                                <a href="{{route('user_profile',['id'=>$item->id])}}">{{$item->name}}</a>
                             </td>
                             <td>{{$item->created_at}}</td>
                             <td class="user-list-action">

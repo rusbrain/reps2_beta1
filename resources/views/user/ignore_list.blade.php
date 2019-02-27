@@ -19,7 +19,7 @@
                     <a href="{{route('user_profile',['id' =>Auth::id()])}}">/ Мой Аккаунт</a>
                 </li>
                 <li>
-                    <a href="" class="active">/ Список заигнорированых пользователей</a>
+                    <a href="" class="active">/ Список игнорируемых пользователей</a>
                 </li>
             </ul>
         </div>
@@ -28,15 +28,15 @@
 
     <div class="content-box">
         <div class="col-md-12 section-title">
-            <div>Список заигнорированых пользователей</div>
+            <div>Список игнорируемых пользователей</div>
         </div>
         <div class="table-wrapper">
             <table class="table user-friends-list-table">
                 <thead>
                 <tr>
                     <td scope="col">#</td>
+                    <td scope="col">Аватар</td>
                     <td scope="col">Имя</td>
-                    <td scope="col">Email</td>
                     <td scope="col">Дата</td>
                     <td scope="col">Действие</td>
                 </tr>
@@ -47,10 +47,20 @@
                         <tr>
                             <td scope="row">{{$k}}</td>
                             <td>
-                                <a href="{{route('user_profile',['id'=>$item->id])}}">{{$item->ignored_user->name}}</a>
+                                @if($item->view_avatars == 1)
+                                    @if($item->avatar)
+                                        <a href="" class="logged-user-avatar">
+                                            <img src="{{$item->avatar->link}}">
+                                        </a>
+                                    @else
+                                        <a href="" class="logged-user-avatar">A</a>
+                                    @endif
+                                @else
+                                    <a href="" class="logged-user-avatar">A</a>
+                                @endif
                             </td>
                             <td>
-                                <a href="">{{$item->ignored_user->email}}</a>
+                                <a href="{{route('user_profile',['id'=>$item->id])}}">{{$item->ignored_user->name}}</a>
                             </td>
                             <td>{{$item->created_at}}</td>
                             <td class="user-list-action">

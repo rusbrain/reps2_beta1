@@ -138,7 +138,7 @@
                         <label for="signature">Подпись:</label>
                         <textarea name="signature" id="signature"
                                   class="form-control {{ $errors->has('signature') ? ' is-invalid' : '' }}"
-                                  rows="15">{!! old('skype')??$user->signature !!}</textarea>
+                                  rows="10">{!! old('skype')??$user->signature !!}</textarea>
                         @if ($errors->has('signature'))
                             <span class="invalid-feedback">
                                 <strong>{{ $errors->first('signature') }}</strong>

@@ -210,6 +210,9 @@ class ReplayController extends Controller
         return redirect()->route('replay.gosus');
     }
 
+    /**
+     * @param $type
+     */
     public function checkReplayType($type)
     {
         $type = ReplayType::where('name', $type)->first();
