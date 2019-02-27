@@ -95,10 +95,10 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="preview_content">* Сокращенное содержание:</label>
+                        <label for="preview_content">* Краткое содержание:</label>
                         <textarea name="preview_content" id="preview_content"
                                   class="form-control {{ $errors->has('preview_content') ? ' is-invalid' : '' }}"
-                                  rows="15">{!! old('preview_content') !!}</textarea>
+                                  rows="8">{!! old('preview_content') !!}</textarea>
                         @if ($errors->has('preview_content'))
                             <span class="invalid-feedback">
                                 <strong>{{ $errors->first('preview_content') }}</strong>
@@ -107,7 +107,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="content">* Содержание:</label>
+                        <label for="content">* Основной текст:</label>
                         <textarea name="content" id="content"
                                   class="form-control {{ $errors->has('content') ? ' is-invalid' : '' }}"
                                   rows="15">{!! old('content') !!}</textarea>
