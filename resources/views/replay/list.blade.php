@@ -31,7 +31,7 @@
         </div>
         <!--  REPLAY LIST -->
         <div id="ajax_section_replays_list"
-             data-path="{{($type) ? route('replay.'.$replay_type.'_type.paginate', ['type' => $type]) : route('replay.'.$replay_type.'.paginate')}}">
+             data-path="{{(isset($type) && $type) ? route('replay.'.$replay_type.'_type.paginate', ['type' => $type]) : route('replay.'.$replay_type.'.paginate')}}">
             <div class="load-wrapp">
                 <img src="/images/loader.gif" alt="">
             </div>

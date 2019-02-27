@@ -149,10 +149,32 @@ class ReplayController extends Controller
         if (!$user_id) {
             $user_id = Auth::id();
         }
+        return view('replay.list')->with([
+            'title' => $this->replay_group,
+            'replay_type' => 'my_'.$this->replay_type,
+            'user_id' => $user_id
+        ]);
+    }
+
+    /**
+     * Pagination of User's replays list
+     *
+     * @param int $user_id
+     * @return array
+     */
+    public function getUserReplayPaginate($user_id = 0)
+    {
+        if (!$user_id) {
+            $user_id = Auth::id();
+        }
         $method = $this->method_get;
         return ReplayService::getList(Replay::$method()->where('user_id', $user_id), $this->replay_group);
     }
 
+    /**
+     * @param int $user_id
+     * @return array
+     */
     public function getAllUserReplay($user_id = 0)
     {
         if (!$user_id) {

@@ -1448,13 +1448,23 @@ password-repairing:visited,
   color: #fff !important;
 }
 .user-replay-header .info a {
-  margin-right: 15px;
+  margin-right: 5px;
 }
 .user-replay-header .info a:last-of-type {
   margin-right: 0;
 }
 .user-replay-header .user-nickname {
-  flex: 0 0 70%;
+  flex: 0 0 50%;
+}
+.replay-author{
+  display: flex;
+  align-items: center;
+}
+.replay-author a{
+  color: #fff;
+}
+.replay-author .logged-user-avatar{
+  margin-right: 5px;
 }
 .user-replay-info {
   display: flex;

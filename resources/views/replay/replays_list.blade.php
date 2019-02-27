@@ -8,6 +8,21 @@
                 <div class="user-nickname text-bold">
                     <a href="{{route('replay.get',['id' => $replay->id])}}"> {{$replay->title}} </a>
                 </div>
+
+                <div class="replay-author">
+                    @if($replay->user->avatar)
+                        <a href="{{route('user_profile',['id' => $replay->user->id])}}">
+                            <img src="{{$replay->user->avatar->link}}" class="user-avatar" alt="">
+                        </a>
+                    @else
+                        <a href="{{route('user_profile',['id' => $replay->user->id])}}"
+                           class="logged-user-avatar no-header">A</a>
+                    @endif
+                    <div>
+                        <a href="{{route('user_profile',['id' => $replay->user->id])}}">{{$replay->user->name}}</a>
+                    </div>
+                </div>
+
                 <div class="info">
                     <a href="{{route('replay.get',['id' => $replay->id])}}#comments">
                         <img src="{{route('home')}}/images/icons/message-square-white.png" alt="">

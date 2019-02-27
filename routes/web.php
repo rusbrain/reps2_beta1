@@ -143,8 +143,13 @@ Route::group(['middleware' => 'activity'], function () {
             Route::get('/{id}/edit', 'ReplayController@edit')->name('replay.edit');
             Route::post('/{id}/update', 'ReplayController@update')->name('replay.update');
             Route::get('{id}/delete', 'ReplayController@destroy')->name('replay.delete');
+
             Route::get('/my', 'ReplayUsersController@getUserReplay')->name('replay.my_user');
+            Route::get('/my/paginate', 'ReplayUsersController@getUserReplayPaginate')->name('replay.my_users.paginate');
+
             Route::get('/my_gosu', 'ReplayGosuController@getUserReplay')->name('replay.my_gosu');
+            Route::get('/my_gosu/paginate', 'ReplayGosuController@getUserReplayPaginate')->name('replay.my_gosus.paginate');
+
             Route::get('{id}/set_rating', 'ReplayRatingController@setRating')->name('replay.set_rating');
             Route::post('{id}/set_evaluation', 'ReplayRatingController@setEvaluation')->name('replay.set_evaluation');
             Route::group(['prefix' => 'comment'], function () {
