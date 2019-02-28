@@ -21,7 +21,7 @@
                     <a href="{{route('forum.section.index', ['name' => $topic->section->name])}}">/ {{$topic->section->title}}</a>
                 </li>
                 <li>
-                    <a href="{{route('forum.topic.index',['id'=>$topic->id])}}" class="active">/ {{$topic->title}}</a>
+                    <a href="{{route('forum.topic.index',['id'=>$topic->id])}}" class="active">/ {!! $topic->title !!}</a>
                 </li>
             </ul>
         </div>
@@ -100,7 +100,8 @@
                 </div>
                 <div class="article-footer">
                     <div class="quote">
-                        <img src="{{route('home')}}/images/icons/frame.png" alt="">
+                        <img src="{{route('home')}}/images/icons/frame.png" alt=""
+                             data-user="{{$topic->user->name}}">
                         Цитировать
                     </div>
                     <div class="article-rating">

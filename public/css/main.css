@@ -563,7 +563,7 @@ form label {
   align-items: center;
 }
 .comment-header > div > div {
-  margin-left: 10px;
+  margin-left: 5px;
 }
 .comment-creating-date img {
   margin-right: 5px;
@@ -584,6 +584,10 @@ form label {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+.quote img:hover{
+  cursor: pointer;
+  z-index: 10;
 }
 .comment-creating-date img {
   margin-right: 5px;

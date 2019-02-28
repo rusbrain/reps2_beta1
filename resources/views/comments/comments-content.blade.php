@@ -49,7 +49,7 @@
                 <div class="comment-creating-date">
                     <img src="{{route('home')}}/images/icons/clock-white.png" alt="">
                     {{$comment->created_at}}
-                    <span class="comment-id">#{{$item}}</span>
+                    <span class="comment-id" id="{{$item}}">#{{$item}}</span>
                 </div>
             </div>
             <div class="col-md-12 comment-content-wrapper">
@@ -58,8 +58,10 @@
                 </div>
                 <div class="comment-footer">
                     <div class="quote">
-                        <img src="{{route('home')}}/images/icons/frame.png" alt="">
-                        Цитировать
+                        <img src="{{route('home')}}/images/icons/frame.png" alt=""
+                             data-user="{{$comment->user->name}}"
+                             data-id="{{$item}}">
+                        <span>Цитировать</span>
                     </div>
                     <div class="comment-rating">
                         <a href="" class="positive-vote">

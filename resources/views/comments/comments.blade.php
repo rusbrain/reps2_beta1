@@ -1,3 +1,8 @@
+@section('css')
+    <!--SCEditor -  WYSIWYG BBCode editor -->
+    <link rel="stylesheet" href="{{route('home')}}/js/sceditor/minified/themes/default.min.css"/>
+@endsection
+
 <!--Comments-->
 @if($comments->total() > 0)
     <!-- COMMENTS PAGINATION TOP-->
@@ -30,6 +35,11 @@
 <!--END Comments-->
 
 @section('js')
+    <!--SCEditor -  WYSIWYG BBCode editor -->
+    <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.min.js"></script>
+
+    <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.xhtml.min.js"></script>
+    <script src="{{route('home')}}/js/sceditor/languages/ru.js"></script>
     <script>
         $(function () {
             getSections(1);
@@ -50,10 +60,92 @@
                 $('.load-wrapp').hide();
 
                 /**move to top of comments*/
-                if(page !== 1){
+                if (page !== 1) {
                     moveToTop(container);
                 }
             })
+        }
+
+        /**
+         * Comments box is the same for all pages
+         *SCEditor -  WYSIWYG BBCode editor
+         * https://www.sceditor.com/
+         * */
+        $(function () {
+            if ($('body').find('#comment-content').length > 0) {
+                var textarea = document.getElementById('comment-content');
+
+                sceditor.create(textarea, {
+                    format: 'xhtml',
+                    style: '{{route('home')}}' + '/js/sceditor/minified/themes/content/default.min.css',
+                    emoticonsRoot: '{{route('home')}}' + '/js/sceditor/',
+                    locale: 'ru',
+                    toolbar: 'bold,italic,underline|' +
+                    'left,center,right,justify|' +
+                    'font,size,color,removeformat|' +
+                    'source,quote,code|' +
+                    'image,link,unlink|' +
+                    'emoticon|' +
+                    'date,time'
+                });
+            }
+
+            /**add quote*/
+            $('body').on('click', '.quote img', function () {
+                addText(textarea, $(this));
+            });
+        });
+
+        /**
+         * Add quote into comment form
+         * */
+        // function addQuoteInCommentForm() {
+        //     var selectedText = '';
+        //     if (window.getSelection) {
+        //         var selection = window.getSelection();
+        //         selectedText = selection.toString();
+        //     } else if (document.selection) {
+        //         var range = document.selection.createRange();
+        //         selectedText = range.htmlText;
+        //     }
+        //     console.log(selectedText);
+        // }
+
+        function addText(textarea, quote_data) {
+            var selection = window.getSelection();
+            var quoted_user = quote_data.attr('data-user');
+            var comment_id = quote_data.attr('data-id');
+            var object = '{{$object}}';
+            var object_id = '{{$id}}';
+
+            /**create comment url string*/
+            var url = createCommentUrl(comment_id, object, object_id);
+            /**crete user info sring*/
+            var user = '[u]' + quoted_user + ':[/u]';
+            /**create quote string*/
+            var quote = '[quote]' + selection.toString() + '[/quote]';
+            /**create full quote text*/
+            var text = url + user + quote;
+
+            /**add text*/
+            sceditor.instance(textarea).insert(text);
+            sceditor.instance(textarea).focus();
+            moveToTop($('.comment-form-wrapper'));
+        }
+
+        function createCommentUrl(comment_id, object, object_id) {
+            var url = '[url={{route('home')}}/';
+            if (object === 'topic') {
+                url += 'forum/';
+            }
+            url += object + '/' + object_id;
+            if (comment_id === undefined || comment_id === '') {
+                url += '] >>';
+            } else {
+                url += '#' + comment_id + ']#' + comment_id;
+            }
+            url += ' [/url]';
+            return url;
         }
     </script>
 @endsection
