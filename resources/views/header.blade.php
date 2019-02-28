@@ -29,7 +29,9 @@
             <div class="logged-user-info">
                 <a href="" class="user-new-messages">
                     <img src="{{route('home')}}/images/icons/new_message.png" alt="">
-                    <div class="user-new-messages-qty">{{$general_helper->getNewUserMessage()}}</div>
+                    @if($general_helper->getNewUserMessage() != 0)
+                        <div class="user-new-messages-qty">{{$general_helper->getNewUserMessage()}}</div>
+                    @endif
                 </a>
 
                 @if(Auth::user()->view_avatars == 1)
