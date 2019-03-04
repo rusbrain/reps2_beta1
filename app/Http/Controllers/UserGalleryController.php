@@ -116,11 +116,13 @@ class UserGalleryController extends Controller
         return abort(404);
     }
 
+
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse|void
+     * @throws \Exception
      */
     public function destroy($id)
     {

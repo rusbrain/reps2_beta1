@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\{Dialogue, UserMessage};
+use App\{
+    Dialogue, Services\User\MessageService, UserMessage
+};
 use App\Http\Requests\SendUserMessageRequest;
 use App\Services\User\UserDialogService;
 use Illuminate\Support\Facades\Auth;
@@ -20,8 +22,7 @@ class UserMessagingController extends BaseUserMessageController
         if($id == Auth::id()){
             return redirect()->route('user.messages');
         }
-
-        return view('user.messages')->with(self::getMessageData($id));
+        return view('user.messages')->with(MessageService::getMessageData($id));
     }
 
     /**
@@ -78,8 +79,7 @@ class UserMessagingController extends BaseUserMessageController
      */
     public function loadMessages($user_id)
     {
-
-        return view('user.message_parse')->with(self::getMessageData($user_id));
+        return view('user.message_parse')->with(MessageService::getMessageData($user_id));
     }
 
     /**

@@ -222,7 +222,7 @@
     </div>
 
     <!--Comments-->
-    @include('comments.comments')
+    @include('comments.comments',['object' => 'replay', 'id' => $replay->id])
     <!--END Comments-->
 
     <!--ADD Comment-->

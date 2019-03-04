@@ -12,9 +12,13 @@ class UsersCommentController extends Controller
     /**
      * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View|mixed
      */
-    public function index(){
+    public function index()
+    {
         $user = Auth::user();
-        return view('comments.my_comments')->with(['user' => $user, 'comments_count' => $user->comments()->count()]);
+        return view('user.comments.my_comments')->with([
+            'user' => $user,
+            'comments_count' => $user->comments()->count(),
+        ]);
     }
 
     /**
@@ -23,7 +27,7 @@ class UsersCommentController extends Controller
     public function pagination()
     {
         $comments = $this->paginationData(Auth::id());
-        return ['comments' => UserViewService::getUserComments($comments), 'pagination' => UserViewService::getPagination($comments)];
+        return ['comments' => UserViewService::getUserComments($comments), 'pagination' => UserViewService::getPagination($comments) ];
     }
 
     /**
@@ -33,6 +37,9 @@ class UsersCommentController extends Controller
     protected function paginationData($id)
     {
         $user = User::find($id);
-        return $user->comments()->orderBy('created_at', 'desc')->with('user', 'topic', 'replay', 'gallery')->paginate(20);
+        $comments = $user->comments()->orderBy('created_at', 'desc')->with('user', 'topic', 'replay', 'gallery')->paginate(30);
+        return $comments;
     }
+
+
 }

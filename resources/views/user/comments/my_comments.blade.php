@@ -1,10 +1,8 @@
 @extends('layouts.site')
 @inject('general_helper', 'App\Services\GeneralViewHelper')
-@php $countries = $general_helper->getCountries();@endphp
-
 @section('sidebar-left')
     <!-- All Forum Topics -->
-    @include('sidebar-widgets.search-replay-form')
+    @include('sidebar-widgets.all-forum-sections')
     <!-- END All Forum Topics -->
 @endsection
 
@@ -18,7 +16,10 @@
                     <a href="/">Главная</a>
                 </li>
                 <li>
-                    <a href="" class="active">/ {!! $title !!}</a>
+                    <a href="{{route('user_profile',['id' =>Auth::id()])}}">/ Мой Аккаунт</a>
+                </li>
+                <li>
+                    <a href="#" class="active">/ Мои посты</a>
                 </li>
             </ul>
         </div>
@@ -27,16 +28,14 @@
 
     <div class="content-box">
         <div class="col-md-12 section-title">
-            <div>{!! $title !!}</div>
+            <div>Мои посты</div>
         </div>
-        <!--  REPLAY LIST -->
-        <div id="ajax_section_replays_list"
-             data-path="{{(isset($type) && $type) ? route('replay.'.$replay_type.'_type.paginate', ['type' => $type]) : route('replay.'.$replay_type.'.paginate')}}">
+
+        <div id="ajax_section_user_comments">
             <div class="load-wrapp">
                 <img src="/images/loader.gif" alt="">
             </div>
         </div>
-        <!-- END REPLAY LIST -->
     </div><!-- close div /.content-box -->
 
     <!--  PAGINATION -->
@@ -75,12 +74,11 @@
             })
         });
         function getSections(page) {
-            var container = $('#ajax_section_replays_list');
-            var path = container.attr('data-path');
+            var container = $('#ajax_section_user_comments');
             var body = $("html, body");
 
-            $.get(path+'?page='+page, {}, function (data) {
-                container.html(data.replays);
+            $.get('{{route('user.comments.pagination')}}'+'?page='+page, {}, function (data) {
+                container.html(data.comments);
                 $('.pagination-content').html(data.pagination);
                 $('.load-wrapp').hide();
 

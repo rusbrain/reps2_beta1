@@ -36,7 +36,7 @@ class UserViewService extends ViewService
      */
    public static function getComments(LengthAwarePaginator $data)
    {
-       return (string) view('comments.comments')->with(['data' => $data]);
+       return (string) view('comments.comments-content')->with(['comments' => $data]);
    }
 
     /**
@@ -54,7 +54,7 @@ class UserViewService extends ViewService
      */
    public static function getUserComments(LengthAwarePaginator $data)
    {
-       return (string) view('comments.my_comments_list')->with(['data' => $data]);
+       return (string) view('user.comments.my_comments_list')->with(['comments' => $data]);
    }
 
     /**
@@ -72,6 +72,6 @@ class UserViewService extends ViewService
      */
    public static function getReplay(LengthAwarePaginator $data)
    {
-       return (string) view('replay.replays_list')->with(['data' => $data]);
+       return (string) view('replay.replays_list')->with(['replays' => $data]);
    }
 }

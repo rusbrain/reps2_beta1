@@ -127,7 +127,7 @@ class RedirectOldURL extends Controller
         }
 
         if($request->has('type')){
-            return redirect()->route('replay.gosu_type',['type'=> $request->get('type')]);
+            return redirect()->route('replay.gosus_type',['type'=> $request->get('type')]);
         }
         return redirect()->route('replay.gosus');
     }

@@ -45,8 +45,7 @@ class CommentService
 
     /**
      * @param $name
-     * @param $id
-     * @return int
+     * @return bool|int
      */
     public static function getObjectRelation($name)
     {

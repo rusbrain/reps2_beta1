@@ -3,6 +3,12 @@
 
 @php $section_icons = $general_helper->getSectionIcons(); @endphp
 
+@section('sidebar-left')
+    <!-- All Forum Topics -->
+    @include('sidebar-widgets.general-forum-sections')
+    <!-- END All Forum Topics -->
+@endsection
+
 @section('content')
     <!-- Breadcrumbs -->
     <div class="row">
@@ -25,33 +31,36 @@
         @foreach($sections as $section)
             <div class="content-box">
                 <div class="row">
-                    <div class="col-md-12 ">
-                        <a href="{{route('forum.section.index', ['name' => $section->name])}}" class="forum-section-title">
-                            <img src="{{route('home').$section_icons[$section->id]}}" class="margin-right-15" alt="">
-                            {{$section->title}}
-                        </a>
-                    </div>
-                </div>
-                <div class="row align-items-center">
-                    <div class="col-md-4 ">
-                        <div class="forum-section-info">
-                            <div>
-                                <span>Темы:</span>
-                                <span class="forum-section-topics">{{$section->topics_count}}</span>
-                            </div>
-                            <div>
-                                <span>Комментариев:</span>
-                                <span class="forum-section-topics">{{$section->comment_count}}</span>
+                    <div class="col-md-12">
+                        <div class="forum-section-title">
+                            <a href="{{route('forum.section.index', ['name' => $section->name])}}" class="">
+                                <img src="{{route('home').$section_icons[$section->id]}}" class="margin-right-15" alt="">
+                                {{$section->title}}
+                            </a>
+                            <div class="forum-section-info">
+                                <div>
+                                    <span>Темы:</span>
+                                    <span class="forum-section-topics">{{$section->topics_count}}</span>
+                                </div>
+                                <div>
+                                    <span>Комментариев:</span>
+                                    <span class="forum-section-topics">{{$section->comment_count}}</span>
+                                </div>
+                                <div>
+                                    <a href="{{route('forum.section.index', ['name' => $section->name])}}">
+                                        <img src="/images/icons/arrow-right-white.png" alt="">
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-8 padding-top-10">
+                </div>
+                <div class="row align-items-center">
+                    <div class="col-md-12 padding-top-10">
                         <div class="content-box-topic-desc margin-bottom-15">
-                            <a href="{{route('forum.section.index', ['name' => $section->name])}}">
-                                <h2 class="margin-bottom-10">
-                                    {!! $section->description !!}
-                                </h2>
-                            </a>
+                            <p class="forum-section-link">
+                                {!! $section->description !!}
+                            </p>
                         </div>
                     </div>
                 </div>

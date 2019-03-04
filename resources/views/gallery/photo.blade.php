@@ -103,7 +103,7 @@
 
     <!--Comments-->
     @php $comments = $photo->comments @endphp
-    @include('comments.comments')
+    @include('comments.comments',['object' => 'gallery', 'id' => $photo->id])
     <!--END Comments-->
 
     <!--ADD Comment-->

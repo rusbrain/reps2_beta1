@@ -98,6 +98,6 @@ trait ForumData
             }
             return self::$instance->section_icons;
         }
+        return self::$instance->section_icons;
     }
-
 }

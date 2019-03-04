@@ -38,12 +38,12 @@ class SectionService
      * @param $title
      * @return array
      */
-    public static function getSectionViewData($topics, $title)
+    public static function getSectionViewData($topics, $title)//TODO remove
     {
         return [
-            'topics'=> $topics,
-            'title' => $title, //TODO: remove
-            'total_comment_count' => $topics->sum('comments_count')];
+            'title' => $title,
+            'total_comment_count' => $topics->sum('comments_count')
+        ];
     }
 
     /**

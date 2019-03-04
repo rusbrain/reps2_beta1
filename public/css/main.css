@@ -60,6 +60,12 @@ img {
   font-size: 12px;
 }
 /*helpers*/
+.min-height-100 {
+  min-height: 100px;
+}
+.min-height-200 {
+  min-height: 200px;
+}
 .margin-bottom-5 {
   margin-bottom: 5px;
 }
@@ -123,7 +129,7 @@ img {
 .margin-left-10 {
   margin-left: 10px;
 }
-.margin-top-bottom-20{
+.margin-top-bottom-20 {
   margin-top: 20px;
   margin-bottom: 20px;
 }
@@ -136,7 +142,7 @@ img {
 .display-none {
   display: none !important;
 }
-.list-empty{
+.list-empty {
   padding: 15px;
 }
 .position-relative {
@@ -190,11 +196,11 @@ img {
 .padding-right-15 {
   padding-right: 15px;
 }
-.padding-top-bottom-10{
+.padding-top-bottom-10 {
   padding-top: 10px;
   padding-bottom: 10px;
 }
-.padding-top-bottom-5{
+.padding-top-bottom-5 {
   padding-top: 5px;
   padding-bottom: 5px;
 }
@@ -204,7 +210,7 @@ img {
 .positive-vote {
   color: #2f6696 !important;
 }
-.error{
+.error {
   color: #dc3545;
 }
 .font-14 {
@@ -218,6 +224,28 @@ img {
   color: #54c438;
 }
 /**buttons*/
+.button-up.fixed {
+  position: fixed;
+}
+.button-up {
+  padding: 0;
+  transition: all 0.5s ease 0s;
+  z-index: 100;
+  right: 50px;
+  bottom: 150px;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  background: #4890af;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.button-up:hover {
+  text-decoration: none;
+  box-shadow: 0 0 1em 0.5em rgba(0, 0, 0, 0.3);
+}
 .btn-blue {
   background: #4890af;
   border-radius: 0px 3px 3px 0px;
@@ -250,7 +278,7 @@ img {
   border-radius: 3px;
   position: absolute;
   right: 0;
-  bottom: 50px;
+  bottom: 60px;
 }
 .btn-empty {
   border: 0.5px solid #2f6696;
@@ -282,6 +310,21 @@ img {
   font-size: 12px;
   color: #fff;
 }
+/**Loader*/
+.load-wrapp {
+  width: 100%;
+  height: 200px;
+  margin: 0;
+  text-align: center;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.load-wrapp img{
+  width: 70px;
+}
+
 /*******Icons SVG*******/
 .add-friend,
 .send-message,
@@ -406,8 +449,8 @@ form label {
   justify-content: center;
 }
 .pagination {
-  margin-top: 35px;
-  margin-bottom: 35px;
+  margin-top: 15px;
+  margin-bottom: 25px;
 }
 .pagination .page-item .page-link {
   outline: none;
@@ -501,6 +544,10 @@ form label {
 /**end search-replay-form - sidebar-widget*/
 
 /**Forum comments*/
+.move-to-add-comment span:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
 .comment-header {
   background: #4890af;
   color: #fff;
@@ -516,7 +563,7 @@ form label {
   align-items: center;
 }
 .comment-header > div > div {
-  margin-left: 10px;
+  margin-left: 5px;
 }
 .comment-creating-date img {
   margin-right: 5px;
@@ -537,6 +584,10 @@ form label {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+.quote img:hover{
+  cursor: pointer;
+  z-index: 10;
 }
 .comment-creating-date img {
   margin-right: 5px;
@@ -607,11 +658,11 @@ form label {
 
 /*****Modal Windows*****/
 #vote-modal .positive,
-#vote-modal .negative{
+#vote-modal .negative {
   display: none;
 }
 #vote-modal .positive.active,
-#vote-modal .negative.active{
+#vote-modal .negative.active {
   display: inline-block;
 }
 /*****END Modal Windows*****/
@@ -639,17 +690,17 @@ form label {
   color: #fff;
 }
 password-repairing:visited,
-.password-repairing{
+.password-repairing {
   font-family: "Roboto-Bold", sans-serif;
   color: #fff;
   display: block;
   text-align: right;
   margin-top: 10px;
 }
-.password-repairing img{
+.password-repairing img {
   margin-right: 10px;
 }
-.password-repairing:hover{
+.password-repairing:hover {
   text-decoration: underline;
   color: #fff;
 }
@@ -661,9 +712,9 @@ password-repairing:visited,
   top: 0;
   right: 0;
 }
-.login-form div.error{
+.login-form div.error {
   color: yellow;
-  font-family: "Roboto-Bold",sans-serif;
+  font-family: "Roboto-Bold", sans-serif;
   text-shadow: 0 0 1px red;
 }
 .btn-login {
@@ -747,7 +798,7 @@ password-repairing:visited,
   z-index: 10;
   position: absolute;
   right: 0;
-  bottom: -10px;
+  bottom: 5px;
   border: 0.5px solid #e5e6eb;
 }
 .logged-user-action-bar > div:first-of-type {
@@ -758,14 +809,20 @@ password-repairing:visited,
 }
 .logged-user-menu-links {
   position: absolute;
-  background: rgba(229, 230, 235, 1);
+  background: #fff;
   border-radius: 0px 0px 3px 3px;
   z-index: 10;
   width: 256px;
-  display: none;
+  transition: height 1.5s;
+  height: 0;
+  overflow: hidden;
+  left: -1px;
 }
 .logged-user-menu-links.active {
-  display: block;
+  height: 285px;
+  border-left: 2px solid #efefef;
+  border-right: 2px solid #efefef;
+  border-bottom: 2px solid #efefef;
 }
 .logged-user-menu-links ul {
   list-style-type: none;
@@ -836,12 +893,12 @@ password-repairing:visited,
   font-size: 12px;
   margin-left: 10px;
 }
-.vote-response{
+.vote-response {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-.vote-response > span:first-of-type{
+.vote-response > span:first-of-type {
   max-width: 200px;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -849,9 +906,9 @@ password-repairing:visited,
   overflow: hidden;
   margin: 10px 0;
 }
-.sidebar-widget-subtitle{
+.sidebar-widget-subtitle {
   margin-bottom: 10px;
-  font-family: "Roboto-Bold",sans-serif;
+  font-family: "Roboto-Bold", sans-serif;
   font-size: 14px;
 }
 .widget-header {
@@ -924,21 +981,33 @@ password-repairing:visited,
 /**gallery widget*/
 .user-gallery-widget-link {
   color: #737373 !important;
+  position: relative;
 }
 .user-gallery-widget .widget-title {
   font-size: 14px;
   font-family: "Roboto-Medium", sans-serif;
 }
-.user-gallery-widget .widget-forum-topics-wrapper{
+.user-gallery-widget .widget-forum-topics-wrapper {
   max-height: 300px;
   overflow-y: auto;
 }
-.user-gallery-widget .photo-comment{
+.user-gallery-widget .photo-comment {
   max-width: 175px;
   white-space: nowrap;
   text-overflow: ellipsis;
   display: inline-block;
   overflow: hidden;
+}
+.widget-gallery-img-preview{
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 25px;
+  width: 100px;
+  z-index: 10;
+}
+.user-gallery-widget-link:hover .widget-gallery-img-preview{
+  display: block;
 }
 /*********END SIDEBAR LEFT*********/
 
@@ -952,10 +1021,10 @@ password-repairing:visited,
   align-items: center;
   color: #737373;
 }
-.widget-wrapper .widget-new-user a > span:first-of-type{
+.widget-wrapper .widget-new-user a > span:first-of-type {
   flex: 0 0 90px;
 }
-.widget-wrapper .widget-new-user a > span:last-of-type{
+.widget-wrapper .widget-new-user a > span:last-of-type {
   margin-left: auto;
 }
 .widget-wrapper .widget-new-user a:hover {
@@ -1109,13 +1178,16 @@ password-repairing:visited,
   height: 30px;
   color: #fff;
   align-items: center;
-  justify-content: left;
+  justify-content: space-between;
   border-bottom: 0.5px solid #fff;
   padding-left: 15px;
   font-family: "Roboto-Medium", sans-serif;
   background: #4890af;
 }
-.forum-section-title:hover{
+.forum-section-title a{
+  color: #fff;
+}
+.forum-section-title:hover {
   color: #fff;
 }
 .forum-section-img {
@@ -1125,16 +1197,17 @@ password-repairing:visited,
 .forum-section-info {
   font-family: "NotoSans-Bold", sans-serif;
   font-size: 11px;
-  color: #4d4d4d;
+  color: #fff;
   display: flex;
-  flex-direction: column;
-  justify-content: left;
-  text-align: left;
+  justify-content: space-between;
   padding-left: 10px;
+  align-items: center;
+}
+.forum-section-info > div{
+  margin-right: 10px;
 }
 .forum-section-topics {
-  color: #2f6696;
-  font-size: 12px;
+  font-size: 11px;
   font-family: "Roboto-Medium", sans-serif;
 }
 .forum-section-extract {
@@ -1142,6 +1215,10 @@ password-repairing:visited,
   height: 60px;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.forum-section-link{
+  color: #737373;
+  padding-left: 15px;
 }
 /*----------------------------------------*/
 /*--------- END FORUM PAGE CONTENT ----------- */
@@ -1383,13 +1460,23 @@ password-repairing:visited,
   color: #fff !important;
 }
 .user-replay-header .info a {
-  margin-right: 15px;
+  margin-right: 5px;
 }
 .user-replay-header .info a:last-of-type {
   margin-right: 0;
 }
-.user-replay-header .user-nickname{
-  flex: 0 0 70%;
+.user-replay-header .user-nickname {
+  flex: 0 0 50%;
+}
+.replay-author{
+  display: flex;
+  align-items: center;
+}
+.replay-author a{
+  color: #fff;
+}
+.replay-author .logged-user-avatar{
+  margin-right: 5px;
 }
 .user-replay-info {
   display: flex;
@@ -1418,16 +1505,16 @@ password-repairing:visited,
   padding-top: 6px;
   color: #4d4d4d;
 }
-div.author-info{
+div.author-info {
   font-size: 10px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
 }
-.author-info > div{
+.author-info > div {
   font-size: 10px;
 }
-.author-info > a{
+.author-info > a {
   margin-right: 5px;
 }
 /*----------------------------------------*/
@@ -1454,7 +1541,7 @@ div.author-info{
 .replay-map {
   margin-bottom: 15px;
 }
-.replay-map-empty{
+.replay-map-empty {
   height: 100px;
   width: 150px;
   margin: 10px auto;
@@ -1599,7 +1686,7 @@ div.author-info{
   padding: 0 15px 15px 15px;
 }
 .user-account-widget {
-  padding: 15px;
+  padding: 15px 5px 15px 15px;
 }
 .user-account-widget-title {
   color: #4d4d4d;
@@ -1871,9 +1958,15 @@ div.author-info{
   margin-bottom: 0;
 }
 .user-list-action {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  /*display: flex;*/
+  /*align-items: center;*/
+  /*justify-content: center;*/
+  text-align: center;
+}
+.user-friends-list-table .logged-user-avatar {
+  width: 36px;
+  height: 36px;
+  font-size: 20px;
 }
 .user-friends-list-table a {
   font-family: "Roboto-Medium", sans-serif;
@@ -1882,6 +1975,9 @@ div.author-info{
 .table-wrapper {
   overflow-y: auto;
   max-height: 500px;
+}
+.user-friends-list-table tr td{
+  vertical-align: middle;
 }
 /*----------------------------------------*/
 /*---END USER FRIEND LIST PAGE -------- */
@@ -2122,7 +2218,7 @@ a.user-section-title {
   justify-content: space-between;
   font-size: 14px;
 }
-.load-more{
+.load-more {
   cursor: pointer;
   width: 190px;
   border-radius: 6px;

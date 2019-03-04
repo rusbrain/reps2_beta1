@@ -25,10 +25,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home.index')->with([
-            'popular_forum_topics'  => ForumTopic::popularForumTopics(), // TODO: remove
-            'last_news'             => ForumTopic::lastNews(), // TODO: remove
-        ]);
+        return view('home.index');
     }
 
     /**

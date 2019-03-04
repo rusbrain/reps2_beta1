@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\BaseUserMessageController;
 use App\Http\Requests\SendUserMessageRequest;
+use App\Services\User\MessageService;
 use Illuminate\Support\Facades\Auth;
 
 class UserMessageController extends BaseUserMessageController
@@ -20,7 +21,7 @@ class UserMessageController extends BaseUserMessageController
             return redirect()->route('admin.user.messages_all');
         }
 
-        return view('admin.user.messages')->with(self::getMessageData($id));
+        return view('admin.user.messages')->with(MessageService::getMessageData($id));
     }
 
     /**

@@ -90,6 +90,49 @@ class GeneralViewHelper
     }
 
     /**
+     * @param $comments
+     * @return array|bool
+     */
+    public function parseCommentsData($comments)
+    {
+        $types = [
+            'topic' =>
+                [
+                    'title' => 'Форумы',
+                    'relation' => 'topic',
+                    'route' => 'forum.topic.index',
+                    'comments' => []
+                ],
+            'gallery' =>
+                [
+                    'title' => 'Галереи',
+                    'relation' => 'gallery',
+                    'route' => 'gallery.view',
+                    'comments' => []
+                ],
+            'replay' =>
+                [
+                    'title' => 'Реплеи',
+                    'relation' => 'replay',
+                    'route' => 'replay.get',
+                    'comments' => []
+                ]
+        ];
+
+        if (!$comments) {
+            return false;
+        }
+        foreach ($comments as $item => $comment) {
+            foreach ($types as $key => $type) {
+                if ($comment->$key) {
+                    $types[$key]['comments'][] = $comment;
+                }
+            }
+        }
+        return $types;
+    }
+
+    /**
      * @return mixed
      */
     public function getRandomBanner()

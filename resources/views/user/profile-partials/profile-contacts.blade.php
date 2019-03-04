@@ -4,7 +4,11 @@
     </div>
     <div class="user-account-info-row ">
         <span class="">Е-mail:</span>
-        <span>{{$user->email ?? 'не указано'}}</span>
+        @if(Auth::id() == $user->id)
+            <span>{{$user->email ?? 'не указано'}}</span>
+        @else
+            <span>{{'Скрыт' ?? 'не указано'}}</span>
+        @endif
     </div>
     <div class="user-account-info-row">
         <span>Сайт:</span>
@@ -20,6 +24,6 @@
     </div>
     <div class="user-account-info-row">
         <span>Подпись:</span>
-        <span>{{$user->signature ?? 'не указано'}}</span>
+        <span>{!! $user->signature ?? 'не указано' !!}</span>
     </div>
 </div><!-- close div /.content-box -->
