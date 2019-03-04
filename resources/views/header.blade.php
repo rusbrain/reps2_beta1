@@ -77,7 +77,7 @@
                             <a href="{{route('user.get_rating', ['id' => Auth::id()])}}">Репутация</a>
                         </li>
                         <li>
-                            <a href="{{route('forum.topic.my_list')}}">Мои посты</a>
+                            <a href="{{route('user.comments')}}">Мои посты</a>
                         </li>
                         <li>
                             <a href="{{route('forum.topic.my_list')}}">Мои темы</a>

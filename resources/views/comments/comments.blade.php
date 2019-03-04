@@ -99,18 +99,6 @@
         /**
          * Add quote into comment form
          * */
-        // function addQuoteInCommentForm() {
-        //     var selectedText = '';
-        //     if (window.getSelection) {
-        //         var selection = window.getSelection();
-        //         selectedText = selection.toString();
-        //     } else if (document.selection) {
-        //         var range = document.selection.createRange();
-        //         selectedText = range.htmlText;
-        //     }
-        //     console.log(selectedText);
-        // }
-
         function addText(textarea, quote_data) {
             var selection = window.getSelection();
             var quoted_user = quote_data.attr('data-user');
