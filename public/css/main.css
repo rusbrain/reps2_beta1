@@ -817,12 +817,12 @@ password-repairing:visited,
   height: 0;
   overflow: hidden;
   left: -1px;
-  border-left: 2px solid #efefef;
-  border-right: 2px solid #efefef;
-  border-bottom: 2px solid #efefef;
 }
 .logged-user-menu-links.active {
   height: 285px;
+  border-left: 2px solid #efefef;
+  border-right: 2px solid #efefef;
+  border-bottom: 2px solid #efefef;
 }
 .logged-user-menu-links ul {
   list-style-type: none;
@@ -1178,11 +1178,14 @@ password-repairing:visited,
   height: 30px;
   color: #fff;
   align-items: center;
-  justify-content: left;
+  justify-content: space-between;
   border-bottom: 0.5px solid #fff;
   padding-left: 15px;
   font-family: "Roboto-Medium", sans-serif;
   background: #4890af;
+}
+.forum-section-title a{
+  color: #fff;
 }
 .forum-section-title:hover {
   color: #fff;
@@ -1194,16 +1197,17 @@ password-repairing:visited,
 .forum-section-info {
   font-family: "NotoSans-Bold", sans-serif;
   font-size: 11px;
-  color: #4d4d4d;
+  color: #fff;
   display: flex;
-  flex-direction: column;
-  justify-content: left;
-  text-align: left;
+  justify-content: space-between;
   padding-left: 10px;
+  align-items: center;
+}
+.forum-section-info > div{
+  margin-right: 10px;
 }
 .forum-section-topics {
-  color: #2f6696;
-  font-size: 12px;
+  font-size: 11px;
   font-family: "Roboto-Medium", sans-serif;
 }
 .forum-section-extract {
@@ -1211,6 +1215,10 @@ password-repairing:visited,
   height: 60px;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.forum-section-link{
+  color: #737373;
+  padding-left: 15px;
 }
 /*----------------------------------------*/
 /*--------- END FORUM PAGE CONTENT ----------- */
