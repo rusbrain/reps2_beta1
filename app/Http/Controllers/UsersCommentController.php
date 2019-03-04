@@ -27,7 +27,7 @@ class UsersCommentController extends Controller
     public function pagination()
     {
         $comments = $this->paginationData(Auth::id());
-        return ['comments' => UserViewService::getUserComments($comments)];
+        return ['comments' => UserViewService::getUserComments($comments), 'pagination' => UserViewService::getPagination($comments) ];
     }
 
     /**
@@ -37,46 +37,9 @@ class UsersCommentController extends Controller
     protected function paginationData($id)
     {
         $user = User::find($id);
-        $comments = $user->comments()->orderBy('created_at', 'desc')->with('user', 'topic', 'replay', 'gallery')->get();
-        return $this->createCommentDataArray($comments);
+        $comments = $user->comments()->orderBy('created_at', 'desc')->with('user', 'topic', 'replay', 'gallery')->paginate(30);
+        return $comments;
     }
 
-    public function createCommentDataArray($comments)
-    {
-        $types = [
-            'topic' =>
-                [
-                    'title' => 'Форумы',
-                    'relation' => 'topic',
-                    'route' => 'forum.topic.index',
-                    'comments' => []
-                ],
-            'gallery' =>
-                [
-                    'title' => 'Галереи',
-                    'relation' => 'gallery',
-                    'route' => 'gallery.view',
-                    'comments' => []
-                ],
-            'replay' =>
-                [
-                    'title' => 'Реплеи',
-                    'relation' => 'replay',
-                    'route' => 'replay.get',
-                    'comments' => []
-                ]
-        ];
 
-        if (!$comments) {
-            return false;
-        }
-        foreach ($comments as $item => $comment) {
-            foreach ($types as $key => $type) {
-                if ($comment->$key) {
-                    $types[$key]['comments'][] = $comment;
-                }
-            }
-        }
-        return $types;
-    }
 }

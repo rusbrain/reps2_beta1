@@ -1,5 +1,6 @@
 @inject('general_helper', 'App\Services\GeneralViewHelper')
 @if($comments)
+    @php $comments = $general_helper->parseCommentsData($comments) @endphp
     <div class="accordion user-posts" id="user-posts">
         @php $s = 0 @endphp
         @foreach($comments as $comment_objects)

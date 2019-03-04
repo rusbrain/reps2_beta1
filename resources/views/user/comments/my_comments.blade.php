@@ -36,8 +36,12 @@
                 <img src="/images/loader.gif" alt="">
             </div>
         </div>
-
     </div><!-- close div /.content-box -->
+
+    <!--  PAGINATION -->
+    <div class="pagination-content"></div>
+    <!-- END  PAGINATION -->
+
 @endsection
 
 @section('sidebar-right')
@@ -61,14 +65,21 @@
 @section('js')
     <script>
         $(function () {
-            getSections();
+            getSections(1);
+            $('.pagination-content').on('click', '.page-link', function (e) {
+                e.preventDefault();
+                $('.load-wrapp').show();
+                var page = $(this).attr('data-page');
+                getSections(page);
+            })
         });
-        function getSections() {
+        function getSections(page) {
             var container = $('#ajax_section_user_comments');
             var body = $("html, body");
 
-            $.get('{{route('user.comments.pagination')}}', {}, function (data) {
+            $.get('{{route('user.comments.pagination')}}'+'?page='+page, {}, function (data) {
                 container.html(data.comments);
+                $('.pagination-content').html(data.pagination);
                 $('.load-wrapp').hide();
 
                 /**move to top of page*/

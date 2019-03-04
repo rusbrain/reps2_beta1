@@ -25,7 +25,7 @@ class UserViewService extends ViewService
      * @param LengthAwarePaginator $data
      * @return string
      */
-   public static function getPagination($data)
+   public static function getPagination(LengthAwarePaginator $data)
    {
        return (string) view('pagination')->with(['data' => $data]);
    }
@@ -52,7 +52,7 @@ class UserViewService extends ViewService
      * @param LengthAwarePaginator $data
      * @return string
      */
-   public static function getUserComments($data)
+   public static function getUserComments(LengthAwarePaginator $data)
    {
        return (string) view('user.comments.my_comments_list')->with(['comments' => $data]);
    }
