@@ -36,8 +36,15 @@
             @if($sender)
                 <div class="widget-forum-topics-wrapper">
                     <div class="widget-forum-topic">
-                        <img src="{{(($sender->avatar?$sender->avatar->link:'/dist/img/avatar.png'))}}"
-                             alt="User Avatar">
+                        @if($sender->avatar)
+                            <a href="{{route('user.messages', ['id' => $sender->id])}}">
+                                <img src="{{(($sender->avatar?$sender->avatar->link:'/dist/img/avatar.png'))}}"
+                                     alt="User Avatar">
+                            </a>
+                        @else
+                            <a href="{{route('user_profile',['id' => $sender->id])}}"
+                               class="logged-user-avatar no-header">A</a>
+                        @endif
                         <div>
                             <div>
                                 <a href="{{route('user.messages', ['id' => $sender->id])}}"

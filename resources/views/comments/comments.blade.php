@@ -48,7 +48,7 @@
                 $('.load-wrapp').show();
                 var page = $(this).attr('data-page');
                 getSections(page);
-            })
+            });
         });
 
         function getSections(page) {
@@ -86,7 +86,14 @@
                     'source,quote,code|' +
                     'image,link,unlink|' +
                     'emoticon|' +
-                    'date,time'
+                    'date,time',
+                    emoticons: {
+                        // Emoticons to be included in the dropdown
+                        dropdown: getAllSmiles(),
+                        // Emoticons to be included in the more section
+                        more: getMoreSmiles()
+                    }
+
                 });
             }
 
@@ -135,5 +142,35 @@
             url += ' [/url]';
             return url;
         }
+
+        function getAllSmiles() {
+            var path = 'emoticons/smiles/';
+            var smile = 's';
+            var extension = '.gif';
+            var qty = 63;
+            var smilesObject = {};
+            var key;
+            var result;
+
+            for (var i = 0; i <= qty; i++) {
+                key = smile + i;
+                result = path + smile + i + extension;
+                smilesObject[key] = result;
+            }
+            return smilesObject
+        }
+
+        function getMoreSmiles() {
+            var path = 'emoticons/smiles/';
+            var smilesObject = {
+                'silver': path + 'silver.png',
+                'terran': path + 'terran.gif',
+                'zerg': path + 'zerg.gif',
+                'gold': path + 's1.png',
+                'protoss': path + 'protoss.gif'
+            };
+            return smilesObject
+        }
+
     </script>
 @endsection
