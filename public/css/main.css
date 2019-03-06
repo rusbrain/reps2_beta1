@@ -1156,6 +1156,11 @@ password-repairing:visited,
 .content-box-topic-extract {
   margin-bottom: 10px;
 }
+.content-box-topic-extract-news {
+  margin-bottom: 10px;
+  height: 180px;
+  overflow: hidden;
+}
 .content-box-forum-img-wrapper {
   display: flex;
   height: 100%;
@@ -1164,6 +1169,10 @@ password-repairing:visited,
 }
 .content-box-forum-img {
   max-height: 170px;
+}
+.content-box-news-title{
+  height: 40px;
+  display: block;
 }
 /*----------------------------------------*/
 /*--------- END HOME PAGE CONTENT ----------- */

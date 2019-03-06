@@ -59,7 +59,7 @@
                         <span>20:12  Дек 21, 2018</span>
                     </div>
                     <div class="news-content">
-                        {!! $general_helper->oldContentFilter($single_news->preview_content ?? mb_substr($single_news->content,0,150,'UTF-8').' ...')!!}
+                        {!! $general_helper->closeAllTags($general_helper->oldContentFilter($single_news->preview_content ?? mb_substr($single_news->content,0,150,'UTF-8').' ...'))!!}
                         <a href="{{route('forum.topic.index',['id' => $single_news->id])}}" class="read-more-link">
                             <img src="{{route('home')}}/images/icons/arrow-right.png" alt="">
                         </a>
