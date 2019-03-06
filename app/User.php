@@ -3,10 +3,19 @@
 namespace App;
 
 use App\Traits\ModelRelations\UserRelation;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+/**
+ * @property integer $id
+ * @property string $name
+ * @property integer $email
+ * @property Carbon $email_verified_at
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+*/
 class User extends Authenticatable
 {
     use Notifiable, UserRelation, SoftDeletes;

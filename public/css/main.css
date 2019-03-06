@@ -223,6 +223,12 @@ img {
 .color-green {
   color: #54c438;
 }
+.color-red{
+  color: #dc3545;
+}
+.color-white{
+  color: #fff;
+}
 /**buttons*/
 .button-up.fixed {
   position: fixed;
@@ -324,7 +330,9 @@ img {
 .load-wrapp img{
   width: 70px;
 }
-
+.email-btn{
+  padding: 9px 36px;
+}
 /*******Icons SVG*******/
 .add-friend,
 .send-message,
