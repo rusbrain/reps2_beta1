@@ -11,7 +11,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 /**
  * @property integer $id
  * @property string $name
- * @property integer $email
+ * @property string $email
  * @property Carbon $email_verified_at
  * @property Carbon $created_at
  * @property Carbon $updated_at

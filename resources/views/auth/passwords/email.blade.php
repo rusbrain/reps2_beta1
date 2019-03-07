@@ -27,7 +27,7 @@
         <div class="row">
             <div class="col"></div>
             <div class="col-md-10">
-                <form method="POST" action="{{ route('password.email') }}">
+                <form method="GET" action="{{route('get_update_password')}}">
                     @csrf
                     <div class="form-group">
                         <label for="email">*E-Mail:</label>

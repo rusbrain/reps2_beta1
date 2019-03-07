@@ -23,7 +23,7 @@
 
     <div class="content-box">
         <div class="col-md-12 section-title margin-bottom-15">
-            <h1>Регистрация:</h1>
+            <h1>Восстановление пароля:</h1>
         </div>
         <div class="row">
             <div class="col"></div>
@@ -47,12 +47,17 @@
                                class="form-control {{ $errors->has('password_confirmation') ? ' is-invalid' : '' }}">
                         @if ($errors->has('password_confirmation'))
                             <span class="invalid-feedback">
-                    <strong>{{ $errors->first('password_confirmation') }}</strong>
-                </span>
+                                <strong>{{ $errors->first('password_confirmation') }}</strong>
+                            </span>
                         @endif
                     </div>
-                    <input type="hidden" name="password_update_token" value="{{$update_email_token}}">
-                    <div class="form-group">
+                    <div class="form-group {{ $errors->has('password_update_token') ? ' is-invalid' : '' }}">
+                        <input type="hidden" name="password_update_token" value="{{$update_email_token}}">
+                        @if ($errors->has('password_update_token'))
+                            <span class="invalid-feedback text-center">
+                                <strong>{{ $errors->first('password_update_token') }}</strong>
+                            </span>
+                        @endif
                         <button type="submit" class="btn-blue btn-form">Отправить</button>
                     </div>
                 </form>

@@ -36,7 +36,7 @@ class UpdateOldUserPassword extends Mailable
         return $this
             ->from(config('mail.from.email'), config('mail.from.name'))
             ->subject('Обновите Ваш пароль на Reps.ru')
-            ->view('emails.auth.update_old_password')
+            ->markdown('emails.auth.update_old_password')
             ->with('token',$this->token);
     }
 }
