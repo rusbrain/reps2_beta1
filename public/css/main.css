@@ -223,6 +223,12 @@ img {
 .color-green {
   color: #54c438;
 }
+.color-red{
+  color: #dc3545;
+}
+.color-white{
+  color: #fff;
+}
 /**buttons*/
 .button-up.fixed {
   position: fixed;
@@ -324,7 +330,9 @@ img {
 .load-wrapp img{
   width: 70px;
 }
-
+.email-btn{
+  padding: 9px 36px;
+}
 /*******Icons SVG*******/
 .add-friend,
 .send-message,
@@ -1156,6 +1164,11 @@ password-repairing:visited,
 .content-box-topic-extract {
   margin-bottom: 10px;
 }
+.content-box-topic-extract-news {
+  margin-bottom: 10px;
+  height: 180px;
+  overflow: hidden;
+}
 .content-box-forum-img-wrapper {
   display: flex;
   height: 100%;
@@ -1164,6 +1177,10 @@ password-repairing:visited,
 }
 .content-box-forum-img {
   max-height: 170px;
+}
+.content-box-news-title{
+  height: 40px;
+  display: block;
 }
 /*----------------------------------------*/
 /*--------- END HOME PAGE CONTENT ----------- */
@@ -2206,6 +2223,14 @@ a.user-section-title {
   flex: 0 0 50px;
   width: 50px;
 }
+.user-message-widget .logged-user-avatar{
+  width: 50px;
+  height: 50px;
+  margin-right: 15px;
+  font-size: 24px;
+  border-radius: 0;
+}
+
 .qty-messages {
   border-radius: 10px;
   background: #f44336;
@@ -2228,4 +2253,20 @@ a.user-section-title {
 }
 /*----------------------------------------*/
 /*---END USER MESSAGE PAGE -------- */
+/*---------------------------------------*/
+
+/**------------------------------------*/
+/*---------ERROR PAGE-------------------*/
+/*---------------------------------------*/
+.password-recovering{
+  text-align: center;
+  padding-bottom: 10px;
+  color: #4d4d4d;
+}
+.is-invalid .invalid-feedback{
+  display: block;
+}
+
+/**------------------------------------*/
+/*---------END ERROR PAGE-------------------*/
 /*---------------------------------------*/

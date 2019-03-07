@@ -39,38 +39,38 @@ class RegisterController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
     {
         return Validator::make($data,
             [
-            'name' => 'required|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|max:255|confirmed',
-            'country' => 'nullable|exists:countries,id',
-                ],
+                'name' => 'required|max:255',
+                'email' => 'required|string|email|max:255|unique:users',
+                'password' => 'required|string|min:8|max:255|confirmed',
+                'country' => 'nullable|exists:countries,id',
+            ],
             [
-            'password.required'  => 'Не указан новый пароль.',
-            'password.confirmed' => 'Пароль не подтвержден или подтвержден не верно.',
-            'password.min'       => 'Минимальная длина пароля 8 символов.',
-            'password.max'       => 'Максимальная длина пароля 255 символов.',
-            'name.required'      => 'Не указно имя.',
-            'name.max'           => 'Максимальная длина имени 255 символов.',
-            'email.required'     => 'Email обязательный для заполнения.',
-            'email.email'        => 'Введен не верный формат Email.',
-            'email.unique'       => 'Пользователь с таким Email уже зарегестрирован.',
-            'email.max'          => 'Максимальная длина Email 255 символов.',
-            'country.exists'     => 'Не верно указана страна.',
-                ]
+                'password.required' => 'Не указан новый пароль.',
+                'password.confirmed' => 'Пароль не подтвержден или подтвержден не верно.',
+                'password.min' => 'Минимальная длина пароля 8 символов.',
+                'password.max' => 'Максимальная длина пароля 255 символов.',
+                'name.required' => 'Не указно имя.',
+                'name.max' => 'Максимальная длина имени 255 символов.',
+                'email.required' => 'Email обязательный для заполнения.',
+                'email.email' => 'Введен не верный формат Email.',
+                'email.unique' => 'Пользователь с таким Email уже зарегестрирован.',
+                'email.max' => 'Максимальная длина Email 255 символов.',
+                'country.exists' => 'Не верно указана страна.',
+            ]
         );
     }
 
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return \App\User
      */
     protected function create(array $data)
@@ -83,7 +83,7 @@ class RegisterController extends Controller
             'updated_password' => 1
         ];
 
-        if (isset($data['country']) && $data['country']>0){
+        if (isset($data['country']) && $data['country'] > 0) {
             $data_save['country_id'] = $data['country'];
         }
 
@@ -104,8 +104,8 @@ class RegisterController extends Controller
     /**
      * The user has been registered.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  mixed  $user
+     * @param  \Illuminate\Http\Request $request
+     * @param  mixed $user
      * @return mixed
      */
     protected function registered(Request $request, $user)
@@ -121,15 +121,29 @@ class RegisterController extends Controller
      */
     public function emailVerified($token)
     {
-        if( $user = UserEmailToken::where('token',$token)->where('function', UserEmailToken::TOK_FUNC_VERIFIED_EMAIL)->first()->user()->first()) {
+        /**@var UserEmailToken $email_token*/
+        $email_token = UserEmailToken::where('token', $token)->where('function', UserEmailToken::TOK_FUNC_VERIFIED_EMAIL)->first();
+        if (!$email_token) {
+            return view('auth.passwords.not_correct_token',['error' => 'Неверный токен']);
+        }
+        /**@var User $user*/
+        $user = $email_token->user()->first();
+
+        try {
+            if($user->email_verified_at){
+                throw new \DomainException('Ваш email уже подтвержден');
+            }
             $user->email_verified_at = Carbon::now();
             $user->save();
-
             $this->guard()->login($user);
-
             return redirect('/');
-        }
 
-        return view('auth.passwords.not_correct_token');
+        } catch (\DomainException $e) {
+            return view('auth.passwords.not_correct_token',['error' => $e->getMessage()]);
+        }
     }
+
+
+
+
 }

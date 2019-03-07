@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\SaveNewPasswordRequest;
 use App\Mail\UpdateOldUserPassword;
 use App\Mail\UserPasswordUpdated;
+use App\User;
 use App\UserEmailToken;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\ResetsPasswords;
@@ -45,28 +46,32 @@ class ResetPasswordController extends Controller
         $this->middleware('guest');
     }
 
+
     /**
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return $this|\Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function updateOldPassword(Request $request)
     {
-        $user = $request->session()->get('user');
+        $this->validate($request, [
+            'email' => 'required|email|exists:users,email',
+        ]);
 
+        /**@var User $user*/
+        $user = User::where('email',$request->get('email'))->first();
         if(!$user){
-            return back();
+            return view('auth.passwords.not_correct_token',['error' => 'Нет пользователя с таким email']);
         }
 
         $token = md5(time());
-
         UserEmailToken::create(
             [
                 'user_id' => $user->id,
-                'function' => UserEmailToken::TOK_FUNC_VERIFIED_EMAIL,
+                'function' => UserEmailToken::TOK_FUNC_UPDATE_PASSWORD,
                 'token' => $token
             ]
         );
-
         Mail::to($user->email)->send(new UpdateOldUserPassword($token));
 
         return view('auth.passwords.update_old')->with('email', $user->email);
@@ -78,11 +83,11 @@ class ResetPasswordController extends Controller
      */
     public function viewNewPassword($token)
     {
+
         if (UserEmailToken::where('token',$token)->where('function', UserEmailToken::TOK_FUNC_UPDATE_PASSWORD)->count()){
             return view('auth.passwords.new')->with('update_email_token', $token);
         }
-
-        return view('auth.passwords.not_correct_token');
+        return view('auth.passwords.not_correct_token', ['error' => 'Неверная ссылка']);
     }
 
     /**
@@ -104,6 +109,6 @@ class ResetPasswordController extends Controller
             return redirect('/');
         }
 
-        return view('auth.passwords.not_correct_token');
+        return view('auth.passwords.not_correct_token',['error' => 'Неверная ссылка']);
     }
 }

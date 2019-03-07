@@ -31,6 +31,6 @@ class UserPasswordUpdated extends Mailable
         return $this
             ->from(config('mail.from.email'), config('mail.from.name'))
             ->subject('Ваш пароль на Reps.ru обновлен')
-            ->view('emails.auth.password_updated');
+            ->markdown('emails.auth.password_updated');
     }
 }

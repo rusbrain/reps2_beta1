@@ -9,8 +9,12 @@
 namespace App\Services;
 
 use App\Country;
-use App\Services\Base\{BaseDataService, InterviewQuestionsService};
-use App\Traits\ViewHelper\{ForumData, ReplayData, UserData};
+use App\Services\Base\{
+    BaseDataService, InterviewQuestionsService
+};
+use App\Traits\ViewHelper\{
+    ForumData, ReplayData, UserData
+};
 use App\UserGallery;
 
 class GeneralViewHelper
@@ -378,5 +382,46 @@ class GeneralViewHelper
         $result = (isset($url['st']) ? $url['st'] : '') . "<a rel=\"nofollow\" href=\"" . $url['html'] . "\" target=\"_blank\">" . $show . "</a>" . $url['end'];
 
         return $result;
+    }
+
+    public function closeAllTags($content)
+    {
+        $position = 0;
+        $open_tags = array();
+        //ignored tags
+        $ignored_tags = array('br', 'hr', 'img');
+
+        while (($position = strpos($content, '<', $position)) !== false) {
+            //get all tags in content
+            if (preg_match("|^<(/?)([a-z\d]+)\b[^>]*>|i", substr($content, $position), $match)) {
+                $tag = strtolower($match[2]);
+                //ignore all single tags
+                if (in_array($tag, $ignored_tags) == false) {
+                    //tag is opened
+                    if (isset($match[1]) AND $match[1] == '') {
+                        if (isset($open_tags[$tag])) {
+                            $open_tags[$tag]++;
+                        } else {
+                            $open_tags[$tag] = 1;
+                        }
+                    }
+                    //tag is closed
+                    if (isset($match[1]) AND $match[1] == '/') {
+                        if (isset($open_tags[$tag])) {
+                            $open_tags[$tag]--;
+                        }
+                    }
+                }
+                $position += strlen($match[0]);
+            } else {
+                $position++;
+            }
+        }
+        //close all tags
+        foreach ($open_tags as $tag => $count_not_closed) {
+            $content .= str_repeat("</{$tag}>", $count_not_closed);
+        }
+
+        return $content;
     }
 }

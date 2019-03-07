@@ -5,25 +5,24 @@
     <div>
         @include('layouts.partials.search')
     </div>
-@if(!Auth::user())
-    <!--IF user is NOT logged,  displays this view-->
+    @if(!Auth::user())
+        <!--IF user is NOT logged,  displays this view-->
         <div class="no-logged-user">
-            <a href="{{route('registration_form')}}" class="registration-link">
-                <img src="{{route('home')}}/images/icons/vector.png" alt="">
-                <span>Регистрация</span>
-            </a>
             @if(Route::currentRouteName() !== 'registration_form'))
-            <!-- LOGIN FORM-->
-            @include('layouts.partials.login-form')
-        <!-- END LOGIN FORM-->
-
-            <a href="{{route('password.request')}}" class="password-repairing">
-                <img src="{{route('home')}}/images/icons/lock_icon.png" alt="">
-                Восстановление пароля
-            </a>
+                <a href="{{route('registration_form')}}" class="registration-link">
+                    <img src="{{route('home')}}/images/icons/vector.png" alt="">
+                    <span>Регистрация</span>
+                </a>
+                <!-- LOGIN FORM-->
+                @include('auth.login-form')
+                <!-- END LOGIN FORM-->
+                <a href="{{route('password.request')}}" class="password-repairing">
+                    <img src="{{route('home')}}/images/icons/lock_icon.png" alt="">
+                    Восстановление пароля
+                </a>
             @endif
         </div>
-@else
+    @else
     <!--IF user is logged, displays this view-->
         <div class="logged-user">
             <div class="logged-user-info">
@@ -45,16 +44,14 @@
                 @endif
                 <a href="" class="logged-user-nickname">{{Auth::user()->name}}</a>
             </div>
-
-            @if(Auth::user()->user_role_id == 1)
-                <!--IF user is admin-->
+        @if(Auth::user()->user_role_id == 1)
+            <!--IF user is admin-->
                 <a href="{{route('admin.home')}}" class="btn-blue admin-button">
                     <img src="{{route('home')}}/images/icons/admin_icon.png" class="margin-right-5" alt="">
                     <span>Admin Panel</span>
                 </a>
                 <!--END IF user is admin-->
             @endif
-
             <div class="logged-user-action-bar">
                 <div>
                     <a href="{{route('user.friends_list')}}" class="logged-user-friends" title="Мои друзья"></a>

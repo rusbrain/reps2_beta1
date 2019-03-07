@@ -27,15 +27,14 @@
         <div class="row">
             <div class="col"></div>
             <div class="col-md-10">
-                <h3 class="text-bold text-center padding-top-bottom-10">На указаный Вами email было отправлено письмо
-                    для восстановления пароля</h3>
-                <h4 class="text-bold text-center">Email: {{$email}}</h4>
+                <h2 class="password-recovering">На указаный Вами email было отправлено письмо
+                    для восстановления пароля</h2>
+                <p class="text-bold text-center">Email: <span class="color-red">{{$email}}</span></p>
                 <a href="/" class="btn-blue btn-form margin-top-20 margin-bottom-20">Вернутся на Главную</a>
             </div>
             <div class="col"></div>
         </div>
     </div><!-- close div /.content-box -->
-
 @endsection
 
 @section('sidebar-right')

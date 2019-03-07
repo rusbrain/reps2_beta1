@@ -46,7 +46,7 @@ class RegisteredUser extends Mailable
         return $this->to($this->user->email)
             ->from(config('mail.from.email'), config('mail.from.name'))
             ->subject('Вы зарегестрировались на Reps.ru')
-            ->view('emails.registered')
+            ->markdown('emails.registered')
             ->with('token',$this->token);
     }
 }

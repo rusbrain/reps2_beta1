@@ -164,7 +164,7 @@ class ForumTopic extends Model
             $q->withTrashed()->with('avatar');
         }])
             ->withCount( 'positive', 'negative', 'comments')
-            ->with('preview_image', 'icon')->limit(5)->get();
+            ->with('preview_image', 'icon')->limit(4)->get();
     }
 
     /**

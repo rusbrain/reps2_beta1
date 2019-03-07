@@ -358,7 +358,13 @@ $game_versions = $general_helper->getGameVersion();
                     'left,center,right,justify|' +
                     'font,size,color,removeformat|' +
                     'emoticon|' +
-                    'date,time'
+                    'date,time',
+                    emoticons: {
+                        // Emoticons to be included in the dropdown
+                        dropdown: getAllSmiles(),
+                        // Emoticons to be included in the more section
+                        more: getMoreSmiles()
+                    }
                 });
             }
         });

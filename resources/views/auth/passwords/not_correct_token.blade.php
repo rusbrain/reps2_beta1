@@ -14,7 +14,7 @@
                     <a href="/">Главная</a>
                 </li>
                 <li>
-                    <a href="#" class="active">/ Не верный токен</a>
+                    <a href="#" class="active">/ Ошибка</a>
                 </li>
             </ul>
         </div>
@@ -23,12 +23,12 @@
 
     <div class="content-box">
         <div class="col-md-12 section-title margin-bottom-15">
-            <h1>Ошибка</h1>
+            <h2 class="color-white">Ошибка: {{$error}}</h2>
         </div>
         <div class="row">
             <div class="col"></div>
             <div class="col-md-10">
-                <h3 class="text-bold text-center padding-top-bottom-10">Не верный Токен</h3>
+                <h1 class="text-bold text-center color-red padding-top-bottom-10">{{$error}}</h1>
                 <a href="/" class="btn-blue btn-form margin-top-20 margin-bottom-20">Вернутся на Главную</a>
             </div>
             <div class="col"></div>

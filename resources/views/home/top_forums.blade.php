@@ -21,7 +21,7 @@
                                 <h2 class="margin-bottom-10">{!! $forum->title ?? 'Название темы' !!}</h2>
                             </a>
                             <p class="content-box-topic-extract">
-                                {!! $general_helper->oldContentFilter($forum->preview_content ?? mb_substr($forum->content,0,200,'UTF-8').' ...')!!}
+                                {!! $general_helper->closeAllTags($general_helper->oldContentFilter($forum->preview_content ?? mb_substr($forum->content,0,200,'UTF-8').' ...'))!!}
                             </p>
                             <div class="content-box-topic-view">
                                 <span>{{$forum->reviews ?? '0'}} просмотров</span>
