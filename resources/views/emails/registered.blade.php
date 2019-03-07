@@ -9,5 +9,4 @@
     @component('mail::button', ['url' => route('email_verified', ['token'=>$token]),])
         Подтвердить почту
     @endcomponent
-
 @endcomponent

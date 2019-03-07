@@ -6,7 +6,4 @@
     @component('mail::button', ['url' => route('update_old_password', ['token'=>$token])])
         Обновить пароль
     @endcomponent
-
-    Спасибо,
-    {{ config('app.name') }}
 @endcomponent

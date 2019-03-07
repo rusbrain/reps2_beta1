@@ -8,5 +8,4 @@
     @endcomponent
 
     ![zerg]({{asset('/images/zerg.png')}})
-
 @endcomponent
