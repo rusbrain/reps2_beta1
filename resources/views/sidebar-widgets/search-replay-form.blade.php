@@ -7,11 +7,11 @@
 @endphp
 <div class="widget-wrapper">
     <div class="widget-header">Поиск реплеев</div>
-    <form action="{{route('replay.users')}}" method="GET" class="search-replay-form col-md-12">
+    <form action="{{route('replay.search')}}" method="GET" class="search-replay-form col-md-12">
         @csrf
         <div class="form-group">
-            <label for="championship">Имя / Чемпионат /Описание:</label>
-            <input type="text" id="championship" name="championship" value="{{ old('championship') }}"
+            <label for="text">Имя / Чемпионат /Описание:</label>
+            <input type="text" id="text" name="text" value="{{ old('championship') }}"
                    class="form-control {{ $errors->has('championship') ? ' is-invalid' : '' }}">
             @if ($errors->has('championship'))
                 <span class="invalid-feedback">
@@ -21,7 +21,7 @@
         </div>
         <div class="form-group">
             <label for="first_country_id">Победившая страна:</label>
-            <select name="" id="first_country_id"
+            <select name="first_country_id" id="first_country_id"
                     class="custom-select {{ $errors->has('first_country_id') ? ' is-invalid' : '' }}">
                 <option value="">Все</option>
                 @foreach($countries as $country)

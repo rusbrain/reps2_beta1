@@ -137,6 +137,10 @@ Route::group(['middleware' => 'activity'], function () {
         Route::get('/{id}/get_evaluation', 'ReplayRatingController@getEvaluation')->name('replay.get_evaluation');
         Route::get('/{id}/download', 'ReplayController@download')->name('replay.download');
 
+        /**search form in sidebar widget*/
+        Route::get('search', 'ReplayController@index')->name('replay.search');
+        Route::get('search/paginate', 'ReplayController@paginate')->name('replay.search.paginate');
+
         Route::group(['middleware' => 'auth'], function () {
             Route::get('/create', 'ReplayController@create')->name('replay.create');
             Route::post('/store', 'ReplayController@store')->name('replay.store');

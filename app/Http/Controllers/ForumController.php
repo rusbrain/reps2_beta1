@@ -51,9 +51,11 @@ class ForumController extends Controller
      */
     public function searchTopic(Request $request)
     {
-        if ($request->has('text')){
-            $topics = ForumTopic::searchTopic($request->get('text')); //TODO: remove
-            return view('forum.section')->with(SectionService::getSectionViewData($topics, "Поиск Тем"));
+        if ($request->has('text')) {
+            return view('forum.search_results')->with([
+                'search_text' => $request->get('text'),
+                'title' => 'Поиск Тем'
+            ]);
         }
         return back();
     }

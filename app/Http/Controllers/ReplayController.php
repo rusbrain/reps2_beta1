@@ -20,14 +20,14 @@ class ReplayController extends Controller
      *
      * @var string
      */
-    public $replay_group = "";
+    public $replay_group = "Поиск реплеев";
 
     /**
      * Replay type
      *
      * @var string
      */
-    public $replay_type = "";
+    public $replay_type = "search";
 
     /**
      * Replay query function name
@@ -40,17 +40,24 @@ class ReplayController extends Controller
      * Get view list of all Replay
      *
      * @param bool $type
+     * @param ReplaySearchRequest $request
      * @return $this
      */
-    public function index($type = false)
+    public function index($type = false, ReplaySearchRequest $request)
     {
+        $request_data = '';
         if ($type) {
             $type = $this->checkReplayType($type);
         }
+        if(!$this->replay_type == 'search'){
+            $request_data = ReplayService::getRequestString($request);
+        }
+
         return view('replay.list')->with([
             'title' => (!$type) ? $this->replay_group : $this->replay_group . ': ' . $type->title,
             'replay_type' => $this->replay_type,
-            'type' => ($type) ? $type->name : $type
+            'type' => ($type) ? $type->name : $type,
+            'request' => $request_data
         ]);
     }
 
