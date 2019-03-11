@@ -49,7 +49,7 @@ class ReplayController extends Controller
         if ($type) {
             $type = $this->checkReplayType($type);
         }
-        if(!$this->replay_type == 'search'){
+        if($this->replay_type == 'search'){
             $request_data = ReplayService::getRequestString($request);
         }
 

@@ -1492,6 +1492,9 @@ password-repairing:visited,
 .replay-author a{
   color: #fff;
 }
+.replay-author a > img{
+  margin-right: 5px;
+}
 .replay-author .logged-user-avatar{
   margin-right: 5px;
 }
@@ -1613,6 +1616,21 @@ div.author-info {
 }
 .replay-vote-form label {
   margin: 0 30px 0 10px;
+}
+.replay-header-content{
+  align-items: center;
+}
+.replay-header-content p{
+  margin-bottom: 1px;
+}
+.user-replay-wrapper .user-theme-edit{
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  margin-top: 10px;
+}
+.user-replay-wrapper .user-theme-edit img{
+  margin-right: 10px;
 }
 /*----------------------------------------*/
 /*----- END SINGLE  REPLAY PAGE --------- */
