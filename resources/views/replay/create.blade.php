@@ -47,7 +47,7 @@ $game_versions = $general_helper->getGameVersion();
         <div class="row">
             <div class="col"></div>
             <div class="col-md-10">
-                <form action="{{route('replay.store')}}" enctype="multipart/form-data"
+                <form action="{{route('replay.store')}}" method="POST" enctype="multipart/form-data"
                       class="user-create-replay-form">
                     @csrf
                     <div class="form-fields-box">

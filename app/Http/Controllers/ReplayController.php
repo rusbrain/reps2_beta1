@@ -159,7 +159,8 @@ class ReplayController extends Controller
         return view('replay.list')->with([
             'title' => $this->replay_group,
             'replay_type' => 'my_'.$this->replay_type,
-            'user_id' => $user_id
+            'user_id' => $user_id,
+            'request' => ''
         ]);
     }
 
