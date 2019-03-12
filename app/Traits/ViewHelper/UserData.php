@@ -8,7 +8,9 @@
 
 namespace App\Traits\ViewHelper;
 
-use App\{User, UserGallery, UserMessage, UserRole};
+use App\{
+    User, UserGallery, UserMessage, UserRole
+};
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,9 +21,9 @@ trait UserData
      */
     public function getUserStatus($cs)
     {
-        if ($cs < 1000){
+        if ($cs < 1000) {
             return "Zim";
-        } elseif ($cs < 2000){
+        } elseif ($cs < 2000) {
             return "Fan of Barbie";
         } elseif ($cs < 3000) {
             return "Zagoogli";
@@ -47,22 +49,60 @@ trait UserData
             return "Savior";
         } elseif ($cs < 70000) {
             return "Lutshii";
-        } elseif ($cs < 100000 ) {
+        } elseif ($cs < 100000) {
             return "Bonjva";
-        } elseif($cs >= 100000) {
+        } elseif ($cs >= 100000) {
             return "Ebanutyi";
         }
     }
 
     /**
-     * @param $user
+     * @param User $user
      * @return bool
      */
-    public function isOnline($user)
+    public function isOnline(User $user)
     {
-        $time = (Carbon::now()->getTimestamp() - Carbon::parse($user->activity_at)->getTimestamp()) / 60;
-
+        if (is_null($user->activity_at)) {
+            return false;
+        }
+        $time = Carbon::now()->diffInMinutes(Carbon::parse($user->activity_at));
         return $time <= 15;
+    }
+
+    /**
+     * @param User $user
+     * @return bool
+     */
+    public function isAdult(User $user)
+    {
+        $years_old = Carbon::parse($user->birthday)->diffInYears(Carbon::now());
+        return $years_old >= 21;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        if(Auth::user() && Auth::user()->role){
+            if(Auth::user()->role ->name == 'admin'){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isModerator()
+    {
+        if(Auth::user() && Auth::user()->role){
+            if(Auth::user()->role ->name == 'moderator'){
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

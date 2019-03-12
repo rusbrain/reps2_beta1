@@ -431,7 +431,7 @@ function getMoreSmiles() {
         'silver': path + 'silver.png',
         'terran': path + 'terran.gif',
         'zerg': path + 'zerg.gif',
-        'gold': path + 's1.png',
+        'gold': path + 'gold.png',
         'protoss': path + 'protoss.gif'
     };
     return smilesObject

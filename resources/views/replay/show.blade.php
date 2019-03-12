@@ -40,11 +40,13 @@
                     {{$replay->user->name. ' | '}}
                 </a>
                 <div class="user-role">
-                    @if($replay->user->user_role_id != 0)
-                        {{$replay->user->role->title . ' | '}}
-                        {{$general_helper->getUserStatus($replay->user->score)}} {{$replay->user->score . ' pts | '}}
-                    @else
-                        {{$general_helper->getUserStatus($replay->user->score)}} {{$replay->user->score . ' pts | '}}
+                    @if($general_helper->isAdmin() ||  $general_helper->isModerator())
+                        @if($replay->user->user_role_id != 0)
+                            {{$replay->user->role->title . ' | '}}
+                            {{$general_helper->getUserStatus($replay->user->score)}} {{$replay->user->score . ' pts | '}}
+                        @else
+                            {{$general_helper->getUserStatus($replay->user->score)}} {{$replay->user->score . ' pts | '}}
+                        @endif
                     @endif
                 </div>
                 <div>

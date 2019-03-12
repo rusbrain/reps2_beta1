@@ -1017,6 +1017,26 @@ password-repairing:visited,
 .user-gallery-widget-link:hover .widget-gallery-img-preview{
   display: block;
 }
+.full-opacity-hover{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  opacity: 0.8;
+  background: #fff;
+  color: #2f6696;
+  transition: opacity 1s;
+  z-index: 10;
+  top:0;
+  left: 0;
+  border: 1px solid #efefef;
+}
+.full-opacity-hover:hover{
+  opacity: 0;
+}
+
 /*********END SIDEBAR LEFT*********/
 
 /*********SIDEBAR RIGHT********/
