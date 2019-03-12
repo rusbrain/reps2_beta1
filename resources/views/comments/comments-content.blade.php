@@ -34,11 +34,13 @@
                         </div>
                     </div>
                     <div class="user-role">
-                        @if($comment->user->user_role_id != 0)
-                            {{$comment->user->role->title . ' | '}}
-                            {{$general_helper->getUserStatus($comment->user->score)}} {{$comment->user->score . ' pts | '}}
-                        @else
-                            {{$general_helper->getUserStatus($comment->user->score)}} {{$comment->user->score . ' pts | '}}
+                        @if($general_helper->isAdmin() ||  $general_helper->isModerator())
+                            @if($comment->user->user_role_id != 0)
+                                {{$comment->user->role->title . ' | '}}
+                                {{$general_helper->getUserStatus($comment->user->score)}} {{$comment->user->score . ' pts | '}}
+                            @else
+                                {{$general_helper->getUserStatus($comment->user->score)}} {{$comment->user->score . ' pts | '}}
+                            @endif
                         @endif
                     </div>
                     <div>

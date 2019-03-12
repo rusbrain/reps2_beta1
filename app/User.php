@@ -10,11 +10,17 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
  * @property integer $id
+ * @property integer $user_role_id
  * @property string $name
  * @property string $email
+ * @property Carbon $birthday
+ * @property Carbon $activity_at
  * @property Carbon $email_verified_at
  * @property Carbon $created_at
  * @property Carbon $updated_at
+ *
+ *
+ * @property UserRole[] $role
 */
 class User extends Authenticatable
 {

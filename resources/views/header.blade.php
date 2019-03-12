@@ -42,7 +42,7 @@
                         <a href="" class="logged-user-avatar">A</a>
                     @endif
                 @endif
-                <a href="" class="logged-user-nickname">{{Auth::user()->name}}</a>
+                <a href="{{route('user_profile',['id' =>Auth::id()])}}" class="logged-user-nickname">{{Auth::user()->name}}</a>
             </div>
         @if(Auth::user()->user_role_id == 1)
             <!--IF user is admin-->

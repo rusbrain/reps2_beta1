@@ -66,17 +66,21 @@
 
             @if($general_helper->isOnline($user))
                 <!-- if online displays this -->
-                    <div class="color-green text-bold margin-bottom-20">online</div>
+                <div class="color-green text-bold margin-bottom-20">online</div>
             @else
                 <!-- if INACTIVE displays this -->
-                    <div class="user-last-online">{{$user->activity_at}}</div>
-                @endif
+                <div class="user-last-online">{{$user->activity_at}}</div>
+            @endif
 
                 <div class="user-account-info-row">
                     <span>Статус:</span>
-                    <span>{{$general_helper->getUserStatus($user->score)}}
-                        <span class="text-bold">{{$user->score}}</span> pts
-                    </span>
+                    @if(Auth::id() == $user->id || $general_helper->isAdmin() ||  $general_helper->isModerator())
+                        <span>{{$general_helper->getUserStatus($user->score)}}
+                            <span class="text-bold">{{$user->score}}</span> pts
+                        </span>
+                    @else
+                        <span class="">скрыт</span>
+                    @endif
                 </div>
                 <div class="user-account-info-row">
                     <span>ДР:</span>

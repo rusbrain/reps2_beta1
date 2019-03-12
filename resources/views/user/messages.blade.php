@@ -41,7 +41,7 @@
                     @endif
                     <a href="{{route('user_profile',['id' =>$user->id])}}" class="user-name">{{$user->name}}</a>
 
-                    @if($general_helper->isOnline($user) && !is_null($user->activity_at))
+                    @if($general_helper->isOnline($user))
                         <!-- if online displays this -->
                         <span class="user-online-status">online</span>
                     @else
