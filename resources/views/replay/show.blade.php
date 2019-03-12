@@ -55,7 +55,7 @@
         </div>
         <div class="user-replay-wrapper">
             <div class="col-md-12 user-replay-header">
-                <div class="user-nickname text-bold">
+                <div class="user-nickname text-bold replay-header-content">
                     <a href="">{!! $replay->content !!}</a>
                 </div>
                 <div class="info">
@@ -135,6 +135,12 @@
                         <div class="replay-desc-right">Юзер Рейтинг:</div>
                         <div class="replay-desc-left">({{$replay->user_rating??'0'}})</div>
                     </div>
+                    @if(Auth::id() == $replay->user->id)
+                        <a href="{{route('replay.edit', ['id' => $replay->id])}}" class="user-theme-edit">
+                            <img src="{{route('home')}}/images/icons/svg/edit_icon.svg" alt="">
+                            <span>Редактировать</span>
+                        </a>
+                    @endif
                 </div>
                 <div class="col-md-4 position-relative">
                     <div>{{$replay->map->name??'не указано'}}</div>
@@ -167,13 +173,6 @@
                         <a href="{{route('replay.download', ['id' => $replay->id])}}" class="">Скачать</a>
                         <span>({{$replay->downloaded??0}})</span>
                     </div>
-
-                    @if(Auth::id() == $replay->user->id)
-                        <a href="{{route('replay.edit', ['id' => $replay->id])}}" class="user-theme-edit">
-                            <img src="{{route('home')}}/images/icons/svg/edit_icon.svg" alt="">
-                            <span>Редактировать</span>
-                        </a>
-                    @endif
                 </div>
             </div>
         </div><!-- close div /.user-replay-wrapper -->

@@ -121,29 +121,27 @@ class RegisterController extends Controller
      */
     public function emailVerified($token)
     {
-        /**@var UserEmailToken $email_token*/
-        $email_token = UserEmailToken::where('token', $token)->where('function', UserEmailToken::TOK_FUNC_VERIFIED_EMAIL)->first();
-        if (!$email_token) {
-            return view('auth.passwords.not_correct_token',['error' => 'Неверный токен']);
-        }
-        /**@var User $user*/
-        $user = $email_token->user()->first();
-
         try {
+            /**@var UserEmailToken $email_token*/
+            $email_token = UserEmailToken::where('token', $token)->where('function', UserEmailToken::TOK_FUNC_VERIFIED_EMAIL)->first();
+            if (!$email_token) {
+                throw new \DomainException('Неверная ссылка');
+            }
+            /**@var User $user*/
+            $user = $email_token->user()->first();
+
             if($user->email_verified_at){
                 throw new \DomainException('Ваш email уже подтвержден');
             }
             $user->email_verified_at = Carbon::now();
             $user->save();
             $this->guard()->login($user);
+
             return redirect('/');
 
         } catch (\DomainException $e) {
-            return view('auth.passwords.not_correct_token',['error' => $e->getMessage()]);
+            return redirect()->route('error',['error' => $e->getMessage()]);
         }
     }
-
-
-
 
 }

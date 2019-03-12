@@ -20,38 +20,42 @@ use Illuminate\Support\Facades\Auth;
 class ReplayService
 {
     /**
+     * Get Replays list
+     *
      * @param ReplaySearchRequest $request
      * @param ReplayController $object
-     * @return mixed
+     * @return Builder
      */
     public static function listReplay(ReplaySearchRequest $request, ReplayController $object)
     {
-        $method = $object->method_get;
-        $query = Replay::$method();
-        $request_data = $request->validated();
+        /**@var Builder $query*/
+        $query = Replay::where('approved', 1);
 
-        foreach ($request_data as $key=>$datum){
-            if (is_null($datum)){
-                unset($request_data[$key]);
-            }
+        /**check object replay type */
+        if($object->replay_type != 'search'){
+            $method = $object->method_get;
+            $query = Replay::$method();
         }
 
-        if ($request_data){
-            foreach ($request_data as $key=>$request_datum) {
-                if ($key == 'text'){
-                    $query->where(function ($q) use ($request_datum){
+        /**remove request parameters with null */
+        $request_data = self::cleanRequestData($request);
+
+        /**create search query*/
+        if ($request_data) {
+            foreach ($request_data as $key => $request_datum) {
+                if ($key == 'text') {
+                    $query->where(function ($q) use ($request_datum) {
                         $q->where('title', 'like', "%$request_datum%")
                             ->orWhere('content', 'like', "%$request_datum%")
                             ->orWhere('championship', 'like', "%$request_datum%");
                     });
-                }elseif($key == 'sort_by'){
+                } elseif ($key == 'sort_by') {
                     $query->orderBy($request_datum, 'desc');
-                }else{
+                } else {
                     $query->where($key, $request_datum);
                 }
             }
         }
-
         return $query;
     }
 
@@ -130,9 +134,14 @@ class ReplayService
      */
     public static function download(Replay $replay)
     {
+        /**@var Replay $replay*/
         $file = $replay->file()->first();
+        if(is_null($file)){
+            return false;
+        }
         $replay->downloaded = $replay->downloaded+1;
         $replay->save();
+
         return $file->link;
     }
 
@@ -299,5 +308,37 @@ class ReplayService
                 'desc')->limit(5)->get();
             $last_gosu_replay->load('map');
         return $last_gosu_replay->load('map');
+    }
+
+    /**
+     * Prepare string with search parameters for ajax replays rendering
+     *
+     * @param ReplaySearchRequest $request
+     * @return string
+     */
+    public static function getRequestString(ReplaySearchRequest $request)
+    {
+        $str = '';
+        $request_data = self::cleanRequestData($request);
+        foreach ($request_data as $key => $datum) {
+            $str .= '&'.$key.'='.$datum;
+        }
+        return $str;
+    }
+
+    /**
+     * Remove request parameters with null
+     * @param $request
+     * @return mixed
+     */
+    public static function cleanRequestData($request)
+    {
+        $request_data = $request->validated();
+        foreach ($request_data as $key=>$datum){
+            if (is_null($datum)){
+                unset($request_data[$key]);
+            }
+        }
+        return $request_data;
     }
 }

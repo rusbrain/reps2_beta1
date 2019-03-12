@@ -42,7 +42,7 @@ class HomeController extends Controller
                 return redirect()->route('forum.topic.search', $request->all());
                 break;
             case 'replay':
-                return redirect()->route('replay', $request->all());
+                return redirect()->route('replay.search', $request->all());
                 break;
         }
         return back();

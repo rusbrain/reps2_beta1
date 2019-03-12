@@ -1,10 +1,9 @@
 @extends('layouts.site')
 @inject('general_helper', 'App\Services\GeneralViewHelper')
-@php $countries = $general_helper->getCountries();@endphp
 
 @section('sidebar-left')
     <!-- All Forum Topics -->
-    @include('sidebar-widgets.search-replay-form')
+    @include('sidebar-widgets.all-forum-sections')
     <!-- END All Forum Topics -->
 @endsection
 
@@ -15,10 +14,15 @@
         <div class="col-md-12">
             <ul class="breadcrumb">
                 <li>
-                    <a href="/">Главная</a>
+                    <a href="/">
+                        Главная
+                    </a>
                 </li>
                 <li>
-                    <a href="" class="active">/ {!! $title !!}</a>
+                    <a href="{{route('forum.index')}}">/ Форум</a>
+                </li>
+                <li>
+                    <a href="" class="active">/ Результаты поиска</a>
                 </li>
             </ul>
         </div>
@@ -27,26 +31,29 @@
 
     <div class="content-box">
         <div class="col-md-12 section-title">
-            <div>{!! $title !!}</div>
+            <div>Вы искали: {{$search_text}}</div>
+            <div>
+                @if(Auth::user())
+                    <img src="{{route('home')}}/images/icons/arrow-right-white.png" alt="">
+                    <a href="{{route('forum.topic.create')}}">
+                        Добавить новую тему
+                    </a>
+                @endif
+            </div>
         </div>
-        <!--  REPLAY LIST -->
-        <div id="ajax_section_replays_list"
-            @if($replay_type == 'search')
-             data-path="{{route('replay.search.paginate').'?'.$request}}">
-            @else
-             data-path="{{(isset($type) && $type) ? route('replay.'.$replay_type.'_type.paginate', ['type' => $type]).'?'.$request : route('replay.'.$replay_type.'.paginate').'?'.$request}}">
-            @endif
+
+        <!--  CONTENT -->
+        <div id="ajax_section_topics" >
             <div class="load-wrapp">
                 <img src="/images/loader.gif" alt="">
             </div>
         </div>
-        <!-- END REPLAY LIST -->
+        <!-- END CONTENT -->
+
+        <!--  PAGINATION -->
+        <div class="pagination-content"></div>
+        <!-- END  PAGINATION -->
     </div><!-- close div /.content-box -->
-
-    <!--  PAGINATION -->
-    <div class="pagination-content"></div>
-    <!-- END  PAGINATION -->
-
 @endsection
 
 @section('sidebar-right')
@@ -78,14 +85,12 @@
                 getSections(page);
             })
         });
-
         function getSections(page) {
-            var container = $('#ajax_section_replays_list');
-            var path = container.attr('data-path');
+            var container = $('#ajax_section_topics');
             var body = $("html, body");
 
-            $.get(path + '&page=' + page, {}, function (data) {
-                container.html(data.replays);
+            $.get('{{route('forum.topic.search.pagination')}}'+'?page='+page+'&text='+'{{$search_text}}', {}, function (data) {
+                container.html(data.topics);
                 $('.pagination-content').html(data.pagination);
                 $('.load-wrapp').hide();
 
