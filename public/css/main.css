@@ -1860,6 +1860,10 @@ div.author-info {
 .gallery-image-wrapper {
   padding: 20px 15px;
 }
+.gallery-image-wrapper img{
+  margin: 0 auto;
+  display: block;
+}
 .next-image,
 .prev-image {
   background-color: #fff;
