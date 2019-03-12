@@ -23,6 +23,7 @@ Route::group(['middleware' => 'activity'], function () {
         Route::get('/gosu_replays', 'WidgetController@gosuReplay')->name('widgets.gosu_replays');
     });
 
+    Route::get('error/{error}', 'ErrorController@index')->name('error');
     Route::get('/comments/{object}/{id}', 'CommentController@pagination')->name('comments.pagination');
     Route::get('/search', 'HomeController@search')->name('home.search');
     Route::get('/email/verified/{token}', 'Auth\RegisterController@emailVerified')->name('email_verified');

@@ -6,9 +6,20 @@ use App\Http\Requests\ReplaySearchAdminRequest;
 use App\Observers\ReplayPointsObserver;
 use App\Services\Replay\ReplayService;
 use App\Traits\ModelRelations\ReplayRelation;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * @property integer $id
+ * @property integer $user_id
+ * @property integer $downloaded
+ * @property string $title
+ * @property string $content
+ * @property Carbon $email_verified_at
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ */
 class Replay extends Model
 {
     use Notifiable, ReplayRelation;

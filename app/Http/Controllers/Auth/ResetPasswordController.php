@@ -61,7 +61,7 @@ class ResetPasswordController extends Controller
         /**@var User $user*/
         $user = User::where('email',$request->get('email'))->first();
         if(!$user){
-            return view('auth.passwords.not_correct_token',['error' => 'Нет пользователя с таким email']);
+            return redirect()->route('error',['error' => 'Нет пользователя с таким email: '.$request->get('email')]);
         }
 
         $token = md5(time());
@@ -83,11 +83,10 @@ class ResetPasswordController extends Controller
      */
     public function viewNewPassword($token)
     {
-
         if (UserEmailToken::where('token',$token)->where('function', UserEmailToken::TOK_FUNC_UPDATE_PASSWORD)->count()){
             return view('auth.passwords.new')->with('update_email_token', $token);
         }
-        return view('auth.passwords.not_correct_token', ['error' => 'Неверная ссылка']);
+        return redirect()->route('error', ['error' => 'Неверная ссылка']);
     }
 
     /**
@@ -108,7 +107,6 @@ class ResetPasswordController extends Controller
 
             return redirect('/');
         }
-
-        return view('auth.passwords.not_correct_token',['error' => 'Неверная ссылка']);
+        return redirect()->route('error', ['error' => 'Неверная ссылка']);
     }
 }

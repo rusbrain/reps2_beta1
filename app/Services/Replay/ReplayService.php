@@ -134,9 +134,14 @@ class ReplayService
      */
     public static function download(Replay $replay)
     {
+        /**@var Replay $replay*/
         $file = $replay->file()->first();
+        if(is_null($file)){
+            return false;
+        }
         $replay->downloaded = $replay->downloaded+1;
         $replay->save();
+
         return $file->link;
     }
 

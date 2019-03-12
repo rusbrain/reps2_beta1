@@ -213,11 +213,22 @@ class ReplayController extends Controller
      */
     public function download($id)
     {
+        /**@var Replay $replay*/
         $replay = Replay::find($id);
         if (!$replay) {
             return abort(404);
         }
-        return Storage::download(str_replace('/storage', 'public', ReplayService::download($replay)));
+
+        try {
+            $link = ReplayService::download($replay);
+            if (!$link) {
+                throw new \DomainException('Файл отсутствует');
+            }
+            return Storage::download(str_replace('/storage', 'public', $link));
+
+        } catch (\DomainException $e) {
+            return view('error', ['error' => $e->getMessage()]);
+        }
     }
 
     /**
