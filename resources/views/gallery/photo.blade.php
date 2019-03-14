@@ -41,6 +41,18 @@
                             <!-- -- -->
                         @endif
                     </div>
+                    <div class="article-rating">
+                        <a href="#vote-modal" class="positive-vote vote-replay-up" data-toggle="modal"
+                           data-rating="1" data-route="{{route('gallery.set_rating',['id'=>$photo->id])}}">
+                            <img src="{{route('home')}}/images/icons/thumbs-up.png" alt="">
+                            <span id="positive-vote">{{$photo->positive_count}}</span>
+                        </a>
+                        <a href="#vote-modal" class="negative-vote vote-replay-down" data-toggle="modal"
+                           data-rating="-1" data-route="{{route('gallery.set_rating',['id'=>$photo->id])}}">
+                            <img src="{{route('home')}}/images/icons/thumbs-down.png" alt="">
+                            <span id="negative-vote">{{$photo->negative_count}}</span>
+                        </a>
+                    </div>
                     <div>
                         @if($photo->photo_before)
                             <a href="{{route('gallery.view', ['id' => $photo->photo_before->id])}}" class="prev-image">&laquo;</a>
@@ -52,7 +64,7 @@
                 </div>
                 @if($photo->for_adults == \App\UserGallery::USER_GALLERY_FOR_ADULTS && !Auth::user())
                     <div class="text-center padding-top-bottom-10 text-bold">
-                        Фотография с рейтингом 18+. <br>
+                        Фотография с рейтингом 21+. <br>
                         Доступно только зарегистрированным пользователям
                     </div>
                 @else

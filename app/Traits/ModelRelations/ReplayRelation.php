@@ -93,7 +93,7 @@ trait ReplayRelation
     }
 
     /**
-     * Relations. Topic comments
+     * Relations. Replay comments
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */

@@ -47,7 +47,7 @@ Route::group(['middleware' => 'activity'], function () {
     Route::post('question/{id}/view_answer', 'InterviewQuestionController@getResult')->name('question.view_answer');
     Route::group(['middleware' => 'auth'], function () {
         Route::get('logout', 'Auth\LoginController@logout')->name('logout');
-        Route::get('comment/{id}/set_rating', 'CommentsRatingController@setRating')->name('comment.set_rating');
+        Route::post('comment/{id}/set_rating', 'CommentsRatingController@setRating')->name('comment.set_rating');
         Route::get('comment/{id}/get_rating', 'CommentsRatingController@getRating')->name('comment.ger_rating');
     });
 
@@ -155,7 +155,7 @@ Route::group(['middleware' => 'activity'], function () {
             Route::get('/my_gosu', 'ReplayGosuController@getUserReplay')->name('replay.my_gosu');
             Route::get('/my_gosu/paginate', 'ReplayGosuController@getUserReplayPaginate')->name('replay.my_gosus.paginate');
 
-            Route::get('{id}/set_rating', 'ReplayRatingController@setRating')->name('replay.set_rating');
+            Route::post('{id}/set_rating', 'ReplayRatingController@setRating')->name('replay.set_rating');
             Route::post('{id}/set_evaluation', 'ReplayRatingController@setEvaluation')->name('replay.set_evaluation');
             Route::group(['prefix' => 'comment'], function () {
                 Route::post('/store', 'ReplayCommentController@store')->name('replay.comment.store');
@@ -180,7 +180,7 @@ Route::group(['middleware' => 'activity'], function () {
             Route::get('/{id}/edit', 'UserGalleryController@edit')->name('gallery.edit');
             Route::post('/store', 'UserGalleryController@store')->name('gallery.store');
             Route::post('/{id}/update', 'UserGalleryController@update')->name('gallery.update');
-            Route::get('{id}/set_rating', 'UserGalleryRatingController@setRating')->name('gallery.set_rating');
+            Route::post('{id}/set_rating', 'UserGalleryRatingController@setRating')->name('gallery.set_rating');
 
             Route::group(['prefix' => 'comment'], function () {
                 Route::post('/store', 'UserGalleryCommentController@store')->name('gallery.comment.store');

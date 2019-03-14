@@ -155,20 +155,16 @@
                         </div>
                     @endif
                     <div class="replay-rating">
-                        @if(Auth::user())
-                            <a href="#vote-modal" class="positive-vote vote-replay-up" data-toggle="modal"
-                               data-rating="1">
-                                <img src="{{route('home')}}/images/icons/thumbs-up.png" alt="">
-                                <span id="positive-vote">{{$replay->positive_count}}</span>
-                            </a>
-                            <a href="#vote-modal" class="negative-vote vote-replay-down" data-toggle="modal"
-                               data-rating="-1">
-                                <img src="{{route('home')}}/images/icons/thumbs-down.png" alt="">
-                                <span id="negative-vote">{{$replay->negative_count}}</span>
-                            </a>
-                        @else
-                            <p>Зарегистрируйтесь что бы проголосовать</p>
-                        @endif
+                        <a href="#vote-modal" class="positive-vote vote-replay-up" data-toggle="modal"
+                           data-rating="1" data-route="{{route('replay.set_rating',['id'=>$replay->id])}}">
+                            <img src="{{route('home')}}/images/icons/thumbs-up.png" alt="">
+                            <span id="positive-vote">{{$replay->positive_count}}</span>
+                        </a>
+                        <a href="#vote-modal" class="negative-vote vote-replay-down" data-toggle="modal"
+                           data-rating="-1" data-route="{{route('replay.set_rating',['id'=>$replay->id])}}">
+                            <img src="{{route('home')}}/images/icons/thumbs-down.png" alt="">
+                            <span id="negative-vote">{{$replay->negative_count}}</span>
+                        </a>
                     </div>
                     <div class="replay-download">
                         <img src="{{route('home')}}/images/icons/download-blue.png" alt="">
@@ -215,10 +211,9 @@
                 </form>
             @else
                 <div class="text-center padding-top-bottom-10">
-                    Данная возможность доступна только зарегистрированным пользователям
+                    Данная возможность доступна только авторизированным пользователям
                 </div>
             @endif
-
         </div>
     </div>
 
@@ -234,42 +229,6 @@
         'object_id' => $replay->id
     ])
     <!--END ADD Comment-->
-
-    <!-- Modal -->
-    <div class="modal fade" id="vote-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Оставте комментарий</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="vote-form" action="{{route('replay.set_rating',['id'=>$replay->id])}}">
-                        @csrf
-                        <div class="form-group">
-                            <label for="rating">Голос:
-                                <div class="positive">
-                                    <img src="{{route('home')}}/images/icons/thumbs-up.png" alt="">
-                                </div>
-                                <div class="negative">
-                                    <img src="{{route('home')}}/images/icons/thumbs-down.png" alt="">
-                                </div>
-                            </label>
-                            <input type="hidden" name="rating" id="rating" value="">
-                        </div>
-                        <div class="form-group">
-                            <label for="comment">Комментарий</label>
-                            <input type="text" class="form-control" name="comment" id="comment" value="">
-                        </div>
-                        <button class="btn-blue btn-form" type="submit">Проголосовать</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection
 
 @section('sidebar-right')

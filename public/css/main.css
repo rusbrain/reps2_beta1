@@ -223,10 +223,10 @@ img {
 .color-green {
   color: #54c438;
 }
-.color-red{
+.color-red {
   color: #dc3545;
 }
-.color-white{
+.color-white {
   color: #fff;
 }
 /**buttons*/
@@ -327,10 +327,10 @@ img {
   align-items: center;
   justify-content: center;
 }
-.load-wrapp img{
+.load-wrapp img {
   width: 70px;
 }
-.email-btn{
+.email-btn {
   padding: 9px 36px;
 }
 /*******Icons SVG*******/
@@ -593,7 +593,7 @@ form label {
   justify-content: space-between;
   align-items: center;
 }
-.quote img:hover{
+.quote img:hover {
   cursor: pointer;
   z-index: 10;
 }
@@ -673,6 +673,23 @@ form label {
 #vote-modal .negative.active {
   display: inline-block;
 }
+.unregistered-info-wrapper {
+}
+.unregistered-info-wrapper .notice {
+  font-size: 14px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-family: 'Roboto-Medium', sans-serif;
+  padding: 15px;
+}
+.btn-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn-wrapper > a {
+  margin-right: 10px;
+}
 /*****END Modal Windows*****/
 
 /*******HEADER**********/
@@ -697,7 +714,7 @@ form label {
   text-decoration: underline;
   color: #fff;
 }
-password-repairing:visited,
+.password-repairing:visited,
 .password-repairing {
   font-family: "Roboto-Bold", sans-serif;
   color: #fff;
@@ -1006,7 +1023,7 @@ password-repairing:visited,
   display: inline-block;
   overflow: hidden;
 }
-.widget-gallery-img-preview{
+.widget-gallery-img-preview {
   display: none;
   position: absolute;
   top: 0;
@@ -1014,10 +1031,10 @@ password-repairing:visited,
   width: 100px;
   z-index: 10;
 }
-.user-gallery-widget-link:hover .widget-gallery-img-preview{
+.user-gallery-widget-link:hover .widget-gallery-img-preview {
   display: block;
 }
-.full-opacity-hover{
+.full-opacity-hover {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1029,14 +1046,13 @@ password-repairing:visited,
   color: #2f6696;
   transition: opacity 1s;
   z-index: 10;
-  top:0;
+  top: 0;
   left: 0;
   border: 1px solid #efefef;
 }
-.full-opacity-hover:hover{
+.full-opacity-hover:hover {
   opacity: 0;
 }
-
 /*********END SIDEBAR LEFT*********/
 
 /*********SIDEBAR RIGHT********/
@@ -1198,7 +1214,7 @@ password-repairing:visited,
 .content-box-forum-img {
   max-height: 170px;
 }
-.content-box-news-title{
+.content-box-news-title {
   height: 40px;
   display: block;
 }
@@ -1221,7 +1237,7 @@ password-repairing:visited,
   font-family: "Roboto-Medium", sans-serif;
   background: #4890af;
 }
-.forum-section-title a{
+.forum-section-title a {
   color: #fff;
 }
 .forum-section-title:hover {
@@ -1240,7 +1256,7 @@ password-repairing:visited,
   padding-left: 10px;
   align-items: center;
 }
-.forum-section-info > div{
+.forum-section-info > div {
   margin-right: 10px;
 }
 .forum-section-topics {
@@ -1253,7 +1269,7 @@ password-repairing:visited,
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.forum-section-link{
+.forum-section-link {
   color: #737373;
   padding-left: 15px;
 }
@@ -1505,17 +1521,17 @@ password-repairing:visited,
 .user-replay-header .user-nickname {
   flex: 0 0 50%;
 }
-.replay-author{
+.replay-author {
   display: flex;
   align-items: center;
 }
-.replay-author a{
+.replay-author a {
   color: #fff;
 }
-.replay-author a > img{
+.replay-author a > img {
   margin-right: 5px;
 }
-.replay-author .logged-user-avatar{
+.replay-author .logged-user-avatar {
   margin-right: 5px;
 }
 .user-replay-info {
@@ -1575,6 +1591,7 @@ div.author-info {
   justify-content: space-around;
   border-bottom: none !important;
 }
+
 .replay-rating a {
   margin-right: 5px;
 }
@@ -1637,19 +1654,19 @@ div.author-info {
 .replay-vote-form label {
   margin: 0 30px 0 10px;
 }
-.replay-header-content{
+.replay-header-content {
   align-items: center;
 }
-.replay-header-content p{
+.replay-header-content p {
   margin-bottom: 1px;
 }
-.user-replay-wrapper .user-theme-edit{
+.user-replay-wrapper .user-theme-edit {
   display: flex;
   align-items: center;
   justify-content: left;
   margin-top: 10px;
 }
-.user-replay-wrapper .user-theme-edit img{
+.user-replay-wrapper .user-theme-edit img {
   margin-right: 10px;
 }
 /*----------------------------------------*/
@@ -1860,7 +1877,7 @@ div.author-info {
 .gallery-image-wrapper {
   padding: 20px 15px;
 }
-.gallery-image-wrapper img{
+.gallery-image-wrapper img {
   margin: 0 auto;
   display: block;
 }
@@ -2035,7 +2052,7 @@ div.author-info {
   overflow-y: auto;
   max-height: 500px;
 }
-.user-friends-list-table tr td{
+.user-friends-list-table tr td {
   vertical-align: middle;
 }
 /*----------------------------------------*/
@@ -2265,14 +2282,13 @@ a.user-section-title {
   flex: 0 0 50px;
   width: 50px;
 }
-.user-message-widget .logged-user-avatar{
+.user-message-widget .logged-user-avatar {
   width: 50px;
   height: 50px;
   margin-right: 15px;
   font-size: 24px;
   border-radius: 0;
 }
-
 .qty-messages {
   border-radius: 10px;
   background: #f44336;
@@ -2300,15 +2316,14 @@ a.user-section-title {
 /**------------------------------------*/
 /*---------ERROR PAGE-------------------*/
 /*---------------------------------------*/
-.password-recovering{
+.password-recovering {
   text-align: center;
   padding-bottom: 10px;
   color: #4d4d4d;
 }
-.is-invalid .invalid-feedback{
+.is-invalid .invalid-feedback {
   display: block;
 }
-
 /**------------------------------------*/
 /*---------END ERROR PAGE-------------------*/
 /*---------------------------------------*/
