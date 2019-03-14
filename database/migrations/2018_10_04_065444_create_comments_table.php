@@ -21,6 +21,8 @@ class CreateCommentsTable extends Migration
             $table->string('title')     ->nullable();
             $table->longText('content') ->charset('cp1251');
             $table->integer('rating')   ->default(0);
+            $table->integer('negative_count')   ->default(0);
+            $table->integer('positive_count')   ->default(0);
             $table->timestamps();
 
             $table->index('user_id');

@@ -79,7 +79,53 @@
 </div>
 
 <!-- ========ALL MODAL WINDOWS ============== -->
-
+<div class="modal fade" id="vote-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Оставте комментарий</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @if(Auth::user() )
+                    <form id="vote-form" action="" method="POST">
+                        @csrf
+                        <div class="form-group">
+                            <label for="rating">Голос:
+                                <div class="positive">
+                                    <img src="{{route('home')}}/images/icons/thumbs-up.png" alt="">
+                                </div>
+                                <div class="negative">
+                                    <img src="{{route('home')}}/images/icons/thumbs-down.png" alt="">
+                                </div>
+                            </label>
+                            <input type="hidden" name="rating" id="rating" value="">
+                        </div>
+                        <div class="form-group">
+                            <label for="comment">Комментарий</label>
+                            <input type="text" class="form-control" name="comment" id="comment" value="">
+                        </div>
+                        <button class="btn-blue btn-form" type="submit">Проголосовать</button>
+                    </form>
+                @else
+                    <div class="unregistered-info-wrapper">
+                        <div class="notice">
+                            Данная опция доступна только авторизированным пользователям
+                        </div>
+                        <div class="btn-wrapper">
+                            <a href="/" class="btn-blue btn-form">Авторизироваться</a>
+                            <a href="{{route('registration_form')}}"
+                               class="btn-blue btn-form">Зарегистрироваться</a>
+                        </div>
+                    </div>
+                @endif
+            </div>
+        </div>
+    </div>
+</div>
 <!-- ========== END ALL MODAL WINDOWS ============ -->
 
 <!-- Optional JavaScript -->

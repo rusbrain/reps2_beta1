@@ -66,13 +66,15 @@
                         <span>Цитировать</span>
                     </div>
                     <div class="comment-rating">
-                        <a href="" class="positive-vote">
+                        <a href="#vote-modal" class="positive-vote vote-replay-up" data-toggle="modal"
+                           data-rating="1" data-route="{{route('comment.set_rating',['id' => $comment->id])}}">
                             <img src="{{route('home')}}/images/icons/thumbs-up.png" alt="">
-                            <span>{{$comment->positive_count}}</span>
+                            <span id="positive-vote">{{$comment->positive_count}}</span>
                         </a>
-                        <a href="" class="negative-vote">
+                        <a href="#vote-modal" class="negative-vote vote-replay-down" data-toggle="modal"
+                           data-rating="-1" data-route="{{route('comment.set_rating',['id' => $comment->id])}}">
                             <img src="{{route('home')}}/images/icons/thumbs-down.png" alt="">
-                            <span>{{$comment->negative_count}}</span>
+                            <span id="negative-vote">{{$comment->negative_count}}</span>
                         </a>
                     </div>
                 </div>

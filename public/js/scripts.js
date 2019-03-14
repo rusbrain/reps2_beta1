@@ -152,7 +152,9 @@ $(function () {
     $('a.vote-replay-up, a.vote-replay-down').on('click', function (e) {
         var rating = $(this).attr('data-rating');
         var modal = $('#vote-modal');
+        var url = $(this).attr('data-route');
         modal.find('form input#rating').val(rating);
+        modal.find('form').attr('action', url);
 
         if (rating === '1') {
             modal.find('.negative').removeClass('active');
@@ -167,15 +169,11 @@ $(function () {
     $('#vote-form').on('submit', function (e) {
         e.preventDefault();
         var url = $(this).attr('action');
-        var comment = $(this).find('input[name=comment]').val();
-        var rating = $(this).find('input[name=rating]').val();
+        var selectData = $('#vote-form').serialize();
         $.ajax({
-            type: 'GET',
+            type: 'POST',
             url: url,
-            data: {
-                comment: comment,
-                rating: rating
-            },
+            data: selectData,
             success: function (response) {
                 location.reload();
             },
@@ -184,6 +182,9 @@ $(function () {
             }
         });
     });
+
+
+
 });
 
 /**

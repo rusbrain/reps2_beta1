@@ -44,7 +44,9 @@ class Comment extends Model
         'object_id',
         'title',
         'content',
-        'relation'
+        'relation',
+        'negative_count',
+        'positive_count'
     ];
 
     /**
