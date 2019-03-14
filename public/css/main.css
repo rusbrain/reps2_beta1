@@ -714,7 +714,7 @@ form label {
   text-decoration: underline;
   color: #fff;
 }
-password-repairing:visited,
+.password-repairing:visited,
 .password-repairing {
   font-family: "Roboto-Bold", sans-serif;
   color: #fff;
