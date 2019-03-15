@@ -51,7 +51,8 @@
                             </a>
                         </div>
                         @if($section->topics)
-                            <div id="post_id_{{$s}}" class="collapse {{$s == 0 ? 'show' : ''}} user-section-post-wrapper"
+                            <div id="post_id_{{$s}}"
+                                 class="collapse {{$s == 0 ? 'show' : ''}} user-section-post-wrapper"
                                  aria-labelledby="heading_post_id_{{$s}}"
                                  data-parent="#user-posts">
                                 @foreach($section->topics as $topic)
@@ -87,12 +88,14 @@
                                                         <img src="{{route('home')}}/images/icons/message-square-blue.png"
                                                              alt="" class="margin-right-15">
                                                     </a>
-                                                    <a href="{{route('forum.topic.edit',['id'=>$topic->id])}}"
-                                                       class="user-theme-edit">
-                                                        <img src="{{route('home')}}/images/icons/svg/edit_icon.svg"
-                                                             alt="">
-                                                        <span>Редактировать</span>
-                                                    </a>
+                                                    @if($general_helper->checkForumEdit($topic))
+                                                        <a href="{{route('forum.topic.edit',['id'=>$topic->id])}}"
+                                                           class="user-theme-edit">
+                                                            <img src="{{route('home')}}/images/icons/svg/edit_icon.svg"
+                                                                 alt="">
+                                                            <span>Редактировать</span>
+                                                        </a>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>

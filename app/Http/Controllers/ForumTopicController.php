@@ -83,10 +83,14 @@ class ForumTopicController extends Controller
      */
     public function edit($id)
     {
+        /**@var ForumTopic $topic*/
         $topic = ForumTopic::where('id', $id)->with('icon')->first();
 
         if(!$topic){
             return abort(404);
+        }
+        if(!TopicService::checkForumEdit($topic)){
+            return redirect()->route('error',['id' => 'Данный топик закрыт для редактирования']);
         }
 
         return view('forum.edit_topic', [
