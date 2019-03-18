@@ -166,7 +166,7 @@ $(function () {
         }
     });
 
-    $('#vote-form').on('submit', function (e) {
+    $('body').on('submit','#vote-form', function (e) {
         e.preventDefault();
         var url = $(this).attr('action');
         var selectData = $('#vote-form').serialize();
@@ -182,9 +182,6 @@ $(function () {
             }
         });
     });
-
-
-
 });
 
 /**
