@@ -64,12 +64,14 @@ class RatingService
         $comment = self::getComment($request);
 
         if($object){
-            UserReputation::updateOrCreate(
-                ['sender_id' => Auth::id(), 'recipient_id' => $object->user_id, 'object_id' => $object->id, 'relation' => $relation],
-                ['comment' => $comment, 'rating'=>  $request->get('rating')]
-            );
-
-            return ['rating' => self::getRatingValue($object)];
+            if(!self::checkUserVoteExist($object, $request, $relation)){
+                UserReputation::updateOrCreate(
+                    ['sender_id' => Auth::id(), 'recipient_id' => $object->user_id, 'object_id' => $object->id, 'relation' => $relation],
+                    ['comment' => $comment, 'rating'=>  $request->get('rating')]
+                );
+                return ['rating' => self::getRatingValue($object)];
+            }
+            return ['message' => 'Вы уже проголосовали, Ваш голос:', 'user_rating' => $request->get('rating')];
         }
 
         return abort(404);
@@ -169,5 +171,23 @@ class RatingService
         $val = $positive - $negative;
 
         $class_name::where('id', $object_id)->update(['rating'=>$val, 'negative_count' => $negative, 'positive_count' => $positive]);
+    }
+
+    /**
+     * @param $object
+     * @param $request
+     * @param $relation
+     * @return bool
+     */
+    public static function checkUserVoteExist($object, $request, $relation)
+    {
+        $vote = UserReputation::where('sender_id', Auth::id())
+            ->where('recipient_id', $object->user_id)
+            ->where('object_id', $object->id)
+            ->where('relation', $relation)
+            ->where('rating', $request->get('rating'))
+            ->first();
+
+        return $vote ? $vote : false;
     }
 }

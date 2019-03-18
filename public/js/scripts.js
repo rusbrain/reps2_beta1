@@ -149,7 +149,7 @@ $(function () {
     });
 
     /**Vote - positive / negative vote - Separate Replay Page*/
-    $('a.vote-replay-up, a.vote-replay-down').on('click', function (e) {
+    $('body').on('click','a.vote-replay-up, a.vote-replay-down', function (e) {
         var rating = $(this).attr('data-rating');
         var modal = $('#vote-modal');
         var url = $(this).attr('data-route');
@@ -166,16 +166,27 @@ $(function () {
         }
     });
 
-    $('body').on('submit','#vote-form', function (e) {
+    $('body').on('submit','#rating-vote-form', function (e) {
         e.preventDefault();
         var url = $(this).attr('action');
-        var selectData = $('#vote-form').serialize();
+        var selectData = $('#rating-vote-form').serialize();
+        var imgClass = 'positive-vote-img';
         $.ajax({
             type: 'POST',
             url: url,
             data: selectData,
             success: function (response) {
-                location.reload();
+                if(response.message){
+                    if(response.user_rating === "-1"){
+                        imgClass = 'negative-vote-img';
+                        console.log(response.user_rating);
+                    }
+                    $('#vote-modal').find('.modal-body .unregistered-info-wrapper').addClass('active');
+                    $('#vote-modal').find('.modal-body .unregistered-info-wrapper .notice').html(response.message);
+                    $('#vote-modal').find('.modal-body'+' .'+imgClass).addClass('active');
+                }else{
+                    location.reload();
+                }
             },
             error: function () {
 

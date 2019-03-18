@@ -673,7 +673,15 @@ form label {
 #vote-modal .negative.active {
   display: inline-block;
 }
-.unregistered-info-wrapper {
+.unregistered-info-wrapper.info-block{
+  align-items: center;
+  justify-content: center;
+}
+.unregistered-info-wrapper.info-block .notice{
+  margin-bottom: 0;
+}
+.unregistered-info-wrapper.active{
+  display: flex !important;
 }
 .unregistered-info-wrapper .notice {
   font-size: 14px;
@@ -681,6 +689,14 @@ form label {
   text-align: center;
   font-family: 'Roboto-Medium', sans-serif;
   padding: 15px;
+}
+.negative-vote-img,
+.positive-vote-img{
+  display: none;
+}
+.negative-vote-img.active,
+.positive-vote-img.active{
+  display: block;
 }
 .btn-wrapper {
   display: flex;
