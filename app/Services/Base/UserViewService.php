@@ -43,9 +43,9 @@ class UserViewService extends ViewService
      * @param LengthAwarePaginator $data
      * @return string
      */
-   public static function getNews(LengthAwarePaginator $data)
+   public static function getNews($data)
    {
-       return (string) view('news.news_list')->with(['data' => $data]);
+       return (string) view('news.news_list')->with(['news' => $data]);
    }
 
     /**
@@ -74,4 +74,6 @@ class UserViewService extends ViewService
    {
        return (string) view('replay.replays_list')->with(['replays' => $data]);
    }
+
+
 }

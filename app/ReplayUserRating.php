@@ -3,8 +3,18 @@
 namespace App;
 
 use App\Traits\ModelRelations\ReplayUserRatingRelation;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property integer $id
+ * @property integer $user_id
+ * @property integer $replay_id
+ * @property string $comment
+ * @property string $rating
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ */
 class ReplayUserRating extends Model
 {
     use ReplayUserRatingRelation;

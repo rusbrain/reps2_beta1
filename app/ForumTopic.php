@@ -10,6 +10,28 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\{Model, Builder};
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * @property integer $id
+ * @property integer $section_id
+ * @property integer $user_id
+ * @property integer $reviews
+ * @property integer $negative_count
+ * @property integer $positive_count
+ * @property integer $comments_count
+ * @property integer $news
+ * @property integer $approved
+ * @property string $title
+ * @property string $preview_file_id
+ * @property string $preview_content
+ * @property string $content
+ *
+ * @property Carbon $start_on
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ *
+ *
+  'preview_file_id', 'news',
+ */
 class ForumTopic extends Model
 {
     use Notifiable, ForumTopicRelation;

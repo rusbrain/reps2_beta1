@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\{ForumTopic, Replay, Services\Forum\TopicService};
+use App\{ForumTopic, Services\Forum\TopicService};
 use App\Http\Requests\PortalSearchRequest;
-use App\Services\Replay\ReplayService;
 
 class HomeController extends Controller
 {

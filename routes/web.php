@@ -41,12 +41,17 @@ Route::group(['middleware' => 'activity'], function () {
         });
     });
 
+    /**news page*/
     Route::get('news', 'NewsController@index')->name('news');
     Route::get('news/pagination', 'NewsController@pagination')->name('news.pagination');
+
+    /**sidebar voting*/
     Route::post('question/{id}/set_answer', 'InterviewQuestionController@setAnswer')->name('question.set_answer');
     Route::post('question/{id}/view_answer', 'InterviewQuestionController@getResult')->name('question.view_answer');
+
     Route::group(['middleware' => 'auth'], function () {
         Route::get('logout', 'Auth\LoginController@logout')->name('logout');
+        /**comments rating: like/dislike*/
         Route::post('comment/{id}/set_rating', 'CommentsRatingController@setRating')->name('comment.set_rating');
         Route::get('comment/{id}/get_rating', 'CommentsRatingController@getRating')->name('comment.ger_rating');
     });

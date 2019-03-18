@@ -91,7 +91,7 @@
             </div>
             <div class="modal-body">
                 @if(Auth::user() )
-                    <form id="vote-form" action="" method="POST">
+                    <form id="rating-vote-form" action="" method="POST">
                         @csrf
                         <div class="form-group">
                             <label for="rating">Голос:
@@ -122,6 +122,11 @@
                         </div>
                     </div>
                 @endif
+                <div class="unregistered-info-wrapper info-block display-none">
+                    <div class="notice"></div>
+                    <img class="positive-vote-img" src="{{route('home')}}/images/icons/thumbs-up.png" alt="">
+                    <img class="negative-vote-img" src="{{route('home')}}/images/icons/thumbs-down.png" alt="">
+                </div>
             </div>
         </div>
     </div>

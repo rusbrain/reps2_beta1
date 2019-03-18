@@ -9,13 +9,16 @@
 namespace App\Services;
 
 use App\Country;
+use App\ForumTopic;
 use App\Services\Base\{
     BaseDataService, InterviewQuestionsService
 };
+use App\Services\Forum\TopicService;
 use App\Traits\ViewHelper\{
     ForumData, ReplayData, UserData
 };
 use App\UserGallery;
+use Carbon\Carbon;
 
 class GeneralViewHelper
 {
@@ -45,6 +48,15 @@ class GeneralViewHelper
         if (!self::$instance) {
             self::$instance = $this;
         }
+    }
+
+    /**
+     * @param ForumTopic $topic
+     * @return bool
+     */
+    public function checkForumEdit(ForumTopic $topic)
+    {
+        return TopicService::checkForumEdit($topic);
     }
 
     /**

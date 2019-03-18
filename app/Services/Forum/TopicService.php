@@ -34,7 +34,6 @@ class TopicService
     {
         $title = 'Превью '.$request->has('title')?$request->get('title'):'';
         $file = File::storeFile($request->file('preview_img'), 'preview_img', $title);
-
         return $file->id;
     }
 
@@ -228,5 +227,18 @@ class TopicService
                 ->with('preview_image')
                 ->withCount('positive', 'negative', 'comments')
                 ->limit(5)->get();
+    }
+
+    /**
+     * @param $topic
+     * @return bool
+     */
+    public static function checkForumEdit($topic)
+    {
+        if (is_null($topic->created_at)) {
+            return false;
+        }
+        $time = Carbon::now()->diffInMinutes(Carbon::parse($topic->created_at));
+        return $time <= 60;
     }
 }

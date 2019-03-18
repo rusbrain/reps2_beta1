@@ -8,7 +8,9 @@
 
 namespace App\Traits\ViewHelper;
 
-use App\{GameVersion, Replay, ReplayMap, ReplayType};
+use App\{
+    GameVersion, Replay, ReplayMap, ReplayType, ReplayUserRating
+};
 
 trait ReplayData
 {
@@ -102,4 +104,16 @@ trait ReplayData
         return self::$instance->game_version;
     }
 
+    /**
+     * Checking User's evaluation on scale 1-5 of current Replay
+     *
+     * @param Replay $replay
+     * @return bool
+     */
+    public function checkUserReplayEvaluation(Replay $replay)
+    {
+        /**@var ReplayUserRating $evaluation_vote*/
+        $evaluation_vote = ReplayUserRating::where('user_id', \Auth::id())->where('replay_id', $replay->id)->first();
+        return $evaluation_vote ? $evaluation_vote->rating : false;
+    }
 }

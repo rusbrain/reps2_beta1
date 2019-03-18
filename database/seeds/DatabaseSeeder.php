@@ -23,5 +23,6 @@ class DatabaseSeeder extends Seeder
          $this->call(ForumSectionIconsSeed::class);
          $this->call(DBRelocationDataSeed::class);
 
+         $this->call(UserBirthdaysSeeder::class);//TODO: hide for production
     }
 }

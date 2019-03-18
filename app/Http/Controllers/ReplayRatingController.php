@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\SetReplayUserRatingRequest;
 use App\{Replay, ReplayUserRating, UserReputation};
-use App\Services\Rating\{ReplayUserRatingService, ReplayService};
+use App\Services\Rating\{ReplayUserRatingService};
+use \App\Services\Replay\ReplayService;
 
 class ReplayRatingController extends RatingController
 {

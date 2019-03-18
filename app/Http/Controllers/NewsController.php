@@ -15,8 +15,18 @@ class NewsController extends Controller
      */
     public function index(SearchForumTopicRequest $request)
     {
-        $news = TopicService::search($request->validated(), ForumTopic::newsWithQuery(ForumTopic::news())); // TODO:remove
-        return view('news.index')->with('news', $news->paginate(20));
+        $request_data = $request->validated();
+        foreach ($request_data as $key=>$datum){
+            if (is_null($datum)){
+                unset($request_data[$key]);
+            }
+        }
+        $str = '';
+        foreach ($request_data as $key => $datum) {
+            $str .= '&'.$key.'='.$datum;
+        }
+
+        return view('news.index')->with('request', $str);
     }
 
     /**

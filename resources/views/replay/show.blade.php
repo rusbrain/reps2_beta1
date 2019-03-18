@@ -182,33 +182,40 @@
         </div>
         <div class="col-md-12">
             @if(Auth::user())
-                <form action="{{route('replay.set_evaluation',['id'=>$replay->id])}}" method="POST"
-                      class="replay-vote-form">
-                    @csrf
-                    <div class="row">
-                        <div class="">
-                            <input type="radio" name="rating" id="rate_1" value="1">
-                            <label for="rate_1">1</label>
+                @php $evaluation_vote = $general_helper->checkUserReplayEvaluation($replay) @endphp
+                @if(!$evaluation_vote)
+                    <form action="{{route('replay.set_evaluation',['id'=>$replay->id])}}" method="POST"
+                          class="replay-vote-form">
+                        @csrf
+                        <div class="row">
+                            <div>
+                                <input type="radio" name="rating" id="rate_1" value="1">
+                                <label for="rate_1">1</label>
+                            </div>
+                            <div>
+                                <input type="radio" name="rating" id="rate_2" value="2">
+                                <label for="rate_2">2</label>
+                            </div>
+                            <div>
+                                <input type="radio" name="rating" id="rate_3" value="3">
+                                <label for="rate_3">3</label>
+                            </div>
+                            <div>
+                                <input type="radio" name="rating" id="rate_4" value="4">
+                                <label for="rate_4">4</label>
+                            </div>
+                            <div>
+                                <input type="radio" name="rating" id="rate_5" value="5">
+                                <label for="rate_5">5</label>
+                            </div>
+                            <button type="submit" class="btn-empty margin-left-40">Оценить</button>
                         </div>
-                        <div class="">
-                            <input type="radio" name="rating" id="rate_2" value="1">
-                            <label for="rate_2">2</label>
-                        </div>
-                        <div class="">
-                            <input type="radio" name="rating" id="rate_3" value="1">
-                            <label for="rate_3">3</label>
-                        </div>
-                        <div class="">
-                            <input type="radio" name="rating" id="rate_4" value="1">
-                            <label for="rate_4">4</label>
-                        </div>
-                        <div class="">
-                            <input type="radio" name="rating" id="rate_5" value="1">
-                            <label for="rate_5">5</label>
-                        </div>
-                        <button type="submit" class="btn-empty margin-left-40">Оценить</button>
+                    </form>
+                @else
+                    <div class="text-center padding-top-bottom-10">
+                        Ваша Оценка: <strong>{{$evaluation_vote}}</strong> по шкале от 1 до 5
                     </div>
-                </form>
+                @endif
             @else
                 <div class="text-center padding-top-bottom-10">
                     Данная возможность доступна только авторизированным пользователям

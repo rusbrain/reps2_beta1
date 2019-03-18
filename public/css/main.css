@@ -673,7 +673,15 @@ form label {
 #vote-modal .negative.active {
   display: inline-block;
 }
-.unregistered-info-wrapper {
+.unregistered-info-wrapper.info-block{
+  align-items: center;
+  justify-content: center;
+}
+.unregistered-info-wrapper.info-block .notice{
+  margin-bottom: 0;
+}
+.unregistered-info-wrapper.active{
+  display: flex !important;
 }
 .unregistered-info-wrapper .notice {
   font-size: 14px;
@@ -681,6 +689,14 @@ form label {
   text-align: center;
   font-family: 'Roboto-Medium', sans-serif;
   padding: 15px;
+}
+.negative-vote-img,
+.positive-vote-img{
+  display: none;
+}
+.negative-vote-img.active,
+.positive-vote-img.active{
+  display: block;
 }
 .btn-wrapper {
   display: flex;
@@ -1294,7 +1310,7 @@ form label {
 }
 .section-title > div:first-of-type {
   font-size: 14px;
-  max-width: 75%;
+  max-width: 72%;
 }
 .section-title div a {
   font-size: 10px;
@@ -1492,6 +1508,11 @@ form label {
 }
 .article-rating a img {
   margin-right: 5px;
+}
+.edit-info{
+  font-size: 11px;
+  font-style: italic;
+  font-family: 'Roboto-Regular',sans-serif;
 }
 /*----------------------------------------*/
 /*--------- END SINGLE ARTICLES PAGE CONTENT ----------- */
@@ -2034,9 +2055,6 @@ div.author-info {
   margin-bottom: 0;
 }
 .user-list-action {
-  /*display: flex;*/
-  /*align-items: center;*/
-  /*justify-content: center;*/
   text-align: center;
 }
 .user-friends-list-table .logged-user-avatar {
@@ -2142,6 +2160,7 @@ a.user-section-title {
 .user-theme-edit {
   font-size: 10px;
   color: #4890af;
+  margin-bottom: 2px;
 }
 /*----------------------------------------*/
 /*---END USER THEMES PAGE -------- */
