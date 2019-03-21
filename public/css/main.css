@@ -157,6 +157,9 @@ img {
 .text-medium {
   font-family: "Roboto-Medium", sans-serif;
 }
+.padding-15{
+  padding: 15px;
+}
 .padding-top-10 {
   padding-top: 10px;
 }
@@ -1233,6 +1236,19 @@ form label {
 .content-box-news-title {
   height: 40px;
   display: block;
+}
+.home-last-forum-type{
+  text-transform: uppercase;
+  color: #A6A6A6;
+  font-size: 12px;
+  letter-spacing: 0.25em;
+  margin-top: 20px;
+}
+.section-title.home-page{
+  font-size: 14px;
+  background: none;
+  color: #2F6696;
+  font-family: "Roboto-Medium",sans-serif;
 }
 /*----------------------------------------*/
 /*--------- END HOME PAGE CONTENT ----------- */

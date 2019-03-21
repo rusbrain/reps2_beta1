@@ -9,6 +9,7 @@ use App\Traits\ModelRelations\ReplayRelation;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 
 /**
  * @property integer $id
@@ -30,9 +31,9 @@ class Replay extends Model
      * @var array
      */
     protected $dispatchesEvents = [
-        'created'   => ReplayPointsObserver::class,
-        'deleted'   => ReplayPointsObserver::class,
-        'restored'  => ReplayPointsObserver::class,
+        'created' => ReplayPointsObserver::class,
+        'deleted' => ReplayPointsObserver::class,
+        'restored' => ReplayPointsObserver::class,
     ];
 
     /**
@@ -67,11 +68,33 @@ class Replay extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'user_replay', 'type_id','title', 'content', 'map_id', 'file_id',
-        'game_version_id', 'championship', 'first_country_id', 'second_country_id',
-        'first_matchup', 'second_matchup', 'rating', 'user_rating', 'first_race',
-        'second_race', 'first_location', 'second_location', 'creating_rate' ,'negative_count',
-        'positive_count', 'comments_count', 'downloaded', 'length', 'approved'];
+        'user_id',
+        'user_replay',
+        'type_id',
+        'title',
+        'content',
+        'map_id',
+        'file_id',
+        'game_version_id',
+        'championship',
+        'first_country_id',
+        'second_country_id',
+        'first_matchup',
+        'second_matchup',
+        'rating',
+        'user_rating',
+        'first_race',
+        'second_race',
+        'first_location',
+        'second_location',
+        'creating_rate',
+        'negative_count',
+        'positive_count',
+        'comments_count',
+        'downloaded',
+        'length',
+        'approved'
+    ];
 
     /**
      * @param $rating
@@ -108,8 +131,9 @@ class Replay extends Model
      */
     public static function getReplay(ReplaySearchAdminRequest $request)
     {
-        return ReplayService::search($request,Replay::withCount('user_rating'))
-            ->with('user',  'file', 'first_country', 'second_country', 'type', 'map')->withCount( 'positive', 'negative', 'comments')->paginate(50);
+        return ReplayService::search($request, Replay::withCount('user_rating'))
+            ->with('user', 'file', 'first_country', 'second_country', 'type', 'map')->withCount('positive', 'negative',
+                'comments')->paginate(50);
     }
 
     /**
@@ -119,8 +143,37 @@ class Replay extends Model
     public static function getreplayById($id)
     {
         return Replay::where('id', $id)
-            ->withCount( 'user_rating')
-            ->withCount( 'positive', 'negative', 'comments')
+            ->withCount('user_rating')
+            ->withCount('positive', 'negative', 'comments')
             ->with('user.avatar', 'file', 'game_version')->first();
+    }
+
+    /**
+     * get last five replays
+     *
+     * @param int $limit
+     * @return $this
+     */
+    public static function getLastReplays($limit = 5)
+    {
+
+        return DB::table((new self)->getTable())
+            ->select(DB::raw("id, created_at, 'replay' AS 'type'"))
+            ->where('approved', 1)
+            ->orderBy('created_at', 'desc')
+            ->limit($limit);
+    }
+
+    /**
+     * Get replays by ids
+     *
+     * @param array $ids
+     * @return mixed
+     */
+    public static function getReplayByIds(array $ids)
+    {
+        return Replay::whereIn('id', $ids)
+            ->withCount('positive', 'negative', 'comments')
+            ->get();
     }
 }
