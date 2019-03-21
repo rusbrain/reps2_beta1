@@ -10,7 +10,7 @@
     <!-- END COMMENTS PAGINATION TOP-->
 
     <!-- COMMENTS CONTENT -->
-    <div id="ajax_section_comments">
+    <div id="ajax_section_comments" data-pages="" data-comments-total="{{$comments->total()}}">
         <div class="load-wrapp">
             <img src="/images/loader.gif" alt="">
         </div>
@@ -53,6 +53,8 @@
 
         function getSections(page) {
             var container = $('#ajax_section_comments');
+            var comments_total = container.attr('data-comments-total');
+            var comments_on_page = 20;
             $.get('{{route('comments.pagination',['object' => $object, 'id' => $id])}}' +
                 '?page=' + page, {}, function (data) {
                 container.html(data.comments);
@@ -63,6 +65,8 @@
                 if (page !== 1) {
                     moveToTop(container);
                 }
+                /***/
+                writeCommentIds(comments_total, page, comments_on_page);
             })
         }
 
@@ -141,6 +145,28 @@
             }
             url += ' [/url]';
             return url;
+        }
+
+        /**Write comments IDs on page*/
+        function writeCommentIds(comments_total, current_page, comments_on_page) {
+            var i = 0;
+            var j = 0;
+            /**ID of first comment on page*/
+            var first_comment = comments_total;
+            if (parseInt(current_page) !== 1) {
+                first_comment = (comments_total - (comments_on_page * current_page - comments_on_page));
+            }
+
+            $('.comment-id').each(function () {
+                $(this).attr('id', first_comment - i);
+                $(this).html('#' + (first_comment - i));
+                i++;
+            });
+
+            $('.quote').each(function () {
+                $(this).attr('data-id', first_comment - j);
+                j++;
+            });
         }
     </script>
 @endsection

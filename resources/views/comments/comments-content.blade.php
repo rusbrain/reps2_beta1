@@ -1,5 +1,4 @@
 @inject('general_helper', 'App\Services\GeneralViewHelper')
-@php $total_comments = $comments->total(); @endphp
 @foreach($comments as $item => $comment)
     <div class="content-box">
         @if($item == 0)
@@ -51,8 +50,7 @@
                 <div class="comment-creating-date">
                     <img src="{{route('home')}}/images/icons/clock-white.png" alt="">
                     {{$comment->created_at}}
-                    <span class="comment-id" id="{{$item == 0 ? $total_comments : $total_comments - $item}}">
-                        #{{$item == 0 ? $total_comments : $total_comments - $item}}</span>
+                    <span class="comment-id" id=""></span>
                 </div>
             </div>
             <div class="col-md-12 comment-content-wrapper">
@@ -63,7 +61,7 @@
                     <div class="quote">
                         <img src="{{route('home')}}/images/icons/frame.png" alt=""
                              data-user="{{$comment->user->name}}"
-                             data-id="{{$item}}">
+                             data-id="">
                         <span>Цитировать</span>
                     </div>
                     <div class="comment-rating">
