@@ -1,19 +1,21 @@
 @inject('general_helper', 'App\Services\GeneralViewHelper')
 <div class="row">
+
     <div class="col-12 home-last-forum-type margin-bottom-10">Галереи</div>
     <div class="gallery-image-info-panel col-md-12">
-        <div>
-            <div class="font-14">
-                <a href="{{route('gallery.view', ['id' => $photo->id])}}">{{$photo->comment}}</a>
+        <div class="home-gallery-info">
+            <div class="font-14 ">
+                <a  class="color-black" href="{{route('gallery.view', ['id' => $photo->id])}}">{{$photo->comment}}</a>
             </div>
-            @if(Auth::id() != $photo->user->id)
-                <!--display if user is not author-->
-                <div>
-                    <span>автор:</span>
-                    <a href="{{route('user_profile',['id' =>$photo->user->id])}}">{{$photo->user->name}}</a>
-                </div>
-                <!-- -- -->
-            @endif
+            <span> | </span>
+            <div>
+                <span>автор:</span>
+                @if(!is_null($photo->user))
+                    <a class="color-blue"
+                       href="{{route('user_profile',['id' =>$photo->user->id])}}">{{$photo->user->name}}</a>
+
+                @endif
+            </div>
         </div>
         <div class="article-rating">
             <a href="#vote-modal" class="positive-vote vote-replay-up" data-toggle="modal"

@@ -73,7 +73,7 @@ class HomeController extends Controller
      */
     public function lastForums()
     {
-        $last_records = $this->getRecordsById($this->lastFiveRecords());
+        $last_records = $this->getRecordsByIds($this->lastFiveRecords());
         return view('home.last_forums')->with(['last_forum' => $last_records]);
     }
 
@@ -82,14 +82,15 @@ class HomeController extends Controller
      */
     public function topForums()
     {
-        return view('home.top_forums')->with(['popular_forum_topics' => ForumTopic::popularForumTopics()]);
+        $popular_forums = $this->getRecordsByIds($this->getTopRecords());
+        return view('home.top_forums')->with(['popular_forums' => $popular_forums]);
     }
 
     /**
      * @param $ids
      * @return mixed
      */
-    public function getRecordsById($ids)
+    public function getRecordsByIds($ids)
     {
         /**create ids arrays by record type*/
         foreach ($ids as $id) {
@@ -118,6 +119,18 @@ class HomeController extends Controller
 
         return $forums->union($replays)
             ->union($galleries)->orderBy('created_at', 'desc')
+            ->limit(5)->get();
+    }
+
+    public function getTopRecords()
+    {
+        /**@var Builder $forums */
+        $forums = ForumTopic::getTopForumTopics(5);
+        $replays = Replay::getTopReplays(5);
+        $galleries = UserGallery::getTopGalleries(5);
+
+        return $forums->union($replays)
+            ->union($galleries)->orderBy('rating','DESC')
             ->limit(5)->get();
     }
 

@@ -172,8 +172,21 @@ class Replay extends Model
      */
     public static function getReplayByIds(array $ids)
     {
-        return Replay::whereIn('id', $ids)
-            ->withCount('positive', 'negative', 'comments')
-            ->get();
+        return Replay::whereIn('id', $ids)->get();
+    }
+
+    /**
+     * Get five populates replays
+     *
+     * @param $limit
+     * @return $this
+     */
+    public static function getTopReplays($limit)
+    {
+        return DB::table((new self())->getTable())
+            ->select(DB::raw("id, rating, 'replay' AS 'type'"))
+            ->where('approved', 1)
+            ->orderBy('rating','DESC')
+            ->limit($limit);
     }
 }

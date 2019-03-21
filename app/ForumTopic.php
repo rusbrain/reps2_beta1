@@ -202,6 +202,25 @@ class ForumTopic extends Model
     }
 
     /**
+     * Get five populates forum topics/news
+     *
+     * @param $limit
+     * @return $this
+     */
+    public static function getTopForumTopics($limit)
+    {
+        return DB::table((new self())->getTable())
+            ->select(DB::raw("id, rating, 'forum' AS 'type'"))
+            ->where('approved', 1)
+            ->where(function ($q) {
+                $q->whereNull('start_on')
+                    ->orWhere('start_on', '<=', Carbon::now()->format('Y-M-d'));
+            })
+            ->orderBy('rating','DESC')
+            ->limit($limit);
+    }
+
+    /**
      * @return mixed
      */
     public static function lastNews()

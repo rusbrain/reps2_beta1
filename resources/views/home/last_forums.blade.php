@@ -1,5 +1,5 @@
 @inject('general_helper', 'App\Services\GeneralViewHelper')
-<div class="content-box padding-left-15 padding-right-15">
+<div class="content-box content-box-home-page">
     <div class="row">
         <h1 class="content-box-title w-100">Последние форумы</h1>
     </div>

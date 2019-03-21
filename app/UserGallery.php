@@ -100,4 +100,18 @@ class UserGallery extends Model
             ->withCount('positive', 'negative', 'comments')
             ->get();
     }
+
+    /**
+     * Get five populates replays
+     *
+     * @param $limit
+     * @return mixed
+     */
+    public static function getTopGalleries($limit)
+    {
+        return DB::table((new self())->getTable())
+            ->select(DB::raw("id, rating, 'gallery' AS 'type'"))
+            ->orderBy('rating','DESC')
+            ->limit($limit);
+    }
 }

@@ -232,6 +232,9 @@ img {
 .color-white {
   color: #fff;
 }
+.color-black{
+  color: #737373;
+}
 /**buttons*/
 .button-up.fixed {
   position: fixed;
@@ -1191,6 +1194,17 @@ form label {
   border-radius: 3px;
   background: #fff;
   margin-bottom: 10px;
+}
+.content-box-home-page{
+  padding: 0 15px 15px 15px;
+}
+.home-gallery-info{
+  display: flex;
+  align-items: center;
+}
+.home-gallery-info span{
+  margin-left: 10px;
+  margin-right: 10px;
 }
 .content-box-title {
   height: 40px;
