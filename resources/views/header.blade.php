@@ -26,7 +26,7 @@
     <!--IF user is logged, displays this view-->
         <div class="logged-user">
             <div class="logged-user-info">
-                <a href="" class="user-new-messages">
+                <a href="{{route('user.messages_all')}}" class="user-new-messages">
                     <img src="{{route('home')}}/images/icons/new_message.png" alt="">
                     @if($general_helper->getNewUserMessage() != 0)
                         <div class="user-new-messages-qty">{{$general_helper->getNewUserMessage()}}</div>
