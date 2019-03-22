@@ -1035,7 +1035,7 @@ form label {
   font-family: "Roboto-Medium", sans-serif;
 }
 .user-gallery-widget .widget-forum-topics-wrapper {
-  max-height: 300px;
+  max-height: 500px;
   overflow-y: auto;
 }
 .user-gallery-widget .photo-comment {
@@ -1205,6 +1205,13 @@ form label {
 .home-gallery-info span{
   margin-left: 10px;
   margin-right: 10px;
+}
+.home-gallery-img-wrapper{
+  display: block;
+  text-align: center;
+}
+.home-gallery-img-wrapper img{
+  max-height: 400px;
 }
 .content-box-title {
   height: 40px;

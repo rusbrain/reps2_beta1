@@ -24,9 +24,10 @@ use Illuminate\Support\Facades\DB;
  * @property integer $news
  * @property integer $approved
  * @property string $title
- * @property string $preview_file_id
+ * @property integer $preview_file_id
  * @property string $preview_content
  * @property string $content
+ * @property string $updated_by_user
  *
  * @property Carbon $start_on
  * @property Carbon $created_at

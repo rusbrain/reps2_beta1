@@ -155,6 +155,7 @@ $(function () {
         var url = $(this).attr('data-route');
         modal.find('form input#rating').val(rating);
         modal.find('form').attr('action', url);
+        modal.find('.modal-body .unregistered-info-wrapper').removeClass('active');
 
         if (rating === '1') {
             modal.find('.negative').removeClass('active');

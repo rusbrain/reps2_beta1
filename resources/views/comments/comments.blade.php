@@ -134,10 +134,18 @@
 
         function createCommentUrl(comment_id, object, object_id) {
             var url = '[url={{route('home')}}/';
+            console.log(comment_id);
+            console.log(object);
+            console.log(object_id);
             if (object === 'topic') {
                 url += 'forum/';
             }
-            url += object + '/' + object_id;
+            if(object === 'gallery'){
+                url += object + '/photo/' + object_id;
+            }else{
+                url += object + '/' + object_id;
+            }
+
             if (comment_id === undefined || comment_id === '') {
                 url += '] >>';
             } else {
@@ -163,7 +171,7 @@
                 i++;
             });
 
-            $('.quote').each(function () {
+            $('.quote img').each(function () {
                 $(this).attr('data-id', first_comment - j);
                 j++;
             });

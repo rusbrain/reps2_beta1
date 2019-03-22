@@ -131,4 +131,30 @@ class UserService
 
         User::where('id', $user->id)->delete();
     }
+
+    /**
+     * @return bool
+     */
+    public static function isAdmin()
+    {
+        if(Auth::user() && Auth::user()->role){
+            if(Auth::user()->role->name == 'admin'){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @return bool
+     */
+    public static function isModerator()
+    {
+        if(Auth::user() && Auth::user()->role){
+            if(Auth::user()->role->name == 'moderator'){
+                return true;
+            }
+        }
+        return false;
+    }
 }

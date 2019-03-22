@@ -13,7 +13,6 @@
                 @if(!is_null($photo->user))
                     <a class="color-blue"
                        href="{{route('user_profile',['id' =>$photo->user->id])}}">{{$photo->user->name}}</a>
-
                 @endif
             </div>
         </div>
@@ -43,7 +42,7 @@
                     <div class="full-opacity-hover">[21+]</div>
                 </div>
             @else
-                <a href="{{route('gallery.view', ['id' => $photo->id])}}">
+                <a href="{{route('gallery.view', ['id' => $photo->id])}}" class="home-gallery-img-wrapper">
                     <img src="{{$photo->file->link}}" alt="" class="">
                 </a>
             @endif

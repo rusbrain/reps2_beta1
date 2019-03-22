@@ -80,7 +80,7 @@
                             <a href="{{route('forum.topic.my_list')}}">Мои темы</a>
                         </li>
                         <li>
-                            <a href="{{route('replay.create')}}">Отправить госу реплей</a>
+                            <a href="{{route('replay.create')}}">Отправить реплей</a>
                         </li>
                         <li>
                             <a href="{{route('replay.my_user')}}">Мои реплеи</a>
