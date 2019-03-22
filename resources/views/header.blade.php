@@ -26,7 +26,7 @@
     <!--IF user is logged, displays this view-->
         <div class="logged-user">
             <div class="logged-user-info">
-                <a href="" class="user-new-messages">
+                <a href="{{route('user.messages_all')}}" class="user-new-messages">
                     <img src="{{route('home')}}/images/icons/new_message.png" alt="">
                     @if($general_helper->getNewUserMessage() != 0)
                         <div class="user-new-messages-qty">{{$general_helper->getNewUserMessage()}}</div>
@@ -80,7 +80,7 @@
                             <a href="{{route('forum.topic.my_list')}}">Мои темы</a>
                         </li>
                         <li>
-                            <a href="{{route('replay.create')}}">Отправить госу реплей</a>
+                            <a href="{{route('replay.create')}}">Отправить реплей</a>
                         </li>
                         <li>
                             <a href="{{route('replay.my_user')}}">Мои реплеи</a>

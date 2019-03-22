@@ -85,7 +85,7 @@ trait UserData
     public function isAdmin()
     {
         if(Auth::user() && Auth::user()->role){
-            if(Auth::user()->role ->name == 'admin'){
+            if(Auth::user()->role->name == 'admin'){
                 return true;
             }
         }
@@ -98,7 +98,7 @@ trait UserData
     public function isModerator()
     {
         if(Auth::user() && Auth::user()->role){
-            if(Auth::user()->role ->name == 'moderator'){
+            if(Auth::user()->role->name == 'moderator'){
                 return true;
             }
         }

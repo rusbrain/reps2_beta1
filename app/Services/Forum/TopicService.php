@@ -78,7 +78,7 @@ class TopicService
      * @param $topic
      * @param bool $admin
      */
-    public static function update(ForumTopicUpdteRequest $request, $topic, $admin = false)
+    public static function update(ForumTopicUpdteRequest $request, ForumTopic $topic, $admin = false)
     {
         $topic_data = [
             'title'=> $request->get('title'),
@@ -114,6 +114,10 @@ class TopicService
 
             $topic_data['preview_file_id'] = $file->id;
         }
+
+        /**@var User $user*/
+        $user = User::getUserProfile(Auth::id());
+        $topic_data['updated_by_user'] = $user->name;
 
         ForumTopic::where('id', $topic->id)->update($topic_data);
     }

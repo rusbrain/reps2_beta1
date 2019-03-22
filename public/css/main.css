@@ -157,6 +157,9 @@ img {
 .text-medium {
   font-family: "Roboto-Medium", sans-serif;
 }
+.padding-15{
+  padding: 15px;
+}
 .padding-top-10 {
   padding-top: 10px;
 }
@@ -228,6 +231,9 @@ img {
 }
 .color-white {
   color: #fff;
+}
+.color-black{
+  color: #737373;
 }
 /**buttons*/
 .button-up.fixed {
@@ -1029,7 +1035,7 @@ form label {
   font-family: "Roboto-Medium", sans-serif;
 }
 .user-gallery-widget .widget-forum-topics-wrapper {
-  max-height: 300px;
+  max-height: 500px;
   overflow-y: auto;
 }
 .user-gallery-widget .photo-comment {
@@ -1189,6 +1195,24 @@ form label {
   background: #fff;
   margin-bottom: 10px;
 }
+.content-box-home-page{
+  padding: 0 15px 15px 15px;
+}
+.home-gallery-info{
+  display: flex;
+  align-items: center;
+}
+.home-gallery-info span{
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.home-gallery-img-wrapper{
+  display: block;
+  text-align: center;
+}
+.home-gallery-img-wrapper img{
+  max-height: 400px;
+}
 .content-box-title {
   height: 40px;
   background: #4890af;
@@ -1233,6 +1257,19 @@ form label {
 .content-box-news-title {
   height: 40px;
   display: block;
+}
+.home-last-forum-type{
+  text-transform: uppercase;
+  color: #A6A6A6;
+  font-size: 12px;
+  letter-spacing: 0.25em;
+  margin-top: 20px;
+}
+.section-title.home-page{
+  font-size: 14px;
+  background: none;
+  color: #2F6696;
+  font-family: "Roboto-Medium",sans-serif;
 }
 /*----------------------------------------*/
 /*--------- END HOME PAGE CONTENT ----------- */

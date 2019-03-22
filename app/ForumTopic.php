@@ -7,8 +7,11 @@ use App\Observers\ForumTopicPointsObserver;
 use App\Services\Forum\TopicService;
 use App\Traits\ModelRelations\ForumTopicRelation;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\{Model, Builder};
+use Illuminate\Database\Eloquent\{
+    Model, Builder
+};
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 
 /**
  * @property integer $id
@@ -21,16 +24,17 @@ use Illuminate\Notifications\Notifiable;
  * @property integer $news
  * @property integer $approved
  * @property string $title
- * @property string $preview_file_id
+ * @property integer $preview_file_id
  * @property string $preview_content
  * @property string $content
+ * @property string $updated_by_user
  *
  * @property Carbon $start_on
  * @property Carbon $created_at
  * @property Carbon $updated_at
  *
  *
-  'preview_file_id', 'news',
+ * 'preview_file_id', 'news',
  */
 class ForumTopic extends Model
 {
@@ -42,9 +46,9 @@ class ForumTopic extends Model
      * @var array
      */
     protected $dispatchesEvents = [
-        'created'   => ForumTopicPointsObserver::class,
-        'deleted'   => ForumTopicPointsObserver::class,
-        'restored'  => ForumTopicPointsObserver::class,
+        'created' => ForumTopicPointsObserver::class,
+        'deleted' => ForumTopicPointsObserver::class,
+        'restored' => ForumTopicPointsObserver::class,
     ];
 
     /**
@@ -59,9 +63,23 @@ class ForumTopic extends Model
      *
      * @var array
      */
-    protected $fillable = ['icon', 'reps_id', 'reps_section', 'section_id', 'title', 'preview_content',
-        'content', 'user_id', 'reviews', 'start_on', 'preview_file_id', 'news','negative_count',
-        'positive_count', 'comments_count'];
+    protected $fillable = [
+        'icon',
+        'reps_id',
+        'reps_section',
+        'section_id',
+        'title',
+        'preview_content',
+        'content',
+        'user_id',
+        'reviews',
+        'start_on',
+        'preview_file_id',
+        'news',
+        'negative_count',
+        'positive_count',
+        'comments_count'
+    ];
 
     /**
      * Update forum topic rating
@@ -81,14 +99,14 @@ class ForumTopic extends Model
      */
     public static function news()
     {
-        return ForumTopic::where('news',1)
-            ->where(function ($q){
+        return ForumTopic::where('news', 1)
+            ->where(function ($q) {
                 $q->whereNull('start_on')
                     ->orWhere('start_on', '<=', Carbon::now()->format('Y-M-d'));
             })
-            ->whereHas('section', function($q){
-            $q->where('is_active', 1)->where('is_general', 1);
-        })->orderBy('created_at', 'desc');
+            ->whereHas('section', function ($q) {
+                $q->where('is_active', 1)->where('is_general', 1);
+            })->orderBy('created_at', 'desc');
     }
 
     /**
@@ -98,10 +116,12 @@ class ForumTopic extends Model
     public static function newsWithQuery(Builder $query)
     {
         return $query->with('section', 'preview_image', 'icon')
-            ->withCount( 'positive', 'negative', 'comments')
-            ->with(['user'=> function($q){
-                $q->withTrashed();
-            }]);
+            ->withCount('positive', 'negative', 'comments')
+            ->with([
+                'user' => function ($q) {
+                    $q->withTrashed();
+                }
+            ]);
     }
 
     /**
@@ -113,8 +133,8 @@ class ForumTopic extends Model
     public static function getTopicById($topic_id)
     {
         return ForumTopic::where('id', $topic_id)
-            ->with('section', 'user.avatar','preview_image', 'icon')
-            ->withCount( 'positive', 'negative', 'comments')
+            ->with('section', 'user.avatar', 'preview_image', 'icon')
+            ->withCount('positive', 'negative', 'comments')
             ->first();
     }
 
@@ -126,18 +146,23 @@ class ForumTopic extends Model
      */
     public static function getTopicsForSection(ForumSection $data)
     {
-        return $data->topics()->with(['user'=> function($q){
-            $q->with('avatar')->withTrashed();
-        }])
-            ->withCount( 'positive', 'negative', 'comments')
-            ->where(function ($q){
+        return $data->topics()->with([
+            'user' => function ($q) {
+                $q->with('avatar')->withTrashed();
+            }
+        ])
+            ->withCount('positive', 'negative', 'comments')
+            ->where(function ($q) {
                 $q->whereNull('start_on')
-                    ->orWhere('start_on','<=', Carbon::now()->format('Y-M-d'));
+                    ->orWhere('start_on', '<=', Carbon::now()->format('Y-M-d'));
             })
-            ->with(['comments' => function($query){                                                             //TODO:remove "with comments"
-                $query->withCount('positive', 'negative')->orderBy('created_at', 'desc')->get();
-            }])
-            ->with('comments', 'icon')                                                                  //TODO:remove "with comments"
+            ->with([
+                'comments' => function ($query
+                ) {                                                             //TODO:remove "with comments"
+                    $query->withCount('positive', 'negative')->orderBy('created_at', 'desc')->get();
+                }
+            ])
+            ->with('comments', 'icon')//TODO:remove "with comments"
             ->orderBy('created_at', 'desc')->paginate(20);
     }
 
@@ -148,12 +173,12 @@ class ForumTopic extends Model
     public static function getTopicWithRelations($id)
     {
         return ForumTopic::where('id', $id)
-            ->where(function ($q){
+            ->where(function ($q) {
                 $q->whereNull('start_on')
                     ->orWhere('start_on', '<=', Carbon::now()->format('Y-M-d'));
             })
             ->with(User::getUserWithReputationQuery())
-            ->withCount( 'positive', 'negative', 'comments')
+            ->withCount('positive', 'negative', 'comments')
             ->with('icon')->first();
     }
 
@@ -162,14 +187,14 @@ class ForumTopic extends Model
      */
     public static function popularForumTopics()
     {
-        return ForumTopic::where('approved',1)
-            ->where(function ($q){
+        return ForumTopic::where('approved', 1)
+            ->where(function ($q) {
                 $q->whereNull('start_on')
-                    ->orWhere('start_on','<=', Carbon::now()->format('Y-M-d'));
+                    ->orWhere('start_on', '<=', Carbon::now()->format('Y-M-d'));
             })
-            ->withCount( 'positive', 'negative', 'comments')
-            ->whereHas('section', function ($query){
-                $query->where('is_active',1)->where('is_general',1);
+            ->withCount('positive', 'negative', 'comments')
+            ->whereHas('section', function ($query) {
+                $query->where('is_active', 1)->where('is_general', 1);
             })
             ->with('preview_image')
             ->limit(5)
@@ -178,14 +203,35 @@ class ForumTopic extends Model
     }
 
     /**
+     * Get five populates forum topics/news
+     *
+     * @param $limit
+     * @return $this
+     */
+    public static function getTopForumTopics($limit)
+    {
+        return DB::table((new self())->getTable())
+            ->select(DB::raw("id, rating, 'forum' AS 'type'"))
+            ->where('approved', 1)
+            ->where(function ($q) {
+                $q->whereNull('start_on')
+                    ->orWhere('start_on', '<=', Carbon::now()->format('Y-M-d'));
+            })
+            ->orderBy('rating','DESC')
+            ->limit($limit);
+    }
+
+    /**
      * @return mixed
      */
     public static function lastNews()
     {
-        return ForumTopic::news()->where('approved',1)->with(['user'=> function($q){
-            $q->withTrashed()->with('avatar');
-        }])
-            ->withCount( 'positive', 'negative', 'comments')
+        return ForumTopic::news()->where('approved', 1)->with([
+            'user' => function ($q) {
+                $q->withTrashed()->with('avatar');
+            }
+        ])
+            ->withCount('positive', 'negative', 'comments')
             ->with('preview_image', 'icon')->limit(4)->get();
     }
 
@@ -195,10 +241,12 @@ class ForumTopic extends Model
      */
     public static function getSearchTitleNews($search)
     {
-        return ForumTopic::news()->where('approved',1)->with(['user'=> function($q){
-            $q->withTrashed()->with('avatar');
-        }])
-            ->withCount( 'positive', 'negative', 'comments')
+        return ForumTopic::news()->where('approved', 1)->with([
+            'user' => function ($q) {
+                $q->withTrashed()->with('avatar');
+            }
+        ])
+            ->withCount('positive', 'negative', 'comments')
             ->where('title', 'like', "%$search%")
             ->with('preview_image', 'icon')->paginate(20);
     }
@@ -209,12 +257,14 @@ class ForumTopic extends Model
      */
     public static function getSearchTitle($search)
     {
-        return ForumTopic::with(['user'=> function($q){
-            $q->withTrashed();
-        }])
-            ->withCount( 'positive', 'negative', 'comments')
+        return ForumTopic::with([
+            'user' => function ($q) {
+                $q->withTrashed();
+            }
+        ])
+            ->withCount('positive', 'negative', 'comments')
             ->with('icon')
-            ->where(function ($q){
+            ->where(function ($q) {
                 $q->whereNull('start_on')
                     ->orWhere('start_on', '<=', Carbon::now()->format('Y-M-d'));
             })
@@ -229,7 +279,7 @@ class ForumTopic extends Model
     public static function getTopicPagination(SearchForumTopicRequest $request)
     {
         return TopicService::search($request->validated(), self::with('user', 'section', 'icon'))
-            ->withCount( 'positive', 'negative', 'comments')->paginate(50);
+            ->withCount('positive', 'negative', 'comments')->paginate(50);
     }
 
     /**
@@ -238,6 +288,41 @@ class ForumTopic extends Model
      */
     public static function searchTopic($text)
     {
-        return ForumTopic::where('preview_content', 'like', "%$text%")->orWhere('content', 'like', "%$text%")->orWhere('title', 'like', "%$text%");
+        return ForumTopic::where('preview_content', 'like', "%$text%")->orWhere('content', 'like',
+            "%$text%")->orWhere('title', 'like', "%$text%");
+    }
+
+    /**
+     * get last five forums
+     *
+     * @param int $limit
+     * @return $this
+     */
+    public static function getLastForumTopic($limit = 5)
+    {
+        return DB::table((new self())->getTable())
+            ->select(DB::raw("id, created_at, 'forum' AS 'type'"))
+            ->where('approved', 1)
+            ->where('news', 0)
+            ->where(function ($q) {
+                $q->whereNull('start_on')
+                    ->orWhere('start_on', '<=', Carbon::now()->format('Y-M-d'));
+            })
+            ->orderBy('created_at', 'desc')
+            ->limit($limit);
+    }
+
+    /**
+     * Get forum topics by ids
+     *
+     * @param array $ids
+     * @return mixed
+     */
+    public static function getForumTopicsByIds(array $ids)
+    {
+        return ForumTopic::whereIn('id', $ids)
+            ->with('preview_image')
+            ->withCount('positive', 'negative', 'comments')
+            ->get();
     }
 }

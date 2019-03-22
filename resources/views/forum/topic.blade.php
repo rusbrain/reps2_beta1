@@ -56,9 +56,16 @@
                         <img src="{{route('home')}}/images/icons/svg/edit_icon.svg" alt="">
                         <span>Редактировать</span>
                     </a>
+                @elseif($general_helper->isAdmin() || $general_helper->isModerator())
+                    <a href="{{route('forum.topic.edit',['id'=>$topic->id])}}" class="user-theme-edit">
+                        <img src="{{route('home')}}/images/icons/svg/edit_icon.svg" alt="">
+                        <span>Редактировать</span>
+                    </a>
                 @endif
                 <div class="edit-info">
-                    {{$topic->user->name}} отредактировал сообщение {{$topic->updated_at->format('d-m-Y')}}
+                    @if(!is_null($topic->updated_by_user) && $topic->updated_by_user != '')
+                        {{$topic->updated_by_user}} отредактировал сообщение {{$topic->updated_at->format('d-m-Y')}}
+                    @endif
                 </div>
             </div>
         </div>

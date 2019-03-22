@@ -20,7 +20,7 @@ class CreateForumTopicsTable extends Migration
             $table->integer('section_id');
             $table->string('title');
             $table->text('preview_content')     ->charset('cp1251')->nullable();
-            $table->text('preview_file_id')     ->nullable();
+            $table->integer('preview_file_id')  ->nullable();
             $table->longText('content')         ->charset('cp1251');
             $table->integer('user_id');
             $table->integer('reviews')          ->default(0);
@@ -33,6 +33,7 @@ class CreateForumTopicsTable extends Migration
             $table->integer('positive_count')   ->default(0);
             $table->integer('comments_count')   ->default(0);
             $table->dateTime('commented_at')    ->default(\Carbon\Carbon::now());
+            $table->string('updated_by_user')   ->nullable();
             $table->timestamps();
 
             $table->index('section_id');
