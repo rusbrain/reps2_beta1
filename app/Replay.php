@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 /**
  * @property integer $id
  * @property integer $user_id
+ * @property integer $user_replay
  * @property integer $downloaded
  * @property string $title
  * @property string $content
@@ -93,7 +94,8 @@ class Replay extends Model
         'comments_count',
         'downloaded',
         'length',
-        'approved'
+        'approved',
+        'video_iframe'
     ];
 
     /**

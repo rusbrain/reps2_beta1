@@ -133,7 +133,7 @@
                     </div>
 
                     <div class="form-group">
-                        <button type="submit" class="btn-blue btn-form">Опубликовать</button>
+                        <button type="submit" class="btn-blue btn-form">Сохранить</button>
                     </div>
                 </form>
             </div>

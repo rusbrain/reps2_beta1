@@ -1343,7 +1343,7 @@ form label {
   justify-content: space-between;
   padding-top: 4px;
   padding-bottom: 4px;
-  height: 30px;
+  min-height: 30px;
 }
 .section-title > div:first-of-type {
   font-size: 14px;
@@ -1726,6 +1726,13 @@ div.author-info {
 }
 .user-replay-wrapper .user-theme-edit img {
   margin-right: 10px;
+}
+.video-link-wrapper{
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.video-link-wrapper iframe{
+  max-width: 100%;
 }
 /*----------------------------------------*/
 /*----- END SINGLE  REPLAY PAGE --------- */
@@ -2231,6 +2238,13 @@ a.user-section-title {
   border-bottom: 1px solid #dadada;
   padding-bottom: 15px;
   padding-top: 30px;
+}
+.replay-type{
+  height: 30px;
+  display: flex;
+  align-items: center;
+  padding-left: 15px;
+  color: #495057;
 }
 /*----------------------------------------*/
 /*---END USER CREATE REPLAY PAGE -------- */

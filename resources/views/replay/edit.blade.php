@@ -48,12 +48,12 @@ $game_versions = $general_helper->getGameVersion();
             <div class="col"></div>
             <div class="col-md-10">
                 <form action="{{route('replay.update',['id' => $replay->id])}}" enctype="multipart/form-data"
-                      class="user-create-replay-form">
+                      class="user-create-replay-form" method="post">
                     @csrf
                     <div class="form-fields-box">
                         <div class="form-group">
                             <label for="name">* Название:</label>
-                            <input type="text" id="name" value="{{$replay->title??old('title')}}" name="name"
+                            <input type="text" id="name" value="{{$replay->title??old('title')}}" name="title"
                                    class="form-control {{ $errors->has('title') ? ' is-invalid' : '' }}">
                             @if ($errors->has('title'))
                                 <span class="invalid-feedback">
@@ -65,18 +65,25 @@ $game_versions = $general_helper->getGameVersion();
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="user_replay">* Пользовательский/Gosu:</label>
-                                    <select class="custom-select {{ $errors->has('user_replay') ? ' is-invalid' : '' }}"
-                                            id="user_replay" name="user_replay">
-                                        <option value="0" {{0 == $replay->user_replay??old('user_replay')?'selected':''}}>Госу
-                                        </option>
-                                        <option value="1" {{1 == $replay->user_replay??old('user_replay')?'selected':''}}>
-                                            Пользовательский
-                                        </option>
-                                    </select>
-                                    @if ($errors->has('user_replay'))
-                                        <span class="invalid-feedback">
+                                    @if($general_helper->isModerator() || $general_helper->isAdmin())
+                                        <select class="custom-select {{ $errors->has('user_replay') ? ' is-invalid' : '' }}"
+                                                id="user_replay" name="user_replay">
+                                            <option value="0" {{0 == $replay->user_replay??old('user_replay')?'selected':''}}>Госу
+                                            </option>
+                                            <option value="1" {{1 == $replay->user_replay??old('user_replay')?'selected':''}}>
+                                                Пользовательский
+                                            </option>
+                                        </select>
+                                        @if ($errors->has('user_replay'))
+                                            <span class="invalid-feedback">
                                             <strong>{{ $errors->first('user_replay') }}</strong>
                                         </span>
+                                        @endif
+                                    @else
+                                        <div class="replay-type">
+                                            {{$replay->user_replay == 1 ? 'Пользовательский' : 'Gosu'}}
+                                        </div>
+                                        <input type="hidden" name="user_replay" value="{{$replay->user_replay}}">
                                     @endif
                                 </div>
                             </div>
@@ -278,6 +285,18 @@ $game_versions = $general_helper->getGameVersion();
                     </div><!--close div /.form-fields-box-->
 
                     <div class="form-group margin-top-30">
+                        <label for="video_iframe">Вставить HTML код с Youtube с видео реплеем</label>
+                        <textarea name="video_iframe"
+                                  class="form-control {{ $errors->has('video_iframe') ? ' is-invalid' : '' }}"
+                                  id="video_iframe" rows="3">{!! $replay->video_iframe??old('video_iframe') !!}</textarea>
+                        @if ($errors->has('video_iframe'))
+                            <span class="invalid-feedback">
+                                <strong>{{ $errors->first('video_iframe') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+
+                    <div class="form-group">
                         <label for="replay">*Загрузить новый Replay:
                             <span class="preview-image-wrapper">
                                 <img src="{{route('home')}}/images/icons/add_photo_icon.png" alt="">
@@ -306,7 +325,7 @@ $game_versions = $general_helper->getGameVersion();
                     </div>
 
                     <div class="form-group">
-                        <button type="submit" class="btn-blue btn-form">Создать</button>
+                        <button type="submit" class="btn-blue btn-form">Сохранить</button>
                     </div>
                 </form><!-- close div /.user-create-replay-form -->
             </div>

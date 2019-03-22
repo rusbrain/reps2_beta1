@@ -35,7 +35,7 @@
 
                 @if(Auth::user()->view_avatars == 1)
                     @if(Auth::user()->avatar)
-                        <a href="" class="logged-user-avatar">
+                        <a href="{{route('user_profile',['id' =>Auth::id()])}}" class="logged-user-avatar">
                             <img src="{{Auth::user()->avatar->link}}" alt="">
                         </a>
                     @else

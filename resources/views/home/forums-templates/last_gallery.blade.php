@@ -37,7 +37,7 @@
     @else
         <div class="col-md-12">
             @if($photo->for_adults == \App\UserGallery::USER_GALLERY_FOR_ADULTS && !$general_helper->isAdult(Auth::user()))
-                <div class="position-relative">
+                <div class="position-relative home-gallery-img-wrapper">
                     <img src="{{$photo->file->link}}" alt="" class="">
                     <div class="full-opacity-hover">[21+]</div>
                 </div>

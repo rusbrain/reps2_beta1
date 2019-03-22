@@ -137,7 +137,7 @@
                         <div class="replay-desc-right">Юзер Рейтинг:</div>
                         <div class="replay-desc-left">({{$replay->user_rating??'0'}})</div>
                     </div>
-                    @if(Auth::id() == $replay->user->id)
+                    @if(Auth::id() == $replay->user->id || $general_helper->isAdmin() || $general_helper->isModerator())
                         <a href="{{route('replay.edit', ['id' => $replay->id])}}" class="user-theme-edit">
                             <img src="{{route('home')}}/images/icons/svg/edit_icon.svg" alt="">
                             <span>Редактировать</span>
@@ -167,14 +167,25 @@
                         </a>
                     </div>
                     <div class="replay-download">
-                        <img src="{{route('home')}}/images/icons/download-blue.png" alt="">
-                        <a href="{{route('replay.download', ['id' => $replay->id])}}" class="">Скачать</a>
-                        <span>({{$replay->downloaded??0}})</span>
+                        @if(!is_null($replay->file_id))
+                            <img src="{{route('home')}}/images/icons/download-blue.png" alt="">
+                            <a href="{{route('replay.download', ['id' => $replay->id])}}" class="">Скачать</a>
+                            <span>({{$replay->downloaded??0}})</span>
+                        @else
+                            <span>Видео реплай</span>
+                        @endif
                     </div>
                 </div>
             </div>
         </div><!-- close div /.user-replay-wrapper -->
     </div><!-- close div /.content-box -->
+    @if($replay->video_iframe)
+    <div class="content-box">
+        <div class="col-md-12 video-link-wrapper">
+          {!! $replay->video_iframe !!}
+        </div>
+    </div>
+    @endif
 
     <div class="content-box">
         <div class="col-md-12 section-title">
