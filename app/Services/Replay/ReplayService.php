@@ -150,9 +150,6 @@ class ReplayService
         if (is_null($file)) {
             return false;
         }
-        $replay->downloaded = $replay->downloaded + 1;
-        $replay->save();
-
         return $file->link;
     }
 

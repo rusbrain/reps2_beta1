@@ -1271,6 +1271,13 @@ form label {
   color: #2F6696;
   font-family: "Roboto-Medium",sans-serif;
 }
+.section-title.home-page .replay-home-title a{
+  font-size: 14px;
+  background: none;
+  color: #2F6696;
+  font-family: "Roboto-Medium",sans-serif;
+  margin-left: 0;
+}
 /*----------------------------------------*/
 /*--------- END HOME PAGE CONTENT ----------- */
 /*---------------------------------------*/
