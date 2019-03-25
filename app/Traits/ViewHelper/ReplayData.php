@@ -9,7 +9,7 @@
 namespace App\Traits\ViewHelper;
 
 use App\{
-    GameVersion, Replay, ReplayMap, ReplayType, ReplayUserRating
+    GameVersion, Replay, ReplayMap, ReplayType, ReplayUserRating, Services\Replay\ReplayService
 };
 
 trait ReplayData
@@ -33,14 +33,11 @@ trait ReplayData
     /**
      * @return mixed
      */
-    public function getLastGosuReplay() //TODO:remove
+    public function getLastGosuReplay()
     {
         if (!self::$instance->last_gosu_replay) {
-            self::$instance->last_gosu_replay = Replay::gosuReplay()->where('approved', 1)->orderBy('created_at',
-                'desc')->limit(5)->get();
-            self::$instance->last_gosu_replay->load('map');
+            self::$instance->last_gosu_replay = ReplayService::getLastGosuReplay(5);
         }
-
         return self::$instance->last_gosu_replay;
     }
 

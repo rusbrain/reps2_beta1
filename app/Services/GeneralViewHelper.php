@@ -28,6 +28,7 @@ class GeneralViewHelper
     protected $last_forum_home;
     protected $last_gosu_replay;
     protected $last_user_replay;
+    protected $last_news_footer;
     protected $countries;
     protected $user_roles;
     protected $bd_users;

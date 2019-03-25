@@ -28,10 +28,15 @@
                         <img src="{{route('home')}}/images/icons/message-square-white.png" alt="">
                         ({{$replay->comments_count}})
                     </a>
-                    <a href="{{route('replay.download', ['id' => $replay->id])}}">
-                        <img src="{{route('home')}}/images/icons/download.png" alt="">
-                        {{$replay->downloaded}}
-                    </a>
+
+                    @if(!is_null($replay->file_id))
+                        <a href="{{route('replay.download', ['id' => $replay->id])}}">
+                            <img src="{{route('home')}}/images/icons/download.png" alt="">
+                            {{$replay->downloaded}}
+                        </a>
+                    @else
+                        <span>Видео реплай</span>
+                    @endif
                 </div>
             </div>
             <div class="col-md-12 user-replay-info">

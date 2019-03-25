@@ -150,9 +150,6 @@ class ReplayService
         if (is_null($file)) {
             return false;
         }
-        $replay->downloaded = $replay->downloaded + 1;
-        $replay->save();
-
         return $file->link;
     }
 
@@ -304,13 +301,15 @@ class ReplayService
         return $query;
     }
 
+
     /**
+     * @param int $limit
      * @return mixed
      */
-    public static function getLastGosuReplay() //TODO:remove
+    public static function getLastGosuReplay($limit = 5)
     {
         $last_gosu_replay = Replay::gosuReplay()->where('approved', 1)->orderBy('created_at',
-            'desc')->limit(5)->get();
+            'desc')->limit($limit)->get();
         $last_gosu_replay->load('map');
         return $last_gosu_replay->load('map');
     }

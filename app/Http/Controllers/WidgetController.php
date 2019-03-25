@@ -12,7 +12,7 @@ class WidgetController extends Controller
      */
     public function allForumSections()
     {
-        return view('sidebar-widgets.all-forum-sections')->with(['forum_sections' => SectionService::getAllForumSections()]);
+        return view('sidebar-widgets.all-forum-sections')->with(['forum_sections' => SectionService::getAllSections()]);
     }
 
     /**

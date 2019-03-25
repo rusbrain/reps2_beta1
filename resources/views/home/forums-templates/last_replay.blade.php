@@ -2,7 +2,9 @@
 @php $countries = $general_helper->getCountries();@endphp
 <div class="col-12 home-last-forum-type">Реплеи</div>
 <div class="col-md-12 section-title home-page">
-    <div>{{$replay->title}}</div>
+    <div class="replay-home-title">
+        <a href="{{route('replay.get',['id'=>$replay->id])}}" class="color-blue">{{$replay->title}}</a>
+    </div>
 
     <div class="author-info">
         <a href="{{route('user_profile',['id' => $replay->user->id])}}">
@@ -18,7 +20,7 @@
 <div class="user-replay-wrapper">
     <div class="col-md-12 user-replay-header">
         <div class="user-nickname text-bold replay-header-content">
-            <a href="">{!! $replay->content !!}</a>
+            <a href="{{route('replay.get',['id'=>$replay->id])}}">{!! $replay->content !!}</a>
         </div>
         <div class="info">
             <a href="#comments">
@@ -115,9 +117,15 @@
                 </div>
             @endif
             <div class="replay-download">
-                <img src="{{route('home')}}/images/icons/download-blue.png" alt="">
-                <a href="{{route('replay.download', ['id' => $replay->id])}}" class="">Скачать</a>
-                <span>({{$replay->downloaded??0}})</span>
+                @if(!is_null($replay->file_id))
+                    <img src="{{route('home')}}/images/icons/download-blue.png" alt="">
+                    <a href="{{route('replay.download', ['id' => $replay->id])}}" class="">Скачать</a>
+                    <span>({{$replay->downloaded??0}})</span>
+                @else
+                    <a href="{{route('replay.get',['id'=>$replay->id])}}">
+                        Видео реплай
+                    </a>
+                @endif
             </div>
         </div>
     </div>
