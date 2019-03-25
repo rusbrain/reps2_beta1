@@ -1,3 +1,4 @@
+@php $last_news = $general_helper->getLastNewsFooter(); @endphp
 <section class="section-footer-top">
     <div class="container">
         <div class="row">
@@ -74,10 +75,6 @@
                                 <img src="{{route('home')}}/images/icons/icq.png" alt="">
                                 864-000
                             </div>
-                            {{--<a href="">--}}
-                                {{--<img src="{{route('home')}}/images/icons/pdf_icon.png" alt="">--}}
-                                {{--скачать pdf--}}
-                            {{--</a>--}}
                         </div>
                     </div>
                 </div>
@@ -87,7 +84,7 @@
                     <h2>Последние новости:</h2>
                 </div>
                 <div class="footer-user-birthday-wrapper">
-                    @if(isset($last_news))
+                    @if($last_news)
                         @foreach($last_news as $last_forum)
                             <a href="{{route('forum.topic.index',['id'=>$last_forum->id])}}"
                                class="footer-user-birthday"
@@ -103,8 +100,7 @@
     <div class="container">
         <div class="row ">
             <div class="col-md-12 footer-low">
-                Generated in 0.078403 seconds 32 Query
-                I © 2002-{{date('Y')}} Replay Cafe All Right Reserved
+                © 2002-{{date('Y')}} Replay Cafe All Right Reserved
                 I © 2003-{{date('Y')}} REPLAY CAFE ENGINE / v.4.7.
                 I © 1998-{{date('Y')}} StarCraft, StarCraft:Brood War by Blizzard Ent.
             </div>

@@ -6,6 +6,15 @@ use App\Traits\ModelRelations\ForumSectionRelation;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property integer $id
+ * @property string $name
+ * @property string $title
+ * @property string $description
+ * @property integer $position
+ * @property boolean $is_active
+ * @property boolean $is_general
+ */
 class ForumSection extends Model
 {
     use ForumSectionRelation;

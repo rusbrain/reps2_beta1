@@ -1,3 +1,8 @@
+@php
+    /**@var \App\ForumSection[] $sections*/
+    $sections = $general_helper->getGeneralSectionsForum();
+    $replays_types = $general_helper->getReplayTypes();
+@endphp
 <div class="widget-navigation">
     <ul id="menu" class="navigation">
         <li class="active">
@@ -5,11 +10,11 @@
         </li>
         <li>
             <a href="{{route('forum.index')}}" class="has-arrow menu-link" aria-expanded="false">Форум</a>
-            @if($general_helper->getGeneralSectionsForum())
+            @if($sections)
                 <ul class="submenu">
-                    @foreach($general_helper->getGeneralSectionsForum() as $item)
+                    @foreach($sections as $section)
                         <li>
-                            <a href="{{route('forum.section.index',['name' => $item->name])}}" class="submenu-menu-link">{{$item->title}}</a>
+                            <a href="{{route('forum.section.index',['name' => $section->name])}}" class="submenu-menu-link">{{$section->title}}</a>
                         </li>
                     @endforeach
                 </ul>
@@ -24,11 +29,11 @@
                 <li>
                     <a href="{{route('replay.gosus')}}" class="has-arrow submenu-menu-link" aria-expanded="false">Госу
                         реплеи</a>
-                    @if($general_helper->getReplayTypes())
+                    @if($replays_types)
                         <ul class="sub submenu">
-                            @foreach($general_helper->getReplayTypes() as $replayType)
+                            @foreach($replays_types as $replay_type)
                                 <li>
-                                    <a href="{{route('replay.gosus_type', ['type' => $replayType->name])}}" class="submenu-menu-link">{{$replayType->title}}</a>
+                                    <a href="{{route('replay.gosus_type', ['type' => $replay_type->name])}}" class="submenu-menu-link">{{$replay_type->title}}</a>
                                 </li>
                             @endforeach
                         </ul>

@@ -111,4 +111,14 @@ class SectionService
         $all_sections = self::getAllForumSections();
         return $all_sections->where('is_general', 1);
     }
+
+    /**
+     *
+     * @return static
+     */
+    public static function getAllSections()
+    {
+        $all_sections = self::getAllForumSections();
+        return $all_sections->whereIn('is_general', [1,0]);
+    }
 }
