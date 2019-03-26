@@ -1,7 +1,6 @@
 @if($data)
     @if($data->lastPage() > 1)
         <ul class="pagination pagination-sm no-margin pull-right">
-            {{--{{dd($data->currentPage())}}--}}
             <li class="pagination-push" data-to-page="{{$data->currentPage()>1?$data->currentPage()-1:1}}"><a href="#">&laquo;</a></li>
             @if($data->lastPage() > 7)
                 @if($data->currentPage() <= 3)

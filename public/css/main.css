@@ -1741,6 +1741,9 @@ div.author-info {
 .video-link-wrapper iframe{
   max-width: 100%;
 }
+.video-link-wrapper p{
+  margin-bottom: 0;
+}
 /*----------------------------------------*/
 /*----- END SINGLE  REPLAY PAGE --------- */
 /*---------------------------------------*/

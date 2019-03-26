@@ -25,7 +25,7 @@ class Dialogue extends Model
     /**
      * Get User Dialog content
      *
-     * @param $user_id
+     * @param $dialog_id
      * @return mixed
      */
     public static function getUserDialogueContent($dialog_id)

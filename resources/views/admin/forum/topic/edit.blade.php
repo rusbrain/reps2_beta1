@@ -4,6 +4,8 @@
     <link rel="stylesheet" href="{{route('home')}}/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
     <link rel="stylesheet" href="{{route('home')}}/plugins/iCheck/all.css">
 
+    <!--SCEditor -  WYSIWYG BBCode editor -->
+    <link rel="stylesheet" href="{{route('home')}}/js/sceditor/minified/themes/default.min.css"/>
 @endsection
 
 @section('page_header')
@@ -188,8 +190,12 @@
     <script src="{{route('home')}}/bower_components/fastclick/lib/fastclick.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="{{route('home')}}/dist/js/demo.js"></script>
-    <!-- CK Editor -->
-    <script src="{{route('home')}}/bower_components/ckeditor/ckeditor.js"></script>
+
+    <!--SCEditor -  WYSIWYG BBCode editor -->
+    <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.min.js"></script>
+    <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.xhtml.min.js"></script>
+    <script src="{{route('home')}}/js/sceditor/languages/ru.js"></script>
+
     <script src="{{route('home')}}/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
     <script src="{{route('home')}}/plugins/iCheck/icheck.min.js"></script>
 
@@ -197,18 +203,63 @@
     <script>
         $('#datepicker').datepicker({
             format: "yyyy-mm-dd",
-            autoclose: true,
+            autoclose: true
         });
-        $(function () {
-            // Replace the <textarea id="editor1"> with a CKEditor
-            // instance, using default configuration.
-            CKEDITOR.replace('content');
-            CKEDITOR.replace('preview_content');
-        });
+
         //Flat red color scheme for iCheck
         $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
             checkboxClass: 'icheckbox_flat-green',
             radioClass   : 'iradio_flat-green'
-        })
+        });
+
+        $(function () {
+            if ($('#content').length > 0) {
+                var content = document.getElementById('content');
+
+                sceditor.create(content, {
+                    format: 'xhtml',
+                    style: '{{route("home")}}' + '/js/sceditor/minified/themes/content/default.min.css',
+                    emoticonsRoot: '{{route("home")}}' + '/js/sceditor/',
+                    locale: 'ru',
+                    toolbar: 'bold,italic,underline|' +
+                    'left,center,right,justify|' +
+                    'font,size,color,removeformat|' +
+                    'source,quote,code|' +
+                    'image,link,unlink|' +
+                    'emoticon|' +
+                    'date,time',
+                    emoticons: {
+                        // Emoticons to be included in the dropdown
+                        dropdown: getAllSmiles(),
+                        // Emoticons to be included in the more section
+                        more: getMoreSmiles()
+                    }
+                });
+            }
+
+            if ($('#preview_content').length > 0) {
+                var preview_content = document.getElementById('preview_content');
+
+                sceditor.create(preview_content, {
+                    format: 'xhtml',
+                    style: '{{route("home")}}' + '/js/sceditor/minified/themes/content/default.min.css',
+                    emoticonsRoot: '{{route("home")}}' + '/js/sceditor/',
+                    locale: 'ru',
+                    toolbar: 'bold,italic,underline|' +
+                    'left,center,right,justify|' +
+                    'font,size,color,removeformat|' +
+                    'source,quote,code|' +
+                    'image,link,unlink|' +
+                    'emoticon|' +
+                    'date,time',
+                    emoticons: {
+                        // Emoticons to be included in the dropdown
+                        dropdown: getAllSmiles(),
+                        // Emoticons to be included in the more section
+                        more: getMoreSmiles()
+                    }
+                });
+            }
+        });
     </script>
 @endsection

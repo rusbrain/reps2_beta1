@@ -5,6 +5,8 @@
     <link rel="stylesheet" href="{{route('home')}}/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
     <link rel="stylesheet" href="{{route('home')}}/plugins/iCheck/all.css">
 
+    <!--SCEditor -  WYSIWYG BBCode editor -->
+    <link rel="stylesheet" href="{{route('home')}}/js/sceditor/minified/themes/default.min.css"/>
 @endsection
 
 @section('page_header')
@@ -17,7 +19,7 @@
     <li class="active">Создать новый Replay</li>
 @endsection
 
-@section('content'){{--{{dd($errors)}}--}}
+@section('content')
     <div class="col-md-10 col-md-offset-1">
         <div class="box">
             <div class="box-header with-border">
@@ -316,27 +318,54 @@
     <script src="{{route('home')}}/bower_components/fastclick/lib/fastclick.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="{{route('home')}}/dist/js/demo.js"></script>
-    <!-- CK Editor -->
-    <script src="{{route('home')}}/bower_components/ckeditor/ckeditor.js"></script>
+
+    <!--SCEditor -  WYSIWYG BBCode editor -->
+    <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.min.js"></script>
+    <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.xhtml.min.js"></script>
+    <script src="{{route('home')}}/js/sceditor/languages/ru.js"></script>
+
     <script src="{{route('home')}}/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
     <script src="{{route('home')}}/plugins/iCheck/icheck.min.js"></script>
 
-    //Date picker
     <script>
+        //Date picker
         $('#datepicker').datepicker({
             format: "yyyy-mm-dd",
-            autoclose: true,
-        });
-        $(function () {
-            // Replace the <textarea id="editor1"> with a CKEditor
-            // instance, using default configuration.
-            CKEDITOR.replace('content');
-            CKEDITOR.replace('content');
+            autoclose: true
         });
         //Flat red color scheme for iCheck
         $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
             checkboxClass: 'icheckbox_flat-green',
             radioClass   : 'iradio_flat-green'
-        })
+        });
+
+        /**
+         * Comments box is the same for all pages
+         *SCEditor -  WYSIWYG BBCode editor
+         * https://www.sceditor.com/
+         * */
+        $(function () {
+            if ($('#content').length > 0) {
+                var content = document.getElementById('content');
+
+                sceditor.create(content, {
+                    format: 'xhtml',
+                    style: '{{route("home")}}' + '/js/sceditor/minified/themes/content/default.min.css',
+                    emoticonsRoot: '{{route("home")}}' + '/js/sceditor/',
+                    locale: 'ru',
+                    toolbar: 'bold,italic,underline|' +
+                    'left,center,right,justify|' +
+                    'font,size,color,removeformat|' +
+                    'emoticon|' +
+                    'date,time',
+                    emoticons: {
+                        // Emoticons to be included in the dropdown
+                        dropdown: getAllSmiles(),
+                        // Emoticons to be included in the more section
+                        more: getMoreSmiles()
+                    }
+                });
+            }
+        });
     </script>
 @endsection

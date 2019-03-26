@@ -222,7 +222,7 @@
             getUsers(1);
             $('.pagination-content').on('click', '.pagination-push', function () {
                 $('.load-wrapp').show();
-                let page = $(this).data('to-page');
+                var page = $(this).data('to-page');
                 getUsers(page);
             })
         });

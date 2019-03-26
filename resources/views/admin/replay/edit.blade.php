@@ -5,6 +5,8 @@
     <link rel="stylesheet" href="{{route('home')}}/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
     <link rel="stylesheet" href="{{route('home')}}/plugins/iCheck/all.css">
 
+    <!--SCEditor -  WYSIWYG BBCode editor -->
+    <link rel="stylesheet" href="{{route('home')}}/js/sceditor/minified/themes/default.min.css"/>
 @endsection
 
 @section('page_header')
@@ -274,25 +276,38 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-12">
-                                    <div class="row">
-                                        <div>
-                                            <div class="box-header">
-                                                <h3 class="box-title">Комментарий:</h3>
-                                                <!-- /. tools -->
-                                            </div>
-                                            <!-- /.box-header -->
-                                            <div class="box-body pad">
-                                        <textarea id="content" name="content" rows="5" cols="80">
-                                                                {!! old('content')??$replay->content !!}
-                                        </textarea>
-                                            </div>
-                                            @if ($errors->has('content'))
-                                                <span class="invalid-feedback text-red" role="alert">
+                                <div class="col-md-6">
+                                    <div class="box-header">
+                                        <h3 class="box-title">Комментарий:</h3>
+                                        <!-- /. tools -->
+                                    </div>
+                                    <!-- /.box-header -->
+                                    <div class="box-body pad">
+                                            <textarea
+                                                    id="content"
+                                                    name="content"
+                                                    rows="10"
+                                                    cols="80">{!! old('content')??$replay->content !!}</textarea>
+                                    </div>
+                                    @if ($errors->has('content'))
+                                        <span class="invalid-feedback text-red" role="alert">
                                                 <strong>{{ $errors->first('content') }}</strong>
                                             </span>
-                                            @endif
-                                        </div>
+                                    @endif
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="box-body pad">
+                                        <div class="box-header">
+                                            <h3 class="box-title">Вставить HTML код с Youtube с видео реплеем:</h3>
+                                         </div>
+                                        <textarea name="video_iframe"
+                                                  class="form-control {{ $errors->has('video_iframe') ? ' is-invalid' : '' }}"
+                                                  id="video_iframe" rows="10">{!! $replay->video_iframe??old('video_iframe') !!}</textarea>
+                                        @if ($errors->has('video_iframe'))
+                                            <span class="invalid-feedback">
+                                                <strong>{{ $errors->first('video_iframe') }}</strong>
+                                            </span>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -302,7 +317,6 @@
                                     <button type="submit" class="btn btn-primary btn-flat send-message-btn">Сохранить</button>
                                 </div>
                             </div>
-
                             <!-- /.form group -->
                         </form>
                         <br>
@@ -318,27 +332,66 @@
     <script src="{{route('home')}}/bower_components/fastclick/lib/fastclick.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="{{route('home')}}/dist/js/demo.js"></script>
-    <!-- CK Editor -->
-    <script src="{{route('home')}}/bower_components/ckeditor/ckeditor.js"></script>
+
+    <!--SCEditor -  WYSIWYG BBCode editor -->
+    <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.min.js"></script>
+    <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.xhtml.min.js"></script>
+    <script src="{{route('home')}}/js/sceditor/languages/ru.js"></script>
+
     <script src="{{route('home')}}/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
     <script src="{{route('home')}}/plugins/iCheck/icheck.min.js"></script>
 
-    //Date picker
     <script>
+        //Date picker
         $('#datepicker').datepicker({
             format: "yyyy-mm-dd",
-            autoclose: true,
+            autoclose: true
         });
-        $(function () {
-            // Replace the <textarea id="editor1"> with a CKEditor
-            // instance, using default configuration.
-            CKEDITOR.replace('content');
-            CKEDITOR.replace('content');
-        });
+
         //Flat red color scheme for iCheck
         $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
             checkboxClass: 'icheckbox_flat-green',
             radioClass   : 'iradio_flat-green'
-        })
+        });
+
+        /**
+         * Comments box is the same for all pages
+         *SCEditor -  WYSIWYG BBCode editor
+         * https://www.sceditor.com/
+         * */
+        $(function () {
+            if ($('#content').length > 0) {
+                var content = document.getElementById('content');
+
+                sceditor.create(content, {
+                    format: 'xhtml',
+                    style: '{{route("home")}}' + '/js/sceditor/minified/themes/content/default.min.css',
+                    emoticonsRoot: '{{route("home")}}' + '/js/sceditor/',
+                    locale: 'ru',
+                    toolbar: 'bold,italic,underline|' +
+                    'left,center,right,justify|' +
+                    'font,size,color,removeformat|' +
+                    'emoticon,source|' +
+                    'date,time',
+                    emoticons: {
+                        // Emoticons to be included in the dropdown
+                        dropdown: getAllSmiles(),
+                        // Emoticons to be included in the more section
+                        more: getMoreSmiles()
+                    }
+                });
+            }
+
+            if ($('#video_iframe').length > 0) {
+                var video_iframe = document.getElementById('video_iframe');
+
+                sceditor.create(video_iframe, {
+                    format: 'xhtml',
+                    style: '{{route("home")}}' + '/js/sceditor/minified/themes/content/default.min.css',
+                    locale: 'ru',
+                    toolbar: 'youtube,source|'
+                });
+            }
+        });
     </script>
 @endsection

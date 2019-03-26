@@ -206,11 +206,11 @@
 
 @section('js')
     <script src="{{route('home')}}/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-    //Date picker
     <script>
+        //Date picker
         $('#datepicker').datepicker({
             format: "yyyy-mm-dd",
-            autoclose: true,
+            autoclose: true
         });
     </script>
 @endsection
