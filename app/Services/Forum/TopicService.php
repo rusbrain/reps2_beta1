@@ -59,6 +59,7 @@ class TopicService
             $data['news']       = $data['news']??0;
         }
 
+        /**@var ForumTopic $topic*/
         $topic = ForumTopic::create($topic_data);
 
        return $topic->id;
