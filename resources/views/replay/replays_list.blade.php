@@ -73,6 +73,19 @@
                 <div class="user-replay-content">
                     {!! $replay->content !!}
                 </div>
+                @if(Auth::id() == $replay->user->id)
+                    <div class="reputation-button-wrapper">
+                        <div class="user-reputation-qty">
+                            <span class="reputation-vote-up bg-blue"></span>
+                            <span class="reputation-qty">{{$replay->positive_count}}</span>
+                            <span class="reputation-vote-down bg-gray"></span>
+                            <span class="reputation-qty">{{$replay->negative_count}}</span>
+                        </div>
+                        <a href="{{route('replay.get_rating', ['id' => $replay->id])}}" class="btn-blue">
+                            рейтинг лист
+                        </a>
+                    </div>
+                @endif
             </div>
         </div><!-- close div /.user-replay-wrapper -->
     @endforeach

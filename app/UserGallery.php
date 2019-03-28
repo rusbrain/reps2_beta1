@@ -4,12 +4,31 @@ namespace App;
 
 use App\Observers\UserGalleryPointsObserver;
 use App\Traits\ModelRelations\UserGalleryRelation;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\{
     Model, SoftDeletes
 };
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * @property integer $id
+ * @property integer $user_id
+ * @property integer $file_id
+ * @property integer $reps_id
+ * @property integer $rating
+ * @property integer $for_adults
+ * @property integer $reviews
+ * @property integer $negative_count
+ * @property integer $positive_count
+ * @property integer $comments_count
+ * @property string $comment
+ *
+ * @property Carbon $deleted_at
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ *
+ */
 class UserGallery extends Model
 {
     use SoftDeletes, Notifiable, UserGalleryRelation;
@@ -46,7 +65,8 @@ class UserGallery extends Model
         'for_adults',
         'negative_count',
         'positive_count',
-        'comments_count'
+        'comments_count',
+        'reviews'
     ];
 
     const USER_GALLERY_FOR_ADULTS = 1;

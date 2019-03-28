@@ -67,15 +67,18 @@ class UserGalleryController extends Controller
      */
     public function show($id)
     {
+        /**@var UserGallery $photo*/
         $photo = UserGallery::find($id);
 
         if (IgnoreUser::me_ignore($photo->user_id)){
-            return abort(403);
+            return view('error', [
+                'error' => 'Галлеря недоступна. Автор добавил Вас в игнор лист']);
         }
-        if (!$photo)
-        {
+        if (!$photo) {
             return abort(404);
         }
+
+        UserGalleryService::updateReview($photo);
 
         return view('gallery.photo')->with('photo', UserGalleryService::getPhotoData($photo));
     }

@@ -91,56 +91,19 @@
                 <span class="reputation-qty">{{$user->negative_count}}</span>
             </div>
         </div>
-        @if($list)
-            @foreach($list as $item)
-                <div class="user-reputation-vote-row">
-                    <div class="user-reputation-vote-info">
-                        <div>
-                            <a href="{{route('user_profile',['id' => $item->sender->id])}}">{{$item->sender->name}}</a>
-                            @if($item->sender->country_id)
-                                <span class="flag-icon flag-icon-{{mb_strtolower($countries[$item->sender->country_id]->code)}}"></span>
-                            @else
-                                <span></span>
-                            @endif
-                            @if($general_helper->isAdmin() ||  $general_helper->isModerator())
-                                <span>{{$general_helper->getUserStatus($item->sender->score)}} {{$item->sender->score . 'pts'}} </span>
-                            @endif
-                            <span>|</span>
-                            <a href="{{route('user.get_rating', ['id' => $item->sender->id])}}">{{$item->sender->rating}}
-                                кг</a>
-                        </div>
-                        <div>
-                            <img src="{{route('home')}}/images/icons/eye.png" alt="">
-                            <span>{{$item->created_at}}</span>
-                        </div>
-                    </div>
-                    <div class="user-reputation-vote-content">
-                        <div class="col-md-11">
-                            {{--<a href="" class="target-vote-link">--}}
-                                {{--<span>#1</span>--}}
-                                {{--Нужно добавить связь коммента с объектом комментирования--}}
-                            {{--</a>--}}
-                            <div>{!! $general_helper->oldContentFilter($item->comment) !!}</div>
-                        </div>
-                        <div class="col-md-1">
-                            @if($item->rating == 1)
-                                <span class="reputation-vote-up"></span>
-                            @else
-                                <span class="reputation-vote-down"></span>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        @else
-            <div>Комментарии отсутствуют</div>
-        @endif
+
+        <!--  CONTENT -->
+        <div id="ajax_topic_reputation" >
+            <div class="load-wrapp">
+                <img src="/images/loader.gif" alt="">
+            </div>
+        </div>
     </div><!-- close div /.content-box -->
 
-    <!--Pagination-->
-    @php  $data = $pagination_data @endphp
-    @include('pagination')
-    <!--END Pagination-->
+    <!--  PAGINATION -->
+    <div class="pagination-content"></div>
+    <!-- END  PAGINATION -->
+
 @endsection
 
 @section('sidebar-right')
@@ -161,5 +124,31 @@
     <!-- END Gallery -->
 @endsection
 
+@section('js')
+    <script>
+        $(function () {
+            getSections(1);
+            $('.pagination-content').on('click', '.page-link', function (e) {
+                e.preventDefault();
+                $('.load-wrapp').show();
+                var page = $(this).attr('data-page');
+                getSections(page);
+            })
+        });
+        function getSections(page) {
+            var container = $('#ajax_topic_reputation');
+            var body = $("html, body");
+
+            $.get('{{route('user.paginate',['id' => $user->id])}}' + '?page=' + page, {}, function (data) {
+                container.html(data.list);
+                $('.pagination-content').html(data.pagination);
+                $('.load-wrapp').hide();
+
+                /**move to top of page*/
+                moveToTop(body);
+            });
+        }
+    </script>
+@endsection
 
 
