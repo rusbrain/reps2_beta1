@@ -21,6 +21,11 @@ class UserViewService extends ViewService
        return (string) view('forum.section_list')->with(['topics' => $data]);
    }
 
+    public static function getReputationList($data)
+    {
+        return (string)view('user.reputation_list')->with(['list' => $data]);
+    }
+
     /**
      * @param LengthAwarePaginator $data
      * @return string

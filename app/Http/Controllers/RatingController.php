@@ -30,7 +30,18 @@ class RatingController extends Controller
      */
     public function getRating($id)
     {
-        return RatingService::getRatingView(UserReputation::where('object_id', $id)->where('relation', $this->relation), $id);
+        return RatingService::getObjectRating($id, $this->model, $this->relation);
+    }
+
+    /**
+     * $id - object id
+     *
+     * @param $id
+     * @return array
+     */
+    public function paginate($id)
+    {
+        return RatingService::getList($this->relation, $id, false);
     }
 
     /**
@@ -44,6 +55,7 @@ class RatingController extends Controller
     {
         return RatingService::set($request, $id, $this->relation, $this->model);
     }
+
     /**
      * Get reputation of User
      *
@@ -52,6 +64,11 @@ class RatingController extends Controller
      */
     public function getRatingUser($id)
     {
-        return RatingService::getRatingView(UserReputation::where('recipient_id', $id), $id);
+        return RatingService::getRatingView($id);
+    }
+
+    public function userRatingPagination($id)
+    {
+        return RatingService::getList(false, $id, UserReputation::where('recipient_id', $id));
     }
 }

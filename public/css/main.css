@@ -235,7 +235,18 @@ img {
 .color-black{
   color: #737373;
 }
+/*background color*/
+.bg-blue{
+  background-color: #4890af !important;
+}
+.bg-gray{
+  background-color: #737373 !important;
+}
+
 /**buttons*/
+.button-up.fixed {
+  position: fixed;
+}
 .button-up.fixed {
   position: fixed;
 }
@@ -1638,6 +1649,18 @@ div.author-info {
 .author-info > a {
   margin-right: 5px;
 }
+.reputation-button-wrapper{
+  padding: 5px 0;
+  display: flex;
+  align-items: center;
+  justify-content: right;
+}
+.reputation-button-wrapper .btn-blue{
+  border-radius: 4px;
+  width: 100px;
+  padding: 5px;
+}
+
 /*----------------------------------------*/
 /*--------- END USER REPLAY PAGE -------- */
 /*---------------------------------------*/
@@ -2097,6 +2120,11 @@ div.author-info {
 .user-info-row span:first-of-type {
   width: 100px;
   font-family: "Roboto-Bold", sans-serif;
+}
+
+.content-box.object-reputation .user-post-content{
+  border-bottom: none;
+  padding: 0 20px;
 }
 /*----------------------------------------*/
 /*---END USER REPUTATION PAGE -------- */

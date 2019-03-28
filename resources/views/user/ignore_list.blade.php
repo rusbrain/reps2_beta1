@@ -60,7 +60,7 @@
                                 @endif
                             </td>
                             <td>
-                                <a href="{{route('user_profile',['id'=>$item->id])}}">{{$item->ignored_user->name}}</a>
+                                <a href="{{route('user_profile',['id'=>$item->ignored_user_id])}}">{{$item->ignored_user->name}}</a>
                             </td>
                             <td>{{$item->created_at}}</td>
                             <td class="user-list-action">

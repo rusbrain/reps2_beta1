@@ -119,4 +119,12 @@ class UserGalleryService
         unset($gallery_data['image']);
         return $gallery_data;
     }
+
+    /**
+     * @param UserGallery $photo
+     */
+    public static function updateReview(UserGallery $photo)
+    {
+        UserGallery::where('id', $photo->id)->update(['reviews' => $photo->reviews+1]);
+    }
 }

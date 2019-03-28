@@ -24,6 +24,7 @@ class CreateUserGalleriesTable extends Migration
             $table->integer('negative_count')   ->default(0);
             $table->integer('positive_count')   ->default(0);
             $table->integer('comments_count')   ->default(0);
+            $table->integer('reviews')          ->default(0);
             $table->timestamps();
             $table->softDeletes();
 

@@ -82,7 +82,11 @@ Route::group(['middleware' => 'activity'], function () {
         });
 
         Route::get('/{id}', 'UserController@show')->name('user_profile');
+
+        /**get user reputation list*/
         Route::get('{id}/get_rating', 'RatingController@getRatingUser')->name('user.get_rating');
+        Route::get('{id}/pagination', 'RatingController@userRatingPagination')->name('user.paginate');
+
         Route::get('{id}/replay', 'ReplayUsersController@getUserReplay')->name('user.user_replay');
         Route::get('{id}/gosu_replay', 'ReplayGosuController@getUserReplay')->name('user.gosu_replay');
         Route::get('{id}/all_replay', 'ReplayController@getAllUserReplay')->name('user.all_replay');
@@ -101,7 +105,11 @@ Route::group(['middleware' => 'activity'], function () {
             Route::get('search', 'ForumController@searchTopic')->name('forum.topic.search');
             Route::get('search/pagination',
                 'ForumController@searchPaginationTopic')->name('forum.topic.search.pagination');
-            Route::post('{id}/get_rating', 'TopicRatingController@getRating')->name('forum.topic.get_rating');
+
+            /**reputation forum topic list*/
+            Route::get('{id}/get_rating', 'TopicRatingController@getRating')->name('forum.topic.get_rating');
+            Route::get('{id}/paginate', 'TopicRatingController@paginate')->name('forum.topic.paginate');
+
             Route::group(['middleware' => 'auth'], function () {
                 Route::get('/my', 'ForumTopicController@getUserTopic')->name('forum.topic.my_list');
                 Route::get('/create', 'ForumTopicController@create')->name('forum.topic.create');
@@ -110,6 +118,8 @@ Route::group(['middleware' => 'activity'], function () {
                 Route::get('{id}/edit', 'ForumTopicController@edit')->name('forum.topic.edit');
                 Route::post('{id}/update', 'ForumTopicController@update')->name('forum.topic.update');
                 Route::post('{id}/rebase', 'ForumTopicController@rebase')->name('forum.topic.rebase');
+
+                /**set reputation like/dislike*/
                 Route::post('{id}/set_rating', 'TopicRatingController@setRating')->name('forum.topic.set_rating');
 
                 Route::group(['prefix' => 'comment'], function () {
@@ -139,7 +149,10 @@ Route::group(['middleware' => 'activity'], function () {
         Route::get('/users/{type}/paginate',
             'ReplayGosuController@getReplayByType')->name('replay.users_type.paginate');
 
-        Route::get('/{id}/get_rating', 'ReplayRatingController@getRating')->name('replay.ger_rating');
+        /**reputation replay list*/
+        Route::get('/{id}/get_rating', 'ReplayRatingController@getRating')->name('replay.get_rating');
+        Route::get('/{id}/pagination', 'ReplayRatingController@paginate')->name('replay.paginate');
+
         Route::get('/{id}/get_evaluation', 'ReplayRatingController@getEvaluation')->name('replay.get_evaluation');
         Route::get('/{id}/download', 'ReplayController@download')->name('replay.download');
 
@@ -178,7 +191,9 @@ Route::group(['middleware' => 'activity'], function () {
         Route::get('/user/{id}', 'UserGalleryController@indexUser')->name('gallery.list_user');
         Route::get('/user/{id}/paginate', 'UserGalleryController@indexUser')->name('gallery.list_user.paginate');
 
-        Route::get('/{id}/get_rating', 'UserGalleryRatingController@getRating')->name('gallery.ger_rating');
+        /**reputation gallery list*/
+        Route::get('/{id}/get_rating', 'UserGalleryRatingController@getRating')->name('gallery.get_rating');
+        Route::get('/{id}/pagination', 'UserGalleryRatingController@paginate')->name('gallery.paginate');
 
         Route::group(['middleware' => 'auth', 'prefix' => 'photo'], function () {
             Route::get('/create', 'UserGalleryController@create')->name('gallery.create');

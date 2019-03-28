@@ -16,7 +16,8 @@
                     <a href="/">Главная</a>
                 </li>
                 <li>
-                    <a href="#" class="active">/ {{$photo->comment != '' ? $general_helper->oldContentFilter($photo->comment) :'Без названия'}}</a>
+                    <a href="#"
+                       class="active">/ {{$photo->comment != '' ? $general_helper->oldContentFilter($photo->comment) :'Без названия'}}</a>
                 </li>
             </ul>
         </div>
@@ -53,6 +54,13 @@
                             <span id="negative-vote">{{$photo->negative_count}}</span>
                         </a>
                     </div>
+                    @if(Auth::id() == $photo->user->id)
+                        <div class="reputation-button-wrapper">
+                            <a href="{{route('gallery.get_rating', ['id' => $photo->id])}}" class="btn-blue">
+                                рейтинг лист
+                            </a>
+                        </div>
+                    @endif
                     <div>
                         @if($photo->photo_before)
                             <a href="{{route('gallery.view', ['id' => $photo->photo_before->id])}}" class="prev-image">&laquo;</a>

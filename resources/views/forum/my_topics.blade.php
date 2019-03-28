@@ -83,6 +83,19 @@
                                                          class="margin-right-5" alt="">
                                                     <span>{{$topic->comments_count}}</span>
                                                 </div>
+                                                @if(Auth::id() == $topic->user->id)
+                                                    <div class="reputation-button-wrapper">
+                                                        <div class="user-reputation-qty">
+                                                            <span class="reputation-vote-up bg-blue"></span>
+                                                            <span class="reputation-qty">{{$topic->positive_count}}</span>
+                                                            <span class="reputation-vote-down bg-gray"></span>
+                                                            <span class="reputation-qty">{{$topic->negative_count}}</span>
+                                                        </div>
+                                                        <a href="{{route('forum.topic.get_rating', ['id' => $topic->id])}}" class="btn-blue">
+                                                            рейтинг лист
+                                                        </a>
+                                                    </div>
+                                                @endif
                                                 <div>
                                                     <a href="{{route('forum.topic.index',['id'=>$topic->id])}}#comments">
                                                         <img src="{{route('home')}}/images/icons/message-square-blue.png"

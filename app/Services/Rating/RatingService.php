@@ -8,7 +8,9 @@
 
 namespace App\Services\Rating;
 
-use App\{Comment, ForumTopic, IgnoreUser, Replay, User, UserGallery, UserReputation};
+use App\{
+    Comment, ForumTopic, IgnoreUser, Replay, Services\Base\UserViewService, User, UserGallery, UserReputation
+};
 use App\Http\Requests\SetRatingRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,33 +18,89 @@ use Illuminate\Support\Facades\Auth;
 class RatingService
 {
     /**
-     * Get view with rating list
-     *
-     * @param UserReputation $user_reputation
+     * Get user reputation view
+     * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public static function getRatingView($user_reputation, $id)
+    public static function getRatingView($id)
     {
-        $query_list = clone $user_reputation;
-        $query_topic = clone $user_reputation;
-        $query_replay = clone $user_reputation;
-        $query_base = clone $user_reputation;
+        return view('user.reputation')->with([
+            'user' => User::find($id)
+        ]);
+    }
 
-        $list = $query_list->orderBy('created_at', 'desc')->paginate(20);
+    /**
+     * @param $user_reputation
+     * @return $this
+     */
+    public static function getUserRatingList($user_reputation)
+    {
+        return $user_reputation->orderBy('created_at', 'desc')->paginate(20);
+    }
 
-        $ids = [];
-        foreach ($list as $item) {
-            $ids[] = $item->id;
+    /**
+     * Get view with rating list for current object
+     *
+     * @param $id
+     * @param $relation
+     * @param $model
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public static function getObjectRating($id, $model, $relation)
+    {
+        $route = '';
+        $pagination_path = '';
+        $object = $model::find($id);
+        switch ($relation) {
+            case UserReputation::RELATION_FORUM_TOPIC:
+                $route = 'forum.topic.index';
+                $pagination_path = 'forum.topic.paginate';
+                break;
+            case UserReputation::RELATION_REPLAY:
+                $route = 'replay.get';
+                $pagination_path = 'replay.paginate';
+                break;
+            case UserReputation::RELATION_USER_GALLERY:
+                $route = 'gallery.view';
+                $pagination_path = 'gallery.paginate';
+                break;
+        }
+        return view('user.object-reputation')->with([
+            'object' => $object,
+            'route' => $route,
+            'pagination_path' => $pagination_path
+        ]);
+    }
+
+    /**
+     * @param $user_reputation
+     * @param $relation
+     * @param $id
+     * @return array
+     */
+    public static function getList($relation = false, $id, $user_reputation = false)
+    {
+        if(!$relation && $user_reputation){
+            $data = self::getUserRatingList($user_reputation, $id);
+        }
+        if($relation && !$user_reputation){
+            $data = self::reputationWithPagination($relation, $id);
         }
 
-        $list_topic     =  $query_topic->where('relation', UserReputation::RELATION_FORUM_TOPIC)        ->whereIn('id',$ids)->with('sender', 'topic')   ->get();
-        $list_replay    =  $query_replay->where('relation', UserReputation::RELATION_REPLAY)            ->whereIn('id',$ids)->with('sender', 'replay')  ->get();
-        $list_gallery   =  $user_reputation->where('relation', UserReputation::RELATION_USER_GALLERY)   ->whereIn('id',$ids)->with('sender', 'gallery') ->get();
-        $list_base      =  $query_base->where('relation', 0)                                            ->whereIn('id',$ids)->with('sender')            ->get();
+        return [
+            'list' => UserViewService::getReputationList($data),
+            'pagination' => UserViewService::getPagination($data)
+        ];
+    }
 
-        $list_with_data = $list_topic->merge($list_replay)->merge($list_topic)->merge($list_gallery)->merge($list_base)->sortByDesc('created_at');
-
-        return view('user.reputation')->with(['list'=>$list_with_data, 'pagination_data' =>$list, 'user' => User::find($id)] );
+    /**
+     * @param $relation
+     * @param $id
+     * @return mixed
+     */
+    public static function reputationWithPagination($relation, $id)
+    {
+        return UserReputation::where('object_id', $id)->where('relation', $relation)->with('sender')->paginate(20);
     }
 
     /**
@@ -56,18 +114,21 @@ class RatingService
     public static function set(SetRatingRequest $request, $id, $relation, $model)
     {
         $object = ($model)::find($id);
-
-        if (IgnoreUser::me_ignore($object->user_id)){
-            return abort(403);
+        if (IgnoreUser::me_ignore($object->user_id)) {
+            return ['message' => 'Вы не можете проголосовать. Автор добавил Вас в игнор лист'];
         }
 
         $comment = self::getComment($request);
-
-        if($object){
-            if(!self::checkUserVoteExist($object, $request, $relation)){
+        if ($object) {
+            if (!self::checkUserVoteExist($object, $request, $relation)) {
                 UserReputation::updateOrCreate(
-                    ['sender_id' => Auth::id(), 'recipient_id' => $object->user_id, 'object_id' => $object->id, 'relation' => $relation],
-                    ['comment' => $comment, 'rating'=>  $request->get('rating')]
+                    [
+                        'sender_id' => Auth::id(),
+                        'recipient_id' => $object->user_id,
+                        'object_id' => $object->id,
+                        'relation' => $relation
+                    ],
+                    ['comment' => $comment, 'rating' => $request->get('rating')]
                 );
                 return ['rating' => self::getRatingValue($object)];
             }
@@ -98,7 +159,7 @@ class RatingService
     {
         $comment = null;
 
-        if($request->has('comment')){
+        if ($request->has('comment')) {
             $comment = $request->get('comment');
         }
         return $comment;
@@ -111,7 +172,7 @@ class RatingService
     {
         $ratings = UserReputation::where('recipient_id', $user_id)->get();
         $sum = 0;
-        foreach ($ratings as $rating){
+        foreach ($ratings as $rating) {
             $sum += $rating->rating;
         }
 
@@ -125,7 +186,7 @@ class RatingService
     public static function getModel($relation_id)
     {
         $model = null;
-        switch ($relation_id){
+        switch ($relation_id) {
             case UserReputation::RELATION_FORUM_TOPIC:
                 $model = ForumTopic::class;
                 break;
@@ -154,7 +215,11 @@ class RatingService
         $negative = UserReputation::where('recipient_id', $user_id)->where('rating', '-1')->count();
         $val = $positive - $negative;
 
-        User::where('id', $user_id)->update(['rating'=>$val, 'negative_count' => $negative, 'positive_count' => $positive]);
+        User::where('id', $user_id)->update([
+            'rating' => $val,
+            'negative_count' => $negative,
+            'positive_count' => $positive
+        ]);
     }
 
     /**
@@ -166,11 +231,17 @@ class RatingService
     public static function refreshObjectRating($object_id, $relation_id)
     {
         $class_name = RatingService::getModel($relation_id);
-        $positive = UserReputation::where('object_id', $object_id)->where('relation',$relation_id)->where('rating', '1')->count();
-        $negative = UserReputation::where('object_id', $object_id)->where('relation',$relation_id)->where('rating', '-1')->count();
+        $positive = UserReputation::where('object_id', $object_id)->where('relation', $relation_id)->where('rating',
+            '1')->count();
+        $negative = UserReputation::where('object_id', $object_id)->where('relation', $relation_id)->where('rating',
+            '-1')->count();
         $val = $positive - $negative;
 
-        $class_name::where('id', $object_id)->update(['rating'=>$val, 'negative_count' => $negative, 'positive_count' => $positive]);
+        $class_name::where('id', $object_id)->update([
+            'rating' => $val,
+            'negative_count' => $negative,
+            'positive_count' => $positive
+        ]);
     }
 
     /**

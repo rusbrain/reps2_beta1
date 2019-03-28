@@ -180,7 +180,9 @@ $(function () {
                 if(response.message){
                     if(response.user_rating === "-1"){
                         imgClass = 'negative-vote-img';
-                        console.log(response.user_rating);
+                    }
+                    if(response.user_rating === undefined){
+                        imgClass = '';
                     }
                     $('#vote-modal').find('.modal-body .unregistered-info-wrapper').addClass('active');
                     $('#vote-modal').find('.modal-body .unregistered-info-wrapper .notice').html(response.message);
