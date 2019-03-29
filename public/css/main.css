@@ -1453,6 +1453,10 @@ form label {
 .section-article-info > a:hover {
   color: #737373;
 }
+.section-article-author .user-avatar img{
+  display: block;
+  margin: 0 auto;
+}
 /*----------------------------------------*/
 /*--------- END FORUM SECTION ARTICLES PAGE CONTENT ----------- */
 /*---------------------------------------*/
