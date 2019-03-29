@@ -75,8 +75,8 @@
                 <div class="user-account-info-row">
                     <span>Статус:</span>
                     @if(Auth::id() == $user->id || $general_helper->isAdmin() ||  $general_helper->isModerator())
-                        <span>{{$general_helper->getUserStatus($user->score)}}
-                            <span class="text-bold">{{$user->score}}</span> pts
+                        <span>{{$general_helper->getUserStatus($user->points)}}
+                            <span class="text-bold">{{$user->points}}</span> pts
                         </span>
                     @else
                         <span class="">скрыт</span>

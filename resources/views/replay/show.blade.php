@@ -43,9 +43,9 @@
                     @if($general_helper->isAdmin() ||  $general_helper->isModerator())
                         @if($replay->user->user_role_id != 0)
                             {{$replay->user->role->title . ' | '}}
-                            {{$general_helper->getUserStatus($replay->user->score)}} {{$replay->user->score . ' pts | '}}
+                            {{$general_helper->getUserStatus($replay->user->points)}} {{$replay->user->points . ' pts | '}}
                         @else
-                            {{$general_helper->getUserStatus($replay->user->score)}} {{$replay->user->score . ' pts | '}}
+                            {{$general_helper->getUserStatus($replay->user->points)}} {{$replay->user->points . ' pts | '}}
                         @endif
                     @endif
                 </div>

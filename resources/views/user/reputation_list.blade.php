@@ -13,7 +13,7 @@
                         <span></span>
                     @endif
                     @if($general_helper->isAdmin() ||  $general_helper->isModerator())
-                        <span>{{$general_helper->getUserStatus($item->sender->score)}} {{$item->sender->score . 'pts'}} </span>
+                        <span>{{$general_helper->getUserStatus($item->sender->points)}} {{$item->sender->points . 'pts'}} </span>
                     @endif
                     <span>|</span>
                     <a href="{{route('user.get_rating', ['id' => $item->sender->id])}}">{{$item->sender->rating}}

@@ -1289,6 +1289,18 @@ form label {
   font-family: "Roboto-Medium",sans-serif;
   margin-left: 0;
 }
+.preview-img-home{
+  padding-left: 15px;
+  padding-right: 15px;
+  display: block;
+  height: 140px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+.preview-img-home .content-box-topic-img{
+  max-height: 140px;
+  margin-bottom: 0;
+}
 /*----------------------------------------*/
 /*--------- END HOME PAGE CONTENT ----------- */
 /*---------------------------------------*/

@@ -97,7 +97,9 @@ class SectionService
             $topics = collect(\DB::select($sql))->groupBy('section_id');
 
             foreach ($all_sections as $key => $section) {
-                $all_sections[$key]->topics = $topics[$section->id];
+                if(isset($topics[$section->id])){
+                    $all_sections[$key]->topics = $topics[$section->id];
+                }
             }
 
         return $all_sections;
