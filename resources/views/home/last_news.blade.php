@@ -7,13 +7,15 @@
             </div>
             @foreach($last_news as $news)
                 <div class="col-md-6 margin-top-20">
-                    <a href="{{route('forum.topic.index',['id'=>$news->id])}}"  class="">
-                        @if($news->preview_image)
+                    @if($news->preview_image)
+                        <a href="{{route('forum.topic.index',['id'=>$news->id])}}"
+                           class="preview-img-home">
                             <img src="{{$news->preview_image->link ?? '/images/logo.png'}}"
                                  class="content-box-topic-img"
                                  alt="">
-                        @endif
-                    </a>
+                        </a>
+                    @endif
+
                     <div class="content-box-topic-desc padding-left-15 margin-bottom-10">
                         <a href="{{route('forum.topic.index',['id'=>$news->id])}}" class="content-box-news-title">
                             <h2 class="margin-bottom-5">{!! $news->title??'название форума' !!}</h2>

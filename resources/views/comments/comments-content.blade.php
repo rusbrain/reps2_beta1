@@ -36,9 +36,9 @@
                         @if($general_helper->isAdmin() ||  $general_helper->isModerator())
                             @if($comment->user->user_role_id != 0)
                                 {{$comment->user->role->title . ' | '}}
-                                {{$general_helper->getUserStatus($comment->user->score)}} {{$comment->user->score . ' pts | '}}
+                                {{$general_helper->getUserStatus($comment->user->points)}} {{$comment->user->points . ' pts | '}}
                             @else
-                                {{$general_helper->getUserStatus($comment->user->score)}} {{$comment->user->score . ' pts | '}}
+                                {{$general_helper->getUserStatus($comment->user->points)}} {{$comment->user->points . ' pts | '}}
                             @endif
                         @endif
                     </div>

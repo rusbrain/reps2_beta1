@@ -47,7 +47,7 @@ class CreateUsersTable extends Migration
             $table->dateTime('activity_at')         ->nullable();
             $table->integer('negative_count')       ->default(0);
             $table->integer('positive_count')       ->default(0);
-            $table->unsignedInteger('points')       ->default(0);
+            $table->integer('points')               ->default(0);
 
             $table->rememberToken();
             $table->timestamps();
