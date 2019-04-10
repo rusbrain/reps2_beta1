@@ -16,7 +16,11 @@ class CreateDialogueUserTable extends Migration
         Schema::create('dialogue_user', function (Blueprint $table) {
             $table->integer('user_id');
             $table->integer('dialogue_id');
+
+            $table->index('user_id');
+            $table->index('dialogue_id');
         });
+
     }
 
     /**
