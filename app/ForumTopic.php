@@ -325,4 +325,35 @@ class ForumTopic extends Model
             ->withCount('positive', 'negative', 'comments')
             ->get();
     }
+
+    /**
+     * Get last 10 forums and news for home page
+     * @return mixed
+     */
+    public static function getLastForums ()
+    {
+        return ForumTopic::forums()->where('approved', 1)->with([
+            'user' => function ($q) {
+                $q->withTrashed()->with('avatar');
+            }
+        ])
+            ->withCount('positive', 'negative', 'comments')
+            ->with('preview_image', 'icon')->limit(10)->get();
+    }
+
+    /**
+     * get all forums
+     * @return mixed
+     */
+    public static function forums()
+    {
+        return ForumTopic::where(function ($q) {
+                $q->whereNull('start_on')
+                    ->orWhere('start_on', '<=', Carbon::now()->format('Y-M-d'));
+            })
+            ->whereHas('section', function ($q) {
+                $q->where('is_active', 1)->where('is_general', 1);
+            })->orderBy('created_at', 'desc');
+    }
+
 }

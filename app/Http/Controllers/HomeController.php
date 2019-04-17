@@ -63,76 +63,9 @@ class HomeController extends Controller
     /**
      * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View|mixed
      */
-    public function lastNews()
-    {
-        return view('home.last_news')->with(['last_news' => ForumTopic::lastNews()]);
-    }
-
-    /**
-     * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View|mixed
-     */
     public function lastForums()
     {
-        $last_records = $this->getRecordsByIds($this->lastFiveRecords());
-        return view('home.last_forums')->with(['last_forum' => $last_records]);
+        return view('home.last_forums')->with(['news' => ForumTopic::getLastForums()]);
     }
-
-    /**
-     * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View|mixed
-     */
-    public function topForums()
-    {
-        $popular_forums = $this->getRecordsByIds($this->getTopRecords());
-        return view('home.top_forums')->with(['popular_forums' => $popular_forums]);
-    }
-
-    /**
-     * @param $ids
-     * @return mixed
-     */
-    public function getRecordsByIds($ids)
-    {
-        /**create ids arrays by record type*/
-        foreach ($ids as $id) {
-            foreach (self::$records_type as $type => $i) {
-                if ($id->type == $type) {
-                    self::$records_type[$type][] = $id->id;
-                }
-            }
-        }
-        $last_records['replays'] = Replay::getReplayByIds(self::$records_type[self::REPLAYS]);
-        $last_records['galleries'] = UserGallery::getGalleriesByIds(self::$records_type[self::GALLERIES]);
-        $last_records['forums'] = ForumTopic::getForumTopicsByIds(self::$records_type[self::FORUMS]);
-
-        return $last_records;
-    }
-
-    /**
-     * @return \Illuminate\Support\Collection
-     */
-    public function lastFiveRecords()
-    {
-        /**@var Builder $forums */
-        $forums = ForumTopic::getLastForumTopic(5);
-        $replays = Replay::getLastReplays(5);
-        $galleries = UserGallery::getLastGallery(5);
-
-        return $forums->union($replays)
-            ->union($galleries)->orderBy('created_at', 'desc')
-            ->limit(5)->get();
-    }
-
-    public function getTopRecords()
-    {
-        /**@var Builder $forums */
-        $forums = ForumTopic::getTopForumTopics(5);
-        $replays = Replay::getTopReplays(5);
-        $galleries = UserGallery::getTopGalleries(5);
-
-        return $forums->union($replays)
-            ->union($galleries)->orderBy('rating','DESC')
-            ->limit(5)->get();
-    }
-
 }
 
