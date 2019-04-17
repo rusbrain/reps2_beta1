@@ -12,14 +12,6 @@
 @endsection
 
 @section('content')
-    <!--Last News-->
-    <div id="ajax_last_news" data-path="{{route('home.last_news')}}">
-        <div class="load-wrapp">
-            <img src="/images/loader.gif" alt="">
-        </div>
-    </div>
-    <!--END Last News-->
-
     <!--Last Forums-->
     <div id="ajax_last_forums" data-path="{{route('home.last_forum')}}">
         <div class="load-wrapp">
@@ -27,14 +19,6 @@
         </div>
     </div>
     <!--END Last Forums-->
-
-    <!--Popular Forums-->
-    <div id="ajax_top_forums" data-path="{{route('home.top_forum')}}">
-        <div class="load-wrapp">
-            <img src="/images/loader.gif" alt="">
-        </div>
-    </div>
-    <!--END Popular Forums-->
 @endsection
 
 @section('sidebar-right')
@@ -62,12 +46,8 @@
 @section('js')
     <script>
         $(function () {
-            var last_news = $('#ajax_last_news');
             var last_forums = $('#ajax_last_forums');
-            var top_forums = $('#ajax_top_forums');
-            getLastNews(last_news);
             getLastNews(last_forums);
-            getLastNews(top_forums);
         });
         function getLastNews(container) {
             $.get(container.attr('data-path'), {}, function (html) {

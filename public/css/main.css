@@ -581,6 +581,7 @@ form label {
   align-items: center;
   justify-content: space-between;
   height: 40px;
+  font-size: 11.5px;
 }
 .comment-header > div {
   display: flex;
