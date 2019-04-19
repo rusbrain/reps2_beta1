@@ -24,7 +24,11 @@
             </div>
             <div class="user-reputation-vote-content">
                 <div class="col-md-11">
-                    <div>{!! $general_helper->oldContentFilter($item->comment) !!}</div>
+                    @if(\App\IgnoreUser::i_ignore($item->sender->id))
+                        <div class="padding-15 text-center">Комментарий скрыт</div>
+                    @else
+                        <div>{!! $general_helper->oldContentFilter($item->comment) !!}</div>
+                    @endif
                 </div>
                 <div class="col-md-1">
                     @if($item->rating == 1)

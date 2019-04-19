@@ -25,22 +25,38 @@
             </div>
         </div><!--close div /.user-messages-row .my-message-->
     @else
-        <div class="user-messages-row user-message">
-            <div>
-                <div class="user-name">{{$message->sender->name}}</div>
-                <img src="{{route('home').($message->sender->avatar?$message->sender->avatar->link:'/dist/img/avatar04.png')}}"
-                     class="user-avatar-image" alt="">
-            </div>
-            <div class="message-wrapper">
-                <div class="message-content">
-                    {!! $message->message !!}
-                    <img src="{{route('home')}}/images/polygon.png" alt="">
+        @if(\App\IgnoreUser::i_ignore($message->user_id))
+            <div class="user-messages-row user-message">
+                <div>
+                    <div class="user-name">{{$message->sender->name}}</div>
+                    <img src="{{route('home').($message->sender->avatar?$message->sender->avatar->link:'/dist/img/avatar04.png')}}"
+                         class="user-avatar-image" alt="">
                 </div>
-                <div class="message-create">
-                    <span>{{$message->created_at}}</span>
+                <div class="message-wrapper">
+                    <div class="message-content">
+                        Сообщение скрыто
+                        <img src="{{route('home')}}/images/polygon.png" alt="">
+                    </div>
                 </div>
-            </div>
-        </div><!--close div /.user-messages-row .user-message-->
+            </div><!--close div /.user-messages-row .user-message-->
+        @else
+            <div class="user-messages-row user-message">
+                <div>
+                    <div class="user-name">{{$message->sender->name}}</div>
+                    <img src="{{route('home').($message->sender->avatar?$message->sender->avatar->link:'/dist/img/avatar04.png')}}"
+                         class="user-avatar-image" alt="">
+                </div>
+                <div class="message-wrapper">
+                    <div class="message-content">
+                        {!! $message->message !!}
+                        <img src="{{route('home')}}/images/polygon.png" alt="">
+                    </div>
+                    <div class="message-create">
+                        <span>{{$message->created_at}}</span>
+                    </div>
+                </div>
+            </div><!--close div /.user-messages-row .user-message-->
+        @endif
     @endif
 @endforeach
 <div class="scroll-to"></div>

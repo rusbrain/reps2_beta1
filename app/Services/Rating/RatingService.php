@@ -114,9 +114,6 @@ class RatingService
     public static function set(SetRatingRequest $request, $id, $relation, $model)
     {
         $object = ($model)::find($id);
-        if (IgnoreUser::me_ignore($object->user_id)) {
-            return ['message' => 'Вы не можете проголосовать. Автор добавил Вас в игнор лист'];
-        }
 
         $comment = self::getComment($request);
         if ($object) {
