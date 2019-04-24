@@ -6,6 +6,4 @@
     @component('mail::button', ['url' => route('home')])
         На главную
     @endcomponent
-
-    ![zerg]({{asset('/images/zerg.png')}})
 @endcomponent
