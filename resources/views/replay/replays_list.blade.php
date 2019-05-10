@@ -75,6 +75,11 @@
                 </div>
                 @if(Auth::id() == $replay->user->id)
                     <div class="reputation-button-wrapper">
+                        @if(!\App\Replay::isApproved($replay->approved))
+                            <div class="error margin-right-10 text-bold">
+                                Не подтвержден
+                            </div>
+                        @endif
                         <div class="user-reputation-qty">
                             <span class="reputation-vote-up bg-blue"></span>
                             <span class="reputation-qty">{{$replay->positive_count}}</span>

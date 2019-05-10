@@ -1786,6 +1786,10 @@ div.author-info {
 .video-link-wrapper p{
   margin-bottom: 0;
 }
+.replay-action-wrapper{
+  display: flex;
+  justify-content: left !important;
+}
 /*----------------------------------------*/
 /*----- END SINGLE  REPLAY PAGE --------- */
 /*---------------------------------------*/
