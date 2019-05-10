@@ -134,9 +134,7 @@
 
         function createCommentUrl(comment_id, object, object_id) {
             var url = '[url={{route('home')}}/';
-            console.log(comment_id);
-            console.log(object);
-            console.log(object_id);
+
             if (object === 'topic') {
                 url += 'forum/';
             }

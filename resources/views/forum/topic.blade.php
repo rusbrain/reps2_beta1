@@ -116,6 +116,11 @@
                              data-user="{{$topic->user->name}}">
                         Цитировать
                     </div>
+                    @if(!\App\Replay::isApproved($topic->approved))
+                        <div class="error margin-left-40 text-bold margin-top-10">
+                            Не подтвержден
+                        </div>
+                    @endif
                     <div class="article-rating">
                         <a href="#vote-modal" class="positive-vote vote-replay-up" data-toggle="modal"
                            data-rating="1" data-route="{{route('forum.topic.set_rating',['id'=>$topic->id])}}">

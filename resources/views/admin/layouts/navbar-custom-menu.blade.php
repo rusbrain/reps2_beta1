@@ -32,7 +32,7 @@
                                 <small><i class="fa fa-clock-o"></i> {{$message->created_at}}</small>
                             </h4>
                             <!-- The message -->
-                            <p>{{substr($message->message, 0, 100)}}</p>
+                            <p>{{mb_substr($message->message, 0, 100)}}</p>
                         </a>
                     </li>
                     @endforeach

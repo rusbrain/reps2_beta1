@@ -390,7 +390,7 @@ class GeneralViewHelper
             $stripped = preg_replace("#^(http|ftp|https|news)://(\S+)$#i", "\\2", $url['show']);
             $uri_type = preg_replace("#^(http|ftp|https|news)://(\S+)$#i", "\\1", $url['show']);
 
-            $show = $uri_type . '://' . substr($stripped, 0, 25) . '...' . substr($stripped, -10);
+            $show = $uri_type . '://' . mb_substr($stripped, 0, 25) . '...' . mb_substr($stripped, -10);
         }
         $result = (isset($url['st']) ? $url['st'] : '') . "<a rel=\"nofollow\" href=\"" . $url['html'] . "\" target=\"_blank\">" . $show . "</a>" . $url['end'];
 
@@ -406,7 +406,7 @@ class GeneralViewHelper
 
         while (($position = strpos($content, '<', $position)) !== false) {
             //get all tags in content
-            if (preg_match("|^<(/?)([a-z\d]+)\b[^>]*>|i", substr($content, $position), $match)) {
+            if (preg_match("|^<(/?)([a-z\d]+)\b[^>]*>|i", mb_substr($content, $position), $match)) {
                 $tag = strtolower($match[2]);
                 //ignore all single tags
                 if (in_array($tag, $ignored_tags) == false) {
