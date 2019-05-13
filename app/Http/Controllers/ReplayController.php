@@ -176,7 +176,7 @@ class ReplayController extends Controller
             $user_id = Auth::id();
         }
         $method = $this->method_get;
-        return ReplayService::getList(Replay::$method()->where('user_id', $user_id), $this->replay_group);
+        return ReplayService::getList(Replay::$method()->where('user_id', $user_id), $this->replay_group, true);
     }
 
     /**
@@ -188,7 +188,7 @@ class ReplayController extends Controller
         if (!$user_id) {
             $user_id = Auth::id();
         }
-        return ReplayService::getList(Replay::where('user_id', $user_id), $this->replay_group);
+        return ReplayService::getList(Replay::where('user_id', $user_id), $this->replay_group, true);
     }
 
     /**

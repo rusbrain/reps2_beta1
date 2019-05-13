@@ -96,6 +96,11 @@
                                                         </a>
                                                     </div>
                                                 @endif
+                                                @if(!\App\Replay::isApproved($topic->approved))
+                                                    <div class="error margin-left-10 text-bold">
+                                                        Не подтвержден
+                                                    </div>
+                                                @endif
                                                 <div>
                                                     <a href="{{route('forum.topic.index',['id'=>$topic->id])}}#comments">
                                                         <img src="{{route('home')}}/images/icons/message-square-blue.png"

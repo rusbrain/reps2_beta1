@@ -135,12 +135,19 @@
                         <div class="replay-desc-right">Юзер Рейтинг:</div>
                         <div class="replay-desc-left">({{$replay->user_rating??'0'}})</div>
                     </div>
-                    @if(Auth::id() == $replay->user->id || $general_helper->isAdmin() || $general_helper->isModerator())
-                        <a href="{{route('replay.edit', ['id' => $replay->id])}}" class="user-theme-edit">
-                            <img src="{{route('home')}}/images/icons/svg/edit_icon.svg" alt="">
-                            <span>Редактировать</span>
-                        </a>
-                    @endif
+                    <div class="replay-action-wrapper">
+                        @if(Auth::id() == $replay->user->id || $general_helper->isAdmin() || $general_helper->isModerator())
+                            <a href="{{route('replay.edit', ['id' => $replay->id])}}" class="user-theme-edit">
+                                <img src="{{route('home')}}/images/icons/svg/edit_icon.svg" alt="">
+                                <span>Редактировать</span>
+                            </a>
+                        @endif
+                        @if(!\App\Replay::isApproved($replay->approved))
+                            <div class="error margin-left-40 text-bold margin-top-10">
+                                Не подтвержден
+                            </div>
+                        @endif
+                    </div>
                 </div>
                 <div class="col-md-4 position-relative">
                     <div>{{$replay->map->name??'не указано'}}</div>

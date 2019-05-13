@@ -37,6 +37,9 @@ class Replay extends Model
         'restored' => ReplayPointsObserver::class,
     ];
 
+    const REPLAY_NOT_APPROVED  = 0;
+    const REPLAY_APPROVED      = 1;
+
     /**
      * @var array
      */
@@ -190,5 +193,10 @@ class Replay extends Model
             ->where('approved', 1)
             ->orderBy('rating','DESC')
             ->limit($limit);
+    }
+
+    public static function isApproved($status)
+    {
+        return $status == self::REPLAY_APPROVED ? true : false;
     }
 }

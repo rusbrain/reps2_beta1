@@ -156,6 +156,7 @@ class ForumTopic extends Model
                 $q->whereNull('start_on')
                     ->orWhere('start_on', '<=', Carbon::now()->format('Y-M-d'));
             })
+            ->where('approved', 1)
             ->with([
                 'comments' => function ($query
                 ) {                                                             //TODO:remove "with comments"

@@ -156,12 +156,17 @@ class ReplayService
     /**
      * get Replay data list with pagination
      *
+     * $my_replay - if true to select all approved / not approved  user's replays
      * @param $query
      * @param $title
+     * @param $my_replay
      * @return array
      */
-    public static function getList($query, $title)
+    public static function getList($query, $title, $my_replay = false)
     {
+        if(!$my_replay){
+            $query = $query->where('approved', 1);
+        }
         $data = ReplayService::replayWithPagination(ReplayService::getReplayQuery($query));
         return ['replays' => UserViewService::getReplay($data), 'pagination' => UserViewService::getPagination($data)];
     }
