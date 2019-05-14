@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\{Country, IgnoreUser, User};
+use App\{Country, IgnoreUser, User, UserFriend};
 use App\Http\Requests\User\UpdateProfileRequest;
 use App\Services\User\UserService;
 use Illuminate\Support\Facades\Auth;
@@ -30,12 +30,18 @@ class UserController extends Controller
         if (Auth::user() && IgnoreUser::me_ignore($id)){
             return abort(403);
         }
-
         $user = User::getUserDataById($id);
         if (!$user){
             abort(404);
         }
-        return view('user.profile')->with('user', $user->load('avatar'));
+        $friends = UserFriend::getFriends($user);
+        $friendly = UserFriend::getFriendlies($user);
+
+        return view('user.profile')->with([
+            'friends' => $friends,
+            'friendly' => $friendly,
+            'user' => $user->load('avatar')
+        ]);
     }
 
     /**

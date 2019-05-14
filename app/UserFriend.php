@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Services\User\UserService;
 use App\Traits\ModelRelations\UserFriendRelation;
 use Illuminate\Database\Eloquent\{Model, SoftDeletes};
 use Illuminate\Support\Facades\Auth;
@@ -28,13 +29,18 @@ class UserFriend extends Model
 
     /**
      * @param $user_id
+     * @return bool
      */
     public static function createFriend($user_id)
     {
+        if(UserService::isFriendExists(Auth::id(), $user_id)){
+            return false;
+        }
         UserFriend::create([
             'user_id' => Auth::id(),
             'friend_user_id' => $user_id
         ]);
+        return true;
     }
 
     /**

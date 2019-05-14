@@ -50,14 +50,14 @@
                             <td>
                                 @if($item->view_avatars == 1)
                                     @if($item->avatar)
-                                        <a href="" class="logged-user-avatar">
+                                        <a href="{{route('user_profile',['id'=>$item->id])}}" class="logged-user-avatar">
                                             <img src="{{$item->avatar->link}}">
                                         </a>
                                     @else
-                                        <a href="" class="logged-user-avatar">A</a>
+                                        <a href="{{route('user_profile',['id'=>$item->id])}}" class="logged-user-avatar">A</a>
                                     @endif
                                 @else
-                                    <a href="" class="logged-user-avatar">A</a>
+                                    <a href="{{route('user_profile',['id'=>$item->id])}}" class="logged-user-avatar">A</a>
                                 @endif
                             </td>
                             <td>
@@ -71,7 +71,7 @@
                         </tr>
                     @endforeach
                 @else
-                    <tr class="">
+                    <tr class="text-center">
                         <td colspan="5">В данный момент список пуст</td>
                     </tr>
                 @endif
@@ -104,14 +104,14 @@
                             <td>
                                 @if($item->view_avatars == 1)
                                     @if($item->avatar)
-                                        <a href="" class="logged-user-avatar">
+                                        <a href="{{route('user_profile',['id'=>$item->id])}}" class="logged-user-avatar">
                                             <img src="{{$item->avatar->link}}">
                                         </a>
                                     @else
-                                        <a href="" class="logged-user-avatar">A</a>
+                                        <a href="{{route('user_profile',['id'=>$item->id])}}" class="logged-user-avatar">A</a>
                                     @endif
                                 @else
-                                    <a href="" class="logged-user-avatar">A</a>
+                                    <a href="{{route('user_profile',['id'=>$item->id])}}" class="logged-user-avatar">A</a>
                                 @endif
                             </td>
                             <td>
@@ -125,7 +125,7 @@
                         </tr>
                     @endforeach
                 @else
-                    <tr class="">
+                    <tr class="text-center">
                         <td colspan="5">В данный момент список пуст</td>
                     </tr>
                 @endif

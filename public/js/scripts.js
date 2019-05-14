@@ -202,7 +202,7 @@ $(function () {
  * Hidden text - hide/show
  * */
 $(function () {
-    $('.quotetop').on('click', function (e) {
+    $('body').on('click','.quotetop', function (e) {
         $(this).siblings('.spoilmain').toggleClass('active');
     });
 });
@@ -430,7 +430,7 @@ function getAllSmiles() {
     var result;
 
     for (var i = 0; i <= qty; i++) {
-        key = smile + i;
+        key = ':'+ smile + i+':';
         result = path + smile + i + extension;
         smilesObject[key] = result;
     }
@@ -440,11 +440,11 @@ function getAllSmiles() {
 function getMoreSmiles() {
     var path = 'emoticons/smiles/';
     var smilesObject = {
-        'silver': path + 'silver.png',
-        'terran': path + 'terran.gif',
-        'zerg': path + 'zerg.gif',
-        'gold': path + 'gold.png',
-        'protoss': path + 'protoss.gif'
+        ':silver:': path + 'silver.png',
+        ':terran:': path + 'terran.gif',
+        ':zerg:': path + 'zerg.gif',
+        ':gold:': path + 'gold.png',
+        ':protoss:': path + 'protoss.gif'
     };
     return smilesObject
 }

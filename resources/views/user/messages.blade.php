@@ -34,7 +34,9 @@
             <div class="row">
                 <div class="user-messages-info">
                     @if($user->avatar)
-                        <img src="{{$user->avatar->link}}" alt="" class="margin-right-5">
+                        <a href="{{route('user_profile',['id' => $user->id])}}" class="margin-right-5">
+                            <img src="{{$user->avatar->link}}" alt="" class="margin-right-5">
+                        </a>
                     @else
                         <a href="{{route('user_profile',['id' => $user->id])}}"
                            class="logged-user-avatar no-header margin-right-5">A</a>

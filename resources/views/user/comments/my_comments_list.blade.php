@@ -40,7 +40,7 @@
                     <div id="post_id_{{$s}}" class="collapse {{$s == 0 ? 'show' : ''}} user-section-post-wrapper"
                          aria-labelledby="heading_post_id_{{$s}}"
                          data-parent="#user-posts">
-                        <div class="card-body">
+                        <div class="card-body padding-15 text-bold">
                             Список пуст
                         </div><!--close div /.card-body-->
                     </div>

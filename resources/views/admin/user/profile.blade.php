@@ -369,6 +369,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <h3 class="text-blue">{{$user->name}} дружит с:</h3>
+
                                     <table class="table table-condensed">
                                         <thead>
                                         <tr>
@@ -379,17 +380,25 @@
                                         </thead>
                                         <tbody>
                                         @foreach($user->user_friends as $friend)
-                                            <tr>
-                                                <td>{{$friend->friend_user->id}}</td>
-                                                <td>
-                                                    <img class="direct-chat-img"
-                                                         src="{{route('home').($friend->friend_user->avatar?$friend->friend_user->avatar->link:'/dist/img/avatar.png')}}"
-                                                         alt="Аватар пользователя"><!-- /.direct-chat-img -->
-                                                </td>
-                                                <td>
-                                                    <a href="{{route('admin.user.profile', ['id' => $friend->friend_user->id])}}">{{$friend->friend_user->name}}</a>
-                                                </td>
-                                            </tr>
+                                            @if(!$friend->friend_user)
+                                                <tr class="alert-error text-center">
+                                                    <td> - </td>
+                                                    <td> - </td>
+                                                    <td>данные в БД не корректны</td>
+                                                </tr>
+                                            @else
+                                                <tr>
+                                                    <td>{{$friend->friend_user->id}}</td>
+                                                    <td>
+                                                        <img class="direct-chat-img"
+                                                             src="{{route('home').($friend->friend_user->avatar?$friend->friend_user->avatar->link:'/dist/img/avatar.png')}}"
+                                                             alt="Аватар пользователя"><!-- /.direct-chat-img -->
+                                                    </td>
+                                                    <td>
+                                                        <a href="{{route('admin.user.profile', ['id' => $friend->friend_user->id])}}">{{$friend->friend_user->name}}</a>
+                                                    </td>
+                                                </tr>
+                                            @endif
                                         @endforeach
                                         </tbody>
                                     </table>
