@@ -202,7 +202,7 @@ $(function () {
  * Hidden text - hide/show
  * */
 $(function () {
-    $('.quotetop').on('click', function (e) {
+    $('body').on('click','.quotetop', function (e) {
         $(this).siblings('.spoilmain').toggleClass('active');
     });
 });
