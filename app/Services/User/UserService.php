@@ -8,7 +8,7 @@
 
 namespace App\Services\User;
 
-use App\{File, User};
+use App\{File, User, UserFriend};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -154,6 +154,14 @@ class UserService
             if(Auth::user()->role->name == 'moderator'){
                 return true;
             }
+        }
+        return false;
+    }
+
+    public static function isFriendExists($user_id, $friend_user_id)
+    {
+        if(UserFriend::where('user_id', $user_id)->where('friend_user_id',$friend_user_id)->exists()){
+            return true;
         }
         return false;
     }

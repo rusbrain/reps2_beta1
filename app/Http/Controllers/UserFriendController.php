@@ -15,11 +15,18 @@ class UserFriendController extends Controller
      */
     public function addFriend($user_id)
     {
-        if (IgnoreUser::me_ignore($user_id)){
-            return abort(403);
+        try{
+            if (IgnoreUser::me_ignore($user_id)){
+                throw new \DomainException('Данный пользователь Вас игнорирует');
+            }
+            if(!UserFriend::createFriend($user_id)){
+                throw new \DomainException('Пользователь уже добавлен в список друзей');
+            }
+            return back();
+
+        } catch (\DomainException $e) {
+            return redirect()->route('error',['error' => $e->getMessage()]);
         }
-        UserFriend::createFriend($user_id);
-        return back();
     }
 
     /**

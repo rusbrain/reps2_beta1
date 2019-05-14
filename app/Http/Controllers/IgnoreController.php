@@ -16,12 +16,20 @@ class IgnoreController extends Controller
      */
     public function setIgnore($user_id)
     {
-        IgnoreUser::create([
-            'user_id'           => Auth::id(),
-            'ignored_user_id'   => $user_id
-        ]);
+        try {
+            if (IgnoreUser::i_ignore($user_id)) {
+                throw new \DomainException('Пользователь уже находится в Вашем игнор листе');
+            }
+            IgnoreUser::create([
+                'user_id' => Auth::id(),
+                'ignored_user_id' => $user_id
+            ]);
 
-        return back();
+            return back();
+
+        } catch (\DomainException $e) {
+            return redirect()->route('error', ['error' => $e->getMessage()]);
+        }
     }
 
     /**

@@ -71,7 +71,7 @@
                         </tr>
                     @endforeach
                 @else
-                    <tr class="">
+                    <tr class="text-center">
                         <td colspan="5">В данный момент список пуст</td>
                     </tr>
                 @endif
@@ -125,7 +125,7 @@
                         </tr>
                     @endforeach
                 @else
-                    <tr class="">
+                    <tr class="text-center">
                         <td colspan="5">В данный момент список пуст</td>
                     </tr>
                 @endif
