@@ -114,38 +114,38 @@
 
 @section('js')
     <script>
-        $('.pop-up-content').on('click', '.add_input', function () {
+        $('body').on('click', '.add_input', function () {
             console.log(this);
-            $html = ' <div class="row">\n' +
-                '                                <div class="col-md-10">\n' +
-                '                                    <input type="text" name="new_answers[]" class="form-control" placeholder="Вариант ответа">\n' +
-                '                                </div>\n' +
-                '                                <div class="col-md-2">\n' +
-                '                                    <h4>\n' +
-                '                                        <i class="fa fa-plus text-green add_input" data-question="'+this.dataset.question+'"></i>\n' +
-                '                                    </h4>\n' +
-                '                                </div>\n' +
-                '                            </div>';
+            $html = '<div class="row">\n' +
+                    '    <div class="col-md-10">\n' +
+                    '        <input type="text" name="new_answers[]" class="form-control" placeholder="Вариант ответа">\n' +
+                    '    </div>\n' +
+                    '    <div class="col-md-2">\n' +
+                    '        <h4>\n' +
+                    '            <i class="fa fa-plus text-green add_input" data-question="' + this.dataset.question + '"></i>\n' +
+                    '        </h4>\n' +
+                    '    </div>\n' +
+                    '</div>';
 
-            $("#"+this.dataset.question).append($html);
+            $("#" + this.dataset.question).append($html);
         });
 
         $('.pop-up-content').on('click', '.remove_input', function () {
             console.log(this.dataset.answer);
-            $('#'+this.dataset.answer).remove();
+            $('#' + this.dataset.answer).remove();
         });
 
         $(function () {
             getQuestions(1);
             $('.pagination-content').on('click', '.pagination-push', function () {
                 $('.load-wrapp').show();
-                let page = $(this).data('to-page');
+                var page = $(this).data('to-page');
                 getQuestions(page);
             })
         });
 
         function getQuestions(page) {
-            $.get('{{route('admin.question.pagination')}}?page='+page, {}, function (data) {
+            $.get('{{route('admin.question.pagination')}}?page=' + page, {}, function (data) {
                 $('.table-content').html(data.table);
                 $('.pagination-content').html(data.pagination);
                 $('.pop-up-content').html(data.pop_up);
