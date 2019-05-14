@@ -97,10 +97,8 @@
                         // Emoticons to be included in the more section
                         more: getMoreSmiles()
                     }
-
                 });
             }
-
             /**add quote*/
             $('body').on('click', '.quote img', function () {
                 addText(textarea, $(this));

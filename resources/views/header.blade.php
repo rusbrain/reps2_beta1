@@ -39,7 +39,7 @@
                             <img src="{{Auth::user()->avatar->link}}" alt="">
                         </a>
                     @else
-                        <a href="" class="logged-user-avatar">A</a>
+                        <a href="{{route('user_profile',['id' =>Auth::id()])}}" class="logged-user-avatar">A</a>
                     @endif
                 @endif
                 <a href="{{route('user_profile',['id' =>Auth::id()])}}" class="logged-user-nickname">{{Auth::user()->name}}</a>

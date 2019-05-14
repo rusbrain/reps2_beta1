@@ -158,7 +158,6 @@ class GeneralViewHelper
         return self::$instance->banner;
     }
 
-
     /**
      * @param $text
      * @return mixed|null|string|string[]
