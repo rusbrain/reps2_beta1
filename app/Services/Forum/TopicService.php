@@ -8,7 +8,7 @@
 
 namespace App\Services\Forum;
 
-use App\{File, ForumSection, ForumTopic, User};
+use App\{File, ForumSection, ForumTopic, Services\User\UserService, User};
 use App\Http\Requests\{ForumTopicStoreRequest, ForumTopicUpdteRequest, SearchForumTopicRequest};
 use App\Services\Base\FileService;
 use Carbon\Carbon;
@@ -49,20 +49,24 @@ class TopicService
         $topic_data['user_id'] = Auth::id();
         $topic_data['commented_at'] = Carbon::now();
 
-        if ($request->file('preview_img')){
+        if ($request->file('preview_img')) {
             unset($topic_data['preview_img']);
             $topic_data['preview_file_id'] = self::savePreview($request);
         }
 
-        if ($admin){
-            $data['approved']   = $data['approved']??0;
-            $data['news']       = $data['news']??0;
+        if ($admin) {
+            $data['approved'] = $data['approved'] ?? 0;
+            $data['news'] = $data['news'] ?? 0;
         }
 
-        /**@var ForumTopic $topic*/
+        if (UserService::isAdmin() || UserService::isModerator()) {
+            $topic_data['approved'] = 1;
+        }
+
+        /**@var ForumTopic $topic */
         $topic = ForumTopic::create($topic_data);
 
-       return $topic->id;
+        return $topic->id;
     }
 
     /**

@@ -126,7 +126,7 @@ class ReplayService
         $replay_data = $request->validated();
         $title = 'Replay ' . $request->has('title') ? $request->get('title') : '';
         if ($request->file()) {
-            $file = File::storeFile($replay_data['replay'], 'replays', $title);
+            $file = File::storeFile($replay_data['replay'], 'replays', $title, true);
             $replay_data['file_id'] = $file->id;
         }
         if (!UserService::isAdmin() && !UserService::isModerator()) {
@@ -134,6 +134,11 @@ class ReplayService
         }
         $replay_data['user_id'] = Auth::id();
         unset($replay_data['replay']);
+
+        if (UserService::isAdmin() || UserService::isModerator()) {
+            $replay_data['approved'] = 1;
+        }
+
         $replay = Replay::create($replay_data);
 
         return $replay->id;
@@ -226,7 +231,7 @@ class ReplayService
             FileService::removeFile($replay->file_id);
 
             $title = 'Replay ' . $request->has('title') ? $request->get('title') : '';
-            $file = File::storeFile($replay_data['replay'], 'replays', $title);
+            $file = File::storeFile($replay_data['replay'], 'replays', $title, true);
             $replay_data['file_id'] = $file->id;
             unset($replay_data['replay']);
         }

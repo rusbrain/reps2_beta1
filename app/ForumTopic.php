@@ -78,7 +78,8 @@ class ForumTopic extends Model
         'news',
         'negative_count',
         'positive_count',
-        'comments_count'
+        'comments_count',
+        'approved'
     ];
 
     /**
