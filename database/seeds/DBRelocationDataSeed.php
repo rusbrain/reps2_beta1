@@ -303,8 +303,8 @@ class DBRelocationDataSeed extends Seeder
 
             $new_users = [];
             foreach ($old_users as $old_user){
-                if (!in_array(strtolower($old_user->user_email), $emails)){
-                    $emails[] = strtolower($old_user->user_email);
+                if (!in_array(mb_strtolower($old_user->user_email), $emails)){
+                    $emails[] = mb_strtolower($old_user->user_email);
                     $role = self::getUserRole($old_user);
 
                     $avatar_id = 0;
@@ -1075,7 +1075,7 @@ class DBRelocationDataSeed extends Seeder
                             break;
                     };
 
-                    $substring = strlen($old_replay->replay_type) > 4 ? substr($old_replay->replay_type, 1) : $old_replay->replay_type;
+                    $substring = mb_strlen($old_replay->replay_type) > 4 ? mb_substr($old_replay->replay_type, 1) : $old_replay->replay_type;
                     $first_country = $countries->where('name', $old_replay->replay_countryv)->first();
                     $second_country = $countries->where('name', $old_replay->replay_countryd)->first();
 

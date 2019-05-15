@@ -37,9 +37,10 @@ class File extends Model
      * @param string $file_title
      * @return mixed
      */
-    public static function storeFile($file,$dir_name, $file_title = '')
+    public static function storeFile($file, $dir_name, $file_title = '')
     {
-        $path = str_replace('public', '/storage',$file->store('public/'.$dir_name));
+        $path = str_replace('public', '/storage',
+            $file->storeAs('public/' . $dir_name, $file->getClientOriginalName()));
 
         $file_boj = File::create([
             'user_id' => Auth::id(),
