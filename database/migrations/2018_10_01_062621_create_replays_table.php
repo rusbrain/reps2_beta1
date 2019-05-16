@@ -21,7 +21,7 @@ class CreateReplaysTable extends Migration
             $table->string('title');
             $table->longText('content')                     ->charset('cp1251');
             $table->integer('map_id')                       ->default(0);
-            $table->integer('file_id')                      ->nullable();
+            $table->integer('file_id')->unsigned()          ->nullable();
             $table->longText('video_iframe')                ->nullable();
             $table->enum('creating_rate', ['7','8','9','10','Cool','Best'])->default('10');
             $table->integer('game_version_id')              ->default(0);
@@ -51,6 +51,9 @@ class CreateReplaysTable extends Migration
             $table->index('first_race');
             $table->index('second_race');
             $table->index('approved');
+            $table->index('file_id');
+
+            $table->foreign('file_id')->references('id')->on('files')->onDelete('restrict');
         });
     }
 
