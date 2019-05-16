@@ -50,8 +50,9 @@ class LoginController extends Controller
      */
     public function userLogin(UserLoginRequest $request)
     {
-        if($user = User::getOld($request->get('email'))){
-            return redirect()->route('get_update_password')->with('user', $user);
+        /**if true - redirect to password recovering*/
+        if(User::getOld($request->get('email'))){
+            return redirect()->route('password.request');
         }
 
         $this->login($request);
@@ -76,7 +77,7 @@ class LoginController extends Controller
             'password' => 'required|string',
         ],[
             $this->username().'.required'   => 'Не указан E-mail',
-            $this->username().'.email'      => 'Не верно указана почьта',
+            $this->username().'.email'      => 'Не верно указана почта',
             $this->username().'.exist'      => 'Пользователя с указаной почьтой не существует',
             'password.required'             => 'Не указан пароль',
             'password.string'               => 'Пароль должен быть строкой',
