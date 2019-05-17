@@ -1698,7 +1698,10 @@ div.author-info {
   justify-content: space-around;
   border-bottom: none !important;
 }
-
+.replay-map-wrapper{
+  min-height: 200px;
+  border: none !important;
+}
 .replay-rating a {
   margin-right: 5px;
 }
@@ -1706,7 +1709,7 @@ div.author-info {
   margin-bottom: 15px;
 }
 .replay-map-empty {
-  height: 100px;
+  height: 180px;
   width: 150px;
   margin: 10px auto;
   display: flex;
@@ -1737,9 +1740,7 @@ div.author-info {
 }
 .replay-download {
   color: #2f6696;
-  position: absolute;
-  bottom: 0;
-  left: 20%;
+  margin-top: 10px;
 }
 .replay-download a {
   font-family: "Roboto-Medium", sans-serif;

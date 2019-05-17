@@ -50,14 +50,19 @@ class LoginController extends Controller
      */
     public function userLogin(UserLoginRequest $request)
     {
-        if($user = User::getOld($request->get('email'))){
-            return redirect()->route('get_update_password')->with('user', $user);
+        /**if true - redirect to password recovering*/
+        if (User::getOld($request->get('email'))) {
+            return redirect()->route('password.request');
         }
 
         $this->login($request);
 
-        if(Auth::user()->is_ban){
-            $this->logout($request);
+        if (Auth::user()->is_ban) {
+            /**if is ban*/
+            if($this->logout($request, true)){
+                return redirect()->route('error',
+                    ['error' => 'Ваш аккаунт заблокирован, для выяснения причин обращайтесь к администрации сайта']);
+            }
         }
 
         return redirect('/');
@@ -74,27 +79,30 @@ class LoginController extends Controller
         $this->validate($request, [
             $this->username() => 'required|email|exists:users,email',
             'password' => 'required|string',
-        ],[
-            $this->username().'.required'   => 'Не указан E-mail',
-            $this->username().'.email'      => 'Не верно указана почьта',
-            $this->username().'.exist'      => 'Пользователя с указаной почьтой не существует',
-            'password.required'             => 'Не указан пароль',
-            'password.string'               => 'Пароль должен быть строкой',
+        ], [
+            $this->username() . '.required' => 'Не указан E-mail',
+            $this->username() . '.email' => 'Не верно указана почта',
+            $this->username() . '.exist' => 'Пользователя с указаной почьтой не существует',
+            'password.required' => 'Не указан пароль',
+            'password.string' => 'Пароль должен быть строкой',
         ]);
     }
 
     /**
      * Log the user out of the application.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param bool $is_ban
+     * @return bool|\Illuminate\Http\Response
      */
-    public function logout(Request $request)
+    public function logout(Request $request, $is_ban = false)
     {
         $this->guard()->logout();
-
         $request->session()->invalidate();
 
+        if($is_ban == true){
+            return true;
+        }
         return redirect('/');
     }
 }

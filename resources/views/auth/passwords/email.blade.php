@@ -50,7 +50,6 @@
     </div><!-- close div /.content-box -->
 @endsection
 
-
 @section('sidebar-right')
     <!--Banners-->
     @include('sidebar-widgets.banner')

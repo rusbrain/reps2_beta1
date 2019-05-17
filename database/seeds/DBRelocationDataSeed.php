@@ -281,7 +281,6 @@ class DBRelocationDataSeed extends Seeder
         $this->updateUserRating();
         echo "Update User Reputation and Points finished \n\n";
 
-
         //Update users avatars
         echo "30. Start Update Users avatars \n";
         $this->updateUserAvatar();
@@ -303,11 +302,11 @@ class DBRelocationDataSeed extends Seeder
 
             $new_users = [];
             foreach ($old_users as $old_user){
-                if (!in_array(strtolower($old_user->user_email), $emails)){
-                    $emails[] = strtolower($old_user->user_email);
+                if (!in_array(mb_strtolower($old_user->user_email), $emails)){
+                    $emails[] = mb_strtolower($old_user->user_email);
                     $role = self::getUserRole($old_user);
 
-                    $avatar_id = 0;
+                    $avatar_id = null;
                     if ($old_user->user_avatar){
                         $path_to   = "./public/storage/avatars/{$old_user->user_avatar}";
 
@@ -1044,7 +1043,7 @@ class DBRelocationDataSeed extends Seeder
                         $users_id[] = $old_replay->user_id;
                     }
 
-                    $file_id = 0;
+                    $file_id = null;
                     $sl = $old_replay->replay_file[0] == '/' ? '' : '/';
                     $path_to = "./public/storage/replays$sl{$old_replay->replay_file}";
 
@@ -1058,8 +1057,11 @@ class DBRelocationDataSeed extends Seeder
                         ];
 
                         $replay_n++;
-                        $file = App\File::create($file_data);
-                        $file_id = $file->id;
+                        if($file = App\File::create($file_data)){
+                            $file_id = $file->id;
+                        }else{
+                            $file_id = null;
+                        }
                     }
 
                     $user_replay = 0;
@@ -1075,7 +1077,7 @@ class DBRelocationDataSeed extends Seeder
                             break;
                     };
 
-                    $substring = strlen($old_replay->replay_type) > 4 ? substr($old_replay->replay_type, 1) : $old_replay->replay_type;
+                    $substring = mb_strlen($old_replay->replay_type) > 4 ? mb_substr($old_replay->replay_type, 1) : $old_replay->replay_type;
                     $first_country = $countries->where('name', $old_replay->replay_countryv)->first();
                     $second_country = $countries->where('name', $old_replay->replay_countryd)->first();
 
@@ -1086,7 +1088,7 @@ class DBRelocationDataSeed extends Seeder
                         'title'             => $old_replay->replay_name,
                         'content'           => $old_replay->replay_rustext,
                         'map_id'            => (int)($old_replay->replay_map ? $maps->where('name', $old_replay->replay_map)->first()->id ?? 0 : 0),
-                        'file_id'           => (int)$file_id,
+                        'file_id'           => $file_id,
                         'championship'      => $old_replay->replay_event,
                         'first_country_id'  => (int)($first_country? $first_country->id : 0),
                         'second_country_id' => (int)($second_country? $second_country->id : 0),

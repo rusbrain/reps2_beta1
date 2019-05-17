@@ -134,6 +134,11 @@ class ReplayService
         }
         $replay_data['user_id'] = Auth::id();
         unset($replay_data['replay']);
+
+        if (UserService::isAdmin() || UserService::isModerator()) {
+            $replay_data['approved'] = 1;
+        }
+
         $replay = Replay::create($replay_data);
 
         return $replay->id;

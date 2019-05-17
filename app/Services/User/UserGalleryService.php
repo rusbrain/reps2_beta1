@@ -79,7 +79,7 @@ class UserGalleryService
      */
     public static function destroy(UserGallery $gallery)
     {
-        $user_id = $gallery->user_id;
+//        $user_id = $gallery->user_id;
         $file = $gallery->file()->first();
         FileService::removeFile($file->id);
 
@@ -87,7 +87,7 @@ class UserGalleryService
         $gallery->positive()->delete();
         $gallery->negative()->delete();
         $gallery->delete();
-        User::recountRating($user_id);
+//        User::recountRating($user_id);
     }
 
     /**
@@ -114,6 +114,7 @@ class UserGalleryService
     public static function saveImage($gallery_data)
     {
         $title = 'Картинка галереи пользователя '.Auth::user()->name;
+
         $file = File::storeFile($gallery_data['image'], 'gallery', $title);
         $gallery_data['file_id'] = $file->id;
         unset($gallery_data['image']);

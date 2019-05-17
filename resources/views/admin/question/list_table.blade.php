@@ -9,8 +9,8 @@
     <td>{!! $question->is_favorite?'<i class="fa fa-plus text-green"></i>':'<i class="fa fa-minus text-gray"></i>' !!}</td>
     <td>
         <div class="btn-group">
-            <a type="button" class="btn btn-default text-fuchsia"  title="Просмотреть профиль пользователя" data-toggle="modal" data-target="#modal-default_view_{{$question->id}}" href="{{route('admin.question.view', ['id' => $question->id])}}"><i class="fa fa-eye"></i></a>
-            <a type="button" class="btn btn-default text-orange"  title="Править профиль пользователя"  data-toggle="modal" data-target="#modal-default_edit_{{$question->id}}" href="{{route('admin.question.edit', ['id' => $question->id])}}"><i class="fa fa-edit"></i></a>
+            <a type="button" class="btn btn-default text-fuchsia"  title="Просмотреть опрос" data-toggle="modal" data-target="#modal-default_view_{{$question->id}}" href="{{route('admin.question.view', ['id' => $question->id])}}"><i class="fa fa-eye"></i></a>
+            <a type="button" class="btn btn-default text-orange"  title="Править опрос"  data-toggle="modal" data-target="#modal-default_edit_{{$question->id}}" href="{{route('admin.question.edit', ['id' => $question->id])}}"><i class="fa fa-edit"></i></a>
             @if(!$question->is_active)
                 <a type="button" class="btn btn-default text-aqua" title="Сделать активным" href="{{route('admin.question.active', ['id' => $question->id])}}"><i class="fa fa-check"></i></a>
             @else

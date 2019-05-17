@@ -110,7 +110,7 @@
                                 </label>
                             </div>
                             <div class="form-group bnt-form-wrapper">
-                                <a href="" class="btn-empty btn-empty-form">Удалить</a>
+                                {{--<a href="" class="btn-empty btn-empty-form">Удалить</a>--}}
                                 <button type="submit" class="btn-blue btn-form">Обновить</button>
                             </div>
                         </form>

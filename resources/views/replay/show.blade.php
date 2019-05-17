@@ -150,10 +150,12 @@
                     </div>
                 </div>
                 <div class="col-md-4 position-relative">
-                    <div>{{$replay->map->name??'не указано'}}</div>
+                    <div class="border-0">{{$replay->map->name??'не указано'}}</div>
                     @if(isset($replay->map->url))
-                        <img src="{{route('home')}}/{{$replay->map->url}}" class="replay-map"
-                             alt="{{$replay->map->name??'не указано'}}">
+                        <div class="replay-map-wrapper">
+                            <img src="{{route('home')}}/{{$replay->map->url}}" class="replay-map"
+                                 alt="{{$replay->map->name??'не указано'}}">
+                        </div>
                     @else
                         <div class="replay-map-empty">
                             Не указано

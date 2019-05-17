@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Traits\ModelRelations\FileRelation;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
@@ -35,11 +36,16 @@ class File extends Model
      * @param $file
      * @param $dir_name
      * @param string $file_title
+     * @param bool $file_name
      * @return mixed
      */
-    public static function storeFile($file,$dir_name, $file_title = '')
+    public static function storeFile($file, $dir_name, $file_title = '')
     {
-        $path = str_replace('public', '/storage',$file->store('public/'.$dir_name));
+        $uploading_path = $dir_name.'/'.Carbon::now()->format('Y-m-d');
+        $original_name = Carbon::now()->timestamp. '_' .$file->getClientOriginalName();
+
+        $path = str_replace('public', '/storage',
+            $file->storeAs('public/' . $uploading_path, $original_name));
 
         $file_boj = File::create([
             'user_id' => Auth::id(),
