@@ -39,16 +39,13 @@ class File extends Model
      * @param bool $file_name
      * @return mixed
      */
-    public static function storeFile($file, $dir_name, $file_title = '', $file_name = false)
+    public static function storeFile($file, $dir_name, $file_title = '')
     {
-        if($file_name){
-            $original_name = Carbon::now()->timestamp. '_' .$file->getClientOriginalName();
-            $path = str_replace('public', '/storage',
-                $file->storeAs('public/' . $dir_name, $original_name));
-        }else{
-            $path = str_replace('public', '/storage',
-                $file->store('public/' . $dir_name));
-        }
+        $uploading_path = $dir_name.'/'.Carbon::now()->format('Y-m-d');
+        $original_name = Carbon::now()->timestamp. '_' .$file->getClientOriginalName();
+
+        $path = str_replace('public', '/storage',
+            $file->storeAs('public/' . $uploading_path, $original_name));
 
         $file_boj = File::create([
             'user_id' => Auth::id(),
