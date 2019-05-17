@@ -23,7 +23,7 @@
 
     <div class="content-box">
         <div class="col-md-12 section-title margin-bottom-15">
-            <h2 class="color-white">Ошибка: {{$error}}</h2>
+            <h2 class="color-white">Ошибка:</h2>
         </div>
         <div class="row">
             <div class="col"></div>
