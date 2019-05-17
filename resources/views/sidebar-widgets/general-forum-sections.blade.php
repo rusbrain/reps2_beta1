@@ -11,12 +11,19 @@
                 {{$section->title}}:
             </a>
             <div class="widget-forum-topics-wrapper">
-                @foreach($section->topics as $item => $topic)
-                    <a href="{{route('forum.topic.index',['id'=>$topic->id])}}" class="widget-forum-topic">
-                        <span>{{$topic->title}}</span>
-                        <span class="widget-forum-topic-comments">({{$topic->comments_count}})</span>
-                    </a>
-                @endforeach
+                @if($section->topics)
+                    @foreach($section->topics as $item => $topic)
+                        <a href="{{route('forum.topic.index',['id'=>$topic->id])}}" class="widget-forum-topic">
+                            <span>{!! $topic->title !!}</span>
+                            <span class="widget-forum-topic-comments">({{$topic->comments_count}})</span>
+                        </a>
+                    @endforeach
+                @else
+                    <div class="widget-forum-topic">
+                        В данной секции форума нет активных тем
+                    </div>
+                @endif
+
             </div>
         @endforeach
     </div>

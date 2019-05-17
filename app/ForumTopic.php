@@ -103,7 +103,7 @@ class ForumTopic extends Model
         return ForumTopic::where('news', 1)
             ->where(function ($q) {
                 $q->whereNull('start_on')
-                    ->orWhere('start_on', '<=', Carbon::now()->format('Y-M-d'));
+                    ->orWhere('start_on', '<=', Carbon::now()->format('Y-m-d'));
             })
             ->whereHas('section', function ($q) {
                 $q->where('is_active', 1)->where('is_general', 1);
@@ -155,7 +155,7 @@ class ForumTopic extends Model
             ->withCount('positive', 'negative', 'comments')
             ->where(function ($q) {
                 $q->whereNull('start_on')
-                    ->orWhere('start_on', '<=', Carbon::now()->format('Y-M-d'));
+                    ->orWhere('start_on', '<=', Carbon::now()->format('Y-m-d'));
             })
             ->where('approved', 1)
             ->with([
@@ -177,7 +177,7 @@ class ForumTopic extends Model
         return ForumTopic::where('id', $id)
             ->where(function ($q) {
                 $q->whereNull('start_on')
-                    ->orWhere('start_on', '<=', Carbon::now()->format('Y-M-d'));
+                    ->orWhere('start_on', '<=', Carbon::now()->format('Y-m-d'));
             })
             ->with(User::getUserWithReputationQuery())
             ->withCount('positive', 'negative', 'comments')
@@ -192,7 +192,7 @@ class ForumTopic extends Model
         return ForumTopic::where('approved', 1)
             ->where(function ($q) {
                 $q->whereNull('start_on')
-                    ->orWhere('start_on', '<=', Carbon::now()->format('Y-M-d'));
+                    ->orWhere('start_on', '<=', Carbon::now()->format('Y-m-d'));
             })
             ->withCount('positive', 'negative', 'comments')
             ->whereHas('section', function ($query) {
@@ -217,7 +217,7 @@ class ForumTopic extends Model
             ->where('approved', 1)
             ->where(function ($q) {
                 $q->whereNull('start_on')
-                    ->orWhere('start_on', '<=', Carbon::now()->format('Y-M-d'));
+                    ->orWhere('start_on', '<=', Carbon::now()->format('Y-m-d'));
             })
             ->orderBy('rating','DESC')
             ->limit($limit);
@@ -268,7 +268,7 @@ class ForumTopic extends Model
             ->with('icon')
             ->where(function ($q) {
                 $q->whereNull('start_on')
-                    ->orWhere('start_on', '<=', Carbon::now()->format('Y-M-d'));
+                    ->orWhere('start_on', '<=', Carbon::now()->format('Y-m-d'));
             })
             ->where('title', 'like', "%$search%")
             ->orderBy('created_at', 'desc')->paginate(20);
@@ -308,7 +308,7 @@ class ForumTopic extends Model
             ->where('news', 0)
             ->where(function ($q) {
                 $q->whereNull('start_on')
-                    ->orWhere('start_on', '<=', Carbon::now()->format('Y-M-d'));
+                    ->orWhere('start_on', '<=', Carbon::now()->format('Y-m-d'));
             })
             ->orderBy('created_at', 'desc')
             ->limit($limit);
@@ -351,7 +351,7 @@ class ForumTopic extends Model
     {
         return ForumTopic::where(function ($q) {
                 $q->whereNull('start_on')
-                    ->orWhere('start_on', '<=', Carbon::now()->format('Y-M-d'));
+                    ->orWhere('start_on', '<=', Carbon::now()->format('Y-m-d'));
             })
             ->whereHas('section', function ($q) {
                 $q->where('is_active', 1)->where('is_general', 1);

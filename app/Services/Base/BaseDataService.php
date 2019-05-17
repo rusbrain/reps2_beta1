@@ -23,7 +23,7 @@ class BaseDataService
     {
         $topic_count = ForumTopic::where(function ($q){
             $q->whereNull('start_on')
-                ->orWhere('start_on','<=', Carbon::now()->format('Y-M-d'));
+                ->orWhere('start_on','<=', Carbon::now()->format('Y-m-d'));
         })->count();
 
         $gosu_replay_count = Replay::gosuReplay()->count();

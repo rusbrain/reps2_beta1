@@ -82,7 +82,7 @@ class ForumSection extends Model
                         }])
                         ->where(function ($q){
                             $q->whereNull('start_on')
-                                ->orWhere('start_on','<=', Carbon::now()->format('Y-M-d'));
+                                ->orWhere('start_on','<=', Carbon::now()->format('Y-m-d'));
                         })
                         ->with(['comments' => function($query){                                                     //TODO:remove "with comments"
                             $query->withCount('positive', 'negative')->orderBy('created_at', 'desc')->first();

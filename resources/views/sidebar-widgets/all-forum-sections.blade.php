@@ -21,7 +21,7 @@
                     @endforeach
                 @else
                     <div class="widget-forum-topic">
-                        В данной секции форума нет тем
+                        В данной секции форума нет активных тем
                     </div>
                 @endif
             </div>
