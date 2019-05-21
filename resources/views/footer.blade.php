@@ -1,4 +1,7 @@
-@php $last_news = $general_helper->getLastNewsFooter(); @endphp
+@php
+    $last_news = $general_helper->getLastNewsFooter();
+    $footer_widgets = $general_helper->getFooterWidgets();
+@endphp
 <section class="section-footer-top">
     <div class="container">
         <div class="row">
@@ -61,21 +64,43 @@
                         </div>
                     </div>
                     <div class="col-md-8">
-                        <div class="footer-title">
-                            <h2>Info and legal information</h2>
-                        </div>
-                        <div class="footer-info">
-                            По вопросам работы сайта, сотрудничества, ньюсмейкерства, спонсорства и размещения
-                            рекламы, обращайтесь:
-                            <div>
-                                <img src="{{route('home')}}/images/icons/mail_icon.png" alt="">
-                                evil-2002@yandex.ru
+                        @if($footer_widgets)
+                            @foreach($footer_widgets as $footer_widget)
+                                @if($footer_widget->position == 4)
+                                    <div class="footer-title">
+                                        <h2>{{$footer_widget->title}}</h2>
+                                    </div>
+                                    <div class="footer-info">
+                                        {!! $footer_widget->text !!}
+                                        <div>
+                                            <img src="{{route('home')}}/images/icons/mail_icon.png" alt="">
+                                            {{$footer_widget->email}}
+                                        </div>
+                                        <div>
+                                            <img src="{{route('home')}}/images/icons/icq.png" alt="">
+                                            {{$footer_widget->icq}}
+                                        </div>
+                                    </div>
+                                @endif
+                            @endforeach
+                        @else
+                            <div class="footer-title">
+                                <h2>Info and legal information</h2>
                             </div>
-                            <div>
-                                <img src="{{route('home')}}/images/icons/icq.png" alt="">
-                                864-000
+                            <div class="footer-info">
+                                По вопросам работы сайта, сотрудничества, ньюсмейкерства, спонсорства и размещения
+                                рекламы, обращайтесь:
+                                <div>
+                                    <img src="{{route('home')}}/images/icons/mail_icon.png" alt="">
+                                    evil-2002@yandex.ru
+                                </div>
+                                <div>
+                                    <img src="{{route('home')}}/images/icons/icq.png" alt="">
+                                    864-000
+                                </div>
                             </div>
-                        </div>
+                        @endif
+
                     </div>
                 </div>
             </div>

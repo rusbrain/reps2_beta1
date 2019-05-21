@@ -1,0 +1,20 @@
+.margin-right-20 {
+  margin-right: 20px;
+}
+.margin-left-20{
+  margin-left: 20px;
+}
+textarea {
+  width: 100%;
+}
+.site-footer .box-header {
+  display: flex;
+  align-items: center;
+}
+.site-footer .box-header h3 {
+  margin-right: 10px;
+}
+.preview-image-wrapper img {
+  max-width: 100%;
+  margin: 0 auto;
+}

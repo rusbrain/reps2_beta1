@@ -29,4 +29,8 @@ $menu_name = $admin_helper->getMenuName();
     <li @if($menu_name == 'replay') class="active" @endif><a href="{{route('admin.replay')}}"><i class="fa fa-film"></i> <span>Replays</span></a></li>
     <li @if($menu_name == 'replay/map') class="active" @endif><a href="{{route('admin.replay.map')}}"><i class="fa fa-map-o"></i> <span>Карты</span></a></li>
     <li @if($menu_name == 'replay/type') class="active" @endif><a href="{{route('admin.replay.type')}}"><i class="fa fa-object-group"></i> <span>Типы Replay</span></a></li>
+
+    <li class="header">Подвал/Footer</li>
+    <li @if($menu_name == 'footer') class="active" @endif><a href="{{route('admin.footer')}}"><i class="fa fa-film"></i> <span>Подвал/Footer сайта</span></a></li>
+
 </ul>
