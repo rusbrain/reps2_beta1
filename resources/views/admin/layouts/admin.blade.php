@@ -23,6 +23,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 <!-- Theme style -->
     <link rel="stylesheet" href="{{route('home')}}/dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="{{route('home')}}/css/admin_styles.css">
     <style>
         .load-wrapp {
             float: left;

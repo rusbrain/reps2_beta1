@@ -33,7 +33,7 @@
                     <div class="post">
                         @if($topic->preview_file_id)
                             <div class="row">
-                                <div class="col-md-8 col-md-offset-2 text-center">
+                                <div class="col-md-8 col-md-offset-2 preview-image-wrapper text-center">
                                     <img class="img-bordered-sm" src="{{route('home').$topic->preview_image->link}}" alt="user image">
                                 </div>
                             </div>

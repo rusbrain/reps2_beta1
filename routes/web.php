@@ -395,6 +395,18 @@ Route::group(['middleware' => 'activity'], function () {
                 Route::post('/{id}/update', 'FileManagementController@update')->name('admin.file.update');
                 Route::get('/{id}/download', 'FileManagementController@download')->name('admin.file.download');
             });
+
+            Route::group(['prefix' => 'footer'], function () {
+                Route::get('/', 'FooterManagementController@index')->name('admin.footer');
+                Route::get('/create', 'FooterManagementController@create')->name('admin.footer.create');
+                Route::get('/{id}/edit', 'FooterManagementController@edit')->name('admin.footer.edit');
+                Route::post('/{id}/update', 'FooterManagementController@update')->name('admin.footer.update');
+                Route::get('/{id}/view', 'FooterManagementController@show')->name('admin.footer.view');
+                Route::post('/store', 'FooterManagementController@store')->name('admin.footer.store');
+                Route::get('/{id}/delete', 'FooterManagementController@destroy')->name('admin.footer.delete');
+                Route::get('/{id}/approved', 'FooterManagementController@approved')->name('admin.footer.approved');
+                Route::get('/{id}/not_approved','FooterManagementController@notApproved')->name('admin.footer.not_approved');
+            });
         });
 });
 

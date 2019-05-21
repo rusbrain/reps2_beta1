@@ -118,17 +118,17 @@
                         @endif
                     </div>
 
-                    <div class="form-group form-group user-account-birthday">
-                        <label for="start_on">Опубликовать с:</label>
-                        <input type="date" id="start_on"
-                               class="form-control {{ $errors->has('start_on') ? ' is-invalid' : '' }}" name="start_on"
-                               value="{{old('start_on')}}">
-                        @if ($errors->has('start_on'))
-                            <span class="invalid-feedback">
-                                <strong>{{ $errors->first('start_on') }}</strong>
-                            </span>
-                        @endif
-                    </div>
+                    {{--<div class="form-group form-group user-account-birthday">--}}
+                        {{--<label for="start_on">Опубликовать с:</label>--}}
+                        {{--<input type="date" id="start_on"--}}
+                               {{--class="form-control {{ $errors->has('start_on') ? ' is-invalid' : '' }}" name="start_on"--}}
+                               {{--value="{{old('start_on')}}">--}}
+                        {{--@if ($errors->has('start_on'))--}}
+                            {{--<span class="invalid-feedback">--}}
+                                {{--<strong>{{ $errors->first('start_on') }}</strong>--}}
+                            {{--</span>--}}
+                        {{--@endif--}}
+                    {{--</div>--}}
 
                     <div class="form-group">
                         <button type="submit" class="btn-blue btn-form">Опубликовать</button>

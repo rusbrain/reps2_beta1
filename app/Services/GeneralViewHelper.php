@@ -9,6 +9,7 @@
 namespace App\Services;
 
 use App\Country;
+use App\Footer;
 use App\ForumTopic;
 use App\Services\Base\{
     BaseDataService, InterviewQuestionsService
@@ -18,7 +19,6 @@ use App\Traits\ViewHelper\{
     ForumData, ReplayData, UserData
 };
 use App\UserGallery;
-use Carbon\Carbon;
 
 class GeneralViewHelper
 {
@@ -43,12 +43,30 @@ class GeneralViewHelper
     protected $user_gallery;
     protected $section_icons;
     protected static $instance;
+    protected $footer_widgets;
 
     public function __construct()
     {
         if (!self::$instance) {
             self::$instance = $this;
         }
+    }
+
+    /**
+     * Get footer's widgets
+     *
+     * @return mixed
+     */
+    public function getFooterWidgets()
+    {
+        if (!self::$instance->footer_widgets) {
+            $footer_widgets = Footer::where('approved', 1)->get();
+
+            foreach ($footer_widgets as $footer_widget) {
+                self::$instance->footer_widgets[$footer_widget->position] = $footer_widget;
+            }
+        }
+        return self::$instance->footer_widgets;
     }
 
     /**
