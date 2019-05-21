@@ -76,6 +76,10 @@
          * https://www.sceditor.com/
          * */
         $(function () {
+            /**custom commands for HTML text editor*/
+            addCountries();
+            addRaces();
+
             if ($('body').find('#comment-content').length > 0) {
                 var textarea = document.getElementById('comment-content');
 
@@ -90,7 +94,9 @@
                     'source,quote,code|' +
                     'image,link,unlink|' +
                     'emoticon|' +
-                    'date,time',
+                    'date,time|' +
+                    'countries|'+
+                    'races',
                     emoticons: {
                         // Emoticons to be included in the dropdown
                         dropdown: getAllSmiles(),

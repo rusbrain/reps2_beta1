@@ -4,7 +4,7 @@
 @section('css')
     <!--SCEditor -  WYSIWYG BBCode editor -->
     <link rel="stylesheet" href="{{route('home')}}/js/sceditor/minified/themes/default.min.css"/>
-@endsection
+   @endsection
 
 @section('sidebar-left')
     <!-- All Forum Topics -->
@@ -93,7 +93,6 @@
                             </span>
                         @endif
                     </div>
-
                     <div class="form-group">
                         <label for="preview_content">* Краткое содержание:</label>
                         <textarea name="preview_content" id="preview_content"
@@ -162,6 +161,7 @@
     <!--SCEditor -  WYSIWYG BBCode editor -->
     <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.min.js"></script>
     <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.xhtml.min.js"></script>
+    <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.bbcode.min.js"></script>
     <script src="{{route('home')}}/js/sceditor/languages/ru.js"></script>
 
     <script>
@@ -171,6 +171,38 @@
          * https://www.sceditor.com/
          * */
         $(function () {
+            /**custom commands for HTML text editor*/
+            addCountries();
+            addRaces();
+
+            /**turn on HTML text editor for Topic's preview content**/
+            if ($('#preview_content').length > 0) {
+                var preview_content = document.getElementById('preview_content');
+
+                sceditor.create(preview_content, {
+                    format: 'xhtml',
+                    style: '{{route("home")}}' + '/js/sceditor/minified/themes/content/default.min.css',
+                    emoticonsRoot: '{{route("home")}}' + '/js/sceditor/',
+                    locale: 'ru',
+                    toolbar: 'bold,italic,underline|' +
+                        'left,center,right,justify|' +
+                        'font,size,color,removeformat|' +
+                        'source,quote,code|' +
+                        'image,link,unlink|' +
+                        'emoticon|' +
+                        'date,time|' +
+                        'countries|'+
+                        'races',
+                    emoticons: {
+                        // Emoticons to be included in the dropdown
+                        dropdown: getAllSmiles(),
+                        // Emoticons to be included in the more section
+                        more: getMoreSmiles()
+                    }
+                });
+            }
+
+            /**turn on HTML text editor for Topic content**/
             if ($('#content').length > 0) {
                 var content = document.getElementById('content');
 
@@ -185,31 +217,9 @@
                     'source,quote,code|' +
                     'image,link,unlink|' +
                     'emoticon|' +
-                    'date,time',
-                    emoticons: {
-                        // Emoticons to be included in the dropdown
-                        dropdown: getAllSmiles(),
-                        // Emoticons to be included in the more section
-                        more: getMoreSmiles()
-                    }
-                });
-            }
-
-            if ($('#preview_content').length > 0) {
-                var preview_content = document.getElementById('preview_content');
-
-                sceditor.create(preview_content, {
-                    format: 'xhtml',
-                    style: '{{route("home")}}' + '/js/sceditor/minified/themes/content/default.min.css',
-                    emoticonsRoot: '{{route("home")}}' + '/js/sceditor/',
-                    locale: 'ru',
-                    toolbar: 'bold,italic,underline|' +
-                    'left,center,right,justify|' +
-                    'font,size,color,removeformat|' +
-                    'source,quote,code|' +
-                    'image,link,unlink|' +
-                    'emoticon|' +
-                    'date,time',
+                    'date,time|' +
+                    'countries|'+
+                    'races',
                     emoticons: {
                         // Emoticons to be included in the dropdown
                         dropdown: getAllSmiles(),
