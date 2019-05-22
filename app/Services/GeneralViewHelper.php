@@ -37,6 +37,7 @@ class GeneralViewHelper
     protected $general_sections;
     protected $replay_maps;
     protected $banner;
+    protected $active_banners;
     protected $question;
     protected $new_users;
     protected $game_version;
@@ -174,6 +175,12 @@ class GeneralViewHelper
     {
         self::$instance->banner = self::$instance->banner ?? BaseDataService::getRandomBanner();
         return self::$instance->banner;
+    }
+
+    public function getActiveBanners()
+    {
+        self::$instance->active_banners = self::$instance->active_banners ?? BaseDataService::getActiveBanners();
+        return self::$instance->active_banners;
     }
 
     /**

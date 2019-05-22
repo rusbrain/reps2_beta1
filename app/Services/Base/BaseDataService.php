@@ -72,4 +72,9 @@ class BaseDataService
 
         return Banner::where('id', $ids[$id])->with('file')->first();
     }
+
+    public static function getActiveBanners()
+    {
+        return Banner::where('is_active',1)->has('file')->with('file')->get();
+    }
 }
