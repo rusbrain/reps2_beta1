@@ -4,22 +4,22 @@
     </div>
     <div class="user-account-info-row">
         <span>Темы:</span>
-        <a href="">{{$user->topics_count}}</a>
+        <span class="color-blue text-bold">{{$user->topics_count}}</span>
     </div>
     <div class="user-account-info-row">
         <span>Посты:</span>
-        <a href="">{{$user->comments_count}}</a>
+        <span class="color-blue text-bold">{{$user->comments_count}}</span>
     </div>
     <div class="user-account-info-row">
         <span>Госу реплеи:</span>
-        <a href="">{{$user->gosu_replay_count}}</a>
+        <span class="color-blue text-bold">{{$user->gosu_replay_count}}</span>
     </div>
     <div class="user-account-info-row">
         <span>Пользовательские реплеи:</span>
-        <a href="">{{$user->replay_count}}</a>
+        <span class="color-blue text-bold">{{$user->replay_count}}</span>
     </div>
     <div class="user-account-info-row">
         <span>Посты к реплеям:</span>
-        <a href="">{{$user->replay_comments_count}}</a>
+        <span class="color-blue text-bold">{{$user->replay_comments_count}}</span>
     </div>
 </div><!-- close div /.content-box -->
