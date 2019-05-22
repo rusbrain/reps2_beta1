@@ -88,7 +88,7 @@ class SectionService
             $time = Carbon::now()->format('Y-m-d');
             $sql = [];
             foreach ($all_sections as $section) {
-                $sql[] = "( select * from `forum_topics` where `approved` = 1 and (`start_on` is null or `start_on` <= '$time') and `section_id` = $section->id ORDER BY `commented_at` DESC limit 5 )";
+                $sql[] = "( select * from `forum_topics` where `approved` = 1 and (`start_on` is null or `start_on` <= '$time') and `section_id` = $section->id ORDER BY `commented_at` DESC, `created_at` DESC  limit 5 )";
             }
 
             $sql = implode(" UNION ALL ", $sql);
