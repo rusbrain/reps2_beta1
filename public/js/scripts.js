@@ -131,7 +131,7 @@ $(function () {
  * Single Replay page
  * */
 $(function () {
-    $('body').on('click','.user-menu-link ', function (e) {
+    $('body').on('click', '.user-menu-link ', function (e) {
         e.preventDefault();
         $('.user-menu').each(function () {
             $(this).removeClass('active');
@@ -149,7 +149,7 @@ $(function () {
     });
 
     /**Vote - positive / negative vote - Separate Replay Page*/
-    $('body').on('click','a.vote-replay-up, a.vote-replay-down', function (e) {
+    $('body').on('click', 'a.vote-replay-up, a.vote-replay-down', function (e) {
         var rating = $(this).attr('data-rating');
         var modal = $('#vote-modal');
         var url = $(this).attr('data-route');
@@ -167,7 +167,7 @@ $(function () {
         }
     });
 
-    $('body').on('submit','#rating-vote-form', function (e) {
+    $('body').on('submit', '#rating-vote-form', function (e) {
         e.preventDefault();
         var url = $(this).attr('action');
         var selectData = $('#rating-vote-form').serialize();
@@ -177,17 +177,17 @@ $(function () {
             url: url,
             data: selectData,
             success: function (response) {
-                if(response.message){
-                    if(response.user_rating === "-1"){
+                if (response.message) {
+                    if (response.user_rating === "-1") {
                         imgClass = 'negative-vote-img';
                     }
-                    if(response.user_rating === undefined){
+                    if (response.user_rating === undefined) {
                         imgClass = '';
                     }
                     $('#vote-modal').find('.modal-body .unregistered-info-wrapper').addClass('active');
                     $('#vote-modal').find('.modal-body .unregistered-info-wrapper .notice').html(response.message);
-                    $('#vote-modal').find('.modal-body'+' .'+imgClass).addClass('active');
-                }else{
+                    $('#vote-modal').find('.modal-body' + ' .' + imgClass).addClass('active');
+                } else {
                     location.reload();
                 }
             },
@@ -202,7 +202,7 @@ $(function () {
  * Hidden text - hide/show
  * */
 $(function () {
-    $('body').on('click','.quotetop', function (e) {
+    $('body').on('click', '.quotetop', function (e) {
         $(this).siblings('.spoilmain').toggleClass('active');
     });
 });
@@ -256,7 +256,7 @@ $(function () {
 
 /**View vote results ->  LEFT SIDEBAR */
 $(function () {
-    if($('#vote-question-form').length > 0){
+    if ($('#vote-question-form').length > 0) {
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -359,7 +359,7 @@ $(function () {
 /**
  * Scroll page Up Button
  * */
-$(function(){
+$(function () {
     var btnUp = $('.button-up');
     var body = $("html, body");
     var sc;
@@ -368,25 +368,28 @@ $(function(){
 
     /**start scroll function */
     document.onscroll = my_func;
+
     function my_func() {
         sc = parseInt($(document).scrollTop());
-        if(sc > menuPosition){
+        if (sc > menuPosition) {
             btnUp.addClass('fixed in');
-        }else{
+        } else {
             btnUp.removeClass('fixed in');
         }
     }
+
     btnUp.on('click', function (e) {
         e.preventDefault();
-        body.animate({scrollTop:0}, 800, 'swing', function() { });
+        body.animate({scrollTop: 0}, 800, 'swing', function () {
+        });
     });
 });
 
 /**
  * Move to Comment Form
  * */
-$(function(){
-    $('body').on('click','.move-to-add-comment', function () {
+$(function () {
+    $('body').on('click', '.move-to-add-comment', function () {
         moveToCommentForm();
     });
 });
@@ -401,7 +404,8 @@ function moveToCommentForm() {
     body.animate(
         {
             scrollTop: moveFormPosition
-        }, 1200, 'swing', function() { });
+        }, 1200, 'swing', function () {
+        });
 
     commentForm.find('input[name=title]').focus();
 }
@@ -409,14 +413,15 @@ function moveToCommentForm() {
 /**
  * Move to top after load page data
  * */
-function moveToTop(container){
+function moveToTop(container) {
 
     var body = $("html, body");
     var moveFormPosition = parseInt(container.offset().top);
     body.animate(
         {
             scrollTop: moveFormPosition
-        }, 2000, 'swing', function() { });
+        }, 2000, 'swing', function () {
+        });
 }
 
 /**Get all smiles for HTML text editor*/
@@ -430,12 +435,13 @@ function getAllSmiles() {
     var result;
 
     for (var i = 0; i <= qty; i++) {
-        key = ':'+ smile + i+':';
+        key = ':' + smile + i + ':';
         result = path + smile + i + extension;
         smilesObject[key] = result;
     }
     return smilesObject
 }
+
 /**Get additional smiles for HTML text editor*/
 function getMoreSmiles() {
     var path = 'emoticons/smiles/';
@@ -447,4 +453,224 @@ function getMoreSmiles() {
         ':protoss:': path + 'protoss.gif'
     };
     return smilesObject
+}
+
+/**race's images array for custom command of HTML text editor SCEditor */
+function getRacesImg() {
+    return ['terran.gif','zerg.gif','protoss.gif'];
+}
+
+/**countries's code array for custom command of HTML text editor SCEditor */
+function getCountries() {
+    return [
+        'RU',
+        'KR',
+        'KZ',
+        'BY',
+        'PL',
+        'UA',
+        'UZ',
+        'CN',
+        'TW',
+        'GR',
+        'AL',
+        'DZ',
+        'AD',
+        'AO',
+        'AR',
+        'AM',
+        'AU',
+        'AT',
+        'AZ',
+        'BS',
+        'BH',
+        'BD',
+        'BB',
+        'AF',
+        'CF',
+        'BE',
+        'BZ',
+        'BJ',
+        'BT',
+        'BO',
+        'BA',
+        'BW',
+        'BR',
+        'BN',
+        'BG',
+        'BF',
+        'BI',
+        'KH',
+        'CM',
+        'CA',
+        'CV',
+        'CL',
+        'CO',
+        'CG',
+        'HR',
+        'CU',
+        'CY',
+        'CZ',
+        'DK',
+        'EC',
+        'EG',
+        'ER',
+        'EE',
+        'ET',
+        'EU',
+        'FJ',
+        'FI',
+        'FR',
+        'GA',
+        'GE',
+        'DE',
+        'GT',
+        'GN',
+        'GY',
+        'HT',
+        'HK',
+        'HR',
+        'HU',
+        'IS',
+        'IN',
+        'ID',
+        'IR',
+        'IQ',
+        'IE',
+        'IL',
+        'IT',
+        'CI',
+        'JM',
+        'JP',
+        'JO',
+        'KE',
+        'KP',
+        'KG',
+        'LV',
+        'LB',
+        'LY',
+        'LT',
+        'LU',
+        'MG',
+        'MY',
+        'MR',
+        'MX',
+        'MD',
+        'MC',
+        'MN',
+        'MA',
+        'MZ',
+        'NA',
+        'NR',
+        'NP',
+        'NL',
+        'NZ',
+        'NO',
+        'OM',
+        'PK',
+        'PA',
+        'PY',
+        'PE',
+        'PH',
+        'PT',
+        'QA',
+        'RO',
+        'SA',
+        'RS',
+        'SL',
+        'SG',
+        'SK',
+        'SI',
+        'SO',
+        'ZA',
+        'ES',
+        'SD',
+        'SE',
+        'CH',
+        'TZ',
+        'TW',
+        'TH',
+        'TG',
+        'TO',
+        'TT',
+        'TN',
+        'TR',
+        'TV',
+        'UK',
+        'US',
+        'UG',
+        'UY',
+        'VE',
+        'VN',
+        'YE',
+        'ZW'
+    ];
+}
+
+/**
+ * Add custom command: "races" into HTML text editor SCEditor
+ * https://www.sceditor.com/posts/how-to-add-custom-commands/
+ * https://www.sceditor.com/
+ * */
+function addRaces() {
+    sceditor.command.set("races", {
+        exec: function (caller) {
+            // Store the editor instance so it can be used
+            // in the click handler
+            var races = getRacesImg();
+            var editor = this;
+            var $content = $("<div />");
+            // Create country flags options
+            for (var i = 0; i < races.length; i++) {
+                $(
+                    '<img src="/images/smiles/'+races[i]+'" alt="">'
+            )
+            .data('race', races[i])
+                    .click(function (e) {
+                        editor.insert('<img src="/images/smiles/'+$(this).data('race')+'" alt="">');
+                        editor.closeDropDown(true);
+
+                        e.preventDefault();
+                    })
+                    .appendTo($content);
+            }
+            editor.createDropDown(caller, "race-picker", $content.get(0));
+        },
+        tooltip: "Race"
+    });
+}
+
+/**
+ * Add custom command: "countries" into HTML text editor SCEditor
+ * https://www.sceditor.com/posts/how-to-add-custom-commands/
+ * https://www.sceditor.com/
+ * */
+function addCountries() {
+    sceditor.command.set("countries", {
+        exec: function (caller) {
+            // Store the editor instance so it can be used
+            // in the click handler
+            var flags = getCountries().map(function (value) {
+                return value.toLowerCase();
+            });
+            var editor = this;
+            var $content = $("<div />");
+            // Create country flags options
+            for (var i = 0; i < flags.length; i++) {
+                $(
+                    '<span class="flag-icon flag-icon-'+flags[i]+'" title="'+flags[i]+'"></span>'
+                )
+                    .data('flag', flags[i])
+                    .click(function (e) {
+                        editor.insert('<img src="/flags/editor/'+$(this).data('flag')+'.png" alt="">');
+                        editor.closeDropDown(true);
+
+                        e.preventDefault();
+                    })
+                    .appendTo($content);
+            }
+            editor.createDropDown(caller, "country-picker", $content.get(0));
+        },
+        tooltip: "Countries flags"
+    });
 }

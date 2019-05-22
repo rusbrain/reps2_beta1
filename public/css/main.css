@@ -17,6 +17,37 @@
   font-family: 'NotoSans-Bold';
   src: url('../fonts/NotoSans-Bold.ttf') format('truetype');
 }
+/**SCEditor plugin*/
+.sceditor-button-countries div {
+  background: url('../flags/editor/ru.png') no-repeat center center;
+}
+.sceditor-button-races div{
+  background: url('../images/smiles/terran.gif') no-repeat center center;
+}
+.sceditor-race-picker img{
+  display: inline-block;
+  margin-right: 8px;
+  cursor: pointer;
+}
+.sceditor-race-picker img:last-child{
+  margin-right: 0;
+}
+.sceditor-button-countries div span.flag-icon{
+  margin-right: 1px !important;
+  display: inline-block !important;
+  margin-top: 1px !important;
+}
+.sceditor-container span.flag-icon{
+  margin-right: 3px;
+  margin-top: 3px;
+  cursor: pointer;
+}
+.sceditor-container, .sceditor-container div, div.sceditor-dropdown, div.sceditor-dropdown div{
+  z-index: unset;
+}
+div.sceditor-dropdown{
+  z-index: 4000!important;
+}
 /**---------------------*/
 /**------Base style-----------*/
 /**---------------------*/

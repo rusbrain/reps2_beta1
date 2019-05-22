@@ -454,4 +454,17 @@ class GeneralViewHelper
 
         return $content;
     }
+
+    public function checkUserLink($str)
+    {
+        if (preg_match('/^(http|https):\/\//i', $str)) {
+            $url = $str;
+        }else{
+            $url = 'http://' . $str;
+        }
+        if(filter_var($url, FILTER_VALIDATE_URL)){
+            return $url;
+        }
+        return false;
+    }
 }

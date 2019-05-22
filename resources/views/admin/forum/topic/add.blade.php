@@ -211,6 +211,9 @@
         });
 
         $(function () {
+            addCountries();
+            addRaces();
+
             if ($('#content').length > 0) {
                 var content = document.getElementById('content');
 
@@ -225,7 +228,9 @@
                     'source,quote,code|' +
                     'image,link,unlink|' +
                     'emoticon|' +
-                    'date,time',
+                    'date,time|' +
+                    'countries|'+
+                    'races',
                     emoticons: {
                         // Emoticons to be included in the dropdown
                         dropdown: getAllSmiles(),
@@ -249,7 +254,9 @@
                     'source,quote,code|' +
                     'image,link,unlink|' +
                     'emoticon|' +
-                    'date,time',
+                    'date,time|' +
+                    'countries|'+
+                    'races',
                     emoticons: {
                         // Emoticons to be included in the dropdown
                         dropdown: getAllSmiles(),
