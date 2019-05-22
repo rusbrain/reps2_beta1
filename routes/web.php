@@ -416,8 +416,8 @@ Route::group(['middleware' => 'activity'], function () {
                 Route::get('/{id}/view', 'BannerManagementController@show')->name('admin.banner.view');
                 Route::post('/store', 'BannerManagementController@store')->name('admin.banner.store');
                 Route::get('/{id}/delete', 'BannerManagementController@destroy')->name('admin.banner.delete');
-                Route::get('/{id}/is_active', 'BannerManagementController@approved')->name('admin.banner.is_active');
-                Route::get('/{id}/not_active','BannerManagementController@notApproved')->name('admin.banner.not_active');
+                Route::get('/{id}/is_active', 'BannerManagementController@isActive')->name('admin.banner.is_active');
+                Route::get('/{id}/not_active','BannerManagementController@notActive')->name('admin.banner.not_active');
             });
         });
 });

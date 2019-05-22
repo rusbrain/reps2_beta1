@@ -28,11 +28,11 @@
                         <thead>
                         <tr>
                             <th style="width: 30px">ID</th>
-                            <th width="15%">Изображение</th>
+                            <th width="10%">Изображение</th>
                             <th>Название</th>
                             <th>Ссылка</th>
                             <th style="width: 30px">Активный</th>
-                            <th width="15%">Действия</th>
+                            <th width="15%" class="text-center">Действия</th>
                         </tr>
                         </thead>
                         <tbody>

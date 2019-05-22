@@ -75,7 +75,7 @@ class BannerManagementController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  AdminBannerUpdateRequest $request
      * @param  $id
      * @return \Illuminate\Http\Response
      */
@@ -92,13 +92,34 @@ class BannerManagementController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Banner  $banner
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Banner $banner)
+    public function destroy($id)
     {
-        //
+        $footer = Banner::find($id);
+        $footer->delete();
+        return back();
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function isActive($id)
+    {
+        Banner::where('id', $id)->update(['is_active' => 1]);
+        return back();
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function notActive($id)
+    {
+        Banner::where('id', $id)->update(['is_active' => 0]);
+        return back();
+    }
 
 }
