@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Footer;
 use App\Http\Requests\AdminFooterStoreRequest;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class FooterManagementController extends Controller

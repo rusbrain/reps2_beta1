@@ -7,6 +7,25 @@
 textarea {
   width: 100%;
 }
+img{
+  max-width: 100%;
+}
+
+/************* Banners management ***************/
+.banners tr td{
+  vertical-align: middle;
+}
+.banners .img-preview{
+  max-width: 100%;
+  margin: 0 auto;
+}
+.banner-img-wrapper{
+  padding: 10px;
+}
+.banner-img-wrapper img{
+  max-width: 100%;
+}
+/************* Footer management ***************/
 .site-footer .box-header {
   display: flex;
   align-items: center;
@@ -14,11 +33,17 @@ textarea {
 .site-footer .box-header h3 {
   margin-right: 10px;
 }
+/************* Topics ***************/
 .preview-image-wrapper img {
   max-width: 100%;
   margin: 0 auto;
 }
-/**SCEditor plugin*/
+/************* Menu ***************/
+.sidebar-menu > li > a {
+  padding: 8px 5px 8px 15px;
+  display: block;
+}
+/***************  SCEditor plugin ***************************/
 .sceditor-button-countries div {
   background: url('../flags/editor/ru.png') no-repeat center center !important;
 }
@@ -49,3 +74,4 @@ textarea {
 div.sceditor-dropdown{
   z-index: 4000!important;
 }
+/******************************************/
