@@ -407,6 +407,18 @@ Route::group(['middleware' => 'activity'], function () {
                 Route::get('/{id}/approved', 'FooterManagementController@approved')->name('admin.footer.approved');
                 Route::get('/{id}/not_approved','FooterManagementController@notApproved')->name('admin.footer.not_approved');
             });
+
+            Route::group(['prefix' => 'banner'], function () {
+                Route::get('/', 'BannerManagementController@index')->name('admin.banner');
+                Route::get('/create', 'BannerManagementController@create')->name('admin.banner.create');
+                Route::get('/{id}/edit', 'BannerManagementController@edit')->name('admin.banner.edit');
+                Route::post('/{id}/update', 'BannerManagementController@update')->name('admin.banner.update');
+                Route::get('/{id}/view', 'BannerManagementController@show')->name('admin.banner.view');
+                Route::post('/store', 'BannerManagementController@store')->name('admin.banner.store');
+                Route::get('/{id}/delete', 'BannerManagementController@destroy')->name('admin.banner.delete');
+                Route::get('/{id}/is_active', 'BannerManagementController@isActive')->name('admin.banner.is_active');
+                Route::get('/{id}/not_active','BannerManagementController@notActive')->name('admin.banner.not_active');
+            });
         });
 });
 

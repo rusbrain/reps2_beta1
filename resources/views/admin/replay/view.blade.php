@@ -31,18 +31,18 @@
                 <div class="box-tools col-md-12">
                     <div class="post">
                         <div class="row">
-                            <div class="col-md-4">
-                                <div class="col-md-8 col-md-offset-2 text-center">
-                                    <img class="img-bordered-sm" src="{{route('home')."/".($replay->map->url??"/dist/img/default-50x50.gif")}}" alt="map">
-                                </div>
+                            <div class="col-md-3 text-center">
+                                <img class="img-bordered-sm"
+                                     src="{{route('home')."/".($replay->map->url??"/dist/img/default-50x50.gif")}}" alt="map">
+
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-md-4">
                                 <div class="row">
                                     <div class="row">
                                         <div class="col-md-5">
                                             Название:
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-7">
                                             <a href="{{route('replay.get', ['id' => $replay->id])}}">
                                                 {{$replay->title}}
                                             </a>
@@ -52,7 +52,7 @@
                                         <div class="col-md-5">
                                             Страны:
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-7">
                                             {{($replay->first_country->name??"Нет")}} vs {{($replay->second_country->name??"Нет")}}
                                         </div>
                                     </div>
@@ -60,7 +60,7 @@
                                         <div class="col-md-5">
                                             Расы:
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-7">
                                             {{$replay->first_race}} vs {{$replay->second_race}}
                                         </div>
                                     </div>
@@ -68,7 +68,7 @@
                                         <div class="col-md-5">
                                             Тип:
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-7">
                                             {{$replay->type->title}} ({{$replay->type->name}})
                                         </div>
                                     </div>
@@ -76,7 +76,7 @@
                                         <div class="col-md-5">
                                             Версия игры:
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-7">
                                             {{$replay->game_version->version}}
                                         </div>
                                     </div>
@@ -84,7 +84,7 @@
                                         <div class="col-md-5">
                                             Локация:
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-7">
                                             {{$replay->first_location??"-"}} vs {{$replay->second_location??"-"}}
                                         </div>
                                     </div>
@@ -92,7 +92,7 @@
                                         <div class="col-md-5">
                                             Чемпионат:
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-7">
                                             {{$replay->championship??"-"}}
                                         </div>
                                     </div>
@@ -100,7 +100,7 @@
                                         <div class="col-md-5">
                                             Оценка:
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-7">
                                             {{$replay->creating_rate}}
                                         </div>
                                     </div>
@@ -108,7 +108,7 @@
                                         <div class="col-md-5">
                                             Оценка пользователей:
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-7">
                                             <a type="button" title="Править профиль пользователя"  data-toggle="modal" data-target="#modal-default_{{$replay->id}}"
                                                href="{{route('admin.replay.user_rating', ['id' => $replay->id])}}">
                                                 {{$replay->user_rating}} ({{$replay->user_rating_count}})
@@ -119,7 +119,7 @@
                                         <div class="col-md-5">
                                             Подтвержден:
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-7">
                                             {!! $replay->approved?'<i class="fa fa-check text-green"></i>':'<i class="fa fa-clock-o text-red"></i>' !!}
                                         </div>
                                     </div>
@@ -127,7 +127,7 @@
                                         <div class="col-md-5">
                                             Файл:
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-7">
                                             <a href="{{route('replay.download', ['id'=>$replay->id])}}">Скачать Replay</a>
                                         </div>
                                     </div>
@@ -135,11 +135,18 @@
                                         <div class="col-md-5">
                                             Коментарий:
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-7">
                                             {!! $replay->content !!}
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-md-5">
+                                @if($replay->video_iframe)
+                                    <div class="video-link-wrapper">
+                                        {!! $replay->video_iframe !!}
+                                    </div>
+                                @endif
                             </div>
                         </div>
                         <br>

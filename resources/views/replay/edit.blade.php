@@ -392,6 +392,7 @@ $game_versions = $general_helper->getGameVersion();
                 sceditor.create(video_iframe, {
                     format: 'xhtml',
                     style: '{{route("home")}}' + '/js/sceditor/minified/themes/content/default.min.css',
+                    emoticonsRoot: '{{route("home")}}' + '/js/sceditor/',
                     locale: 'ru',
                     toolbar: 'youtube,source|'
                 });

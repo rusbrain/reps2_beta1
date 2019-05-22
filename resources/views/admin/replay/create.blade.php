@@ -2,7 +2,8 @@
 @inject('admin_helper', 'App\Services\AdminViewHelper')
 
 @section('css')
-    <link rel="stylesheet" href="{{route('home')}}/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet"
+          href="{{route('home')}}/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
     <link rel="stylesheet" href="{{route('home')}}/plugins/iCheck/all.css">
 
     <!--SCEditor -  WYSIWYG BBCode editor -->
@@ -36,7 +37,8 @@
                                         <h3 class="box-title">Название:</h3>
                                         <!-- /. tools -->
                                     </div>
-                                    <input type="text" name="title" class="form-control" placeholder="Название..." value="{{old('title')}}">
+                                    <input type="text" name="title" class="form-control" placeholder="Название..."
+                                           value="{{old('title')}}">
                                     @if ($errors->has('title'))
                                         <span class="invalid-feedback text-red" role="alert">
                                         <strong>{{ $errors->first('title') }}</strong>
@@ -51,7 +53,9 @@
                                     <div class="form-group">
                                         <select class="form-control" name="user_replay">
                                             <option value="0" {{0 == old('user_replay')?'selected':''}}>Gosy</option>
-                                            <option value="1" {{1 == old('user_replay')?'selected':''}}>Пользовательский</option>
+                                            <option value="1" {{1 == old('user_replay')?'selected':''}}>
+                                                Пользовательский
+                                            </option>
                                         </select>
                                         @if ($errors->has('user_replay'))
                                             <span class="invalid-feedback text-red" role="alert">
@@ -140,7 +144,8 @@
                                                 <h3 class="box-title">Первая локация:</h3>
                                                 <!-- /. tools -->
                                             </div>
-                                            <input type="text" name="first_location" class="form-control" placeholder="Локация..." value="{{old('first_location')}}">
+                                            <input type="text" name="first_location" class="form-control"
+                                                   placeholder="Локация..." value="{{old('first_location')}}">
                                             @if ($errors->has('first_location'))
                                                 <span class="invalid-feedback text-red" role="alert">
                                         <strong>{{ $errors->first('first_location') }}</strong>
@@ -190,7 +195,8 @@
                                                 <h3 class="box-title">Вторая локация:</h3>
                                                 <!-- /. tools -->
                                             </div>
-                                            <input type="text" name="second_location" class="form-control" placeholder="Локация..." value="{{old('second_location')}}">
+                                            <input type="text" name="second_location" class="form-control"
+                                                   placeholder="Локация..." value="{{old('second_location')}}">
                                             @if ($errors->has('second_location'))
                                                 <span class="invalid-feedback text-red" role="alert">
                                         <strong>{{ $errors->first('second_location') }}</strong>
@@ -220,7 +226,8 @@
                                         <h3 class="box-title">Чемпионат:</h3>
                                         <!-- /. tools -->
                                     </div>
-                                    <input type="text" name="championship" class="form-control" placeholder="Чемпионат..." value="{{old('championship')}}">
+                                    <input type="text" name="championship" class="form-control"
+                                           placeholder="Чемпионат..." value="{{old('championship')}}">
                                     @if ($errors->has('championship'))
                                         <span class="invalid-feedback text-red" role="alert">
                                         <strong>{{ $errors->first('championship') }}</strong>
@@ -248,7 +255,8 @@
                                         <br>
                                         <br>
                                         <label>
-                                            <input type="checkbox" name="approved" class="flat-red" {{old('approved')?'checked':''}} value="1">
+                                            <input type="checkbox" name="approved" class="flat-red"
+                                                   {{old('approved')?'checked':''}} value="1">
                                             Подтвердить
                                         </label>
                                         @if ($errors->has('approved'))
@@ -274,32 +282,45 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-12">
-                                    <div class="row">
-                                        <div>
-                                            <div class="box-header">
-                                                <h3 class="box-title">Комментарий:</h3>
-                                                <!-- /. tools -->
-                                            </div>
-                                            <!-- /.box-header -->
-                                            <div class="box-body pad">
-                                        <textarea id="content" name="content" rows="5" cols="80">
-                                                                {!! old('content') !!}
-                                        </textarea>
-                                            </div>
-                                            @if ($errors->has('content'))
-                                                <span class="invalid-feedback text-red" role="alert">
+                                <div class="col-md-6">
+                                    <div class="box-header">
+                                        <h3 class="box-title">Комментарий:</h3>
+                                    </div><!-- /.box-header -->
+                                    <div class="box-body pad">
+                                            <textarea
+                                                    id="content"
+                                                    name="content"
+                                                    rows="10"
+                                                    cols="80">{!! old('content') !!}</textarea>
+                                    </div>
+                                    @if ($errors->has('content'))
+                                        <span class="invalid-feedback text-red" role="alert">
                                                 <strong>{{ $errors->first('content') }}</strong>
                                             </span>
-                                            @endif
-                                        </div>
+                                    @endif
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="box-body pad">
+                                        <div class="box-header">
+                                            <h3 class="box-title">Вставить HTML код с Youtube с видео реплеем:</h3>
+                                        </div><!-- /.box-header -->
+                                        <textarea name="video_iframe"
+                                                  class="form-control {{ $errors->has('video_iframe') ? ' is-invalid' : '' }}"
+                                                  id="video_iframe"
+                                                  rows="10">{!! old('video_iframe') !!}</textarea>
+                                        @if ($errors->has('video_iframe'))
+                                            <span class="invalid-feedback">
+                                                <strong>{{ $errors->first('video_iframe') }}</strong>
+                                            </span>
+                                        @endif
                                     </div>
                                 </div>
-                            </div>
+                            </div><!-- /.row -->
                             <div class="row">
                                 <div class="col-md-1 col-md-offset-11">
                                     <br>
-                                    <button type="submit" class="btn btn-primary btn-flat send-message-btn">Сохранить</button>
+                                    <button type="submit" class="btn btn-primary btn-flat send-message-btn">Сохранить
+                                    </button>
                                 </div>
                             </div>
 
@@ -336,7 +357,7 @@
         //Flat red color scheme for iCheck
         $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
             checkboxClass: 'icheckbox_flat-green',
-            radioClass   : 'iradio_flat-green'
+            radioClass: 'iradio_flat-green'
         });
 
         /**
@@ -354,16 +375,28 @@
                     emoticonsRoot: '{{route("home")}}' + '/js/sceditor/',
                     locale: 'ru',
                     toolbar: 'bold,italic,underline|' +
-                    'left,center,right,justify|' +
-                    'font,size,color,removeformat|' +
-                    'emoticon|' +
-                    'date,time',
+                        'left,center,right,justify|' +
+                        'font,size,color,removeformat|' +
+                        'emoticon|' +
+                        'date,time',
                     emoticons: {
                         // Emoticons to be included in the dropdown
                         dropdown: getAllSmiles(),
                         // Emoticons to be included in the more section
                         more: getMoreSmiles()
                     }
+                });
+            }
+
+            if ($('#video_iframe').length > 0) {
+                var video_iframe = document.getElementById('video_iframe');
+
+                sceditor.create(video_iframe, {
+                    format: 'xhtml',
+                    style: '{{route("home")}}' + '/js/sceditor/minified/themes/content/default.min.css',
+                    emoticonsRoot: '{{route("home")}}' + '/js/sceditor/',
+                    locale: 'ru',
+                    toolbar: 'youtube,source'
                 });
             }
         });

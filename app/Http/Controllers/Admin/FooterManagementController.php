@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Footer;
 use App\Http\Requests\AdminFooterStoreRequest;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class FooterManagementController extends Controller
@@ -45,7 +44,7 @@ class FooterManagementController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Footer  $footer
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -69,7 +68,7 @@ class FooterManagementController extends Controller
      *
      * @param AdminFooterStoreRequest $request
      * @param $id
-     * @return \Illuminate\Http\RedirectResponse|void
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(AdminFooterStoreRequest $request, $id)
     {
@@ -80,6 +79,7 @@ class FooterManagementController extends Controller
                 return back();
             }
         }
+        return back();
     }
 
     /**

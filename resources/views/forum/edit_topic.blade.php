@@ -193,7 +193,8 @@
                     'emoticon|' +
                     'date,time|' +
                     'countries|'+
-                    'races',
+                    'races|' +
+                    'maximize',
                     emoticons: {
                         // Emoticons to be included in the dropdown
                         dropdown: getAllSmiles(),
@@ -217,7 +218,10 @@
                     'source,quote,code|' +
                     'image,link,unlink|' +
                     'emoticon|' +
-                    'date,time',
+                    'date,time|' +
+                    'countries|'+
+                    'races|' +
+                    'maximize',
                     emoticons: {
                         // Emoticons to be included in the dropdown
                         dropdown: getAllSmiles(),

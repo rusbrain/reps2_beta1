@@ -288,7 +288,7 @@ $game_versions = $general_helper->getGameVersion();
                         <label for="video_iframe">Вставить HTML код с Youtube с видео реплеем</label>
                         <textarea name="video_iframe"
                                   class="form-control {{ $errors->has('video_iframe') ? ' is-invalid' : '' }}"
-                                  id="video_iframe" rows="3">{{old('video_iframe')}}</textarea>
+                                  id="video_iframe" rows="16">{{old('video_iframe')}}</textarea>
                         @if ($errors->has('video_iframe'))
                             <span class="invalid-feedback">
                                 <strong>{{ $errors->first('video_iframe') }}</strong>
@@ -384,6 +384,18 @@ $game_versions = $general_helper->getGameVersion();
                         // Emoticons to be included in the more section
                         more: getMoreSmiles()
                     }
+                });
+            }
+
+            if ($('#video_iframe').length > 0) {
+                var video_iframe = document.getElementById('video_iframe');
+
+                sceditor.create(video_iframe, {
+                    format: 'xhtml',
+                    style: '{{route("home")}}' + '/js/sceditor/minified/themes/content/default.min.css',
+                    emoticonsRoot: '{{route("home")}}' + '/js/sceditor/',
+                    locale: 'ru',
+                    toolbar: 'youtube,source|'
                 });
             }
         });

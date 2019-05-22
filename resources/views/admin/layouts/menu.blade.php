@@ -33,4 +33,7 @@ $menu_name = $admin_helper->getMenuName();
     <li class="header">Подвал/Footer</li>
     <li @if($menu_name == 'footer') class="active" @endif><a href="{{route('admin.footer')}}"><i class="fa fa-film"></i> <span>Подвал/Footer сайта</span></a></li>
 
+    <li class="header">Баннеры</li>
+    <li @if($menu_name == 'banner') class="active" @endif><a href="{{route('admin.banner')}}"><i class="fa fa-film"></i> <span>Баннеры</span></a></li>
+
 </ul>
