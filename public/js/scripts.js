@@ -463,8 +463,16 @@ function getRacesImg() {
 /**countries's code array for custom command of HTML text editor SCEditor */
 function getCountries() {
     return [
-        'AF',
-        'CF',
+        'RU',
+        'KR',
+        'KZ',
+        'BY',
+        'PL',
+        'UA',
+        'UZ',
+        'CN',
+        'TW',
+        'GR',
         'AL',
         'DZ',
         'AD',
@@ -478,7 +486,8 @@ function getCountries() {
         'BH',
         'BD',
         'BB',
-        'BY',
+        'AF',
+        'CF',
         'BE',
         'BZ',
         'BJ',
@@ -496,8 +505,6 @@ function getCountries() {
         'CA',
         'CV',
         'CL',
-        'CN',
-        'TW',
         'CO',
         'CG',
         'HR',
@@ -517,7 +524,6 @@ function getCountries() {
         'GA',
         'GE',
         'DE',
-        'GR',
         'GT',
         'GN',
         'GY',
@@ -537,10 +543,8 @@ function getCountries() {
         'JM',
         'JP',
         'JO',
-        'KZ',
         'KE',
         'KP',
-        'KR',
         'KG',
         'LV',
         'LB',
@@ -568,11 +572,9 @@ function getCountries() {
         'PY',
         'PE',
         'PH',
-        'PL',
         'PT',
         'QA',
         'RO',
-        'RU',
         'SA',
         'RS',
         'SL',
@@ -597,9 +599,7 @@ function getCountries() {
         'UK',
         'US',
         'UG',
-        'UA',
         'UY',
-        'UZ',
         'VE',
         'VN',
         'YE',
@@ -658,7 +658,7 @@ function addCountries() {
             // Create country flags options
             for (var i = 0; i < flags.length; i++) {
                 $(
-                    '<span class="flag-icon flag-icon-'+flags[i]+'"></span>'
+                    '<span class="flag-icon flag-icon-'+flags[i]+'" title="'+flags[i]+'"></span>'
                 )
                     .data('flag', flags[i])
                     .click(function (e) {

@@ -20,7 +20,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
           page. However, you can choose any other skin. Make sure you
           apply the skin class to the body tag so the changes take effect. -->
     <link rel="stylesheet" href="{{route('home')}}/dist/css/skins/skin-blue.min.css">
-
+    <!--Flags CSS-->
+    <link rel="stylesheet" href="{{route('home')}}/css/flag-icon.css">
 <!-- Theme style -->
     <link rel="stylesheet" href="{{route('home')}}/dist/css/AdminLTE.min.css">
     <link rel="stylesheet" href="{{route('home')}}/css/admin_styles.css">
