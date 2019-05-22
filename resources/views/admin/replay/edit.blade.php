@@ -279,9 +279,7 @@
                                 <div class="col-md-6">
                                     <div class="box-header">
                                         <h3 class="box-title">Комментарий:</h3>
-                                        <!-- /. tools -->
-                                    </div>
-                                    <!-- /.box-header -->
+                                    </div><!-- /.box-header -->
                                     <div class="box-body pad">
                                             <textarea
                                                     id="content"
@@ -369,10 +367,14 @@
                     emoticonsRoot: '{{route("home")}}' + '/js/sceditor/',
                     locale: 'ru',
                     toolbar: 'bold,italic,underline|' +
-                    'left,center,right,justify|' +
-                    'font,size,color,removeformat|' +
-                    'emoticon,source|' +
-                    'date,time',
+                        'left,center,right,justify|' +
+                        'font,size,color,removeformat|' +
+                        'source,quote,code|' +
+                        'image,link,unlink|' +
+                        'emoticon|' +
+                        'date,time|' +
+                        'countries|'+
+                        'races',
                     emoticons: {
                         // Emoticons to be included in the dropdown
                         dropdown: getAllSmiles(),
@@ -388,8 +390,9 @@
                 sceditor.create(video_iframe, {
                     format: 'xhtml',
                     style: '{{route("home")}}' + '/js/sceditor/minified/themes/content/default.min.css',
+                    emoticonsRoot: '{{route("home")}}' + '/js/sceditor/',
                     locale: 'ru',
-                    toolbar: 'youtube,source|'
+                    toolbar: 'youtube,source'
                 });
             }
         });

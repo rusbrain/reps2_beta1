@@ -10,7 +10,10 @@ textarea {
 img{
   max-width: 100%;
 }
-
+/************* Replays management ***************/
+.video-link-wrapper iframe{
+  max-width: 100%;
+}
 /************* Banners management ***************/
 .banners tr td{
   vertical-align: middle;
