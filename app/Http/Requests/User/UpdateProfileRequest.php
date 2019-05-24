@@ -24,6 +24,7 @@ class UpdateProfileRequest extends FormRequest
     public function rules()
     {
         return [
+            'email'         => 'required|string|email|max:255|unique:users,email,'.$this->get('id'),
             'name'          => 'required|max:255',
             'country'       => 'exists:countries,id',
             'homepage'      => 'nullable|url|max:255',
@@ -48,6 +49,10 @@ class UpdateProfileRequest extends FormRequest
     public function messages()
     {
         return [
+            'email.required' => 'Email обязательный для заполнения.',
+            'email.email' => 'Введен не верный формат Email.',
+            'email.unique' => 'Пользователь с таким Email уже зарегестрирован.',
+            'email.max' => 'Максимальная длина Email 255 символов.',
             'name.required'  => 'Не указно имя.',
             'name.max'       => 'Максимальная длина имени 255 символов.',
             'country.exists' => 'Не верно указана страна.',

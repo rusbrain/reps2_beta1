@@ -43,6 +43,17 @@
                       class="user-account-edit-form">
                     @csrf
                     <div class="form-group">
+                        <label for="email">*Email:</label>
+                        <input type="email" id="email" name="email" value="{{old('email')??$user->email}}"
+                               class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}">
+                        @if ($errors->has('email'))
+                            <span class="invalid-feedback">
+                                <strong>{{ $errors->first('email') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+
+                    <div class="form-group">
                         <label for="name">*Имя:</label>
                         <input type="text" id="name" name="name" value="{{old('name')??$user->name}}"
                                class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}">
@@ -214,6 +225,7 @@
                         @endif
                     </div>
                     <div class="form-group">
+                        <input type="hidden" name="id" value="{{Auth::id()}}">
                         <button type="submit" class="btn-blue btn-form">Сохранить</button>
                     </div>
                 </form>
