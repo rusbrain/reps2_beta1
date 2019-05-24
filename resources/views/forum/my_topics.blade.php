@@ -73,7 +73,7 @@
                                             </div>
                                         </div>
                                         <div class="user-post-content">
-                                            {!! $general_helper->oldContentFilter($topic->preview_content ?? mb_substr($topic->content,0,100,'UTF-8').' ...')!!}
+                                                {!! $general_helper->oldContentFilter($topic->preview_content ?? $topic->content)!!}
                                             <div class="user-post-content-footer">
                                                 <div>
                                                     <img src="{{route('home')}}/images/icons/eye.png"

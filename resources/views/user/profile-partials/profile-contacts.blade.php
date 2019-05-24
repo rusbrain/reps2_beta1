@@ -28,6 +28,6 @@
     </div>
     <div class="user-account-info-row">
         <span>Подпись:</span>
-        <span class="color-blue text-bold">{!! $user->signature ?? 'не указано' !!}</span>
+        <span class="color-blue text-bold">{!! $general_helper->oldContentFilter($user->signature ?? 'не указано') !!}</span>
     </div>
 </div><!-- close div /.content-box -->

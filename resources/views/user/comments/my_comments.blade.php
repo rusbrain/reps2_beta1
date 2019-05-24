@@ -16,10 +16,18 @@
                     <a href="/">Главная</a>
                 </li>
                 <li>
-                    <a href="{{route('user_profile',['id' =>Auth::id()])}}">/ Мой Аккаунт</a>
+                    @if($user->id == Auth::id()){
+                    <a href="{{route('user_profile',['id' =>$user->id])}}">/ Мой Аккаунт</a>
+                    @else
+                        <a href="{{route('user_profile',['id' =>$user->id])}}">/ Профиль: {{$user->name}}</a>
+                    @endif
                 </li>
                 <li>
+                    @if($user->id == Auth::id()){
                     <a href="#" class="active">/ Мои посты</a>
+                    @else
+                        <a href="#" class="active">/ Посты пользователя: {{$user->name}} </a>
+                    @endif
                 </li>
             </ul>
         </div>
@@ -30,8 +38,8 @@
         <div class="col-md-12 section-title">
             <div>Мои посты</div>
         </div>
-
-        <div id="ajax_section_user_comments">
+        <div id="ajax_section_user_comments"
+                data-path="{{($user->id == Auth::id()) ? route('user.comments.pagination'):route('user.user_comments.pagination',['id' => $user->id])}}">
             <div class="load-wrapp">
                 <img src="/images/loader.gif" alt="">
             </div>
@@ -76,8 +84,9 @@
         function getSections(page) {
             var container = $('#ajax_section_user_comments');
             var body = $("html, body");
+            var path = container.attr('data-path');
 
-            $.get('{{route('user.comments.pagination')}}'+'?page='+page, {}, function (data) {
+            $.get(path + '?page=' + page, {}, function (data) {
                 container.html(data.comments);
                 $('.pagination-content').html(data.pagination);
                 $('.load-wrapp').hide();

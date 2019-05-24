@@ -28,8 +28,17 @@
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-envelope-o margin-r-5"></i></span>
-                                    <input type="email" class="form-control" placeholder="Email" disabled value="{{$user->email}}">
+                                    <input type="email"
+                                           name="email"
+                                           class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}"
+                                           placeholder="Email"
+                                           value="{{old('email')??$user->email}}">
                                 </div>
+                                @if ($errors->has('email'))
+                                    <span class="invalid-feedback text-red" role="alert">
+                                            <strong>{{ $errors->first('email') }}</strong>
+                                        </span>
+                                @endif
                                 <br>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-user margin-r-5"></i></span>
@@ -193,6 +202,7 @@
                             </div>
                         </div>
                         <div class="box-footer">
+                            <input type="hidden" name="id" value="{{$user->id}}">
                             <button type="submit" class="btn btn-info pull-right">Обновить</button>
                         </div>
                     </form>

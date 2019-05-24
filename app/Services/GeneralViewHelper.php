@@ -428,10 +428,10 @@ class GeneralViewHelper
         //ignored tags
         $ignored_tags = array('br', 'hr', 'img');
 
-        while (($position = strpos($content, '<', $position)) !== false) {
+        while (($position = mb_strpos($content, '<', $position)) !== false) {
             //get all tags in content
             if (preg_match("|^<(/?)([a-z\d]+)\b[^>]*>|i", mb_substr($content, $position), $match)) {
-                $tag = strtolower($match[2]);
+                $tag = mb_strtolower($match[2]);
                 //ignore all single tags
                 if (in_array($tag, $ignored_tags) == false) {
                     //tag is opened
@@ -449,7 +449,7 @@ class GeneralViewHelper
                         }
                     }
                 }
-                $position += strlen($match[0]);
+                $position += mb_strlen($match[0]);
             } else {
                 $position++;
             }

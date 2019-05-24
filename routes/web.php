@@ -63,6 +63,7 @@ Route::group(['middleware' => 'activity'], function () {
         Route::group(['middleware' => 'auth'], function () {
             Route::get('/comments', 'UsersCommentController@index')->name('user.comments');
             Route::get('/comments/pagination', 'UsersCommentController@pagination')->name('user.comments.pagination');
+
             Route::get('{id}/ignore', 'IgnoreController@setIgnore')->name('user.set_ignore');
             Route::get('{id}/not_ignore', 'IgnoreController@setNotIgnore')->name('user.set_not_ignore');
             Route::get('/ignore_list', 'IgnoreController@getIgnoreList')->name('user.ignore_list');
@@ -92,6 +93,10 @@ Route::group(['middleware' => 'activity'], function () {
         Route::get('{id}/topic', 'ForumTopicController@getUserTopic')->name('user.forum_topic');
         Route::get('{id}/topic/pagination',
             'ForumTopicController@userTopicPagination')->name('user.forum_topic.pagination');
+
+        Route::get('{id}/comments', 'UsersCommentController@index')->name('user.user_comments');
+        Route::get('{id}/comments/pagination', 'UsersCommentController@pagination')->name('user.user_comments.pagination');
+
     });
 
     Route::group(['prefix' => 'forum'], function () {
