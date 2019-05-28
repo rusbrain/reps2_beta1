@@ -10,8 +10,10 @@
             @endif
             <div class="col-md-12 news-wrapper">
                 @if($single_news->preview_image)
-                    <img src="{{$single_news->preview_image->link ?? route('home').'/images/logo.png'}}"
-                         class="" alt="">
+                    <a href="{{route('forum.topic.index',['id' => $single_news->id])}}">
+                        <img src="{{$single_news->preview_image->link ?? route('home').'/images/logo.png'}}"
+                             class="" alt="">
+                    </a>
                 @endif
                 <a href="{{route('forum.topic.index',['id' => $single_news->id])}}">
                     <h2>{!! $single_news->title !!}</h2>

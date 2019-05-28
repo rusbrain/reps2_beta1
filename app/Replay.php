@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\DB;
  * @property integer $user_id
  * @property integer $user_replay
  * @property integer $downloaded
+ * @property integer $file_id
  * @property string $title
  * @property string $content
  * @property Carbon $email_verified_at
