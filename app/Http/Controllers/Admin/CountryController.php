@@ -24,7 +24,7 @@ class CountryController extends Controller
      */
     public function pagination()
     {
-        $countries =Country::withCount('users', 'replays1', 'replays2')->paginate(50);
+        $countries = Country::withCount('users', 'replays1', 'replays2')->paginate(50);
         return BaseDataService::getPaginationData(AdminViewService::getCountries($countries), AdminViewService::getPagination($countries), AdminViewService::getCountriesPopUp($countries));
     }
 
