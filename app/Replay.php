@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\DB;
  * @property integer $user_id
  * @property integer $user_replay
  * @property integer $downloaded
+ * @property integer $file_id
  * @property string $title
  * @property string $content
  * @property Carbon $email_verified_at
@@ -48,6 +49,12 @@ class Replay extends Model
         2 => 'Z',
         3 => 'T',
         4 => 'P',
+    ];
+    public static $races_full = [
+         'All' => 'Random',
+         'Z' => 'Zerg',
+         'T' => 'Terran',
+         'P' => 'Protoss',
     ];
 
     public static $creating_rates = [

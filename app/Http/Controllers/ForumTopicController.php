@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\{
     Comment, ForumSection, ForumTopic, Services\Base\UserViewService, Services\User\UserService
 };
-use App\Http\Requests\{ForumTopicRebaseRequest, ForumTopicStoreRequest, ForumTopicUpdteRequest};
+use App\Http\Requests\{ForumTopicRebaseRequest, ForumTopicStoreRequest, ForumTopicUpdateRequest};
 use App\Services\Forum\TopicService;
 use Illuminate\Support\Facades\Auth;
 
@@ -105,11 +105,11 @@ class ForumTopicController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param ForumTopicUpdteRequest $request
+     * @param ForumTopicUpdateRequest $request
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(ForumTopicUpdteRequest $request, $id)
+    public function update(ForumTopicUpdateRequest $request, $id)
     {
         $topic = ForumTopic::find($id);
         if (!$topic){

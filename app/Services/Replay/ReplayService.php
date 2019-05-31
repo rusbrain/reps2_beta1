@@ -200,10 +200,15 @@ class ReplayService
      */
     public static function remove($replay_id)
     {
+        /**@var Replay $replay*/
         $replay = Replay::find($replay_id);
         $user_id = $replay->user_id;
 
-        FileService::removeFile($replay->file_id);
+        /**if it is not video replay*/
+        if(!is_null($replay->file_id)){
+            FileService::removeFile($replay->file_id);
+        }
+
         $replay->positive()->delete();
         $replay->negative()->delete();
         $replay->user_rating()->delete();

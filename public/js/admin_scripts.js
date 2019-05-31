@@ -23,14 +23,15 @@ function getMoreSmiles() {
         ':terran:': path + 'terran.gif',
         ':zerg:': path + 'zerg.gif',
         ':gold:': path + 'gold.png',
-        ':protoss:': path + 'protoss.gif'
+        ':protoss:': path + 'protoss.gif',
+        ':random:': path + 'random.png'
     };
     return smilesObject
 }
 
 /**race's images array for custom command of HTML text editor SCEditor */
 function getRacesImg() {
-    return ['terran.gif','zerg.gif','protoss.gif'];
+    return ['terran.gif','zerg.gif','protoss.gif','random.png'];
 }
 
 /**countries's code array for custom command of HTML text editor SCEditor */

@@ -9,7 +9,7 @@
 namespace App\Services\Forum;
 
 use App\{File, ForumSection, ForumTopic, Services\User\UserService, User};
-use App\Http\Requests\{ForumTopicStoreRequest, ForumTopicUpdteRequest, SearchForumTopicRequest};
+use App\Http\Requests\{ForumTopicStoreRequest, ForumTopicUpdateRequest, SearchForumTopicRequest};
 use App\Services\Base\FileService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -79,15 +79,16 @@ class TopicService
     }
 
     /**
-     * @param ForumTopicUpdteRequest $request
+     * @param ForumTopicUpdateRequest $request
      * @param $topic
      * @param bool $admin
      */
-    public static function update(ForumTopicUpdteRequest $request, ForumTopic $topic, $admin = false)
+    public static function update(ForumTopicUpdateRequest $request, ForumTopic $topic, $admin = false)
     {
         $topic_data = [
             'title'=> $request->get('title'),
-            'content'=> $request->get('content')
+            'content'=> $request->get('content'),
+            'section_id' => $request->get('section_id')
         ];
 
         if ($request->has('preview_content') && $request->get('preview_content') != ''){

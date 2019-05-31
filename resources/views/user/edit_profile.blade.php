@@ -4,6 +4,8 @@
 @section('css')
     <!--SCEditor -  WYSIWYG BBCode editor -->
     <link rel="stylesheet" href="{{route('home')}}/js/sceditor/minified/themes/default.min.css"/>
+    <!--JS plugin Select2 - autocomplete -->
+    <link rel="stylesheet" href="{{route('home')}}/css/select2.min.css"/>
 @endsection
 
 @section('sidebar-left')
@@ -84,9 +86,9 @@
                     <div class="form-group">
                         <label for="country">Страна:</label>
                         <select name='country' id="country" size=1
-                                class="custom-select {{ $errors->has('country') ? ' is-invalid' : '' }}">
+                                class="form-select-2 custom-select {{ $errors->has('country') ? ' is-invalid' : '' }}">
                             @foreach($countries as $country)
-                                <option value="{{$country->id}}" {{$country->id == old('country') ? ' selected' : '' }}>{{$country->name}}</option>
+                                <option value="{{$country->id}}" {{($country->id == old('country')||$country->id == $user->country_id) ? ' selected' : '' }}>{{$country->name}}</option>
                             @endforeach
                         </select>
                         @if ($errors->has('country'))
@@ -94,7 +96,23 @@
                                 <strong>{{ $errors->first('country') }}</strong>
                             </span>
                         @endif
+                    </div>
 
+                    <div class="form-group">
+                        <label for="race">Раса:</label>
+                        <select class="custom-select {{ $errors->has('race') ? ' is-invalid' : '' }}"
+                                id="first_race" name="race">
+                            @foreach(\App\Replay::$races as $race)
+                                <option value="{{$race}}" {{($race == $user->race || $race == old('race')) ? ' selected':''}}>
+                                    {{$race}}
+                                </option>
+                            @endforeach
+                        </select>
+                        @if ($errors->has('first_race'))
+                            <span class="invalid-feedback">
+                                <strong>{{ $errors->first('race') }}</strong>
+                            </span>
+                        @endif
                     </div>
 
                     <div class="form-group form-group user-account-birthday">
@@ -258,6 +276,8 @@
     <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.min.js"></script>
     <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.xhtml.min.js"></script>
     <script src="{{route('home')}}/js/sceditor/languages/ru.js"></script>
+    <!--JS plugin Select2 - autocomplete -->
+    <script src="{{route('home')}}/js/select2.full.min.js"></script>
 
     <script>
         /**
@@ -287,6 +307,14 @@
                         // Emoticons to be included in the more section
                         more: getMoreSmiles()
                     }
+                });
+            }
+        });
+
+        $(function () {
+            if($('.form-select-2').length > 0){
+                $('.form-select-2').select2({
+
                 });
             }
         });

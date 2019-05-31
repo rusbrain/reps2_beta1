@@ -12,6 +12,9 @@
             <a href="{{route('forum.index')}}" class="has-arrow menu-link" aria-expanded="false">Форум</a>
             @if($sections)
                 <ul class="submenu">
+                    <li>
+                        <a href="{{route('forum.index')}}" class="submenu-menu-link">Все разделы</a>
+                    </li>
                     @foreach($sections as $section)
                         <li>
                             <a href="{{route('forum.section.index',['name' => $section->name])}}" class="submenu-menu-link">{{$section->title}}</a>

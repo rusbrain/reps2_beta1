@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->integer('user_role_id');
             $table->integer('country_id')           ->nullable();
+            $table->string('race')                  ->default('All');
             $table->integer('score')                ->nullable();
             $table->string('homepage')              ->nullable();
             $table->string('isq')                   ->nullable();

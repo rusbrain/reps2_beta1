@@ -4,6 +4,9 @@
 @section('css')
     <!--SCEditor -  WYSIWYG BBCode editor -->
     <link rel="stylesheet" href="{{route('home')}}/js/sceditor/minified/themes/default.min.css"/>
+
+    <!--JS plugin Select2 - autocomplete -->
+    <link rel="stylesheet" href="{{route('home')}}/css/select2.min.css"/>
 @endsection
 
 <?php
@@ -108,7 +111,7 @@ $game_versions = $general_helper->getGameVersion();
                         </div>
                         <div class="form-group">
                             <label for="map_id">* Карта:</label>
-                            <select class="custom-select {{ $errors->has('map_id') ? ' is-invalid' : '' }}"
+                            <select class="form-select-2 custom-select {{ $errors->has('map_id') ? ' is-invalid' : '' }}"
                                     id="map_id" name="map_id">
                                 @foreach($maps as $map)
                                     <option value="{{$map->id}}" {{$map->id == old('map_id')?'selected':''}}>
@@ -147,7 +150,7 @@ $game_versions = $general_helper->getGameVersion();
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="first_country_id">* Первая страна:</label>
-                                    <select class="custom-select {{ $errors->has('first_country_id') ? ' is-invalid' : '' }}"
+                                    <select class="form-select-2 custom-select {{ $errors->has('first_country_id') ? ' is-invalid' : '' }}"
                                             id="first_country_id"
                                             name="first_country_id">
                                         @foreach($countries as $country)
@@ -200,7 +203,7 @@ $game_versions = $general_helper->getGameVersion();
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="second_country_id">* Вторая страна:</label>
-                                    <select class="custom-select {{ $errors->has('second_country_id') ? ' is-invalid' : '' }}"
+                                    <select class="form-select-2 custom-select {{ $errors->has('second_country_id') ? ' is-invalid' : '' }}"
                                             id="second_country_id"
                                             name="second_country_id">
                                         @foreach($countries as $country)
@@ -357,7 +360,8 @@ $game_versions = $general_helper->getGameVersion();
     <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.min.js"></script>
     <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.xhtml.min.js"></script>
     <script src="{{route('home')}}/js/sceditor/languages/ru.js"></script>
-
+    <!--JS plugin Select2 - autocomplete -->
+    <script src="{{route('home')}}/js/select2.full.min.js"></script>
     <script>
         /**
          * Comments box is the same for all pages
@@ -396,6 +400,13 @@ $game_versions = $general_helper->getGameVersion();
                     emoticonsRoot: '{{route("home")}}' + '/js/sceditor/',
                     locale: 'ru',
                     toolbar: 'youtube,source|'
+                });
+            }
+        });
+        $(function () {
+            if($('.form-select-2').length > 0){
+                $('.form-select-2').select2({
+
                 });
             }
         });

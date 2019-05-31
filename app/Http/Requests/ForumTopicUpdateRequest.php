@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ForumTopicUpdteRequest extends FormRequest
+class ForumTopicUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,6 +25,7 @@ class ForumTopicUpdteRequest extends FormRequest
     {
         return [
             'title'           =>'required|min:3|max:255',
+            'section_id'      =>'required|exists:forum_sections,id',
             'preview_content' =>'nullable|max:1000',
             'content'         =>'required|min:3',
             'start_on'        =>'nullable|date',
