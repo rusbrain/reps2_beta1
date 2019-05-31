@@ -14,7 +14,7 @@
                 </div>
                 <div class="widget-replay-desc col-md-8">
                     <div class="widget-replay-desc-row">
-                        <span class="widget-replay-title">Название:</span>
+                        <span class="widget-replay-title"></span>
                         <a class="color-blue"
                            href="{{route('replay.get',['id' => $replay->id])}}">{{$replay->title}}</a>
                     </div>
