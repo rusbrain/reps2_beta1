@@ -83,6 +83,7 @@ class RegisterController extends Controller
         $data_save = [
             'name' => $data['name'],
             'email' => $data['email'],
+            'race' => $data['race'],
             'password' => Hash::make($data['password']),
             'user_role_id' => 0,
             'updated_password' => 1

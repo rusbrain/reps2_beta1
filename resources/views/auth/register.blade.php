@@ -73,16 +73,16 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="country" id="race">*Раса:</label>
+                        <label for="race" id="race">*Раса:</label>
                         <select class="custom-select {{ $errors->has('race') ? ' is-invalid' : '' }}"
-                                id="first_race" name="race">
+                                id="race" name="race">
                             @foreach(\App\Replay::$races as $race)
-                                <option value="{{$race}}" {{$race == old('race')?'selected':''}}>
+                                <option value="{{$race}}" {{$race == old('race')?' selected':''}}>
                                     {{$race}}
                                 </option>
                             @endforeach
                         </select>
-                        @if ($errors->has('first_race'))
+                        @if ($errors->has('race'))
                             <span class="invalid-feedback">
                                 <strong>{{ $errors->first('race') }}</strong>
                             </span>
