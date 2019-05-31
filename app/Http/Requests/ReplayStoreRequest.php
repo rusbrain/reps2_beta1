@@ -33,7 +33,7 @@ class ReplayStoreRequest extends FormRequest
             'title'                 => 'required|string|min:3|max:255',
             'content'               => 'required|string|min:3|max:1000',
             'map_id'                => 'nullable|exists:replay_maps,id',
-            'replay'                => 'required_without:video_iframe|file|max:1024',
+            'replay'                => 'required_without:video_iframe|file|max:50000',
             'video_iframe'          => 'required_without:replay|max:1000',
             'game_version_id'       => 'required|exists:game_versions,id',
             'championship'          => 'nullable|string|max:255',
