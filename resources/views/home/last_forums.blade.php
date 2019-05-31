@@ -5,7 +5,7 @@
         <div class="content-box">
             @if($n == 0)
                 <div class="col-md-12 section-title">
-                    <h1>Последние форумы</h1>
+                    <h1>Последние новости</h1>
                 </div>
             @endif
             <div class="col-md-12 news-wrapper">
