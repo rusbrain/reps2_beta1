@@ -7,6 +7,9 @@
 
     <!--SCEditor -  WYSIWYG BBCode editor -->
     <link rel="stylesheet" href="{{route('home')}}/js/sceditor/minified/themes/default.min.css"/>
+
+    <!--JS plugin Select2 - autocomplete -->
+    <link rel="stylesheet" href="{{route('home')}}/css/select2.min.css"/>
 @endsection
 
 @section('page_header')
@@ -123,7 +126,7 @@
                                                 <!-- /. tools -->
                                             </div>
                                             <div class="form-group">
-                                                <select class="form-control" name="first_country_id">
+                                                <select class="form-control form-select-2" name="first_country_id">
                                                     @foreach($admin_helper->getCountries() as $country)
                                                         <option value="{{$country->id}}" {{$country->id == $replay->first_country_id?'selected':''}}>{{$country->name}}</option>
                                                     @endforeach
@@ -173,7 +176,7 @@
                                                 <!-- /. tools -->
                                             </div>
                                             <div class="form-group">
-                                                <select class="form-control" name="second_country_id">
+                                                <select class="form-control form-select-2" name="second_country_id">
                                                     @foreach($admin_helper->getCountries() as $country)
                                                         <option value="{{$country->id}}" {{$country->id == $replay->second_country_id?'selected':''}}>{{$country->name}}</option>
                                                     @endforeach
@@ -339,6 +342,9 @@
     <script src="{{route('home')}}/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
     <script src="{{route('home')}}/plugins/iCheck/icheck.min.js"></script>
 
+    <!--JS plugin Select2 - autocomplete -->
+    <script src="{{route('home')}}/js/select2.full.min.js"></script>
+
     <script>
         //Date picker
         $('#datepicker').datepicker({
@@ -393,6 +399,13 @@
                     emoticonsRoot: '{{route("home")}}' + '/js/sceditor/',
                     locale: 'ru',
                     toolbar: 'youtube,source'
+                });
+            }
+        });
+        $(function () {
+            if($('.form-select-2').length > 0){
+                $('.form-select-2').select2({
+
                 });
             }
         });

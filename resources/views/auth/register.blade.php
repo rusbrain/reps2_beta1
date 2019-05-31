@@ -1,12 +1,15 @@
 @extends('layouts.site')
 @inject('general_helper', 'App\Services\GeneralViewHelper')
 
-@section('sidebar-left')
-    @include('sidebar-widgets.gosu-replays')
+@section('css')
+    <!--JS plugin Select2 - autocomplete -->
+    <link rel="stylesheet" href="{{route('home')}}/css/select2.min.css"/>
 @endsection
 
-@section('content')
+<!--JS plugin Select2 - autocomplete -->
+<link rel="stylesheet" href="{{route('home')}}/css/select2.min.css"/>
 
+@section('content')
     <!-- Breadcrumbs -->
     <div class="row">
         <div class="col-md-12">
@@ -56,7 +59,7 @@
                     <div class="form-group">
                         <label for="country">*Страна:</label>
                         <select name='country' id="country" size=1
-                                class="custom-select {{ $errors->has('country') ? ' is-invalid' : '' }}">
+                                class="form-select-2 custom-select {{ $errors->has('country') ? ' is-invalid' : '' }}">
                             @foreach($countries as $country)
                                 <option value="{{$country->id}}" {{$country->id == old('country') ? ' selected' : '' }}>
                                     {{$country->name}}</option>
@@ -65,6 +68,23 @@
                         @if ($errors->has('country'))
                             <span class="invalid-feedback">
                                 <strong>{{ $errors->first('country') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+
+                    <div class="form-group">
+                        <label for="country" id="race">*Раса:</label>
+                        <select class="custom-select {{ $errors->has('race') ? ' is-invalid' : '' }}"
+                                id="first_race" name="race">
+                            @foreach(\App\Replay::$races as $race)
+                                <option value="{{$race}}" {{$race == old('race')?'selected':''}}>
+                                    {{$race}}
+                                </option>
+                            @endforeach
+                        </select>
+                        @if ($errors->has('first_race'))
+                            <span class="invalid-feedback">
+                                <strong>{{ $errors->first('race') }}</strong>
                             </span>
                         @endif
                     </div>
@@ -117,5 +137,20 @@
     <!-- Gallery -->
     @include('sidebar-widgets.random-gallery')
     <!-- END Gallery -->
+@endsection
+
+@section('js')
+    <!--JS plugin Select2 - autocomplete -->
+    <script src="{{route('home')}}/js/select2.full.min.js"></script>
+
+    <script>
+        $(function () {
+            if($('.form-select-2').length > 0){
+                $('.form-select-2').select2({
+
+                });
+            }
+        });
+    </script>
 @endsection
 

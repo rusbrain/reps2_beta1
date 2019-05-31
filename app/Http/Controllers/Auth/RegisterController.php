@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Country;
 use App\Mail\RegisteredUser;
+use App\Replay;
 use App\User;
 use App\Http\Controllers\Controller;
 use App\UserEmailToken;
@@ -44,25 +45,29 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        $races = implode(",", Replay::$races);
         return Validator::make($data,
             [
-                'name' => 'required|max:255',
-                'email' => 'required|string|email|max:255|unique:users',
-                'password' => 'required|string|min:8|max:255|confirmed',
-                'country' => 'nullable|exists:countries,id',
+                'name'      => 'required|max:255',
+                'email'     => 'required|string|email|max:255|unique:users',
+                'race'      => 'required|in:'.$races,
+                'password'  => 'required|string|min:8|max:255|confirmed',
+                'country'   => 'nullable|exists:countries,id',
             ],
             [
-                'password.required' => 'Не указан новый пароль.',
+                'race.required'      => 'Раса обязательна для заполнения.',
+                'race.in'            => 'Не верно указана расса',
+                'password.required'  => 'Не указан новый пароль.',
                 'password.confirmed' => 'Пароль не подтвержден или подтвержден не верно.',
-                'password.min' => 'Минимальная длина пароля 8 символов.',
-                'password.max' => 'Максимальная длина пароля 255 символов.',
-                'name.required' => 'Не указно имя.',
-                'name.max' => 'Максимальная длина имени 255 символов.',
-                'email.required' => 'Email обязательный для заполнения.',
-                'email.email' => 'Введен не верный формат Email.',
-                'email.unique' => 'Пользователь с таким Email уже зарегестрирован.',
-                'email.max' => 'Максимальная длина Email 255 символов.',
-                'country.exists' => 'Не верно указана страна.',
+                'password.min'       => 'Минимальная длина пароля 8 символов.',
+                'password.max'       => 'Максимальная длина пароля 255 символов.',
+                'name.required'      => 'Не указно имя.',
+                'name.max'           => 'Максимальная длина имени 255 символов.',
+                'email.required'     => 'Email обязательный для заполнения.',
+                'email.email'        => 'Введен не верный формат Email.',
+                'email.unique'       => 'Пользователь с таким Email уже зарегестрирован.',
+                'email.max'          => 'Максимальная длина Email 255 символов.',
+                'country.exists'     => 'Не верно указана страна.',
             ]
         );
     }

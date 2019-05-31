@@ -91,6 +91,14 @@
                     @endif
                 </div>
                 <div class="user-account-info-row">
+                    <span>Раса:</span>
+                    @if($user->race)
+                        <span>{{\App\Replay::$races_full[$user->race]}}</span>
+                    @else
+                        <span>Не указано</span>
+                    @endif
+                </div>
+                <div class="user-account-info-row">
                     <span>Репутация:</span>
                     <a href="{{route('user.get_rating', ['id' => $user->id])}}">{{$user->rating}} кг</a>
                 </div>

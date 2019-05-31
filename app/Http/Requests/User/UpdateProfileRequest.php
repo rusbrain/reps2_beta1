@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\User;
 
+use App\Replay;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateProfileRequest extends FormRequest
@@ -23,10 +24,12 @@ class UpdateProfileRequest extends FormRequest
      */
     public function rules()
     {
+        $races = implode(",", Replay::$races);
         return [
             'email'         => 'required|string|email|max:255|unique:users,email,'.$this->get('id'),
             'name'          => 'required|max:255',
             'country'       => 'exists:countries,id',
+            'race'          => 'required|in:'.$races,
             'homepage'      => 'nullable|url|max:255',
             'vk_link'       => 'nullable|url|max:255',
             'fb_link'       => 'nullable|url|max:255',
@@ -49,10 +52,12 @@ class UpdateProfileRequest extends FormRequest
     public function messages()
     {
         return [
+            'race.required'  => 'Раса обязательна для заполнения.',
+            'race.in'        => 'Не верно указана расса',
             'email.required' => 'Email обязательный для заполнения.',
-            'email.email' => 'Введен не верный формат Email.',
-            'email.unique' => 'Пользователь с таким Email уже зарегестрирован.',
-            'email.max' => 'Максимальная длина Email 255 символов.',
+            'email.email'    => 'Введен не верный формат Email.',
+            'email.unique'   => 'Пользователь с таким Email уже зарегестрирован.',
+            'email.max'      => 'Максимальная длина Email 255 символов.',
             'name.required'  => 'Не указно имя.',
             'name.max'       => 'Максимальная длина имени 255 символов.',
             'country.exists' => 'Не верно указана страна.',

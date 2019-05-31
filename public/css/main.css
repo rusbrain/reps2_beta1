@@ -92,6 +92,11 @@ img {
   height: 30px;
   border-radius: 3px;
   font-size: 12px;
+  outline: none !important;
+}
+/*Select - 2 Plugin */
+.select2-container{
+  outline: none !important;
 }
 /*helpers*/
 .min-height-100 {

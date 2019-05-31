@@ -4,6 +4,9 @@
 @section('css')
     <!--SCEditor -  WYSIWYG BBCode editor -->
     <link rel="stylesheet" href="{{route('home')}}/js/sceditor/minified/themes/default.min.css"/>
+
+    <!--JS plugin Select2 - autocomplete -->
+    <link rel="stylesheet" href="{{route('home')}}/css/select2.min.css"/>
 @endsection
 
 <?php
@@ -93,7 +96,7 @@ $game_versions = $general_helper->getGameVersion();
                                     <select class="custom-select {{ $errors->has('type_idy') ? ' is-invalid' : '' }}"
                                             id="type_id" name="type_id">
                                         @foreach($types as $type)
-                                            <option value="{{$type->id}}" {{$type->id == $replay->type_id??old('type_id')?'selected':''}}>
+                                            <option value="{{$type->id}}" {{($type->id == $replay->type_id || $type->id ==old('type_id'))?'selected':''}}>
                                                 {{$type->name}}
                                             </option>
                                         @endforeach
@@ -108,10 +111,10 @@ $game_versions = $general_helper->getGameVersion();
                         </div>
                         <div class="form-group">
                             <label for="map_id">* Карта:</label>
-                            <select class="custom-select {{ $errors->has('map_id') ? ' is-invalid' : '' }}"
+                            <select class="form-select-2 custom-select {{ $errors->has('map_id') ? ' is-invalid' : '' }}"
                                     id="map_id" name="map_id">
                                 @foreach($maps as $map)
-                                    <option value="{{$map->id}}" {{$map->id == $replay->map_id??old('map_id')?'selected':''}}>
+                                    <option value="{{$map->id}}" {{($map->id == $replay->map_id || $map->id == old('map_id'))?'selected':''}}>
                                         {{$map->name}}
                                     </option>
                                 @endforeach
@@ -132,7 +135,7 @@ $game_versions = $general_helper->getGameVersion();
                                     <select class="custom-select {{ $errors->has('first_race') ? ' is-invalid' : '' }}"
                                             id="first_race" name="first_race">
                                         @foreach(\App\Replay::$races as $race)
-                                            <option value="{{$race}}" {{$race == $replay->first_race??old('first_race')?'selected':''}}>
+                                            <option value="{{$race}}" {{($race == $replay->first_race|| $race == old('first_race'))?'selected':''}}>
                                                 {{$race}}
                                             </option>
                                         @endforeach
@@ -147,12 +150,12 @@ $game_versions = $general_helper->getGameVersion();
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="first_country_id">* Первая страна:</label>
-                                    <select class="custom-select {{ $errors->has('first_country_id') ? ' is-invalid' : '' }}"
+                                    <select class="form-select-2 custom-select {{ $errors->has('first_country_id') ? ' is-invalid' : '' }}"
                                             id="first_country_id"
                                             name="first_country_id">
                                         @foreach($countries as $country)
                                             <option
-                                                    value="{{$country->id}}" {{$country->id == $replay->first_country_id??old('first_country_id')?'selected':''}}>
+                                                    value="{{$country->id}}" {{($country->id == $replay->first_country_id || $country->id == old('first_country_id'))?'selected':''}}>
                                                 {{$country->name}}</option>
                                         @endforeach
                                     </select>
@@ -185,7 +188,7 @@ $game_versions = $general_helper->getGameVersion();
                                     <select class="custom-select {{ $errors->has('second_race') ? ' is-invalid' : '' }}"
                                             id="second_race" name="second_race">
                                         @foreach(\App\Replay::$races as $race)
-                                            <option value="{{$race}}" {{$race == $replay->second_race??old('second_race')?'selected':''}}>
+                                            <option value="{{$race}}" {{$race == $replay->second_race || $race == old('second_race')?'selected':''}}>
                                                 {{$race}}
                                             </option>
                                         @endforeach
@@ -200,12 +203,12 @@ $game_versions = $general_helper->getGameVersion();
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="second_country_id">* Вторая страна:</label>
-                                    <select class="custom-select {{ $errors->has('second_country_id') ? ' is-invalid' : '' }}"
+                                    <select class="form-select-2 custom-select {{ $errors->has('second_country_id') ? ' is-invalid' : '' }}"
                                             id="second_country_id"
                                             name="second_country_id">
                                         @foreach($countries as $country)
                                             <option
-                                                    value="{{$country->id}}" {{$country->id == $replay->second_country_id??old('second_country_id')?'selected':''}}>
+                                                    value="{{$country->id}}" {{($country->id == $replay->second_country_id || $country->id ==old('second_country_id'))?'selected':''}}>
                                                 {{$country->name}}</option>
                                         @endforeach
                                     </select>
@@ -238,7 +241,7 @@ $game_versions = $general_helper->getGameVersion();
                                     <select class="custom-select {{ $errors->has('game_version_id') ? ' is-invalid' : '' }}"
                                             id="game_version_id" name="game_version_id">
                                         @foreach($game_versions as $game_version)
-                                            <option value="{{$game_version->id}}" {{$game_version->id == $replay->game_version_id??old('game_version_id')?'selected':''}}>
+                                            <option value="{{$game_version->id}}" {{($game_version->id == $replay->game_version_id || $game_version->id == old('game_version_id')) ?'selected':''}}>
                                                 {{$game_version->version}}
                                             </option>
                                         @endforeach
@@ -269,7 +272,7 @@ $game_versions = $general_helper->getGameVersion();
                                             id="creating_rate"
                                             name="creating_rate">
                                         @foreach(\App\Replay::$creating_rates as $creating_rate)
-                                            <option value="{{$creating_rate}}" {{$creating_rate == $replay->creating_rate??old('creating_rate')?'selected':''}}>
+                                            <option value="{{$creating_rate}}" {{($creating_rate == $replay->creating_rate|| $creating_rate == old('creating_rate'))?'selected':''}}>
                                                 {{$creating_rate}}
                                             </option>
                                         @endforeach
@@ -358,6 +361,9 @@ $game_versions = $general_helper->getGameVersion();
     <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.xhtml.min.js"></script>
     <script src="{{route('home')}}/js/sceditor/languages/ru.js"></script>
 
+    <!--JS plugin Select2 - autocomplete -->
+    <script src="{{route('home')}}/js/select2.full.min.js"></script>
+
     <script>
         /**
          * Comments box is the same for all pages
@@ -395,6 +401,13 @@ $game_versions = $general_helper->getGameVersion();
                     emoticonsRoot: '{{route("home")}}' + '/js/sceditor/',
                     locale: 'ru',
                     toolbar: 'youtube,source|'
+                });
+            }
+        });
+        $(function () {
+            if($('.form-select-2').length > 0){
+                $('.form-select-2').select2({
+
                 });
             }
         });

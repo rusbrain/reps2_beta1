@@ -50,6 +50,12 @@ class Replay extends Model
         3 => 'T',
         4 => 'P',
     ];
+    public static $races_full = [
+         'All' => 'Random',
+         'Z' => 'Zerg',
+         'T' => 'Terran',
+         'P' => 'Protoss',
+    ];
 
     public static $creating_rates = [
         1 => '7',

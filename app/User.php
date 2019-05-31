@@ -13,6 +13,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property integer $user_role_id
  * @property string $name
  * @property string $email
+ * @property string $race
  * @property Carbon $birthday
  * @property Carbon $activity_at
  * @property Carbon $email_verified_at
@@ -41,7 +42,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name', 'email', 'password', 'email_verified_at','user_role_id', 'country_id', 'homepage', 'isq', 'skype', 'vk_link', 'fb_link',
         'signature', 'file_id', 'mouse', 'keyboard', 'headphone', 'mousepad', 'birthday', 'last_ip', 'is_ban', 'rep_allow', 'rep_buy',
-        'rep_sell', 'view_signs', 'view_avatars', 'updated_password'
+        'rep_sell', 'view_signs', 'view_avatars', 'updated_password','race'
     ];
 
     /**
