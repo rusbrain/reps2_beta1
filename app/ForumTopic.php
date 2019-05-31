@@ -354,7 +354,7 @@ class ForumTopic extends Model
                     ->orWhere('start_on', '<=', Carbon::now()->format('Y-m-d'));
             })
             ->whereHas('section', function ($q) {
-                $q->where('is_active', 1)->where('is_general', 1);
+                $q->where('is_active', 1);//->where('is_general', 1)
             })->orderBy('created_at', 'desc');
     }
 
