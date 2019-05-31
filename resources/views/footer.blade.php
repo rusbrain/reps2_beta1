@@ -77,7 +77,7 @@
                                             {{$footer_widget->email}}
                                         </div>
                                         <div>
-                                            <img src="{{route('home')}}/images/icons/icq.png" alt="">
+                                            <img src="{{route('home')}}/images/icons/discord-logo-vector.png" alt="">
                                             {{$footer_widget->icq}}
                                         </div>
                                     </div>
@@ -95,7 +95,7 @@
                                     evil-2002@yandex.ru
                                 </div>
                                 <div>
-                                    <img src="{{route('home')}}/images/icons/icq.png" alt="">
+                                    <img src="{{route('home')}}/images/icons/discord-logo-vector.png" alt="">
                                     864-000
                                 </div>
                             </div>
