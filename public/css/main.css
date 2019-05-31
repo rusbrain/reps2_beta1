@@ -1140,11 +1140,8 @@ form label {
   align-items: center;
   color: #737373;
 }
-.widget-wrapper .widget-new-user a > span:first-of-type {
-  flex: 0 0 90px;
-}
-.widget-wrapper .widget-new-user a > span:last-of-type {
-  margin-left: auto;
+.widget-wrapper .widget-new-user a > span {
+  margin-right: 10px;
 }
 .widget-wrapper .widget-new-user a:hover {
   color: #737373;

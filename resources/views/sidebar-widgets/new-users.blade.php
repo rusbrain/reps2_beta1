@@ -8,7 +8,6 @@
         @foreach($new_users as $new_user)
             <div class="widget-new-user">
                 <a href="{{route('user_profile',['id'=>$new_user->id])}}">
-                    <span class="color-blue">#{{$new_user->id}}</span>
                     @if($new_user->country_id)
                         <span class="flag-icon flag-icon-{{mb_strtolower($countries[$new_user->country_id]->code)}}"></span>
                     @else
