@@ -179,7 +179,7 @@
                             <a href="{{route('replay.download', ['id' => $replay->id])}}" class="">Скачать</a>
                             <span>({{$replay->downloaded??0}})</span>
                         @else
-                            <span>Видео реплай</span>
+                            <span>VOD</span>
                         @endif
                     </div>
                 </div>

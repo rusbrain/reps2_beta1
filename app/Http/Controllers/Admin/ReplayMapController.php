@@ -28,7 +28,7 @@ class ReplayMapController extends Controller
     public function pagination(Request $request)
     {
         $data = ReplayMapService::search($request, ReplayMap::withCount('replay'))->paginate(20);
-        return BaseDataService::getPaginationData(AdminViewService::getMap($data), AdminViewService::getMapPopUp($data), AdminViewService::getPagination($data));
+        return BaseDataService::getPaginationData(AdminViewService::getMap($data), AdminViewService::getPagination($data),AdminViewService::getMapPopUp($data));
     }
 
     /**

@@ -30,7 +30,7 @@
                     <a href="{{route('user_profile',['id' => $single_news->user->id])}}"
                        class="margin-right-30">{{$single_news->user->name}}</a>
                     <img src="{{route('home')}}/images/icons/clock.png" class="margin-right-5" alt="created at">
-                    <span>20:12  Дек 21, 2018</span>
+                    <span>{{\Carbon\Carbon::parse($single_news->created_at)->format('H:i d.m.Y')}}</span>
                 </div>
                 <div class="news-content">
                     {!! $general_helper->closeAllTags($general_helper->oldContentFilter(mb_substr($single_news->preview_content,0,250,'UTF-8').' ...' ?? mb_substr($single_news->content,0,250,'UTF-8').' ...'))!!}
