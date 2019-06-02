@@ -118,7 +118,7 @@
                     <div class="form-group form-group user-account-birthday">
                         <label for="birthday">Дата рождения:</label>
                         <input type="date" id="birthday"
-                               class="form-control {{ $errors->has('country') ? ' is-invalid' : '' }}" name="birthday"
+                               class="form-control {{ $errors->has('birthday') ? ' is-invalid' : '' }}" name="birthday"
                                value="{{old('birthday')??$user->birthday}}">
                         @if ($errors->has('birthday'))
                             <span class="invalid-feedback">
