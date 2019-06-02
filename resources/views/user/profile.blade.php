@@ -102,11 +102,12 @@
                     <span>Репутация:</span>
                     <a href="{{route('user.get_rating', ['id' => $user->id])}}">{{$user->rating}} кг</a>
                 </div>
-            </div>    <div class="row">
-                <div class="col-md-4">
-
-                </div>
+            </div>
+        </div>
     </div><!-- close div /.content-box -->
+
+    <div class="row">
+        <div class="col-md-4">
 
             <!-- FRIEND LIST -->
         @include('user.profile-partials.profile-friend-list')
