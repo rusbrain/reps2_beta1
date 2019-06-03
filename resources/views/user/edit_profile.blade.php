@@ -84,7 +84,7 @@
                         @endif
                     </div>
                     <div class="form-group">
-                        <label for="country">Страна:</label>
+                        <label for="country">*Страна:</label>
                         <select name='country' id="country" size=1
                                 class="form-select-2 custom-select {{ $errors->has('country') ? ' is-invalid' : '' }}">
                             @foreach($countries as $country)
@@ -99,7 +99,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="race">Раса:</label>
+                        <label for="race">*Раса:</label>
                         <select class="custom-select {{ $errors->has('race') ? ' is-invalid' : '' }}"
                                 id="first_race" name="race">
                             @foreach(\App\Replay::$races as $race)

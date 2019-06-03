@@ -52,7 +52,7 @@ class RegisterController extends Controller
                 'email'     => 'required|string|email|max:255|unique:users',
                 'race'      => 'required|in:'.$races,
                 'password'  => 'required|string|min:8|max:255|confirmed',
-                'country'   => 'nullable|exists:countries,id',
+                'country'   => 'required|exists:countries,id',
             ],
             [
                 'race.required'      => 'Раса обязательна для заполнения.',
@@ -68,6 +68,7 @@ class RegisterController extends Controller
                 'email.unique'       => 'Пользователь с таким Email уже зарегестрирован.',
                 'email.max'          => 'Максимальная длина Email 255 символов.',
                 'country.exists'     => 'Не верно указана страна.',
+                'country.required'   => 'Страна обязательна для заполнения.',
             ]
         );
     }

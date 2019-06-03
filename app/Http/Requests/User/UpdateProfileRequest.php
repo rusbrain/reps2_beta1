@@ -28,7 +28,7 @@ class UpdateProfileRequest extends FormRequest
         return [
             'email'         => 'required|string|email|max:255|unique:users,email,'.$this->get('id'),
             'name'          => 'required|max:255',
-            'country'       => 'exists:countries,id',
+            'country'       => 'required|exists:countries,id',
             'race'          => 'required|in:'.$races,
             'homepage'      => 'nullable|url|max:255',
             'vk_link'       => 'nullable|url|max:255',
@@ -61,6 +61,7 @@ class UpdateProfileRequest extends FormRequest
             'name.required'  => 'Не указно имя.',
             'name.max'       => 'Максимальная длина имени 255 символов.',
             'country.exists' => 'Не верно указана страна.',
+            'country.required' => 'Страна обязательна для заполнения.',
             'homepage.url'   => 'Домашняя страница должна быть ссылкой.',
             'vk_link.url'    => 'Страница Вконтакте должна быть ссылкой.',
             'fb_link.url'    => 'Страница Facebook должна быть ссылкой.',
