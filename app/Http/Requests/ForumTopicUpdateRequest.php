@@ -25,7 +25,7 @@ class ForumTopicUpdateRequest extends FormRequest
     {
         return [
             'title'           =>'required|min:3|max:255',
-            'section_id'      =>'required|exists:forum_sections,id',
+            'section_id'      =>'nullable|exists:forum_sections,id',
             'preview_content' =>'nullable|max:1000',
             'content'         =>'required|min:3',
             'start_on'        =>'nullable|date',
