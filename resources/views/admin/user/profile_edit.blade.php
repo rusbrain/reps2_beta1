@@ -75,8 +75,10 @@
                                 @endif
                                 <br>
                                 <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-columns margin-r-5"></i></span>
-                                    <input type="text" name="isq" class="form-control" placeholder="ISQ" value="{{old('isq')??$user->isq}}">
+                                    <span class="input-group-addon" style="width: 6%">
+                                        <img src="{{route('home')}}/images/icons/discord-logo-vector.png" alt="discord">
+                                    </span>
+                                    <input type="text" name="isq" class="form-control" placeholder="Discord" value="{{old('isq')??$user->isq}}">
                                 </div>
                                 @if ($errors->has('isq'))
                                     <span class="invalid-feedback text-red" role="alert">
@@ -163,7 +165,7 @@
                                 <br>
                                 <div class="form-group">
                                     <label>Роль</label>
-                                    <select class="form-control" name="user_role_id" @if(!$admin_helper->admin()) disabled @endif>
+                                    <select class="form-select-2 form-control" name="user_role_id" @if(!$admin_helper->admin()) disabled @endif>
                                         <option value="0" @if(!$user->user_role_id) selected @endif>Пользователь</option>
                                         @foreach($admin_helper->getUserRole() as $role)
                                             <option value="{{$role->id}}" @if($user->user_role_id == $role->id) selected @endif>{{$role->title}}</option>
@@ -172,7 +174,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Страна</label>
-                                    <select class="form-control" name="country_id">
+                                    <select class="form-control form-select-2" name="country_id">
                                         @foreach($admin_helper->getCountries() as $country)
                                             <option value="{{$country->id}}" @if($user->country_id == $country->id) selected @endif>{{$country->name}}</option>
                                         @endforeach
@@ -183,8 +185,24 @@
                                         <strong>{{ $errors->first('country') }}</strong>
                                     </span>
                                 @endif
+                                <div class="form-group">
+                                    <label for="race">Раса:</label>
+                                    <select class="form-select-2 form-control {{ $errors->has('race') ? ' is-invalid' : '' }}"
+                                            id="first_race" name="race">
+                                        @foreach(\App\Replay::$races as $race)
+                                            <option value="{{$race}}" {{($race == $user->race || $race == old('race')) ? ' selected':''}}>
+                                                {{$race}}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('first_race'))
+                                        <span class="invalid-feedback">
+                                            <strong>{{ $errors->first('race') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
                                 <br>
-                            </div>
+                            </div><!-- /.col-md-6 -->
                             <div class="col-md-6">
                                 <img class="img-responsive" src="{{route('home').($user->avatar->link??'/dist/img/avatar.png')}}" alt="Photo">
                                 <br>
@@ -206,12 +224,10 @@
                             <button type="submit" class="btn btn-info pull-right">Обновить</button>
                         </div>
                     </form>
-                </div>
-                <!-- /.box-body -->
+                </div><!-- /.box-body -->
             </div>
         </div>
-
-    </div>
+    </div><!-- /.row -->
 @endsection
 
 @section('js')
@@ -221,6 +237,14 @@
         $('#datepicker').datepicker({
             format: "yyyy-mm-dd",
             autoclose: true
+        });
+
+        $(function () {
+            if($('.form-select-2').length > 0){
+                $('.form-select-2').select2({
+
+                });
+            }
         });
     </script>
 @endsection

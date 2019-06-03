@@ -50,7 +50,7 @@
                     <div class="form-group margin-top-25">
                         <label for="section_id">Раздел:</label>
                         <select class="custom-select {{ $errors->has('section_id') ? ' is-invalid' : '' }}"
-                                id="section_id" name="section_id">
+                                id="section_id" name="section_id" {{($general_helper->isModerator() || $general_helper->isAdmin()) ? '' : 'disabled'}}>
                             @foreach($sections as $section)
                                 <option value="{{$section->id}}"
                                         {{($section->id == old('section_id') || $section->id == $topic->section_id)?'selected':''}} >

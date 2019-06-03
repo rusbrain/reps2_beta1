@@ -88,8 +88,11 @@ class TopicService
         $topic_data = [
             'title'=> $request->get('title'),
             'content'=> $request->get('content'),
-            'section_id' => $request->get('section_id')
         ];
+
+        if(UserService::isAdmin() || UserService::isModerator()){
+            $topic_data['section_id'] = $request->get('section_id');
+        }
 
         if ($request->has('preview_content') && $request->get('preview_content') != ''){
             $topic_data['preview_content'] = $request->get('preview_content');

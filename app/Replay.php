@@ -57,6 +57,13 @@ class Replay extends Model
          'P' => 'Protoss',
     ];
 
+    public static $race_icons = [
+        'All' => 'random.png',
+        'Z' => 'zerg.gif',
+        'T' => 'terran.gif',
+        'P' => 'protoss.gif',
+    ];
+
     public static $creating_rates = [
         1 => '7',
         2 => '8',
