@@ -22,6 +22,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="{{route('home')}}/dist/css/skins/skin-blue.min.css">
     <!--Flags CSS-->
     <link rel="stylesheet" href="{{route('home')}}/css/flag-icon.css">
+
+    <!--Select2 CSS-->
+    <link rel="stylesheet" href="{{route('home')}}/bower_components/select2/dist/css/select2.min.css">
 <!-- Theme style -->
     <link rel="stylesheet" href="{{route('home')}}/dist/css/AdminLTE.min.css">
     <link rel="stylesheet" href="{{route('home')}}/css/admin_styles.css">
@@ -164,6 +167,10 @@ desired effect
 <script src="{{route('home')}}/bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="{{route('home')}}/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<!--Select2 JS-->
+<script src="{{route('home')}}/bower_components/select2/dist/js/select2.full.min.js"></script>
+
 <!-- AdminLTE App -->
 <script src="{{route('home')}}/dist/js/adminlte.min.js"></script>
 

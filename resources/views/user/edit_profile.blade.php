@@ -140,7 +140,9 @@
                         @endif
                     </div>
                     <div class="form-group">
-                        <label for="isq">ICQ:</label>
+                        <label for="isq">
+                            Discord:
+                        </label>
                         <input type="text" id="isq" class="form-control {{ $errors->has('isq') ? ' is-invalid' : '' }}"
                                name="isq"
                                value="{{old('isq')??$user->isq}}">

@@ -19,7 +19,7 @@
         @endif
     </div>
     <div class="user-account-info-row">
-        <span>ICQ:</span>
+        <span>Discord:</span>
         <span class="color-blue text-bold">{{$user->isq ?? 'не указано'}}</span>
     </div>
     <div class="user-account-info-row">

@@ -152,6 +152,11 @@
                         <p class="text-muted">{{$user->country->name}}</p>
                         <hr>
                     @endif
+                    @if($user->race)
+                        <strong><i class="fa fa-birthday-cake margin-r-5"></i>Раса</strong>
+                        <p class="text-muted">{{\App\Replay::$races_full[$user->race]}}</p>
+                        <hr>
+                    @endif
                     @if($user->birthday)
                         <strong><i class="fa fa-birthday-cake margin-r-5"></i>День рождения</strong>
                         <p class="text-muted">{{$user->birthday}}</p>
@@ -163,7 +168,10 @@
                         <hr>
                     @endif
                     @if($user->isq)
-                        <strong><i class="fa fa-columns margin-r-5"></i>ISQ</strong>
+                        <strong>
+                            <img src="{{route('home')}}/images/icons/discord-logo-vector.png" alt="discord">
+                            Discord
+                        </strong>
                         <p class="text-muted">{{$user->isq}}</p>
                         <hr>
                     @endif
