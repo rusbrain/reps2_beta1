@@ -118,7 +118,7 @@
             var selection = window.getSelection();
             var quoted_user = quote_data.attr('data-user');
             var comment_id = quote_data.attr('data-id');
-            var object = '{{$object}}';
+            var object = '{{$object}}';console.log(object)
             var object_id = '{{$id}}';
 
             /**create comment url string*/
@@ -162,19 +162,19 @@
             var i = 0;
             var j = 0;
             /**ID of first comment on page*/
-            var first_comment = comments_total;
+            var first_comment = 1;
             if (parseInt(current_page) !== 1) {
-                first_comment = (comments_total - (comments_on_page * current_page - comments_on_page));
+                first_comment = ( (comments_on_page * current_page - comments_on_page));
             }
 
             $('.comment-id').each(function () {
-                $(this).attr('id', first_comment - i);
-                $(this).html('#' + (first_comment - i));
+                $(this).attr('id', first_comment + i);
+                $(this).html('#' + (first_comment + i));
                 i++;
             });
 
             $('.quote img').each(function () {
-                $(this).attr('data-id', first_comment - j);
+                $(this).attr('data-id', first_comment + j);
                 j++;
             });
         }

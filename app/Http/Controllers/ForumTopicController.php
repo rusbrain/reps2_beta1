@@ -19,6 +19,7 @@ class ForumTopicController extends Controller
      */
     public function index($id)
     {
+        
         $topic = ForumTopic::getTopicWithRelations($id);
         if(!$topic){
             return abort(404);

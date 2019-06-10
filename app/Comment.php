@@ -58,8 +58,7 @@ class Comment extends Model
     public static function getObjectComments($object)
     {
         return $object->comments()->with(User::getUserWithReputationQuery())->withCount('positive', 'negative')
-            ->orderBy('created_at')->paginate(20);
-    }
+            ->paginate(20);    }
 
     /**
      * @param $object_name
@@ -71,7 +70,7 @@ class Comment extends Model
         $relation = CommentService::getObjectRelation($object_name);
 
         if ($relation){
-            $comments = Comment::where('relation', $relation)->where('object_id', $id)->with('user.avatar')->orderBy('created_at', 'desc');
+            $comments = Comment::where('relation', $relation)->where('object_id', $id)->with('user.avatar')->orderBy('created_at', 'asc');
         } else {
             $comments = Comment::where('id' < 0);
         }
