@@ -1,7 +1,10 @@
 /node_modules
 /public/hot
 /public/storage
-/publid/bower_components
+
+/public/bower_components
+/storage/debugbar
+
 /storage/*.key
 /storage/debugbar
 /vendor
