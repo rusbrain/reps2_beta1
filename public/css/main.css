@@ -1153,6 +1153,7 @@ form label {
 }
 .widget-wrapper .widget-new-user a > span:last-of-type {
   margin-left: auto;
+  text-align: right;
 }
 .widget-wrapper .widget-new-user a:hover {
   color: #737373;
