@@ -1,9 +1,12 @@
 /node_modules
 /public/hot
 /public/storage
+
 /public/bower_components
 /storage/debugbar
+
 /storage/*.key
+/storage/debugbar
 /vendor
 /.idea
 /.vscode
