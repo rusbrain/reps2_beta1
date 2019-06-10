@@ -3,6 +3,7 @@
 /public/storage
 /publid/bower_components
 /storage/*.key
+/storage/debugbar
 /vendor
 /.idea
 /.vscode
