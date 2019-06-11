@@ -30,6 +30,13 @@ class TopicCommentController extends CommentController
     public $route_name = 'forum.topic.index';
 
     /**
+     * Route name for action attribute in edit comment form
+     *
+     * @var string
+     */
+    public $edit_route_name = 'forum.topic.comment.edit';
+
+    /**
      * object name with 'id'
      *
      * @var string

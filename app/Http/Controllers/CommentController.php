@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\Base\UserViewService;
 use App\Services\Comment\CommentService;
+use App\Services\User\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Comment;
@@ -33,6 +34,13 @@ class CommentController extends Controller
     public $route_name;
 
     /**
+     * Route name for action attribute in edit comment form
+     *
+     * @var string
+     */
+    public $edit_route_name;
+
+    /**
      * object name with 'id'
      *
      * @var string
@@ -45,6 +53,34 @@ class CommentController extends Controller
      * @var string
      */
     public $model;
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        /** @var Comment $comment */
+        $comment = Comment::where('id', $id)->first();
+
+        if (!$comment) {
+            return abort(404);
+        }
+
+        if(!($comment->user_id == Auth::user()->id && CommentService::checkCommentEdit($comment)) && !UserService::isAdmin() && !UserService::isModerator()){
+            return redirect()->route('error',['id' => 'Вы не можете редактировать этот комментарий']);
+        }
+
+        return view('comments.comment-edit', [
+            'comment' => $comment,
+            'route' => $this->edit_route_name,
+            'relation' => $comment->relation,
+            'comment_type' => $this->name_id,
+            'object_id' => $comment->object_id
+        ]);
+    }
 
     /**
      * Update the specified resource in storage.

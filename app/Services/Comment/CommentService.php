@@ -9,6 +9,7 @@
 namespace App\Services\Comment;
 
 use App\Comment;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -59,5 +60,14 @@ class CommentService
         }
 
         return false;
+    }
+
+    public static function checkCommentEdit($comment)
+    {
+        if (is_null($comment->created_at)) {
+            return false;
+        }
+        $time = Carbon::now()->diffInMinutes(Carbon::parse($comment->created_at));
+        return $time <= 10;
     }
 }

@@ -27,7 +27,7 @@ class SectionService
             $section_comments_count[$comment->section_id] = $comment->comment_count;
         }
         foreach ($sections as $key=>$section) {
-            $sections[$key]['comment_count'] = $section_comments_count[$section->id];
+            $sections[$key]['comment_count'] = $section_comments_count[$section->id] ?? 0;
         }
 
         return $sections;

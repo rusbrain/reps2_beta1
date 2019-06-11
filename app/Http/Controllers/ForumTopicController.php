@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\{
-    Comment, ForumSection, ForumTopic, Services\Base\UserViewService, Services\User\UserService
-};
+use App\{Comment, ForumSection, ForumTopic, Services\Base\UserViewService, Services\User\UserService, User};
 use App\Http\Requests\{ForumTopicRebaseRequest, ForumTopicStoreRequest, ForumTopicUpdateRequest};
 use App\Services\Forum\TopicService;
 use Illuminate\Support\Facades\Auth;
@@ -92,7 +90,7 @@ class ForumTopicController extends Controller
             return abort(404);
         }
 
-        if(!TopicService::checkForumEdit($topic) && !UserService::isAdmin() && !UserService::isModerator()){
+        if(!($topic->user_id == Auth::user()->id && TopicService::checkForumEdit($topic)) && !UserService::isAdmin() && !UserService::isModerator()){
             return redirect()->route('error',['id' => 'Данный топик закрыт для редактирования']);
         }
 
