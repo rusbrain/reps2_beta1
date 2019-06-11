@@ -26,7 +26,11 @@ class NewsController extends Controller
             $str .= '&'.$key.'='.$datum;
         }
 
-        return view('news.index')->with('request', $str);
+        return view('news.index')->with([
+            'request' => $str,
+            'search_text' => $request->get('text'),
+            'search_section' => HomeController::SEARCH_NEWS,
+        ]);
     }
 
     /**

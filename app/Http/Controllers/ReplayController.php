@@ -57,7 +57,9 @@ class ReplayController extends Controller
             'title' => (!$type) ? $this->replay_group : $this->replay_group . ': ' . $type->title,
             'replay_type' => $this->replay_type,
             'type' => ($type) ? $type->name : $type,
-            'request' => $request_data
+            'request' => $request_data,
+            'search_text' => $request->get('text'),
+            'search_section' => HomeController::SEARCH_REPLAY,
         ]);
     }
 
