@@ -36,8 +36,8 @@
 
 @section('js')
     <!--SCEditor -  WYSIWYG BBCode editor -->
-    <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.min.js"></script>
-
+    <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.min.js"></script>    
+    <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.bbcode.min.js"></script>
     <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.xhtml.min.js"></script>
     <script src="{{route('home')}}/js/sceditor/languages/ru.js"></script>
     <script>
@@ -79,6 +79,9 @@
             /**custom commands for HTML text editor*/
             addCountries();
             addRaces();
+            // Check user is admin or morderate
+            var isUpload = {{Auth::user()->user_role_id}};
+            if (isUpload) addUpload();
 
             if ($('body').find('#comment-content').length > 0) {
                 var textarea = document.getElementById('comment-content');
@@ -96,7 +99,8 @@
                     'emoticon|' +
                     'date,time|' +
                     'countries|'+
-                    'races',
+                    'races|'+
+                    'upload',
                     emoticons: {
                         // Emoticons to be included in the dropdown
                         dropdown: getAllSmiles(),

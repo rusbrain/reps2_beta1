@@ -145,13 +145,16 @@
 @endsection
 
 @section('js')
+
+  
     <!--SCEditor -  WYSIWYG BBCode editor -->
     <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.min.js"></script>
     <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.xhtml.min.js"></script>
     <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.bbcode.min.js"></script>
     <script src="{{route('home')}}/js/sceditor/languages/ru.js"></script>
 
-    <script>
+    <script>       
+         
         /**
          * Comments box is the same for all pages
          *SCEditor -  WYSIWYG BBCode editor
@@ -161,7 +164,10 @@
             /**custom commands for HTML text editor*/
             addCountries();
             addRaces();
-
+            // Check user is admin or morderate
+            var isUpload = {{Auth::user()->user_role_id}};
+            if (isUpload) addUpload();
+                        
             /**turn on HTML text editor for Topic's preview content**/
             if ($('#preview_content').length > 0) {
                 var preview_content = document.getElementById('preview_content');
@@ -179,8 +185,9 @@
                         'emoticon|' +
                         'date,time|' +
                         'countries|'+
-                        'races|' +
-                        'maximize',
+                        'races|'+                        
+                        'maximize|'+
+                        'upload' ,
                     emoticons: {
                         // Emoticons to be included in the dropdown
                         dropdown: getAllSmiles(),
@@ -208,7 +215,7 @@
                     'date,time|' +
                     'countries|'+
                     'races|' +
-                    'maximize',
+                    'maximize|upload' ,
                     emoticons: {
                         // Emoticons to be included in the dropdown
                         dropdown: getAllSmiles(),
@@ -217,6 +224,7 @@
                     }
                 });
             }
+
         });
     </script>
 @endsection
