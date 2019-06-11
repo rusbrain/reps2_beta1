@@ -122,8 +122,11 @@ class CommentController extends Controller
      * @return array
      */
     public function pagination($object, $id)
-    {
+    {      
+       
         $comments   = Comment::getComment($object, $id);
         return ['comments' => UserViewService::getComments($comments), 'pagination' => UserViewService::getPagination($comments)];
+      
+        
     }
 }

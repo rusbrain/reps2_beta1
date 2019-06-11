@@ -71,7 +71,7 @@ class Comment extends Model
 
         if ($relation){
             $comments = Comment::where('relation', $relation)->where('object_id', $id)->with('user.avatar')->orderBy('created_at', 'asc');
-        } else {
+       } else {
             $comments = Comment::where('id' < 0);
         }
 

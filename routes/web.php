@@ -217,6 +217,8 @@ Route::group(['middleware' => 'activity'], function () {
         Route::get('/photo/{id}', 'UserGalleryController@show')->name('gallery.view');
     });
 
+    // Admin Routes
+
     Route::group(['middleware' => ['auth', 'admin_panel'], 'prefix' => 'admin_panel', 'namespace' => 'Admin'],
         function () {
             Route::get('/', 'BaseController@index')->name('admin.home');
