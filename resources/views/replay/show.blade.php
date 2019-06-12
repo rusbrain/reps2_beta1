@@ -61,7 +61,7 @@
                 <div class="info">
                     <a href="#comments">
                         <img src="{{route('home')}}/images/icons/message-square-white.png" alt="">
-                        {{($replay->comments_count > 0) ? $replay->comments_count : $comments->total() }}
+                        {{($replay->comments_count > 0) ? $replay->comments_count : 0 }}
                     </a>
                     <a href="#">
                         <img src="{{route('home')}}/images/icons/clock-white.png" alt="">
