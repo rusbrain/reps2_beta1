@@ -165,8 +165,10 @@
             addCountries();
             addRaces();
             // Check user is admin or morderate
-            var isUpload = {{Auth::user()->user_role_id}};
-            if (isUpload) addUpload();
+            @if (Auth::user())
+                var isUpload = {{Auth::user()->user_role_id}};
+                if (isUpload) addUpload();
+            @endif
                         
             /**turn on HTML text editor for Topic's preview content**/
             if ($('#preview_content').length > 0) {
