@@ -54,7 +54,7 @@ return [
             'strict' => true,
             'engine' => null,
             'dump' => [
-                'dump_binary_path' =>'usr/bin',
+                'dump_binary_path' =>'/usr/bin',
                 // 'dump_binary_path' => 'C:\\Program Files\\MySQL\\MySQL Server 5.7\\bin', // only the path, so without `mysqldump` or `pg_dump`
                 'use_single_transaction',
                 'timeout' => 60 * 20, // 20 minute timeout
