@@ -1160,7 +1160,7 @@ form label {
   margin-left: auto;
   text-align: right;
   max-width: 90px;
-  word-break: keep-all;
+  word-break: break-word;
 }
 .widget-wrapper .widget-new-user a:hover {
   color: #737373;
