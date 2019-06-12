@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\{Comment, ForumSection, ForumTopic, Services\Base\UserViewService, Services\User\UserService, User};
-use App\Http\Requests\{ForumTopicRebaseRequest, ForumTopicStoreRequest, ForumTopicUpdateRequest};
+use App\{
+    Comment, ForumSection, ForumTopic, Services\Base\UserViewService, Services\User\UserService, User
+};
+use App\Http\Requests\{ForumTopicRebaseRequest, ForumTopicStoreRequest,ForumTopicUploadRequest, ForumTopicUpdateRequest};
 use App\Services\Forum\TopicService;
 use Illuminate\Support\Facades\Auth;
 
@@ -166,5 +168,44 @@ class ForumTopicController extends Controller
     {
         $data = ForumSection::getUserTopics($user_id);
         return ['topics' => UserViewService::getTopics($data), 'pagination' => UserViewService::getPagination($data)];
+    }
+
+    /**
+     * @param $request : file
+     * @return file_path
+     */
+    public function img_upload(Request $request) {
+        if($request->hasFile('file')) {
+            $allowedExt = ['jpg', 'png', 'gif'];
+            $file = $request->file('file');
+            $ext = $file->getClientOriginalExtension();
+            $extCheck = in_array($ext, $allowedExt);
+
+            if($extCheck) {
+                $filename = uniqid().'.'.$ext;
+                $dir_name = "forum";
+                try {
+                    Storage::putFileAs("public/forum", $file, $filename, 'public');
+                    $path = "forum/" . $filename;
+                    $url = Storage::url($path);
+                    $result = array (
+                        'success' => true,
+                        'data' => $url
+                    );
+                    return $result;
+                } catch (\Exception $e) {
+                    return array (
+                        'success' => false,
+                        'data' => 'Upload Error'
+                    );
+                }
+
+            } else {
+                return array (
+                    'success' => false,
+                    'data' => 'File Type error'
+                );
+            }
+        }
     }
 }

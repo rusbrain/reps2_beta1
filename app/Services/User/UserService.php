@@ -23,35 +23,33 @@ class UserService
      */
     public static function updateData(Request $request, $user_id)
     {
-        $user = User::find($user_id);
-
+        $user      = User::find( $user_id);
         $user_data = $request->all();
 
-        foreach ($user_data as $key=>$item){
-            if (is_null($item)){
+        foreach ( $user_data as $key=>$item ){
+            if ( is_null($item) ){
                 unset($user_data[$key]);
             }
         }
 
-        if (isset($user_data['country'])){
+        if ( isset( $user_data['country'] ) ){ // country_id
             $user_data['country_id'] = $user_data['country'];
-            unset($user_data['country']);
+            unset( $user_data['country'] );
         }
 
-        if ($request->file('avatar')){
-            $title = 'Аватар '.$user->name;
-            $file = File::storeFile($request->file('avatar'), 'avatars', $title);
+        if ( $request->file('avatar') ){
+            $title  = 'Аватар '.$user->name;
+            $file   = File::storeFile ($request->file( 'avatar' ), 'avatars', $title );
 
             $user_data['file_id'] = $file->id;
         }
 
-        if(Auth::user()->role?(Auth::user()->role->name != 'admin'):true){
-            unset($user_data['user_role_id']);
+        if( Auth::user()->role ? ( Auth::user()->role->name != 'admin' ) : true ){
+            unset( $user_data['user_role_id'] );
         }
 
-        $user->update($user_data);
-
-        return User::find($user_id);
+        $user->update( $user_data );
+        return User::find( $user_id );
     }
 
     /**

@@ -134,6 +134,8 @@ Route::group(['middleware' => 'activity'], function () {
                 });
             });
             Route::get('/{id}', 'ForumTopicController@index')->name('forum.topic.index');
+
+            Route::post('/img_upload', 'ForumTopicController@img_upload')->name('forum.topic.imgupload');
         });
     });
 
@@ -215,6 +217,8 @@ Route::group(['middleware' => 'activity'], function () {
         });
         Route::get('/photo/{id}', 'UserGalleryController@show')->name('gallery.view');
     });
+
+    // Admin Routes
 
     Route::group(['middleware' => ['auth', 'admin_panel'], 'prefix' => 'admin_panel', 'namespace' => 'Admin'],
         function () {
@@ -325,8 +329,8 @@ Route::group(['middleware' => 'activity'], function () {
                     Route::get('/{id}/edit', 'ForumTopicController@getTopicEdit')->name('admin.forum.topic.edit');
                     Route::post('/{id}/edit', 'ForumTopicController@saveTopic')->name('admin.forum.topic.edit.save');
                     Route::get('/{id}', 'ForumTopicController@getTopic')->name('admin.forum.topic.get');
-                    Route::post('/{id}/send_comment',
-                        'TopicCommentController@sendComment')->name('admin.forum.topic.comment_send');
+                    Route::post('/{id}/send_comment', 'TopicCommentController@sendComment')->name('admin.forum.topic.comment_send');
+                  
                 });
             });
             Route::group(['prefix' => 'replay'], function () {

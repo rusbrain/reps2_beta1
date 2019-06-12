@@ -24,6 +24,7 @@
                 <div class="box-body">
                     <form action="{{route('admin.user.profile.save', ['id' => $user->id])}}" method="post" enctype="multipart/form-data">
                         @csrf
+                        <input type="hidden" name="id" value="{{$user->id}}" />
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="input-group">
@@ -174,7 +175,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Страна</label>
-                                    <select class="form-control form-select-2" name="country_id">
+                                    <select class="form-control form-select-2" name="country">
                                         @foreach($admin_helper->getCountries() as $country)
                                             <option value="{{$country->id}}" @if($user->country_id == $country->id) selected @endif>{{$country->name}}</option>
                                         @endforeach

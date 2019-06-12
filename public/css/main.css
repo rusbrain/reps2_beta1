@@ -18,6 +18,10 @@
   src: url('../fonts/NotoSans-Bold.ttf') format('truetype');
 }
 /**SCEditor plugin*/
+.sceditor-button-upload div {
+  background: url('../images/icons/upload.png') no-repeat center center;
+  background-size: cover;
+}
 .sceditor-button-countries div {
   background: url('../flags/editor/ru.png') no-repeat center center;
 }
@@ -1153,6 +1157,7 @@ form label {
 }
 .widget-wrapper .widget-new-user a > span:last-of-type {
   margin-left: auto;
+  text-align: right;
 }
 .widget-wrapper .widget-new-user a:hover {
   color: #737373;
