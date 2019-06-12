@@ -1156,8 +1156,11 @@ form label {
   flex: 0 0 90px;
 }
 .widget-wrapper .widget-new-user a > span:last-of-type {
+
   margin-left: auto;
   text-align: right;
+  max-width: 90px;
+  word-break: keep-all;
 }
 .widget-wrapper .widget-new-user a:hover {
   color: #737373;
