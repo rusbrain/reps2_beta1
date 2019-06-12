@@ -68,6 +68,6 @@ class CommentService
             return false;
         }
         $time = Carbon::now()->diffInMinutes(Carbon::parse($comment->created_at));
-        return $time <= 10;
+        return $time <= 60;
     }
 }

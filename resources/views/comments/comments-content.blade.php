@@ -65,12 +65,21 @@
                                  data-id="">
                             <span>Цитировать</span>
                         </div>
-                        <div>
-                            <a href="{{route('forum.topic.comment.edit', ['id' => $comment->id])}}" class="user-theme-edit">
-                                <img src="{{route('home')}}/images/icons/svg/edit_icon.svg" alt="">
-                                <span>Редактировать</span>
-                            </a>
-                        </div>
+                        @if (Auth::user() && $comment->user_id == Auth::user()->id && $general_helper->checkCommentEdit($comment))
+                            <div>
+                                <a href="{{route('forum.topic.comment.edit', ['id' => $comment->id])}}" class="user-theme-edit">
+                                    <img src="{{route('home')}}/images/icons/svg/edit_icon.svg" alt="">
+                                    <span>Редактировать</span>
+                                </a>
+                            </div>
+                        @elseif ($general_helper->isAdmin() || $general_helper->isModerator())
+                            <div>
+                                <a href="{{route('forum.topic.comment.edit', ['id' => $comment->id])}}" class="user-theme-edit">
+                                    <img src="{{route('home')}}/images/icons/svg/edit_icon.svg" alt="">
+                                    <span>Редактировать</span>
+                                </a>
+                            </div>
+                        @endif
                         <div class="comment-rating">
                             <a href="#vote-modal" class="positive-vote vote-replay-up" data-toggle="modal"
                                data-rating="1" data-route="{{route('comment.set_rating',['id' => $comment->id])}}">

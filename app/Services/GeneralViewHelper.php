@@ -8,12 +8,14 @@
 
 namespace App\Services;
 
+use App\Comment;
 use App\Country;
 use App\Footer;
 use App\ForumTopic;
 use App\Services\Base\{
     BaseDataService, InterviewQuestionsService
 };
+use App\Services\Comment\CommentService;
 use App\Services\Forum\TopicService;
 use App\Traits\ViewHelper\{
     ForumData, ReplayData, UserData
@@ -77,6 +79,15 @@ class GeneralViewHelper
     public function checkForumEdit(ForumTopic $topic)
     {
         return TopicService::checkForumEdit($topic);
+    }
+
+    /**
+     * @param Comment $comment
+     * @return bool
+     */
+    public function checkCommentEdit(Comment $comment)
+    {
+        return CommentService::checkCommentEdit($comment);
     }
 
     /**
