@@ -869,6 +869,9 @@ form label {
   width: 220px;
 }
 .logged-user-nickname {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 55%;
   color: #fff !important;
   font-size: 14px;
   font-family: "Roboto-Medium", sans-serif;
