@@ -43,7 +43,9 @@
                 </div>
             </div>
             @else
-                        
+                @if($count != 0 && ($count % 2)==1)
+                <div class="widget-replay row">
+                @endif        
                 <div class="widget-replay-sec col-md-6">
                     <div class="widget-replay-desc-row">
                         <span class="widget-replay-title"></span>
@@ -71,6 +73,9 @@
                         <span>{{$replay->first_race}} vs {{$replay->second_race}}</span>
                     </div>                   
                 </div>
+                @if($count != 0 && ($count % 2)==0)
+                </div>
+                @endif  
            
             @endif
             @php $count++; @endphp
