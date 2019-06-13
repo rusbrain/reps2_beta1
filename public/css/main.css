@@ -109,6 +109,9 @@ img {
 .min-height-200 {
   min-height: 200px;
 }
+.margin-bottom-0{
+  margin-bottom: 0 !important;
+}
 .margin-bottom-5 {
   margin-bottom: 5px;
 }
@@ -1049,8 +1052,32 @@ form label {
 }
 .widget-replay {
   margin-top: 15px;
+  margin-bottom: 15px;
   line-height: 17px;
   align-items: center;
+}
+.widget-replay-sec {
+  line-height: 17px;
+  margin-top: 15px;
+  padding-right:7px !important;
+  float: left
+}
+.gosu-btn {
+  display: inline-block
+}
+.gosu-btn .btn-empty {
+  border: 0.5px solid #2f6696;
+  box-sizing: border-box;
+  border-radius: 3px;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 5px;
+  background: transparent;
+  font-family: "Roboto-Medium", sans-serif;
+  min-width: 155px;
+  color: #2f6696;
 }
 .widget-map {
   text-align: center;

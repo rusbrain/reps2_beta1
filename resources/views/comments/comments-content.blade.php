@@ -26,8 +26,7 @@
                             @else
                                 <a href="{{route('user_profile',['id' => $comment->user->id])}}"
                                 class="logged-user-avatar no-header">A</a>
-                            @endif
-                            
+                            @endif                           
                             
                             <div class="">
                                 @php
@@ -40,6 +39,7 @@
                                 @else
                                    <span class="flag-icon"></span>
                                 @endif
+
                                 @if($comment->user->race)
                                    <img class="margin-left-5" src="{{route('home')}}/images/smiles/{{\App\Replay::$race_icons[$comment->user->race]}}" alt="">
                                 @else
@@ -72,9 +72,9 @@
                         </div>
                     </div>
                     <div class="col-md-12 comment-content-wrapper">
-                        <div class="commnet-edit">
+                        {{-- <div class="commnet-edit">
                             {{$comment->edit_user_id}}
-                        </div>
+                        </div> --}}
                         <div class="comment-content">
                             {!! $general_helper->oldContentFilter($comment->content) !!}
                         </div>

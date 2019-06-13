@@ -35,7 +35,7 @@
     <!-- END New Users-->
 
     <!-- User's Replays-->
-    @include('sidebar-widgets.users-replays')
+    {{-- @include('sidebar-widgets.users-replays') --}}
     <!-- END User's Replays-->
 
     <!-- Gallery -->
