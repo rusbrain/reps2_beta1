@@ -107,7 +107,7 @@ class Replay extends Model
         'positive_count',
         'comments_count',
         'downloaded',
-        'length',
+        // 'length',
         'approved',
         'video_iframe'
     ];

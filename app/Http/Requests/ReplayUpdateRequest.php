@@ -39,7 +39,6 @@ class ReplayUpdateRequest extends FormRequest
             'second_country_id'     => 'required|exists:countries,id',
             'first_race'            => 'required|in:'.$races,
             'second_race'           => 'required|in:'.$races,
-            'length'                => 'nullable',
             'first_location'        => 'nullable|integer',
             'second_location'       => 'nullable|integer',
             'approved'              => 'nullable|in:0,1',

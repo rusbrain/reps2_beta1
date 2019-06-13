@@ -111,11 +111,7 @@
                             </span>
                         </div>
                     </div>
-                    <div>
-                        <div class="replay-desc-right">Длительность:</div>
-                        <div class="replay-desc-left">{{$replay->length??'не указано'}}</div>
-                    </div>
-                
+                   
                     <div>
                         <div class="replay-desc-right">Рейтинг:</div>
                         <div class="replay-desc-left">{{$replay->rating??'0'}}</div>
