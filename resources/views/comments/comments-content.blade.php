@@ -27,6 +27,7 @@
                                 <a href="{{route('user_profile',['id' => $comment->user->id])}}"
                                 class="logged-user-avatar no-header">A</a>
                             @endif
+                            
                             <div class="user-nickname">
                                 <a href="{{route('user_profile',['id' => $comment->user->id])}}">{{$comment->user->name}}</a>
                                 <a href="" class="user-menu-link @if(!Auth::user()) display-none @endif"></a>
@@ -37,12 +38,23 @@
                                 </div>
                             </div>
                             <div class="user-role">
-                                @if($comment->user->user_role_id != 0)
-                                    {{$comment->user->role->title . ' | '}}
-                                    {{$general_helper->getUserStatus($comment->user->points)}} {{$comment->user->points . ' pts | '}}
+                                @php
+                                    $countries = $general_helper->getCountries();
+                                @endphp
+
+                                {{-- <span class="color-blue">#{{$comment->user->id}}</span> --}}
+                                @if($comment->user->country_id)
+                                   <span class="flag-icon flag-icon-{{mb_strtolower($countries[$comment->user->country_id]->code)}}"></span>
                                 @else
-                                    {{$general_helper->getUserStatus($comment->user->points)}} {{$comment->user->points . ' pts | '}}
+                                   <span class="flag-icon"></span>
                                 @endif
+                                @if($comment->user->race)
+                                   <img class="margin-left-5" src="{{route('home')}}/images/smiles/{{\App\Replay::$race_icons[$comment->user->race]}}" alt="">
+                                @else
+                                   <img class="margin-left-5" src="{{route('home')}}/images/smiles/{{\App\Replay::$race_icons['All']}}" alt="">
+                                @endif
+                                {{-- <span>{{$comment->user->name}}</span> --}}
+                                {{$comment->user->points . ' pts | '}}
                             </div>
                             <div>
                                 <a href="{{route('user.get_rating', ['id' => $comment->user->id])}}"
@@ -56,6 +68,9 @@
                         </div>
                     </div>
                     <div class="col-md-12 comment-content-wrapper">
+                        <div class="commnet-edit">
+                            {{$comment->edit_user_id}}
+                        </div>
                         <div class="comment-content">
                             {!! $general_helper->oldContentFilter($comment->content) !!}
                         </div>
