@@ -54,7 +54,7 @@ class UserMessagingController extends BaseUserMessageController
      */
     public function getCorrespList()
     {
-        return view('user.message_list')->with('messages_list', UserDialogService::getUserDialogues());
+        return view('user.message_list')->with('messages_list', UserDialogService::getUserDialoguesList());
     }
 
     /**
