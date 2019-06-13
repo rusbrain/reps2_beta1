@@ -23,6 +23,7 @@ Route::group(['middleware' => 'activity'], function () {
     });
 
     Route::get('error/{error}', 'ErrorController@index')->name('error');
+    Route::get('notification/{notification}', 'NotificationController@index')->name('notification');
     Route::get('/comments/{object}/{id}', 'CommentController@pagination')->name('comments.pagination');
     Route::get('/search', 'HomeController@search')->name('home.search');
     Route::get('/email/verified/{token}', 'Auth\RegisterController@emailVerified')->name('email_verified');
