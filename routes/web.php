@@ -75,8 +75,8 @@ Route::group(['middleware' => 'activity'], function () {
 
             Route::post('messages/{id}/update', 'UserMessagingController@updateMessage')->name('user.message.update');
             Route::post('messages/{id}/delete', 'UserMessagingController@removeMessage')->name('user.message.delete');
-            Route::get('{id}/messages', 'UserMessagingController@getUser')->name('user.messages');
             Route::get('messages', 'UserMessagingController@getUser')->name('user.messages_all');
+            Route::get('{id}/messages', 'UserMessagingController@getUser')->name('user.messages');
             Route::get('/message/{dialog_id}/load', 'UserMessagingController@load')->name('user.message_load');
             Route::post('/message/{dialog_id}/send', 'UserMessagingController@send')->name('user.message.send');
         });
