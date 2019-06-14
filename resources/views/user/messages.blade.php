@@ -1,6 +1,6 @@
 @extends('layouts.site')
 @inject('general_helper', 'App\Services\GeneralViewHelper')
-
+{{-- @php dd($contacts);@endphp --}}
 @section('sidebar-left')
     <!-- User messages widget -->   
     @include('sidebar-widgets.user-messages',['all_new_messages'=>collect($contacts->items())->sum('new_messages'),'contacts' => $contacts])
@@ -30,7 +30,7 @@
         <div class="col-md-12 section-title">
             <div>Мои сообщения</div>
         </div>
-        @if($user)
+        @if(isset($user) && $user)
         <div class="col-md-12">
             <div class="row">
                 <div class="user-messages-info">
