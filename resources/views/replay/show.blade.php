@@ -36,16 +36,26 @@
             <div>{{$replay->title}}</div>
 
             <div class="author-info">
+                <div class="">
+                   
+                    @if($replay->user->country_id)
+                        <span class="flag-icon flag-icon-{{mb_strtolower($countries[$replay->user->country_id]->code)}}"></span>
+                    @else
+                        <span class="flag-icon"></span>
+                    @endif
+
+                    @if($replay->user->race)
+                        <img class="margin-left-5" src="{{route('home')}}/images/smiles/{{\App\Replay::$race_icons[$replay->user->race]}}" alt="">
+                    @else
+                        <img class="margin-left-5" src="{{route('home')}}/images/smiles/{{\App\Replay::$race_icons['All']}}" alt="">
+                    @endif
+                    
+                </div>
                 <a href="{{route('user_profile',['id' => $replay->user->id])}}">
                     {{$replay->user->name. ' | '}}
                 </a>
-                <div class="user-role">
-                    @if($replay->user->user_role_id != 0)
-                        {{$replay->user->role->title . ' | '}}
-                        {{$general_helper->getUserStatus($replay->user->points)}} {{$replay->user->points . ' pts | '}}
-                    @else
-                        {{$general_helper->getUserStatus($replay->user->points)}} {{$replay->user->points . ' pts | '}}
-                    @endif
+                <div>
+                    {{$replay->user->points . ' pts | '}}
                 </div>
                 <div>
                     <a href="{{route('user.get_rating', ['id' => $replay->user->id])}}"

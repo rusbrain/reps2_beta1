@@ -80,6 +80,25 @@
                         <a href="{{route('user_profile',['id' => $topic->user->id])}}"
                            class="logged-user-avatar no-header">A</a>
                     @endif
+
+                    <div class="">
+                        @php
+                            $countries = $general_helper->getCountries();
+                        @endphp
+
+                        @if($topic->user->country_id)
+                            <span class="flag-icon flag-icon-{{mb_strtolower($countries[$topic->user->country_id]->code)}}"></span>
+                        @else
+                            <span class="flag-icon"></span>
+                        @endif
+
+                        @if($topic->user->race)
+                            <img class="margin-left-5" src="{{route('home')}}/images/smiles/{{\App\Replay::$race_icons[$topic->user->race]}}" alt="">
+                        @else
+                            <img class="margin-left-5" src="{{route('home')}}/images/smiles/{{\App\Replay::$race_icons['All']}}" alt="">
+                        @endif
+                        
+                    </div>
                     <div class="user-nickname">
                         <a href="{{route('user_profile',['id' => $topic->user->id])}}">{{$topic->user->name}}</a>
                         <a href="" class="user-menu-link @if(!Auth::user()) display-none @endif "></a>
@@ -89,12 +108,8 @@
                             <a href="{{route('user.set_ignore',['id'=>$topic->user->id])}}">Игнор-лист</a>
                         </div>
                     </div>
-                    <div class="user-role">
-                        @if($topic->user->user_role_id != 0)
-                            {{$topic->user->role->title}}
-                        @else
-                            user
-                        @endif
+                    <div>
+                        {{$topic->user->points . ' pts | '}}
                     </div>
                     <div>
                         <a href="{{route('user.get_rating', ['id' => $topic->user->id])}}"
