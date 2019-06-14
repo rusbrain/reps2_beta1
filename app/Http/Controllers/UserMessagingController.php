@@ -20,7 +20,7 @@ class UserMessagingController extends BaseUserMessageController
     public function getUser($id = false)
     {
         if($id && $id == Auth::id()){
-            return redirect()->route('user.messages');        
+            return redirect()->route('user.messages_all');        
         } else {
             return view('user.messages')->with(MessageService::getMessageData($id));       
         }
