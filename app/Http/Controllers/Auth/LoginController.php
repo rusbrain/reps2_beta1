@@ -65,6 +65,14 @@ class LoginController extends Controller
             }
         }
 
+        if (!Auth::user()->email_verified_at) {
+            /**if is not verified*/
+            if($this->logout($request, true)){
+                return redirect()->route('error',
+                    ['error' => 'Ваш аккаунт не подтверждён, для подвтерждения перейдите по ссылке , которая пришла к вам на почту, или обращайтесь к администрации сайта']);
+            }
+        }
+
         return redirect('/');
     }
 

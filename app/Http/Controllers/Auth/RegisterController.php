@@ -119,7 +119,8 @@ class RegisterController extends Controller
     {
         Mail::send(new RegisteredUser($user));
 
-        return redirect()->route('edit_profile');
+        $this->guard()->logout($user);
+        return redirect()->route('notification',['notification' => "Вы успешно зарегистрировались! Для дальнейшего использования сайта подтвердите вашу почту. Ссылка отправлена на указанный email"]);
     }
 
     /**
