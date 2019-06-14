@@ -5,14 +5,15 @@
             <span class="qty-messages">{{$all_new_messages}}</span>
         @endif
     </div>
-    <div class="messages-wrapper">
+    <div class="messages-wrapper">    
         @foreach($contacts as $contact)
             @php
-                $diff = Carbon\Carbon::now()->diffAsCarbonInterval($contact->messages_last);
+           
                 $date = "";
                 $sender = false;
 
                 if ($contact->messages_last){
+                    $diff = Carbon\Carbon::now()->diffAsCarbonInterval($contact->messages_last);
                     $date = $contact->messages_last->format('Y/m/d H:m:s');
 
                     if ($diff->d == 0 && $diff->y == 0 && $diff->m == 0){
@@ -34,6 +35,7 @@
             @endphp
 
             @if($sender)
+          
                 <div class="widget-forum-topics-wrapper">
                     <div class="widget-forum-topic">
                         @if($sender->avatar)

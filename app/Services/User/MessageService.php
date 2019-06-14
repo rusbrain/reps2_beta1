@@ -21,8 +21,11 @@ class MessageService
      */
     public static function getMessageData($id)
     {
-        $contacts = UserDialogService::getUserDialogues();
-        return self::formMessageData($id, $contacts);
+        $contacts = UserDialogService::getUserDialogues();  
+        $data =    self::formMessageData($id, $contacts);
+       
+        return $data;
+       
     }
 
     /**
@@ -31,8 +34,7 @@ class MessageService
      * @return array
      */
     protected static function formMessageData($id, $contacts)
-    {
-        $dialog_id = UserDialogService::getDialogUser($id)->id;
+    {       
 
         if(!$id){
             foreach ($contacts->first()->senders as $sender){
@@ -41,6 +43,8 @@ class MessageService
                 }
             }
         }
+
+        $dialog_id = UserDialogService::getDialogUser($id)->id;
 
         return [
             'dialog_id' => $dialog_id,

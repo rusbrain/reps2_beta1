@@ -2,7 +2,7 @@
 @inject('general_helper', 'App\Services\GeneralViewHelper')
 
 @section('sidebar-left')
-    <!-- User messages widget -->
+    <!-- User messages widget -->   
     @include('sidebar-widgets.user-messages',['all_new_messages'=>collect($contacts->items())->sum('new_messages'),'contacts' => $contacts])
     <!-- END User Messages widget -->
 @endsection
@@ -25,11 +25,12 @@
         </div>
     </div>
     <!-- END Breadcrumbs -->
-
+  
     <div class="content-box">
         <div class="col-md-12 section-title">
             <div>Мои сообщения</div>
         </div>
+        @if($user)
         <div class="col-md-12">
             <div class="row">
                 <div class="user-messages-info">
@@ -64,6 +65,15 @@
             @include('user.messages-partials.add-message-form')
         </div>
         <!-- END ADD MESSAGE FORM -->
+        @else
+        <div class="col-md-12">
+            <div class="row">
+                <div class="user-messages-info">
+                    Hет сообщений
+                </div>
+            </div>
+        </div>
+        @endif
     </div>
 @endsection
 
