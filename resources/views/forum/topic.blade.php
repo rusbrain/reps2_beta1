@@ -80,7 +80,15 @@
                         <a href="{{route('user_profile',['id' => $topic->user->id])}}"
                            class="logged-user-avatar no-header">A</a>
                     @endif
-
+                    <div class="user-nickname">
+                        <a href="{{route('user_profile',['id' => $topic->user->id])}}">{{$topic->user->name}}</a>
+                        <a href="" class="user-menu-link @if(!Auth::user()) display-none @endif "></a>
+                        <div class="user-menu">
+                            <a href="{{route('user.add_friend',['id'=>$topic->user->id])}}">Добавить в друзья</a>
+                            <a href="{{route('user.messages',['id' => $topic->user->id])}}">Сообщение</a>
+                            <a href="{{route('user.set_ignore',['id'=>$topic->user->id])}}">Игнор-лист</a>
+                        </div>
+                    </div>
                     <div class="">
                         @php
                             $countries = $general_helper->getCountries();
@@ -99,15 +107,7 @@
                         @endif
                         
                     </div>
-                    <div class="user-nickname">
-                        <a href="{{route('user_profile',['id' => $topic->user->id])}}">{{$topic->user->name}}</a>
-                        <a href="" class="user-menu-link @if(!Auth::user()) display-none @endif "></a>
-                        <div class="user-menu">
-                            <a href="{{route('user.add_friend',['id'=>$topic->user->id])}}">Добавить в друзья</a>
-                            <a href="{{route('user.messages',['id' => $topic->user->id])}}">Сообщение</a>
-                            <a href="{{route('user.set_ignore',['id'=>$topic->user->id])}}">Игнор-лист</a>
-                        </div>
-                    </div>
+                    
                     <div>
                         {{$topic->user->points . ' pts | '}}
                     </div>
