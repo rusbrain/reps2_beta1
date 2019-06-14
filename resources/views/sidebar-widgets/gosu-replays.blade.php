@@ -85,7 +85,7 @@
         </div>
         <div class="justify-content-center display-flex gosu-btn">
             <a href="{{route('replay.gosus')}}" class="btn-empty margin-top-20 margin-bottom-20" type="submit">
-                Пользовательские реплеи"
+                Пользовательские реплеи
             </a>
         </div>
     </div>
