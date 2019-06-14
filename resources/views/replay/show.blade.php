@@ -36,8 +36,10 @@
             <div>{{$replay->title}}</div>
 
             <div class="author-info">
-                <div class="">
-                   
+                <a href="{{route('user_profile',['id' => $replay->user->id])}}">
+                    {{$replay->user->name. ' | '}}
+                </a>
+                <div class="">                   
                     @if($replay->user->country_id)
                         <span class="flag-icon flag-icon-{{mb_strtolower($countries[$replay->user->country_id]->code)}}"></span>
                     @else
@@ -51,9 +53,7 @@
                     @endif
                     
                 </div>
-                <a href="{{route('user_profile',['id' => $replay->user->id])}}">
-                    {{$replay->user->name. ' | '}}
-                </a>
+                
                 <div>
                     {{$replay->user->points . ' pts | '}}
                 </div>

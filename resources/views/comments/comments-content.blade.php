@@ -27,7 +27,15 @@
                                 <a href="{{route('user_profile',['id' => $comment->user->id])}}"
                                 class="logged-user-avatar no-header">A</a>
                             @endif                           
-                            
+                            <div class="user-nickname">
+                                <a href="{{route('user_profile',['id' => $comment->user->id])}}">{{$comment->user->name}}</a>
+                                <a href="" class="user-menu-link @if(!Auth::user()) display-none @endif"></a>
+                                <div class="user-menu">
+                                    <a href="{{route('user.add_friend',['id'=>$comment->user->id])}}">Добавить в друзья</a>
+                                    <a href="{{route('user.messages',['id' => $comment->user->id])}}">Сообщение</a>
+                                    <a href="{{route('user.set_ignore',['id'=>$comment->user->id])}}">Игнор-лист</a>
+                                </div>
+                            </div>
                             <div class="">
                                 @php
                                     $countries = $general_helper->getCountries();
@@ -48,15 +56,7 @@
                                 {{-- <span>{{$comment->user->name}}</span> --}}
                                 
                             </div>
-                            <div class="user-nickname">
-                                <a href="{{route('user_profile',['id' => $comment->user->id])}}">{{$comment->user->name}}</a>
-                                <a href="" class="user-menu-link @if(!Auth::user()) display-none @endif"></a>
-                                <div class="user-menu">
-                                    <a href="{{route('user.add_friend',['id'=>$comment->user->id])}}">Добавить в друзья</a>
-                                    <a href="{{route('user.messages',['id' => $comment->user->id])}}">Сообщение</a>
-                                    <a href="{{route('user.set_ignore',['id'=>$comment->user->id])}}">Игнор-лист</a>
-                                </div>
-                            </div>
+                            
                             <div>
                                 {{$comment->user->points . ' pts | '}}
                             </div>

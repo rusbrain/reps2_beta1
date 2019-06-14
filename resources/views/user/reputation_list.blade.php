@@ -18,10 +18,8 @@
                             <img class="margin-left-5" src="{{route('home')}}/images/smiles/{{\App\Replay::$race_icons[$item->sender->race]}}" alt="">
                         @else
                             <img class="margin-left-5" src="{{route('home')}}/images/smiles/{{\App\Replay::$race_icons['All']}}" alt="">
-                        @endif
-                        
+                        @endif                        
                     {{-- </div> --}}
-
 
                     <span> {{$item->sender->points . 'pts'}} </span>
                     <span>|</span>
