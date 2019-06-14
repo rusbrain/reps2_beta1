@@ -42,6 +42,34 @@ class UserDialogService
     }
 
     /**
+     * Get User Dialog List
+     *
+     * @return mixed
+     */
+    public static function getUserDialoguesList()
+    {
+        $dialogues = Dialogue::whereHas('users', function ($query){
+            $query->where('user_id', Auth::id());
+        })->with('messages.sender', 'users.avatar')
+            ->withCount(['messages as new_messages' => function($query){
+                $query->where('user_id', '<>', Auth::id())
+                    ->where('is_read',0);
+            }])
+            ->paginate(10);
+
+        $dialogues->transform(function ($item)
+        {
+            $item->senders = $item->users->unique();
+            $item->messages_last = ($item->messages->last());
+            unset($item->users);
+            //unset($item->messages);
+            return $item;
+        });
+
+        return $dialogues;
+    }
+
+    /**
      * get dialogue by user
      *
      * @param $user_id
