@@ -176,6 +176,11 @@
             /**custom commands for HTML text editor*/
             addCountries();
             addRaces();
+            // Check user is admin or morderate
+            @if (Auth::user())
+                var isUpload = {{Auth::user()->user_role_id}};
+                if (isUpload) addUpload();
+            @endif
 
             if ($('#content').length > 0) {
                 var content = document.getElementById('content');
@@ -194,7 +199,8 @@
                     'date,time|' +
                     'countries|'+
                     'races|' +
-                    'maximize',
+                    'maximize|' +
+                    'upload',
                     emoticons: {
                         // Emoticons to be included in the dropdown
                         dropdown: getAllSmiles(),
@@ -221,7 +227,8 @@
                     'date,time|' +
                     'countries|'+
                     'races|' +
-                    'maximize',
+                    'maximize|' +
+                    'upload',
                     emoticons: {
                         // Emoticons to be included in the dropdown
                         dropdown: getAllSmiles(),

@@ -232,60 +232,7 @@ $game_versions = $general_helper->getGameVersion();
                             @endif
                         </div>
                     </div><!--close div /.form-fields-box-->
-
-                    <div class="form-fields-box">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="game_version_id">* Версия игры:</label>
-                                    <select class="custom-select {{ $errors->has('game_version_id') ? ' is-invalid' : '' }}"
-                                            id="game_version_id" name="game_version_id">
-                                        @foreach($game_versions as $game_version)
-                                            <option value="{{$game_version->id}}" {{($game_version->id == $replay->game_version_id || $game_version->id == old('game_version_id')) ?'selected':''}}>
-                                                {{$game_version->version}}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @if ($errors->has('game_version_id'))
-                                        <span class="invalid-feedback">
-                                            <strong>{{ $errors->first('game_version_id') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="championship">Чемпионат:</label>
-                            <input type="text" value="{{$replay->title??old('title')}}" id="championship" name="championship"
-                                   class="form-control {{ $errors->has('championship') ? ' is-invalid' : '' }}">
-                            @if ($errors->has('championship'))
-                                <span class="invalid-feedback">
-                                    <strong>{{ $errors->first('championship') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="creating_rate">* Оценка:</label>
-                                    <select class="custom-select {{ $errors->has('creating_rate') ? ' is-invalid' : '' }}"
-                                            id="creating_rate"
-                                            name="creating_rate">
-                                        @foreach(\App\Replay::$creating_rates as $creating_rate)
-                                            <option value="{{$creating_rate}}" {{($creating_rate == $replay->creating_rate|| $creating_rate == old('creating_rate'))?'selected':''}}>
-                                                {{$creating_rate}}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @if ($errors->has('creating_rate'))
-                                        <span class="invalid-feedback">
-                                            <strong>{{ $errors->first('creating_rate') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                    </div><!--close div /.form-fields-box-->
+                
 
                     <div class="form-group margin-top-30">
                         <label for="video_iframe">Вставить HTML код с Youtube с видео реплеем</label>

@@ -230,7 +230,8 @@
                     'emoticon|' +
                     'date,time|' +
                     'countries|'+
-                    'races',
+                    'races|'+
+                    'img',
                     emoticons: {
                         // Emoticons to be included in the dropdown
                         dropdown: getAllSmiles(),
@@ -256,7 +257,8 @@
                     'emoticon|' +
                     'date,time|' +
                     'countries|'+
-                    'races',
+                    'races|'+
+                    'img',
                     emoticons: {
                         // Emoticons to be included in the dropdown
                         dropdown: getAllSmiles(),

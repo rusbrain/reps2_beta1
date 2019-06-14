@@ -10,8 +10,8 @@
     <form action="{{route('replay.search')}}" method="GET" class="search-replay-form col-md-12">
         @csrf
         <div class="form-group">
-            <label for="text">Имя / Чемпионат /Описание:</label>
-            <input type="text" id="text" name="text" value="{{ old('championship') }}"
+            <label for="text">Имя / Описание:</label>
+            <input type="text" id="text" name="text" value="{{ request('text') }}"
                    class="form-control {{ $errors->has('championship') ? ' is-invalid' : '' }}">
             @if ($errors->has('championship'))
                 <span class="invalid-feedback">
@@ -25,7 +25,7 @@
                     class="custom-select {{ $errors->has('first_country_id') ? ' is-invalid' : '' }}">
                 <option value="">Все</option>
                 @foreach($countries as $country)
-                    <option value="{{$country->id}}" {{$country->id == old('first_country_id') ? ' selected' : '' }}>{{$country->name}}</option>
+                    <option value="{{$country->id}}" {{$country->id == request('first_country_id') ? ' selected' : '' }}>{{$country->name}}</option>
                 @endforeach
             </select>
             @if ($errors->has('first_country_id'))
@@ -40,7 +40,7 @@
                     class="custom-select {{ $errors->has('second_country_id') ? ' is-invalid' : '' }}">
                 <option value="">Все</option>
                 @foreach($countries as $country)
-                    <option value="{{$country->id}}" {{$country->id == old('second_country_id') ? ' selected' : '' }}>{{$country->name}}</option>
+                    <option value="{{$country->id}}" {{$country->id == request('second_country_id') ? ' selected' : '' }}>{{$country->name}}</option>
                 @endforeach
             </select>
             @if ($errors->has('second_country_id'))
@@ -55,7 +55,7 @@
                     class="custom-select {{ $errors->has('first_race') ? ' is-invalid' : '' }}">
                 <option value="">Все</option>
                 @foreach($races as $race)
-                    <option value="{{$race}}" {{$race == old('first_race') ? ' selected' : '' }}>{{$race}}</option>
+                    <option value="{{$race}}" {{$race == request('first_race') ? ' selected' : '' }}>{{$race}}</option>
                 @endforeach
             </select>
             @if ($errors->has('first_race'))
@@ -70,7 +70,7 @@
                     class="custom-select {{ $errors->has('second_race') ? ' is-invalid' : '' }}">
                 <option value="">Все</option>
                 @foreach($races as $race)
-                    <option value="{{$race}}" {{$race == old('second_race') ? ' selected' : '' }}>{{$race}}</option>
+                    <option value="{{$race}}" {{$race == request('second_race') ? ' selected' : '' }}>{{$race}}</option>
                 @endforeach
             </select>
             @if ($errors->has('second_race'))
@@ -84,7 +84,7 @@
             <select name="map_id" id="map_id" class="custom-select {{ $errors->has('map_id') ? ' is-invalid' : '' }}">
                 <option value="">Все</option>
                 @foreach($maps as $map)
-                    <option value="{{$map->id}}" {{$map->id == old('map_id') ? ' selected' : '' }}>{!! $map->name !!}</option>
+                    <option value="{{$map->id}}" {{$map->id == request('map_id') ? ' selected' : '' }}>{!! $map->name !!}</option>
                 @endforeach
             </select>
             @if ($errors->has('map_id'))
@@ -99,7 +99,7 @@
                     class="custom-select {{ $errors->has('type_id') ? ' is-invalid' : '' }}">
                 <option value="">Все</option>
                 @foreach($types as $type)
-                    <option value="{{$type->id}}" {{$type->id == old('type_id') ? ' selected' : '' }}>{{$type->name}}</option>
+                    <option value="{{$type->id}}" {{$type->id == request('type_id') ? ' selected' : '' }}>{{$type->name}}</option>
                 @endforeach
             </select>
             @if ($errors->has('type_id'))
@@ -113,7 +113,7 @@
             <select name="sort_by" id="sort_by" class="custom-select {{ $errors->has('sort_by') ? ' is-invalid' : '' }}">
                 <option value="">Все</option>
                 @foreach($general_helper->getReplaySortBy() as $sort_by => $sort_title)
-                    <option value="{{$sort_by}}" {{$sort_by == old('sort_by') ? ' selected' : '' }}>{{$sort_title}}</option>
+                    <option value="{{$sort_by}}" {{$sort_by == request('sort_by') ? ' selected' : '' }}>{{$sort_title}}</option>
                 @endforeach
             </select>
             @if ($errors->has('sort_by'))
