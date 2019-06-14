@@ -19,9 +19,11 @@ class UserMessagingController extends BaseUserMessageController
      */
     public function getUser($id = false)
     {
-        //dd($id);
-        if ($id && ($id != Auth::id() )) return view('user.messages')->with(MessageService::getMessageData($id));
-        else return redirect()->route('user.messages_all');
+        if($id == Auth::id()){
+            return redirect()->route('user.messages');
+        
+        }
+        return view('user.messages')->with(MessageService::getMessageData($id));
     }
 
     /**
@@ -54,7 +56,7 @@ class UserMessagingController extends BaseUserMessageController
      */
     public function getCorrespList()
     {
-        return view('user.message_list')->with('messages_list', UserDialogService::getUserDialoguesList());
+        return view('user.message_list')->with('messages_list', UserDialogService::getUserDialogues());
     }
 
     /**
