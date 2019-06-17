@@ -79,12 +79,12 @@
             @php $count++; @endphp
         @endforeach
         <div class="justify-content-center display-flex gosu-btn">
-            <a href="{{route('replay.users')}}" class="btn-empty margin-top-20 " type="submit">
+            <a href="{{route('replay.gosus')}}" class="btn-empty margin-top-20 " type="submit">
                 Другие госу реплеи
             </a>
         </div>
         <div class="justify-content-center display-flex gosu-btn">
-            <a href="{{route('replay.gosus')}}" class="btn-empty margin-top-20 margin-bottom-20" type="submit">
+            <a href="{{route('replay.users')}}" class="btn-empty margin-top-20 margin-bottom-20" type="submit">
                 Пользовательские реплеи
             </a>
         </div>
