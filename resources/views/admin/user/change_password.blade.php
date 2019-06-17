@@ -43,7 +43,7 @@
                             <div class="col-md-6">
                              
                                 <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-chrome margin-r-5"></i></span>
+                                    <span class="input-group-addon"><i class="fa fa-lock margin-r-5"></i></span>
                                     <input type="password" name="old_password" class="form-control" placeholder="Прежний пароль" value="{{old('old_password')}}" autocomplete="off">
                                 </div>
                                 @if($wrong_password = Session::get("errors_password"))
@@ -53,7 +53,7 @@
                                 @endif
                                 <br>
                                 <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-chrome margin-r-5"></i></span>
+                                    <span class="input-group-addon"><i class="fa fa-lock margin-r-5"></i></span>
                                     <input type="password" name="password" class="form-control" placeholder="Новый пароль" value="" autocomplete="off">
                                 </div>
                                 @if ($errors->has('password'))
@@ -63,7 +63,7 @@
                                 @endif
                                 <br>
                                 <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-chrome margin-r-5"></i></span>
+                                    <span class="input-group-addon"><i class="fa fa-lock margin-r-5"></i></span>
                                     <input type="password" name="password_confirmation" class="form-control" placeholder="Подтвердите пароль" value="" autocomplete="off">
                                 </div>
                                 @if ($errors->has('password_confirmation'))
