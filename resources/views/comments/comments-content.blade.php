@@ -87,7 +87,7 @@
                             </div>
                             <div class="comment-rating">
                                 @php 
-                                $modal = ($comment->user->id == Auth::user()->id) ?'#no-rating':'#vote-modal';
+                                $modal = (!Auth::guest() && $comment->user->id == Auth::user()->id) ?'#no-rating':'#vote-modal';
                                 @endphp 
                                 <a href="{{$modal}}" class="positive-vote vote-replay-up" data-toggle="modal"
                                     data-rating="1" data-route="{{route('comment.set_rating',['id' => $comment->id])}}">

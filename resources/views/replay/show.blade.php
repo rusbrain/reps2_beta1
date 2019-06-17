@@ -155,7 +155,7 @@
                     @endif
                     <div class="replay-rating">    
                         @php 
-                        $modal = ($replay->user->id == Auth::user()->id) ?'#no-rating':'#vote-modal';
+                        $modal = (!Auth::guest() && $replay->user->id == Auth::user()->id) ?'#no-rating':'#vote-modal';
                         @endphp                   
                         <a href="{{ $modal }}" class="positive-vote vote-replay-up" data-toggle="modal"
                            data-rating="1" data-route="{{route('replay.set_rating',['id'=>$replay->id])}}">

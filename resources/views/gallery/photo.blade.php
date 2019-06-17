@@ -44,7 +44,7 @@
                     </div>
                     <div class="article-rating">
                         @php 
-                        $modal = ($photo->user->id == Auth::user()->id) ?'#no-rating':'#vote-modal';
+                        $modal = (!Auth::guest() &&  $photo->user->id == Auth::user()->id) ?'#no-rating':'#vote-modal';
                         @endphp 
                         <a href="{{$modal}}" class="positive-vote vote-replay-up" data-toggle="modal"
                            data-rating="1" data-route="{{route('gallery.set_rating',['id'=>$photo->id])}}">

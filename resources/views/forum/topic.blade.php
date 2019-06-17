@@ -138,7 +138,7 @@
                     @endif
                     <div class="article-rating">
                         @php 
-                        $modal = ($topic->user->id == Auth::user()->id) ?'#no-rating':'#vote-modal';
+                        $modal = (!Auth::guest() &&  $topic->user->id == Auth::user()->id) ?'#no-rating':'#vote-modal';
                         @endphp 
                         <a href="{{$modal}}" class="positive-vote vote-replay-up" data-toggle="modal"
                            data-rating="1" data-route="{{route('forum.topic.set_rating',['id'=>$topic->id])}}">
