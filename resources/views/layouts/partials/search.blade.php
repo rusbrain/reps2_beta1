@@ -2,11 +2,11 @@
     @csrf
     <div class="search_input">
         @php
-        $search_text = isset($search_text) ? $search_text : '';    
+            $search_text = isset($search_text) ? $search_text : '';    
         @endphp
         <input type="text" name="text" class="form-control {{ $errors->has('text') ? ' is-invalid' : '' }}"
              value="{{$errors->has('text') ? old('text') : $search_text }}" placeholder="Поиск" >
-        @if ($errors->has('text'))
+        @if ( $errors->has('text') )
             <span class="invalid-feedback text-red" role="alert">
                 <strong>{{ $errors->first('text') }}</strong>
             </span>
