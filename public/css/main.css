@@ -1912,6 +1912,10 @@ div.author-info {
   display: flex;
   padding: 18px 0 18px 0;
 }
+.user-account-info-wrapper .user-name {
+  color: black;
+  max-width: 100%;
+}
 .user-account-avatar {
   margin: 0 auto 20px auto;
   display: block;
@@ -2389,6 +2393,9 @@ a.user-section-title {
   margin: 0 15px;
 }
 .user-name {
+  overflow: hidden;
+  max-width: 100px;
+  text-overflow: ellipsis;
   margin-right: 15px;
   font-size: 14px;
   font-family: "Roboto-Medium", sans-serif;
@@ -2431,6 +2438,9 @@ a.user-section-title {
 }
 .user-message .user-name,
 .my-message .user-name {
+  overflow: hidden;
+  max-width: 150px;
+  text-overflow: ellipsis;
   margin-left: 15px;
   margin-right: 0;
   text-align: center;

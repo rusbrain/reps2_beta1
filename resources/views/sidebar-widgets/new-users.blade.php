@@ -19,7 +19,7 @@
                     @else
                         <img class="margin-left-5" src="{{route('home')}}/images/smiles/{{\App\Replay::$race_icons['All']}}" alt="">
                     @endif
-                    <span>{{$new_user->name}}</span>
+                    <span class="user-name">{{$new_user->name}}</span>
                 </a>
             </div>
         @endforeach

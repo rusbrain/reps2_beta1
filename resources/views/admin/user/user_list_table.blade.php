@@ -4,7 +4,7 @@
         <td>
             <img class="direct-chat-img" src="{{route('home').($user->avatar?$user->avatar->link:'/dist/img/avatar.png')}}" alt="Аватар пользователя"><!-- /.direct-chat-img -->
         </td>
-        <td>{{$user->name}}</td>
+        <td><span class="user-name">{{$user->name}}</span></td>
         <td>{{$user->email}}</td>
         <td>{{$user->country->name??"Нет"}}</td>
         <td>{{$user->role->title??"Пользователь"}}</td>
