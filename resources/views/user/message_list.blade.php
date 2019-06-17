@@ -26,14 +26,31 @@
             <div>Мои сообщения</div>
         </div>
         <div class="col-md-12">
-            <div class="row">
-            @foreach($messages_list as $dialog)
-            <div>{{$dialog->senders->first()->name}}</div>
-            <div>{{strip_tags($dialog->messages_last->message)}}</div>
-            <div>{{$dialog->messages_last->created_at}}</div>
-            <div>{{$dialog->messages_last->user_id}}</div>
-            @endforeach
+        @foreach($messages_list as $dialog)
+            <div href="{{route('user.messages',['id' => $dialog->senders->where('id','<>',Auth::id())->first()->id])}}" class="dialog-slot row @if($dialog->messages_last->is_read == 0 and ($dialog->messages_last->user_id != Auth::id())) dialog-new-message @endif">
+            <div class="dialog user-name">
+                {{$dialog->senders->where('id','<>',Auth::id())->first()->name}}
             </div>
+            <div class="dialog user-message-line">
+            <div class="dialog message">
+                @if($dialog->messages_last->user_id == Auth::id())
+                <span class="me">Я:</span>
+                @endif
+                <div class="message-body @if($dialog->messages_last->is_read == 0 and ($dialog->messages_last->user_id == Auth::id())) dialog-new-message @endif">{{strip_tags($dialog->messages_last->message)}}</div>
+            </div>
+            @if(($dialog->messages_last->created_at->format('Y-m-d') != now()->format('Y-m-d')) and ($dialog->messages_last->created_at->format('Y') == now()->format('Y')))
+                <div class="dialog date" >{{date_format($dialog->messages_last->created_at, 'd-M H:i')}}</div>
+            @elseif(($dialog->messages_last->created_at < now()) and ($dialog->messages_last->created_at->format('Y') != now()->format('Y')))
+                <div class="dialog date" >{{date_format($dialog->messages_last->created_at, 'Y-d-M H:i')}}</div>
+            @elseif($dialog->messages_last->created_at->format('Y-m-d') == now()->format('Y-m-d') )
+                <div class="dialog date" >Сегодня, {{date_format($dialog->messages_last->created_at, 'H:i')}}</div>
+            @endif
+            @if($dialog->messages->where('is_read', 0)->where('user_id','<>', Auth::id())->count())
+            <span class="count-msg">{{$dialog->messages->where('is_read',0)->where('user_id','<>', Auth::id())->count()}}</span>
+            @endif
+            </div>
+            </div>
+        @endforeach
         </div>
     </div>
 @endsection
@@ -69,46 +86,9 @@
          * https://www.sceditor.com/
          * */
         $(function () {
-            if ($('.user-message-form').length > 0) {
-                var textarea = document.getElementById('message');
-
-                sceditor.create(textarea, {
-                    format: 'xhtml',
-                    style: '{{route('home')}}' + '/js/sceditor/minified/themes/content/default.min.css',
-                    emoticonsRoot: '{{route('home')}}' + '/js/sceditor/',
-                    locale: 'ru',
-                    toolbar: 'bold,italic,underline|' +
-                    'left,center,right,justify|' +
-                    'font,size,color,removeformat|' +
-                    'source,quote,code|' +
-                    'image,link,unlink|' +
-                    'emoticon|' +
-                    'date,time',
-                    emoticons: {
-                        // Emoticons to be included in the dropdown
-                        dropdown: getAllSmiles(),
-                        // Emoticons to be included in the more section
-                        more: getMoreSmiles()
-                    }
-                });
-
-                $('body').find('.messages-box').scrollTop($(".scroll-to").offset().top);
-
-                $('body').on('click', '.load-more', function () {
-                    var url = $('.load-more').attr('date-href');
-
-                    $.get(
-                        url,
-                        {
-                            _token: '{{csrf_token()}}'
-                        },
-                        function (data) {
-                            $('.load-more-box').remove();
-                            $('.messages-box').prepend(data);
-                        }
-                    );
-                })
-            }
+            $('.dialog-slot').on('click', function(){
+                window.location.replace($(this).attr('href'));
+            })
         });
     </script>
 @endsection

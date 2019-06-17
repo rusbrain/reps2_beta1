@@ -2488,6 +2488,51 @@ a.user-section-title {
   margin: 10px auto;
   padding: 2px;
 }
+.user-message-line {
+  height: 40px;
+  width:95%;
+}
+
+.user-message-line > * {
+  display: inline-block;
+}
+.dialog.message {
+  width: 70%;
+}
+.dialog.message > * {
+  vertical-align: middle;
+  display: inline-block;
+}
+
+.dialog .message-body {
+  padding: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 90%;
+}
+.dialog.date {
+  width: 26%;
+  margin: 0!important;
+}
+.dialog {
+  margin: 5px 0 0 5px;
+}
+.dialog-slot {
+  cursor: pointer;
+  height: auto;
+  border-bottom: 1px solid #2F6696;
+}
+.me {
+  color: #68a012;
+}
+
+.dialog-new-message{
+  background-color:#bad5ecaa;
+}
+.count-msg {
+  font-size: 15px;
+  color: blue;
+}
 /*----------------------------------------*/
 /*---END USER MESSAGE PAGE -------- */
 /*---------------------------------------*/
