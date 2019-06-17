@@ -135,9 +135,9 @@
                 <div class="pull-left">
                     <a href="{{route('user_profile',['id'=>Auth::id()])}}" class="btn btn-default btn-flat">Profile</a>
                 </div>
-                {{-- <div class="pull-center">
-                    <a href="{{route('change_password',['id'=>Auth::id()])}}" class="btn btn-default btn-flat">Change password</a>
-                </div> --}}
+                <div class="pull-center">
+                    <a href="{{route('admin.user.change_password',['id'=>Auth::id()])}}" class="btn btn-default btn-flat">Change password</a>
+                </div>
                 <div class="pull-right">
                     <a href="{{route('logout')}}" class="btn btn-default btn-flat">Sign out</a>
                 </div>

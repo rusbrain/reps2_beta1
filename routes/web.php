@@ -249,6 +249,9 @@ Route::group(['middleware' => 'activity'], function () {
                 Route::get('/message/{dialog_id}/load', 'UserMessageController@load')->name('admin.user.message_load');
                 Route::post('/message/{dialog_id}/send', 'UserMessageController@send')->name('admin.user.message.send');
 
+                Route::get('{id}/change_password', 'UserController@changePassword')->name('admin.user.change_password');
+                Route::post('/update_password', 'UserController@updatePassword')->name('admin.user.update_password');
+
                 Route::group(['prefix' => 'role'], function () {
                     Route::get('/', 'UserRoleController@index')->name('admin.users.role');
                     Route::get('/{id}/edit', 'UserRoleController@edit')->name('admin.user.role.edit');
