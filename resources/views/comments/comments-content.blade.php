@@ -86,13 +86,16 @@
                                 <span>Цитировать</span>
                             </div>
                             <div class="comment-rating">
-                                <a href="#vote-modal" class="positive-vote vote-replay-up" data-toggle="modal"
-                                data-rating="1" data-route="{{route('comment.set_rating',['id' => $comment->id])}}">
+                                @php 
+                                $modal = ($comment->user->id == Auth::user()->id) ?'#no-rating':'#vote-modal';
+                                @endphp 
+                                <a href="{{$modal}}" class="positive-vote vote-replay-up" data-toggle="modal"
+                                    data-rating="1" data-route="{{route('comment.set_rating',['id' => $comment->id])}}">
                                     <img src="{{route('home')}}/images/icons/thumbs-up.png" alt="">
                                     <span id="positive-vote">{{$comment->positive_count}}</span>
                                 </a>
-                                <a href="#vote-modal" class="negative-vote vote-replay-down" data-toggle="modal"
-                                data-rating="-1" data-route="{{route('comment.set_rating',['id' => $comment->id])}}">
+                                <a href="{{$modal}}" class="negative-vote vote-replay-down" data-toggle="modal"
+                                    data-rating="-1" data-route="{{route('comment.set_rating',['id' => $comment->id])}}">
                                     <img src="{{route('home')}}/images/icons/thumbs-down.png" alt="">
                                     <span id="negative-vote">{{$comment->negative_count}}</span>
                                 </a>
