@@ -55,7 +55,7 @@
             var container = $('#ajax_section_comments');
             var comments_total = container.attr('data-comments-total');
             var comments_on_page = 20;
-            $.get('{{route('comments.pagination',['object' => $object, 'id' => $id])}}' +
+            $.get('{{route($comments_pagination_route,['object' => $object, 'id' => $id])}}' +
                 '?page=' + page, {}, function (data) {
                 container.html(data.comments);
                 $('.pagination-content').html(data.pagination);

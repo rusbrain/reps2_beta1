@@ -632,6 +632,13 @@ form label {
   height: 40px;
   font-size: 11.5px;
 }
+.comment-header.comment-header-additional {
+  background: #7373734d;
+}
+.comment-header.comment-header-additional a {
+  color: #fff
+}
+
 .comment-header > div {
   display: flex;
   justify-content: space-between;

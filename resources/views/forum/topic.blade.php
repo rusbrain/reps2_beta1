@@ -157,7 +157,7 @@
     </div><!-- close div /.content-box -->
 
     <!--Comments-->
-    @include('comments.comments', ['object' => 'topic', 'id' => $topic->id])
+    @include('comments.comments', ['object' => 'topic', 'id' => $topic->id, 'comments_pagination_route' => 'forum.topic.comment.pagination'])
     <!--END Comments-->
 
     <!--ADD Comment-->

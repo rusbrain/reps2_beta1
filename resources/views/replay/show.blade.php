@@ -190,7 +190,7 @@
     @endif
 
     <!--Comments-->
-    @include('comments.comments',['object' => 'replay', 'id' => $replay->id])
+    @include('comments.comments',['object' => 'replay', 'id' => $replay->id, 'comments_pagination_route' => 'replay.comment.pagination'])
     <!--END Comments-->
 
     <!--ADD Comment-->

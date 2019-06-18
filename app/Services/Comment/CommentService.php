@@ -9,6 +9,7 @@
 namespace App\Services\Comment;
 
 use App\Comment;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -35,12 +36,13 @@ class CommentService
      * @param $id
      * @param $relation
      */
-    public static function update(Request $request, $id, $relation)
+    public static function update(Request $request, Comment $comment)
     {
         $replay_data = $request->validated();
         $replay_data['title'] = $replay_data['title']??null;
+        $replay_data['last_editor_id'] = Auth::id();
 
-        Comment::where('id', $id)->where('relation', $relation)->update($replay_data);
+        $comment->update($replay_data);
     }
 
     /**
@@ -59,5 +61,14 @@ class CommentService
         }
 
         return false;
+    }
+
+    public static function checkCommentEdit($comment)
+    {
+        if (is_null($comment->created_at)) {
+            return false;
+        }
+        $time = Carbon::now()->diffInMinutes(Carbon::parse($comment->created_at));
+        return $time <= 60;
     }
 }

@@ -3,15 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\{
-    Comment, ForumSection, ForumTopic, Services\Base\UserViewService, Services\User\UserService
+    Comment, ForumSection, ForumTopic, Services\Base\UserViewService, Services\User\UserService, User
 };
 use App\Http\Requests\{ForumTopicRebaseRequest, ForumTopicStoreRequest,ForumTopicUploadRequest, ForumTopicUpdateRequest};
 use App\Services\Forum\TopicService;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use App\File;
-use Carbon\Carbon;
 
 class ForumTopicController extends Controller
 {
@@ -23,7 +19,6 @@ class ForumTopicController extends Controller
      */
     public function index($id)
     {
-
         $topic = ForumTopic::getTopicWithRelations($id);
         if(!$topic){
             return abort(404);
@@ -97,7 +92,7 @@ class ForumTopicController extends Controller
             return abort(404);
         }
 
-        if(!TopicService::checkForumEdit($topic) && !UserService::isAdmin() && !UserService::isModerator()){
+        if(!($topic->user_id == Auth::user()->id && TopicService::checkForumEdit($topic)) && !UserService::isAdmin() && !UserService::isModerator()){
             return redirect()->route('error',['id' => 'Данный топик закрыт для редактирования']);
         }
 
@@ -182,10 +177,10 @@ class ForumTopicController extends Controller
     public function img_upload(Request $request) {
         if($request->hasFile('file')) {
             $allowedExt = ['jpg', 'png', 'gif'];
-            $file = $request->file('file');          
+            $file = $request->file('file');
             $ext = $file->getClientOriginalExtension();
             $extCheck = in_array($ext, $allowedExt);
-           
+
             if($extCheck) {
                 $filename = uniqid().'.'.$ext;
                 $dir_name = "forum";
@@ -204,13 +199,13 @@ class ForumTopicController extends Controller
                         'data' => 'Upload Error'
                     );
                 }
-               
+
             } else {
                 return array (
                     'success' => false,
                     'data' => 'File Type error'
                 );
-            } 
+            }
         }
     }
 }

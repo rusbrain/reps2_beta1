@@ -71,6 +71,13 @@
                             <span class="comment-id" id=""></span>
                         </div>
                     </div>
+                    @if ($comment->lastEditor)
+                        <div class="col-md-12 comment-header comment-header-additional" sty>
+                            <span>
+                                <a href="{{route('user_profile',['id' => $comment->lastEditor->id])}}">{{$comment->lastEditor->name}}</a> отредактировал сообщение {{$comment->updated_at}}
+                            </span>
+                        </div>
+                    @endif
                     <div class="col-md-12 comment-content-wrapper">
                         {{-- <div class="commnet-edit">
                             {{$comment->edit_user_id}}
@@ -85,6 +92,21 @@
                                     data-id="">
                                 <span>Цитировать</span>
                             </div>
+                            @if (Auth::user() && $comment->user_id == Auth::user()->id && $general_helper->checkCommentEdit($comment))
+                                <div>
+                                    <a href="{{route($commentEditPageRoute, ['id' => $comment->id])}}" class="user-theme-edit">
+                                        <img src="{{route('home')}}/images/icons/svg/edit_icon.svg" alt="">
+                                        <span>Редактировать</span>
+                                    </a>
+                                </div>
+                            @elseif ($general_helper->isAdmin() || $general_helper->isModerator())
+                                <div>
+                                    <a href="{{route($commentEditPageRoute, ['id' => $comment->id])}}" class="user-theme-edit">
+                                        <img src="{{route('home')}}/images/icons/svg/edit_icon.svg" alt="">
+                                        <span>Редактировать</span>
+                                    </a>
+                                </div>
+                            @endif
                             <div class="comment-rating">
                                 @php 
                                 $modal = (!Auth::guest() && $comment->user->id == Auth::user()->id) ?'#no-rating':'#vote-modal';

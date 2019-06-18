@@ -27,7 +27,7 @@ class SectionService
             $section_comments_count[$comment->section_id] = $comment->comment_count;
         }
         foreach ($sections as $key=>$section) {
-            $sections[$key]['comment_count'] = $section_comments_count[$section->id];
+            $sections[$key]['comment_count'] = $section_comments_count[$section->id] ?? 0;
         }
 
         return $sections;
@@ -127,11 +127,11 @@ class SectionService
     /**
      * @return static
      */
-    public static function getRecentForums() {      
-        $time = Carbon::now()->format('Y-m-d');  
+    public static function getRecentForums() {
+        $time = Carbon::now()->format('Y-m-d');
         $sql = "( select * from `forum_topics` where `approved` = 1  ORDER BY `commented_at` DESC, `updated_at` DESC  limit 10 )";
-        $recent_forums = collect(\DB::select($sql)); 
-        
+        $recent_forums = collect(\DB::select($sql));
+
         return $recent_forums;
     }
 }

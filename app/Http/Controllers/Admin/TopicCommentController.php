@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\{Comment, ForumTopic};
+use App\{Comment, ForumTopic, Services\Comment\CommentService};
 use App\Http\Controllers\CommentController;
 use App\Http\Requests\CommentUpdateRequest;
 use Carbon\Carbon;
@@ -47,9 +47,9 @@ class TopicCommentController extends CommentController
     public function sendComment(CommentUpdateRequest $request, $topic_id)
     {
         $data = $request->validated();
-        ForumTopic::where('id', $topic_id)->update('commented_at', Carbon::now());
+        ForumTopic::where('id', $topic_id)->update(['commented_at' => Carbon::now()]);
 
-        $this->createComment($data, $topic_id);
+        CommentService::create($data, $this->relation, $topic_id);
 
         return back();
     }

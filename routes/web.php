@@ -130,12 +130,13 @@ Route::group(['middleware' => 'activity'], function () {
 
                 Route::group(['prefix' => 'comment'], function () {
                     Route::post('/store', 'TopicCommentController@store')->name('forum.topic.comment.store');
-                    // Route::
                     Route::get('{id}/delete', 'TopicCommentController@destroy')->name('forum.topic.comment.delete');
-                    Route::post('{id}/update', 'TopicCommentController@update')->name('forum.topic.comment.update');
+                    Route::get('{comment}/edit', 'TopicCommentController@edit')->name('forum.topic.comment.edit');
+                    Route::post('{comment}/update', 'TopicCommentController@update')->name('forum.topic.comment.update');
                 });
             });
             Route::get('/{id}', 'ForumTopicController@index')->name('forum.topic.index');
+            Route::get('/{id}/comments', 'TopicCommentController@pagination')->name('forum.topic.comment.pagination');
 
             Route::post('/img_upload', 'ForumTopicController@img_upload')->name('forum.topic.imgupload');
         });
@@ -187,9 +188,12 @@ Route::group(['middleware' => 'activity'], function () {
             Route::group(['prefix' => 'comment'], function () {
                 Route::post('/store', 'ReplayCommentController@store')->name('replay.comment.store');
                 Route::get('{id}/delete', 'ReplayCommentController@destroy')->name('replay.comment.delete');
-                Route::post('{id}/update', 'ReplayCommentController@update')->name('replay.comment.update');
+                Route::get('{comment}/edit', 'ReplayCommentController@edit')->name('replay.comment.edit');
+                Route::post('{comment}/update', 'ReplayCommentController@update')->name('replay.comment.update');
             });
         });
+
+        Route::get('/replay/{id}/comments', 'ReplayCommentController@pagination')->name('replay.comment.pagination');
         Route::get('/{id}', 'ReplayController@show')->name('replay.get');
     });
 
@@ -214,9 +218,12 @@ Route::group(['middleware' => 'activity'], function () {
             Route::group(['prefix' => 'comment'], function () {
                 Route::post('/store', 'UserGalleryCommentController@store')->name('gallery.comment.store');
                 Route::get('{id}/delete', 'UserGalleryCommentController@destroy')->name('gallery.comment.delete');
-                Route::post('{id}/update', 'UserGalleryCommentController@update')->name('gallery.comment.update');
+                Route::get('{comment}/edit', 'UserGalleryCommentController@edit')->name('gallery.comment.edit');
+                Route::post('{comment}/update', 'UserGalleryCommentController@update')->name('gallery.comment.update');
             });
         });
+
+        Route::get('/photo/{id}/comments', 'UserGalleryCommentController@pagination')->name('gallery.comment.pagination');
         Route::get('/photo/{id}', 'UserGalleryController@show')->name('gallery.view');
     });
 
