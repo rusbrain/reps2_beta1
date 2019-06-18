@@ -123,7 +123,7 @@
 
                 $('body').on('submit','.user-message-form', function (e) {
                     e.preventDefault();
-                    var message = $('.send-message-text').val();
+                    var message = $('.send-message-text').val().substring(0, 1000);
 
                     /**clean textarea field*/
                     sceditor.instance(textarea).val('');
