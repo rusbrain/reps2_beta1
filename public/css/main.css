@@ -2407,6 +2407,10 @@ a.user-section-title {
 }
 .my-message .message-content,
 .user-message .message-content {
+  width: 100%;
+  max-width: 200px;
+  word-break: break-word;
+  height: auto;
   background: #e5e6eb;
   padding: 10px 15px;
   position: relative;
@@ -2414,11 +2418,11 @@ a.user-section-title {
   color: #4d4d4d;
   line-height: 18px;
 }
-.user-message .message-content img {
+/* .user-message .message-content img {
   position: absolute;
   top: 10px;
   left: -7px;
-}
+} */
 .user-message .user-avatar-image,
 .my-message .user-avatar-image {
   width: 50px;
@@ -2440,11 +2444,11 @@ a.user-section-title {
   background: #4890af;
   color: #fff;
 }
-.my-message .message-content img {
+/* .my-message .message-content img {
   position: absolute;
   top: 10px;
   right: -7px;
-}
+} */
 .message-create {
   margin-top: 5px;
   font-size: 10px;
