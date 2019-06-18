@@ -121,13 +121,15 @@ class UserController extends Controller
 
     /**
      * Update password
-     * @param $request 
+     * @param PasswordRequestChange $request 
      * @return \Illuminat\Http\RedirectResponse
      * 
      */
 
     public function updatePassword(PasswordRequestChange $request) {
+
         $user = User::find($request->id);
+
         if (!Hash::check($request['old_password'], $user->password)){
             return back()->with('errors_password', 'Неверный пароль');
         }  
@@ -139,9 +141,5 @@ class UserController extends Controller
         } catch (\Exception $e) {
             return back()->with('server_error', 'Ошибка сервера');
         }
-       
-
-        
-
     }
 }
