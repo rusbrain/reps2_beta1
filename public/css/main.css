@@ -2411,7 +2411,7 @@ span.user-name {
   color: black;
 }
 .overflow-hidden {
-  max-width: 150px;
+  max-width: 100px;
   text-overflow: ellipsis;
   overflow: hidden;
 }
