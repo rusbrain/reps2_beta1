@@ -54,7 +54,6 @@ class LoginController extends Controller
         if (User::getOld($request->get('email'))) {
             return redirect()->route('password.request');
         }
-
         $this->login($request);
 
         if (Auth::user()->is_ban) {

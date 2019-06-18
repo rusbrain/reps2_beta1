@@ -20,4 +20,7 @@
         @endif
         <button type="submit" class="btn-login btn-blue">Ok</button>
     </div>
+    <div class="remember">
+        <input type="checkbox" name="remember" value="1" id="remember_me" class="margin-right-10 margin-top-10" /> <span>Remember me</span>
+    </div>
 </form>

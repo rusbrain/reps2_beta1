@@ -827,6 +827,10 @@ form label {
   font-family: "Roboto-Bold", sans-serif;
   text-shadow: 0 0 1px red;
 }
+.login-form div.remember span{
+  font-family: "Roboto-Bold", sans-serif;
+  color: #fff;
+}
 .btn-login {
   width: 29px;
   height: 30px;
