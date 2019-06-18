@@ -19,6 +19,8 @@ class CommentController extends Controller
      */
     public $relation;
 
+    public $relation_name;
+
     /**
      * View name
      *
@@ -34,11 +36,18 @@ class CommentController extends Controller
     public $route_name;
 
     /**
-     * Route name for action attribute in edit comment form
+     * Route name for view edit comment page
      *
      * @var string
      */
     public $edit_route_name;
+
+    /**
+     * Route name for action attribute in edit comment form
+     *
+     * @var string
+     */
+    public $update_route_name;
 
     /**
      * object name with 'id'
@@ -57,25 +66,18 @@ class CommentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Comment $comment)
     {
-        /** @var Comment $comment */
-        $comment = Comment::where('id', $id)->first();
-
-        if (!$comment) {
-            return abort(404);
-        }
-
         if(!($comment->user_id == Auth::user()->id && CommentService::checkCommentEdit($comment)) && !UserService::isAdmin() && !UserService::isModerator()){
             return redirect()->route('error',['id' => 'Вы не можете редактировать этот комментарий']);
         }
 
         return view('comments.comment-edit', [
             'comment' => $comment,
-            'route' => $this->edit_route_name,
+            'route' => $this->update_route_name,
             'relation' => $comment->relation,
             'comment_type' => $this->name_id,
             'object_id' => $comment->object_id
@@ -89,11 +91,12 @@ class CommentController extends Controller
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(CommentUpdateRequest $request, $id)
+    public function update(CommentUpdateRequest $request, Comment $comment)
     {
+        $id = $comment->id;
         if (Comment::find($id)){
-            $this->updateComment($request, $id);
-            return redirect()->route($this->view_name, ['id' => $id]);
+            $this->updateComment($request, $comment);
+            return redirect()->route($this->view_name, ['id' => $comment->object_id]);
         }
 
         return abort(404);
@@ -147,9 +150,9 @@ class CommentController extends Controller
      * @param Request $request
      * @param $id
      */
-    public function updateComment(Request $request, $id)
+    public function updateComment(Request $request, $comment)
     {
-        CommentService::update($request, $id, $this->relation);
+        CommentService::update($request, $comment, $this->relation);
     }
 
     /**
@@ -157,12 +160,9 @@ class CommentController extends Controller
      * @param $id
      * @return array
      */
-    public function pagination($object, $id)
-    {      
-       
-        $comments   = Comment::getComment($object, $id);
-        return ['comments' => UserViewService::getComments($comments), 'pagination' => UserViewService::getPagination($comments)];
-      
-        
+    public function pagination($id)
+    {
+        $comments   = Comment::getComment($this->relation_name, $id);
+        return ['comments' => UserViewService::getComments($comments, $this->edit_route_name), 'pagination' => UserViewService::getPagination($comments)];
     }
 }

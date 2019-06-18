@@ -14,6 +14,12 @@ class ReplayCommentController extends CommentController
      */
     public $relation = Comment::RELATION_REPLAY;
 
+    public $relation_name = 'replay';
+
+    public $edit_route_name = 'replay.comment.edit';
+
+    public $update_route_name = 'replay.comment.update';
+
     /**
      * View name
      *

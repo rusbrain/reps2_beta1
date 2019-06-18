@@ -65,4 +65,9 @@ trait CommentRelation
     {
         return $this->hasMany('App\UserReputation', 'object_id')->where('relation', UserReputation::RELATION_COMMENT)->where('rating','-1');
     }
+
+    public function lastEditor()
+    {
+        return $this->hasOne('App\User', 'id', 'last_editor_id');
+    }
 }

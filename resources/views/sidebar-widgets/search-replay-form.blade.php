@@ -10,7 +10,7 @@
     <form action="{{route('replay.search')}}" method="GET" class="search-replay-form col-md-12">
         @csrf
         <div class="form-group">
-            <label for="text">Имя / Чемпионат /Описание:</label>
+            <label for="text">Имя / Описание:</label>
             <input type="text" id="text" name="text" value="{{ request('text') }}"
                    class="form-control {{ $errors->has('championship') ? ' is-invalid' : '' }}">
             @if ($errors->has('championship'))

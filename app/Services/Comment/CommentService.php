@@ -36,12 +36,13 @@ class CommentService
      * @param $id
      * @param $relation
      */
-    public static function update(Request $request, $id, $relation)
+    public static function update(Request $request, Comment $comment)
     {
         $replay_data = $request->validated();
         $replay_data['title'] = $replay_data['title']??null;
+        $replay_data['last_editor_id'] = Auth::id();
 
-        Comment::where('id', $id)->where('relation', $relation)->update($replay_data);
+        $comment->update($replay_data);
     }
 
     /**

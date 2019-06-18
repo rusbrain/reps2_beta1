@@ -123,7 +123,7 @@
 
     <!--Comments-->
     @php $comments = $photo->comments @endphp
-    @include('comments.comments',['object' => 'gallery', 'id' => $photo->id])
+    @include('comments.comments',['object' => 'gallery', 'id' => $photo->id, 'comments_pagination_route' => 'gallery.comment.pagination'])
     <!--END Comments-->
 
     <!--ADD Comment-->

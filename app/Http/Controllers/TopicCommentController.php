@@ -15,6 +15,8 @@ class TopicCommentController extends CommentController
      */
     public  $relation = Comment::RELATION_FORUM_TOPIC;
 
+    public  $relation_name = 'topic';
+
     /**
      * View name
      *
@@ -30,11 +32,18 @@ class TopicCommentController extends CommentController
     public $route_name = 'forum.topic.index';
 
     /**
-     * Route name for action attribute in edit comment form
+     * Route name for view edit comment page
      *
      * @var string
      */
     public $edit_route_name = 'forum.topic.comment.edit';
+
+    /**
+     * Route name for action attribute in edit comment form
+     *
+     * @var string
+     */
+    public $update_route_name = 'forum.topic.comment.update';
 
     /**
      * object name with 'id'

@@ -34,7 +34,7 @@
                         <form>
                             <div class="row">
                                 <div class="form-group col-md-3">
-                                    <label>Поиск(id, название, чемпионат):</label>
+                                    <label>Поиск(id, название):</label>
                                     <input type="text" class="form-control" name="search" placeholder="Enter ..." value="{{$request_data['search']??''}}">
                                 </div>
                                 <div class="form-group col-md-3">

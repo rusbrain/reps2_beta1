@@ -61,7 +61,7 @@
                 <div class="info">
                     <a href="#comments">
                         <img src="{{route('home')}}/images/icons/message-square-white.png" alt="">
-                        {{($replay->comments_count > 0) ? $replay->comments_count : $comments->total() }}
+                        {{($replay->comments_count > 0) ? $replay->comments_count : 0 }}
                     </a>
                     <a href="#">
                         <img src="{{route('home')}}/images/icons/clock-white.png" alt="">
@@ -111,30 +111,12 @@
                             </span>
                         </div>
                     </div>
-                    <div>
-                        <div class="replay-desc-right">Длительность:</div>
-                        <div class="replay-desc-left">{{$replay->length??'не указано'}}</div>
-                    </div>
-                    <div>
-                        <div class="replay-desc-right">Чемпионат:</div>
-                        <div class="replay-desc-left">{{$replay->championship??'не указано'}}</div>
-                    </div>
-                    <div>
-                        <div class="replay-desc-right">Версия:</div>
-                        <div class="replay-desc-left">{{$replay->game_version->version??'не указано'}}</div>
-                    </div>
-                    <div>
-                        <div class="replay-desc-right">Рейтинг при создании:</div>
-                        <div class="replay-desc-left">{{$replay->creating_rate??'0'}}</div>
-                    </div>
+                   
                     <div>
                         <div class="replay-desc-right">Рейтинг:</div>
                         <div class="replay-desc-left">{{$replay->rating??'0'}}</div>
                     </div>
-                    <div>
-                        <div class="replay-desc-right">Юзер Рейтинг:</div>
-                        <div class="replay-desc-left">({{$replay->user_rating??'0'}})</div>
-                    </div>
+                  
                     <div class="replay-action-wrapper">
                         @if(Auth::id() == $replay->user->id || $general_helper->isAdmin() || $general_helper->isModerator())
                             <a href="{{route('replay.edit', ['id' => $replay->id])}}" class="user-theme-edit">
@@ -194,56 +176,8 @@
     </div>
     @endif
 
-    <div class="content-box">
-        <div class="col-md-12 section-title">
-            <div>Оценить реплай</div>
-        </div>
-        <div class="col-md-12">
-            @if(Auth::user())
-                @php $evaluation_vote = $general_helper->checkUserReplayEvaluation($replay) @endphp
-                @if(!$evaluation_vote)
-                    <form action="{{route('replay.set_evaluation',['id'=>$replay->id])}}" method="POST"
-                          class="replay-vote-form">
-                        @csrf
-                        <div class="row">
-                            <div>
-                                <input type="radio" name="rating" id="rate_1" value="1">
-                                <label for="rate_1">1</label>
-                            </div>
-                            <div>
-                                <input type="radio" name="rating" id="rate_2" value="2">
-                                <label for="rate_2">2</label>
-                            </div>
-                            <div>
-                                <input type="radio" name="rating" id="rate_3" value="3">
-                                <label for="rate_3">3</label>
-                            </div>
-                            <div>
-                                <input type="radio" name="rating" id="rate_4" value="4">
-                                <label for="rate_4">4</label>
-                            </div>
-                            <div>
-                                <input type="radio" name="rating" id="rate_5" value="5">
-                                <label for="rate_5">5</label>
-                            </div>
-                            <button type="submit" class="btn-empty margin-left-40">Оценить</button>
-                        </div>
-                    </form>
-                @else
-                    <div class="text-center padding-top-bottom-10">
-                        Ваша Оценка: <strong>{{$evaluation_vote}}</strong> по шкале от 1 до 5
-                    </div>
-                @endif
-            @else
-                <div class="text-center padding-top-bottom-10">
-                    Данная возможность доступна только авторизированным пользователям
-                </div>
-            @endif
-        </div>
-    </div>
-
     <!--Comments-->
-    @include('comments.comments',['object' => 'replay', 'id' => $replay->id])
+    @include('comments.comments',['object' => 'replay', 'id' => $replay->id, 'comments_pagination_route' => 'replay.comment.pagination'])
     <!--END Comments-->
 
     <!--ADD Comment-->

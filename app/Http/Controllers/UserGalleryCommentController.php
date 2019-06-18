@@ -14,6 +14,12 @@ class UserGalleryCommentController extends CommentController
      */
     public $relation = Comment::RELATION_USER_GALLERY;
 
+    public $edit_route_name = 'gallery.comment.edit';
+
+    public $update_route_name = 'gallery.comment.update';
+
+    public $relation_name = 'gallery';
+
     /**
      * View name
      *

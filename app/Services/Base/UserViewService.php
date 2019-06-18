@@ -37,11 +37,15 @@ class UserViewService extends ViewService
 
     /**
      * @param LengthAwarePaginator $data
+     * @param string $commentEditPageRoute
      * @return string
      */
-   public static function getComments(LengthAwarePaginator $data)
+   public static function getComments(LengthAwarePaginator $data, $commentEditPageRoute)
    {
-       return (string) view('comments.comments-content')->with(['comments' => $data]);
+       return (string) view('comments.comments-content')->with([
+           'comments' => $data,
+           'commentEditPageRoute' => $commentEditPageRoute
+       ]);
    }
 
     /**

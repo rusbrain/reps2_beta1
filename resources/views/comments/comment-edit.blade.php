@@ -1,6 +1,11 @@
 {{--@extends('layouts.site')--}}
 @extends('home.index')
 
+@section('css')
+    <!--SCEditor -  WYSIWYG BBCode editor -->
+    <link rel="stylesheet" href="{{route('home')}}/js/sceditor/minified/themes/default.min.css"/>
+@endsection
+
 @section('content')
     <div class="content-box">
         <div class="col-md-12 section-title">
@@ -9,7 +14,7 @@
         <div class="col-md-12 comment-form-wrapper">
         @if(Auth::user())
             <!--COMMENT FORM-->
-                <form action="{{$route}}" class="add-comment-form" method="POST">
+                <form action="{{route($route, ['id' => $comment->id])}}" class="add-comment-form" method="POST">
                     @csrf
                     <div class="form-group">
                         <label for="comment-title">Заголовок</label>

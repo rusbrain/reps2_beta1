@@ -26,7 +26,28 @@
                             @else
                                 <a href="{{route('user_profile',['id' => $comment->user->id])}}"
                                 class="logged-user-avatar no-header">A</a>
-                            @endif
+                            @endif                           
+                            
+                            <div class="">
+                                @php
+                                    $countries = $general_helper->getCountries();
+                                @endphp
+
+                                {{-- <span class="color-blue">#{{$comment->user->id}}</span> --}}
+                                @if($comment->user->country_id)
+                                   <span class="flag-icon flag-icon-{{mb_strtolower($countries[$comment->user->country_id]->code)}}"></span>
+                                @else
+                                   <span class="flag-icon"></span>
+                                @endif
+
+                                @if($comment->user->race)
+                                   <img class="margin-left-5" src="{{route('home')}}/images/smiles/{{\App\Replay::$race_icons[$comment->user->race]}}" alt="">
+                                @else
+                                   <img class="margin-left-5" src="{{route('home')}}/images/smiles/{{\App\Replay::$race_icons['All']}}" alt="">
+                                @endif
+                                {{-- <span>{{$comment->user->name}}</span> --}}
+                                
+                            </div>
                             <div class="user-nickname">
                                 <a href="{{route('user_profile',['id' => $comment->user->id])}}">{{$comment->user->name}}</a>
                                 <a href="" class="user-menu-link @if(!Auth::user()) display-none @endif"></a>
@@ -36,13 +57,8 @@
                                     <a href="{{route('user.set_ignore',['id'=>$comment->user->id])}}">Игнор-лист</a>
                                 </div>
                             </div>
-                            <div class="user-role">
-                                @if($comment->user->user_role_id != 0)
-                                    {{$comment->user->role->title . ' | '}}
-                                    {{$general_helper->getUserStatus($comment->user->points)}} {{$comment->user->points . ' pts | '}}
-                                @else
-                                    {{$general_helper->getUserStatus($comment->user->points)}} {{$comment->user->points . ' pts | '}}
-                                @endif
+                            <div>
+                                {{$comment->user->points . ' pts | '}}
                             </div>
                             <div>
                                 <a href="{{route('user.get_rating', ['id' => $comment->user->id])}}"
@@ -55,7 +71,17 @@
                             <span class="comment-id" id=""></span>
                         </div>
                     </div>
+                    @if ($comment->lastEditor)
+                        <div class="col-md-12 comment-header comment-header-additional" sty>
+                            <span>
+                                <a href="{{route('user_profile',['id' => $comment->lastEditor->id])}}">{{$comment->lastEditor->name}}</a> отредактировал сообщение {{$comment->updated_at}}
+                            </span>
+                        </div>
+                    @endif
                     <div class="col-md-12 comment-content-wrapper">
+                        {{-- <div class="commnet-edit">
+                            {{$comment->edit_user_id}}
+                        </div> --}}
                         <div class="comment-content">
                             {!! $general_helper->oldContentFilter($comment->content) !!}
                         </div>
@@ -68,14 +94,14 @@
                             </div>
                             @if (Auth::user() && $comment->user_id == Auth::user()->id && $general_helper->checkCommentEdit($comment))
                                 <div>
-                                    <a href="{{route('forum.topic.comment.edit', ['id' => $comment->id])}}" class="user-theme-edit">
+                                    <a href="{{route($commentEditPageRoute, ['id' => $comment->id])}}" class="user-theme-edit">
                                         <img src="{{route('home')}}/images/icons/svg/edit_icon.svg" alt="">
                                         <span>Редактировать</span>
                                     </a>
                                 </div>
                             @elseif ($general_helper->isAdmin() || $general_helper->isModerator())
                                 <div>
-                                    <a href="{{route('forum.topic.comment.edit', ['id' => $comment->id])}}" class="user-theme-edit">
+                                    <a href="{{route($commentEditPageRoute, ['id' => $comment->id])}}" class="user-theme-edit">
                                         <img src="{{route('home')}}/images/icons/svg/edit_icon.svg" alt="">
                                         <span>Редактировать</span>
                                     </a>
