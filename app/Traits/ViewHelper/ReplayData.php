@@ -36,9 +36,20 @@ trait ReplayData
     public function getLastGosuReplay()
     {
         if (!self::$instance->last_gosu_replay) {
-            self::$instance->last_gosu_replay = ReplayService::getLastGosuReplay(5);
+            self::$instance->last_gosu_replay = ReplayService::getLastGosuReplay(4);
         }
         return self::$instance->last_gosu_replay;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastRotwReplay()
+    {
+        if (!self::$instance->last_rotw_replay) {
+            self::$instance->last_rotw_replay = ReplayService::getLastRotwReplay(1);
+        }
+        return self::$instance->last_rotw_replay;
     }
 
     /**

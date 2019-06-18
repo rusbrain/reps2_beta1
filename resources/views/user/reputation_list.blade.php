@@ -7,12 +7,21 @@
             <div class="user-reputation-vote-info">
                 <div>
                     <a href="{{route('user_profile',['id' => $item->sender->id])}}">{{$item->sender->name}}</a>
-                    @if($item->sender->country_id)
-                        <span class="flag-icon flag-icon-{{mb_strtolower($countries[$item->sender->country_id]->code)}}"></span>
-                    @else
-                        <span></span>
-                    @endif
-                    <span>{{$general_helper->getUserStatus($item->sender->points)}} {{$item->sender->points . 'pts'}} </span>
+                    {{-- <div class="">                        --}}
+                        @if($item->sender->country_id)
+                            <span class="flag-icon flag-icon-{{mb_strtolower($countries[$item->sender->country_id]->code)}}"></span>
+                        @else
+                            <span class="flag-icon"></span>
+                        @endif
+    
+                        @if($item->sender->race)
+                            <img class="margin-left-5" src="{{route('home')}}/images/smiles/{{\App\Replay::$race_icons[$item->sender->race]}}" alt="">
+                        @else
+                            <img class="margin-left-5" src="{{route('home')}}/images/smiles/{{\App\Replay::$race_icons['All']}}" alt="">
+                        @endif                        
+                    {{-- </div> --}}
+
+                    <span> {{$item->sender->points . 'pts'}} </span>
                     <span>|</span>
                     <a href="{{route('user.get_rating', ['id' => $item->sender->id])}}">{{$item->sender->rating}}
                         кг</a>

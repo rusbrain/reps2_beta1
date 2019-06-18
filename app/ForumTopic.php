@@ -111,6 +111,23 @@ class ForumTopic extends Model
     }
 
     /**
+     * Get forum topics for news
+     *
+     * @return mixed
+     */
+    public static function last_news()
+    {
+        return ForumTopic::where('news', 1)
+            ->where(function ($q) {
+                $q->whereNull('start_on')
+                    ->orWhere('start_on', '<=', Carbon::now()->format('Y-m-d'));
+            })
+            ->whereHas('section', function ($q) {
+                $q->where('is_active', 1);
+            })->orderBy('created_at', 'desc');
+    }
+
+    /**
      * @param Builder $query
      * @return Builder
      */
@@ -224,20 +241,6 @@ class ForumTopic extends Model
     }
 
     /**
-     * @return mixed
-     */
-    public static function lastNews()
-    {
-        return ForumTopic::news()->where('approved', 1)->with([
-            'user' => function ($q) {
-                $q->withTrashed()->with('avatar');
-            }
-        ])
-            ->withCount('positive', 'negative', 'comments')
-            ->with('preview_image', 'icon')->limit(4)->get();
-    }
-
-    /**
      * @param $search
      * @return mixed
      */
@@ -334,7 +337,7 @@ class ForumTopic extends Model
      */
     public static function getLastForums ()
     {
-        return ForumTopic::forums()->where('approved', 1)->with([
+        return ForumTopic::new_forums()->where('approved', 1)->orWhere('news', 1)->with([
             'user' => function ($q) {
                 $q->withTrashed()->with('avatar');
             }
@@ -357,5 +360,22 @@ class ForumTopic extends Model
                 $q->where('is_active', 1)->where('is_general', 1);
             })->orderBy('created_at', 'desc');
     }
+
+
+    
+    /**
+     * @return mixed
+     */
+    public static function new_forums()
+    {
+        return ForumTopic::where(function ($q) {
+            $q->whereNull('start_on')
+                ->orWhere('start_on', '<=', Carbon::now()->format('Y-m-d'));
+        })
+        ->whereHas('section', function ($q) {
+            $q->where('is_active', 1);
+        })->orderBy('created_at', 'desc');
+    }
+
 
 }

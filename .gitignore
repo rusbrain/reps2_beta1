@@ -1,6 +1,9 @@
 /node_modules
 /public/hot
 /public/storage
+/public/editor
+/public/img
+/public/race
 /public/.htaccess
 
 /public/bower_components

@@ -53,9 +53,9 @@ class ForumController extends Controller
     {
         if ($request->has('text')) {
             return view('forum.search_results')->with([
-                'search_text' => $request->get('text'),
+                'search_text'    => $request->get('text'),
                 'search_section' => HomeController::SEARCH_FORUM,
-                'title' => 'Поиск Тем'
+                'title'          => 'Поиск Тем'
             ]);
         }
         return back();

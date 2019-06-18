@@ -54,7 +54,6 @@ class LoginController extends Controller
         if (User::getOld($request->get('email'))) {
             return redirect()->route('password.request');
         }
-
         $this->login($request);
 
         if (Auth::user()->is_ban) {
@@ -62,6 +61,14 @@ class LoginController extends Controller
             if($this->logout($request, true)){
                 return redirect()->route('error',
                     ['error' => 'Ваш аккаунт заблокирован, для выяснения причин обращайтесь к администрации сайта']);
+            }
+        }
+
+        if (!Auth::user()->email_verified_at) {
+            /**if is not verified*/
+            if($this->logout($request, true)){
+                return redirect()->route('error',
+                    ['error' => 'Ваш аккаунт не подтверждён, для подвтерждения перейдите по ссылке , которая пришла к вам на почту, или обращайтесь к администрации сайта']);
             }
         }
 

@@ -39,13 +39,23 @@
                 <a href="{{route('user_profile',['id' => $replay->user->id])}}">
                     {{$replay->user->name. ' | '}}
                 </a>
-                <div class="user-role">
-                    @if($replay->user->user_role_id != 0)
-                        {{$replay->user->role->title . ' | '}}
-                        {{$general_helper->getUserStatus($replay->user->points)}} {{$replay->user->points . ' pts | '}}
+                <div class="">                   
+                    @if($replay->user->country_id)
+                        <span class="flag-icon flag-icon-{{mb_strtolower($countries[$replay->user->country_id]->code)}}"></span>
                     @else
-                        {{$general_helper->getUserStatus($replay->user->points)}} {{$replay->user->points . ' pts | '}}
+                        <span class="flag-icon"></span>
                     @endif
+
+                    @if($replay->user->race)
+                        <img class="margin-left-5" src="{{route('home')}}/images/smiles/{{\App\Replay::$race_icons[$replay->user->race]}}" alt="">
+                    @else
+                        <img class="margin-left-5" src="{{route('home')}}/images/smiles/{{\App\Replay::$race_icons['All']}}" alt="">
+                    @endif
+                    
+                </div>
+                
+                <div>
+                    {{$replay->user->points . ' pts | '}}
                 </div>
                 <div>
                     <a href="{{route('user.get_rating', ['id' => $replay->user->id])}}"
@@ -143,13 +153,16 @@
                             Не указано
                         </div>
                     @endif
-                    <div class="replay-rating">
-                        <a href="#vote-modal" class="positive-vote vote-replay-up" data-toggle="modal"
+                    <div class="replay-rating">    
+                        @php 
+                        $modal = (!Auth::guest() && $replay->user->id == Auth::user()->id) ?'#no-rating':'#vote-modal';
+                        @endphp                   
+                        <a href="{{ $modal }}" class="positive-vote vote-replay-up" data-toggle="modal"
                            data-rating="1" data-route="{{route('replay.set_rating',['id'=>$replay->id])}}">
                             <img src="{{route('home')}}/images/icons/thumbs-up.png" alt="">
                             <span id="positive-vote">{{$replay->positive_count}}</span>
                         </a>
-                        <a href="#vote-modal" class="negative-vote vote-replay-down" data-toggle="modal"
+                        <a href="{{ $modal }}" class="negative-vote vote-replay-down" data-toggle="modal"
                            data-rating="-1" data-route="{{route('replay.set_rating',['id'=>$replay->id])}}">
                             <img src="{{route('home')}}/images/icons/thumbs-down.png" alt="">
                             <span id="negative-vote">{{$replay->negative_count}}</span>

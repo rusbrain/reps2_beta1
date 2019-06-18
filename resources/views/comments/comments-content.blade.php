@@ -27,7 +27,15 @@
                                 <a href="{{route('user_profile',['id' => $comment->user->id])}}"
                                 class="logged-user-avatar no-header">A</a>
                             @endif                           
-                            
+                            <div class="user-nickname">
+                                <a href="{{route('user_profile',['id' => $comment->user->id])}}">{{$comment->user->name}}</a>
+                                <a href="" class="user-menu-link @if(!Auth::user()) display-none @endif"></a>
+                                <div class="user-menu">
+                                    <a href="{{route('user.add_friend',['id'=>$comment->user->id])}}">Добавить в друзья</a>
+                                    <a href="{{route('user.messages',['id' => $comment->user->id])}}">Сообщение</a>
+                                    <a href="{{route('user.set_ignore',['id'=>$comment->user->id])}}">Игнор-лист</a>
+                                </div>
+                            </div>
                             <div class="">
                                 @php
                                     $countries = $general_helper->getCountries();
@@ -48,15 +56,7 @@
                                 {{-- <span>{{$comment->user->name}}</span> --}}
                                 
                             </div>
-                            <div class="user-nickname">
-                                <a href="{{route('user_profile',['id' => $comment->user->id])}}">{{$comment->user->name}}</a>
-                                <a href="" class="user-menu-link @if(!Auth::user()) display-none @endif"></a>
-                                <div class="user-menu">
-                                    <a href="{{route('user.add_friend',['id'=>$comment->user->id])}}">Добавить в друзья</a>
-                                    <a href="{{route('user.messages',['id' => $comment->user->id])}}">Сообщение</a>
-                                    <a href="{{route('user.set_ignore',['id'=>$comment->user->id])}}">Игнор-лист</a>
-                                </div>
-                            </div>
+                            
                             <div>
                                 {{$comment->user->points . ' pts | '}}
                             </div>
@@ -108,13 +108,16 @@
                                 </div>
                             @endif
                             <div class="comment-rating">
-                                <a href="#vote-modal" class="positive-vote vote-replay-up" data-toggle="modal"
-                                data-rating="1" data-route="{{route('comment.set_rating',['id' => $comment->id])}}">
+                                @php 
+                                $modal = (!Auth::guest() && $comment->user->id == Auth::user()->id) ?'#no-rating':'#vote-modal';
+                                @endphp 
+                                <a href="{{$modal}}" class="positive-vote vote-replay-up" data-toggle="modal"
+                                    data-rating="1" data-route="{{route('comment.set_rating',['id' => $comment->id])}}">
                                     <img src="{{route('home')}}/images/icons/thumbs-up.png" alt="">
                                     <span id="positive-vote">{{$comment->positive_count}}</span>
                                 </a>
-                                <a href="#vote-modal" class="negative-vote vote-replay-down" data-toggle="modal"
-                                data-rating="-1" data-route="{{route('comment.set_rating',['id' => $comment->id])}}">
+                                <a href="{{$modal}}" class="negative-vote vote-replay-down" data-toggle="modal"
+                                    data-rating="-1" data-route="{{route('comment.set_rating',['id' => $comment->id])}}">
                                     <img src="{{route('home')}}/images/icons/thumbs-down.png" alt="">
                                     <span id="negative-vote">{{$comment->negative_count}}</span>
                                 </a>

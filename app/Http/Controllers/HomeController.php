@@ -45,7 +45,7 @@ class HomeController extends Controller
      * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View|mixed
      */
     public function search(PortalSearchRequest $request)
-    {
+    {        
         switch ($request->get('section')) {
             case 'news':
                 return redirect()->route('news', $request->all());
@@ -55,6 +55,8 @@ class HomeController extends Controller
                 break;
             case 'replay':
                 return redirect()->route('replay.search', $request->all());
+                break;
+            default:
                 break;
         }
         return back();

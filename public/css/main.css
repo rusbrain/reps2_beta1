@@ -834,6 +834,10 @@ form label {
   font-family: "Roboto-Bold", sans-serif;
   text-shadow: 0 0 1px red;
 }
+.login-form div.remember span{
+  font-family: "Roboto-Bold", sans-serif;
+  color: #fff;
+}
 .btn-login {
   width: 29px;
   height: 30px;
@@ -849,7 +853,19 @@ form label {
 }
 .search-form div:first-of-type {
   margin-right: 3px;
+  display:inline
 }
+
+.search-form div.search_input{
+  display:inline;
+}
+.search-form div.search_input span{
+  position: absolute;
+  font-size: 12px;
+  font-weight: 800;
+  color: #e64f4f;
+}
+
 .btn-search {
   width: 33px;
   height: 30px;

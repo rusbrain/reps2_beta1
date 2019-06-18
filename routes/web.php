@@ -23,6 +23,7 @@ Route::group(['middleware' => 'activity'], function () {
     });
 
     Route::get('error/{error}', 'ErrorController@index')->name('error');
+    Route::get('notification/{notification}', 'NotificationController@index')->name('notification');
     Route::get('/comments/{object}/{id}', 'CommentController@pagination')->name('comments.pagination');
     Route::get('/search', 'HomeController@search')->name('home.search');
     Route::get('/email/verified/{token}', 'Auth\RegisterController@emailVerified')->name('email_verified');
@@ -75,8 +76,9 @@ Route::group(['middleware' => 'activity'], function () {
 
             Route::post('messages/{id}/update', 'UserMessagingController@updateMessage')->name('user.message.update');
             Route::post('messages/{id}/delete', 'UserMessagingController@removeMessage')->name('user.message.delete');
+            Route::get('messages', 'UserMessagingController@getUser')->name('user.messages_all');
             Route::get('{id}/messages', 'UserMessagingController@getUser')->name('user.messages');
-            Route::get('/messages', 'UserMessagingController@getUser')->name('user.messages_all');
+
             Route::get('/message/{dialog_id}/load', 'UserMessagingController@load')->name('user.message_load');
             Route::post('/message/{dialog_id}/send', 'UserMessagingController@send')->name('user.message.send');
         });
@@ -253,6 +255,9 @@ Route::group(['middleware' => 'activity'], function () {
                 Route::get('message', 'UserMessageController@getUser')->name('admin.user.messages_all');
                 Route::get('/message/{dialog_id}/load', 'UserMessageController@load')->name('admin.user.message_load');
                 Route::post('/message/{dialog_id}/send', 'UserMessageController@send')->name('admin.user.message.send');
+
+                Route::get('{id}/change_password', 'UserController@changePassword')->name('admin.user.change_password');
+                Route::post('/update_password', 'UserController@updatePassword')->name('admin.user.update_password');
 
                 Route::group(['prefix' => 'role'], function () {
                     Route::get('/', 'UserRoleController@index')->name('admin.users.role');

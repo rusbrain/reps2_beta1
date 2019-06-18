@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\User\UpdateProfileRequest;
+use App\Http\Requests\User\PasswordRequestChange;
 use App\Services\Base\{BaseDataService, AdminViewService};
 use App\Services\User\UserService;
 use App\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -106,5 +108,38 @@ class UserController extends Controller
     {
         UserService::removeUser(User::find($user_id));
         return back();
+    }
+
+    /**
+     * Change password on admin 
+     * @param $user_id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function changePassword($user_id) {       
+        return view('admin.user.change_password')->with('user', User::getUserProfile($user_id));
+    }
+
+    /**
+     * Update password
+     * @param PasswordRequestChange $request 
+     * @return \Illuminat\Http\RedirectResponse
+     * 
+     */
+
+    public function updatePassword(PasswordRequestChange $request) {
+
+        $user = User::find($request->id);
+
+        if (!Hash::check($request['old_password'], $user->password)){
+            return back()->with('errors_password', 'Неверный пароль');
+        }  
+
+        try{
+            $user->password=Hash::make($request['password']);
+            $user->save();
+            return back()->with('updated_password', 'Пароль успешно изменен');
+        } catch (\Exception $e) {
+            return back()->with('server_error', 'Ошибка сервера');
+        }
     }
 }

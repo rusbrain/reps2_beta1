@@ -1,11 +1,6 @@
 @extends('layouts.site')
 @inject('general_helper', 'App\Services\GeneralViewHelper')
-{{-- @php dd($contacts);@endphp --}}
-@section('sidebar-left')
-    <!-- User messages widget -->   
-    @include('sidebar-widgets.user-messages',['all_new_messages'=>collect($contacts->items())->sum('new_messages'),'contacts' => $contacts])
-    <!-- END User Messages widget -->
-@endsection
+@inject('MessageService','App\Services\User\MessageService')
 
 @section('content')
     <!-- Breadcrumbs -->
@@ -25,55 +20,21 @@
         </div>
     </div>
     <!-- END Breadcrumbs -->
-  
+
     <div class="content-box">
         <div class="col-md-12 section-title">
             <div>Мои сообщения</div>
         </div>
-        @if(isset($user) && $user)
         <div class="col-md-12">
             <div class="row">
-                <div class="user-messages-info">
-                    @if($user->avatar)
-                        <a href="{{route('user_profile',['id' => $user->id])}}" class="margin-right-5">
-                            <img src="{{$user->avatar->link}}" alt="" class="margin-right-5">
-                        </a>
-                    @else
-                        <a href="{{route('user_profile',['id' => $user->id])}}"
-                           class="logged-user-avatar no-header margin-right-5">A</a>
-                    @endif
-                    <a href="{{route('user_profile',['id' =>$user->id])}}" class="user-name">{{$user->name}}</a>
-
-                    @if($general_helper->isOnline($user))
-                        <!-- if online displays this -->
-                        <span class="user-online-status">online</span>
-                    @else
-                        <!-- if INACTIVE displays this -->
-                        <div class="user-last-online">{{$user->activity_at??'offline'}}</div>
-                    @endif
-                </div>
-            </div>
-            <!-- CHAT MESSAGES -->
-            <div class="messages-wrapper messages-box">
-                @include('user.messages-partials.message_parse')
-            </div>
-            <!--END CHAT MESSAGES -->
-        </div>
-
-        <!-- ADD MESSAGE FORM -->
-        <div class="col-md-12">
-            @include('user.messages-partials.add-message-form')
-        </div>
-        <!-- END ADD MESSAGE FORM -->
-        @else
-        <div class="col-md-12">
-            <div class="row">
-                <div class="user-messages-info">
-                    Hет сообщений
-                </div>
+            @foreach($messages_list as $dialog)
+            <div>{{$dialog->senders->first()->name}}</div>
+            <div>{{strip_tags($dialog->messages_last->message)}}</div>
+            <div>{{$dialog->messages_last->created_at}}</div>
+            <div>{{$dialog->messages_last->user_id}}</div>
+            @endforeach
             </div>
         </div>
-        @endif
     </div>
 @endsection
 
@@ -129,26 +90,6 @@
                         // Emoticons to be included in the more section
                         more: getMoreSmiles()
                     }
-                });
-
-                $('body').on('submit','.user-message-form', function (e) {
-                    e.preventDefault();
-                    var message = $('.send-message-text').val();
-
-                    /**clean textarea field*/
-                    sceditor.instance(textarea).val('');
-
-                    $.post(
-                        '{{route('user.message.send', ['id'=>$dialog_id])}}',
-                        {
-                            message: message,
-                            _token: '{{csrf_token()}}'
-                        },
-                        function (data) {
-                            $('.messages-box').html(data);
-                            $('.messages-box').scrollTop($(".scroll-to").offset().top);
-                        }
-                    );
                 });
 
                 $('body').find('.messages-box').scrollTop($(".scroll-to").offset().top);

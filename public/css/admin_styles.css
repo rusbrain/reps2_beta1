@@ -78,3 +78,11 @@ div.sceditor-dropdown{
   z-index: 4000!important;
 }
 /******************************************/
+
+.navbar-nav>.user-menu>.dropdown-menu>.user-footer div .btn{
+  padding: 6px 9px !important;
+}
+.navbar-nav>.user-menu>.dropdown-menu>.user-footer .pull-center{
+  float: left;
+  margin-left: 4px;
+}

@@ -89,12 +89,27 @@
                             <a href="{{route('user.set_ignore',['id'=>$topic->user->id])}}">Игнор-лист</a>
                         </div>
                     </div>
-                    <div class="user-role">
-                        @if($topic->user->user_role_id != 0)
-                            {{$topic->user->role->title}}
+                    <div class="">
+                        @php
+                            $countries = $general_helper->getCountries();
+                        @endphp
+
+                        @if($topic->user->country_id)
+                            <span class="flag-icon flag-icon-{{mb_strtolower($countries[$topic->user->country_id]->code)}}"></span>
                         @else
-                            user
+                            <span class="flag-icon"></span>
                         @endif
+
+                        @if($topic->user->race)
+                            <img class="margin-left-5" src="{{route('home')}}/images/smiles/{{\App\Replay::$race_icons[$topic->user->race]}}" alt="">
+                        @else
+                            <img class="margin-left-5" src="{{route('home')}}/images/smiles/{{\App\Replay::$race_icons['All']}}" alt="">
+                        @endif
+                        
+                    </div>
+                    
+                    <div>
+                        {{$topic->user->points . ' pts | '}}
                     </div>
                     <div>
                         <a href="{{route('user.get_rating', ['id' => $topic->user->id])}}"
@@ -122,12 +137,15 @@
                         </div>
                     @endif
                     <div class="article-rating">
-                        <a href="#vote-modal" class="positive-vote vote-replay-up" data-toggle="modal"
+                        @php 
+                        $modal = (!Auth::guest() &&  $topic->user->id == Auth::user()->id) ?'#no-rating':'#vote-modal';
+                        @endphp 
+                        <a href="{{$modal}}" class="positive-vote vote-replay-up" data-toggle="modal"
                            data-rating="1" data-route="{{route('forum.topic.set_rating',['id'=>$topic->id])}}">
                             <img src="{{route('home')}}/images/icons/thumbs-up.png" alt="">
                             <span id="positive-vote">{{$topic->positive_count}}</span>
                         </a>
-                        <a href="#vote-modal" class="negative-vote vote-replay-down" data-toggle="modal"
+                        <a href="{{$modal}}" class="negative-vote vote-replay-down" data-toggle="modal"
                            data-rating="-1" data-route="{{route('forum.topic.set_rating',['id'=>$topic->id])}}">
                             <img src="{{route('home')}}/images/icons/thumbs-down.png" alt="">
                             <span id="negative-vote">{{$topic->negative_count}}</span>

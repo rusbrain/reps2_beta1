@@ -21,6 +21,7 @@ class NewsController extends Controller
                 unset($request_data[$key]);
             }
         }
+        
         $str = '';
         foreach ($request_data as $key => $datum) {
             $str .= '&'.$key.'='.$datum;

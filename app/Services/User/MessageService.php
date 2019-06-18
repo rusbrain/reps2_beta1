@@ -21,8 +21,10 @@ class MessageService
      */
     public static function getMessageData($id)
     {
-        $contacts = UserDialogService::getUserDialogues();
-        return self::formMessageData($id, $contacts);
+        $contacts = UserDialogService::getUserDialogues();        
+        $data =    self::formMessageData($id, $contacts);       
+        return $data;
+       
     }
 
     /**
@@ -31,24 +33,37 @@ class MessageService
      * @return array
      */
     protected static function formMessageData($id, $contacts)
-    {
-        $dialog_id = UserDialogService::getDialogUser($id)->id;
+    {       
 
-        if(!$id){
-            foreach ($contacts->first()->senders as $sender){
-                if ($sender->id != Auth::id()){
-                    $id = $sender->id;
-                }
+        if (count($contacts)) {
+            if(!$id){
+                
+                foreach ($contacts->first()->senders as $sender){
+                        if ($sender->id != Auth::id()){
+                            $id = $sender->id;
+                        }
+                    } 
+            
             }
-        }
 
-        return [
-            'dialog_id' => $dialog_id,
-            'messages' => Dialogue::getUserDialogueContent($dialog_id),
-            'contacts' => $contacts,
-            'user' => User::find($id),
-            'page' => Input::has('page') ? Input::get('page') + 1 : 2
-        ];
+            $dialog_id = UserDialogService::getDialogUser($id)->id;
+
+            return [
+                'dialog_id' => $dialog_id,
+                'messages' => Dialogue::getUserDialogueContent($dialog_id),
+                'contacts' => $contacts,
+                'user' => User::find($id),
+                'page' => Input::has('page') ? Input::get('page') + 1 : 2
+            ];
+        } else {
+            return  [
+                'dialog_id' => false,
+                'messages' => '',
+                'contacts' => $contacts,
+                'user' => false,
+                'page' => false
+            ];
+        }
     }
 
     /**

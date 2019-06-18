@@ -1,7 +1,16 @@
 <form method="GET" action="{{route('home.search')}}" class="search-form" id="search-form">
     @csrf
-    <div>
-        <input type="text" name="text" class="form-control" value="{{ $search_text ??  '' }}" placeholder="Поиск" >
+    <div class="search_input">
+        @php
+            $search_text = isset($search_text) ? $search_text : '';    
+        @endphp
+        <input type="text" name="text" class="form-control {{ $errors->has('text') ? ' is-invalid' : '' }}"
+             value="{{$errors->has('text') ? old('text') : $search_text }}" placeholder="Поиск" >
+        @if ( $errors->has('text') )
+            <span class="invalid-feedback text-red" role="alert">
+                <strong>{{ $errors->first('text') }}</strong>
+            </span>
+        @endif
     </div>
     <div class="position-relative">
         <select name="section" class="custom-select">

@@ -33,8 +33,8 @@
                 <div class="gallery-image-info-panel">
                     <div>
                         <div class="font-14">{{$photo->comment}}</div>
-                    @if(Auth::id() != $photo->user->id)
-                        <!--display if user is not author-->
+                        @if(Auth::id() != $photo->user->id)
+                            <!--display if user is not author-->
                             <div>
                                 <span>автор:</span>
                                 <a href="{{route('user_profile',['id' =>$photo->user->id])}}">{{$photo->user->name}}</a>
@@ -43,12 +43,15 @@
                         @endif
                     </div>
                     <div class="article-rating">
-                        <a href="#vote-modal" class="positive-vote vote-replay-up" data-toggle="modal"
+                        @php 
+                        $modal = (!Auth::guest() &&  $photo->user->id == Auth::user()->id) ?'#no-rating':'#vote-modal';
+                        @endphp 
+                        <a href="{{$modal}}" class="positive-vote vote-replay-up" data-toggle="modal"
                            data-rating="1" data-route="{{route('gallery.set_rating',['id'=>$photo->id])}}">
                             <img src="{{route('home')}}/images/icons/thumbs-up.png" alt="">
                             <span id="positive-vote">{{$photo->positive_count}}</span>
                         </a>
-                        <a href="#vote-modal" class="negative-vote vote-replay-down" data-toggle="modal"
+                        <a href="{{$modal}}" class="negative-vote vote-replay-down" data-toggle="modal"
                            data-rating="-1" data-route="{{route('gallery.set_rating',['id'=>$photo->id])}}">
                             <img src="{{route('home')}}/images/icons/thumbs-down.png" alt="">
                             <span id="negative-vote">{{$photo->negative_count}}</span>

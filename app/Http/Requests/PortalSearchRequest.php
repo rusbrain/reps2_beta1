@@ -28,4 +28,18 @@ class PortalSearchRequest extends FormRequest
             'section' => 'required|in:news,forum,replay'
         ];
     }
+
+    /**
+     * Get custom messages for validator errors.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'text.required' => 'Tекста обязаельно для заполнения',
+            'text.min'      => 'Tекста быть не меньше 3 символов',
+            'text.max'      => 'Длина текста поиска не должна быть'      
+        ];
+    }
 }
