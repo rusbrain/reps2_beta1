@@ -227,6 +227,7 @@ class ReplayService
     {
         $replay_data = $request->validated();
 
+
         if ($request->has('user_replay') && $request->get('user_replay') != $replay->user_replay) {
             if (!UserService::isAdmin() && !UserService::isModerator()) {
                 $replay_data['user_replay'] = 1;
@@ -237,6 +238,7 @@ class ReplayService
 
             $title = 'Replay ' . $request->has('title') ? $request->get('title') : '';
             $file = File::storeFile($replay_data['replay'], 'replays', $title);
+            
             $replay_data['file_id'] = $file->id;
             unset($replay_data['replay']);
         }
@@ -255,7 +257,7 @@ class ReplayService
         if ($request->has('length') && $request->get('length') == '') {
             $replay_data['length'] = '00:00:00';
         }
-
+        
         Replay::where('id', $replay->id)->update($replay_data);
     }
 
