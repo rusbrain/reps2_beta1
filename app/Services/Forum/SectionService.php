@@ -8,7 +8,7 @@
 
 namespace App\Services\Forum;
 
-use App\{Comment, ForumSection};
+use App\{Comment, ForumSection, ForumTopic};
 use App\Http\Requests\ForumSectionUpdateAdminRequest;
 use Carbon\Carbon;
 
@@ -122,5 +122,16 @@ class SectionService
     {
         $all_sections = self::getAllForumSections();
         return $all_sections->whereIn('is_general', [1,0]);
+    }
+
+    /**
+     * @return static
+     */
+    public static function getRecentForums() {      
+        $time = Carbon::now()->format('Y-m-d');  
+        $sql = "( select * from `forum_topics` where `approved` = 1  ORDER BY `commented_at` DESC, `updated_at` DESC  limit 10 )";
+        $recent_forums = collect(\DB::select($sql)); 
+        
+        return $recent_forums;
     }
 }

@@ -71,15 +71,7 @@
                                         <div class="col-md-7">
                                             {{$replay->type->title}} ({{$replay->type->name}})
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-5">
-                                            Версия игры:
-                                        </div>
-                                        <div class="col-md-7">
-                                            {{$replay->game_version->version}}
-                                        </div>
-                                    </div>
+                                    </div>                                  
                                     <div class="row">
                                         <div class="col-md-5">
                                             Локация:
@@ -88,22 +80,7 @@
                                             {{$replay->first_location??"-"}} vs {{$replay->second_location??"-"}}
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-5">
-                                            Чемпионат:
-                                        </div>
-                                        <div class="col-md-7">
-                                            {{$replay->championship??"-"}}
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-5">
-                                            Оценка:
-                                        </div>
-                                        <div class="col-md-7">
-                                            {{$replay->creating_rate}}
-                                        </div>
-                                    </div>
+                                   
                                     <div class="row">
                                         <div class="col-md-5">
                                             Оценка пользователей:

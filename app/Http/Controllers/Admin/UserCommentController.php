@@ -11,7 +11,7 @@ class UserCommentController extends UsersCommentController
      * @param $id
      * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View|mixed
      */
-    public function index($id){
+    public function index($id = 0){
         $user = User::find($id);
         return view('admin.user.comments.list')->with(['user' => $user, 'comments_count' => $user->comments()->count()]);
     }
@@ -20,7 +20,7 @@ class UserCommentController extends UsersCommentController
      * @param $id
      * @return array
      */
-    public function pagination($id)
+    public function pagination($id = 0)
     {
         $comments = $this->paginationData($id);
         return BaseDataService::getPaginationData(AdminViewService::getUserComment($comments), AdminViewService::getPagination($comments));

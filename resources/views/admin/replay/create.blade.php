@@ -207,52 +207,7 @@
                                             @endif
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="box-header">
-                                        <h3 class="box-title">Версия игры:</h3>
-                                        <!-- /. tools -->
-                                    </div>
-                                    <select class="form-control" name="game_version_id">
-                                        @foreach($admin_helper->getGameVersions() as $game_version)
-                                            <option value="{{$game_version->id}}" {{$game_version->id == old('game_version_id')?'selected':''}}>{{$game_version->version}}</option>
-                                        @endforeach
-                                    </select>
-                                    @if ($errors->has('game_version_id'))
-                                        <span class="invalid-feedback text-red" role="alert">
-                                        <strong>{{ $errors->first('game_version_id') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="box-header">
-                                        <h3 class="box-title">Чемпионат:</h3>
-                                        <!-- /. tools -->
-                                    </div>
-                                    <input type="text" name="championship" class="form-control"
-                                           placeholder="Чемпионат..." value="{{old('championship')}}">
-                                    @if ($errors->has('championship'))
-                                        <span class="invalid-feedback text-red" role="alert">
-                                        <strong>{{ $errors->first('championship') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="box-header">
-                                        <h3 class="box-title">Оценка:</h3>
-                                        <!-- /. tools -->
-                                    </div>
-                                    <select class="form-control" name="creating_rate">
-                                        @foreach(\App\Replay::$creating_rates as $creating_rate)
-                                            <option value="{{$creating_rate}}" {{$creating_rate == old('creating_rate')?'selected':''}}>{{$creating_rate}}</option>
-                                        @endforeach
-                                    </select>
-                                    @if ($errors->has('creating_rate'))
-                                        <span class="invalid-feedback text-red" role="alert">
-                                        <strong>{{ $errors->first('creating_rate') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
+                                </div>                               
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <br>

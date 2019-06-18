@@ -23,6 +23,7 @@ Route::group(['middleware' => 'activity'], function () {
     });
 
     Route::get('error/{error}', 'ErrorController@index')->name('error');
+    Route::get('notification/{notification}', 'NotificationController@index')->name('notification');
     Route::get('/comments/{object}/{id}', 'CommentController@pagination')->name('comments.pagination');
     Route::get('/search', 'HomeController@search')->name('home.search');
     Route::get('/email/verified/{token}', 'Auth\RegisterController@emailVerified')->name('email_verified');
@@ -77,6 +78,7 @@ Route::group(['middleware' => 'activity'], function () {
             Route::post('messages/{id}/delete', 'UserMessagingController@removeMessage')->name('user.message.delete');
             Route::get('messages', 'UserMessagingController@getCorrespList')->name('user.messages_all');
             Route::get('{id}/messages', 'UserMessagingController@getUser')->name('user.messages');
+
             Route::get('/message/{dialog_id}/load', 'UserMessagingController@load')->name('user.message_load');
             Route::post('/message/{dialog_id}/send', 'UserMessagingController@send')->name('user.message.send');
         });
@@ -128,11 +130,14 @@ Route::group(['middleware' => 'activity'], function () {
 
                 Route::group(['prefix' => 'comment'], function () {
                     Route::post('/store', 'TopicCommentController@store')->name('forum.topic.comment.store');
+                    // Route::
                     Route::get('{id}/delete', 'TopicCommentController@destroy')->name('forum.topic.comment.delete');
                     Route::post('{id}/update', 'TopicCommentController@update')->name('forum.topic.comment.update');
                 });
             });
             Route::get('/{id}', 'ForumTopicController@index')->name('forum.topic.index');
+
+            Route::post('/img_upload', 'ForumTopicController@img_upload')->name('forum.topic.imgupload');
         });
     });
 
@@ -214,6 +219,8 @@ Route::group(['middleware' => 'activity'], function () {
         });
         Route::get('/photo/{id}', 'UserGalleryController@show')->name('gallery.view');
     });
+
+    // Admin Routes
 
     Route::group(['middleware' => ['auth', 'admin_panel'], 'prefix' => 'admin_panel', 'namespace' => 'Admin'],
         function () {
@@ -324,8 +331,8 @@ Route::group(['middleware' => 'activity'], function () {
                     Route::get('/{id}/edit', 'ForumTopicController@getTopicEdit')->name('admin.forum.topic.edit');
                     Route::post('/{id}/edit', 'ForumTopicController@saveTopic')->name('admin.forum.topic.edit.save');
                     Route::get('/{id}', 'ForumTopicController@getTopic')->name('admin.forum.topic.get');
-                    Route::post('/{id}/send_comment',
-                        'TopicCommentController@sendComment')->name('admin.forum.topic.comment_send');
+                    Route::post('/{id}/send_comment', 'TopicCommentController@sendComment')->name('admin.forum.topic.comment_send');
+                  
                 });
             });
             Route::group(['prefix' => 'replay'], function () {

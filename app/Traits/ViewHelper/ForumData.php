@@ -52,6 +52,17 @@ trait ForumData
     }
 
     /**
+     * @return mixed
+     */
+    public function getRecentForums()
+    {
+        if (!self::$instance->recent_forums) {
+            self::$instance->recent_forums = SectionService::getRecentForums();
+        }
+        return self::$instance->recent_forums;
+    }
+
+    /**
      * Get icon url from Id
      *
      * @return mixed
