@@ -342,8 +342,8 @@ class ForumTopic extends Model
                 $q->withTrashed()->with('avatar');
             }
         ])
-            ->withCount('positive', 'negative', 'comments')
-            ->with('preview_image', 'icon')->limit(10)->get();
+        ->withCount('positive', 'negative', 'comments')
+        ->with('preview_image', 'icon')->limit(10)->get();
     }
 
     /**
@@ -360,8 +360,6 @@ class ForumTopic extends Model
                 $q->where('is_active', 1)->where('is_general', 1);
             })->orderBy('created_at', 'desc');
     }
-
-
     
     /**
      * @return mixed
@@ -372,10 +370,9 @@ class ForumTopic extends Model
             $q->whereNull('start_on')
                 ->orWhere('start_on', '<=', Carbon::now()->format('Y-m-d'));
         })
+      
         ->whereHas('section', function ($q) {
             $q->where('is_active', 1);
         })->orderBy('created_at', 'desc');
     }
-
-
 }
