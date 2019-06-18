@@ -100,7 +100,7 @@ class GeneralViewHelper
     public function getRandomImg()
     {
         $data_img = UserGallery::orderBy('created_at', 'desc')->limit(5000)->get(['id'])->toArray();
-        $random_img_ids = $data_img ? array_rand($data_img, (count($data_img) > 4 ? 4 : count($data_img))) : [];
+        $random_img_ids = $data_img ? array_rand($data_img, (count($data_img) > 2 ? 2 : count($data_img))) : [];
         if (!is_array($random_img_ids)) {
             $random_img_ids = [$random_img_ids];
         }
