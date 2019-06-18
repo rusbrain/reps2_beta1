@@ -6,6 +6,7 @@ use App\{Country, IgnoreUser, User, UserFriend};
 use App\Http\Requests\User\UpdateProfileRequest;
 use App\Services\User\UserService;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -62,6 +63,24 @@ class UserController extends Controller
      */
     public function update(UpdateProfileRequest $request)
     {
+        $this->validate($request,
+            [
+                'name'      => 'required|max:30',
+                'email'     => 'required|string|email|max:30',
+                'country'   => 'required|exists:countries,id',
+            ],
+            [
+                'name.required'      => 'Не указно имя.',
+                'name.max'           => 'Максимальная длина имени 30 символов.',
+                'email.required'     => 'Email обязательный для заполнения.',
+                'email.email'        => 'Введен не верный формат Email.',
+                'email.unique'       => 'Пользователь с таким Email уже зарегестрирован.',
+                'email.max'          => 'Максимальная длина Email 30 символов.',
+                'country.exists'     => 'Не верно указана страна.',
+                'country.required'   => 'Страна обязательна для заполнения.',
+            ]
+     );
+
         UserService::updateData($request, Auth::id());
 
         return redirect()->route('user_profile', ['id' => Auth::id()]);

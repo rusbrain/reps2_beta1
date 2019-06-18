@@ -48,8 +48,8 @@ class RegisterController extends Controller
         $races = implode(",", Replay::$races);
         return Validator::make($data,
             [
-                'name'      => 'required|max:255',
-                'email'     => 'required|string|email|max:255|unique:users',
+                'name'      => 'required|max:30',
+                'email'     => 'required|string|email|max:30|unique:users',
                 'race'      => 'required|in:'.$races,
                 'password'  => 'required|string|min:8|max:255|confirmed',
                 'country'   => 'required|exists:countries,id',
@@ -62,11 +62,11 @@ class RegisterController extends Controller
                 'password.min'       => 'Минимальная длина пароля 8 символов.',
                 'password.max'       => 'Максимальная длина пароля 255 символов.',
                 'name.required'      => 'Не указно имя.',
-                'name.max'           => 'Максимальная длина имени 255 символов.',
+                'name.max'           => 'Максимальная длина имени 30 символов.',
                 'email.required'     => 'Email обязательный для заполнения.',
                 'email.email'        => 'Введен не верный формат Email.',
                 'email.unique'       => 'Пользователь с таким Email уже зарегестрирован.',
-                'email.max'          => 'Максимальная длина Email 255 символов.',
+                'email.max'          => 'Максимальная длина Email 30 символов.',
                 'country.exists'     => 'Не верно указана страна.',
                 'country.required'   => 'Страна обязательна для заполнения.',
             ]

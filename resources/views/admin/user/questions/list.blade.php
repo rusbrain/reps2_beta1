@@ -27,7 +27,7 @@
         </div>
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">Комментарии {{$user->name}} ({{$answer_count}})</h3>
+                <h3 class="box-title">Комментарии <span class="overflow-hidden">{{$user->name}}</span> ({{$answer_count}})</h3>
                 <div class="box-tools pagination-content">
                 </div>
             </div>

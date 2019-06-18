@@ -27,7 +27,7 @@
                     <form action="{{route('admin.send_quick_email')}}" method="post">
                         @csrf
                         <div class="form-group">
-                            <label for="emailto"><h4>TO: {{$user->name}}</h4></label>
+                            <label for="emailto"><h4>TO:<span class="overflow-hidden">{{$user->name}}</span></h4></label>
                             <input type="hidden" class="form-control" name="emailto" placeholder="Email to:" value="{{$user->email}}">
 
                             @if ($errors->has('emailto'))
