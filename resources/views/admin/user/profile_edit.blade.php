@@ -12,14 +12,14 @@
 @section('breadcrumb')
     <li><a href="{{route('admin.home')}}"><i class="fa fa-dashboard"></i>Главная панель</a></li>
     <li><a href="{{route('admin.users')}}">Пользователи</a></li>
-    <li class="active">Профиль <span class="user-name">{{$user->name}}</span></li>
+    <li class="active">Профиль <span class="overflow-hidden">{{$user->name}}</span></li>
 @endsection
 @section('content')
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="box box-info">
                 <div class="box-header with-border">
-                    <h3 class="box-title user-name">{{$user->name}}</h3>
+                    <h3 class="box-title overflow-hidden">{{$user->name}}</h3>
                 </div>
                 <div class="box-body">
                     <form action="{{route('admin.user.profile.save', ['id' => $user->id])}}" method="post" enctype="multipart/form-data">

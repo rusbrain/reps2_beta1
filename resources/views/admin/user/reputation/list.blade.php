@@ -27,7 +27,7 @@
         </div>
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">Оценки <span class="user-name">{{$user->name}}</span> ({{$reputation_count}})</h3>
+                <h3 class="box-title">Оценки <span class="overflow-hidden">{{$user->name}}</span> ({{$reputation_count}})</h3>
                 <div class="box-tools pagination-content">
                 </div>
             </div>

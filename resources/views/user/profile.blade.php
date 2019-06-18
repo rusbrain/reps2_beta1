@@ -62,7 +62,7 @@
                 </div>
             </div>
             <div class="col-md-8">
-                <h2 class="user-name">{{$user->name}}</h2>
+                <h2 class="overflow-hidden">{{$user->name}}</h2>
 
             @if($general_helper->isOnline($user))
                 <!-- if online displays this -->

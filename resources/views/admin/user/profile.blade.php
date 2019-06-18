@@ -11,7 +11,7 @@
 @section('breadcrumb')
     <li><a href="{{route('admin.home')}}"><i class="fa fa-dashboard"></i>Главная панель</a></li>
     <li><a href="{{route('admin.users')}}">Пользователи</a></li>
-    <li class="active">Профиль <span class="user-name">{{$user->name}}</span></li>
+    <li class="active">Профиль <span class="overflow-hidden">{{$user->name}}</span></li>
 @endsection
 
 @section('content')
@@ -28,7 +28,7 @@
                              src="{{route('home').'/dist/img/avatar.png'}}" alt="User profile picture">
                     @endif
 
-                    <h3 class="profile-username text-center user-name">{{$user->name}}</h3>
+                    <h3 class="profile-username text-center overflow-hidden">{{$user->name}}</h3>
 
                     <p class="text-muted text-center">
                         @if($user->user_role_id)
@@ -376,7 +376,7 @@
                             <!-- The timeline -->
                             <div class="row">
                                 <div class="col-md-6">
-                                    <h3 class="text-blue"><span class="user-name">{{$user->name}}</span> дружит с:</h3>
+                                    <h3 class="text-blue"><span class="overflow-hidden">{{$user->name}}</span> дружит с:</h3>
 
                                     <table class="table table-condensed">
                                         <thead>
@@ -412,7 +412,7 @@
                                     </table>
                                 </div>
                                 <div class="col-md-6">
-                                    <h3 class="text-blue">Дружат с <span class="user-name">{{$user->name}}</span>:</h3>
+                                    <h3 class="text-blue">Дружат с <span class="overflow-hidden">{{$user->name}}</span>:</h3>
                                     <table class="table table-condensed">
                                         <thead>
                                         <tr>

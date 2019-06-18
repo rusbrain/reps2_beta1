@@ -2410,6 +2410,12 @@ span.user-name {
   font-family: "Roboto-Medium", sans-serif;
   color: black;
 }
+.overflow-hidden {
+  max-width: 150px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
 
 .user-online-status {
   color: #54c438;
