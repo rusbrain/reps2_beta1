@@ -2401,6 +2401,16 @@ a.user-section-title {
   font-family: "Roboto-Medium", sans-serif;
   color: #4890af;
 }
+span.user-name {
+  overflow: hidden;
+  max-width: 100px;
+  text-overflow: ellipsis;
+  margin-right: 0;
+  font-size: 12px;
+  font-family: "Roboto-Medium", sans-serif;
+  color: black;
+}
+
 .user-online-status {
   color: #54c438;
 }
