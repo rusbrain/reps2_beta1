@@ -6,7 +6,7 @@
     <div class="form-group">
         <label for="message">Написать сообщение:</label>
         <textarea name="message" id="message" class="form-control send-message-text"
-                  rows="10"></textarea>
+                  rows="10" maxlength="1000"></textarea>
         <input type="hidden" name="load-more" value="{{$messages->url($page??2)}}">
     </div>
     <div class="form-group">

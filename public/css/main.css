@@ -2458,6 +2458,10 @@ a.user-section-title {
 }
 .my-message .message-content,
 .user-message .message-content {
+  width: 100%;
+  max-width: 200px;
+  word-break: break-word;
+  height: auto;
   background: #e5e6eb;
   padding: 10px 15px;
   position: relative;
@@ -2465,11 +2469,11 @@ a.user-section-title {
   color: #4d4d4d;
   line-height: 18px;
 }
-.user-message .message-content img {
+/* .user-message .message-content img {
   position: absolute;
   top: 10px;
   left: -7px;
-}
+} */
 .user-message .user-avatar-image,
 .my-message .user-avatar-image {
   width: 50px;
@@ -2491,11 +2495,11 @@ a.user-section-title {
   background: #4890af;
   color: #fff;
 }
-.my-message .message-content img {
+/* .my-message .message-content img {
   position: absolute;
   top: 10px;
   right: -7px;
-}
+} */
 .message-create {
   margin-top: 5px;
   font-size: 10px;
@@ -2538,6 +2542,51 @@ a.user-section-title {
   font-size: 10px;
   margin: 10px auto;
   padding: 2px;
+}
+.user-message-line {
+  height: 40px;
+  width:95%;
+}
+
+.user-message-line > * {
+  display: inline-block;
+}
+.dialog.message {
+  width: 70%;
+}
+.dialog.message > * {
+  vertical-align: middle;
+  display: inline-block;
+}
+
+.dialog .message-body {
+  padding: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 90%;
+}
+.dialog.date {
+  width: 26%;
+  margin: 0!important;
+}
+.dialog {
+  margin: 5px 0 0 5px;
+}
+.dialog-slot {
+  cursor: pointer;
+  height: auto;
+  border-bottom: 1px solid #2F6696;
+}
+.me {
+  color: #68a012;
+}
+
+.dialog-new-message{
+  background-color:#bad5ecaa;
+}
+.count-msg {
+  font-size: 15px;
+  color: blue;
 }
 /*----------------------------------------*/
 /*---END USER MESSAGE PAGE -------- */
