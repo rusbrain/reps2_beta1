@@ -49,7 +49,7 @@ class FileService
         $file->banner()->delete();
         $file->country()->update(['flag_file_id' => null]);
         $file->forum_topic()->update(['preview_file_id' => null]);
-        $file->replay()->delete();
+        //$file->replay()->delete();
         $file->avatar()->update(['file_id' => null]);
         if ($file){
             Storage::delete(str_replace('/storage','public', $file->link));
