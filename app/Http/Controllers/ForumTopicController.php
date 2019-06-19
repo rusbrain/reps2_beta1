@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\{
-    Comment, ForumSection, ForumTopic, Services\Base\UserViewService, Services\User\UserService, User
-};
+use App\{ Comment, ForumSection, ForumTopic, Services\Base\UserViewService, Services\User\UserService, User };
 use App\Http\Requests\{ForumTopicRebaseRequest, ForumTopicStoreRequest,ForumTopicUploadRequest, ForumTopicUpdateRequest};
 use App\Services\Forum\TopicService;
 use Illuminate\Support\Facades\Auth;
