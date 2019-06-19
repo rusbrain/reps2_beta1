@@ -107,8 +107,8 @@ class TopicService
         }
 
         if ($admin){
-            $topic_data['approved']   = $data['approved']??0;
-            $topic_data['news']       = $data['news']??0;
+            $topic_data['approved']   = $request->get('approved', 0);
+            $topic_data['news']       = $request->get('news', 0);
         }
 
         if ($request->file('preview_img')){
