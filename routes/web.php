@@ -441,6 +441,12 @@ Route::group(['middleware' => 'activity'], function () {
                 Route::get('/{id}/is_active', 'BannerManagementController@isActive')->name('admin.banner.is_active');
                 Route::get('/{id}/not_active','BannerManagementController@notActive')->name('admin.banner.not_active');
             });
+
+            Route::group(['prefix' => 'dbbackup'], function () {
+                Route::get('/', 'DBManagementController@index')->name('admin.dbbackup');
+                Route::get("/download/{dbname}", 'DBManagementController@filedownload')->name('admin.dbbackup.download');//
+                Route::get("/delete/{dbname}", 'DBManagementController@filedelete')->name('admin.dbbackup.filedelete');//
+            });
         });
 });
 

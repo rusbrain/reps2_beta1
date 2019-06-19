@@ -105,7 +105,7 @@ $dbbackup = ($menu_name == 'dbbackup') ? true :false;
             </span>
         </a>
         <ul class="treeview-menu  {{ $dbbackup ? 'menu-open' : ''}}">
-            <li @if($menu_name == 'dbbackup') class="active" @endif><a href=""><i class="fa fa-database"></i> <span>Backup</span></a></li>
+            <li @if($menu_name == 'dbbackup') class="active" @endif><a href="{{route('admin.dbbackup')}}"><i class="fa fa-database"></i> <span>Backup</span></a></li>
         </ul>
     </li>
     
