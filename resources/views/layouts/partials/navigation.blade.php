@@ -50,5 +50,8 @@
         <li>
             <a href="#" class="menu-link display-none">Контакты</a>
         </li>
+        <li>
+            <a href="https://drive.google.com/drive/folders/1bkbSoSRHOzEJZKki53uBKYbVMG3xvorc?usp=sharing" target="_blank" class="menu-link">Файлы</a>
+        </li>
     </ul>
 </div><!-- close div /.widget-navigation-->
