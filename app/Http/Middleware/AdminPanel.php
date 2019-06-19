@@ -16,7 +16,7 @@ class AdminPanel
      */
     public function handle($request, Closure $next)
     {
-        if (!Auth::user()->role) {
+        if (Auth::user()->user_role_id != 1) {
         return redirect('/');
     }
 
