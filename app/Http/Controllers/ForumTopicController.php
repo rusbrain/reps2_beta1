@@ -6,6 +6,8 @@ use App\{ Comment, ForumSection, ForumTopic, Services\Base\UserViewService, Serv
 use App\Http\Requests\{ForumTopicRebaseRequest, ForumTopicStoreRequest,ForumTopicUploadRequest, ForumTopicUpdateRequest};
 use App\Services\Forum\TopicService;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ForumTopicController extends Controller
 {

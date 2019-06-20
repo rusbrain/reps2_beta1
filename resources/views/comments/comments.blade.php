@@ -82,7 +82,7 @@
             // Check user is admin or morderate
             @if (Auth::user())
                 var isUpload = {{Auth::user()->user_role_id}};
-                if (isUpload) addUpload();
+                if (isUpload == 1) addUpload();
             @endif
 
             if ($('body').find('#comment-content').length > 0) {
