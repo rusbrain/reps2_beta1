@@ -315,7 +315,9 @@
                                                             vs {{$replay->second_location??"NO"}} <br>
                                                             <b>Длительность:</b> {{$replay->length}} <br>
                                                             <b>Чемпионат:</b> {{$replay->championship}} <br>
-                                                            <b>Версия:</b> {{$replay->game_version->version}} <br>
+                                                            @if($replay->game_version)
+                                                                <b>Версия:</b> {{$replay->game_version->version}} <br>
+                                                            @endif
                                                             <b>Рейтинг:</b> {{$replay->evaluation}} <br>
                                                             <b>Юзер Рейтинг:</b> {{$replay->user_rating}} <br>
                                                             {{mb_strimwidth($replay->content,0,1000, '...')}}
