@@ -11,6 +11,12 @@
 
     <!--JS plugin Select2 - autocomplete -->
     <link rel="stylesheet" href="{{route('home')}}/css/select2.min.css"/>
+
+    <style>
+    .select2-container .select2-selection--single{
+        height: 34px !important;
+    }
+    </style>
 @endsection
 
 @section('page_header')
@@ -55,7 +61,7 @@
                                     </div>
                                     <div class="form-group">
                                         <select class="form-control" name="user_replay">
-                                            <option value="0" {{0 == old('user_replay')?'selected':''}}>Gosy</option>
+                                            <option value="0" {{0 == old('user_replay')?'selected':''}}>Gosu</option>
                                             <option value="1" {{1 == old('user_replay')?'selected':''}}>
                                                 Пользовательский
                                             </option>

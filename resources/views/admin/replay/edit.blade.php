@@ -10,6 +10,11 @@
 
     <!--JS plugin Select2 - autocomplete -->
     <link rel="stylesheet" href="{{route('home')}}/css/select2.min.css"/>
+    <style>
+    .select2-container .select2-selection--single{
+        height: 34px !important;
+    }
+    </style>
 @endsection
 
 @section('page_header')
@@ -53,7 +58,7 @@
                                     </div>
                                     <div class="form-group">
                                         <select class="form-control" name="user_replay">
-                                            <option value="0" {{0 == $replay->user_replay?'selected':''}}>Gosy</option>
+                                            <option value="0" {{0 == $replay->user_replay?'selected':''}}>Gosu</option>
                                             <option value="1" {{1 == $replay->user_replay?'selected':''}}>Пользовательский</option>
                                         </select>
                                         @if ($errors->has('user_replay'))
@@ -87,8 +92,9 @@
                                         <!-- /. tools -->
                                     </div>
                                     <div class="form-group">
-                                        <select class="form-control" name="map_id">
-                                            @foreach($maps as $map)
+                                       
+                                        <select class="form-control form-select-2" name="map_id">
+                                            @foreach($maps as $map)                                          
                                                 <option value="{{$map->id}}" {{$map->id == $replay->map_id?'selected':''}}>{{$map->name}}</option>
                                             @endforeach
                                         </select>

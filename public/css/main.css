@@ -102,6 +102,7 @@ img {
 .select2-container{
   outline: none !important;
 }
+
 /*helpers*/
 .min-height-100 {
   min-height: 100px;
