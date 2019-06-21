@@ -62,7 +62,7 @@
                             </div>
                             <div>
                                 <a href="{{route('user.get_rating', ['id' => $comment->user->id])}}"
-                                class="user-rating"> {{$comment->user->rating}} кг</a>
+                                class="user-rating">{{$comment->user->rating}} кг</a>
                             </div>
                         </div>
                         <div class="comment-creating-date">

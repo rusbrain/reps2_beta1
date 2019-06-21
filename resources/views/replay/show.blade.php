@@ -60,7 +60,7 @@
                 </div>
                 <div>
                     <a href="{{route('user.get_rating', ['id' => $replay->user->id])}}"
-                       class="user-rating"> {{$replay->user->rating}} кг</a>
+                       class="user-rating">{{$replay->user->rating}} кг</a>
                 </div>
             </div>
         </div>
