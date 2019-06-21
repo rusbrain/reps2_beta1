@@ -126,8 +126,26 @@ trait UserData
      */
     public function getNewUsers()
     {
-        $new_users = $new_users ?? User::where('is_ban', 0)->orderBy('created_at', 'desc')->limit(10)->get();
+        $new_users = $new_users ?? User::where('is_ban', 0)->orderBy('created_at', 'desc')->limit(5)->get();
         return $new_users;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTopPtsUsers()
+    {
+        $top_pts_users = $top_pts_users ?? User::where('is_ban', 0)->orderBy('points', 'desc')->limit(10)->get();
+        return $top_pts_users;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTopRatingUsers()
+    {
+        $top_rating_users = $top_rating_users ?? User::where('is_ban', 0)->orderBy('rating', 'desc')->limit(10)->get();
+        return $top_rating_users;
     }
 
     /**
