@@ -56,9 +56,7 @@
                 </div>
                 
                 <div>
-                    {{$replay->user->points . ' pts | '}}
-                </div>
-                <div>
+                    {{$replay->user->points . ' pts | '}}            
                     <a href="{{route('user.get_rating', ['id' => $replay->user->id])}}"
                        class="user-rating">{{$replay->user->rating}} кг</a>
                 </div>

@@ -109,9 +109,7 @@
                     </div>
                     
                     <div>
-                        {{$topic->user->points . ' pts | '}}
-                    </div>
-                    <div>
+                        {{$topic->user->points . ' pts | '}}                  
                         <a href="{{route('user.get_rating', ['id' => $topic->user->id])}}"
                            class="user-rating">{{$topic->user->rating}} кг</a>
                     </div>
