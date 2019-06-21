@@ -8,7 +8,7 @@
         @foreach($top_pts_users as $top_user)
             <div class="widget-new-user">
                 <a href="{{route('user_profile',['id'=>$top_user->id])}}">
-                    <span class="color-blue">#{{$top_user->id}}</span>
+                    <span class="color-blue">{{$top_user->points}} pts</span>
                     @if($top_user->country_id)
                         <span class="flag-icon flag-icon-{{mb_strtolower($countries[$top_user->country_id]->code)}}"></span>
                     @else

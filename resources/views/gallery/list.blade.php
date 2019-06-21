@@ -101,6 +101,15 @@
     @include('sidebar-widgets.new-users')
     <!-- END New Users-->
 
+    <!-- Top Points Users-->
+    @include('sidebar-widgets.top-pts-users')
+    <!-- END New Users-->
+
+    <!-- Top Rating Users-->
+    @include('sidebar-widgets.top-rating-users')
+    <!-- END New Users-->
+
+
     <!-- User's Replays-->
     @include('sidebar-widgets.users-replays')
     <!-- END User's Replays-->
