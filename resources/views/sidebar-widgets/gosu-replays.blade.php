@@ -1,8 +1,9 @@
 @php
     $replays = $general_helper->getLastGosuReplay();
-    $rotw_replay = $general_helper->getLastRotwReplay()[0];
+    //$rotw_replay = $general_helper->getLastRotwReplay()[0];
     $countries = $general_helper->getCountries();
     $count = 0;
+$replays = null;
 @endphp
 @if($replays)
     <div class="widget-wrapper">

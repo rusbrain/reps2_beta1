@@ -325,6 +325,8 @@
          * https://www.sceditor.com/
          * */
         $(function () {
+            addUpload();
+
             if ($('#content').length > 0) {
                 var content = document.getElementById('content');
 
@@ -341,7 +343,8 @@
                         'emoticon|' +
                         'date,time|' +
                         'countries|'+
-                        'races',
+                        'races|' +
+                        'upload',
                     emoticons: {
                         // Emoticons to be included in the dropdown
                         dropdown: getAllSmiles(),

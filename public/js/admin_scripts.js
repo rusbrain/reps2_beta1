@@ -248,3 +248,56 @@ function addCountries() {
         tooltip: "Countries flags"
     });
 }
+
+function addUpload() {
+    sceditor.command.set("upload", {
+        exec: function (caller) {
+            var	editor  = this;
+            var content =document.createElement("DIV");
+            var div = '<form id="upload_form"><label for="upload">Upload</label> ' +
+                '<input type="file" id="upload" dir="ltr"  /></div>' +
+                '<div><input type="button" class="button" value="Upload" />' +
+                '</form>';
+            $(content).append(div);
+            $(content).on('click', '.button', function (e) {
+                var	input = $(content).find("#upload")[0];
+                if (input.value) {
+                    if (input.files && input.files[0]) {
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+
+                        var formdata = new FormData();
+                        formdata.append("file", input.files[0]);
+                        $.ajax({
+                            type: 'POST',
+                            url: '/forum/topic/img_upload',
+                            data: formdata,
+                            contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
+                            processData: false, // NEEDED, DON'T OMIT THIS
+                            success: function (result) {
+                                if (result.success) {
+                                    editor.insert('<img src="'+result.data+'" alt="" style="max-width: 100%;">');
+                                } else {
+                                    alert(result.data) //
+                                }
+                            },
+                            error: function (e) {
+                                console.log(e)
+                            }
+                        });
+                    }
+                } else {
+                    alert ("Please select file");
+                }
+                editor.closeDropDown(true);
+                e.preventDefault();
+            });
+
+            editor.createDropDown(caller, 'uploadimage', content);
+        },
+        tooltip: 'Upload Image'
+    });
+}

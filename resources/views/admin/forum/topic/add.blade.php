@@ -213,6 +213,7 @@
         $(function () {
             addCountries();
             addRaces();
+            addUpload();
 
             if ($('#content').length > 0) {
                 var content = document.getElementById('content');
@@ -231,7 +232,8 @@
                     'date,time|' +
                     'countries|'+
                     'races|'+
-                    'img',
+                    'img|' +
+                    'upload',
                     emoticons: {
                         // Emoticons to be included in the dropdown
                         dropdown: getAllSmiles(),
@@ -258,7 +260,8 @@
                     'date,time|' +
                     'countries|'+
                     'races|'+
-                    'img',
+                    'img|' +
+                    'upload',
                     emoticons: {
                         // Emoticons to be included in the dropdown
                         dropdown: getAllSmiles(),
