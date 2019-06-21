@@ -9,7 +9,7 @@ class ReplayGosuController extends ReplayController
      *
      * @var string
      */
-    public  $replay_group = 'Госу реплаи';
+    public  $replay_group = 'Госу реплeи';
 
     /**
      * Replay type

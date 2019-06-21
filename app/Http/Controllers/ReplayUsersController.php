@@ -9,7 +9,7 @@ class ReplayUsersController extends ReplayController
      *
      * @var string
      */
-    public  $replay_group = 'Пользовательские реплаи';
+    public  $replay_group = 'Пользовательские реплeи';
 
     /**
      * Replay type
