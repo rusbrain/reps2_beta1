@@ -113,7 +113,7 @@
                     </div>
                     <div>
                         <a href="{{route('user.get_rating', ['id' => $topic->user->id])}}"
-                           class="user-rating">pst {{$topic->user->rating}}</a>
+                           class="user-rating">{{$topic->user->rating}} кг</a>
                     </div>
                 </div>
                 <div class="article-creating-date">
