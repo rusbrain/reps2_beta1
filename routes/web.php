@@ -157,7 +157,7 @@ Route::group(['middleware' => 'activity'], function () {
         Route::get('/gosus/{type}/paginate',
             'ReplayGosuController@getReplayByType')->name('replay.gosus_type.paginate');
         Route::get('/users/{type}/paginate',
-            'ReplayGosuController@getReplayByType')->name('replay.users_type.paginate');
+            'ReplayUsersController@getReplayByType')->name('replay.users_type.paginate');
 
         /**reputation replay list*/
         Route::get('/{id}/get_rating', 'ReplayRatingController@getRating')->name('replay.get_rating');
