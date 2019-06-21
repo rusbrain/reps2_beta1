@@ -173,6 +173,7 @@ class ReplayService
             $query = $query->where('approved', 1);
         }
         $data = ReplayService::replayWithPagination(ReplayService::getReplayQuery($query));
+       
         return ['replays' => UserViewService::getReplay($data), 'pagination' => UserViewService::getPagination($data)];
     }
 

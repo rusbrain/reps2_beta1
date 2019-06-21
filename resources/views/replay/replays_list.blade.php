@@ -3,6 +3,7 @@
 
 @if($replays->total() > 0)
     @foreach($replays as $item => $replay)
+        @if($replay->user)
         <div class="user-replay-wrapper">
             <div class="col-md-12 user-replay-header">
                 <div class="user-nickname text-bold">
@@ -62,7 +63,7 @@
                 </div>
                 <div class="user-replay-map">
                     Карта:
-                    <span>{{$replay->map->name??'не указано'}}</span>
+                    <span>{{($replay->map)?$replay->map->name:'не указано'}}</span>
                 </div>
                 <div class="user-replay-rating">
                     <img src="{{route('home')}}/images/icons/icon_rate_blue.png" alt="">
@@ -93,6 +94,7 @@
                 @endif
             </div>
         </div><!-- close div /.user-replay-wrapper -->
+        @endif
     @endforeach
 @else
     <div class="user-replay-wrapper">

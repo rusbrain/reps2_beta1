@@ -201,7 +201,7 @@ class ReplayController extends Controller
      */
     public function getReplayByType($type)
     {
-        $type = $this->checkReplayType($type);
+        $type = $this->checkReplayType($type); 
         $method = $this->method_get;
         return ReplayService::getList(Replay::$method()->where('type_id', $type->id),
             $this->replay_group . ': ' . $type->title);

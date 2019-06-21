@@ -33,6 +33,7 @@
 
     <div class="content-box">
         <div class="col-md-12 section-title ">
+           
             <div>{{$replay->title}}</div>
 
             <div class="author-info">
