@@ -77,6 +77,10 @@ img{
 div.sceditor-dropdown{
   z-index: 4000!important;
 }
+.sceditor-button-upload div {
+  background: url('../images/icons/upload.png') no-repeat center center !important;
+  background-size: cover !important;
+}
 /******************************************/
 
 .navbar-nav>.user-menu>.dropdown-menu>.user-footer div .btn{

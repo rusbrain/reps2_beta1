@@ -1,6 +1,8 @@
 @extends('admin.layouts.admin')
 
 @section('css')
+    <!--SCEditor -  WYSIWYG BBCode editor -->
+    <link rel="stylesheet" href="{{route('home')}}/js/sceditor/minified/themes/default.min.css"/>
 @endsection
 
 @section('page_header')
@@ -157,7 +159,8 @@
                                     <form method="POST" action="{{route('admin.replay.comment_send', ['id' => $replay->id])}}" method="post">
                                         @csrf
                                         <div class="input-group">
-                                            <input class="form-control" placeholder="Type comment..." type="text" name="content" >
+                                            <textarea id="comment_content" class="form-control" placeholder="Type comment..." type="text" name="content" rows="5" cols="80">
+                                            </textarea>
 
                                             <div class="input-group-btn">
                                                 <button type="submit" class="btn btn-success"><i class="fa fa-plus"></i></button>
@@ -201,6 +204,13 @@
 @endsection
 
 @section('js')
+    <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.min.js"></script>
+    <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.xhtml.min.js"></script>
+    <script src="{{route('home')}}/js/sceditor/languages/ru.js"></script>
+
+    <script src="{{route('home')}}/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="{{route('home')}}/plugins/iCheck/icheck.min.js"></script>
+
     <script>
         $(function () {
             getUsers(1);
@@ -218,5 +228,50 @@
                 $('.load-wrapp').hide();
             })
         }
+
+        $('#datepicker').datepicker({
+            format: "yyyy-mm-dd",
+            autoclose: true
+        });
+
+        //Flat red color scheme for iCheck
+        $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+            checkboxClass: 'icheckbox_flat-green',
+            radioClass   : 'iradio_flat-green'
+        });
+
+        $(function () {
+            addCountries();
+            addRaces();
+            addUpload();
+
+            if ($('#comment_content').length > 0) {
+                var comment_content = document.getElementById('comment_content');
+
+                sceditor.create(comment_content, {
+                    format: 'xhtml',
+                    style: '{{route("home")}}' + '/js/sceditor/minified/themes/content/default.min.css',
+                    emoticonsRoot: '{{route("home")}}' + '/js/sceditor/',
+                    locale: 'ru',
+                    toolbar: 'bold,italic,underline|' +
+                        'left,center,right,justify|' +
+                        'font,size,color,removeformat|' +
+                        'source,quote,code|' +
+                        'image,link,unlink|' +
+                        'emoticon|' +
+                        'date,time|' +
+                        'countries|'+
+                        'races|'+
+                        'img|' +
+                        'upload',
+                    emoticons: {
+                        // Emoticons to be included in the dropdown
+                        dropdown: getAllSmiles(),
+                        // Emoticons to be included in the more section
+                        more: getMoreSmiles()
+                    }
+                });
+            }
+        });
     </script>
 @endsection

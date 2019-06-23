@@ -333,6 +333,8 @@
          * https://www.sceditor.com/
          * */
         $(function () {
+            addUpload();
+
             if ($('#content').length > 0) {
                 var content = document.getElementById('content');
 
@@ -345,7 +347,7 @@
                         'left,center,right,justify|' +
                         'font,size,color,removeformat|' +
                         'emoticon|' +
-                        'date,time',
+                        'date,time|' + 'upload',
                     emoticons: {
                         // Emoticons to be included in the dropdown
                         dropdown: getAllSmiles(),
