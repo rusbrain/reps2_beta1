@@ -6,6 +6,7 @@
         <div class="user-reputation-vote-row">
             <div class="user-reputation-vote-info">
                 <div>
+                    @if($item->sender)
                     <a href="{{route('user_profile',['id' => $item->sender->id])}}">{{$item->sender->name}}</a>
                     {{-- <div class="">                        --}}
                         @if($item->sender->country_id)
@@ -25,6 +26,7 @@
                     <span>|</span>
                     <a href="{{route('user.get_rating', ['id' => $item->sender->id])}}">{{$item->sender->rating}}
                         кг</a>
+                    @endif
                 </div>
                 <div>
                     <img src="{{route('home')}}/images/icons/eye.png" alt="">
@@ -33,7 +35,7 @@
             </div>
             <div class="user-reputation-vote-content">
                 <div class="col-md-11">
-                    @if(\App\IgnoreUser::i_ignore($item->sender->id))
+                    @if($item->sender && \App\IgnoreUser::i_ignore($item->sender->id))
                         <div class="padding-15 text-center">Комментарий скрыт</div>
                     @else
                         <div>{!! $general_helper->oldContentFilter($item->comment) !!}</div>
