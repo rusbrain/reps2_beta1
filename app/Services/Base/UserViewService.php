@@ -26,6 +26,11 @@ class UserViewService extends ViewService
         return (string)view('user.reputation_list')->with(['list' => $data]);
     }
 
+    public static function getlastNews(LengthAwarePaginator $data)
+   {
+       return (string) view('home.last_forums')->with(['news' => $data]);
+   }
+
     /**
      * @param LengthAwarePaginator $data
      * @return string

@@ -14,6 +14,7 @@
 Route::group(['middleware' => 'activity'], function () {
     Route::get('/', 'HomeController@index')->name('home');
     Route::get('/last_forums', 'HomeController@lastForums')->name('home.last_forum');
+    Route::get('/last_forums/pagination', 'HomeController@pagination')->name('home.last_forum.pagination');
 
     Route::group(['prefix' => 'widget'], function () {
         Route::get('/all_forum_sections', 'WidgetController@allForumSections')->name('widgets.all_forum_sections');

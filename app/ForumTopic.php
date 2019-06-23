@@ -343,7 +343,7 @@ class ForumTopic extends Model
             }
         ])
         ->withCount('positive', 'negative', 'comments')
-        ->with('preview_image', 'icon')->limit(10)->get();
+        ->with('preview_image', 'icon');
     }
 
     /**

@@ -13,12 +13,16 @@
 
 @section('content')
     <!--Last Forums-->
-    <div id="ajax_last_forums" data-path="{{route('home.last_forum')}}">
+    <div id="ajax_last_forums">
         <div class="load-wrapp">
             <img src="/images/loader.gif" alt="">
         </div>
     </div>
     <!--END Last Forums-->
+
+    <!--  PAGINATION -->
+    <div class="pagination-content"></div>
+    <!-- END  PAGINATION -->
 @endsection
 
 @section('sidebar-right')
@@ -53,15 +57,30 @@
 
 @section('js')
     <script>
+
         $(function () {
-            var last_forums = $('#ajax_last_forums');
-            getLastNews(last_forums);
+            getLastNews(1);
+            $('.pagination-content').on('click', '.page-link', function (e) {
+                e.preventDefault();
+                $('.load-wrapp').show();
+                var page = $(this).attr('data-page');
+                getLastNews(page);
+            })
         });
-        function getLastNews(container) {
-            $.get(container.attr('data-path'), {}, function (html) {
-                container.html(html);
-                container.find('.load-wrapp').hide();
+
+        function getLastNews(page) {
+            var container = $('#ajax_last_forums');
+            var body = $("html, body");
+
+            $.get('{{route('home.last_forum.pagination')}}'+'?page='+page, {}, function (data) {
+                container.html(data.news);
+                $('.pagination-content').html(data.pagination);
+                $('.load-wrapp').hide();
+
+                /**move to top of page*/
+                moveToTop(body);
             });
         }
+
     </script>
 @endsection

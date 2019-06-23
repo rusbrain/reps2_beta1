@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\{
     ForumTopic, Replay, UserGallery
 };
+use App\Services\Base\UserViewService;
 use App\Http\Requests\PortalSearchRequest;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -68,6 +69,15 @@ class HomeController extends Controller
     public function lastForums()
     {
         return view('home.last_forums')->with(['news' => ForumTopic::getLastForums()]);
+        // ->limit(20)->get();
+    }
+
+    /**
+     * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View|mixed
+     */
+    public function pagination() {       
+        $lastForums = ForumTopic::getLastForums()->paginate(10);
+        return ['news' => UserViewService::getlastNews($lastForums), 'pagination' => UserViewService::getPagination($lastForums)];
     }
 }
 
