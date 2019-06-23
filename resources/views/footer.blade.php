@@ -125,10 +125,8 @@
     <div class="container">
         <div class="row ">
             <div class="col-md-12 footer-low">
-                © 2002-{{date('Y')}} Replay Cafe All Right Reserved
-                I © 2003-{{date('Y')}} REPLAY CAFE ENGINE / v.4.7.
-                I © 1998-{{date('Y')}} StarCraft, StarCraft:Brood War by Blizzard Ent.
-            </div>
+                2002-{{date('Y')}} Replay Cafe | 2018-{{date('Y')}} Reps2 | 1998-{{date('Y')}} StarCraft: Brood War by Blizzard Entertainment
+           </div>
         </div>
     </div>
 </section>
