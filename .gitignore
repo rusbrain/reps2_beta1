@@ -15,6 +15,9 @@
 /.idea
 /.vscode
 /.vagrant
+_ide_helper.php
+.phpstorm.meta.php
+/composer.lock
 Homestead.json
 Homestead.yaml
 npm-debug.log
