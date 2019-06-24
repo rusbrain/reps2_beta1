@@ -126,9 +126,7 @@ class TopicService
 
         if ($request->has('created_at') && $request->get('created_at') != ''){
             $topic_data['created_at'] = $request->get('created_at'). " " . Carbon::now()->format('H:i:s');
-        } else {
-            $topic_data['start_on'] = null;
-        }
+        } 
 
         /**@var User $user*/
         $user = User::getUserProfile(Auth::id());
