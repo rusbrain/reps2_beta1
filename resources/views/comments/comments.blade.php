@@ -41,8 +41,9 @@
     <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.xhtml.min.js"></script>
     <script src="{{route('home')}}/js/sceditor/languages/ru.js"></script>
     <script>
-        $(function () {
-            getSections($('#ajax_section_comments').attr('data-pages'));
+        var lastPage = $('#ajax_section_comments').attr('data-pages');
+        $(function () {            
+            getSections(lastPage);
             $('.pagination-content').on('click', '.page-link', function (e) {
                 e.preventDefault();
                 $('.load-wrapp').show();
@@ -62,7 +63,7 @@
                 $('.load-wrapp').hide();
 
                 /**move to top of comments*/
-                if (page !== 1) {
+                if (page !== lastPage) {
                     moveToTop(container);
                 }
                 /***/
