@@ -201,7 +201,7 @@ function addRaces() {
                 )
                     .data('race', races[i])
                     .click(function (e) {
-                        editor.insert('<img src="/images/smiles/'+$(this).data('race')+'" alt="">');
+                        editor.insert('<img src="/images/smiles/'+$(this).data('race')+'" alt="" />');
                         editor.closeDropDown(true);
 
                         e.preventDefault();
@@ -236,7 +236,7 @@ function addCountries() {
                 )
                     .data('flag', flags[i])
                     .click(function (e) {
-                        editor.insert('<img src="/flags/editor/'+$(this).data('flag')+'.png" alt="">');
+                        editor.insert('<img src="/flags/editor/'+$(this).data('flag')+'.png" alt="" />');
                         editor.closeDropDown(true);
 
                         e.preventDefault();
@@ -279,7 +279,7 @@ function addUpload() {
                             processData: false, // NEEDED, DON'T OMIT THIS
                             success: function (result) {
                                 if (result.success) {
-                                    editor.insert('<img src="'+result.data+'" alt="" style="max-width: 100%;">');
+                                    editor.insert('<img src="'+result.data+'" alt="" style="width: 100%;" />');
                                 } else {
                                     alert(result.data) //
                                 }
