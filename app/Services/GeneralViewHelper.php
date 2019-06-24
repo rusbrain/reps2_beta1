@@ -240,7 +240,7 @@ class GeneralViewHelper
         $text = preg_replace("/([\w\.]+)(@)([\w\.]+)/i", "<a rel=\"nofollow\" href=\"mailto:$0\"><b>Mail»</b></a>",
             $text);
 
-        $text = preg_replace("/:s([0-9]{1,}):/", '<img src="/images/smiles/s$1.gif" border="0">', $text);
+        // $text = preg_replace("/:s([0-9]{1,}):/", '<img src="/images/smiles/s$1.gif" border="0">', $text);
 
         /***additional smiles*/
         $text = preg_replace_callback("/:([a-z]{1,2}):/", function ($matches) {

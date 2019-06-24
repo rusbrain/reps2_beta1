@@ -77,9 +77,6 @@
                         </div>
                     @endif
                     <div class="col-md-12 comment-content-wrapper">
-                        {{-- <div class="commnet-edit">
-                            {{$comment->edit_user_id}}
-                        </div> --}}
                         <div class="comment-content">
                             {!! $general_helper->oldContentFilter($comment->content) !!}
                         </div>
