@@ -109,6 +109,18 @@
                                     @endif
                                 </div>
                             </div>
+                            {{-- Thread Created Date --}}
+                            <div class="row">
+                              
+                                <div class="col-md-4">
+                                    <div class="box-header">
+                                        <h3 class="box-title">Дата:</h3>
+                                    </div> <!-- /.box-header -->
+                                    <div class="form-group">
+                                        <input type="text" id="datepicker" class="form-control" name="created_at" value="{{$topic->created_at->format('Y-m-d')}}" />
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-md-4">
                                     <br>
@@ -138,6 +150,7 @@
                                     </div>
                                 </div>
                             </div>
+                            
                             <div class="row">
                                 <div class="col-md-1 col-md-offset-11">
                                     <br>
@@ -167,7 +180,7 @@
     <script src="{{route('home')}}/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
     <script src="{{route('home')}}/plugins/iCheck/icheck.min.js"></script>
 
-    //Date picker
+    {{-- //Date picker --}}
     <script>
         $('#datepicker').datepicker({
             format: "yyyy-mm-dd",

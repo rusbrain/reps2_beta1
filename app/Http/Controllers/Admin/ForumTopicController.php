@@ -7,6 +7,7 @@ use App\Http\Requests\{AdminTopicCreateRequest, ForumTopicUpdateAdminRequest, Se
 use App\Services\Base\{BaseDataService, AdminViewService};
 use App\Services\Forum\TopicService;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 
 class ForumTopicController extends Controller
 {
@@ -112,6 +113,12 @@ class ForumTopicController extends Controller
      */
     public function saveTopic(ForumTopicUpdateAdminRequest $request, $topic_id)
     {
+        $created = new Carbon($request->get('created_at'));
+        $now = Carbon::now();
+        if($created->diffInHours($now, false) < 0){
+            //return back();
+        }
+        $request->get('created_at'). " " . Carbon::now()->format('H:i:s');
         TopicService::update($request, ForumTopic::find($topic_id), true);
         return back();
     }

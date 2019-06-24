@@ -124,6 +124,12 @@ class TopicService
             $topic_data['preview_file_id'] = $file->id;
         }
 
+        if ($request->has('created_at') && $request->get('created_at') != ''){
+            $topic_data['created_at'] = $request->get('created_at'). " " . Carbon::now()->format('H:i:s');
+        } else {
+            $topic_data['start_on'] = null;
+        }
+
         /**@var User $user*/
         $user = User::getUserProfile(Auth::id());
         $topic_data['updated_by_user'] = $user->name;
