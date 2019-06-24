@@ -163,6 +163,9 @@ class CommentController extends Controller
     public function pagination($id)
     {
         $comments   = Comment::getComment($this->relation_name, $id);
-        return ['comments' => UserViewService::getComments($comments, $this->edit_route_name), 'pagination' => UserViewService::getPagination($comments)];
+        return [
+            'comments'   => UserViewService::getComments($comments, $this->edit_route_name),
+            'pagination' => UserViewService::getPagination($comments)
+        ];
     }
 }

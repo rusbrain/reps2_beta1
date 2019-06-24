@@ -10,7 +10,7 @@
     <!-- END COMMENTS PAGINATION TOP-->
 
     <!-- COMMENTS CONTENT -->
-    <div id="ajax_section_comments" data-pages="" data-comments-total="{{$comments->total()}}">
+    <div id="ajax_section_comments" data-pages="{{$comments->lastPage()}}" data-comments-total="{{$comments->total()}}">
         <div class="load-wrapp">
             <img src="/images/loader.gif" alt="">
         </div>
@@ -42,7 +42,7 @@
     <script src="{{route('home')}}/js/sceditor/languages/ru.js"></script>
     <script>
         $(function () {
-            getSections(1);
+            getSections($('#ajax_section_comments').attr('data-pages'));
             $('.pagination-content').on('click', '.page-link', function (e) {
                 e.preventDefault();
                 $('.load-wrapp').show();
