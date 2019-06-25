@@ -14,17 +14,17 @@
         </td>
         <td>{{$topic->comments_count}}</td>
         <td>{{$topic->reviews}}</td>
-        <td>{!! $topic->approved?'<i class="fa fa-check text-green"></i>':'<i class="fa fa-ban text-red"></i>' !!}</td>
+        {{-- <td>{!! $topic->approved?'<i class="fa fa-check text-green"></i>':'<i class="fa fa-ban text-red"></i>' !!}</td> --}}
         <td>{!! $topic->news?'<i class="fa fa-newspaper-o text-blue"></i>':'<i class="fa  fa-newspaper-o text-gray"></i>' !!}</td>
         <td>
             <div class="btn-group">
                 <a type="button" class="btn btn-default text-aqua"  title="Просмотреть запись" href="{{route('admin.forum.topic.get', ['id' => $topic->id])}}"><i class="fa fa-eye"></i></a>
                 <a type="button" class="btn btn-default text-orange"  title="Править запись"  href="{{route('admin.forum.topic.edit', ['id' => $topic->id])}}"><i class="fa fa-edit"></i></a>
-                @if(!$topic->approved)
+                {{-- @if(!$topic->approved)
                     <a type="button" class="btn btn-default text-green" title="Одобрить запись" href="{{route('admin.forum.topic.approve', ['id' => $topic->id])}}"><i class="fa fa-check"></i></a>
                 @else
                     <a type="button" class="btn btn-default text-red"  title="Заблокировать запись" href="{{route('admin.forum.topic.unapprove', ['id' => $topic->id])}}"><i class="fa fa-ban"></i></a>
-                @endif
+                @endif --}}
                 @if(!$topic->news)
                     <a type="button" class="btn btn-default text-blue" title="Сделать новостью" href="{{route('admin.forum.topic.news', ['id' => $topic->id])}}"><i class="fa fa-newspaper-o"></i></a>
                 @else

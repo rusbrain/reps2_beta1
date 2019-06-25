@@ -19,7 +19,6 @@ class ForumTopicUpdateAdminRequest extends ForumTopicUpdateRequest
         return array_merge($rules, [
             'preview_img'  => 'nullable|image',
             'news'         => 'nullable|boolean',
-            'approved'     => 'nullable|boolean',
         ]);
     }
 }

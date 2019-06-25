@@ -53,15 +53,11 @@ class TopicService
             unset($topic_data['preview_img']);
             $topic_data['preview_file_id'] = self::savePreview($request);
         }
-
         if ($admin) {
-            $data['approved'] = $data['approved'] ?? 0;
-            $data['news'] = $data['news'] ?? 0;
+            $topic_data['news'] = $topic_data['news'] ?? 0;
         }
 
-        if (UserService::isAdmin() || UserService::isModerator()) {
-            $topic_data['approved'] = 1;
-        }
+        $topic_data['approved']   = 1;
 
         /**@var ForumTopic $topic */
         $topic = ForumTopic::create($topic_data);
@@ -105,9 +101,8 @@ class TopicService
         } else {
             $topic_data['start_on'] = null;
         }
-
-        if ($admin){
-            $topic_data['approved']   = $request->get('approved', 0);
+        
+        if ($admin){            
             $topic_data['news']       = $request->get('news', 0);
         }
 
@@ -127,6 +122,8 @@ class TopicService
         if ($request->has('created_at') && $request->get('created_at') != ''){
             $topic_data['created_at'] = $request->get('created_at'). " " . Carbon::now()->format('H:i:s');
         } 
+
+        $topic_data['approved']   = 1;
 
         /**@var User $user*/
         $user = User::getUserProfile(Auth::id());

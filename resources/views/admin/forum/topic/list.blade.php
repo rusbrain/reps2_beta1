@@ -50,15 +50,15 @@
                                         <option value="1" @if(isset($request_data['news']) && $request_data['news'] == '1') selected @endif>Да</option>
                                     </select>
                                 </div>
-                                <div class="form-group col-md-3">
+                                {{-- <div class="form-group col-md-3">
                                     <label>Одобрен:</label>
                                     <select class="form-control" style="width: 100%;" name="approved">
                                         <option value="">Select...</option>
                                         <option value="0" @if(isset($request_data['approved']) && $request_data['approved'] == '0') selected @endif>Нет</option>
                                         <option value="1" @if(isset($request_data['approved']) && $request_data['approved'] == '1') selected @endif>Да</option>
                                     </select>
-                                </div>
-                                <div class="form-group col-md-3 col-md-offset-9">
+                                </div> --}}
+                                <div class="form-group col-md-3 ">
                                     <label>Сортировать по:</label>
                                     <select class="form-control" style="width: 100%;" name="sort">
                                         <option value="">Select...</option>
@@ -100,7 +100,7 @@
                             <th>Рейтинг</th>
                             <th>Комментарии</th>
                             <th>Просмотры</th>
-                            <th>Одобрена</th>
+                            {{-- <th>Одобрена</th> --}}
                             <th>Новость</th>
 
                             <th style="width: 220px">Действия</th>

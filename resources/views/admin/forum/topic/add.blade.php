@@ -146,21 +146,10 @@
                                             </label>
                                             @if ($errors->has('news'))
                                                 <span class="invalid-feedback text-red" role="alert">
-                                        <strong>{{ $errors->first('news') }}</strong>
-                                    </span>
+                                                    <strong>{{ $errors->first('news') }}</strong>
+                                                </span>
                                             @endif
-                                        </div>
-                                        <div class="form-group">
-                                            <label>
-                                                <input type="checkbox" name="approved" class="flat-red" {{old('approved')?'checked':''}} value="1">
-                                                Подтвердить
-                                            </label>
-                                            @if ($errors->has('approved'))
-                                                <span class="invalid-feedback text-red" role="alert">
-                                        <strong>{{ $errors->first('approved') }}</strong>
-                                    </span>
-                                            @endif
-                                        </div>
+                                        </div>                                       
                                         <!-- /.input group -->
                                     </div>
                                 </div>
