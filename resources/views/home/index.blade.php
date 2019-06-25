@@ -57,7 +57,6 @@
 
 @section('js')
     <script>
-
         $(function () {
             getLastNews(1);
             $('.pagination-content').on('click', '.page-link', function (e) {
@@ -81,6 +80,5 @@
                 moveToTop(body);
             });
         }
-
     </script>
 @endsection

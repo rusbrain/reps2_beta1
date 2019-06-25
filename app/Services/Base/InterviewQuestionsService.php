@@ -101,7 +101,7 @@ class InterviewQuestionsService
     public static function getRandomQuestion()
     {
         $data = InterviewQuestion::where('is_active', 1)->has('answers');
-
+        
         if(Auth::user()){
             $data->whereDoesntHave('user_answers', function ($query){
                 $query->where('user_id', Auth::id());
@@ -111,7 +111,7 @@ class InterviewQuestionsService
         }
 
         $data = $data->get();
-
+        // dd($data);
         $favorite = clone $data;
         $favorite = $favorite->where('is_favorite')->sortBy('created_at')->last();
         if ($favorite){
@@ -129,6 +129,48 @@ class InterviewQuestionsService
             return $data?$data->load('answers'):[];
         }
 
+        return [];
+    }
+
+    public static function getUserQuestion()
+    {
+        $data = InterviewQuestion::where('is_active', 1)->has('answers');
+        
+        if(Auth::user()){
+            $data->whereHas('user_answers', function ($query){
+                $query->where('user_id', Auth::id());
+            });
+        } else{
+            $data->where('for_login', 0);
+        }
+
+        $data = $data->get();
+        $favorite = clone $data;
+        $favorite = $favorite->where('is_favorite')->sortBy('created_at')->last();
+        if ($favorite){
+            return $favorite?$favorite->load('answers'):[];
+        }
+
+        $ids = [];
+        foreach ($data as $datum){
+            $ids[] = $datum->id;
+        }
+
+        if($ids){
+            $id = array_rand($ids);
+            $data =  $data->where('id', $ids[$id])->first();
+            return $data?$data->load('answers'):[];
+        }
+
+        return [];
+    }
+
+    public static function getUserAnswerQuestion() 
+    {
+        $user_question = InterviewQuestionsService::getUserQuestion();
+        if(!empty($user_question)) {
+            return InterviewQuestion::getAnswerQuestion($user_question->id);
+        }
         return [];
     }
 }

@@ -43,6 +43,7 @@ class GeneralViewHelper
     protected $banner;
     protected $active_banners;
     protected $question;
+    protected $answer;
     protected $new_users;
     protected $game_version;
     protected $user_gallery;
@@ -124,6 +125,17 @@ class GeneralViewHelper
     {
         self::$instance->question = self::$instance->question ?? InterviewQuestionsService::getRandomQuestion();
         return self::$instance->question;
+    }
+
+    /**
+     * Get answer for user
+     *
+     * @return mixed
+     */
+    public function getAnswers()
+    {        
+        return InterviewQuestionsService::getUserAnswerQuestion();
+        
     }
 
     /**
