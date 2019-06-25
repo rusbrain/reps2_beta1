@@ -117,15 +117,15 @@ class InterviewQuestionsService
         if ($favorite){
             return $favorite?$favorite->load('answers'):[];
         }
-
+        
         $ids = [];
         foreach ($data as $datum){
             $ids[] = $datum->id;
         }
-
+        
         if($ids){
-            $id = array_rand($ids);
-            $data =  $data->where('id', $ids[$id])->first();
+            // $id = array_rand($ids);
+            // $data =  $data->where('id', $ids[$id])->first();           
             return $data?$data->load('answers'):[];
         }
 
@@ -150,8 +150,10 @@ class InterviewQuestionsService
         }
 
         $data = $data->get();
+        
         $favorite = clone $data;
         $favorite = $favorite->where('is_favorite')->sortBy('created_at')->last();
+        
         if ($favorite){
             return $favorite?$favorite->load('answers'):[];
         }
@@ -162,8 +164,8 @@ class InterviewQuestionsService
         }
 
         if($ids){
-            $id = array_rand($ids);
-            $data =  $data->where('id', $ids[$id])->first();
+            // $id = array_rand($ids);
+            // $data =  $data->where('id', $ids[$id])->first();
             return $data?$data->load('answers'):[];
         }
 
@@ -175,11 +177,11 @@ class InterviewQuestionsService
      *
      * @return mixed
      */
-    public static function getUserAnswerQuestion() 
+    public static function getUserAnswer($id) 
     {
-        $user_question = InterviewQuestionsService::getUserQuestion();
-        if(!empty($user_question)) {
-            return InterviewQuestion::getAnswerQuestion($user_question->id);
+        
+        if(!empty($id)) {
+            return InterviewQuestion::getAnswerQuestion($id);
         }
         return [];
     }

@@ -217,7 +217,7 @@ $(function () {
         registrationForm.validate({
             rules: {
                 name: "required",
-                email: {required: true, email: true},
+                email: { required: true, email: true },
                 password: "required",
                 password_confirmation: "required"
             },
@@ -256,65 +256,70 @@ $(function () {
 
 /**View vote results ->  LEFT SIDEBAR */
 $(function () {
-    if ($('#vote-question-form').length > 0) {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
 
-        /**view results*/
-        $('#view-answer-results').on('click', function (e) {
-            e.preventDefault();
-            var url = $(this).attr('data-url');
-            $.ajax({
-                type: 'POST',
-                url: url,
-                success: function (html) {
-                    $('#view-results-response').html(html);
-                },
-                error: function () {
-
+    if ($(".vote-form").length > 0) {
+        for (var i = 0; i < $(".vote-form").length; i++) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-        });
 
-        /**Vote Form - Right Sidebar*/
-        var voteForm = $('#vote-question-form');
-        if (voteForm.length > 0) {
-            /**Validation*/
-            voteForm.validate({
-                rules: {
-                    answer_id: {required: true}
-                },
-                messages: {
-                    answer_id: {
-                        required: "Выберите вариант ответа"
+            /**view results*/
+            $('#view-answer-results-' + i).on('click', function (e) {
+                e.preventDefault();
+                var num = $(this).attr('data-num');
+                var url = $(this).attr('data-url');
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    success: function (html) {
+                        $('#view-results-response-' + num).html(html);
+                    },
+                    error: function () {
+
                     }
-                },
-                errorPlacement: function (error, element) {
-                    if (element.attr("name") === "answer_id") {
-                        error.appendTo(voteForm.find(".display-error"));
-                    }
-                },
-                errorElement: "div",
-                submitHandler: function (form) {
-                    var selectData = $(form).serialize();
-
-                    $.ajax({
-                        type: 'POST',
-                        url: $(form).attr('action'),
-                        data: selectData,
-                        success: function (html) {
-                            $('#view-results-response').html(html);
-                        },
-                        error: function () {
-
-                        }
-                    });
-                }
+                });
             });
         }
+        /**Vote Form - Right Sidebar*/
+
+        $(".vote-form").each(function (index) {
+            var voteForm = $(this);
+            if (voteForm.length > 0) {
+                /**Validation*/
+                voteForm.validate({
+                    rules: {
+                        answer_id: { required: true }
+                    },
+                    messages: {
+                        answer_id: {
+                            required: "Выберите вариант ответа"
+                        }
+                    },
+                    errorPlacement: function (error, element) {
+                        if (element.attr("name") === "answer_id") {
+                            error.appendTo(voteForm.find(".display-error-" + voteForm.attr('data-num')));
+                        }
+                    },
+                    errorElement: "div",
+                    submitHandler: function (form) {
+                        var selectData = $(form).serialize();
+                        $.ajax({
+                            type: 'POST',
+                            url: $(form).attr('action'),
+                            data: selectData,
+                            success: function (html) {
+                                $('#view-results-response-' + voteForm.attr('data-num')).html(html);
+                            },
+                            error: function () {
+
+                            }
+                        });
+                    }
+                });
+            }
+        })
     }
 });
 
@@ -328,8 +333,8 @@ $(function () {
         /**Validation*/
         loginForm.validate({
             rules: {
-                email: {required: true, email: true},
-                password: {required: true}
+                email: { required: true, email: true },
+                password: { required: true }
             },
             messages: {
                 email: {
@@ -380,7 +385,7 @@ $(function () {
 
     btnUp.on('click', function (e) {
         e.preventDefault();
-        body.animate({scrollTop: 0}, 800, 'swing', function () {
+        body.animate({ scrollTop: 0 }, 800, 'swing', function () {
         });
     });
 });
@@ -458,7 +463,7 @@ function getMoreSmiles() {
 
 /**race's images array for custom command of HTML text editor SCEditor */
 function getRacesImg() {
-    return ['terran.gif','zerg.gif','protoss.gif','random.png'];
+    return ['terran.gif', 'zerg.gif', 'protoss.gif', 'random.png'];
 }
 
 /**countries's code array for custom command of HTML text editor SCEditor */
@@ -624,11 +629,11 @@ function addRaces() {
             // Create country flags options
             for (var i = 0; i < races.length; i++) {
                 $(
-                    '<img src="/images/smiles/'+races[i]+'" alt="">'
-            )
-            .data('race', races[i])
+                    '<img src="/images/smiles/' + races[i] + '" alt="">'
+                )
+                    .data('race', races[i])
                     .click(function (e) {
-                        editor.insert('<img src="/images/smiles/'+$(this).data('race')+'" alt="">');
+                        editor.insert('<img src="/images/smiles/' + $(this).data('race') + '" alt="">');
                         editor.closeDropDown(true);
 
                         e.preventDefault();
@@ -659,11 +664,11 @@ function addCountries() {
             // Create country flags options
             for (var i = 0; i < flags.length; i++) {
                 $(
-                    '<span class="flag-icon flag-icon-'+flags[i]+'" title="'+flags[i]+'"></span>'
+                    '<span class="flag-icon flag-icon-' + flags[i] + '" title="' + flags[i] + '"></span>'
                 )
                     .data('flag', flags[i])
                     .click(function (e) {
-                        editor.insert('<img src="/flags/editor/'+$(this).data('flag')+'.png" alt="">');
+                        editor.insert('<img src="/flags/editor/' + $(this).data('flag') + '.png" alt=""/>');
                         editor.closeDropDown(true);
 
                         e.preventDefault();
@@ -677,19 +682,19 @@ function addCountries() {
 }
 
 function addUpload() {
-    sceditor.command.set("upload", {       
+    sceditor.command.set("upload", {
         exec: function (caller) {
-            var	editor  = this;
-            var content =document.createElement("DIV");
+            var editor = this;
+            var content = document.createElement("DIV");
             var div = '<form id="upload_form"><label for="upload">Upload</label> ' +
                       '<input type="file" id="upload" dir="ltr"  /></div>' +
                       '<div><input type="button" class="button" value="Upload" />' +
                       '</form>';
             $(content).append(div);
             $(content).on('click', '.button', function (e) {
-                var	input = $(content).find("#upload")[0];  
-                if (input.value) {                 
-                    if (input.files && input.files[0]) {                          
+                var input = $(content).find("#upload")[0];
+                if (input.value) {
+                    if (input.files && input.files[0]) {
                         $.ajaxSetup({
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -706,18 +711,18 @@ function addUpload() {
                             processData: false, // NEEDED, DON'T OMIT THIS
                             success: function (result) {
                                 if (result.success) {
-                                    editor.insert('<img src="'+result.data+'" alt="" style="max-width: 100%;">');
+                                    editor.insert('<img src="' + result.data + '" alt="" style="width: 100%;">');
                                 } else {
                                     alert(result.data) //
-                                }                            
+                                }
                             },
                             error: function (e) {
                                 console.log(e)
                             }
-                        });                        
+                        });
                     }
                 } else {
-                    alert ("Please select file");
+                    alert("Please select file");
                 }
                 editor.closeDropDown(true);
                 e.preventDefault();

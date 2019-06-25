@@ -43,7 +43,7 @@ class GeneralViewHelper
     protected $banner;
     protected $active_banners;
     protected $question;
-    protected $answer;
+    protected $answers;
     protected $new_users;
     protected $game_version;
     protected $user_gallery;
@@ -128,13 +128,24 @@ class GeneralViewHelper
     }
 
     /**
-     * Get answer for user
+     * Get user questions
      *
      * @return mixed
      */
-    public function getAnswers()
+    public function getUserQuestions()
     {        
-        return InterviewQuestionsService::getUserAnswerQuestion();        
+        self::$instance->answers = self::$instance->answers ?? InterviewQuestionsService::getUserQuestion();
+        return self::$instance->answers;
+    }
+
+    /**
+     * Get user answer
+     *
+     * @return mixed
+     */
+    public function getUserAnswers($question_id)
+    {        
+        return InterviewQuestionsService::getUserAnswer($question_id);
     }
 
     /**

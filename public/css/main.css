@@ -2643,3 +2643,27 @@ span.user-name {
 /**------------------------------------*/
 /*---------END ERROR PAGE-------------------*/
 /*---------------------------------------*/
+
+
+/* upload overlay */
+/* body.upload-overlay-open{
+  overflow: hidden;
+}
+body .upload-overlay {
+  position: fixed;
+  height: 100%;
+  background: rgba(0,0,0,0.25);
+  width: 100%;
+  z-index: 9999;
+  top: 0;
+  overflow-y: hidden;
+}
+
+body .upload-overlay .showImg{
+  width: 960px;
+  height: 500px;
+  margin: auto;
+  border: solid 1px gray;
+  background: white
+  
+} */
