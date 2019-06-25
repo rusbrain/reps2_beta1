@@ -111,7 +111,7 @@ class InterviewQuestionsService
         }
 
         $data = $data->get();
-        // dd($data);
+
         $favorite = clone $data;
         $favorite = $favorite->where('is_favorite')->sortBy('created_at')->last();
         if ($favorite){
@@ -132,6 +132,11 @@ class InterviewQuestionsService
         return [];
     }
 
+    /**
+     * Get random interview answers for user
+     *
+     * @return mixed
+     */
     public static function getUserQuestion()
     {
         $data = InterviewQuestion::where('is_active', 1)->has('answers');
@@ -165,6 +170,11 @@ class InterviewQuestionsService
         return [];
     }
 
+    /**
+     * Get random interview answers for user
+     *
+     * @return mixed
+     */
     public static function getUserAnswerQuestion() 
     {
         $user_question = InterviewQuestionsService::getUserQuestion();

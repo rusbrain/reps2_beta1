@@ -1,11 +1,11 @@
 @php
     $random_question = $general_helper->getRandomQuestion();
+    $answers = $general_helper->getAnswers();
 @endphp
 @if( Auth::user())
-    <div class="widget-wrapper">
-        <div class="widget-header">Голосование</div>
-        @if(!empty($random_question))
-            
+    @if(!empty($random_question))
+        <div class="widget-wrapper">
+            <div class="widget-header">Голосование</div>             
             <div class="widget-title">{{$random_question->question}}</div>
             @if(isset($random_question->answers) && !empty($random_question->answers))
                 <div id="view-results-response" class="view-results-response">
@@ -30,24 +30,16 @@
                         Посмотреть результаты</a>
                 </div>
             @endif
-        @else
-            @php 
-                $answers = $general_helper->getAnswers();
-            @endphp
+        </div>
+    @elseif(!empty($answers))
+        <div class="widget-wrapper">
+            <div class="widget-header">Голосование</div> 
             <div class="widget-title">{{$answers->question}}</div>
                 <div id="view-results-response" class="view-results-response">
-                @php $total = 0; @endphp
-                @foreach($answers->answers as $answer)
-                    @php $total = $total + $answer->user_answers_count @endphp
-                    <div class="vote-response">
-                        <span>{!! $answer->answer !!}</span>
-                        <span>{{$answer->user_answers_count}}</span>
-                    </div>
-                @endforeach
-                <div class="sidebar-widget-subtitle">Total votes: {{$total}} </div>
-            </div>
-        @endif
-    </div>
+                @include('sidebar-widgets.answers-result')
+            </div>       
+        </div>
+    @endif
 @endif
 
 

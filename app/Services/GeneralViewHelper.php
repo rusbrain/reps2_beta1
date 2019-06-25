@@ -134,8 +134,7 @@ class GeneralViewHelper
      */
     public function getAnswers()
     {        
-        return InterviewQuestionsService::getUserAnswerQuestion();
-        
+        return InterviewQuestionsService::getUserAnswerQuestion();        
     }
 
     /**
