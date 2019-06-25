@@ -180,8 +180,8 @@
                 i++;
             });
 
-            $('.quote img').each(function () {
-                $(this).attr('data-id', first_comment + j);
+            $('#ajax_section_comments .quote img').each(function () {
+                $(this).attr('data-id', first_comment + j);console.log(first_comment, j)
                 j++;
             });
         }
