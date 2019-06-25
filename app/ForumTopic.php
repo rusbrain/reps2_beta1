@@ -337,7 +337,7 @@ class ForumTopic extends Model
      */
     public static function getLastForums ()
     {
-        return ForumTopic::new_forums()->where('approved', 1)->orWhere('news', 1)->with([
+        return ForumTopic::new_forums()->where('approved', 1)->Where('news', 1)->with([
             'user' => function ($q) {
                 $q->withTrashed()->with('avatar');
             }
