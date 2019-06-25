@@ -133,7 +133,9 @@
             /**crete user info sring*/
             var user = '[u]' + quoted_user + ':[/u]';
             /**create quote string*/
-            var quote = '[quote]' + selection.toString() + '[/quote]';
+            var selectionString = selection.toString();
+            if(selectionString == "") selectionString = " ";
+            var quote = '[quote]' + selectionString + '[/quote]';
             /**create full quote text*/
             var text = url + user + quote;
 
@@ -181,7 +183,7 @@
             });
 
             $('#ajax_section_comments .quote img').each(function () {
-                $(this).attr('data-id', first_comment + j);console.log(first_comment, j)
+                $(this).attr('data-id', first_comment + j);
                 j++;
             });
         }
