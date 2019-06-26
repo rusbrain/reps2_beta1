@@ -380,6 +380,10 @@ Route::group(['middleware' => 'activity'], function () {
                 });
             });
 
+            Route::group(['prefix' => 'stream'], function () {
+                Route::get('/', 'StreamController@index')->name('admin.stream');
+            });
+
             Route::group(['prefix' => 'country'], function () {
                 Route::get('/', 'CountryController@index')->name('admin.country');
                 Route::get('/pagination', 'CountryController@pagination')->name('admin.country.pagination');
@@ -429,6 +433,17 @@ Route::group(['middleware' => 'activity'], function () {
                 Route::get('/{id}/delete', 'FooterManagementController@destroy')->name('admin.footer.delete');
                 Route::get('/{id}/approved', 'FooterManagementController@approved')->name('admin.footer.approved');
                 Route::get('/{id}/not_approved','FooterManagementController@notApproved')->name('admin.footer.not_approved');
+
+                Route::group(['prefix' => 'customurl'], function () {
+                    Route::get('/', 'FooterUrlsController@index')->name('admin.footer.customurl');
+                    Route::get('/create', 'FooterUrlsController@create')->name('admin.footer.customurl.create');
+                    Route::post('/store', 'FooterUrlsController@store')->name('admin.footer.customurl.store');
+                    Route::get('/{id}/edit', 'FooterUrlsController@edit')->name('admin.footer.customurl.edit');
+                    Route::post('/{id}/update', 'FooterUrlsController@update')->name('admin.footer.customurl.update');
+                    Route::get('/{id}/delete', 'FooterUrlsController@destroy')->name('admin.footer.customurl.delete');
+                    Route::get('/{id}/approved', 'FooterUrlsController@approved')->name('admin.footer.customurl.approved');
+                    Route::get('/{id}/not_approved','FooterUrlsController@notApproved')->name('admin.footer.customurl.not_approved');
+                });
             });
 
             Route::group(['prefix' => 'banner'], function () {

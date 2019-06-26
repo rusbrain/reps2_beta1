@@ -13,11 +13,15 @@ class CommentEditorColumn extends Migration
      */
     public function up()
     {
-        Schema::table('comments', function(Blueprint $table) {
-            $table->unsignedInteger('last_editor_id')->nullable();
+       
 
-            $table->foreign('last_editor_id')->references('id')->on('users');
-        });
+        if (!Schema::hasColumn('comments', 'last_editor_id')) {
+            Schema::table('comments', function(Blueprint $table) {
+                $table->unsignedInteger('last_editor_id')->nullable();
+    
+                $table->foreign('last_editor_id')->references('id')->on('users');
+            });
+        }
     }
 
     /**

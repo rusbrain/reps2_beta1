@@ -4,7 +4,7 @@ $general = ($menu_name == 'admin_panel' || $menu_name == 'country' || $menu_name
 $user = ($menu_name == 'user' || $menu_name == 'user/role' || $menu_name == 'user/gallery' ) ? true :false;
 $forum = ($menu_name == 'forum' || $menu_name == 'forum/topic') ? true :false;
 $replay = ($menu_name == 'replay' || $menu_name == 'replay/map' || $menu_name == 'replay/type') ? true :false;
-$footer = ($menu_name == 'footer') ? true :false;
+$footer = ($menu_name == 'footer' || $menu_name == 'footer/customurl') ? true :false;
 $banner = ($menu_name == 'banner') ? true :false;
 $dbbackup = ($menu_name == 'dbbackup') ? true :false;
 @endphp
@@ -82,6 +82,7 @@ $dbbackup = ($menu_name == 'dbbackup') ? true :false;
         <ul class="treeview-menu  {{ $footer ? 'menu-open' : ''}}">
             <!-- Optionally, you can add icons to the links -->
             <li @if($menu_name == 'footer') class="active" @endif><a href="{{route('admin.footer')}}"><i class="fa fa-film"></i> <span>Подвал/Footer сайта</span></a></li>
+            <li @if($menu_name == 'footer/customurl') class="active" @endif><a href="{{route('admin.footer.customurl')}}"><i class="fa fa-film"></i> <span>Подвал/Footer Urls</span></a></li>
         </ul>
     </li>
     {{-- Banner --}}
