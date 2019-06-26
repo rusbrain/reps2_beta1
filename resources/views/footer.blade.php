@@ -10,7 +10,7 @@
                     <img src="{{route('home')}}/images/logo.png" alt="" class="margin-bottom-20">
                 </a>
                 <div>
-                    Everything about Starcraft Broodwar world Pro-gaming
+                        Everything about StarCraft®: Remastered
                 </div>
             </div>
             <div class="col">
