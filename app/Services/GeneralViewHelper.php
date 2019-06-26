@@ -83,7 +83,7 @@ class GeneralViewHelper
     public function getFooterUrls()
     {
         if (!self::$instance->footer_urls) {
-            $footer_urls = Footerurl::where('approved', 1)->get();         
+            $footer_urls = Footerurl::where('approved', 1)->orderBy('updated_at', 'desc')->limit(10)->get();         
             self::$instance->footer_urls = $footer_urls;
           
         }
