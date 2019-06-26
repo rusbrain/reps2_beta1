@@ -11,6 +11,7 @@ namespace App\Services;
 use App\Comment;
 use App\Country;
 use App\Footer;
+use App\Footerurl;
 use App\ForumTopic;
 use App\Services\Base\{
     BaseDataService, InterviewQuestionsService
@@ -50,6 +51,7 @@ class GeneralViewHelper
     protected $section_icons;
     protected static $instance;
     protected $footer_widgets;
+    protected $footer_urls;
 
     public function __construct()
     {
@@ -66,13 +68,26 @@ class GeneralViewHelper
     public function getFooterWidgets()
     {
         if (!self::$instance->footer_widgets) {
-            $footer_widgets = Footer::where('approved', 1)->get();
+            $footer_widgets = Footerurl::where('approved', 1)->get();
 
             foreach ($footer_widgets as $footer_widget) {
                 self::$instance->footer_widgets[$footer_widget->position] = $footer_widget;
             }
         }
         return self::$instance->footer_widgets;
+    }
+
+    /**
+     * Get footer's custom urls
+     */
+    public function getFooterUrls()
+    {
+        if (!self::$instance->footer_urls) {
+            $footer_urls = Footerurl::where('approved', 1)->get();         
+            self::$instance->footer_urls = $footer_urls;
+          
+        }
+        return self::$instance->footer_urls;
     }
 
     /**

@@ -1,5 +1,5 @@
 @php
-    $last_news = $general_helper->getLastNewsFooter();
+    $footer_urls = $general_helper->getFooterUrls();
     $footer_widgets = $general_helper->getFooterWidgets();
 @endphp
 <section class="section-footer-top">
@@ -109,11 +109,11 @@
                     <h2>Последние новости:</h2>
                 </div>
                 <div class="footer-user-birthday-wrapper">
-                    @if($last_news)
-                        @foreach($last_news as $last_forum)
-                            <a href="{{route('forum.topic.index',['id'=>$last_forum->id])}}"
+                    @if($footer_urls)
+                        @foreach($footer_urls as $custom_url)
+                            <a href="{{$custom_url->url}}" target="_blank"
                                class="footer-user-birthday"
-                               title="{!! $last_forum->title??'название новости' !!}">{!! $last_forum->title??'название новости' !!}</a>
+                               title="{!! $custom_url->title !!}">{!! $custom_url->title !!}</a>
                         @endforeach
                     @endif
                 </div>
