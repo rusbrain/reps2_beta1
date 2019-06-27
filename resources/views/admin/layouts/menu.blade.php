@@ -4,7 +4,7 @@ $general = ($menu_name == 'admin_panel' || $menu_name == 'country' || $menu_name
 $user = ($menu_name == 'user' || $menu_name == 'user/role' || $menu_name == 'user/gallery' ) ? true :false;
 $forum = ($menu_name == 'forum' || $menu_name == 'forum/topic') ? true :false;
 $replay = ($menu_name == 'replay' || $menu_name == 'replay/map' || $menu_name == 'replay/type') ? true :false;
-$stream = ($menu_name == 'stream' ) ? true :false;
+$stream = ($menu_name == 'stream' || $menu_name == 'stream/header' ) ? true :false;
 $footer = ($menu_name == 'footer' || $menu_name == 'footer/customurl') ? true :false;
 $banner = ($menu_name == 'banner') ? true :false;
 $dbbackup = ($menu_name == 'dbbackup') ? true :false;
@@ -68,6 +68,7 @@ $dbbackup = ($menu_name == 'dbbackup') ? true :false;
         </a>
         <ul class="treeview-menu  {{ $stream ? 'menu-open' : ''}}">
             <li @if($menu_name == 'stream') class="active" @endif><a href="{{route('admin.stream')}}"><i class="fa fa-film"></i> <span>Streams</span></a></li>
+            <li @if($menu_name == 'stream/header') class="active" @endif><a href="{{route('admin.stream.header')}}"><i class="fa fa-header"></i> <span>Заголовок</span></a></li>
         </ul>
     </li>
 

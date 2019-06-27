@@ -391,6 +391,15 @@ Route::group(['middleware' => 'activity'], function () {
                 Route::get('/create', 'StreamController@create')->name('admin.stream.create');
                 Route::post('/create', 'StreamController@store')->name('admin.stream.store');
                 Route::post('/{id}/edit', 'StreamController@save')->name('admin.stream.save');
+
+                Route::group(['prefix' => 'header'], function(){
+                    Route::get('/', 'StreamHeaderController@index')->name('admin.stream.header');
+                    Route::get('/create', 'StreamHeaderController@create')->name('admin.stream.header.create');
+                    Route::post('/store', 'StreamHeaderController@store')->name('admin.stream.header.store');
+                    Route::get('/{id}/edit', 'StreamHeaderController@edit')->name('admin.stream.header.edit');
+                    Route::post('/{id}/update', 'StreamHeaderController@update')->name('admin.stream.header.update');
+                    Route::get('/{id}/delete', 'StreamHeaderController@destroy')->name('admin.stream.header.delete');
+                });
             });
 
             Route::group(['prefix' => 'country'], function () {
