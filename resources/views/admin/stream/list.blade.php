@@ -6,7 +6,7 @@
 @endsection
 
 @section('page_header')
-    Replays
+    Streams
 @endsection
 
 @section('breadcrumb')
