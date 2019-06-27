@@ -4,6 +4,7 @@ $general = ($menu_name == 'admin_panel' || $menu_name == 'country' || $menu_name
 $user = ($menu_name == 'user' || $menu_name == 'user/role' || $menu_name == 'user/gallery' ) ? true :false;
 $forum = ($menu_name == 'forum' || $menu_name == 'forum/topic') ? true :false;
 $replay = ($menu_name == 'replay' || $menu_name == 'replay/map' || $menu_name == 'replay/type') ? true :false;
+$stream = ($menu_name == 'stream' ) ? true :false;
 $footer = ($menu_name == 'footer' || $menu_name == 'footer/customurl') ? true :false;
 $banner = ($menu_name == 'banner') ? true :false;
 $dbbackup = ($menu_name == 'dbbackup') ? true :false;
@@ -56,6 +57,20 @@ $dbbackup = ($menu_name == 'dbbackup') ? true :false;
             <li @if($menu_name == 'forum/topic') class="active" @endif><a href="{{route('admin.forum_topic')}}"><i class="fa fa-list"></i> <span>Темы форума</span></a></li>
         </ul>
     </li>
+
+    {{-- Stream --}}
+    <li class="treeview {{ $stream ? 'active' : ''}}">
+        <a href="#">
+            <span>Stream</span>
+            <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu  {{ $stream ? 'menu-open' : ''}}">
+            <li @if($menu_name == 'stream') class="active" @endif><a href="{{route('admin.stream')}}"><i class="fa fa-film"></i> <span>Streams</span></a></li>
+        </ul>
+    </li>
+
     {{-- Replay --}}
     <li class="treeview {{ $replay ? 'active' : ''}}">
         <a href="#">

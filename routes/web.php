@@ -382,6 +382,15 @@ Route::group(['middleware' => 'activity'], function () {
 
             Route::group(['prefix' => 'stream'], function () {
                 Route::get('/', 'StreamController@index')->name('admin.stream');
+                Route::get('/pagination', 'StreamController@pagination')->name('admin.stream.pagination');
+                Route::get('/{id}/approve', 'StreamController@approve')->name('admin.stream.approve');
+                Route::get('/{id}/not_approve', 'StreamController@notApprove')->name('admin.stream.not_approve');
+                Route::get('/{id}/remove', 'StreamController@remove')->name('admin.stream.remove');
+                Route::get('/{id}/view', 'StreamController@getStream')->name('admin.stream.view');
+                Route::get('/{id}/edit', 'StreamController@edit')->name('admin.stream.edit');
+                Route::get('/create', 'StreamController@create')->name('admin.stream.create');
+                Route::post('/create', 'StreamController@store')->name('admin.stream.store');
+                Route::post('/{id}/edit', 'StreamController@save')->name('admin.stream.save');
             });
 
             Route::group(['prefix' => 'country'], function () {

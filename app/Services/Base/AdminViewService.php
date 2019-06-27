@@ -31,6 +31,16 @@ class AdminViewService extends ViewService
     }
 
     /**
+     * @param $data
+     * @return string
+     */
+
+     public static function getStreams(LengthAwarePaginator $streams)
+     {
+         return self::getView('admin.stream.list_table', $streams);
+     }
+
+    /**
      * @param LengthAwarePaginator $countries
      * @return string
      */
