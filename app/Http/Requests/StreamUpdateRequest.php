@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Replay;
+use App\Stream;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StreamUpdateRequest extends FormRequest
