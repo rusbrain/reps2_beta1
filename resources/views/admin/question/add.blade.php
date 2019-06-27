@@ -30,10 +30,10 @@
                             <input type="checkbox" name="is_active" class="flat-red" {{old('approved')?'checked':''}} value="1">
                             Активный
                         </label><br>
-                        <label>
+                        {{-- <label>
                             <input type="checkbox" name="is_favorite" class="flat-red" {{old('approved')?'checked':''}} value="1">
                             Обязательный
-                        </label><br>
+                        </label><br> --}}
                         <label>
                             <input type="checkbox" name="for_login" class="flat-red" {{old('approved')?'checked':''}} value="1">
                             Только для зарегестрированных пользователей
