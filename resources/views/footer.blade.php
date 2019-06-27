@@ -106,7 +106,7 @@
             </div>
             <div class="col">
                 <div class="footer-title">
-                    <h2>Пользовательский Urls:</h2>
+                    <h2>Полезное:</h2>
                 </div>
                 <div class="footer-user-birthday-wrapper">
                     @if($footer_urls)
