@@ -35,6 +35,7 @@ class UserController extends Controller
         if (!$user){
             abort(404);
         }
+        
         $friends = UserFriend::getFriends($user);
         $friendly = UserFriend::getFriendlies($user);
 
