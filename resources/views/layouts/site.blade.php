@@ -36,7 +36,36 @@
     <!--SECTION CONTENT-->
     <section>
         <div class="container">
+            <!--Stream Section-->            
             <div class="row">
+                <div class="col-md-12">
+                    <div class="stream-headline-wrapper">
+                        @yield('stream-header')
+                    </div>
+                </div>
+            </div>
+            <div class="row stream-section">
+                <div class="col-md-3">
+                    <div class="stream-message-wrapper">
+                        @yield('stream-message')
+                    </div>
+                </div>
+
+                <div class="col-md-6 video-frame">
+                    <div class="stream-wrapper">
+                        @yield('video-frame-section')
+                    </div>
+                </div>
+
+                <div class="col-md-3 streamlist">
+                    <div class="stream-list-wrapper">
+                        @yield('stream-list')
+                    </div>
+                </div>
+            </div>
+            <!--END Stream Section-->
+           
+            <div class="row">                
                 <!--SIDEBAR LEFT-->
                 <div class="col-md-3">
                     <div class="sidebar-wrapper">

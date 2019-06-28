@@ -121,6 +121,14 @@ trait UserRelation
         return $this->hasMany('App\ForumTopic', 'user_id');
     }
 
+     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function newstopics()
+    {
+        return $this->hasMany('App\ForumTopic', 'user_id')->where('news', 1);
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */

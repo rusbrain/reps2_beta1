@@ -59,6 +59,7 @@ class GeneralViewHelper
             self::$instance = $this;
         }
     }
+   
 
     /**
      * Get footer's widgets
@@ -234,6 +235,15 @@ class GeneralViewHelper
     {
         self::$instance->active_banners = self::$instance->active_banners ?? BaseDataService::getActiveBanners();
         return self::$instance->active_banners;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStreamHeader()
+    {
+        self::$instance->streamheader = self::$instance->streamheader ?? BaseDataService::getStreamHeader();
+        return self::$instance->streamheader;
     }
 
     /**

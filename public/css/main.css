@@ -979,6 +979,41 @@ form label {
 }
 /*******End HEADER********/
 
+
+/****************Stream Setion Style*****************/
+
+/** Stream Headline */
+.stream-headline-wrapper {
+  margin-bottom: 10px;
+}
+.stream-headline-wrapper  .section-title {
+  border-radius: 3px;
+}
+.stream-headline-wrapper a {
+  height: 30px;
+  line-height: 30px;
+  color: #fff;
+  padding-left: 15px;
+  font-family: "Roboto-Medium", sans-serif;
+}
+.stream-headline-wrapper h1 p {
+    margin: 0;
+    margin-right: 10px;
+    font-size: 12px;
+    padding: 5px 10px;
+    border: solid 1px #4a96b7;
+    border-radius: 3px;
+    text-transform: capitalize;
+    background: #4890af;
+    cursor: pointer;
+}
+
+.stream-headline-wrapper h1 p:hover{
+  background: #207396;
+}
+
+/****************************************************/
+
 /*********SIDEBAR LEFT*******/
 .sidebar-wrapper {
   border-radius: 3px;
@@ -2667,3 +2702,43 @@ body .upload-overlay .showImg{
   background: white
   
 } */
+
+
+/* TOPs page */
+
+.tops-wrapper .tops-info {
+  font-family: "NotoSans-Bold", sans-serif;
+  color: #4d4d4d;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  font-size: 12px;
+  align-items: center;
+  justify-content: space-between;
+  max-height:400px;
+  overflow-y:auto;
+}
+
+.tops-wrapper {
+  background: #ffffff;
+  font-family: "Roboto-Medium", sans-serif;
+  padding-bottom: 10px;
+}
+
+.tops-wrapper .tops-info .widget-top-users {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    color: #737373;
+}
+.tops-wrapper .widget-top-users  > span.user-name {
+  margin-left: 15px;
+  max-width: 100px;
+  width: 100px;
+  color: #737373;
+  word-break: break-word;
+}
+.tops-wrapper .widget-top-users  > span.user-value {
+  margin-left: auto;
+  max-width: 250px;
+  word-break: break-word;
+}

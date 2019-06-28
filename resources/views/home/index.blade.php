@@ -1,6 +1,27 @@
 @extends('layouts.site')
 @inject('general_helper', 'App\Services\GeneralViewHelper')
 
+{{-- Stream Section --}}
+
+@section('stream-header')
+    <!-- Headline -->
+    @include('stream-section.headline')
+    <!-- END Headline -->
+@endsection
+
+@section('stream-message')
+    @include('stream-section.message')
+@endsection
+
+@section('video-frame-section')
+    @include('stream-section.stream')
+@endsection
+
+@section('stream-list')
+    @include('stream-section.stream-list')
+@endsection
+
+{{-- Main Section --}}
 @section('sidebar-left')
     <!-- Gosu Replay -->
     @include('sidebar-widgets.gosu-replays')
@@ -64,6 +85,18 @@
                 $('.load-wrapp').show();
                 var page = $(this).attr('data-page');
                 getLastNews(page);
+            })
+
+            // Stream section collapse and expand
+            var toggle_flag = 0;
+            $(".toggle-action").on("click", function(){
+                toggle_flag = !toggle_flag;
+                $(".stream-section").slideToggle(function(){
+                    if (toggle_flag)
+                        $(".toggle-action").text('show')
+                    else
+                        $(".toggle-action").text('hide')
+                });
             })
         });
 

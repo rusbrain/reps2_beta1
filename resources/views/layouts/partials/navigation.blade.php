@@ -47,6 +47,9 @@
         <li class="">
             <a href="{{route('news')}}" class="menu-link">Новости</a>
         </li>
+        <li class="">
+            <a href="{{route('tops')}}" class="menu-link">Верхушки</a>
+        </li>
         <li>
             <a href="#" class="menu-link display-none">Контакты</a>
         </li>

@@ -147,6 +147,7 @@ trait UserData
         $top_rating_users = $top_rating_users ?? User::where('is_ban', 0)->orderBy('rating', 'desc')->limit(10)->get();
         return $top_rating_users;
     }
+  
 
     /**
      * @return UserRole[]|\Illuminate\Database\Eloquent\Collection

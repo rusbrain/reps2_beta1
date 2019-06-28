@@ -8,7 +8,7 @@
 
 namespace App\Services\Base;
 
-use App\{ForumTopic, Replay, User, Banner};
+use App\{ForumTopic, Replay, User, Banner, StreamHeader};
 use App\Http\Requests\QuickEmailRequest;
 use App\Mail\QuickEmail;
 use Carbon\Carbon;
@@ -76,5 +76,10 @@ class BaseDataService
     public static function getActiveBanners()
     {
         return Banner::where('is_active',1)->has('file')->with('file')->get();
+    }
+
+    public static function getStreamHeader()
+    {
+        return StreamHeader::orderBy('updated_at', 'Desc')->first();
     }
 }

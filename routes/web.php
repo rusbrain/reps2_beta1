@@ -46,6 +46,9 @@ Route::group(['middleware' => 'activity'], function () {
     Route::get('news', 'NewsController@index')->name('news');
     Route::get('news/pagination', 'NewsController@pagination')->name('news.pagination');
 
+    /**tops page */
+    Route::get('tops', 'TopsController@index')->name('tops');
+
     /**sidebar voting*/
     Route::post('question/{id}/set_answer', 'InterviewQuestionController@setAnswer')->name('question.set_answer');
     Route::post('question/{id}/view_answer', 'InterviewQuestionController@getResult')->name('question.view_answer');
