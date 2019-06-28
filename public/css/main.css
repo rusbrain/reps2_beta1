@@ -2730,6 +2730,10 @@ body .upload-overlay .showImg{
     align-items: center;
     color: #737373;
 }
+.tops-wrapper .tops-info .widget-top-users .logged-user-avatar {
+  width:30px !important;
+  height:30px !important
+}
 .tops-wrapper .widget-top-users  > span.user-name {
   margin-left: 15px;
   max-width: 100px;

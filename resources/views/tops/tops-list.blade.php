@@ -15,8 +15,8 @@
         @foreach($tops_users[$key] as $user)
         <div class="widget-top-users">       
             <a href="{{route('user_profile',['id'=>$user->id])}}" class="logged-user-avatar">
-                @if(isset($user->avatar) && file_exists(route('home').$user->avatar->link))
-                    <img class="img-circle img-bordered-sm" src="{{route('home').$user->avatar->link}}" alt="A" onerror="this.parentElement.innerHTML = '';">
+                @if(isset($user->avatar) )
+                    <img class="img-circle img-bordered-sm" src="{{route('home').$user->avatar->link}}" alt="A">
                 @else
                     <img class="img-circle img-bordered-sm" src="{{route('home').'/dist/img/avatar.png'}}" alt="A">
                 @endif
