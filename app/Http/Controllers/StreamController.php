@@ -49,16 +49,44 @@ class StreamController extends Controller
      * @param Request $request
      * @return
      */
-    public function store(Request $request)
+    public function store(StreamStoreRequest $request)
     {
+        StreamService::store($request);
+        return redirect()->route('stream.my_stream');
+    }
 
+     /**
+     * @param $stream_id
+     * @return mixed
+     */
+    private function getStreamObject($stream_id)
+    {
+        return Stream::getstreamById($stream_id);
     }
 
     /**
-     * View stream
+     * @param $stream_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function view($stream_id)
+    public function edit($stream_id)
     {
-
+        return view('stream.edit')->with(['stream'=> $this->getStreamObject($stream_id)]);
     }
+
+    /**
+     * @param StreamUpdateRequest $request
+     * @param $replay_id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function save(StreamUpdateRequest $request, $stream_id)
+    {
+        $stream = Stream::find($stream_id);
+
+        if($stream){
+            StreamService::updateStream($request, $stream);
+            return redirect()->route('stream.my_stream');
+        }
+        return abort(404);
+    }
+
 }

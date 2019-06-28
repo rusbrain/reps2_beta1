@@ -734,3 +734,40 @@ function addUpload() {
     });
 }
 
+function addStream() {
+    sceditor.command.set("streams", {
+        exec: function (caller) {
+            var	editor  = this;
+            var content =document.createElement("DIV");
+            var div = 
+                '<label for="link" unselectable="on">Stream URL:</label> '+
+                '<input type="text" id="stream" dir="ltr" placeholder="https://">'+
+                '</div>'+
+                '<div unselectable="on">'+
+                '<label for="width" unselectable="on">Ширина (необязательно):</label>'+
+                '<input type="text" id="width" size="2" dir="ltr">'+
+                '</div>'+
+                '<div unselectable="on">'+
+                '<label for="height" unselectable="on">Высота (необязательно):</label>'+
+                '<input type="text" id="height" size="2" dir="ltr">'+
+                '</div>'+
+                '<div unselectable="on">'+
+                '<input type="button" class="button" value="Вставить">'
+                ;
+            $(content).append(div);
+            $(content).on('click', '.button', function (e) {
+                var	input = $(content).find("#stream");
+                if(input.val()) {
+                    var width = ($('#width').val()) ? $('#width').val() : '640';
+                    var height = ($('#height').val()) ? $('#height').val() : '510';
+                    editor.insert('<iframe src="'+input.val()+'" height="'+height+'" width="'+width+'" frameborder="0" scrolling="no" allowfullscreen="true">'+
+                    '</iframe>');
+                }
+                editor.closeDropDown(true);
+                e.preventDefault();
+            })
+            editor.createDropDown(caller, "insertstream", content);
+        },
+        tooltip: "Video Stream"
+    });
+}

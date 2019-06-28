@@ -205,7 +205,9 @@ Route::group(['middleware' => 'activity'], function () {
             Route::get('/my_stream', 'StreamController@index')->name('stream.my_stream');
             Route::get('/pagination', 'StreamController@pagination')->name('stream.pagination');
             Route::get('/{id}/edit', 'StreamController@edit')->name('stream.edit');
+            Route::post('/{id}/update', 'StreamController@save')->name('stream.update');
             Route::get('/create', 'StreamController@create')->name('stream.create');
+            Route::post('/store', 'StreamController@store')->name('stream.store');
         });
     });
 
