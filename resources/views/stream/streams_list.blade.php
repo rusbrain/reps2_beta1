@@ -1,14 +1,15 @@
 @inject('general_helper', 'App\Services\GeneralViewHelper')
 @php @endphp
-@if($streams)
-    @php $n = 0; @endphp
-    @foreach($streams as $my_stream)
-        <div class="content-box">
-            @if($n == 0)
-                <div class="col-md-12 section-title">
-                    <h1>Мои Cтрим</h1>
-                </div>
-            @endif
+
+<div class="content-box">       
+    <div class="col-md-12 section-title">
+        <h1>Мои Cтрим</h1>
+    </div>
+       
+    @if($streams)
+        @php $n = 0; @endphp
+        @foreach($streams as $my_stream)
+        
             <div class="col-md-12 mystream-wrapper">               
                 <div class="stream-title">
                     <h2>{!! $my_stream->title !!}</h2>  
@@ -43,9 +44,10 @@
                     </a>
                 </div>
             </div><!-- close div /.mystream-wrapper -->
-        </div><!-- close div /.content-box -->
-        @php $n++; @endphp
-    @endforeach
-@else
-    <h1> Hет стрим</h1>
-@endif
+        
+            @php $n++; @endphp
+        @endforeach
+    @else
+        <h1> Hет стрим</h1>
+    @endif
+</div><!-- close div /.content-box -->
