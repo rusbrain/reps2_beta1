@@ -67,30 +67,3 @@
     <!-- END Gallery -->
 @endsection
 
-@section('js')
-    <script>
-        $(function () {
-            getSections(1);
-            $('.pagination-content').on('click', '.page-link', function (e) {
-                e.preventDefault();
-                $('.load-wrapp').show();
-                var page = $(this).attr('data-page');
-                getSections(page);
-            })
-        });
-        function getSections(page) {
-            var container = $('#ajax_section_news');
-            var body = $("html, body");
-            var path = container.attr('data-path');
-            $.get(path +'&page='+page, {}, function (data) {
-                container.html(data.news);
-                $('.pagination-content').html(data.pagination);
-                $('.load-wrapp').hide();
-
-                /**move to top of page*/
-                moveToTop(body);
-            });
-        }
-    </script>
-@endsection
-
