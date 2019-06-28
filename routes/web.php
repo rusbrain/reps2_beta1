@@ -200,6 +200,13 @@ Route::group(['middleware' => 'activity'], function () {
         Route::get('/replay/{id}/comments', 'ReplayCommentController@pagination')->name('replay.comment.pagination');
         Route::get('/{id}', 'ReplayController@show')->name('replay.get');
     });
+    Route::group(['prefix' => 'stream'], function () {
+        Route::group(['middleware' => 'auth'], function () {
+            Route::get('/my_stream', 'StreamController@index')->name('stream.my_stream');
+            Route::get('/pagination', 'StreamController@pagination')->name('stream.pagination');
+            Route::get('/{id}/edit', 'StreamController@edit')->name('stream.edit');
+        });
+    });
 
     Route::group(['prefix' => 'gallery'], function () {
         Route::get('/', 'UserGalleryController@index')->name('gallery.list');

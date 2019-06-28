@@ -89,6 +89,9 @@
                             <a href="{{route('replay.my_gosu')}}">Мои Госу реплеи</a>
                         </li>
                         <li>
+                            <a href="{{route('stream.my_stream')}}">Мои стрим</a>
+                        </li>
+                        <li>
                             <a href="{{route('user.ignore_list')}}">Игнор лист</a>
                         </li>
                     </ul>

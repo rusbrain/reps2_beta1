@@ -246,6 +246,14 @@ class GeneralViewHelper
         return self::$instance->streamheader;
     }
 
+    public function UrlFilter($text)
+    {
+        if(preg_match_all('#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', $text, $match)) {
+            return $match[0][0];
+        }
+        return '';
+    }
+
     /**
      * @param $text
      * @return mixed|null|string|string[]

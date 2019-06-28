@@ -53,6 +53,17 @@ class UserViewService extends ViewService
        ]);
    }
 
+
+    /**
+     * @param LengthAwarePaginator $data
+     * @param string $commentEditPageRoute
+     * @return string
+     */
+    public static function getStreams($data)
+    {
+        return (string) view('stream.streams_list')->with(['streams' => $data ]);
+    }
+
     /**
      * @param LengthAwarePaginator $data
      * @return string

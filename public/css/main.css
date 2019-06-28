@@ -956,7 +956,7 @@ form label {
   left: -1px;
 }
 .logged-user-menu-links.active {
-  height: 285px;
+  height: 325px;
   border-left: 2px solid #efefef;
   border-right: 2px solid #efefef;
   border-bottom: 2px solid #efefef;
@@ -1012,6 +1012,58 @@ form label {
   background: #207396;
 }
 
+
+/* My Stream page */
+.mystream-wrapper {
+  padding-top: 15px;
+    padding-bottom: 15px;
+}
+.mystream-wrapper > div {
+  margin-bottom: 18px;
+}
+
+.mystream-wrapper h2 {
+  margin-bottom: 18px;
+}
+.mystream-info {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}
+.mystream-info .logged-user-avatar {
+  width: 20px;
+  height: 20px;
+  font-size: 12px;
+  margin-right: 5px;
+}
+.mystream-info a {
+  color: #4d4d4d !important;
+  font-family: "Roboto-Medium", sans-serif;
+}
+.mystream-wrapper > div:last-of-type {
+  margin-bottom: 0;
+}
+.mystream-footer {
+  color: #a6a6a6;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.mystream-footer > div {
+  display: flex;
+  align-items: center;
+}
+
+.mystream-footer > div span.stream_id {
+  color:#207396;
+  margin-right: 10px;
+}
+.mystream-footer > div span.approved .confirmed {
+  color: green;
+}
+.mystream-footer > div span.approved .not_confirmed {
+  color: red;
+}
 /****************************************************/
 
 /*********SIDEBAR LEFT*******/
