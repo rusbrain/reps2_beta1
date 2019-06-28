@@ -69,7 +69,7 @@ class GeneralViewHelper
     public function getFooterWidgets()
     {
         if (!self::$instance->footer_widgets) {
-            $footer_widgets = Footerurl::where('approved', 1)->get();
+            $footer_widgets = Footer::where('approved', 1)->get();
 
             foreach ($footer_widgets as $footer_widget) {
                 self::$instance->footer_widgets[$footer_widget->position] = $footer_widget;
