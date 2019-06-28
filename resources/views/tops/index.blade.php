@@ -15,7 +15,7 @@
                     <a href="/">Главная</a>
                 </li>               
                 <li>
-                    <a href="#" class="active">/ Верхушки</a>
+                    <a href="#" class="active">/ Лучшие</a>
                 </li>
             </ul>
         </div>
@@ -25,7 +25,7 @@
     <!--  CONTENT -->
     <div class="content-box">    
         <div class="col-md-12 section-title">
-            <h1>Верхушки</h1>
+            <h1>Лучшие</h1>
         </div>
         
         <div class="tops-wrapper"> 

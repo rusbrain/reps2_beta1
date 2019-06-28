@@ -2730,16 +2730,25 @@ body .upload-overlay .showImg{
     align-items: center;
     color: #737373;
 }
+.tops-wrapper .tops-info .widget-top-users span.position {
+  width: 30px;
+  color: #4890af;
+}
 .tops-wrapper .tops-info .widget-top-users .logged-user-avatar {
   width:30px !important;
   height:30px !important
 }
-.tops-wrapper .widget-top-users  > span.user-name {
+.tops-wrapper .widget-top-users a span.user-name {
   margin-left: 15px;
-  max-width: 100px;
-  width: 100px;
+  max-width: 150px;
+  width: 150px;
+  flex: 0 0 150px;
+  display: flex;
   color: #737373;
   word-break: break-word;
+}
+.tops-wrapper .widget-top-users a span.user-name:hover {
+  color: #4890af;
 }
 .tops-wrapper .widget-top-users  > span.user-value {
   margin-left: auto;
