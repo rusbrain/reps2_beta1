@@ -4,7 +4,7 @@
 @endphp
 @if(!empty($top_rating_users))
     <div class="widget-wrapper">
-        <div class="widget-header">Top кг пользователи</div>
+        <div class="widget-header"><span>Top репутация</span> <a class="top-link" href="{{route('tops')}}">+</a></div>
         @foreach($top_rating_users as $top_rating_user)
             <div class="widget-new-user">
                 <a href="{{route('user_profile',['id'=>$top_rating_user->id])}}">
