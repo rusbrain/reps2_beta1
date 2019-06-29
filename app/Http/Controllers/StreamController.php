@@ -6,6 +6,7 @@ use App\Stream;
 use App\Http\Requests\{ StreamStoreRequest, StreamUpdateRequest};
 use App\Services\Base\{BaseDataService, UserViewService};
 use App\Services\Stream\StreamService;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class StreamController extends Controller
@@ -29,7 +30,7 @@ class StreamController extends Controller
      */
     public function pagination()
     { 
-        $streams = Stream::with('user')->paginate(20);
+        $streams = Stream::with('user')->where('user_id', Auth::user()->id)->paginate(20);
         return [
             'streams'   => UserViewService::getStreams($streams),
             'pagination' => UserViewService::getPagination($streams)
