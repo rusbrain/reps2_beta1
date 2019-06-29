@@ -30,7 +30,7 @@ class StreamController extends Controller
      */
     public function pagination()
     { 
-        $streams = Stream::with('user')->where('user_id', Auth::user()->id)->paginate(20);
+        $streams = Stream::with('user')->where('user_id', Auth::user()->id)->orderBy('updated_at', 'Desc')->paginate(20);
         return [
             'streams'   => UserViewService::getStreams($streams),
             'pagination' => UserViewService::getPagination($streams)

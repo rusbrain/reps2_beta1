@@ -29,7 +29,7 @@ class StreamController extends Controller
      */
     public function pagination()
     {
-        $streams = Stream::withCount('user')->paginate(50);
+        $streams = Stream::withCount('user')->orderBy('updated_at', 'Desc')->paginate(50);
         return BaseDataService::getPaginationData(
             AdminViewService::getStreams($streams), 
             AdminViewService::getPagination($streams)
