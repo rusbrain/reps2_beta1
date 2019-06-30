@@ -2817,9 +2817,10 @@ body.upload-overlay-open .upload-overlay .showImages .images_wrapper label{
 }
 body.upload-overlay-open .upload-overlay .showImages .images_wrapper .images {
   display: inline-block;
-  text-align: center;
   overflow-y: scroll;
   height: 400px;
+  width: 100%;
+  padding: 0 10px;
 }
 
 body.upload-overlay-open .upload-overlay .showImages .images_wrapper .images .prev_image{
