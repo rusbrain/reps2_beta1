@@ -164,6 +164,18 @@ desired effect
 </div>
 <!-- ./wrapper -->
 
+
+{{-- Sceditor UPload overlay --}}
+<div class="upload-overlay">    
+    <div class="showImages">
+        <span class="close_overlay"></span>
+        <div class="all_images"></div>        
+        <button class="open_img">Open</span>            
+    </div>
+</div>
+
+
+
 <!-- jQuery 3 -->
 <script src="{{route('home')}}/bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->

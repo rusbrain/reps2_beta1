@@ -248,19 +248,59 @@ function addCountries() {
         tooltip: "Countries flags"
     });
 }
-
 function addUpload() {
     sceditor.command.set("upload", {
         exec: function (caller) {
-            var	editor  = this;
-            var content =document.createElement("DIV");
-            var div = '<form id="upload_form"><label for="upload">Upload</label> ' +
-                '<input type="file" id="upload" dir="ltr"  /></div>' +
-                '<div><input type="button" class="button" value="Upload" />' +
-                '</form>';
+            var editor = this;
+            var content = document.createElement("DIV");
+            var div = '<label class="prev_imgs">All Images</label>'+
+                      '<form id="upload_form"><label for="upload">Upload</label> ' +
+                      '<input type="file" id="upload" dir="ltr"  /></div>' +
+                      '<div><input type="button" class="button" value="Upload" />' +
+                      '</form>';
             $(content).append(div);
+            $(content).on("click", '.prev_imgs', function(){ 
+                $("body").addClass('upload-overlay-open')               
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: 'POST',
+                    url: '/forum/topic/get_prev_images',                 
+                    contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
+                    processData: false, // NEEDED, DON'T OMIT THIS
+                    data: [],
+                    datatype: 'JSON',
+                    success: function (result) {
+                        $(".all_images").append(result)
+                    },
+                    error: function (e) {
+                        console.log(e)
+                    }
+                });
+              
+            });
+
+            $("body").on('click', '.upload-overlay .showImages .close_overlay', function(e) {
+                $(".all_images").children().remove()
+                $("body").removeClass('upload-overlay-open')            
+            })
+
+            $("body").on('click', '.upload-overlay .showImages .open_img', function(e){
+                $(".prev_image").each(function(index){
+                    if($(this).find('input[type=checkbox]').prop("checked")) {
+                        editor.insert('<img src="' + $(this).find('img').attr('src') + '" alt="" style="max-width: 95%;">');
+                    }
+                })
+                $(".all_images").children().remove()
+                $("body").removeClass('upload-overlay-open') 
+                editor.closeDropDown(true);
+                e.preventDefault();
+            })
             $(content).on('click', '.button', function (e) {
-                var	input = $(content).find("#upload")[0];
+                var input = $(content).find("#upload")[0];
                 if (input.value) {
                     if (input.files && input.files[0]) {
                         $.ajaxSetup({
@@ -279,7 +319,7 @@ function addUpload() {
                             processData: false, // NEEDED, DON'T OMIT THIS
                             success: function (result) {
                                 if (result.success) {
-                                    editor.insert('<img src="'+result.data+'" alt="" style="width: 100%;" />');
+                                    editor.insert('<img src="' + result.data + '" alt="" style="max-width: 95%;">');
                                 } else {
                                     alert(result.data) //
                                 }
@@ -290,7 +330,7 @@ function addUpload() {
                         });
                     }
                 } else {
-                    alert ("Please select file");
+                    alert("Please select file");
                 }
                 editor.closeDropDown(true);
                 e.preventDefault();
@@ -301,6 +341,7 @@ function addUpload() {
         tooltip: 'Upload Image'
     });
 }
+
 
 function addStream() {
     sceditor.command.set("streams", {

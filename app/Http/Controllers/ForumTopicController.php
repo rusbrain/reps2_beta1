@@ -208,4 +208,12 @@ class ForumTopicController extends Controller
             }
         }
     }
+
+    /**
+     * 
+     */
+    public function get_prev_images(Request $request) {
+        $files = Storage::disk('public')->files('forum');
+        return (string)view('files.uploaded_images')->with(['images'=>$files]);
+    }
 }

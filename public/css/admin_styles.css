@@ -90,3 +90,161 @@ div.sceditor-dropdown{
   float: left;
   margin-left: 4px;
 }
+
+
+
+/* upload overlay */
+body.upload-overlay-open{
+  overflow: hidden;
+
+}
+body .upload-overlay{
+  display:none;
+}
+body.upload-overlay-open .upload-overlay {
+  display: inline-flex;
+  position: fixed;
+  height: 100%;
+  background: rgba(0,0,0,0.25);
+  width: 100%;
+  z-index: 9999;
+  top: 0;
+  overflow-y: hidden;
+}
+
+body.upload-overlay-open .upload-overlay .showImages{
+  width: 960px;
+  height: 515px;
+  margin: auto;
+  border: solid 1px gray;
+  background: white;
+  position: relative;
+  display: inline-block;
+  
+}
+body.upload-overlay-open .upload-overlay .open_img {
+  padding: 5px 15px;
+  margin: 5px 15px 5px;
+  float: left;
+}
+.upload-overlay span.close_overlay {
+  background: url(../images/icons/close.png) no-repeat center center;
+  background-size: 20px;
+  width: 20px;
+  height: 20px;
+  padding: 10px;
+  border: solid 1px #2f2f2f;
+  float: right;
+  border-radius: 50%;
+  margin: 15px;
+  cursor: pointer;
+}
+.upload-overlay span.close_overlay:hover{
+  box-shadow: 0px 1px 3px 1px rgba(0,0,0,0.5);
+}
+
+body.upload-overlay-open .upload-overlay .showImages .images_wrapper label{
+  font-size: 16px;
+  padding: 15px;
+  font-weight: 600;
+}
+body.upload-overlay-open .upload-overlay .showImages .images_wrapper .images {
+  display: inline-block;
+  text-align: center;
+  overflow-y: scroll;
+  height: 400px;
+}
+
+body.upload-overlay-open .upload-overlay .showImages .images_wrapper .images .prev_image{
+  width: 150px;
+  box-shadow: 1px 1px 12px 1px rgba(0,0,0,0.2);
+  display: inline-grid;
+  position: relative;
+  min-height: 150px;
+  vertical-align: middle;
+  margin: 2px 0;
+}
+/* body.upload-overlay-open .upload-overlay .showImages .images_wrapper .images .prev_image img{
+  width: auto;
+  text-align: center;
+  margin: auto;
+  max-height: 145px;
+}
+body.upload-overlay-open .upload-overlay .showImages .images_wrapper .images .prev_image input{
+  display: none
+} */
+
+
+.prev_image input[type="checkbox"][id^="cb"] {
+  display: none;
+}
+
+.prev_image label {
+  border: 1px solid #fff;
+  padding:0px !important;
+  display: inline-grid;
+  position: relative;
+ 
+  cursor: pointer;
+  height: 145px;
+  margin: auto;
+}
+
+.prev_image label:before {
+  background-color: white;
+  color: white;
+  content: " ";
+  display: block;
+  border-radius: 50%;
+  border: 1px solid grey;
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  width: 25px;
+  height: 25px;
+  text-align: center;
+  line-height: 28px;
+  transition-duration: 0.4s;
+  transform: scale(0);
+}
+
+ .prev_image label img {
+
+  transition-duration: 0.2s;
+  transform-origin: 50% 50%;
+  width: auto;
+  text-align: center;
+  margin: auto;
+  max-height: 145px;
+}
+
+:checked 
++ label {
+  border: solid 1px #0052ff !important;
+}
+:checked 
++ label:before {
+  background-repeat: no-repeat;
+  background-image: url(../images/icons/checkmark.png);
+  /* content: '\2713';
+  color: #54c438; */
+  transform: scale(1);
+  background-size: 25px;
+}
+
+:checked 
++ label img {
+  /* transform: scale(0.9); */
+  box-shadow: 0 0 5px #333;
+}
+
+div.sceditor-dropdown.sceditor-uploadimage .prev_imgs {
+  cursor: pointer;
+  color: #2f6696;
+  position: absolute;
+  right: 10px;
+  border: solid 1px #949494;
+  background: #ececec;
+  border-radius: 3px;
+  padding: 5px 10px;
+}

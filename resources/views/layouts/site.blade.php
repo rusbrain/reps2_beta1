@@ -162,6 +162,17 @@
 </div>
 <!-- ========== END ALL MODAL WINDOWS ============ -->
 
+{{-- Sceditor UPload overlay --}}
+<div class="upload-overlay">    
+    <div class="showImages">
+        <span class="close_overlay"></span>
+        <div class="all_images"></div>
+       
+        <button class="open_img">Open</span>
+          
+    </div>
+</div>
+
 <!-- Optional JavaScript -->
 <script src="{{route('home')}}/js/jquery-3.2.1.min.js"></script>
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->

@@ -143,6 +143,7 @@ Route::group(['middleware' => 'activity'], function () {
             Route::get('/{id}/comments', 'TopicCommentController@pagination')->name('forum.topic.comment.pagination');
 
             Route::post('/img_upload', 'ForumTopicController@img_upload')->name('forum.topic.imgupload');
+            Route::post('/get_prev_images', 'ForumTopicController@get_prev_images')->name('forum.topic.get_prev_images');
         });
     });
 
