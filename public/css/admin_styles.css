@@ -91,8 +91,13 @@ div.sceditor-dropdown{
   margin-left: 4px;
 }
 
-
-
+/* align of admin buttons group  */
+.btn-group {
+  display: inline-flex !important;
+}
+.box-body {
+  overflow-x: auto;
+}
 /* upload overlay */
 body.upload-overlay-open{
   overflow: hidden;
