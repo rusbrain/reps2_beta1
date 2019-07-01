@@ -13,10 +13,6 @@
     @include('stream-section.message')
 @endsection
 
-@section('video-frame-section')
-    @include('stream-section.stream')
-@endsection
-
 @section('stream-list')
     @include('stream-section.stream-list')
 @endsection
@@ -79,6 +75,17 @@
 @section('js')
     <script>
         $(function () {
+            // video stream
+            var init_streamId = $(".widget-stream-lists:first-child a").attr('data-id');   
+            getSelectStream(init_streamId);
+
+            $('.streams_list').on('click', '.widget-stream-lists a', function(e){
+               
+                e.preventDefault();
+                console.log($(this).attr('data-id'))
+            })
+
+            // Last News
             getLastNews(1);
             $('.pagination-content').on('click', '.page-link', function (e) {
                 e.preventDefault();
@@ -111,6 +118,16 @@
 
                 /**move to top of page*/
                 moveToTop(body);
+            });
+        }
+
+        function getSelectStream(stream_id) {
+            var stream_container = $('#video-frame-container');
+            var body = $("html, body");
+            $.get('{{route('home.stream.view')}}'+'?id='+stream_id, {}, function (data) {
+                stream_container.html(data.stream);   
+                // stream_container.append(result)           
+                $('.load-wrapp').hide();
             });
         }
     </script>

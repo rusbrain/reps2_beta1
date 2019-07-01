@@ -5,11 +5,11 @@
 @endphp
 @if(!empty($streams_list))
     <div class="widget-wrapper">
-        <div class="widget-header">Streams list </div>
+        <div class="widget-header">Streams list <p class="close_menu"></p></div>
             <div class="streams_list">
             @foreach($streams_list as $stream)
                 <div class="widget-stream-lists">
-                    <a href="">
+                    <a href="#"  data-id="{{$stream->id}}">
                         @if($stream->country_id)
                             <span class="flag-icon flag-icon-{{mb_strtolower($countries[$stream->country_id]->code)}}"></span>
                         @else

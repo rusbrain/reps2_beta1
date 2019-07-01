@@ -51,15 +51,16 @@
                     </div>
                 </div>
 
-                <div class="col-md-6 video-frame">
-                    <div class="stream-wrapper">
-                        @yield('video-frame-section')
+                <div class="col-md-9 video-frame">
+                    <div class="stream-wrapper" id="video-frame-container">
+                        <div class="load-wrapp">
+                            <img src="/images/loader.gif" alt="">
+                        </div>
                     </div>
-                </div>
-
-                <div class="col-md-3 streamlist">
-                    <div class="stream-list-wrapper">
-                        @yield('stream-list')
+                    <div class="streamlist">
+                        <div class="stream-list-wrapper">
+                            @yield('stream-list')
+                        </div>
                     </div>
                 </div>
             </div>

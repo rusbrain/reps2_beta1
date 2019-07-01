@@ -1089,17 +1089,18 @@ form label {
 
 /*************************stream-section**************************/
 .stream-section {
-  min-height: 450px;
-  max-height: 450px;
+  min-height: 650px;
   margin-bottom: 10px;
 }
 .stream-section .stream-message-wrapper,
 .stream-section .stream-wrapper,
 .stream-section .stream-list-wrapper  {
   background: #fff;
-  height: 100%;
+  height: 100%;  
 }
-
+.stream-section .stream-list-wrapper  {
+  display: none;
+}
 /* Message wrapper */
 .stream-section .stream-message-wrapper {
  
@@ -1109,16 +1110,56 @@ form label {
 .stream-section .stream-wrapper {
 
 }
+.stream-section .stream-wrapper .stream_view {
+  height: 100%;
+}
 
-/* Stream list wrapper */
-.stream-section .stream-list-wrapper {
+.stream-section .stream-wrapper .stream_view .widget-header .list_menu,
+.stream-section .streamlist .close_menu{
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  padding: 10px;
+  float: right;
+  margin: 15px;
+  cursor: pointer;
 
 }
-.stream-section .stream-list-wrapper .streams_list{
+.stream-section .stream-wrapper .stream_view .widget-header .list_menu{
+  background: url(../images/icons/menu.png) no-repeat center center;
+  background-size: 20px; 
+  filter: invert(100%);
+}
+.stream-section .streamlist .close_menu {
+  background: url(../images/icons/close.png) no-repeat center center;
+  background-size: 20px;  
+  filter: invert(100%);
+}
+
+.stream-section .stream-wrapper .stream_view .ifram_container{
+  height: calc(100% - 40px);
+}
+.stream-section .stream-wrapper .stream_view .ifram_container p{
+  height: 100%;
+}
+.stream-section .stream-wrapper .stream_view .ifram_container p iframe{
+  height: 100% !important;
+  width: 100% !important;
+}
+/* Stream list wrapper */
+.stream-section .streamlist {
+  position: absolute;
+  right: 15px;
+  z-index: 10000000;
+  top: 0;
+  width: 255px;
+}
+
+.stream-section .stream-list-wrapper .streams_list{  
   margin: 10px 0;
-  max-height: 390px;
+  max-height: 590px;
   overflow-y: auto;
-  height: 390px;
+  height: 590px;
 }
 .widget-wrapper .widget-stream-lists {
   margin: 5px 0;

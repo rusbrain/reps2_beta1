@@ -66,6 +66,15 @@ class StreamController extends Controller
     }
 
     /**
+     * @param Request $request->id // selected stream Id
+     * @return mixed
+     */
+    public function getStreamById(Request $request)
+    {
+       return ['stream' =>(string)view('stream-section.stream')->with(['stream'=> Stream::where('id', $request->id)->with('country')->first()])];      
+    }
+
+    /**
      * @param $stream_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
