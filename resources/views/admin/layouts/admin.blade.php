@@ -12,7 +12,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <meta name="csrf-token" content="{{csrf_token()}}">
     <link rel="stylesheet" href="{{route('home')}}/bower_components/bootstrap/dist/css/bootstrap.min.css">
-    <!-- Font Awesome -->
+     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{route('home')}}/bower_components/font-awesome/css/font-awesome.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="{{route('home')}}/bower_components/Ionicons/css/ionicons.min.css">
@@ -175,15 +175,12 @@ desired effect
 </div>
 
 
-
 <!-- jQuery 3 -->
 <script src="{{route('home')}}/bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="{{route('home')}}/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-
 <!--Select2 JS-->
 <script src="{{route('home')}}/bower_components/select2/dist/js/select2.full.min.js"></script>
-
 <!-- AdminLTE App -->
 <script src="{{route('home')}}/dist/js/adminlte.min.js"></script>
 

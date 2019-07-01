@@ -255,3 +255,8 @@ div.sceditor-dropdown.sceditor-uploadimage .prev_imgs {
   border-radius: 3px;
   padding: 5px 10px;
 }
+
+table.dataTable th,
+table.dataTable td {
+    white-space: nowrap;
+}
