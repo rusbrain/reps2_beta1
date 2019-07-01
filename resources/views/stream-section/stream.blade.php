@@ -15,7 +15,7 @@
                     <img class="margin-left-5" src="{{route('home')}}/images/smiles/{{\App\Replay::$race_icons['All']}}" alt="">
                 @endif
                 <span class="color-white">{{$stream->title}}</span>
-                <p class="list_menu"></p>
+                <a href="#" class="list_menu" click="menu_toggle(event, 'open')"></a>
             </div>                  
         </div>
         <div class="ifram_container">

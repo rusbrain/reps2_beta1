@@ -79,8 +79,7 @@
             var init_streamId = $(".widget-stream-lists:first-child a").attr('data-id');   
             getSelectStream(init_streamId);
 
-            $('.streams_list').on('click', '.widget-stream-lists a', function(e){
-               
+            $('.streams_list').on('click', '.widget-stream-lists a', function(e){               
                 e.preventDefault();
                 console.log($(this).attr('data-id'))
             })
@@ -104,7 +103,7 @@
                     else
                         $(".toggle-action").text('hide')
                 });
-            })
+            })            
         });
 
         function getLastNews(page) {
@@ -129,6 +128,17 @@
                 // stream_container.append(result)           
                 $('.load-wrapp').hide();
             });
+        }
+
+        function menu_toggle(event, action) {
+            // stream menu action
+            if(action == 'open') {
+                console.log("open")
+                $(".stream-list-wrapper").show()
+            }else {
+                console.log("close")
+                $(".stream-list-wrapper").hide()
+            }
         }
     </script>
 @endsection

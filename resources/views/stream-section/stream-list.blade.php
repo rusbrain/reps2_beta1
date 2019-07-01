@@ -5,7 +5,7 @@
 @endphp
 @if(!empty($streams_list))
     <div class="widget-wrapper">
-        <div class="widget-header">Streams list <p class="close_menu"></p></div>
+        <div class="widget-header">Streams list <a href="#" class="close_menu" click="menu_toggle(event, 'close')"></a></div>
             <div class="streams_list">
             @foreach($streams_list as $stream)
                 <div class="widget-stream-lists">

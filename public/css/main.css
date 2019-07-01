@@ -1121,7 +1121,7 @@ form label {
   height: 30px;
   padding: 10px;
   float: right;
-  margin: 15px;
+ 
   cursor: pointer;
 
 }
@@ -1129,10 +1129,12 @@ form label {
   background: url(../images/icons/menu.png) no-repeat center center;
   background-size: 20px; 
   filter: invert(100%);
+  right: 20px;
 }
 .stream-section .streamlist .close_menu {
   background: url(../images/icons/close.png) no-repeat center center;
-  background-size: 20px;  
+  background-size: 30px;  
+  right: 5px;
   filter: invert(100%);
 }
 
