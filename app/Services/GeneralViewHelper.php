@@ -246,6 +246,15 @@ class GeneralViewHelper
         return self::$instance->streamheader;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getStreams()
+    {
+        self::$instance->streams_list = self::$instance->streams_list ?? BaseDataService::streams_list();
+        return self::$instance->streams_list;
+    }
+
     public function UrlFilter($text)
     {
         if(preg_match_all('#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', $text, $match)) {

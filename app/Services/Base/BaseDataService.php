@@ -8,7 +8,7 @@
 
 namespace App\Services\Base;
 
-use App\{ForumTopic, Replay, User, Banner, StreamHeader};
+use App\{ForumTopic, Replay, User, Banner, StreamHeader, Stream};
 use App\Http\Requests\QuickEmailRequest;
 use App\Mail\QuickEmail;
 use Carbon\Carbon;
@@ -81,5 +81,9 @@ class BaseDataService
     public static function getStreamHeader()
     {
         return StreamHeader::orderBy('updated_at', 'Desc')->first();
+    }
+
+    public static function streams_list() {
+        return Stream::where('approved', 1)->orderBy('updated_at', 'Desc')->limit(20)->get();
     }
 }

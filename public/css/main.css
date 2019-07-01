@@ -1085,6 +1085,55 @@ form label {
 .mystream-footer > div span.approved .not_confirmed {
   color: red;
 }
+
+
+/*************************stream-section**************************/
+.stream-section {
+  min-height: 450px;
+  max-height: 450px;
+  margin-bottom: 10px;
+}
+.stream-section .stream-message-wrapper,
+.stream-section .stream-wrapper,
+.stream-section .stream-list-wrapper  {
+  background: #fff;
+  height: 100%;
+}
+
+/* Message wrapper */
+.stream-section .stream-message-wrapper {
+ 
+}
+
+/* Stream wrapper */
+.stream-section .stream-wrapper {
+
+}
+
+/* Stream list wrapper */
+.stream-section .stream-list-wrapper {
+
+}
+.stream-section .stream-list-wrapper .streams_list{
+  margin: 10px 0;
+  max-height: 390px;
+  overflow-y: auto;
+  height: 390px;
+}
+.widget-wrapper .widget-stream-lists {
+  margin: 5px 0;
+}
+.widget-wrapper .widget-stream-lists a > span:first-of-type {
+  flex:none;
+  
+}
+.widget-wrapper .widget-stream-lists a > span:last-of-type {  
+  text-align: left;
+  max-width: 150px;
+  word-break: break-word;
+  margin-left: 20px;
+}
+
 /****************************************************/
 
 /*********SIDEBAR LEFT*******/
