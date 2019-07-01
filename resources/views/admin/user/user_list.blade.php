@@ -99,7 +99,7 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered table-hover">
                         <thead>
                         <tr>
                             <th style="width: 30px">ID</th>

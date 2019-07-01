@@ -155,7 +155,7 @@ body.upload-overlay-open .upload-overlay .showImages .images_wrapper label{
 }
 body.upload-overlay-open .upload-overlay .showImages .images_wrapper .images {
   display: inline-block;
-  text-align: center;
+  text-align: left;
   overflow-y: scroll;
   height: 400px;
   width: 100%;
@@ -245,6 +245,9 @@ body.upload-overlay-open .upload-overlay .showImages .images_wrapper .images .pr
   box-shadow: 0 0 5px #333;
 }
 
+.sceditor-dropdown.sceditor-uploadimage {
+  right:0 !important;
+}
 div.sceditor-dropdown.sceditor-uploadimage .prev_imgs {
   cursor: pointer;
   color: #2f6696;

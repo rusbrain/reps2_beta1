@@ -52,6 +52,9 @@
 div.sceditor-dropdown{
   z-index: 4000 !important;
 }
+.sceditor-dropdown.sceditor-uploadimage {
+  right:0 !important;
+}
 div.sceditor-dropdown.sceditor-uploadimage .prev_imgs {
   cursor: pointer;
   color: #2f6696;
