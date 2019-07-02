@@ -176,7 +176,7 @@
             // Check user is admin or morderate
             @if (Auth::user())
                 var isUpload = {{Auth::user()->user_role_id}};
-                if (isUpload == 1) addUpload();
+                if (isUpload == 1 || isUpload == 2) addUpload();
             @endif
                         
             /**turn on HTML text editor for Topic's preview content**/

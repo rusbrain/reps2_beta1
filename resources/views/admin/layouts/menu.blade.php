@@ -114,16 +114,18 @@ $dbbackup = ($menu_name == 'dbbackup') ? true :false;
         </ul>
     </li>
     {{-- Banner --}}
-    <li class="treeview {{ $dbbackup ? 'active' : ''}}">
-        <a href="#">
-            <span>DB Backup</span>
-            <span class="pull-right-container">
-            <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        </a>
-        <ul class="treeview-menu  {{ $dbbackup ? 'menu-open' : ''}}">
-            <li @if($menu_name == 'dbbackup') class="active" @endif><a href="{{route('admin.dbbackup')}}"><i class="fa fa-database"></i> <span>Backup</span></a></li>
-        </ul>
-    </li>
+    @if($admin_helper->admin())
+        <li class="treeview {{ $dbbackup ? 'active' : ''}}">
+            <a href="#">
+                <span>DB Backup</span>
+                <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu  {{ $dbbackup ? 'menu-open' : ''}}">
+                <li @if($menu_name == 'dbbackup') class="active" @endif><a href="{{route('admin.dbbackup')}}"><i class="fa fa-database"></i> <span>Backup</span></a></li>
+            </ul>
+        </li>
+    @endif
     
 </ul>
