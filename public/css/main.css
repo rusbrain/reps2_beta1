@@ -1091,6 +1091,10 @@ form label {
 .stream-section {
   min-height: 650px;
   margin-bottom: 10px;
+  display: none;
+}
+.stream-section.active{
+  display: flex;
 }
 .stream-section .stream-message-wrapper,
 .stream-section .stream-wrapper,
@@ -1099,8 +1103,17 @@ form label {
   height: 100%;  
 }
 .stream-section .stream-list-wrapper  {
-  display: none;
+  right: -255px;
+  position: relative;
+  transition-duration: 0.3s;
+  z-index: 9;
 }
+.stream-section .stream-list-wrapper.open  {
+  right: 0px;
+  position: relative;
+  transition-duration: 0.3s
+}
+
 /* Message wrapper */
 .stream-section .stream-message-wrapper {
  
@@ -1112,6 +1125,13 @@ form label {
 }
 .stream-section .stream-wrapper .stream_view {
   height: 100%;
+}
+
+.stream-section .stream-wrapper .stream_view .no-stream {
+  padding: 50px;
+  text-align: center;
+  font-size: 30px;
+  color: #2f6696;
 }
 
 .stream-section .stream-wrapper .stream_view .widget-header .list_menu,
@@ -1130,11 +1150,14 @@ form label {
   background-size: 20px; 
   filter: invert(100%);
   right: 20px;
+  z-index: 6;
 }
-.stream-section .streamlist .close_menu {
+/* .stream-section .streamlist .close_menu { */
+.stream-section .stream-wrapper .stream_view .widget-header .list_menu.active{
   background: url(../images/icons/close.png) no-repeat center center;
   background-size: 30px;  
-  right: 5px;
+  right: 20px;
+  z-index: 6;
   filter: invert(100%);
 }
 
@@ -1152,9 +1175,10 @@ form label {
 .stream-section .streamlist {
   position: absolute;
   right: 15px;
-  z-index: 10000000;
+  z-index: 5;
   top: 0;
   width: 255px;
+  overflow: hidden;
 }
 
 .stream-section .stream-list-wrapper .streams_list{  

@@ -81,7 +81,10 @@
 
             $('.streams_list').on('click', '.widget-stream-lists a', function(e){               
                 e.preventDefault();
-                console.log($(this).attr('data-id'))
+                var selectId = $(this).attr('data-id');
+                getSelectStream(selectId);
+                $('.list_menu').removeClass('active');
+                $(".stream-list-wrapper").removeClass('open')
             })
 
             // Last News
@@ -97,12 +100,15 @@
             var toggle_flag = 0;
             $(".toggle-action").on("click", function(){
                 toggle_flag = !toggle_flag;
-                $(".stream-section").slideToggle(function(){
-                    if (toggle_flag)
-                        $(".toggle-action").text('show')
-                    else
+                // $(".stream-section").slideToggle(function(){
+                    if (toggle_flag) {
+                        $(".stream-section").addClass('active')
                         $(".toggle-action").text('hide')
-                });
+                    }else{
+                        $(".stream-section").removeClass('active')
+                        $(".toggle-action").text('show')
+                    }
+                // });
             })            
         });
 
@@ -125,19 +131,19 @@
             var body = $("html, body");
             $.get('{{route('home.stream.view')}}'+'?id='+stream_id, {}, function (data) {
                 stream_container.html(data.stream);   
-                // stream_container.append(result)           
                 $('.load-wrapp').hide();
             });
         }
 
-        function menu_toggle(event, action) {
+        function menu_toggle(event, menuObj) {
+            event.preventDefault();          
             // stream menu action
-            if(action == 'open') {
-                console.log("open")
-                $(".stream-list-wrapper").show()
+            if(menuObj.hasClass('active') != true) {
+                $(".stream-list-wrapper").addClass('open')
+                $('.list_menu').addClass('active');
             }else {
-                console.log("close")
-                $(".stream-list-wrapper").hide()
+                $('.list_menu').removeClass('active');
+                $(".stream-list-wrapper").removeClass('open')
             }
         }
     </script>

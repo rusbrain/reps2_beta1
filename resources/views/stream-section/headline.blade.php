@@ -6,7 +6,7 @@
         <div class="col-md-12">
             <h1 class="section-title">
                 <a href="{{$stream_headline->url??"javascript: return false;"}}" >{{$stream_headline->title}}</a>
-                <p class="toggle-action">Hide</p>
+                <p class="toggle-action">Show</p>
             </h1>            
         </div>
     </div>

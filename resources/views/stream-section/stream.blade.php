@@ -15,12 +15,15 @@
                     <img class="margin-left-5" src="{{route('home')}}/images/smiles/{{\App\Replay::$race_icons['All']}}" alt="">
                 @endif
                 <span class="color-white">{{$stream->title}}</span>
-                <a href="#" class="list_menu" click="menu_toggle(event, 'open')"></a>
+                <a href="#" class="list_menu" onclick="menu_toggle(event, $(this))"></a>
             </div>                  
         </div>
         <div class="ifram_container">
             {!! $stream->stream_url !!}
         </div>
-    @endif
-    
+    @else 
+        <div class="no-stream">
+            Там нет cтрим
+        </div>
+    @endif    
 </div>
