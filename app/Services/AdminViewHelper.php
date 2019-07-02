@@ -72,7 +72,7 @@ class AdminViewHelper
      */
     public function superadmin()
     {
-        $this->role = $this->role??(Auth::user()->role?(Auth::user()->role->id == 1):false);
+        $this->role = (Auth::user()->role?(Auth::user()->role->id == 1):false);
         return $this->role;
     }
     public function admin()
