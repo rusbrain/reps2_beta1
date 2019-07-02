@@ -37,7 +37,7 @@ $dbbackup = ($menu_name == 'dbbackup') ? true :false;
         <ul class="treeview-menu  {{ $user ? 'menu-open' : ''}}">
             <!-- Optionally, you can add icons to the links -->
             <li @if($menu_name == 'user') class="active" @endif><a href="{{route('admin.users')}}"><i class="fa fa-users"></i> <span>Список пользователей</span></a></li>
-            @if($admin_helper->admin())
+            @if($admin_helper->superadmin())
                 <li @if($menu_name == 'user/role') class="active" @endif><a href="{{route('admin.users.role')}}"><i class="fa fa-users"></i> <span>Роли пользователей</span></a></li>
             @endif
             <li @if($menu_name == 'user/gallery') class="active" @endif><a href="{{route('admin.users.gallery')}}"><i class="fa fa-image"></i> <span>Галерея</span></a></li>
@@ -117,7 +117,7 @@ $dbbackup = ($menu_name == 'dbbackup') ? true :false;
         </ul>
     </li>
     {{-- Banner --}}
-    @if($admin_helper->admin())
+    @if($admin_helper->superadmin())
         <li class="treeview {{ $dbbackup ? 'active' : ''}}">
             <a href="#">
                 <span>DB Backup</span>
