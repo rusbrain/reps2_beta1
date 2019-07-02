@@ -1091,10 +1091,10 @@ form label {
 .stream-section {
   min-height: 650px;
   margin-bottom: 10px;
-  display: none;
+  display: flex;
 }
 .stream-section.active{
-  display: flex;
+  display: none;
 }
 .stream-section .stream-message-wrapper,
 .stream-section .stream-wrapper,

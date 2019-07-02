@@ -103,10 +103,10 @@
                 // $(".stream-section").slideToggle(function(){
                     if (toggle_flag) {
                         $(".stream-section").addClass('active')
-                        $(".toggle-action").text('hide')
+                        $(".toggle-action").text('show')
                     }else{
                         $(".stream-section").removeClass('active')
-                        $(".toggle-action").text('show')
+                        $(".toggle-action").text('hide')
                     }
                 // });
             })            
