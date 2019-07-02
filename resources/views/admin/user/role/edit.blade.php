@@ -9,7 +9,7 @@
                 <div class="col-md-6">
                     <div class="input-group">
                         <span class="">Имя</span>
-                        <input type="text" class="form-control" placeholder="Имя роли" name="name" value="{{old('name')??$role->name}}" @if($role->name == 'admin') disabled @endif>
+                        <input type="text" class="form-control" placeholder="Имя роли" name="name" value="{{old('name')??$role->name}}" @if($role->name == 'admin' || $role->name == 'super admin') disabled @endif>
                     </div>
 
                     @if ($errors->has('name'))

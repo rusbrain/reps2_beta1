@@ -1365,9 +1365,12 @@ class DBRelocationDataSeed extends Seeder
         $role = 0;
         switch ($user->user_admin){
             case 1:
-                $role = $user_roles->where('name', 'admin')->first()->id;
+                $role = $user_roles->where('name', 'super admin')->first()->id;
                 break;
             case 2:
+                $role = $user_roles->where('name', 'admin')->first()->id;
+                break;
+            case 3:
                 $role = $user_roles->where('name', 'moderator')->first()->id;
                 break;
         }

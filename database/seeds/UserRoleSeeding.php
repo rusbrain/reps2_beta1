@@ -12,6 +12,7 @@ class UserRoleSeeding extends Seeder
     public function run()
     {
         $countries = [
+            [ 'name' => 'super admin', 'title' => 'Cупер администратор'],
             [ 'name' => 'admin', 'title' => 'Администратор'],
             [ 'name' => 'moderator', 'title' => 'Модератор'],
         ];

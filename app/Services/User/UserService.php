@@ -44,7 +44,7 @@ class UserService
             $user_data['file_id'] = $file->id;
         }
 
-        if( Auth::user()->role ? ( Auth::user()->role->name != 'admin' ) : true ){
+        if( Auth::user()->role ? ( Auth::user()->role->name != 'super admin' ) : true ){
             unset( $user_data['user_role_id'] );
         }
 
@@ -136,7 +136,7 @@ class UserService
     public static function isAdmin()
     {
         if(Auth::user() && Auth::user()->role){
-            if(Auth::user()->role->name == 'admin'){
+            if(Auth::user()->role->name == 'admin' || Auth::user()->role->name == 'super admin'){
                 return true;
             }
         }

@@ -85,7 +85,7 @@ trait UserData
     public function isAdmin()
     {
         if(Auth::user() && Auth::user()->role){
-            if(Auth::user()->role->name == 'admin'){
+            if(Auth::user()->role->name == 'admin' || Auth::user()->role->name == 'super admin'){
                 return true;
             }
         }
