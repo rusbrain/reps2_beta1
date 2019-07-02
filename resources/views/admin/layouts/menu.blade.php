@@ -67,6 +67,9 @@ $dbbackup = ($menu_name == 'dbbackup') ? true :false;
             </span>
         </a>
         <ul class="treeview-menu  {{ $stream ? 'menu-open' : ''}}">
+            @if($admin_helper->admin())
+                <li @if($menu_name == 'stream') class="active" @endif><a href="{{route('admin.stream.setting')}}"><i class="fa fa-gear"></i> <span>Hастройки</span></a></li>
+            @endif
             <li @if($menu_name == 'stream') class="active" @endif><a href="{{route('admin.stream')}}"><i class="fa fa-film"></i> <span>Streams</span></a></li>
             <li @if($menu_name == 'stream/header') class="active" @endif><a href="{{route('admin.stream.header')}}"><i class="fa fa-header"></i> <span>Заголовок</span></a></li>
         </ul>

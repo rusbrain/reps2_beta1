@@ -237,6 +237,12 @@ class GeneralViewHelper
         return self::$instance->active_banners;
     }
 
+    public function getStreamSettings()
+    {
+        self::$instance->stream_settings = self::$instance->stream_settings ?? BaseDataService::getStreamSettings();
+        return self::$instance->stream_settings;
+    }
+
     /**
      * @return mixed
      */

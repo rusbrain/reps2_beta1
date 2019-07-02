@@ -24,6 +24,10 @@
 </head>
 <body>
 @inject('general_helper', 'App\Services\GeneralViewHelper')
+
+@php 
+    $streamSettings = $general_helper->getStreamSettings();
+@endphp
 <div class="wrapper">
     <!--SECTION HEADER-->
     <section class="section-header">
@@ -34,36 +38,43 @@
     <!--END SECTION HEADER-->
 
     <!--SECTION CONTENT-->
+    
     <section>
         <div class="container">
-            <!--Stream Section-->            
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="stream-headline-wrapper">
-                        @yield('stream-header')
-                    </div>
-                </div>
-            </div>
-            <div class="row stream-section">
-                <div class="col-md-3">
-                    <div class="stream-message-wrapper">
-                        @yield('stream-message')
-                    </div>
-                </div>
-
-                <div class="col-md-9 video-frame">
-                    <div class="stream-wrapper" id="video-frame-container">
-                        <div class="load-wrapp">
-                            <img src="/images/loader.gif" alt="">
+            <!--Stream Section-->  
+            @if(!empty($streamSettings))  
+                @if($streamSettings->headline)        
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="stream-headline-wrapper">
+                                @yield('stream-header')
+                            </div>
                         </div>
                     </div>
-                    <div class="streamlist">
-                        <div class="stream-list-wrapper">
-                            @yield('stream-list')
+                @endif
+                @if($streamSettings->main_section)
+                    <div class="row stream-section">               
+                        <div class="col-md-3">
+                            <div class="stream-message-wrapper">
+                                @yield('stream-message')
+                            </div>
+                        </div>
+                    
+                        <div class="col-md-9 video-frame">
+                            <div class="stream-wrapper" id="video-frame-container">
+                                <div class="load-wrapp">
+                                    <img src="/images/loader.gif" alt="">
+                                </div>
+                            </div>
+                            <div class="streamlist">
+                                <div class="stream-list-wrapper">
+                                    @yield('stream-list')
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                @endif
+            @endif
             <!--END Stream Section-->
            
             <div class="row">                

@@ -417,6 +417,10 @@ Route::group(['middleware' => 'activity'], function () {
                     Route::post('/{id}/update', 'StreamHeaderController@update')->name('admin.stream.header.update');
                     Route::get('/{id}/delete', 'StreamHeaderController@destroy')->name('admin.stream.header.delete');
                 });
+                Route::group(['prefix' => 'settings'], function(){
+                    Route::get('/', 'StreamSettingsController@index')->name('admin.stream.setting');
+                    Route::post('/save', 'StreamSettingsController@save')->name('admin.stream.setting.save');
+                });
             });
 
             Route::group(['prefix' => 'country'], function () {
