@@ -14,7 +14,12 @@
 @endsection
 
 @section('stream-list')
-    @include('stream-section.stream-list')
+    <div class="widget-wrapper">
+        <div class="widget-header"></div>
+        <div class="streams_list" id="ajax_streamlist_area">
+            @include('stream-section.stream-list')
+        </div>
+    </div>    
 @endsection
 
 {{-- Main Section --}}

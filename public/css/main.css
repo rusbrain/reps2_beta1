@@ -1126,7 +1126,9 @@ form label {
 .stream-section .stream-wrapper .stream_view {
   height: 100%;
 }
-
+.stream-section .stream-wrapper .stream_view .widget-wrapper{
+  padding-bottom: 0 !important;
+}
 .stream-section .stream-wrapper .stream_view .no-stream {
   padding: 50px;
   text-align: center;
@@ -1162,8 +1164,9 @@ form label {
 }
 
 .stream-section .stream-wrapper .stream_view .ifram_container{
-  height: calc(100% - 40px);
+  height: calc(100% - 30px);
 }
+
 .stream-section .stream-wrapper .stream_view .ifram_container p{
   height: 100%;
 }
