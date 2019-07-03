@@ -326,8 +326,10 @@ class ReplayService
      */
     public static function getLastGosuReplay($limit = 5)
     {
-        $last_gosu_replay = Replay::gosuReplay()->where('approved', 1)->where('type_id','<>', 3)->orderBy('created_at',
-            'desc')->limit($limit)->get();
+        $last_gosu_replay = Replay::gosuReplay()->where('approved', 1)
+            ->where('type_id','<>', 3)->orderBy('created_at', 'desc')
+            ->where('user_replay', 0)
+            ->limit($limit)->get();
         // $last_gosu_replay->load('map');
         return $last_gosu_replay->load('map');
     }
