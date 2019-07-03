@@ -257,9 +257,22 @@ class GeneralViewHelper
      * @return mixed
      */
     public function getStreams()
-    {
-        self::$instance->streams_list = self::$instance->streams_list ?? BaseDataService::streams_list();
-        return self::$instance->streams_list;
+    {   //jzkbprff40iqj646a697cyrvl0zt2m6
+        $activeStreams = array();
+   
+        $streams = BaseDataService::streams_list();
+        foreach($streams as $stream) {
+            $url = $this->UrlFilter($stream->stream_url);           
+            $activeStreams[] = $stream;
+        }
+
+        return $activeStreams;
+    }
+
+    private function is_channel_live( $channel ) {dd( @file_get_contents( 'https://api.twitch.tv/kraken/streams/'. $channel ) );
+        $request = json_decode( @file_get_contents( 'https://api.twitch.tv/kraken/streams/' . $channel ) );
+        dd($request->stream);
+        return ( ! is_null( $request->stream ) ) ? TRUE : FALSE;
     }
 
     public function getActivePath()
@@ -269,6 +282,14 @@ class GeneralViewHelper
     }
 
     public function UrlFilter($text)
+    {
+        if(preg_match_all('#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', $text, $match)) {
+            return $match[0][0];
+        }
+        return '';
+    }
+
+    public function ChannelFilter($text)
     {
         if(preg_match_all('#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', $text, $match)) {
             return $match[0][0];
