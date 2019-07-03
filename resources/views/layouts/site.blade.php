@@ -29,6 +29,7 @@
 
 @php 
     $streamSettings = $general_helper->getStreamSettings();
+    $path = $general_helper->getActivePath();
 @endphp
 <div class="wrapper">
     <!--SECTION HEADER-->
@@ -44,7 +45,7 @@
     <section>
         <div class="container">
             <!--Stream Section-->  
-            @if(!empty($streamSettings))  
+            @if(!empty($streamSettings) && $path == '/')  
                 @if($streamSettings->headline)        
                     <div class="row">
                         <div class="col-md-12">

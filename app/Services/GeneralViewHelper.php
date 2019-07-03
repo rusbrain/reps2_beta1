@@ -22,6 +22,7 @@ use App\Traits\ViewHelper\{
     ForumData, ReplayData, UserData
 };
 use App\UserGallery;
+use Illuminate\Http\Request;
 
 class GeneralViewHelper
 {
@@ -259,6 +260,12 @@ class GeneralViewHelper
     {
         self::$instance->streams_list = self::$instance->streams_list ?? BaseDataService::streams_list();
         return self::$instance->streams_list;
+    }
+
+    public function getActivePath()
+    {
+        $this->path = $this->path??str_ireplace('admin_panel/','',Request::capture()->path());
+        return $this->path;
     }
 
     public function UrlFilter($text)
