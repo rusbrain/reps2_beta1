@@ -57,13 +57,11 @@
                 @endif
                 @if($streamSettings->main_section)
                     <div class="row stream-section">               
-                        <div class="col-md-3">
+                                            
+                        <div class="col-md-12 stream-area chat_close">
                             <div class="stream-message-wrapper">
                                 @yield('stream-message')
                             </div>
-                        </div>
-                    
-                        <div class="col-md-9 video-frame">
                             <div class="stream-wrapper" id="video-frame-container">
                                 <div class="load-wrapp">
                                     <img src="/images/loader.gif" alt="">

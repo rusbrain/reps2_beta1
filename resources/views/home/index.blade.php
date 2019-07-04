@@ -166,9 +166,24 @@
             if(menuObj.hasClass('active') != true) {
                 $(".stream-list-wrapper").addClass('open')
                 $('.list_menu').addClass('active');
+                $('.streamlist').css('visibility','visible')
             }else {
                 $('.list_menu').removeClass('active');
                 $(".stream-list-wrapper").removeClass('open')
+                $('.streamlist').css('visibility','hidden')
+            }
+        }
+
+        function chatroom_toggle(event, chatBtn) {
+            event.preventDefault();          
+            // stream menu action
+            var streamArea = $(".stream-area");
+            if(streamArea.hasClass('chat_open') == true) {
+                streamArea.removeClass('chat_open')
+                streamArea.addClass('chat_close')
+            }else {
+                streamArea.removeClass('chat_close')
+                streamArea.addClass('chat_open')
             }
         }
     </script>
