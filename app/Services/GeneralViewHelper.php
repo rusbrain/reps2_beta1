@@ -270,10 +270,10 @@ class GeneralViewHelper
             $channel = $query['channel'];
             return $this->twitchTvStream($channel);
         }
-
+        
         if($host == 'goodgame.ru') {
-            //$id = $query;
-            return '';
+            $channel_id = $parts['query'];
+            return $this->goodgameTvStream($channel_id);
         }
     }
   
@@ -326,6 +326,26 @@ class GeneralViewHelper
             }
         }
         return false;        
+    }
+
+    private function goodgameTvStream($channel_id){
+        if(!empty($channel_id)) {
+            $url = 'https://goodgame.ru/api/player?src=' . $channel_id;
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_AUTOREFERER, TRUE);
+            curl_setopt($ch, CURLOPT_HEADER, 0);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+            $data = curl_exec($ch);
+            curl_close($ch);
+
+            $response = json_decode($data, true);
+            if($response['channel_status'] == 'online') {
+                return true;
+            }
+        }
+        return false;
     }
     // /**
     //  * @return mixed

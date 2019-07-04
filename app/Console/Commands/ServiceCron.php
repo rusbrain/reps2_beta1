@@ -50,7 +50,7 @@ class ServiceCron extends Command
      */    
     public function handle()
     {       
-        $streams = BaseDataService::streams_list();      
+        $streams = BaseDataService::all_streams_list();      
         foreach($streams as $stream) {
            
             $live_check = $this->general_helper->liveStreamCheck($this->general_helper->UrlFilter($stream->stream_url));
