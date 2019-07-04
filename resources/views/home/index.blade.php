@@ -108,15 +108,13 @@
             var toggle_flag = 0;
             $(".toggle-action").on("click", function(){
                 toggle_flag = !toggle_flag;
-                // $(".stream-section").slideToggle(function(){
-                    if (toggle_flag) {
-                        $(".stream-section").addClass('active')
-                        $(".toggle-action").text('show')
-                    }else{
-                        $(".stream-section").removeClass('active')
-                        $(".toggle-action").text('hide')
-                    }
-                // });
+                if (toggle_flag) {
+                    $(".stream-section").addClass('active')
+                    $(".toggle-action").text('show')
+                }else{
+                    $(".stream-section").removeClass('active')
+                    $(".toggle-action").text('hide')
+                }
             })            
         });
 
@@ -144,9 +142,9 @@
         }
 
         function getStreamsList(init = false) {
-            var today = new Date();
-            var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-            console.log(time)
+            // var today = new Date();
+            // var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+            // console.log(time)
             var streamListContainer = $('#ajax_streamlist_area');
             var body = $("html, body");
             $.get('{{route('home.streamlist.get')}}', {}, function (data) {
