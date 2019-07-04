@@ -254,25 +254,98 @@ class GeneralViewHelper
     }
 
     /**
+     * Check Streaming live status
+     */
+    private function liveStreamCheck($stream_url) {
+        $parts = parse_url(htmlspecialchars_decode($stream_url));
+        $host = $parts['host'];
+       
+        if($host == 'play.afreecatv.com') {
+            $channel = explode("/", $parts['path'])[1];
+            return $this->afreecaTvStream($channel); 
+        }
+       
+        if($host == 'player.twitch.tv') {        
+            parse_str($parts['query'], $query);               
+            $channel = $query['channel'];
+            return $this->twitchTvStream($channel);
+        }
+
+        if($host == 'goodgame.ru') {
+            //$id = $query;
+            return '';
+        }
+    }
+  
+    private function afreecaTvStream($channel) {
+        if(!empty($channel)){
+            $url = "https://live.afreecatv.com/afreeca/player_live_api.php";
+            $data = 'bid='.$channel.'&bno=&pwd=&type=&player_type=html5&stream_type=common&quality=&mode=embed';   
+            $ch = curl_init();
+    
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                "Accept:application/json",
+            ));
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);    
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    
+            $response = curl_exec($ch);
+            $err = curl_error($ch);
+            curl_close ($ch);
+
+            $response = json_decode($response, true);
+            if ($response['CHANNEL']['RESULT']) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private function twitchTvStream($channel) {
+        if(!empty($channel)) {
+            $url = 'https://api.twitch.tv/kraken/streams/'.$channel;  
+            $curlHeader = array(
+                'Client-ID: jzkbprff40iqj646a697cyrvl0zt2m6', /* SET CLIENT ID HERE */
+                'Accept: application/json'
+            );
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_AUTOREFERER, TRUE);
+            curl_setopt($ch, CURLOPT_HEADER, 0);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $curlHeader);
+            $data = curl_exec($ch);
+            curl_close($ch);
+
+            $response = json_decode($data, true);
+            if($response['stream'] != null) {
+                return true;
+            }
+        }
+        return false;        
+    }
+    /**
      * @return mixed
      */
     public function getStreams()
     {   //jzkbprff40iqj646a697cyrvl0zt2m6
-        $activeStreams = array();
-   
-        $streams = BaseDataService::streams_list();
+        $activeStreams = array();   
+        $streams = BaseDataService::streams_list();      
         foreach($streams as $stream) {
-            $url = $this->UrlFilter($stream->stream_url);           
-            $activeStreams[] = $stream;
+            if(empty($activeStreams)) {
+                $live_check = $this->liveStreamCheck($this->UrlFilter($stream->stream_url));
+                if($live_check) {
+                    $activeStreams[] = $stream;     
+                }
+            } else  {
+                $activeStreams[] = $stream;   
+            }
         }
-
+            
         return $activeStreams;
-    }
-
-    private function is_channel_live( $channel ) {dd( @file_get_contents( 'https://api.twitch.tv/kraken/streams/'. $channel ) );
-        $request = json_decode( @file_get_contents( 'https://api.twitch.tv/kraken/streams/' . $channel ) );
-        dd($request->stream);
-        return ( ! is_null( $request->stream ) ) ? TRUE : FALSE;
     }
 
     public function getActivePath()
@@ -282,14 +355,6 @@ class GeneralViewHelper
     }
 
     public function UrlFilter($text)
-    {
-        if(preg_match_all('#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', $text, $match)) {
-            return $match[0][0];
-        }
-        return '';
-    }
-
-    public function ChannelFilter($text)
     {
         if(preg_match_all('#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', $text, $match)) {
             return $match[0][0];
