@@ -92,7 +92,8 @@
                 var selectId = $(this).attr('data-id');
                 getSelectStream(selectId);
                 $('.list_menu').removeClass('active');
-                $(".stream-list-wrapper").removeClass('open')
+                $(".stream-list-wrapper").removeClass('open');
+                $('.streamlist').css('visibility','hidden')
             })
 
             // Last News
