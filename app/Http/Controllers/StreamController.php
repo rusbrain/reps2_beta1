@@ -6,6 +6,7 @@ use App\Stream;
 use App\Http\Requests\{ StreamStoreRequest, StreamUpdateRequest};
 use App\Services\Base\{BaseDataService, UserViewService};
 use App\Services\Stream\StreamService;
+use App\Services\GeneralViewHelper;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -17,6 +18,11 @@ class StreamController extends Controller
      * @var string
      */
     public $edit_route_name;
+    public $general_helper;
+
+    public function __construct() {
+        $this->general_helper = new GeneralViewHelper;
+    }
     /**
      * Get my streams
      */
@@ -72,6 +78,27 @@ class StreamController extends Controller
     public function getStreamById(Request $request)
     {
        return ['stream' =>(string)view('stream-section.stream')->with(['stream'=> Stream::where('id', $request->id)->with('country')->first()])];      
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLiveStreamsList() 
+    {
+        return [
+            'streams_list' =>(string)view('stream-section.stream-list')
+                        ->with(
+                            [
+                                'streams_list'=> $this->getLists(),
+                                'countries'=>$this->general_helper->getCountries(),
+                            ])
+                            
+        ];    
+    }
+
+    private function getLists()
+    {         
+        return BaseDataService::streams_list();     
     }
 
     /**

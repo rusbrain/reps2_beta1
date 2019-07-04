@@ -18,6 +18,7 @@ Route::group(['middleware' => 'activity'], function () {
 
     /**streams section */
     Route::get('/stream', 'StreamController@getStreamById')->name('home.stream.view');
+    Route::get('/stream/live', 'StreamController@getLiveStreamsList')->name('home.streamlist.get');
 
     Route::group(['prefix' => 'widget'], function () {
         Route::get('/all_forum_sections', 'WidgetController@allForumSections')->name('widgets.all_forum_sections');

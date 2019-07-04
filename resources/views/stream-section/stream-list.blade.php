@@ -1,7 +1,7 @@
 
 @php 
-    $streams_list = $general_helper->getStreams();
-    $countries = $general_helper->getCountries();
+    // $streams_list = $general_helper->getStreams();
+    // $countries = $general_helper->getCountries();
 @endphp
 @if(!empty($streams_list))   
     @foreach($streams_list as $stream)

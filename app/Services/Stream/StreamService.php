@@ -9,7 +9,10 @@
 namespace App\Services\Stream;
 
 use App\{
-   Stream, Services\Base\UserViewService, Services\User\UserService, User
+   Stream, 
+   Services\Base\UserViewService, 
+   Services\User\UserService, 
+   User
 };
 use App\Http\Controllers\StreamController;
 use App\Http\Requests\{

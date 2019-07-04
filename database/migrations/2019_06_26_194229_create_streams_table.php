@@ -22,6 +22,7 @@ class CreateStreamsTable extends Migration
                 $table->string('race');
                 $table->integer('country_id');
                 $table->longText('stream_url');
+                $table->boolean('active')        ->default(1);
                 $table->boolean('approved')      ->default(0);
                 $table->timestamps();
             });
