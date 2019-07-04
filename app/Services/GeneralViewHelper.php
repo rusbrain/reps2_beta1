@@ -340,9 +340,10 @@ class GeneralViewHelper
                 if($live_check) {
                     $activeStreams[] = $stream;     
                 }
-            } else  {
-                $activeStreams[] = $stream;   
-            }
+            } 
+            // else  {
+            //     $activeStreams[] = $stream;   
+            // }
         }
             
         return $activeStreams;
