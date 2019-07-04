@@ -20,7 +20,7 @@
     <!--Main CSS-->
     <link rel="stylesheet" href="{{route('home')}}/css/main.css">
     <link rel="stylesheet" href="{{route('home')}}/css/responsive.css">
-    <link rel="stylesheet" href="{{route('home')}}/css/message.css">
+    {{-- <link rel="stylesheet" href="{{route('home')}}/css/message.css"> --}}
 
     <title>Главная | Reps.ru</title>
 </head>
@@ -202,6 +202,6 @@
 @yield('js')
 <!--Custom scripts-->
 <script src="{{route('home')}}/js/scripts.js"></script>
-<script src="{{route('home')}}/js/message.js"></script>
+{{-- <script src="{{route('home')}}/js/message.js"></script> --}}
 </body>
 </html>
