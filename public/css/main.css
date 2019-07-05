@@ -1120,21 +1120,28 @@ form label {
 /* Message wrapper */
 .stream-section .stream-area.chat_close .stream-message-wrapper {
   width: 0;
-  transition-duration: 0.2s
+  /* transition-duration: 0.1s; */
+}
+.stream-section .stream-area.chat_close .stream-message-wrapper .chat_text_container {
+  display: none;
+}
+.stream-section .stream-area.chat_close .stream-message-wrapper .chat_footer{
+  display: none;
 }
 .stream-section .stream-area.chat_open .stream-message-wrapper {
   width: 25%;
-  transition-duration: 0.2s
+  /* transition-duration: 0.1s */
 }
 
 /* Stream wrapper */
 .stream-section .stream-area.chat_open .stream-wrapper {
   width: 75%;
-  transition-duration: 0.2s
+  overflow: hidden;
+  /* transition-duration: 0.1s */
 }
 .stream-section .stream-area.chat_close .stream-wrapper {
   width: 100%;
-  transition-duration: 0.2s
+  /* transition-duration: 0.1s */
 }
 .stream-section .stream-wrapper .stream_view {
   height: 100%;
