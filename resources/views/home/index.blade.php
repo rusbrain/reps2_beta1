@@ -181,11 +181,11 @@
             if(streamArea.hasClass('theatre-on') == true) {
                 streamArea.removeClass('theatre-on')
                 streamArea.addClass('theatre-off')
-                $("body").addClass('theatre');
+                $("body").removeClass('theatre');
             }else {
                 streamArea.removeClass('theatre-off')
                 streamArea.addClass('theatre-on')
-                $("body").removeClass('theatre');
+                $("body").addClass('theatre');
             }
         }
 
