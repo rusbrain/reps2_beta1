@@ -58,7 +58,7 @@
                 @if($streamSettings->main_section)
                     <div class="row stream-section">               
                                             
-                        <div class="col-md-12 stream-area chat_open">
+                        <div class="col-md-12 stream-area chat_open theatre-off">
                             <div class="stream-message-wrapper">
                                 @yield('stream-message')
                             </div>
