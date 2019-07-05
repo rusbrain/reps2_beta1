@@ -1114,24 +1114,62 @@ form label {
   transition-duration: 0.3s
 }
 
+.stream-section .stream-area {
+  display: flex;
+}
 /* Message wrapper */
-.stream-section .stream-message-wrapper {
- 
+.stream-section .stream-area.chat_close .stream-message-wrapper {
+  width: 0;
+  transition-duration: 0.2s
+}
+.stream-section .stream-area.chat_open .stream-message-wrapper {
+  width: 25%;
+  transition-duration: 0.2s
 }
 
 /* Stream wrapper */
-.stream-section .stream-wrapper {
-
+.stream-section .stream-area.chat_open .stream-wrapper {
+  width: 75%;
+  transition-duration: 0.2s
+}
+.stream-section .stream-area.chat_close .stream-wrapper {
+  width: 100%;
+  transition-duration: 0.2s
 }
 .stream-section .stream-wrapper .stream_view {
   height: 100%;
 }
-
+.stream-section .stream-wrapper .stream_view .widget-header {
+  padding-left: 50px !important;
+  position: relative;
+}
+.stream-section .stream-wrapper .stream_view .widget-wrapper{
+  padding-bottom: 0 !important;
+}
 .stream-section .stream-wrapper .stream_view .no-stream {
   padding: 50px;
   text-align: center;
   font-size: 30px;
   color: #2f6696;
+}
+.stream-section .stream-area .stream-wrapper .stream_view .widget-header .chat_button {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  padding: 10px;
+  cursor: pointer;  
+  left: 5px;
+  z-index: 6;  
+}
+.stream-section .stream-area.chat_close .stream-wrapper .stream_view .widget-header .chat_button{
+  background: url(../images/icons/open-chat.png) no-repeat center center;
+  background-size: 20px; 
+  filter: invert(100%);
+}
+.stream-section .stream-area.chat_open .stream-wrapper .stream_view .widget-header .chat_button{
+  background: url(../images/icons/close-chat.png) no-repeat center center;
+  background-size: 20px; 
+  filter: invert(100%);
 }
 
 .stream-section .stream-wrapper .stream_view .widget-header .list_menu,
@@ -1162,8 +1200,9 @@ form label {
 }
 
 .stream-section .stream-wrapper .stream_view .ifram_container{
-  height: calc(100% - 40px);
+  height: calc(100% - 30px);
 }
+
 .stream-section .stream-wrapper .stream_view .ifram_container p{
   height: 100%;
 }
@@ -1179,6 +1218,7 @@ form label {
   top: 0;
   width: 255px;
   overflow: hidden;
+  visibility: hidden;
 }
 
 .stream-section .stream-list-wrapper .streams_list{  

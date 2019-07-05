@@ -36,7 +36,7 @@ trait ReplayData
     public function getLastGosuReplay()
     {
         if (!self::$instance->last_gosu_replay) {
-            self::$instance->last_gosu_replay = ReplayService::getLastGosuReplay(4);
+            self::$instance->last_gosu_replay = ReplayService::getLastGosuReplay(8);
         }
         return self::$instance->last_gosu_replay;
     }
@@ -58,7 +58,7 @@ trait ReplayData
     public function getLastUserReplay()
     {
         self::$instance->last_user_replay = self::$instance->last_user_replay ?? Replay::userReplay()->where('approved',
-                1)->orderBy('created_at', 'desc')->limit(5)->get();
+                1)->orderBy('created_at', 'desc') ->where('user_replay', 1)->limit(5)->get();
         return self::$instance->last_user_replay;
     }
 

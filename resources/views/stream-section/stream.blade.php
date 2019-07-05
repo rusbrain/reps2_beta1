@@ -4,6 +4,7 @@
     @if(!empty($stream))
         <div class="widget-wrapper">
             <div class="widget-header">
+                <a href="#" class="chat_button" onclick="chatroom_toggle(event, $(this))"></a>
                 @if(isset($stream->country))
                     <span class="flag-icon flag-icon-{{mb_strtolower($stream->country->code)}}"></span>
                 @else

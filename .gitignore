@@ -25,3 +25,8 @@ yarn-error.log
 composer.lock
 .env
 .phpunit.result.cache
+package-lock.json
+public/mix-manifest.json
+
+
+

@@ -14,7 +14,15 @@
 @endsection
 
 @section('stream-list')
-    @include('stream-section.stream-list')
+    <div class="widget-wrapper">
+        <div class="widget-header"></div>
+        <div class="streams_list" id="ajax_streamlist_area">
+            <div class="load-wrapp">
+                <img src="/images/loader.gif" alt="">
+            </div>
+            {{-- @include('stream-section.stream-list') --}}
+        </div>
+    </div>    
 @endsection
 
 {{-- Main Section --}}
@@ -75,16 +83,17 @@
 @section('js')
     <script>
         $(function () {
+           
             // video stream
-            var init_streamId = $(".widget-stream-lists:first-child a").attr('data-id');   
-            getSelectStream(init_streamId);
+            getStreamsList(true);            
 
             $('.streams_list').on('click', '.widget-stream-lists a', function(e){               
                 e.preventDefault();
                 var selectId = $(this).attr('data-id');
                 getSelectStream(selectId);
                 $('.list_menu').removeClass('active');
-                $(".stream-list-wrapper").removeClass('open')
+                $(".stream-list-wrapper").removeClass('open');
+                $('.streamlist').css('visibility','hidden')
             })
 
             // Last News
@@ -100,15 +109,13 @@
             var toggle_flag = 0;
             $(".toggle-action").on("click", function(){
                 toggle_flag = !toggle_flag;
-                // $(".stream-section").slideToggle(function(){
-                    if (toggle_flag) {
-                        $(".stream-section").addClass('active')
-                        $(".toggle-action").text('show')
-                    }else{
-                        $(".stream-section").removeClass('active')
-                        $(".toggle-action").text('hide')
-                    }
-                // });
+                if (toggle_flag) {
+                    $(".stream-section").addClass('active')
+                    $(".toggle-action").text('show')
+                }else{
+                    $(".stream-section").removeClass('active')
+                    $(".toggle-action").text('hide')
+                }
             })            
         });
 
@@ -119,7 +126,7 @@
             $.get('{{route('home.last_forum.pagination')}}'+'?page='+page, {}, function (data) {
                 container.html(data.news);
                 $('.pagination-content').html(data.pagination);
-                $('.load-wrapp').hide();
+                $('#ajax_last_forums .load-wrapp').hide();
 
                 /**move to top of page*/
                 moveToTop(body);
@@ -131,7 +138,26 @@
             var body = $("html, body");
             $.get('{{route('home.stream.view')}}'+'?id='+stream_id, {}, function (data) {
                 stream_container.html(data.stream);   
-                $('.load-wrapp').hide();
+                $('#video-frame-container .load-wrapp').hide();
+            });
+        }
+
+        function getStreamsList(init = false) {
+            // var today = new Date();
+            // var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+            // console.log(time)
+            var streamListContainer = $('#ajax_streamlist_area');
+            var body = $("html, body");
+            $.get('{{route('home.streamlist.get')}}', {}, function (data) {
+                streamListContainer.html(data.streams_list);
+                if(init) {
+                    var init_streamId = $(".widget-stream-lists:first-child a").attr('data-id');   
+                    getSelectStream(init_streamId);
+                }               
+                setTimeout(function(){
+                    getStreamsList(false);
+                },10000)
+                $('#ajax_streamlist_area .load-wrapp').hide();
             });
         }
 
@@ -141,9 +167,24 @@
             if(menuObj.hasClass('active') != true) {
                 $(".stream-list-wrapper").addClass('open')
                 $('.list_menu').addClass('active');
+                $('.streamlist').css('visibility','visible')
             }else {
                 $('.list_menu').removeClass('active');
                 $(".stream-list-wrapper").removeClass('open')
+                $('.streamlist').css('visibility','hidden')
+            }
+        }
+
+        function chatroom_toggle(event, chatBtn) {
+            event.preventDefault();          
+            // stream menu action
+            var streamArea = $(".stream-area");
+            if(streamArea.hasClass('chat_open') == true) {
+                streamArea.removeClass('chat_open')
+                streamArea.addClass('chat_close')
+            }else {
+                streamArea.removeClass('chat_close')
+                streamArea.addClass('chat_open')
             }
         }
     </script>

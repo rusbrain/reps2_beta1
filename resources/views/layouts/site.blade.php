@@ -20,7 +20,7 @@
     <!--Main CSS-->
     <link rel="stylesheet" href="{{route('home')}}/css/main.css">
     <link rel="stylesheet" href="{{route('home')}}/css/responsive.css">
-    <link rel="stylesheet" href="{{route('home')}}/css/message.css">
+    {{-- <link rel="stylesheet" href="{{route('home')}}/css/message.css"> --}}
 
     <title>Главная | Reps.ru</title>
 </head>
@@ -57,13 +57,11 @@
                 @endif
                 @if($streamSettings->main_section)
                     <div class="row stream-section">               
-                        <div class="col-md-3">
+                                            
+                        <div class="col-md-12 stream-area chat_close">
                             <div class="stream-message-wrapper">
                                 @yield('stream-message')
                             </div>
-                        </div>
-                    
-                        <div class="col-md-9 video-frame">
                             <div class="stream-wrapper" id="video-frame-container">
                                 <div class="load-wrapp">
                                     <img src="/images/loader.gif" alt="">
@@ -204,6 +202,6 @@
 @yield('js')
 <!--Custom scripts-->
 <script src="{{route('home')}}/js/scripts.js"></script>
-<script src="{{route('home')}}/js/message.js"></script>
+{{-- <script src="{{route('home')}}/js/message.js"></script> --}}
 </body>
 </html>

@@ -84,7 +84,10 @@ class BaseDataService
     }
 
     public static function streams_list() {
-        return Stream::where('approved', 1)->orderBy('updated_at', 'Desc')->limit(20)->get();
+        return Stream::where('approved', 1)->where('active', 1)->orderBy('updated_at', 'Desc')->get(); // how many limit ???
+    }
+    public static function all_streams_list() {
+        return Stream::get(); 
     }
 
     public static function getStreamSettings() {

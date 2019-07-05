@@ -7,3 +7,6 @@
         </div>
     </div>
 </div>
+{{-- <div id="chatroom">
+    <message-component :auth = "{{Auth::user()}}"></message-component>
+</div> --}}
