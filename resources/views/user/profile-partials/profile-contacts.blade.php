@@ -28,6 +28,14 @@
     </div>
     <div class="user-account-info-row">
         <span>Подпись:</span>
-        <span class="color-blue text-bold">{!! $general_helper->oldContentFilter($user->signature ?? 'не указано') !!}</span>
+        <span class="color-blue text-bold">
+            {!! $general_helper->oldContentFilter($user->signature ?? 'не указано') !!}
+
+            @if ($general_helper->getUserbarForUser($user))
+                <br />
+                <br />
+                <img src="{{ $general_helper->getUserbarForUser($user) }}"/>
+            @endif
+        </span>
     </div>
 </div><!-- close div /.content-box -->

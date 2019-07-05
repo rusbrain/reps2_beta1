@@ -79,6 +79,12 @@
                     <div class="col-md-12 comment-content-wrapper">
                         <div class="comment-content">
                             {!! $general_helper->oldContentFilter($comment->content) !!}
+
+                            @if ($general_helper->getUserbarForUser($comment->user))
+                                <br />
+                                <br />
+                                <img src="{{ $general_helper->getUserbarForUser($comment->user) }}"/>
+                            @endif
                         </div>
                         <div class="comment-footer">
                             <div class="quote">
