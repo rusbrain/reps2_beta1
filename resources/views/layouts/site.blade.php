@@ -202,6 +202,9 @@
 @yield('js')
 <!--Custom scripts-->
 <script src="{{route('home')}}/js/scripts.js"></script>
+<script src="{{route('home')}}/js/socket.io.js"></script>
 <script src="{{route('home')}}/js/message.js"></script>
+
+
 </body>
 </html>

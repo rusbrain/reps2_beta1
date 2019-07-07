@@ -244,6 +244,13 @@ Route::group(['middleware' => 'activity'], function () {
 
         Route::get('/photo/{id}/comments', 'UserGalleryCommentController@pagination')->name('gallery.comment.pagination');
         Route::get('/photo/{id}', 'UserGalleryController@show')->name('gallery.view');
+
+       
+    });
+
+    Route::group(['prefix' => 'chat'], function () {
+        Route::get('/get_messages', 'ChatController@get_messages')->name('chat.get_messages');
+        Route::post('/insert_message', 'ChatController@insert_message')->name('chat.add_message');
     });
 
     // Admin Routes

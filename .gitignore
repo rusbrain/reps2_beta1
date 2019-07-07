@@ -7,6 +7,11 @@
 /public/.htaccess
 
 /public/bower_components
+
+/public/js/message.js
+/public/css/message.css
+
+/nodejs/node_modules
 /storage/debugbar
 
 /storage/*.key
