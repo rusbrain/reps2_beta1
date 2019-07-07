@@ -42,7 +42,7 @@
 
 <script>
 var moment = require("moment");
-var socket = io("http://172.16.1.128:3000");
+var socket = io(process.env.MIX_SOCKET_SERVER);
 
 export default {
   props: {
