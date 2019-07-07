@@ -7,6 +7,8 @@
 /public/.htaccess
 
 /public/bower_components
+
+/nodejs/node_modules
 /storage/debugbar
 
 /storage/*.key
