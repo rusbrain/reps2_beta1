@@ -1,0 +1,24 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js",
+    "dev": "set NODE_ENV=dev&& nodemon index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "config": "^1.30.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "moment": "^2.22.2",
+    "mysql": "^2.15.0",
+    "nodemon": "^1.18.3",
+    "redis": "^2.8.0",
+    "request": "^2.88.0",
+    "socket.io": "^2.2.0"
+  }
+}
