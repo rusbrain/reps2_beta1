@@ -4,7 +4,7 @@
     @if(!empty($stream))
         <div class="widget-wrapper">
             <div class="widget-header">
-                <a href="#" class="chat_button" onclick="chatroom_toggle(event, $(this))"></a>
+                <a href="#" class="chat_button" data-tip="Chatroom" onclick="chatroom_toggle(event, $(this))"></a>
                 @if(isset($stream->country))
                     <span class="flag-icon flag-icon-{{mb_strtolower($stream->country->code)}}"></span>
                 @else
@@ -16,7 +16,8 @@
                     <img class="margin-left-5" src="{{route('home')}}/images/smiles/{{\App\Replay::$race_icons['All']}}" alt="">
                 @endif
                 <span class="color-white">{{$stream->title}}</span>
-                <a href="#" class="list_menu" onclick="menu_toggle(event, $(this))"></a>
+                <a href="#" class="theatre_mode" data-tip="Theatre Mode" onclick="theatre_mode(event, $(this))" ></a>
+                <a href="#" class="list_menu" data-tip="Streams List" onclick="menu_toggle(event, $(this))"></a>
             </div>                  
         </div>
         <div class="ifram_container">

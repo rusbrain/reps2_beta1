@@ -175,6 +175,20 @@
             }
         }
 
+        function theatre_mode(event, theatreBtn) {
+            event.preventDefault();  
+            var streamArea = $(".stream-area");
+            if(streamArea.hasClass('theatre-on') == true) {
+                streamArea.removeClass('theatre-on')
+                streamArea.addClass('theatre-off')
+                $("body").removeClass('theatre');
+            }else {
+                streamArea.removeClass('theatre-off')
+                streamArea.addClass('theatre-on')
+                $("body").addClass('theatre');
+            }
+        }
+
         function chatroom_toggle(event, chatBtn) {
             event.preventDefault();          
             // stream menu action

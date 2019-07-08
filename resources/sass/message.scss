@@ -1,0 +1,68 @@
+@import "~font-awesome/css/font-awesome.css";
+#chatroom {
+}
+
+.chat_container {
+  .chat_header{
+    background: #2f6696;
+    color: #fff;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    padding: 0 15px;
+    border-right: solid 1px #32515f;
+  }
+
+  .chat_text_container {
+    min-height: 530px;
+    max-height: 530px;
+    overflow-y: auto;
+    border: solid 1px #e8e8e8;
+    .user_msg {
+      padding: 5px 10px !important;
+      border-bottom: solid 1px gray;
+      p {
+        margin: 0;
+        padding: 5px 0;
+      }
+      .user_info {
+        .username {
+          color: #2f6696;
+          font-weight: 600;
+        }
+        .user_id {
+          color: #3265dc;
+        }
+        .msg_timestamp {
+          float: right;
+        }
+      }
+    }
+  }
+
+  .chat_footer {
+    margin: 5px;
+
+    .send {
+      display: inline-flex;
+      width: 100%;
+      padding: 10px 5px;
+      position: relative;
+      input.messagebox {
+        width: 100%;
+        font-size: 14px;
+      }
+      i {
+        font-size: 18px;
+        color: #1660a0;
+        position: absolute;
+        right: 12px;
+        top: 16px;
+      }
+    }
+    
+  }
+}
+
+
