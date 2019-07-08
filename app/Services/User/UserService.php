@@ -132,6 +132,7 @@ class UserService
         $user->user_friends()->delete();
         $user->user_friendly()->delete();
 
+        User::where('id', $user->id)->update(array('email'=>'-'));
         User::where('id', $user->id)->delete();
     }
 
