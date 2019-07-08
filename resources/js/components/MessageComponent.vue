@@ -22,14 +22,14 @@
            
         </div>
         <div class="chat_footer" v-if="userLoggedin">
-            <div class="importing">
+            <!-- <div class="importing">
               <span class="input-group-btn">
                   <div class="btn btn-default btn-file">
                       <label for="image"><i class="fa fa-paperclip"></i></label>
                       <input name="attachment" id="image" type="file" v-on:change="file($event)" style="display:none">
                   </div>
               </span>
-            </div>
+            </div> -->
             <div class="send">
                <div class="input-group">
                     <input name="message" v-model.trim="message" placeholder="Введите сообщение и нажмите Enter" class="form-control" 
