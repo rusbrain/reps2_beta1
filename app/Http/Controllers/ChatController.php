@@ -10,7 +10,10 @@ class ChatController extends Controller
 {
     //
     public function get_messages() {
-       return PublicChat::select('user_id', 'user_name', 'message', 'file_path', 'imo', 'created_at')->limit(50)->get();
+       return PublicChat::select('user_id', 'user_name', 'message', 'file_path', 'imo', 'created_at')
+                        ->orderBy('created_at', 'desc')
+                        ->limit(100)
+                        ->get();
     }
 
     public function insert_message(Request $request) {

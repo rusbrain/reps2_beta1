@@ -22,20 +22,20 @@
            
         </div>
         <div class="chat_footer" v-if="userLoggedin">
-            <div class="importing"></div>
+            <div class="importing">
+              <span class="input-group-btn">
+                  <div class="btn btn-default btn-file">
+                      <label for="image"><i class="fa fa-paperclip"></i></label>
+                      <input name="attachment" id="image" type="file" v-on:change="file($event)" style="display:none">
+                  </div>
+              </span>
+            </div>
             <div class="send">
                <div class="input-group">
                     <input name="message" v-model.trim="message" placeholder="Введите сообщение и нажмите Enter" class="form-control" 
-                    type="text" v-on:keydown="sendMessage($event)">
-                    <!-- <span class="input-group-btn">
-                        <div class="btn btn-default btn-file">
-                            <i class="fa fa-paperclip"></i>
-                            <input name="attachment" type="file" v-on:change="file($event)">
-                        </div>
-                    </span> -->
+                    type="text" v-on:keydown="sendMessage($event)">                    
                 </div>
             </div>
-            
         </div>
     </div>
 </template>
@@ -120,8 +120,8 @@ export default {
     },
 
     addChatMessage: function(data) {
-      this.messages.push(data);
-      this.scrollToBottom();
+      this.messages.unshift(data);
+      this.scrollToTop();
     },
 
     convertTo: function(date) {
@@ -131,10 +131,10 @@ export default {
         .format("hh:mm");
     },
 
-    scrollToBottom: function() {
+    scrollToTop: function() {
       $("#chat_text_container")
         .stop()
-        .animate({ scrollTop: $("#chat_text_container")[0].scrollHeight }, 1);
+        .animate({ scrollTop: 0 }, 1);
     }
   }
 };
