@@ -8,7 +8,7 @@
                 <div v-for="message in messages" class="user_msg">
                     <p class="user_info">
                         <span class="username">{{message.user_name}}</span>
-                        <span class="user_id">#{{message.user_id}}</span>
+                        <span class="user_id"><a :href="'/user/' + message.user_id" >#{{message.user_id}}</a></span>
                         <span class="msg_timestamp">{{convertTo(message.created_at)}}</span>
                     </p>
                     <p class="msg_text">
