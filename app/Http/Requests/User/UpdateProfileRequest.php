@@ -3,6 +3,7 @@
 namespace App\Http\Requests\User;
 
 use App\Replay;
+use App\Services\Base\UserbarService;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateProfileRequest extends FormRequest
@@ -29,6 +30,7 @@ class UpdateProfileRequest extends FormRequest
             'email'         => 'required|string|email|max:255|unique:users,email,'.$this->get('id'),
             'name'          => 'required|max:255',
             'country'       => 'required|exists:countries,id',
+            'userbar'       => 'nullable|in:0,'.implode(',', UserbarService::getItemsIds()),
             'race'          => 'required|in:'.$races,
             'homepage'      => 'nullable|url|max:255',
             'vk_link'       => 'nullable|url|max:255',

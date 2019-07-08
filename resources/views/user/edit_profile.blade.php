@@ -98,6 +98,17 @@
                         @endif
                     </div>
 
+                    <div class="form-group user-bar">
+                        <label for="userbar">Строка статуса</label>
+                        <select name="userbar" class="{{ $errors->has('userbar') ? ' is-invalid' : '' }}" id="userbar" style="width: 100%;"></select>
+
+                        @if ($errors->has('userbar'))
+                            <span class="invalid-feedback">
+                                <strong>{{ $errors->first('userbar') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+
                     <div class="form-group">
                         <label for="race">*Раса:</label>
                         <select class="custom-select {{ $errors->has('race') ? ' is-invalid' : '' }}"
@@ -307,7 +318,8 @@
                         // Emoticons to be included in the dropdown
                         dropdown: getAllSmiles(),
                         // Emoticons to be included in the more section
-                        more: getMoreSmiles()
+                        more: getMoreSmiles(),
+
                     }
                 });
             }
@@ -317,6 +329,23 @@
             if($('.form-select-2').length > 0){
                 $('.form-select-2').select2({
 
+                });
+            }
+
+            if ($('#userbar').length > 0) {
+                $('#userbar').select2({
+                    minimumResultsForSearch: Infinity,
+                    data: {!! $general_helper->getUserbarForFilter($user->userbar_id) !!},
+                    templateResult: function(state) {
+                        if (state.id == 0) return state.text;
+
+                        return $('<span><img src="'+state.text+'"/></span>');
+                    },
+                    templateSelection: function(state) {
+                        if (state.id == 0) return state.text;
+
+                        return $('<span><img src="'+state.text+'"/></span>');
+                    },
                 });
             }
         });

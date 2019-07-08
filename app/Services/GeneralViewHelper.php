@@ -13,14 +13,13 @@ use App\Country;
 use App\Footer;
 use App\Footerurl;
 use App\ForumTopic;
-use App\Services\Base\{
-    BaseDataService, InterviewQuestionsService
-};
+use App\Services\Base\{BaseDataService, InterviewQuestionsService, UserbarService};
 use App\Services\Comment\CommentService;
 use App\Services\Forum\TopicService;
 use App\Traits\ViewHelper\{
     ForumData, ReplayData, UserData
 };
+use App\User;
 use App\UserGallery;
 use Illuminate\Http\Request;
 
@@ -179,6 +178,27 @@ class GeneralViewHelper
         }
         return self::$instance->countries;
     }
+
+    public function getUserbarForFilter($selectedItem)
+    {
+        return collect(UserbarService::getItems())->prepend('Не выбрано', 0)->map(function($item, $key) use ($selectedItem) {
+            return [
+                'id' => $key,
+                'text' => $key ? '/images/userbars/'.$item : $item,
+                'selected' => $selectedItem && $selectedItem == $key
+            ];
+        })->values()->toJson();
+    }
+
+    public function getUserbarForUser(User $user)
+    {
+        if (!isset(UserbarService::getItems()[$user->userbar_id])) {
+            return null;
+        }
+
+        return '/images/userbars/' . UserbarService::getItems()[$user->userbar_id];
+    }
+
 
     /**
      * @param $comments
