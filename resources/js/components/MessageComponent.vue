@@ -102,7 +102,8 @@ export default {
       if (event.keyCode === 13) {
         if (this.message.length > 0) {
           let messagePacket = this.createMsgObj(this.message);
-          socket.emit("sendMessage", messagePacket);
+          let request = {messagePacket: messagePacket, user:this.auth}
+          socket.emit("sendMessage", request);
           this.message = "";
         } else {
           alert("Please Enter Your Message.");

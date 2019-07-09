@@ -28,10 +28,11 @@ class Socket {
             /**
             * send the messages to the user
             */
-            socket.on('sendMessage', async (response) => {              
-                this.insertMessage(response);               
-                response['created_at'] = moment().utc().format();
-                this.io.emit('addMessageResponse', response);
+            socket.on('sendMessage', async (response) => {   
+                console.log(response.user)           
+                this.insertMessage(response.messagePacket);               
+                response.messagePacket['created_at'] = moment().utc().format();
+                this.io.emit('addMessageResponse', response.messagePacket);
             });
 
             socket.on('typing', function (data) {
