@@ -131,6 +131,7 @@
 
                     @if ($general_helper->getUserbarForUser($topic->user))
                         <br />
+                        <br />
                         <img src="{{ $general_helper->getUserbarForUser($topic->user) }}"/>
                     @endif
                 </div>
