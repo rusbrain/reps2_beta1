@@ -5,6 +5,7 @@ $user = ($menu_name == 'user' || $menu_name == 'user/role' || $menu_name == 'use
 $forum = ($menu_name == 'forum' || $menu_name == 'forum/topic') ? true :false;
 $replay = ($menu_name == 'replay' || $menu_name == 'replay/map' || $menu_name == 'replay/type') ? true :false;
 $stream = ($menu_name == 'stream' || $menu_name == 'stream/header' || $menu_name == 'stream/settings') ? true :false;
+$chat = ($menu_name == 'chat' || $menu_name == 'chat/smiles' || $menu_name == 'chat/pictures') ? true :false;
 $footer = ($menu_name == 'footer' || $menu_name == 'footer/customurl') ? true :false;
 $banner = ($menu_name == 'banner') ? true :false;
 $dbbackup = ($menu_name == 'dbbackup') ? true :false;
@@ -88,6 +89,22 @@ $dbbackup = ($menu_name == 'dbbackup') ? true :false;
             <li @if($menu_name == 'replay') class="active" @endif><a href="{{route('admin.replay')}}"><i class="fa fa-film"></i> <span>Replays</span></a></li>
             <li @if($menu_name == 'replay/map') class="active" @endif><a href="{{route('admin.replay.map')}}"><i class="fa fa-map-o"></i> <span>Карты</span></a></li>
             <li @if($menu_name == 'replay/type') class="active" @endif><a href="{{route('admin.replay.type')}}"><i class="fa fa-object-group"></i> <span>Типы Replay</span></a></li>
+        </ul>
+    </li>
+
+    {{-- Chat --}}
+
+    <li class="treeview {{ $chat ? 'active' : ''}}">
+        <a href="#">
+            <span>Chat</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu {{ $chat ? 'menu-open' : ''}}">
+            <li @if($menu_name == 'chat') class="active" @endif><a href="{{route('admin.chat')}}"><i class="fa fa-film"></i> <span>Chat messages</span></a></li>
+            <li @if($menu_name == 'chat/smiles') class="active" @endif><a href="{{route('admin.chat.smiles')}}"><i class="fa fa-map-o"></i> <span>Smiles</span></a></li>
+            <li @if($menu_name == 'chat/picture') class="active" @endif><a href="{{route('admin.chat.pictures')}}"><i class="fa fa-object-group"></i> <span>Pictures</span></a></li>
         </ul>
     </li>
     {{-- Basement / Footer --}}

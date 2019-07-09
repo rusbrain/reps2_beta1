@@ -121,13 +121,8 @@
             </div>
             <div class="col-md-12 article-content-wrapper">
                 <div class="article-content">
-                    {{-- Spoiler button here --}}
-                    <span class="spoiler">
-                        <img src="{{route('home')}}/images/icons/eye.png" alt="">
-                        Spoiler</span>
-                    <span class="content hide">
-                        {!! $general_helper->oldContentFilter($topic->content) !!}
-                    </span>
+                   
+                    {!! $general_helper->oldContentFilter($topic->content) !!}
 
                     @if ($general_helper->getUserbarForUser($topic->user))
                         <br />

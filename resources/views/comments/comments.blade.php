@@ -115,14 +115,7 @@
             /**add quote*/
             $('body').on('click', '.quote img', function () {
                 addText(textarea, $(this));
-            });
-            
-            /**spoiler action*/
-            $('body').on('click', '.spoiler', function(){
-                console.log("spoiler clicked")
-                $(this).addClass('hide');
-                $(this).parent().find(".content").removeClass('hide')
-            })
+            });          
         });
 
         /**

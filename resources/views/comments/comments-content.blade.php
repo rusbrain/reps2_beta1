@@ -78,13 +78,8 @@
                     @endif
                     <div class="col-md-12 comment-content-wrapper">
                         <div class="comment-content">
-                            {{-- Spoiler button here --}}
-                            <span class="spoiler">
-                                <img src="{{route('home')}}/images/icons/eye.png" alt="">
-                                Spoiler</span>
-                            <span class="content hide">
-                                {!! $general_helper->oldContentFilter($comment->content) !!}
-                            </span>                            
+                                       
+                            {!! $general_helper->oldContentFilter($comment->content) !!}
 
                             @if ($general_helper->getUserbarForUser($comment->user))
                                 <br />

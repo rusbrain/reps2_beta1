@@ -739,9 +739,6 @@ form label {
   margin-bottom: 10px;
   width: 100%;
 }
-.comment-content .content.hide {
-  display: none;
-}
 .comment-footer {
   color: #4890af;
   display: flex;
@@ -1990,9 +1987,6 @@ form label {
 .article-content {
   margin-bottom: 10px;
 }
-.article-content .content.hide {
-  display: none;
-}
 .user-menu-link {
   width: 0;
   height: 0;
@@ -3226,22 +3220,4 @@ body.upload-overlay-open .upload-overlay .showImages .images_wrapper .images .pr
   margin-left: auto;
   max-width: 250px;
   word-break: break-word;
-}
-
-
-/* Additional Styles */
-
-/* Article and Comment Spoiler */
-span.spoiler {
-  color: #737373;
-  cursor: pointer;
-  padding: 2px 5px;
-  border-radius: 3px;
-}
-span.spoiler:hover {
-  color: #4890af;
-  background: #f5f5f5;
-}
-span.spoiler.hide{
-  display: none;
 }

@@ -431,6 +431,21 @@ Route::group(['middleware' => 'activity'], function () {
                 });
             });
 
+            Route::group(['prefix' => 'chat'], function () {
+                Route::get('/', 'ChatController@index')->name('admin.chat');
+
+                Route::group(['prefix' => 'smiles'], function(){
+                    Route::get('/', 'ChatController@index')->name('admin.chat.smiles');
+                    Route::post('/save', 'ChatController@save')->name('admin.chat.smiles.save');
+                });
+
+                Route::group(['prefix' => 'pictures'], function(){
+                    Route::get('/', 'ChatController@index')->name('admin.chat.pictures');
+                    Route::post('/save', 'ChatController@save')->name('admin.chat.pictures.save');
+                });
+
+            });
+
             Route::group(['prefix' => 'country'], function () {
                 Route::get('/', 'CountryController@index')->name('admin.country');
                 Route::get('/pagination', 'CountryController@pagination')->name('admin.country.pagination');
