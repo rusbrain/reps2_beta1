@@ -12,16 +12,22 @@ class Socket {
     }
 
     socketEvents() {
-        this.io.on('connection', (socket) => {           
+        this.io.on('connection', (socket) => {
+            /**
+	    * temporary solution
+	    */
+	    const emit     = (type,data) => this.io.emit(type,data);
+	    const userEmit = (type,data) => this.io.to(socket.id).emit(type,data);
+	    
             /**
             * get the get messages
             */
             socket.on('getMessages', async () => {                  
                 const result = await helper.getMessages();
                 if (result === null) {
-                    this.io.emit('getMessagesResponse', { result: [] });
+                    userEmit('getMessagesResponse', { result: [] });
                 } else {
-                    this.io.emit('getMessagesResponse', { result: result });
+                    userEmit('getMessagesResponse', { result: result });
                 }
             });
 
@@ -34,7 +40,7 @@ class Socket {
                     id: response.id
                 });
              
-                this.io.emit('addMessageResponse', result);
+                emit('addMessageResponse', result);
             });
 
             socket.on('disconnect', async () => {
