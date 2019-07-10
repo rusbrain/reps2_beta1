@@ -5,18 +5,41 @@ const fs = require('fs');
 const request = require('request');
 
 class Helper {
-	async insertMessages(params) {
+	async addSocketId(userInfo){
 		return new Promise((resolve, reject) => {
 			try {
 				request.post(
 					{
-						url:process.env.HOST + '/chat/insert_message',
-					 	form: params
+						url:process.env.HOST + '/chat/socket_user',
+					 	form: userInfo
 					}, 
 					function(err,httpResponse,body){
+						console.log(body)
 						  const response = JSON.parse(body)
 						  if(response.status ===  'ok') {
 							  return true
+						  }
+					})
+				
+			} catch (error) {
+				console.warn(error);
+				resolve(null);
+			}
+		})
+	}
+
+	async getMessage(params) {
+		return new Promise((resolve, reject) => {
+			try {
+				request.post(
+					{
+						url:process.env.HOST + '/chat/get_message',
+					 	form: params
+					}, 
+					function(err,httpResponse,body){
+						  const response = JSON.parse(body);						 
+						  if(response.status ===  'ok') {
+							resolve(response.message)
 						  }
 					})
 				

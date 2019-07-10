@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
 /**
  * @property integer $id
@@ -23,7 +24,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  *
  * @property UserRole[] $role
 */
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use Notifiable, UserRelation, SoftDeletes;
 
@@ -54,6 +55,13 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function getJWTIdentifier() {
+        return $this->getKey();
+    }
+    public function getJWTCustomClaims() {
+        return [];
+    }
+    
     /**
      * Get user if his password id not update
      *

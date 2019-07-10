@@ -41,9 +41,8 @@
 </template>
 
 <script>
-var moment = require("moment");
-var socket = io(process.env.MIX_SOCKET_SERVER);
-
+import axios from 'axios';
+import moment from 'moment';
 export default {
   props: {
     auth: [Object, Number]
@@ -54,6 +53,7 @@ export default {
         status: false,
         msg: "Connecting Please Wait..."
       },
+      socket:null,
       userLoggedin: false,
       messages: [],
       isMessages: false,
@@ -71,9 +71,14 @@ export default {
       } else {
         return "Guest";
       }
-    }
+    },
+
   },
   mounted() {
+    
+    var socket = io(process.env.MIX_SOCKET_SERVER, { query: "id= " + this.auth.id });
+    this.socket = socket;
+
     socket.on("connect", () => {
       socket.emit("getMessages");
     });
@@ -102,8 +107,20 @@ export default {
       if (event.keyCode === 13) {
         if (this.message.length > 0) {
           let messagePacket = this.createMsgObj(this.message);
-          let request = {messagePacket: messagePacket, user:this.auth}
-          socket.emit("sendMessage", request);
+          event.preventDefault();
+          let currentObj = this;
+          let self = this;
+          axios.post('/chat/insert_message', messagePacket)
+          .then(function (response) {           
+              if(response.data.status == 'ok') {
+                let data = {'id':response.data.id, 'user_id': response.data.user}               
+                self.socket.emit("sendMessage", data);
+              }
+          })
+          .catch(function (error) {
+              currentObj.output = error;
+          });
+          
           this.message = "";
         } else {
           alert("Please Enter Your Message.");
@@ -113,7 +130,6 @@ export default {
     createMsgObj: function(message) {
       return {
         user_id: this.auth.id,
-        user_name: this.auth.name,
         file_path: "",
         message: message,
         imo: ""

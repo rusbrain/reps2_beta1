@@ -416,7 +416,7 @@ class GeneralViewHelper
         $text = preg_replace("#\[(u)\](.+?)\[/\\1\]#is", "<\\1>\\2</\\1>", $text);
         $text = preg_replace("#\[(s)\](.+?)\[/\\1\]#is", "<\\1>\\2</\\1>", $text);
         $text = preg_replace("#\[spoiler\](.+?)\[/spoiler\]#is", '</p><div style="width: 99%;margin: 0 auto;">
-    <div class="quotetop" style="cursor:pointer;font-size:10px;"><u>Скрытый текст <i>(кликните чтобы развернуть/свернуть)</i></u></div><div class="spoilmain" style="display:none;"><font color="#555599" size="1">\\1</font></div></div><p class="page_content_text" align="justify">',
+    <div class="quotetop" style="cursor:pointer;font-size:12px;"><u>Скрытый текст <i>(кликните чтобы развернуть/свернуть)</i></u></div><div class="spoilmain" style="display:none;"><font color="#555599" size="2">\\1</font></div></div><p class="page_content_text" align="justify">',
             $text);
         $text = preg_replace("#\[(quote)\](.+?)\[/\\1\]#is",
             "</p><p class=\"page_content_info2\" align=\"left\" align=\"justify\"><font color=\"#555599\">\\2</font></p><p align=\"justify\">",

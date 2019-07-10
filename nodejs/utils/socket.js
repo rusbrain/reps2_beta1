@@ -28,11 +28,13 @@ class Socket {
             /**
             * send the messages to the user
             */
-            socket.on('sendMessage', async (response) => {   
-                console.log(response.user)           
-                this.insertMessage(response.messagePacket);               
-                response.messagePacket['created_at'] = moment().utc().format();
-                this.io.emit('addMessageResponse', response.messagePacket);
+            socket.on('sendMessage', async (response) => { 
+                const result = await helper.getMessage({
+                    user_id: response.user_id,
+                    id: response.id
+                });
+             
+                this.io.emit('addMessageResponse', result);
             });
 
             socket.on('typing', function (data) {
@@ -63,22 +65,13 @@ class Socket {
         });
     }
 
-    async insertMessage(data) {
-        const sqlResult = await helper.insertMessages({
-            user_id: data.user_id,
-            user_name: data.user_name,
-            file_path: data.file_path,
-            imo: data.imo,
-            message: data.message,
-        });
-    }
-
+ 
     socketConfig() {
-        this.io.use(async (socket, next) => {
+        this.io.use(async (socket, next) => {            
             next();
             // let userId = socket.request._query['id'];
             // let userSocketId = socket.id;
-            // const response = await helper.addSocketId( userId, userSocketId);
+            // const response = await helper.addSocketId({user_id:userId, socket_id:userSocketId});
             // if(response &&  response !== null){
             //     next();
             // }else{

@@ -11,7 +11,6 @@ class Server {
     constructor() {       
         this.port = process.env.SOCKET_PORT || 3000;
         this.host = process.env.SOCKET_HOST || `localhost`;
-console.log(this.host)
         this.app = express();
         this.app.use(cors())
         this.http = http.Server(this.app);

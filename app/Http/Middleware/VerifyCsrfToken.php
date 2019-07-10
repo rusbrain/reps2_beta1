@@ -20,6 +20,7 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         //
-        'chat/insert_message'
+        // 'chat/insert_message',
+        'chat/get_message'
     ];
 }
