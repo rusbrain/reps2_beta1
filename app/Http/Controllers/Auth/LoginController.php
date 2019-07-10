@@ -8,6 +8,7 @@ use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use JWTAuth;
 
 class LoginController extends Controller
 {
@@ -72,6 +73,13 @@ class LoginController extends Controller
             }
         }
 
+        $credentials = $request->only('email', 'password');
+        $token = JWTAuth::attempt($credentials);
+
+        $user = User::where('id', Auth::id())->update(['jwt_token' => $token]);
+
+
+
         return redirect('/');
     }
 
@@ -110,6 +118,7 @@ class LoginController extends Controller
         if($is_ban == true){
             return true;
         }
+        $user = User::where('id', Auth::id())->update(['jwt_token' => '']);
         return redirect('/');
     }
 }

@@ -249,8 +249,11 @@ Route::group(['middleware' => 'activity'], function () {
     });
 
     Route::group(['prefix' => 'chat'], function () {
+        Route::group(['middleware' => 'auth'], function () {
+            Route::post('/insert_message', 'ChatController@insert_message')->name('chat.add_message');
+        });        
         Route::get('/get_messages', 'ChatController@get_messages')->name('chat.get_messages');
-        Route::post('/insert_message', 'ChatController@insert_message')->name('chat.add_message');
+        Route::post('/get_message', 'ChatController@get_message')->name('chat.get_message'); 
     });
 
     // Admin Routes
