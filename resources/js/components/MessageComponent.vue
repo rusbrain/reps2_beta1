@@ -29,7 +29,7 @@
                     @keyup.enter.exact.native="sendMessage($event)"
                     @keydown.enter.ctrl.exact.native="newline"
                     @keydown.enter.shift.exact.native="newline"
-                    placeholder="Type something here..."                       
+                    placeholder="Введите сообщение и нажмите Enter"                       
                     :min-height="10"
                     :max-height="350"
                     class="form-control"

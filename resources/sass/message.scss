@@ -18,7 +18,7 @@
     min-height: 530px;
     max-height: 530px;
     overflow-y: auto;
-    border: solid 1px #e8e8e8;
+    border: solid 1px #1f1f1f;
     .user_msg {
       padding: 5px 10px !important;
       border-bottom: solid 1px gray;
@@ -73,6 +73,9 @@
         width: 100%;
         font-size: 12px;
         resize: none;
+        background: #3e3e3e;
+        border: solid 1px #1b1a1a;
+        color: white;
       }
       i {
         font-size: 18px;
