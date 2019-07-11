@@ -12,7 +12,7 @@
                         <span class="msg_timestamp">{{convertTo(message.created_at)}}</span>
                     </p>
                     <p class="msg_text">
-                       {{message.message}}
+                       <span v-html="urlify(message.message)"></span>
                     </p>
                 </div>
             </div>
@@ -21,19 +21,19 @@
              </div>
            
         </div>
-        <div class="chat_footer" v-if="userLoggedin">
-            <!-- <div class="importing">
-              <span class="input-group-btn">
-                  <div class="btn btn-default btn-file">
-                      <label for="image"><i class="fa fa-paperclip"></i></label>
-                      <input name="attachment" id="image" type="file" v-on:change="file($event)" style="display:none">
-                  </div>
-              </span>
-            </div> -->
+        <div class="chat_footer" v-if="userLoggedin">           
             <div class="send">
                <div class="input-group">
-                    <input name="message" v-model.trim="message" placeholder="Введите сообщение и нажмите Enter" class="form-control" 
-                    type="text" v-on:keydown="sendMessage($event)">                    
+                  <textarea-autosize
+                    v-model="message"   
+                    @keyup.enter.exact.native="sendMessage($event)"
+                    @keydown.enter.ctrl.exact.native="newline"
+                    @keydown.enter.shift.exact.native="newline"
+                    placeholder="Type something here..."                       
+                    :min-height="10"
+                    :max-height="350"
+                    class="form-control"
+                  ></textarea-autosize>                
                 </div>
             </div>
         </div>
@@ -103,29 +103,30 @@ export default {
         this.isMessages = true;
       }
     },
+    newline() {
+      this.message = `${this.message}\n`;
+    },
     sendMessage(event) {
-      if (event.keyCode === 13) {
-        if (this.message.length > 0) {
-          let messagePacket = this.createMsgObj(this.message);
-          event.preventDefault();
-          let currentObj = this;
-          let self = this;
-          axios.post('/chat/insert_message', messagePacket)
-          .then(function (response) {           
-              if(response.data.status == 'ok') {
-                let data = {'id':response.data.id, 'user_id': response.data.user}               
-                self.socket.emit("sendMessage", data);
-              }
-          })
-          .catch(function (error) {
-              currentObj.output = error;
-          });
-          
-          this.message = "";
-        } else {
-          alert("Please Enter Your Message.");
-        }
-      }
+      if (this.message.length > 0) {
+        let messagePacket = this.createMsgObj(this.wrapperTxt(this.message));
+        event.preventDefault();
+        let currentObj = this;
+        let self = this;
+        axios.post('/chat/insert_message', messagePacket)
+        .then(function (response) {           
+            if(response.data.status == 'ok') {
+              let data = {'id':response.data.id, 'user_id': response.data.user}               
+              self.socket.emit("sendMessage", data);
+            }
+        })
+        .catch(function (error) {
+            currentObj.output = error;
+        });
+        
+        this.message = "";
+      } else {
+        alert("Please Enter Your Message.");
+      }      
     },
     createMsgObj: function(message) {
       return {
@@ -136,6 +137,22 @@ export default {
       };
     },
 
+    urlify:function(text) {
+        text.replace(/(\\r)*\\n/g, '<br>')
+        var urlRegex = /(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/igm;
+        return text.replace(urlRegex, function(url) {
+            return '<a href="' + url + '">' + url + '</a>';
+        })
+    },
+    wrapperTxt: function(text) {
+      let lines = text.split('\n');
+      let wrap_text = '';
+      lines.forEach(function(item, index){
+        if(item != '')
+          wrap_text += '<p>' +item+ '</p>'
+      });
+      return wrap_text;
+    },
     addChatMessage: function(data) {
       this.messages.unshift(data);
       this.scrollToTop();
