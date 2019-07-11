@@ -1072,13 +1072,12 @@ form label {
   font-size: 14px;
 }
 .stream-headline-wrapper a {
-  height: 30px;
-  line-height: 30px;
+  line-height: 15px;
   color: #fff;
-  padding-left: 15px;
   font-family: "Roboto-Medium", sans-serif;
   display: list-item;
   list-style: none;
+  padding: 5px 5px 5px 15px;
 }
 .stream-headline-wrapper h1 p.header_link{
   margin-bottom: 0
