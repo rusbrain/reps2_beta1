@@ -141,7 +141,7 @@ export default {
         text.replace(/(\\r)*\\n/g, '<br>')
         var urlRegex = /(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/igm;
         return text.replace(urlRegex, function(url) {
-            return '<a href="' + url + '">' + url + '</a>';
+            return '<a href="' + url + '" target="_blank">' + url + '</a>';
         })
     },
     wrapperTxt: function(text) {
