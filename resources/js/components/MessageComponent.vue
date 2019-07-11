@@ -3,7 +3,7 @@
         <div class="chat_header">
             <span>{{ user_email }}</span>
         </div>
-        <div class="chat_text_container" id="chat_text_container">
+        <vue-custom-scrollbar class="chat_text_container" id="chat_text_container">
             <div v-if="isMessages">
                 <div v-for="message in messages" class="user_msg">
                     <p class="user_info">
@@ -20,7 +20,7 @@
                  Empty messages
              </div>
            
-        </div>
+        </vue-custom-scrollbar>
         <div class="chat_footer" v-if="userLoggedin">           
             <div class="send">
                <div class="input-group">
@@ -43,12 +43,20 @@
 <script>
 import axios from 'axios';
 import moment from 'moment';
+import vueCustomScrollbar from 'vue-custom-scrollbar'
+
 export default {
+  components: {
+    vueCustomScrollbar
+  },
   props: {
     auth: [Object, Number]
   },
   data() {
     return {
+      settings: {
+        maxScrollbarLength: 60
+      },
       socketConnected: {
         status: false,
         msg: "Connecting Please Wait..."
