@@ -80,7 +80,7 @@ class BaseDataService
 
     public static function getStreamHeader()
     {
-        return StreamHeader::orderBy('updated_at', 'Desc')->first();
+        return StreamHeader::orderBy('updated_at', 'Desc')->get();
     }
 
     public static function streams_list() {

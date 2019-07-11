@@ -1069,6 +1069,8 @@ form label {
 }
 .stream-headline-wrapper  .section-title {
   border-radius: 3px;
+  
+  /* border-bottom: solid 1px #215a8b; */
 }
 .stream-headline-wrapper a {
   height: 30px;
@@ -1076,8 +1078,13 @@ form label {
   color: #fff;
   padding-left: 15px;
   font-family: "Roboto-Medium", sans-serif;
+  display: list-item;
+  list-style: none;
 }
-.stream-headline-wrapper h1 p {
+.stream-headline-wrapper h1 p.header_link{
+  margin-bottom: 0
+}
+.stream-headline-wrapper h1 p.toggle-action {
     margin: 0;
     margin-right: 10px;
     font-size: 12px;
@@ -1089,7 +1096,7 @@ form label {
     cursor: pointer;
 }
 
-.stream-headline-wrapper h1 p:hover{
+.stream-headline-wrapper h1 p.toggle-action:hover{
   background: #207396;
 }
 
