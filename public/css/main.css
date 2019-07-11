@@ -1069,8 +1069,7 @@ form label {
 }
 .stream-headline-wrapper  .section-title {
   border-radius: 3px;
-  
-  /* border-bottom: solid 1px #215a8b; */
+  font-size: 14px;
 }
 .stream-headline-wrapper a {
   height: 30px;
