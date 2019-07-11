@@ -101,8 +101,6 @@ class ResetPasswordController extends Controller
             $user->email_verified_at = Carbon::now();
             $user->save();
 
-            $this->guard()->login($user);
-
             Mail::to($user->email)->send(new UserPasswordUpdated());
 
             return redirect('/');
