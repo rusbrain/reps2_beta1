@@ -812,3 +812,33 @@ function addStream() {
         tooltip: "Video Stream"
     });
 }
+
+function addSpoiler() {
+    var IE_VER = sceditor.ie;
+	// In IE < 11 a BR at the end of a block level element
+	// causes a double line break.
+	var IE_BR_FIX = IE_VER && IE_VER < 11;
+    $.sceditor.command.set("spoiler", {
+        exec: function(caller, html) {
+            // Store the editor instance so it can be used
+            // in the click handler
+            var editor   = this
+           
+            var	before = '[spoiler]',
+            end    = '[/spoiler]';
+
+            // if there is HTML passed set end to null so any selected
+            // text is replaced
+            if (html) {               
+                before = before + html + end;
+                end    = null;
+            // if not add a newline to the end of the inserted quote
+            } else if (this.getRangeHelper().selectedHtml() === '') {
+             
+            }
+            this.wysiwygEditorInsertHtml(before, end);        
+        },
+        tooltip: "Spoiler"
+    });
+
+}
