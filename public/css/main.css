@@ -1215,6 +1215,7 @@ form label {
 }
 .stream-section .stream-area.chat_open .stream-message-wrapper {
   width: 25%;
+  background: #1e2328;
   /* transition-duration: 0.1s */
 }
 

@@ -29,18 +29,34 @@
       }
       .user_info {
         .username {
-          color: #2f6696;
+          color: #f1df87;
           font-weight: 600;
         }
         .user_id {
-          color: #3265dc;
+          a{
+            color :#4890af;
+            &:hover{
+              color:#5584da
+            }
+          }
+          
         }
         .msg_timestamp {
           float: right;
+          color: #DDAA77;
         }
       }
       .msg_text {
           overflow-wrap: break-word;
+          color: #fff;
+          p{
+            a{
+              color:#99a589;
+              &:hover {
+                color:#5083d0;
+              }
+            }
+          }
       }
     }
   }
