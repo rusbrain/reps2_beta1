@@ -39,6 +39,9 @@
           float: right;
         }
       }
+      .msg_text {
+          overflow-wrap: break-word;
+      }
     }
   }
 
