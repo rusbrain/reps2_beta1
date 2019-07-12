@@ -96,15 +96,15 @@ $dbbackup = ($menu_name == 'dbbackup') ? true :false;
 
     <li class="treeview {{ $chat ? 'active' : ''}}">
         <a href="#">
-            <span>Chat</span>
+            <span>Болтаем</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
             </span>
         </a>
         <ul class="treeview-menu {{ $chat ? 'menu-open' : ''}}">
-            <li @if($menu_name == 'chat') class="active" @endif><a href="{{route('admin.chat')}}"><i class="fa fa-film"></i> <span>Chat messages</span></a></li>
-            <li @if($menu_name == 'chat/smiles') class="active" @endif><a href="{{route('admin.chat.smiles')}}"><i class="fa fa-map-o"></i> <span>Smiles</span></a></li>
-            <li @if($menu_name == 'chat/picture') class="active" @endif><a href="{{route('admin.chat.pictures')}}"><i class="fa fa-object-group"></i> <span>Pictures</span></a></li>
+            <li @if($menu_name == 'chat') class="active" @endif><a href="{{route('admin.chat')}}"><i class="fa fa-commenting"></i> <span>Cообщения чата</span></a></li>
+            <li @if($menu_name == 'chat/smiles') class="active" @endif><a href="{{route('admin.chat.smiles')}}"><i class="fa fa-smile-o"></i> <span>Улыбки</span></a></li>
+            <li @if($menu_name == 'chat/picture') class="active" @endif><a href="{{route('admin.chat.pictures')}}"><i class="fa fa-file-image-o"></i> <span>Картина</span></a></li>
         </ul>
     </li>
     {{-- Basement / Footer --}}
