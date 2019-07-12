@@ -33,5 +33,16 @@ class ChatController extends Controller
             AdminViewService::getPagination($messages)
         );    
     }
+
+    /**
+     * @param $stream_id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function remove($id)
+    {
+        $message = PublicChat::find($id);
+        $message->delete();
+        return back();
+    }
     
 }
