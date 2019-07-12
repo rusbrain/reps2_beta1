@@ -6,13 +6,13 @@
 @endsection
 
 @section('page_header')
-    Messages
+Cообщения
 @endsection
 
 @section('breadcrumb')
     <li><a href="{{route('admin.home')}}"><i class="fa fa-dashboard"></i>Главная панель</a></li>
     <li><a href="{{route('admin.users')}}">Пользователи</a></li>
-    <li class="active">Chat Messages</li>
+    <li class="active">Cообщения чата</li>
 @endsection
 
 @section('content')
@@ -27,7 +27,7 @@
             </div>
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Messages</h3>                    
+                    <h3 class="box-title">Cообщения</h3>                    
                     <div class="box-tools pagination-content">
                     </div>
                 </div>
@@ -37,9 +37,9 @@
                         <thead>
                         <tr>
                             <th style="width: 30px">ID</th>
-                            <th>username</th>
-                            <th>message content</th>                      
-                            <th>date time</th>
+                            <th>имя пользователя</th>
+                            <th>Сообщение</th>                      
+                            <th>Дата и время</th>
                             <th>Действия</th>
                         </tr>
                         </thead>
