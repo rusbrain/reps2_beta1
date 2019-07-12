@@ -104,7 +104,7 @@ $dbbackup = ($menu_name == 'dbbackup') ? true :false;
         <ul class="treeview-menu {{ $chat ? 'menu-open' : ''}}">
             <li @if($menu_name == 'chat') class="active" @endif><a href="{{route('admin.chat')}}"><i class="fa fa-commenting"></i> <span>Cообщения чата</span></a></li>
             <li @if($menu_name == 'chat/smiles') class="active" @endif><a href="{{route('admin.chat.smiles')}}"><i class="fa fa-smile-o"></i> <span>Улыбки</span></a></li>
-            <li @if($menu_name == 'chat/picture') class="active" @endif><a href="{{route('admin.chat.pictures')}}"><i class="fa fa-file-image-o"></i> <span>Картина</span></a></li>
+            <li @if($menu_name == 'chat/picture') class="active" @endif><a href="{{route('admin.chat.pictures')}}"><i class="fa fa-file-image-o"></i> <span>Изображение</span></a></li>
         </ul>
     </li>
     {{-- Basement / Footer --}}

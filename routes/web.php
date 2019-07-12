@@ -442,13 +442,22 @@ Route::group(['middleware' => 'activity'], function () {
                 Route::get('/{id}/remove', 'ChatController@remove')->name('admin.chat.remove');
 
                 Route::group(['prefix' => 'smiles'], function(){
-                    Route::get('/', 'ChatController@index')->name('admin.chat.smiles');
-                    Route::post('/save', 'ChatController@save')->name('admin.chat.smiles.save');
+                    Route::get('/', 'ChatSmilesController@index')->name('admin.chat.smiles');
+                    Route::get('/create', 'ChatSmilesController@create')->name('admin.chat.smiles.create');
+                    Route::post('/store', 'ChatSmilesController@store')->name('admin.chat.smiles.store');
+                    Route::get('/{id}/edit', 'ChatSmilesController@edit')->name('admin.chat.smiles.edit');
+                    Route::post('/{id}/update', 'ChatSmilesController@update')->name('admin.chat.smiles.update');
+                    Route::get('/{id}/delete', 'ChatSmilesController@destroy')->name('admin.chat.smiles.delete');
                 });
 
                 Route::group(['prefix' => 'pictures'], function(){
-                    Route::get('/', 'ChatController@index')->name('admin.chat.pictures');
-                    Route::post('/save', 'ChatController@save')->name('admin.chat.pictures.save');
+                    Route::get('/', 'ChatPicturesController@index')->name('admin.chat.pictures');
+                    Route::get('/pagination', 'ChatPicturesController@pagination')->name('admin.chat.pictures.pagination');
+                    Route::get('/create', 'ChatPicturesController@create')->name('admin.chat.pictures.create');
+                    Route::post('/store', 'ChatPicturesController@store')->name('admin.chat.pictures.store');
+                    Route::get('/{id}/edit', 'ChatPicturesController@edit')->name('admin.chat.pictures.edit');
+                    Route::post('/{id}/update', 'ChatPicturesController@update')->name('admin.chat.pictures.update');
+                    Route::get('/{id}/remove', 'ChatPicturesController@destroy')->name('admin.chat.pictures.remove');
                 });
 
             });
