@@ -443,11 +443,12 @@ Route::group(['middleware' => 'activity'], function () {
 
                 Route::group(['prefix' => 'smiles'], function(){
                     Route::get('/', 'ChatSmilesController@index')->name('admin.chat.smiles');
+                    Route::get('/pagination', 'ChatSmilesController@pagination')->name('admin.chat.smiles.pagination');
                     Route::get('/create', 'ChatSmilesController@create')->name('admin.chat.smiles.create');
                     Route::post('/store', 'ChatSmilesController@store')->name('admin.chat.smiles.store');
                     Route::get('/{id}/edit', 'ChatSmilesController@edit')->name('admin.chat.smiles.edit');
                     Route::post('/{id}/update', 'ChatSmilesController@update')->name('admin.chat.smiles.update');
-                    Route::get('/{id}/delete', 'ChatSmilesController@destroy')->name('admin.chat.smiles.delete');
+                    Route::get('/{id}/remove', 'ChatSmilesController@destroy')->name('admin.chat.smiles.remove');
                 });
 
                 Route::group(['prefix' => 'pictures'], function(){

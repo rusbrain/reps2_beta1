@@ -33,8 +33,8 @@
             </div>
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Изображение ({{$pictures_count}})</h3>
-                    <a class="btn btn-info" data-toggle="modal" data-target="#modal-default-add"  href="{{route('admin.chat.pictures.create')}}">Создать</a>
+                    <h3 class="box-title">Изображение ({{$smiles_count}})</h3>
+                    <a class="btn btn-info" data-toggle="modal" data-target="#modal-default-add"  href="{{route('admin.chat.smiles.create')}}">Создать</a>
                     <div class="box-tools pagination-content">
                     </div>
                 </div>
@@ -94,16 +94,16 @@
         $(function () {
             $('.select2').select2();
 
-            getPictures(1);
+            getsmiles(1);
             $('.pagination-content').on('click', '.pagination-push', function () {
                 $('.load-wrapp').show();
                 let page = $(this).data('to-page');
-                getPictures(page);
+                getsmiles(page);
             })
         });
 
-        function getPictures(page) {
-            $.get('{{route('admin.chat.pictures.pagination')}}?page='+page, {!! json_encode($request_data) !!}, function (data) {
+        function getsmiles(page) {
+            $.get('{{route('admin.chat.smiles.pagination')}}?page='+page, {!! json_encode($request_data) !!}, function (data) {
                 $('.table-content').html(data.table);
                 $('.pagination-content').html(data.pagination);
                 $('.pop-up-content').html(data.pop_up);
