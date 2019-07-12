@@ -2,7 +2,7 @@
     <tr>
         <td>{{$message->id}}</td>
         <td><a href="{{route('admin.user.profile', ['id' => $message->user->id])}}">{{$message->user->name}}</a></td>
-        <td><a href="{{route('admin.chat.view', ['id' => $message->id])}}">{!! $message->message !!}</a></td>
+        <td>{!! $message->message !!}</td>
         <td>{{$message->created_at}}</td>       
         <td>
             <div class="btn-group">              
