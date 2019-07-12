@@ -40,7 +40,9 @@ class ChatPicturesController extends Controller
      */
     public function create()
     {
-        return view('admin.chat.pictures.create');
+        $count = ChatPicture::count();
+        $charactor = ':cpic'. $count .':';
+        return view('admin.chat.pictures.create')->with(['charactor'=>$charactor]);
     }
 
     /**
