@@ -7,7 +7,7 @@
         <td><a href="{{route('admin.user.profile', ['id' => $smile->user->id])}}">{{$smile->user->name}}</a></td>
         <td>{{$smile->comment}}</td>
         <td>{{$smile->charactor}}</td>
-
+        <td>{{$smile->created_at}}</td>
         <td>
             <div class="btn-group">
                 <a type="button" class="btn btn-default text-orange"  data-toggle="modal" data-target="#modal-default_{{$smile->id}}" title="Править"  href="{{route('admin.chat.smiles.edit', ['role' => $smile->id])}}"><i class="fa fa-edit"></i></a>
