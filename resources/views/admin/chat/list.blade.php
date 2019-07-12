@@ -6,13 +6,13 @@
 @endsection
 
 @section('page_header')
-    Streams
+    Messages
 @endsection
 
 @section('breadcrumb')
     <li><a href="{{route('admin.home')}}"><i class="fa fa-dashboard"></i>Главная панель</a></li>
     <li><a href="{{route('admin.users')}}">Пользователи</a></li>
-    <li class="active">Streams</li>
+    <li class="active">Chat Messages</li>
 @endsection
 
 @section('content')
@@ -27,8 +27,7 @@
             </div>
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Streams ({{$stream_count}})</h3>
-                    <a class="btn btn-info" href="{{route('admin.stream.create')}}">Создать</a>
+                    <h3 class="box-title">Messages</h3>                    
                     <div class="box-tools pagination-content">
                     </div>
                 </div>
@@ -38,9 +37,9 @@
                         <thead>
                         <tr>
                             <th style="width: 30px">ID</th>
-                            <th>Пользователь</th>
-                            <th>Название</th>                      
-                            <th>Подтвержден</th>
+                            <th>username</th>
+                            <th>message content</th>                      
+                            <th>date time</th>
                             <th>Действия</th>
                         </tr>
                         </thead>
@@ -65,16 +64,16 @@
         $(function () {
             $('.select2').select2();
 
-            getStreams(1);
+            getMessages(1);
             $('.pagination-content').on('click', '.pagination-push', function () {
                 $('.load-wrapp').show();
                 let page = $(this).data('to-page');
-                getStreams(page);
+                getMessages(page);
             })
         });
 
-        function getStreams(page) {
-            $.get('{{route('admin.stream.pagination')}}?page='+page, {!! json_encode($request_data) !!}, function (data) {
+        function getMessages(page) {
+            $.get('{{route('admin.chat.pagination')}}?page='+page, function (data) {
                 $('.table-content').html(data.table);
                 $('.pagination-content').html(data.pagination);
                 $('.load-wrapp').hide();

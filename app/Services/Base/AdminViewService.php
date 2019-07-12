@@ -40,6 +40,17 @@ class AdminViewService extends ViewService
          return self::getView('admin.stream.list_table', $streams);
      }
 
+
+      /**
+     * @param $data
+     * @return string
+     */
+
+    public static function getChatMessages(LengthAwarePaginator $messages)
+    {
+        return self::getView('admin.chat.list_table', $messages);
+    }
+
     /**
      * @param LengthAwarePaginator $countries
      * @return string

@@ -436,6 +436,10 @@ Route::group(['middleware' => 'activity'], function () {
 
             Route::group(['prefix' => 'chat'], function () {
                 Route::get('/', 'ChatController@index')->name('admin.chat');
+                Route::get('/pagination', 'ChatController@pagination')->name('admin.chat.pagination');
+                Route::get('/{id}/view', 'ChatController@view')->name('admin.chat.view');
+                Route::get('/{id}/edit', 'ChatController@edit')->name('admin.chat.edit');
+                Route::get('/{id}/remove', 'ChatController@remove')->name('admin.chat.remove');
 
                 Route::group(['prefix' => 'smiles'], function(){
                     Route::get('/', 'ChatController@index')->name('admin.chat.smiles');
