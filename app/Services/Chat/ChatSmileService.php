@@ -2,65 +2,65 @@
 
 namespace App\Services\Chat;
 
-use App\{File, User, ChatPicture};
-use App\Http\Requests\{PictureStoreRequest, PictureUpdateRequest};
+use App\{File, User, ChatSmile};
+use App\Http\Requests\{SmileStoreRequest, SmileUpdateRequest};
 use App\Services\Base\FileService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
-class ChatPicturesService
+class ChatSmileService
 {
     /**
-     * @param $picture
+     * @param $smile
      * @return mixed
      */
-    public static function getList($picture)
+    public static function getList($smile)
     {
-        return $picture->with('file', 'user')->orderBy('created_at')->paginate(50);
+        return $smile->with('file', 'user')->orderBy('created_at')->paginate(50);
     }
 
     /**
-     * @param PictureStoreRequest $request
+     * @param SmileStoreRequest $request
      * @return mixed
      */
-    public static function store(PictureStoreRequest $request)
+    public static function store(SmileStoreRequest $request)
     {
         $data = $request->validated();
         $data = self::saveImage($data);
         $data['user_id'] = Auth::id();       
-        $picture = ChatPicture::create($data);
+        $smile = ChatSmile::create($data);
 
-        return $picture->id;
+        return $smile->id;
     }
   
     /**
-     * @param PictureUpdateRequest $request
-     * @param ChatPicture $picture
+     * @param SmileUpdateRequest $request
+     * @param ChatSmile $smile
      */
-    public static function update(PictureUpdateRequest $request, ChatPicture $picture)
+    public static function update(SmileUpdateRequest $request, ChatSmile $smile)
     {
         $data = $request->validated();
 
         if($request->has('image')){
-            FileService::removeFile($picture->file_id);
+            FileService::removeFile($smile->file_id);
             $data = self::saveImage($data);
         }
 
-        ChatPicture::where('id', $picture->id)->update($data);
+        ChatSmile::where('id', $smile->id)->update($data);
     }
 
     /**
-     * @param ChatPicture $picture
+     * @param ChatSmile $smile
      * @throws \Exception
      */
-    public static function destroy(ChatPicture $picture)
+    public static function destroy(ChatSmile $smile)
     {
 
-        $file = $picture->file()->first();
+        $file = $smile->file()->first();
         if($file) {
             FileService::removeFile($file->id);
         }
-        $picture->delete();
+        $smile->delete();
     }
 
    

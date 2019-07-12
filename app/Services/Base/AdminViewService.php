@@ -62,12 +62,31 @@ class AdminViewService extends ViewService
     }
 
      /**
-     * @param LengthAwarePaginator $galleries
+     * @param LengthAwarePaginator $pictures
      * @return string
      */
     public static function getChatPicturesPopUp(LengthAwarePaginator $pictures)
     {
         return self::getView('admin.chat.pictures.list_pop_up',$pictures);
+    }
+
+     /**
+     * @param $data
+     * @return string
+     */
+
+    public static function getChatSmiles(LengthAwarePaginator $smiles)
+    {
+        return self::getView('admin.chat.smiles.list_table', $smiles);
+    }
+
+     /**
+     * @param LengthAwarePaginator $smiles
+     * @return string
+     */
+    public static function getChatSmilesPopUp(LengthAwarePaginator $smiles)
+    {
+        return self::getView('admin.chat.smiles.list_pop_up',$smiles);
     }
 
     /**
