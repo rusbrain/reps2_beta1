@@ -27,7 +27,7 @@ class ChatController extends Controller
      */
     public function pagination()
     {
-        $messages = PublicChat::withCount('user')->orderBy('created_at', 'Desc')->paginate(50);
+        $messages = PublicChat::with('user')->orderBy('created_at', 'Desc')->paginate(50);
         return BaseDataService::getPaginationData(
             AdminViewService::getChatMessages($messages), 
             AdminViewService::getPagination($messages)
