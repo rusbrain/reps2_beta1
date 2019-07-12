@@ -15,7 +15,7 @@
                 <div class="col-md-4">
                     <div class="input-group">
                         <span class="">Персонажи</span>
-                        <input type="text" class="form-control" placeholder="Персонажи" name="charactor"  value="{{$picture->charactor}}">
+                        <input type="text" class="form-control" placeholder="Персонажи" name="charactor"  value="{{$picture->charactor}}" readonly>
                     </div>
                 </div>
             </div>
