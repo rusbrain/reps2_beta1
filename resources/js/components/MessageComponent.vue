@@ -37,6 +37,9 @@
                 </div>
             </div>
         </div>
+        <div class="chat_footer" v-if="!userLoggedin">    
+          <p class='guests_message'> Please login to chat!</p> 
+        </div>
     </div>
 </template>
 
