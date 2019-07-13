@@ -12,13 +12,13 @@
 @endsection
 
 @section('page_header')
-    Изображение
+Улыбки
 @endsection
 
 @section('breadcrumb')
     <li><a href="{{route('admin.home')}}"><i class="fa fa-dashboard"></i>Главная панель</a></li>
     <li><a href="{{route('admin.users')}}">Пользователи</a></li>
-    <li class="active">Изображение</li>
+    <li class="active">Улыбки</li>
 @endsection
 
 @section('content')
@@ -33,7 +33,7 @@
             </div>
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Изображение ({{$smiles_count}})</h3>
+                    <h3 class="box-title">Улыбки ({{$smiles_count}})</h3>
                     <a class="btn btn-info" data-toggle="modal" data-target="#modal-default-add"  href="{{route('admin.chat.smiles.create')}}">Создать</a>
                     <div class="box-tools pagination-content">
                     </div>
@@ -44,7 +44,7 @@
                         <thead>
                         <tr>
                             <th style="width: 30px">ID</th>
-                            <th>Изображение</th>
+                            <th>Улыбка</th>
                             <th>Пользователь</th>
                             <th>Подпись</th>
                             <th>Персонажи</th>                    
