@@ -1,6 +1,6 @@
 <div class="box box-info">
     <div class="box-header with-border">
-        <h3 class="box-title">Добавить в свою изображение</h3>
+        <h3 class="box-title">Добавить в свою yлыбка</h3>
     </div>
     <div class="box-body">
         <form action="{{route('admin.chat.smiles.store')}}" method="post" enctype="multipart/form-data">
@@ -9,7 +9,7 @@
                 <div class="row col-md-12">
                     <div class="col-md-4">
                         <div class="box-header">
-                            <h3 class="box-title">Загрузить изображение:</h3>
+                            <h3 class="box-title">Загрузить yлыбка:</h3>
                             <!-- /. tools -->
                         </div>
                         <div class="form-group">
