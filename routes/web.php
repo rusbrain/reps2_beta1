@@ -541,7 +541,10 @@ Route::group(['middleware' => 'activity'], function () {
                 Route::get('/', 'DBManagementController@index')->name('admin.dbbackup');
                 Route::get("/download/{dbname}", 'DBManagementController@filedownload')->name('admin.dbbackup.download');//
                 Route::get("/delete/{dbname}", 'DBManagementController@filedelete')->name('admin.dbbackup.filedelete');//
+                Route::get('/import', 'DBManagementController@import')->name('admin.import');
             });
+
+            
         });
 });
 

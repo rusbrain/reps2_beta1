@@ -144,6 +144,9 @@ $dbbackup = ($menu_name == 'dbbackup') ? true :false;
             </a>
             <ul class="treeview-menu  {{ $dbbackup ? 'menu-open' : ''}}">
                 <li @if($menu_name == 'dbbackup') class="active" @endif><a href="{{route('admin.dbbackup')}}"><i class="fa fa-database"></i> <span>Backup</span></a></li>
+                @if(Auth::user()->name == env('ADMIN_USER'))
+                <li @if($menu_name == 'dbbackup') class="active" @endif><a href="{{route('admin.import')}}"><i class="fa fa-database"></i> <span>Import</span></a></li>
+                @endif
             </ul>
         </li>
     @endif
