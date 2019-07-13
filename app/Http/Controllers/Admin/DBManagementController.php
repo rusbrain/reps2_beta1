@@ -73,25 +73,21 @@ class DBManagementController extends Controller
      * @return \Illuminate\Http\Redirect
      */
     public function import() 
-    {
-        
+    {        
         $defiler_users = DB::connection('mysql2')
                     ->table("user_info as ui")
                     ->join('user as u', 'u.id', '=', 'ui.id')
                     ->where('ui.mail', 'NOT LIKE', '')
                     ->select('u.login', 'ui.mail')
-                    ->get();
-      
+                    ->get();      
         foreach ($defiler_users as $user) {
             try {
-            $check = DB::table('users')->where('email',  trim($user->mail))->exists();
-            $index = 16700;
-            $insert_user = array();
-          
-            if($check) {
-                
-            } else {
-               
+                $check = DB::table('users')->where('email',  trim($user->mail))->exists();
+                $index = 16700;
+                $insert_user = array();
+            
+                if($check) {                
+                } else {               
                     $insert_user = array( 
                         'name' => $user->login,
                         'email' => trim($user->mail),
@@ -100,13 +96,10 @@ class DBManagementController extends Controller
                     );
                     User::create($insert_user);
                     $index++;
-              
-               
+                }
+            } catch (\Exception $e) {
+                dd($e, $check, $insert_user );
             }
-        } catch (\Exception $e) {
-            dd($e, $check, $insert_user );
-        }
-        }
-       
+        }       
     }
 }
