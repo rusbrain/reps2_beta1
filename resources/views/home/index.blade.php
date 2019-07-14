@@ -129,7 +129,7 @@
                 $('#ajax_last_forums .load-wrapp').hide();
 
                 /**move to top of page*/
-                moveToTop(body);
+                moveToTop(container);
             });
         }
 
