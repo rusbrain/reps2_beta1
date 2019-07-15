@@ -141,6 +141,7 @@ class CommentController extends Controller
         }
 
         $id = CommentService::create($data, $this->relation, $id);
+
         return redirect()->route($this->route_name, ['id' => $id]);
     }
 

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Contracts\CommentContainerInterface;
 use App\Observers\UserGalleryPointsObserver;
 use App\Traits\ModelRelations\UserGalleryRelation;
 use Carbon\Carbon;
@@ -29,7 +30,7 @@ use Illuminate\Support\Facades\DB;
  * @property Carbon $updated_at
  *
  */
-class UserGallery extends Model
+class UserGallery extends Model implements CommentContainerInterface
 {
     use SoftDeletes, Notifiable, UserGalleryRelation;
 
@@ -133,5 +134,15 @@ class UserGallery extends Model
             ->select(DB::raw("id, rating, 'gallery' AS 'type'"))
             ->orderBy('rating','DESC')
             ->limit($limit);
+    }
+
+    public function getRouteConfig()
+    {
+        return ['gallery.view', ['id' => $this->id]];
+    }
+
+    public function getTitle()
+    {
+        return $this->comment ? : null;
     }
 }

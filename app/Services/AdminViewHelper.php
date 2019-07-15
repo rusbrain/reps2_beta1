@@ -8,7 +8,7 @@
 
 namespace App\Services;
 
-use App\{Country, ForumTopic, GameVersion, Replay, ReplayMap, UserMessage, UserRole};
+use App\{Country, ForumTopic, GameVersion, Replay, ReplayMap, UserActivityLogEntry, UserMessage, UserRole};
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -115,5 +115,15 @@ class AdminViewHelper
     {
         $this->game_versions = $this->game_versions??GameVersion::all();
         return $this->game_versions;
+    }
+
+    public function getActivityLogEntryDetails(UserActivityLogEntry $logEntry)
+    {
+
+    }
+
+    public function getActivityLogEntryLink(UserActivityLogEntry $logEntry)
+    {
+
     }
 }

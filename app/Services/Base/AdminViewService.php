@@ -201,4 +201,9 @@ class AdminViewService extends ViewService
     {
         return self::getView('admin.user.questions.list_table',$questions);
     }
+
+    public static function getUserActivityLogs($activityLogs)
+    {
+        return self::getView('admin.user-activity-logs.user_logs_table',$activityLogs);
+    }
 }

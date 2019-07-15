@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Contracts\CommentContainerInterface;
 use App\Http\Requests\SearchForumTopicRequest;
 use App\Observers\ForumTopicPointsObserver;
 use App\Services\Forum\TopicService;
@@ -36,7 +37,7 @@ use Illuminate\Support\Facades\DB;
  *
  * 'preview_file_id', 'news',
  */
-class ForumTopic extends Model
+class ForumTopic extends Model implements CommentContainerInterface
 {
     use Notifiable, ForumTopicRelation;
 
@@ -374,5 +375,15 @@ class ForumTopic extends Model
         ->whereHas('section', function ($q) {
             $q->where('is_active', 1);
         })->orderBy('created_at', 'desc');
+    }
+
+    public function getRouteConfig()
+    {
+        return ['forum.topic.index', ['id' => $this->id]];
+    }
+
+    public function getTitle()
+    {
+        return $this->title;
     }
 }
