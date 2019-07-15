@@ -121,7 +121,14 @@
             </div>
             <div class="col-md-12 article-content-wrapper">
                 <div class="article-content">
+                   
                     {!! $general_helper->oldContentFilter($topic->content) !!}
+
+                    @if ($general_helper->getUserbarForUser($topic->user))
+                        <br />
+                        <br />
+                        <img src="{{ $general_helper->getUserbarForUser($topic->user) }}"/>
+                    @endif
                 </div>
                 <div class="article-footer">
                     <div class="quote">

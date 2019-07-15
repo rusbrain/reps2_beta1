@@ -40,6 +40,55 @@ class AdminViewService extends ViewService
          return self::getView('admin.stream.list_table', $streams);
      }
 
+
+      /**
+     * @param $data
+     * @return string
+     */
+
+    public static function getChatMessages(LengthAwarePaginator $messages)
+    {
+        return self::getView('admin.chat.list_table', $messages);
+    }
+
+      /**
+     * @param $data
+     * @return string
+     */
+
+    public static function getChatPictures(LengthAwarePaginator $pictures)
+    {
+        return self::getView('admin.chat.pictures.list_table', $pictures);
+    }
+
+     /**
+     * @param LengthAwarePaginator $pictures
+     * @return string
+     */
+    public static function getChatPicturesPopUp(LengthAwarePaginator $pictures)
+    {
+        return self::getView('admin.chat.pictures.list_pop_up',$pictures);
+    }
+
+     /**
+     * @param $data
+     * @return string
+     */
+
+    public static function getChatSmiles(LengthAwarePaginator $smiles)
+    {
+        return self::getView('admin.chat.smiles.list_table', $smiles);
+    }
+
+     /**
+     * @param LengthAwarePaginator $smiles
+     * @return string
+     */
+    public static function getChatSmilesPopUp(LengthAwarePaginator $smiles)
+    {
+        return self::getView('admin.chat.smiles.list_pop_up',$smiles);
+    }
+
     /**
      * @param LengthAwarePaginator $countries
      * @return string

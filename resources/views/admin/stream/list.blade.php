@@ -65,15 +65,15 @@
         $(function () {
             $('.select2').select2();
 
-            getUsers(1);
+            getStreams(1);
             $('.pagination-content').on('click', '.pagination-push', function () {
                 $('.load-wrapp').show();
                 let page = $(this).data('to-page');
-                getUsers(page);
+                getStreams(page);
             })
         });
 
-        function getUsers(page) {
+        function getStreams(page) {
             $.get('{{route('admin.stream.pagination')}}?page='+page, {!! json_encode($request_data) !!}, function (data) {
                 $('.table-content').html(data.table);
                 $('.pagination-content').html(data.pagination);

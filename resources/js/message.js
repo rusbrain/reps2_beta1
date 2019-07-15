@@ -31,8 +31,16 @@ window.Vue = require('vue');
 const Vue2TouchEvents = require('vue2-touch-events');
 
 window.VueSocketio = require('vue-socket.io');
-
 Vue.use(Vue2TouchEvents);
+
+window.axios = require('axios');
+window.axios.defaults.headers.common = {
+    'X-Requested-With': 'XMLHttpRequest',
+    'X-CSRF-TOKEN' : document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+};
+
+window.VueTextareaAutosize = require('vue-textarea-autosize') 
+Vue.use(VueTextareaAutosize)
 
 Vue.component('message-component', require('./components/MessageComponent.vue').default);
 

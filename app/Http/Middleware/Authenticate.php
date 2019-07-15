@@ -23,7 +23,8 @@ class Authenticate extends Middleware
         $this->authenticate($request, $guards);
 
         if(Auth::user()->is_ban){
-            return redirect()->route('logout');
+            Auth::logout();
+            return redirect("/");
         }
 
         return $next($request);

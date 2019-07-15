@@ -58,7 +58,7 @@ class TopicService
         }
 
         $topic_data['approved']   = 1;
-
+        $topic_data['upgraded_date'] = Carbon::now()->format('Y-m-d H:i:s');
         /**@var ForumTopic $topic */
         $topic = ForumTopic::create($topic_data);
 
@@ -120,7 +120,7 @@ class TopicService
         }
 
         if ($request->has('created_at') && $request->get('created_at') != ''){
-            $topic_data['created_at'] = $request->get('created_at'). " " . Carbon::now()->format('H:i:s');
+            $topic_data['created_at'] = $request->get('created_at'). " " . Carbon::now()->format('H:i:s');            
         } 
 
         $topic_data['approved']   = 1;
@@ -128,7 +128,7 @@ class TopicService
         /**@var User $user*/
         $user = User::getUserProfile(Auth::id());
         $topic_data['updated_by_user'] = $user->name;
-
+        $topic_data['upgraded_date'] = Carbon::now()->format('Y-m-d H:i:s');
         ForumTopic::where('id', $topic->id)->update($topic_data);
     }
 

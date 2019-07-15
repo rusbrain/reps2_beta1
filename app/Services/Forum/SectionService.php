@@ -88,7 +88,7 @@ class SectionService
             $time = Carbon::now()->format('Y-m-d');
             $sql = [];
             foreach ($all_sections as $section) {
-                $sql[] = "( select * from `forum_topics` where `approved` = 1 and (`start_on` is null or `start_on` <= '$time') and `section_id` = $section->id ORDER BY `commented_at` DESC, `created_at` DESC  limit 5 )";
+                $sql[] = "( select *, GREATEST(upgraded_date, commented_at) as lastest_date from `forum_topics` where `approved` = 1 and (`start_on` is null or `start_on` <= '$time') and `section_id` = $section->id ORDER BY lastest_date desc limit 5 )";
             }
 
             $sql = implode(" UNION ALL ", $sql);
@@ -111,7 +111,7 @@ class SectionService
     public static function getGeneralSectionsForum()
     {
         $all_sections = self::getAllForumSections();
-        return $all_sections->where('is_general', 1);
+        return $all_sections;
     }
 
     /**
@@ -129,7 +129,7 @@ class SectionService
      */
     public static function getRecentForums() {
         $time = Carbon::now()->format('Y-m-d');
-        $sql = "( select * from `forum_topics` where `approved` = 1  ORDER BY `commented_at` DESC, `updated_at` DESC  limit 10 )";
+        $sql = "( select *, GREATEST(upgraded_date, commented_at) as lastest_date from `forum_topics` where `approved` = 1  ORDER BY lastest_date desc limit 10 )";
         $recent_forums = collect(\DB::select($sql));
 
         return $recent_forums;

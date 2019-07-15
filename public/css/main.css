@@ -87,6 +87,10 @@ body.theatre {
 .sceditor-button-races div{
   background: url('../images/smiles/terran.gif') no-repeat center center;
 }
+.sceditor-button-spoiler div{
+  background: url('../images/icons/s.png') no-repeat center center;
+}
+
 .sceditor-race-picker img{
   display: inline-block;
   margin-right: 8px;
@@ -1065,15 +1069,20 @@ form label {
 }
 .stream-headline-wrapper  .section-title {
   border-radius: 3px;
+  font-size: 14px;
 }
 .stream-headline-wrapper a {
-  height: 30px;
-  line-height: 30px;
+  line-height: 15px;
   color: #fff;
-  padding-left: 15px;
   font-family: "Roboto-Medium", sans-serif;
+  display: list-item;
+  list-style: none;
+  padding: 5px 5px 5px 15px;
 }
-.stream-headline-wrapper h1 p {
+.stream-headline-wrapper h1 p.header_link{
+  margin-bottom: 0
+}
+.stream-headline-wrapper h1 p.toggle-action {
     margin: 0;
     margin-right: 10px;
     font-size: 12px;
@@ -1085,7 +1094,7 @@ form label {
     cursor: pointer;
 }
 
-.stream-headline-wrapper h1 p:hover{
+.stream-headline-wrapper h1 p.toggle-action:hover{
   background: #207396;
 }
 
@@ -1206,6 +1215,7 @@ form label {
 }
 .stream-section .stream-area.chat_open .stream-message-wrapper {
   width: 25%;
+  background: #1e2328;
   /* transition-duration: 0.1s */
 }
 
@@ -2456,6 +2466,9 @@ div.author-info {
 /*----------------------------------------*/
 /*--- END USER ACCOUNT EDIT PAGE -------- */
 /*---------------------------------------*/
+.user-bar .selection img {
+  margin-bottom: 3px;
+}
 
 /*----------------------------------------*/
 /*--- USER GALLERY PAGE -------- */

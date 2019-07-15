@@ -13,14 +13,13 @@ use App\Country;
 use App\Footer;
 use App\Footerurl;
 use App\ForumTopic;
-use App\Services\Base\{
-    BaseDataService, InterviewQuestionsService
-};
+use App\Services\Base\{BaseDataService, InterviewQuestionsService, UserbarService};
 use App\Services\Comment\CommentService;
 use App\Services\Forum\TopicService;
 use App\Traits\ViewHelper\{
     ForumData, ReplayData, UserData
 };
+use App\User;
 use App\UserGallery;
 use Illuminate\Http\Request;
 
@@ -179,6 +178,27 @@ class GeneralViewHelper
         }
         return self::$instance->countries;
     }
+
+    public function getUserbarForFilter($selectedItem)
+    {
+        return collect(UserbarService::getItems())->prepend('Не выбрано', 0)->map(function($item, $key) use ($selectedItem) {
+            return [
+                'id' => $key,
+                'text' => $key ? '/images/userbars/'.$item : $item,
+                'selected' => $selectedItem && $selectedItem == $key
+            ];
+        })->values()->toJson();
+    }
+
+    public function getUserbarForUser(User $user)
+    {
+        if (!isset(UserbarService::getItems()[$user->userbar_id])) {
+            return null;
+        }
+
+        return '/images/userbars/' . UserbarService::getItems()[$user->userbar_id];
+    }
+
 
     /**
      * @param $comments
@@ -396,7 +416,7 @@ class GeneralViewHelper
         $text = preg_replace("#\[(u)\](.+?)\[/\\1\]#is", "<\\1>\\2</\\1>", $text);
         $text = preg_replace("#\[(s)\](.+?)\[/\\1\]#is", "<\\1>\\2</\\1>", $text);
         $text = preg_replace("#\[spoiler\](.+?)\[/spoiler\]#is", '</p><div style="width: 99%;margin: 0 auto;">
-    <div class="quotetop" style="cursor:pointer;font-size:10px;"><u>Скрытый текст <i>(кликните чтобы развернуть/свернуть)</i></u></div><div class="spoilmain" style="display:none;"><font color="#555599" size="1">\\1</font></div></div><p class="page_content_text" align="justify">',
+    <div class="quotetop" style="cursor:pointer;font-size:12px;"><u>Скрытый текст <i>(кликните чтобы развернуть/свернуть)</i></u></div><div class="spoilmain" style="display:none;"><font color="#555599" size="2">\\1</font></div></div><p class="page_content_text" align="justify">',
             $text);
         $text = preg_replace("#\[(quote)\](.+?)\[/\\1\]#is",
             "</p><p class=\"page_content_info2\" align=\"left\" align=\"justify\"><font color=\"#555599\">\\2</font></p><p align=\"justify\">",

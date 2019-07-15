@@ -249,8 +249,11 @@ Route::group(['middleware' => 'activity'], function () {
     });
 
     Route::group(['prefix' => 'chat'], function () {
+        Route::group(['middleware' => 'auth'], function () {
+            Route::post('/insert_message', 'ChatController@insert_message')->name('chat.add_message');
+        });        
         Route::get('/get_messages', 'ChatController@get_messages')->name('chat.get_messages');
-        Route::post('/insert_message', 'ChatController@insert_message')->name('chat.add_message');
+        Route::post('/get_message', 'ChatController@get_message')->name('chat.get_message'); 
     });
 
     // Admin Routes
@@ -436,6 +439,35 @@ Route::group(['middleware' => 'activity'], function () {
                 });
             });
 
+            Route::group(['prefix' => 'chat'], function () {
+                Route::get('/', 'ChatController@index')->name('admin.chat');
+                Route::get('/pagination', 'ChatController@pagination')->name('admin.chat.pagination');
+                Route::get('/{id}/view', 'ChatController@view')->name('admin.chat.view');
+                Route::get('/{id}/edit', 'ChatController@edit')->name('admin.chat.edit');
+                Route::get('/{id}/remove', 'ChatController@remove')->name('admin.chat.remove');
+
+                Route::group(['prefix' => 'smiles'], function(){
+                    Route::get('/', 'ChatSmilesController@index')->name('admin.chat.smiles');
+                    Route::get('/pagination', 'ChatSmilesController@pagination')->name('admin.chat.smiles.pagination');
+                    Route::get('/create', 'ChatSmilesController@create')->name('admin.chat.smiles.create');
+                    Route::post('/store', 'ChatSmilesController@store')->name('admin.chat.smiles.store');
+                    Route::get('/{id}/edit', 'ChatSmilesController@edit')->name('admin.chat.smiles.edit');
+                    Route::post('/{id}/update', 'ChatSmilesController@update')->name('admin.chat.smiles.update');
+                    Route::get('/{id}/remove', 'ChatSmilesController@destroy')->name('admin.chat.smiles.remove');
+                });
+
+                Route::group(['prefix' => 'pictures'], function(){
+                    Route::get('/', 'ChatPicturesController@index')->name('admin.chat.pictures');
+                    Route::get('/pagination', 'ChatPicturesController@pagination')->name('admin.chat.pictures.pagination');
+                    Route::get('/create', 'ChatPicturesController@create')->name('admin.chat.pictures.create');
+                    Route::post('/store', 'ChatPicturesController@store')->name('admin.chat.pictures.store');
+                    Route::get('/{id}/edit', 'ChatPicturesController@edit')->name('admin.chat.pictures.edit');
+                    Route::post('/{id}/update', 'ChatPicturesController@update')->name('admin.chat.pictures.update');
+                    Route::get('/{id}/remove', 'ChatPicturesController@destroy')->name('admin.chat.pictures.remove');
+                });
+
+            });
+
             Route::group(['prefix' => 'country'], function () {
                 Route::get('/', 'CountryController@index')->name('admin.country');
                 Route::get('/pagination', 'CountryController@pagination')->name('admin.country.pagination');
@@ -514,7 +546,10 @@ Route::group(['middleware' => 'activity'], function () {
                 Route::get('/', 'DBManagementController@index')->name('admin.dbbackup');
                 Route::get("/download/{dbname}", 'DBManagementController@filedownload')->name('admin.dbbackup.download');//
                 Route::get("/delete/{dbname}", 'DBManagementController@filedelete')->name('admin.dbbackup.filedelete');//
+                Route::get('/import', 'DBManagementController@import')->name('admin.import');
             });
+
+            
         });
 });
 

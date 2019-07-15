@@ -65,6 +65,7 @@
             /**custom commands for HTML text editor*/
             addCountries();
             addRaces();
+            addSpoiler();
 
             if ($('body').find('#comment-content').length > 0) {
                 var textarea = document.getElementById('comment-content');
@@ -82,7 +83,7 @@
                         'emoticon|' +
                         'date,time|' +
                         'countries|'+
-                        'races',
+                        'races|spoiler',
                     emoticons: {
                         // Emoticons to be included in the dropdown
                         dropdown: getAllSmiles(),

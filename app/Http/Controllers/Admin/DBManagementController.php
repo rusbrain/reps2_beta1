@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use File;
+use Illuminate\Support\Facades\DB;
+use App\User;
 
 class DBManagementController extends Controller
 {
@@ -64,5 +66,40 @@ class DBManagementController extends Controller
     {
         Storage::delete("{$this->dir_path}/{$file}");
         return redirect()->route('admin.dbbackup');
+    }
+
+    /**
+     * Import database from defiler db
+     * @return \Illuminate\Http\Redirect
+     */
+    public function import() 
+    {        
+        $defiler_users = DB::connection('mysql2')
+                    ->table("user_info as ui")
+                    ->join('user as u', 'u.id', '=', 'ui.id')
+                    ->where('ui.mail', 'NOT LIKE', '')
+                    ->select('u.login', 'ui.mail')
+                    ->get();      
+        foreach ($defiler_users as $user) {
+            try {
+                $check = DB::table('users')->where('email',  trim($user->mail))->exists();
+                $index = 16700;
+                $insert_user = array();
+            
+                if($check) {                
+                } else {               
+                    $insert_user = array( 
+                        'name' => $user->login,
+                        'email' => trim($user->mail),
+                        'password' => '',
+                        'user_role_id' => 0
+                    );
+                    User::create($insert_user);
+                    $index++;
+                }
+            } catch (\Exception $e) {
+                dd($e, $check, $insert_user );
+            }
+        }       
     }
 }

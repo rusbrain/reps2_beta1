@@ -12,48 +12,35 @@ class Socket {
     }
 
     socketEvents() {
-        this.io.on('connection', (socket) => {           
+        this.io.on('connection', (socket) => {
+            /**
+	    * temporary solution
+	    */
+	    const emit     = (type,data) => this.io.emit(type,data);
+	    const userEmit = (type,data) => this.io.to(socket.id).emit(type,data);
+	    
             /**
             * get the get messages
             */
             socket.on('getMessages', async () => {                  
                 const result = await helper.getMessages();
                 if (result === null) {
-                    this.io.emit('getMessagesResponse', { result: [] });
+                    userEmit('getMessagesResponse', { result: [] });
                 } else {
-                    this.io.emit('getMessagesResponse', { result: result });
+                    userEmit('getMessagesResponse', { result: result });
                 }
             });
 
             /**
             * send the messages to the user
             */
-            socket.on('sendMessage', async (response) => {              
-                this.insertMessage(response);               
-                response['created_at'] = moment().utc().format();
-                this.io.emit('addMessageResponse', response);
-            });
-
-            socket.on('typing', function (data) {
-                socket.to(data.socket_id).emit('typing', { typing: data.typing, to_socket_id: socket.id });
-            });
-
-            socket.on('upload-image', async (response) => {
-                let dir = moment().format("D-M-Y") + "/" + moment().format('x') + "/" + response.fromUserId
-                await helper.mkdirSyncRecursive(dir);
-                let filepath = dir + "/" + response.fileName;
-                var writer = fs.createWriteStream(path.basename('uploads') + "/" + filepath, { encoding: 'base64' });
-                writer.write(response.message);
-                writer.end();
-                writer.on('finish', function () {
-                    response.message = response.fileName;
-                    response.filePath = filepath;
-                    response.date = new moment().format("Y-MM-D");
-                    response.time = new moment().format("hh:mm A");
-                    this.insertMessage(response, socket);
-                    socket.to(response.toSocketId).emit('addMessageResponse', response);
-                    socket.emit('image-uploaded', response);
-                }.bind(this));
+            socket.on('sendMessage', async (response) => { 
+                const result = await helper.getMessage({
+                    user_id: response.user_id,
+                    id: response.id
+                });
+             
+                emit('addMessageResponse', result);
             });
 
             socket.on('disconnect', async () => {
@@ -62,27 +49,10 @@ class Socket {
         });
     }
 
-    async insertMessage(data) {
-        const sqlResult = await helper.insertMessages({
-            user_id: data.user_id,
-            user_name: data.user_name,
-            file_path: data.file_path,
-            imo: data.imo,
-            message: data.message,
-        });
-    }
-
+ 
     socketConfig() {
-        this.io.use(async (socket, next) => {
-            next();
-            // let userId = socket.request._query['id'];
-            // let userSocketId = socket.id;
-            // const response = await helper.addSocketId( userId, userSocketId);
-            // if(response &&  response !== null){
-            //     next();
-            // }else{
-            //     console.error(`Socket connection failed, for  user Id ${userId}.`);
-            // }
+        this.io.use(async (socket, next) => {            
+            next();           
         });
         this.socketEvents();
     }

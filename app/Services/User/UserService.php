@@ -37,6 +37,11 @@ class UserService
             unset( $user_data['country'] );
         }
 
+        if ( isset( $user_data['userbar'] ) ) {
+            $user_data['userbar_id'] = $user_data['userbar'];
+            unset( $user_data['userbar'] );
+        }
+
         if ( $request->file('avatar') ){
             $title  = 'Аватар '.$user->name;
             $file   = File::storeFile ($request->file( 'avatar' ), 'avatars', $title );
@@ -127,6 +132,7 @@ class UserService
         $user->user_friends()->delete();
         $user->user_friendly()->delete();
 
+        User::where('id', $user->id)->update(array('email'=>'-'));
         User::where('id', $user->id)->delete();
     }
 

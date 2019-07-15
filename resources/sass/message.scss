@@ -18,40 +18,71 @@
     min-height: 530px;
     max-height: 530px;
     overflow-y: auto;
-    border: solid 1px #e8e8e8;
+    border: solid 1px #1f1f1f;
     .user_msg {
       padding: 5px 10px !important;
       border-bottom: solid 1px gray;
       p {
         margin: 0;
         padding: 5px 0;
+        word-break: break-word;
       }
       .user_info {
         .username {
-          color: #2f6696;
+          color: #f1df87;
           font-weight: 600;
         }
         .user_id {
-          color: #3265dc;
+          a{
+            color :#4890af;
+            &:hover{
+              color:#5584da
+            }
+          }
+          
         }
         .msg_timestamp {
           float: right;
+          color: #DDAA77;
         }
+      }
+      .msg_text {
+          overflow-wrap: break-word;
+          color: #d8d8d8;
+          p{
+            a{
+              color:#99a589;
+              &:hover {
+                color:#5083d0;
+              }
+            }
+          }
       }
     }
   }
 
   .chat_footer {
     margin: 5px;
+    p.guests_message {
+      padding: 24px;
+      text-align: center;
+      color: #da4141;
+      font-size: 16px;
+      font-weight: bold;
+    }
 
     .send {
       display: inline-flex;
       width: 100%;
       padding: 10px 5px;
       position: relative;
-      input.messagebox {
+      textarea {
         width: 100%;
-        font-size: 14px;
+        font-size: 12px;
+        resize: none;
+        background: #3e3e3e;
+        border: solid 1px #1b1a1a;
+        color: white;
       }
       i {
         font-size: 18px;
@@ -59,7 +90,7 @@
         position: absolute;
         right: 12px;
         top: 16px;
-      }
+      }      
     }
     
   }

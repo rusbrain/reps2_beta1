@@ -22,4 +22,17 @@ class PublicChat extends Model
     ];
 
     public $timestamps = true;
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    } 
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function country()
+    {
+        return $this->belongsTo('App\Country', 'country_id');
+    }
 }

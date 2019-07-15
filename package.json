@@ -29,10 +29,12 @@
         "moment": "^2.24.0",
         "nprogress": "^0.2.0",
         "redis": "^2.8.0",
-        "vue-socket.io": "^2.1.1-b",
         "sweetalert": "^2.1.0",
         "vue": "^2.6.10",
+        "vue-custom-scrollbar": "^1.0.0",
         "vue-router": "^3.0.3",
+        "vue-socket.io": "^2.1.1-b",
+        "vue-textarea-autosize": "^1.0.4",
         "vue2-touch-events": "^2.0.0"
     }
 }

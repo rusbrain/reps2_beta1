@@ -63,6 +63,10 @@ class ResetPasswordController extends Controller
         if(!$user){
             return redirect()->route('error',['error' => 'Нет пользователя с таким email: '.$request->get('email')]);
         }
+        
+        if ($user->is_ban) {
+            return redirect()->route('error',['error' => 'Ваш аккаунт заблокирован, для выяснения причин обращайтесь к администрации сайта']);
+        }
 
         $token = md5(time());
         UserEmailToken::create(
@@ -100,8 +104,6 @@ class ResetPasswordController extends Controller
             $user->updated_password = true;
             $user->email_verified_at = Carbon::now();
             $user->save();
-
-            $this->guard()->login($user);
 
             Mail::to($user->email)->send(new UserPasswordUpdated());
 

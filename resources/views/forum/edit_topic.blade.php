@@ -185,6 +185,7 @@
             /**custom commands for HTML text editor*/
             addCountries();
             addRaces();
+            addSpoiler();
             // Check user is admin or morderate
             @if (Auth::user())
                 var isUpload = {{Auth::user()->user_role_id}};
@@ -209,7 +210,7 @@
                     'countries|'+
                     'races|' +
                     'maximize|' +
-                    'upload',
+                    'upload|spoiler',
                     emoticons: {
                         // Emoticons to be included in the dropdown
                         dropdown: getAllSmiles(),
@@ -237,7 +238,7 @@
                     'countries|'+
                     'races|' +
                     'maximize|' +
-                    'upload',
+                    'upload|spoiler',
                     emoticons: {
                         // Emoticons to be included in the dropdown
                         dropdown: getAllSmiles(),

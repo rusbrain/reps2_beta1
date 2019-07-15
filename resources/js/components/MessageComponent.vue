@@ -3,16 +3,16 @@
         <div class="chat_header">
             <span>{{ user_email }}</span>
         </div>
-        <div class="chat_text_container" id="chat_text_container">
+        <vue-custom-scrollbar class="chat_text_container" id="chat_text_container">
             <div v-if="isMessages">
                 <div v-for="message in messages" class="user_msg">
                     <p class="user_info">
                         <span class="username">{{message.user_name}}</span>
-                        <span class="user_id">#{{message.user_id}}</span>
+                        <span class="user_id"><a :href="'/user/' + message.user_id" >#{{message.user_id}}</a></span>
                         <span class="msg_timestamp">{{convertTo(message.created_at)}}</span>
                     </p>
                     <p class="msg_text">
-                       {{message.message}}
+                       <span v-html="urlify(message.message)"></span>
                     </p>
                 </div>
             </div>
@@ -20,40 +20,51 @@
                  Empty messages
              </div>
            
-        </div>
-        <div class="chat_footer" v-if="userLoggedin">
-            <div class="importing"></div>
+        </vue-custom-scrollbar>
+        <div class="chat_footer" v-if="userLoggedin">           
             <div class="send">
                <div class="input-group">
-                    <input name="message" v-model.trim="message" placeholder="Введите сообщение и нажмите Enter" class="form-control" 
-                    type="text" v-on:keydown="sendMessage($event)">
-                    <!-- <span class="input-group-btn">
-                        <div class="btn btn-default btn-file">
-                            <i class="fa fa-paperclip"></i>
-                            <input name="attachment" type="file" v-on:change="file($event)">
-                        </div>
-                    </span> -->
+                  <textarea-autosize
+                    v-model="message"   
+                    @keyup.enter.exact.native="sendMessage($event)"
+                    @keydown.enter.ctrl.exact.native="newline"
+                    @keydown.enter.shift.exact.native="newline"
+                    placeholder="Введите сообщение и нажмите Enter"                       
+                    :min-height="10"
+                    :max-height="350"
+                    class="form-control"
+                  ></textarea-autosize>                
                 </div>
             </div>
-            
+        </div>
+        <div class="chat_footer" v-if="!userLoggedin">    
+          <p class='guests_message'> Please login to chat!</p> 
         </div>
     </div>
 </template>
 
 <script>
-var moment = require("moment");
-var socket = io(process.env.MIX_SOCKET_SERVER);
+import axios from 'axios';
+import moment from 'moment';
+import vueCustomScrollbar from 'vue-custom-scrollbar'
 
 export default {
+  components: {
+    vueCustomScrollbar
+  },
   props: {
     auth: [Object, Number]
   },
   data() {
     return {
+      settings: {
+        maxScrollbarLength: 60
+      },
       socketConnected: {
         status: false,
         msg: "Connecting Please Wait..."
       },
+      socket:null,
       userLoggedin: false,
       messages: [],
       isMessages: false,
@@ -71,9 +82,14 @@ export default {
       } else {
         return "Guest";
       }
-    }
+    },
+
   },
   mounted() {
+    
+    var socket = io(process.env.MIX_SOCKET_SERVER, { query: "id= " + this.auth.id });
+    this.socket = socket;
+
     socket.on("connect", () => {
       socket.emit("getMessages");
     });
@@ -98,30 +114,59 @@ export default {
         this.isMessages = true;
       }
     },
+    newline() {
+      this.message = `${this.message}\n`;
+    },
     sendMessage(event) {
-      if (event.keyCode === 13) {
-        if (this.message.length > 0) {
-          let messagePacket = this.createMsgObj(this.message);
-          socket.emit("sendMessage", messagePacket);
-          this.message = "";
-        } else {
-          alert("Please Enter Your Message.");
-        }
-      }
+      if (this.message.length > 0) {
+        let messagePacket = this.createMsgObj(this.wrapperTxt(this.message));
+        event.preventDefault();
+        let currentObj = this;
+        let self = this;
+        axios.post('/chat/insert_message', messagePacket)
+        .then(function (response) {           
+            if(response.data.status == 'ok') {
+              let data = {'id':response.data.id, 'user_id': response.data.user}               
+              self.socket.emit("sendMessage", data);
+            }
+        })
+        .catch(function (error) {
+            currentObj.output = error;
+        });
+        
+        this.message = "";
+      } else {
+        alert("Please Enter Your Message.");
+      }      
     },
     createMsgObj: function(message) {
       return {
         user_id: this.auth.id,
-        user_name: this.auth.name,
         file_path: "",
         message: message,
         imo: ""
       };
     },
 
+    urlify:function(text) {
+        text.replace(/(\\r)*\\n/g, '<br>')
+        var urlRegex = /(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/igm;
+        return text.replace(urlRegex, function(url) {
+            return '<a href="' + url + '" target="_blank">' + url + '</a>';
+        })
+    },
+    wrapperTxt: function(text) {
+      let lines = text.split('\n');
+      let wrap_text = '';
+      lines.forEach(function(item, index){
+        if(item != '')
+          wrap_text += '<p>' +item+ '</p>'
+      });
+      return wrap_text;
+    },
     addChatMessage: function(data) {
-      this.messages.push(data);
-      this.scrollToBottom();
+      this.messages.unshift(data);
+      this.scrollToTop();
     },
 
     convertTo: function(date) {
@@ -131,10 +176,10 @@ export default {
         .format("hh:mm");
     },
 
-    scrollToBottom: function() {
+    scrollToTop: function() {
       $("#chat_text_container")
         .stop()
-        .animate({ scrollTop: $("#chat_text_container")[0].scrollHeight }, 1);
+        .animate({ scrollTop: 0 }, 1);
     }
   }
 };

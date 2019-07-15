@@ -1,6 +1,7 @@
 @section('css')
     <!--SCEditor -  WYSIWYG BBCode editor -->
     <link rel="stylesheet" href="{{route('home')}}/js/sceditor/minified/themes/default.min.css"/>
+  
 @endsection
 
 <!--Comments-->
@@ -25,7 +26,7 @@
         <div class="col-md-12 section-title">
             <div>Комментарии:</div>
         </div>
-        <div class="col-md-12 comment-content-wrapper">
+        <div class="col-md-12 comment-content-wrapper">                
             <div class="comment-content">
                 Комментарии отсутствуют
             </div>
@@ -35,11 +36,12 @@
 <!--END Comments-->
 
 @section('js')
-    <!--SCEditor -  WYSIWYG BBCode editor -->
-    <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.min.js"></script>    
-    <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.bbcode.min.js"></script>
+    <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.min.js"></script>
     <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.xhtml.min.js"></script>
+    <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.bbcode.min.js"></script>
     <script src="{{route('home')}}/js/sceditor/languages/ru.js"></script>
+
+    
     <script>
         var lastPage = $('#ajax_section_comments').attr('data-pages');
         $(function () {            
@@ -80,6 +82,7 @@
             /**custom commands for HTML text editor*/
             addCountries();
             addRaces();
+            addSpoiler();
             // Check user is admin or morderate
             @if (Auth::user())
                 var isUpload = {{Auth::user()->user_role_id}};
@@ -103,7 +106,7 @@
                     'date,time|' +
                     'countries|'+
                     'races|'+
-                    'upload',
+                    'upload|spoiler',
                     emoticons: {
                         // Emoticons to be included in the dropdown
                         dropdown: getAllSmiles(),
@@ -115,7 +118,7 @@
             /**add quote*/
             $('body').on('click', '.quote img', function () {
                 addText(textarea, $(this));
-            });
+            });          
         });
 
         /**
