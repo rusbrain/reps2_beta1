@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserLoginRequest;
+use App\Services\Base\UserActivityLogService;
 use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -78,7 +79,7 @@ class LoginController extends Controller
 
         $user = User::where('id', Auth::id())->update(['jwt_token' => $token]);
 
-
+        UserActivityLogService::log(UserActivityLogService::EVENT_USER_LOGIN);
 
         return redirect('/');
     }
@@ -112,6 +113,8 @@ class LoginController extends Controller
      */
     public function logout(Request $request, $is_ban = false)
     {
+        UserActivityLogService::log(UserActivityLogService::EVENT_USER_LOGOUT);
+
         $this->guard()->logout();
         $request->session()->invalidate();
 

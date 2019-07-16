@@ -8,9 +8,15 @@
 
 namespace App\Services\Rating;
 
-use App\{
-    Comment, ForumTopic, IgnoreUser, Replay, Services\Base\UserViewService, User, UserGallery, UserReputation
-};
+use App\{Comment,
+    ForumTopic,
+    IgnoreUser,
+    Replay,
+    Services\Base\UserActivityLogService,
+    Services\Base\UserViewService,
+    User,
+    UserGallery,
+    UserReputation};
 use App\Http\Requests\SetRatingRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -118,7 +124,7 @@ class RatingService
         $comment = self::getComment($request);
         if ($object) {
             if (!self::checkUserVoteExist($object, $request, $relation)) {
-                UserReputation::updateOrCreate(
+                $ratingObject = UserReputation::updateOrCreate(
                     [
                         'sender_id' => Auth::id(),
                         'recipient_id' => $object->user_id,
@@ -127,6 +133,9 @@ class RatingService
                     ],
                     ['comment' => $comment, 'rating' => $request->get('rating')]
                 );
+
+                UserActivityLogService::log(UserActivityLogService::EVENT_USER_LIKE, $ratingObject);
+
                 return ['rating' => self::getRatingValue($object)];
             }
             return ['message' => 'Вы уже проголосовали, Ваш голос:', 'user_rating' => $request->get('rating')];

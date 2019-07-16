@@ -119,7 +119,7 @@ class ReplayService
 
     /**
      * @param ReplayStoreRequest $request
-     * @return mixed
+     * @return Replay
      */
     public static function store(ReplayStoreRequest $request)
     {
@@ -141,7 +141,7 @@ class ReplayService
 
         $replay = Replay::create($replay_data);
 
-        return $replay->id;
+        return $replay;
     }
 
     /**

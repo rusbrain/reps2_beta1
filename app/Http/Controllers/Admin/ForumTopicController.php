@@ -165,6 +165,6 @@ class ForumTopicController extends Controller
      */
     public function createTopic(AdminTopicCreateRequest $request)
     {
-        return redirect()->route('admin.forum.topic.edit', ['id' => TopicService::storeTopic($request, true)]);
+        return redirect()->route('admin.forum.topic.edit', ['id' => TopicService::storeTopic($request, true)->id]);
     }
 }

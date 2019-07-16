@@ -338,6 +338,11 @@ Route::group(['middleware' => 'activity'], function () {
                     Route::get('{comments_id}/remove',
                         'UserQuestionsController@remove')->name('admin.user.answers.remove');
                 });
+
+                Route::group(['prefix' => 'activity-log'], function() {
+                    Route::get('/', 'UserActivityLogsController@index')->name('admin.user.activity-log');
+                    Route::get('/pagination', 'UserActivityLogsController@pagination')->name('admin.user.activity-log.pagination');
+                });
             });
 
             Route::group(['prefix' => 'forum'], function () {
