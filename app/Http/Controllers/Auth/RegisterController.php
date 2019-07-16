@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Country;
 use App\Mail\RegisteredUser;
 use App\Replay;
+use App\Services\Base\UserActivityLogService;
 use App\User;
 use App\Http\Controllers\Controller;
 use App\UserEmailToken;
@@ -94,7 +95,11 @@ class RegisterController extends Controller
             $data_save['country_id'] = $data['country'];
         }
 
-        return User::create($data_save);
+        $newUser = User::create($data_save);
+
+        UserActivityLogService::log(UserActivityLogService::EVENT_USER_REGISTER, null, $newUser->id);
+
+        return $newUser;
     }
 
 
@@ -144,6 +149,8 @@ class RegisterController extends Controller
             $user->email_verified_at = Carbon::now();
             $user->save();
             $this->guard()->login($user);
+
+            UserActivityLogService::log(UserActivityLogService::EVENT_USER_REGISTER_CONFIRM, null, $user->id);
 
             return redirect('/');
 

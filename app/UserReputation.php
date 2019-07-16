@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Contracts\LikeContainerInterface;
 use App\Observers\UserReputationObserver;
 use App\Traits\ModelRelations\UserReputationRelation;
 use Carbon\Carbon;
@@ -62,4 +63,25 @@ class UserReputation extends Model
         'rating',
         'relation'
     ];
+
+    /**
+     * @return LikeContainerInterface|Comment
+     */
+    public function getObject()
+    {
+        switch ($this->relation) {
+            case self::RELATION_FORUM_TOPIC: {
+                return $this->topic;
+            }
+            case self::RELATION_REPLAY: {
+                return $this->replay;
+            }
+            case self::RELATION_USER_GALLERY: {
+                return $this->gallery;
+            }
+            case self::RELATION_COMMENT: {
+                return $this->comment()->getResults();
+            }
+        }
+    }
 }

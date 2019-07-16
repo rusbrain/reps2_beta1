@@ -124,6 +124,6 @@ class UserGalleryController extends Controller
      */
     public function create(UserGalleryStoreRequest $request)
     {
-        return redirect()->route('admin.users.gallery.view', ['id' => UserGalleryService::store($request)]);
+        return redirect()->route('admin.users.gallery.view', ['id' => UserGalleryService::store($request)->id]);
     }
 }

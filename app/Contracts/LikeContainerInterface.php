@@ -2,7 +2,7 @@
 
 namespace App\Contracts;
 
-interface CommentContainerInterface
+interface LikeContainerInterface
 {
     public function getRouteConfig();
 

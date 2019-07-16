@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\{UserGalleryStoreRequest, UserGalleryUpdateRequest};
-use App\{IgnoreUser, UserGallery};
+use App\{IgnoreUser, Services\Base\UserActivityLogService, UserGallery};
 use App\Services\User\UserGalleryService;
 use Illuminate\Support\Facades\Auth;
 
@@ -56,7 +56,11 @@ class UserGalleryController extends Controller
      */
     public function store(UserGalleryStoreRequest $request)
     {
-        return redirect()->route('gallery.view', ['id' => UserGalleryService::store($request)]);
+        $newImage = UserGalleryService::store($request);
+
+        UserActivityLogService::log(UserActivityLogService::EVENT_CREATE_IMAGE, $newImage);
+
+        return redirect()->route('gallery.view', ['id' => $newImage->id]);
     }
 
     /**

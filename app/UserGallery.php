@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Contracts\CommentContainerInterface;
+use App\Contracts\LikeContainerInterface;
 use App\Observers\UserGalleryPointsObserver;
 use App\Traits\ModelRelations\UserGalleryRelation;
 use Carbon\Carbon;
@@ -30,7 +31,7 @@ use Illuminate\Support\Facades\DB;
  * @property Carbon $updated_at
  *
  */
-class UserGallery extends Model implements CommentContainerInterface
+class UserGallery extends Model implements CommentContainerInterface, LikeContainerInterface
 {
     use SoftDeletes, Notifiable, UserGalleryRelation;
 

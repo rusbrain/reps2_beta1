@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Contracts\CommentContainerInterface;
+use App\Contracts\LikeContainerInterface;
 use App\Http\Requests\SearchForumTopicRequest;
 use App\Observers\ForumTopicPointsObserver;
 use App\Services\Forum\TopicService;
@@ -37,7 +38,7 @@ use Illuminate\Support\Facades\DB;
  *
  * 'preview_file_id', 'news',
  */
-class ForumTopic extends Model implements CommentContainerInterface
+class ForumTopic extends Model implements CommentContainerInterface, LikeContainerInterface
 {
     use Notifiable, ForumTopicRelation;
 

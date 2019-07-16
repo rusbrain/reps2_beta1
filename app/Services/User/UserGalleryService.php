@@ -27,7 +27,7 @@ class UserGalleryService
 
     /**
      * @param UserGalleryStoreRequest $request
-     * @return mixed
+     * @return UserGallery
      */
     public static function store(UserGalleryStoreRequest $request)
     {
@@ -36,7 +36,7 @@ class UserGalleryService
         $data['user_id'] = Auth::id();
         $gallery = UserGallery::create($data);
 
-        return $gallery->id;
+        return $gallery;
     }
 
     /**

@@ -153,6 +153,6 @@ class ReplayController extends Controller
      */
     public function create(ReplayStoreRequest $request)
     {
-        return redirect()->route('admin.replay.view', ['id' => ReplayService::store($request)]);
+        return redirect()->route('admin.replay.view', ['id' => ReplayService::store($request)->id]);
     }
 }
