@@ -201,5 +201,6 @@
                 streamArea.addClass('chat_open')
             }
         }
+       
     </script>
 @endsection

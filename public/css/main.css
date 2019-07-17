@@ -1219,6 +1219,13 @@ form label {
   /* transition-duration: 0.1s */
 }
 
+.chat_container .chat_header .popup{
+  cursor: pointer;  
+  background: url(../images/icons/popup.png) no-repeat center center;
+  background-size: 22px; 
+  filter: invert(100%);
+}
+
 /* Stream wrapper */
 .stream-section .stream-area.chat_open .stream-wrapper {
   width: 75%;

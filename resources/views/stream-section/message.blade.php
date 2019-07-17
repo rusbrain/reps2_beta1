@@ -9,6 +9,6 @@
 </div> --}}
 
 <div id="chatroom">
-    <message-component :auth = "{{ Auth::check() ? Auth::user() : 0 }}">
-    </message-component>
+    <chat :auth = "{{ Auth::check() ? Auth::user() : 0 }}">
+    </chat>
 </div>
