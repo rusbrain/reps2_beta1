@@ -2,6 +2,7 @@
     <div class="chat_container">
         <div class="chat_header">
             <span>{{ user_email }}</span>
+            <p class="popup" @click="popupChat"></p>
         </div>
         <vue-custom-scrollbar class="chat_text_container" id="chat_text_container">
             <div v-if="isMessages">
@@ -39,21 +40,22 @@
         </div>
         <div class="chat_footer" v-if="!userLoggedin">    
           <p class='guests_message'> Please login to chat!</p> 
-        </div>
-    </div>
+        </div>        
+    </div>    
 </template>
 
 <script>
 import axios from 'axios';
 import moment from 'moment';
-import vueCustomScrollbar from 'vue-custom-scrollbar'
+import vueCustomScrollbar from 'vue-custom-scrollbar';
 
 export default {
   components: {
-    vueCustomScrollbar
+    vueCustomScrollbar,    
   },
   props: {
-    auth: [Object, Number]
+    auth: [Object, Number],
+    
   },
   data() {
     return {
@@ -71,7 +73,7 @@ export default {
       message: "",
       typing: "",
       timeout: "",
-      user: this.auth
+      user: this.auth,
     };
   },
   computed: {
@@ -180,6 +182,12 @@ export default {
       $("#chat_text_container")
         .stop()
         .animate({ scrollTop: 0 }, 1);
+    },
+
+    popupChat: function() {     
+      this.$emit("onPopup", {
+        visibleFormCrud: true
+      });
     }
   }
 };

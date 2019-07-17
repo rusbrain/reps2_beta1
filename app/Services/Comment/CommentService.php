@@ -9,6 +9,7 @@
 namespace App\Services\Comment;
 
 use App\Comment;
+use App\Services\Base\UserActivityLogService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,7 +27,9 @@ class CommentService
         $data['relation'] = $relation;
         $data['object_id'] = (int)$object_id;
 
-        Comment::create($data);
+        $comment = Comment::create($data);
+
+        UserActivityLogService::log(UserActivityLogService::EVENT_USER_COMMENT, $comment);
 
         return $object_id;
     }

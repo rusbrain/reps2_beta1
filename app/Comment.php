@@ -78,4 +78,19 @@ class Comment extends Model
 
         return $comments->paginate(20);
     }
+
+    public function getCommentContainer()
+    {
+        switch ($this->relation) {
+            case self::RELATION_FORUM_TOPIC: {
+                return $this->topic;
+            }
+            case self::RELATION_REPLAY: {
+                return $this->replay;
+            }
+            case self::RELATION_USER_GALLERY: {
+                return $this->gallery;
+            }
+        }
+    }
 }

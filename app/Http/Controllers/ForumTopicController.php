@@ -2,7 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\{ Comment, ForumSection, ForumTopic, Services\Base\UserViewService, Services\User\UserService, User };
+use App\{Comment,
+    ForumSection,
+    ForumTopic,
+    Services\Base\UserActivityLogService,
+    Services\Base\UserViewService,
+    Services\User\UserService,
+    User};
 use App\Http\Requests\{ForumTopicRebaseRequest, ForumTopicStoreRequest,ForumTopicUploadRequest, ForumTopicUpdateRequest};
 use App\Services\Forum\TopicService;
 use Illuminate\Http\Request;
@@ -51,7 +57,11 @@ class ForumTopicController extends Controller
      */
     public function store(ForumTopicStoreRequest $request)
     {
-        return redirect()->route('forum.topic.index', ['id' => TopicService::storeTopic($request)]);
+        $newTopic = TopicService::storeTopic($request);
+
+        UserActivityLogService::log(UserActivityLogService::EVENT_CREATE_POST, $newTopic);
+
+        return redirect()->route('forum.topic.index', ['id' => $newTopic]);
     }
 
     /**

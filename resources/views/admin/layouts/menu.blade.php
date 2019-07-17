@@ -1,7 +1,7 @@
 @php
 $menu_name = $admin_helper->getMenuName();
 $general = ($menu_name == 'admin_panel' || $menu_name == 'country' || $menu_name == 'question' || $menu_name == 'file') ? true :false;
-$user = ($menu_name == 'user' || $menu_name == 'user/role' || $menu_name == 'user/gallery' ) ? true :false;
+$user = ($menu_name == 'user' || $menu_name == 'user/role' || $menu_name == 'user/gallery' || $menu_name == 'user/activity-log') ? true :false;
 $forum = ($menu_name == 'forum' || $menu_name == 'forum/topic') ? true :false;
 $replay = ($menu_name == 'replay' || $menu_name == 'replay/map' || $menu_name == 'replay/type') ? true :false;
 $stream = ($menu_name == 'stream' || $menu_name == 'stream/header' || $menu_name == 'stream/settings') ? true :false;
@@ -42,6 +42,8 @@ $dbbackup = ($menu_name == 'dbbackup') ? true :false;
                 <li @if($menu_name == 'user/role') class="active" @endif><a href="{{route('admin.users.role')}}"><i class="fa fa-users"></i> <span>Роли пользователей</span></a></li>
             @endif
             <li @if($menu_name == 'user/gallery') class="active" @endif><a href="{{route('admin.users.gallery')}}"><i class="fa fa-image"></i> <span>Галерея</span></a></li>
+            <li @if($menu_name == 'user/activity-log') class="active" @endif><a href="{{route('admin.user.activity-log')}}"><i class="fa fa-image"></i> <span>Лог активности</span></a></li>
+
         </ul>
     </li>
     {{-- Forum --}}

@@ -40,7 +40,7 @@ class TopicService
     /**
      * @param ForumTopicStoreRequest $request
      * @param bool $admin
-     * @return mixed
+     * @return ForumTopic
      */
     public static function storeTopic(ForumTopicStoreRequest $request, $admin = false)
     {
@@ -62,7 +62,7 @@ class TopicService
         /**@var ForumTopic $topic */
         $topic = ForumTopic::create($topic_data);
 
-        return $topic->id;
+        return $topic;
     }
 
     /**

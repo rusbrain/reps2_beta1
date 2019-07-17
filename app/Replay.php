@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Contracts\CommentContainerInterface;
+use App\Contracts\LikeContainerInterface;
 use App\Http\Requests\ReplaySearchAdminRequest;
 use App\Observers\ReplayPointsObserver;
 use App\Services\Replay\ReplayService;
@@ -23,7 +25,7 @@ use Illuminate\Support\Facades\DB;
  * @property Carbon $created_at
  * @property Carbon $updated_at
  */
-class Replay extends Model
+class Replay extends Model implements CommentContainerInterface, LikeContainerInterface
 {
     use Notifiable, ReplayRelation;
 
@@ -210,4 +212,16 @@ class Replay extends Model
     {
         return $status == self::REPLAY_APPROVED ? true : false;
     }
+
+    public function getRouteConfig()
+    {
+        return ['replay.get', ['id' => $this->id]];
+    }
+
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+
 }

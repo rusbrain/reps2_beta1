@@ -186,6 +186,9 @@
     </div>
 </div>
 
+{{-- Chat Overlayer --}}
+<div id="chat_layout_overlay" class=""></div>
+
 <!-- Optional JavaScript -->
 <script src="{{route('home')}}/js/jquery-3.2.1.min.js"></script>
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->

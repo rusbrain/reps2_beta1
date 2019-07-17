@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\{
-    ForumTopic, Replay, UserGallery
-};
+use App\{Comment, ForumTopic, Replay, Services\Base\UserActivityLogService, UserGallery};
 use App\Services\Base\UserViewService;
 use App\Http\Requests\PortalSearchRequest;
 use Illuminate\Database\Eloquent\Builder;
@@ -38,6 +36,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+//        UserActivityLogService::log(UserActivityLogService::EVENT_USER_COMMENT, Comment::query()->first());
         return view('home.index');
     }
 

@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\{
-    Comment, Country, Replay, ReplayMap, ReplayType
-};
+use App\{Comment, Country, Replay, ReplayMap, ReplayType, Services\Base\UserActivityLogService};
 use App\Http\Requests\{
     ReplaySearchRequest, ReplayStoreRequest, ReplayUpdateRequest
 };
@@ -112,7 +110,11 @@ class ReplayController extends Controller
      */
     public function store(ReplayStoreRequest $request)
     {
-        return redirect()->route('replay.get', ['id' => ReplayService::store($request)]);
+        $newReplay = ReplayService::store($request);
+
+        UserActivityLogService::log(UserActivityLogService::EVENT_CREATE_REPLAY, $newReplay);
+
+        return redirect()->route('replay.get', ['id' => $newReplay->id]);
     }
 
     /**

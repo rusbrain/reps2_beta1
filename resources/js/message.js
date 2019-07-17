@@ -42,7 +42,7 @@ window.axios.defaults.headers.common = {
 window.VueTextareaAutosize = require('vue-textarea-autosize') 
 Vue.use(VueTextareaAutosize)
 
-Vue.component('message-component', require('./components/MessageComponent.vue').default);
+Vue.component('chat', require('./components/ChatRoom/index.vue').default);
 
 Vue.config.productionTip = false;
 
