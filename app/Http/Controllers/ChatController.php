@@ -6,18 +6,30 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\PublicChat;
 use Illuminate\Support\Facades\Auth;
-use App\User;
+use App\{User, Country, Replay};
+
 
 class ChatController extends Controller
 {
-    //
+    /**
+     * Get 100 messages
+     */
     public function get_messages() {
-       return PublicChat::select('user_id', 'user_name', 'message', 'file_path', 'imo', 'created_at')
-                        ->orderBy('created_at', 'desc')
-                        ->limit(100)
-                        ->get();
+        $messages = PublicChat::select('user_id', 'user_name', 'message', 'file_path', 'imo', 'created_at')->with('user')
+                ->orderBy('created_at', 'desc')
+                ->limit(100)
+                ->get();
+        $result = array();
+        foreach ($messages as $msg) {
+            $result[] = $this->setFullMessage($msg);
+        }
+
+        return $result;
     }
 
+    /**
+     * Insert new messages from chat
+     */
     public function insert_message(Request $request) {
        
         $message_data = $request->all();
@@ -29,7 +41,7 @@ class ChatController extends Controller
                     'status' => 'ok',
                     'id' => $insert->id, 'user' => Auth::id()
                 ], 200);
-            }   
+            }
         } else {
             return response()->json([
                 'status' => 'fail'
@@ -39,15 +51,34 @@ class ChatController extends Controller
             
     }
 
+    /**
+     * Get just updated message
+     */
     public function get_message(Request $request) {
         $id = $request->id;
         $user_id = $request->user_id;
-        $message = PublicChat::where('id', $id)->where('user_id', $user_id)->first();
+        $message = PublicChat::where('id', $id)->where('user_id', $user_id)->with('user')->first();
         return response()->json([
             'status' => "ok",
-            'message' => $message
+            'message' => $this->setFullMessage($message)
         ], 200);
-        // $user = User::find($request->user_id);
+      
+    }
 
+    public function setFullMessage($msg) {
+        $countries = Country::all();
+        $country_code = ($msg->user->country_id) ? mb_strtolower($countries[$msg->user->country_id]->code) : '';
+        $race = ($msg->user->race) ? Replay::$race_icons[$msg->user->race] : Replay::$race_icons['All'];
+        return  array(
+            'user_id'=>$msg->user_id, 
+            'user_name'=>$msg->user_name, 
+            'message'=>$msg->message, 
+            'file_path'=>$msg->file_path, 
+            'imo'=>$msg->imo, 
+            'created_at'=>$msg->created_at,
+            'country_code'=>$country_code,
+            'race'=>$race
+        );
+        return $msg;
     }
 }

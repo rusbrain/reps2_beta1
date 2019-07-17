@@ -7,7 +7,9 @@
         <vue-custom-scrollbar class="chat_text_container" id="chat_text_container">
             <div v-if="isMessages">
                 <div v-for="message in messages" class="user_msg">
-                    <p class="user_info">
+                    <p class="user_info">                    
+                        <span :class="'flag-icon flag-icon-' + message.country_code"></span>
+                        <img class="margin-left-5" :src="'/images/smiles/'+message.race" alt="">                  
                         <span class="username">{{message.user_name}}</span>
                         <span class="user_id"><a :href="'/user/' + message.user_id" >#{{message.user_id}}</a></span>
                         <span class="msg_timestamp">{{convertTo(message.created_at)}}</span>
@@ -151,6 +153,7 @@ export default {
     },
 
     urlify:function(text) {
+      
         text.replace(/(\\r)*\\n/g, '<br>')
         var urlRegex = /(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/igm;
         return text.replace(urlRegex, function(url) {
@@ -173,7 +176,7 @@ export default {
 
     convertTo: function(date) {
       return moment
-        .utc(date)
+        .utc(date.date)
         .local()
         .format("hh:mm");
     },
