@@ -4,7 +4,7 @@
     :title="user_email"  
     v-on:clickClose="visibleFormCrudUpdate(false)"
     :height="`642px`"
-    :width="`600px`"
+    :width="`400px`"
     :backgroundColor="`#222222`"
     >
 
