@@ -6,12 +6,13 @@
         </div>
         <vue-custom-scrollbar class="chat_text_container" id="chat_text_container">
             <div v-if="isMessages">
-                <div v-for="message in messages" class="user_msg">
+                <div  v-if="checkIgnore(message.user_id)" v-for=" message in messages"  class="user_msg" :class="'user-' + message.user_id" >
                     <p class="user_info">                    
                         <span :class="'flag-icon flag-icon-' + message.country_code"></span>
                         <img class="margin-left-5" :src="'/images/smiles/'+message.race" alt="">                  
                         <span class="username">{{message.user_name}}</span>
                         <span class="user_id"><a :href="'/user/' + message.user_id" >#{{message.user_id}}</a></span>
+                        <span class="ignore_user" @click="ignoreUser(message.user_id)">Ignore</span>
                         <span class="msg_timestamp">{{convertTo(message.created_at)}}</span>
                     </p>
                     <p class="msg_text">
@@ -76,6 +77,7 @@ export default {
       typing: "",
       timeout: "",
       user: this.auth,
+      ignore_users: []
     };
   },
   computed: {
@@ -179,6 +181,14 @@ export default {
         .utc(date.date)
         .local()
         .format("hh:mm");
+    },
+
+    ignoreUser: function(user_id) {
+      this.ignore_users.push(user_id)
+    },
+
+    checkIgnore: function(user_id) {
+      return this.ignore_users.indexOf(user_id) == -1 ? true : false
     },
 
     scrollToTop: function() {
