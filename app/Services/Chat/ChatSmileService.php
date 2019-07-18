@@ -59,6 +59,8 @@ class ChatSmileService
         $file = $smile->file()->first();
         if($file) {
             FileService::removeFile($file->id);
+            if(file_exists(base_path('public/images/emoticons/smiles/'.pathinfo($file->link)["basename"])))
+                unlink(base_path('public/images/emoticons/smiles/'.pathinfo($file->link)["basename"]));
         }
         $smile->delete();
     }
@@ -75,6 +77,8 @@ class ChatSmileService
         $title = 'Изображение чата '.Auth::user()->name;
 
         $file = File::storeFile($data['image'], 'chat/smiles', $title);
+        $success = \File::copy(base_path('public/'.$file->link),base_path('public/images/emoticons/smiles/'.pathinfo($file->link)["basename"]));
+      
         $data['file_id'] = $file->id;
         unset($data['image']);
         return $data;
