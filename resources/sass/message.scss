@@ -47,8 +47,15 @@
             &:hover{
               color:#5584da
             }
+          }          
+        }
+        .ignore_user {
+          margin-left: 10px;
+          cursor: pointer;
+          color: #515050;
+          &:hover {
+            color:#2f6696
           }
-          
         }
         .msg_timestamp {
           float: right;

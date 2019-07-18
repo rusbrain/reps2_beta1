@@ -11,7 +11,7 @@
       <div class="chat_container">        
           <vue-custom-scrollbar class="chat_text_container" id="chat_text_container">
               <div v-if="isMessages">
-                  <div v-for="message in messages" class="user_msg">
+                  <div v-for="message in messages" class="user_msg" :class="'user-' + message.user_id">
                       <p class="user_info">
                         <span :class="'flag-icon flag-icon-' + message.country_code"></span>
                         <img class="margin-left-5" :src="'/images/smiles/'+message.race" alt="">  
