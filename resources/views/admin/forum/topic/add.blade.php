@@ -210,7 +210,7 @@
                 sceditor.create(content, {
                     format: 'xhtml',
                     style: '{{route("home")}}' + '/js/sceditor/minified/themes/content/default.min.css',
-                    emoticonsRoot: '{{route("home")}}' + '/js/sceditor/',
+                    emoticonsRoot: '{{route("home")}}' + '/images/',
                     locale: 'ru',
                     toolbar: 'bold,italic,underline|' +
                     'left,center,right,justify|' +
@@ -238,7 +238,7 @@
                 sceditor.create(preview_content, {
                     format: 'xhtml',
                     style: '{{route("home")}}' + '/js/sceditor/minified/themes/content/default.min.css',
-                    emoticonsRoot: '{{route("home")}}' + '/js/sceditor/',
+                    emoticonsRoot: '{{route("home")}}' + '/images/',
                     locale: 'ru',
                     toolbar: 'bold,italic,underline|' +
                     'left,center,right,justify|' +

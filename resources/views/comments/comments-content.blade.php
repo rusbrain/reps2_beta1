@@ -49,9 +49,9 @@
                                 @endif
 
                                 @if($comment->user->race)
-                                   <img class="margin-left-5" src="{{route('home')}}/images/smiles/{{\App\Replay::$race_icons[$comment->user->race]}}" alt="">
+                                   <img class="margin-left-5" src="{{route('home')}}/images/emoticons/smiles/{{\App\Replay::$race_icons[$comment->user->race]}}" alt="">
                                 @else
-                                   <img class="margin-left-5" src="{{route('home')}}/images/smiles/{{\App\Replay::$race_icons['All']}}" alt="">
+                                   <img class="margin-left-5" src="{{route('home')}}/images/emoticons/smiles/{{\App\Replay::$race_icons['All']}}" alt="">
                                 @endif
                                 {{-- <span>{{$comment->user->name}}</span> --}}
                                 

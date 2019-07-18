@@ -11,9 +11,9 @@
                     <span class="flag-icon"></span>
                 @endif
                 @if(isset($stream->race))
-                    <img class="margin-left-5" src="{{route('home')}}/images/smiles/{{\App\Replay::$race_icons[$stream->race]}}" alt="">
+                    <img class="margin-left-5" src="{{route('home')}}/images/emoticons/smiles/{{\App\Replay::$race_icons[$stream->race]}}" alt="">
                 @else
-                    <img class="margin-left-5" src="{{route('home')}}/images/smiles/{{\App\Replay::$race_icons['All']}}" alt="">
+                    <img class="margin-left-5" src="{{route('home')}}/images/emoticons/smiles/{{\App\Replay::$race_icons['All']}}" alt="">
                 @endif
                 <span class="color-white">{{$stream->title}}</span>
                 <a href="#" class="theatre_mode" data-tip="Theatre Mode" onclick="theatre_mode(event, $(this))" ></a>

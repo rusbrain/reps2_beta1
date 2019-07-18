@@ -31,9 +31,9 @@
                     <span class="flag-icon"></span>
                 @endif
                 @if($user->race)
-                    <img class="margin-left-5" src="{{route('home')}}/images/smiles/{{\App\Replay::$race_icons[$user->race]}}" alt="">
+                    <img class="margin-left-5" src="{{route('home')}}/images/emoticons/smiles/{{\App\Replay::$race_icons[$user->race]}}" alt="">
                 @else
-                    <img class="margin-left-5" src="{{route('home')}}/images/smiles/{{\App\Replay::$race_icons['All']}}" alt="">
+                    <img class="margin-left-5" src="{{route('home')}}/images/emoticons/smiles/{{\App\Replay::$race_icons['All']}}" alt="">
                 @endif
                 <span class="color-blue user-value">{{$user[$key]}} {{$value['unit']}}</span> 
            
