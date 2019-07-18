@@ -51,9 +51,7 @@ class ChatController extends Controller
             return response()->json([
                 'status' => 'fail'
             ], 200);
-        }
-      
-            
+        } 
     }
 
     /**
@@ -66,8 +64,7 @@ class ChatController extends Controller
         return response()->json([
             'status' => "ok",
             'message' => $this->setFullMessage($message)
-        ], 200);
-      
+        ], 200);      
     }
 
     public function setFullMessage($msg) {
