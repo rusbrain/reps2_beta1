@@ -331,7 +331,7 @@ $game_versions = $general_helper->getGameVersion();
                 sceditor.create(content, {
                     format: 'xhtml',
                     style: '{{route("home")}}' + '/js/sceditor/minified/themes/content/default.min.css',
-                    emoticonsRoot: '{{route("home")}}' + '/js/sceditor/',
+                    emoticonsRoot: '{{route("home")}}' + '/images/',
                     locale: 'ru',
                     toolbar: 'bold,italic,underline|' +
                     'left,center,right,justify|' +
@@ -353,7 +353,7 @@ $game_versions = $general_helper->getGameVersion();
                 sceditor.create(video_iframe, {
                     format: 'xhtml',
                     style: '{{route("home")}}' + '/js/sceditor/minified/themes/content/default.min.css',
-                    emoticonsRoot: '{{route("home")}}' + '/js/sceditor/',
+                    emoticonsRoot: '{{route("home")}}' + '/images/',
                     locale: 'ru',
                     toolbar: 'youtube,source|'
                 });

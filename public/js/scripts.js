@@ -629,11 +629,11 @@ function addRaces() {
             // Create country flags options
             for (var i = 0; i < races.length; i++) {
                 $(
-                    '<img src="/images/smiles/' + races[i] + '" alt="">'
+                    '<img src="/images/emoticons/smiles/' + races[i] + '" alt="">'
                 )
                     .data('race', races[i])
                     .click(function (e) {
-                        editor.insert('<img src="/images/smiles/' + $(this).data('race') + '" alt="">');
+                        editor.insert('<img src="/images/emoticons/smiles/' + $(this).data('race') + '" alt="">');
                         editor.closeDropDown(true);
 
                         e.preventDefault();

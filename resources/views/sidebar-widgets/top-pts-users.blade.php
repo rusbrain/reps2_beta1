@@ -15,9 +15,9 @@
                         <span class="flag-icon"></span>
                     @endif
                     @if($top_user->race)
-                        <img class="margin-left-5" src="{{route('home')}}/images/smiles/{{\App\Replay::$race_icons[$top_user->race]}}" alt="">
+                        <img class="margin-left-5" src="{{route('home')}}/images/emoticons/smiles/{{\App\Replay::$race_icons[$top_user->race]}}" alt="">
                     @else
-                        <img class="margin-left-5" src="{{route('home')}}/images/smiles/{{\App\Replay::$race_icons['All']}}" alt="">
+                        <img class="margin-left-5" src="{{route('home')}}/images/emoticons/smiles/{{\App\Replay::$race_icons['All']}}" alt="">
                     @endif
                     <span class="overflow-hidden">{{$top_user->name}}</span>
                 </a>

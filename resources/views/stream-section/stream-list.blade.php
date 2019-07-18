@@ -8,9 +8,9 @@
                     <span class="flag-icon"></span>
                 @endif
                 @if($stream->race)
-                    <img class="margin-left-5" src="{{route('home')}}/images/smiles/{{\App\Replay::$race_icons[$stream->race]}}" alt="">
+                    <img class="margin-left-5" src="{{route('home')}}/images/emoticons/smiles/{{\App\Replay::$race_icons[$stream->race]}}" alt="">
                 @else
-                    <img class="margin-left-5" src="{{route('home')}}/images/smiles/{{\App\Replay::$race_icons['All']}}" alt="">
+                    <img class="margin-left-5" src="{{route('home')}}/images/emoticons/smiles/{{\App\Replay::$race_icons['All']}}" alt="">
                 @endif
                 <span class="color-blue">{{$stream->title}}</span>
             </a>

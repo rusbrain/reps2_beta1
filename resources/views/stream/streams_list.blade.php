@@ -27,9 +27,9 @@
                     @endif
 
                     @if($my_stream->race)
-                        <img class="margin-left-5" src="{{route('home')}}/images/smiles/{{\App\Replay::$race_icons[$my_stream->race]}}" alt="">
+                        <img class="margin-left-5" src="{{route('home')}}/images/emoticons/smiles/{{\App\Replay::$race_icons[$my_stream->race]}}" alt="">
                     @else
-                        <img class="margin-left-5" src="{{route('home')}}/images/smiles/{{\App\Replay::$race_icons['All']}}" alt="">
+                        <img class="margin-left-5" src="{{route('home')}}/images/emoticons/smiles/{{\App\Replay::$race_icons['All']}}" alt="">
                     @endif
                 </div>
                 <a href="{{$general_helper->UrlFilter($my_stream->stream_url)}}" target="_blank">

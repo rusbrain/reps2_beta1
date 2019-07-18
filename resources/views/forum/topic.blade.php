@@ -101,9 +101,9 @@
                         @endif
 
                         @if($topic->user->race)
-                            <img class="margin-left-5" src="{{route('home')}}/images/smiles/{{\App\Replay::$race_icons[$topic->user->race]}}" alt="">
+                            <img class="margin-left-5" src="{{route('home')}}/images/emoticons/smiles/{{\App\Replay::$race_icons[$topic->user->race]}}" alt="">
                         @else
-                            <img class="margin-left-5" src="{{route('home')}}/images/smiles/{{\App\Replay::$race_icons['All']}}" alt="">
+                            <img class="margin-left-5" src="{{route('home')}}/images/emoticons/smiles/{{\App\Replay::$race_icons['All']}}" alt="">
                         @endif
                         
                     </div>

@@ -16,7 +16,7 @@
                 <div v-for="(message,index) in messages" :key="`message-${index}`" v-if="!checkIgnore(message.user_id)" class="user_msg" :class="'user-' + message.user_id" >
                     <p class="user_info">
                       <span :class="'flag-icon flag-icon-' + message.country_code"></span>
-                      <img class="margin-left-5" :src="'/images/smiles/'+message.race" alt="">  
+                      <img class="margin-left-5" :src="'/images/emoticons/smiles/'+message.race" alt="">  
                       <span class="username">{{message.user_name}}</span>
                       <span class="user_id"><a :href="'/user/' + message.user_id" >#{{message.user_id}}</a></span>
                       <span class="ignore_user" v-if="userId!=message.user_id" @click="ignoreUser(message)">Ignore</span>
