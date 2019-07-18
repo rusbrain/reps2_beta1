@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 
 
 
-class ServiceCron extends Command
+class StreamCheck extends Command
 {
     /**
      * The name and signature of the console command.
