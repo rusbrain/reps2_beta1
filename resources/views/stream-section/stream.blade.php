@@ -3,8 +3,8 @@
    
     @if(!empty($stream))
         <div class="widget-wrapper">
-            <div class="widget-header">
-                <a href="#" class="chat_button" data-tip="Chatroom" onclick="chatroom_toggle(event, $(this))"></a>
+            <div class="widget-header">                
+                <a href="#" class="chat_button" data-tip="Chatroom" onclick="chatroom_toggle(event, $(this))"></a>               
                 @if(isset($stream->country))
                     <span class="flag-icon flag-icon-{{mb_strtolower($stream->country->code)}}"></span>
                 @else

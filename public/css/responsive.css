@@ -1,6 +1,6 @@
 /* Large Devices, Wide Screens */
 @media only screen and (min-width: 768px) {
-
+    
 }
 /* Large Devices, Wide Screens */
 @media only screen and (max-width: 1415px) {
@@ -23,7 +23,33 @@
 
 }
 @media only screen and (max-width: 768px) {
-
+    .stream-section {
+        min-height: 420px;
+    }
+    .stream-section .stream-area {
+        display: inline-block;
+        overflow: hidden;
+    }
+    .stream-section .stream-area .stream-message-wrapper {
+        float: right;
+        display: block;
+        width: 300px;
+        position: absolute;
+        left: -300px;
+    }
+    .stream-section .stream-area .stream-wrapper {
+        width: 100% !important;
+        float: left;
+    }
+    .stream-section .streamlist {        
+        height: 100%;
+    }
+    .stream-section .stream-list-wrapper .streams_list {
+        margin: 10px 0;
+        max-height: 280px;
+        overflow-y: auto;
+        height: 280px;
+    }
 }
 /* Small Devices, Tablets */
 @media only screen and (max-width: 767px) {
@@ -46,7 +72,9 @@
 }
 /* Extra Small Devices, Phones */
 @media only screen and (max-width: 480px) {
-
+    .stream-section {
+        min-height: 320px;
+    }
 }
 /* Extra Small Devices, Phones */
 @media only screen and (max-width: 440px) {

@@ -30,6 +30,7 @@
 @php 
     $streamSettings = $general_helper->getStreamSettings();
     $path = $general_helper->getActivePath();
+    $isDesktop = (new \Jenssegers\Agent\Agent())->isDesktop();
 @endphp
 <div class="wrapper">
     <!--SECTION HEADER-->
@@ -58,7 +59,7 @@
                 @if($streamSettings->main_section)
                     <div class="row stream-section">               
                                             
-                        <div class="col-md-12 stream-area chat_open theatre-off">
+                        <div class="col-md-12 stream-area {{$isDesktop?'chat_open':'chat_close'}} theatre-off">
                             <div class="stream-message-wrapper">
                                 @yield('stream-message')
                             </div>
