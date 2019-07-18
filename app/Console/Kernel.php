@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        'App\Console\Commands\ServiceCron',
+        'App\Console\Commands\StreamCheck',
+        'App\Console\Commands\ChatClean',
     ];
 
     /**
@@ -28,6 +29,7 @@ class Kernel extends ConsoleKernel
         //          ->hourly();
         $schedule->command('backup:run')->daily()->at('23:00');
         $schedule->command('streamActiveCheck:start')->everyMinute();//->appendOutputTo(storage_path('logs/test.log'))
+        $schedule->command('ChatMessageClean:start')->daily()->at('23:00');
     }
 
     /**
