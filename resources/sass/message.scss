@@ -37,8 +37,11 @@
       p{
         margin: 0;
         .show{
-          color: rebeccapurple;
+          color: #336199;
           cursor: pointer;
+          &:hover{
+            color:#0663d3
+          }
         }
       }
     }

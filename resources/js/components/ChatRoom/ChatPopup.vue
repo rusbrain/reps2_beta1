@@ -7,27 +7,29 @@
     :width="`400px`"
     :backgroundColor="`#222222`"
     >
-
       <div class="chat_container">        
           <vue-custom-scrollbar class="chat_text_container" id="chat_text_container">
-              <div v-if="isMessages">
-                  <div v-for="message in messages" class="user_msg" :class="'user-' + message.user_id">
-                      <p class="user_info">
-                        <span :class="'flag-icon flag-icon-' + message.country_code"></span>
-                        <img class="margin-left-5" :src="'/images/smiles/'+message.race" alt="">  
-                        <span class="username">{{message.user_name}}</span>
-                        <span class="user_id"><a :href="'/user/' + message.user_id" >#{{message.user_id}}</a></span>
-                        <span class="msg_timestamp">{{convertTo(message.created_at)}}</span>
-                      </p>
-                      <p class="msg_text">
-                        <span v-html="urlify(message.message)"></span>
-                      </p>
-                  </div>
-              </div>
-              <div v-if="!isMessages">
-                  Empty messages
-              </div>
-            
+            <div v-if="ignored_users.length > 0" class="ignoredUsers" v-for="(user,key) in ignored_users" :key="key">
+                <p >{{user.user_name}} #{{user.user_id}} {{user.timestamp}} IGNORED <span class="show" @click="showUser(user.user_id)">Show</span></p>
+            </div>
+            <div v-if="isMessages">
+                <div v-for="(message,index) in messages" :key="`message-${index}`" v-if="!checkIgnore(message.user_id)" class="user_msg" :class="'user-' + message.user_id" >
+                    <p class="user_info">
+                      <span :class="'flag-icon flag-icon-' + message.country_code"></span>
+                      <img class="margin-left-5" :src="'/images/smiles/'+message.race" alt="">  
+                      <span class="username">{{message.user_name}}</span>
+                      <span class="user_id"><a :href="'/user/' + message.user_id" >#{{message.user_id}}</a></span>
+                      <span class="ignore_user" v-if="userId!=message.user_id" @click="ignoreUser(message)">Ignore</span>
+                      <span class="msg_timestamp">{{convertTo(message.created_at)}}</span>
+                    </p>
+                    <p class="msg_text">
+                      <span v-html="urlify(message.message)"></span>
+                    </p>
+                </div>
+            </div>
+            <div v-if="!isMessages">
+                Empty messages
+            </div>            
           </vue-custom-scrollbar>
           <div class="chat_footer" v-if="userLoggedin">           
               <div class="send">
@@ -85,7 +87,9 @@ export default {
       message: "",
       typing: "",
       timeout: "",
-      user: this.auth
+      user: this.auth,
+      ignored_userIDs: [],
+      ignored_users: [],
     };
   },
   computed: {
@@ -97,6 +101,14 @@ export default {
         return "Guest";
       }
     },
+
+    userId: function() {
+      if (this.auth != 0) {
+        return this.auth.id;
+      } else {
+        return 0;
+      }
+    }
 
   },
   mounted() {
@@ -189,14 +201,30 @@ export default {
         .local()
         .format("hh:mm");
     },
+    ignoreUser: function(userMsg) {      
+      this.ignored_userIDs.push(userMsg.user_id);    
+      let ignoreUser = {'user_id': userMsg.user_id, 'user_name': userMsg.user_name, 'timestamp': this.convertTo(new Date)}  
+      this.ignored_users.push(ignoreUser);    
+    },
+
+    checkIgnore: function(user_id) {    
+      return this.ignored_userIDs.indexOf(user_id) == -1 ? false : true
+    },  
+
+    showUser: function(user_id) {     
+      this.ignored_userIDs.splice(this.ignored_userIDs.indexOf(user_id), 1);
+
+      let index = this.ignored_users.findIndex(
+        element => element.user_id === user_id
+      );
+      this.ignored_users.splice(index, 1);    
+    },    
 
     scrollToTop: function() {
       $("#chat_text_container")
         .stop()
         .animate({ scrollTop: 0 }, 1);
-    },
-
-    
+    },   
 
     visibleFormCrudUpdate: function() {
       this.$emit("onPopupClose", {
