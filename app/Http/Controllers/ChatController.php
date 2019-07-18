@@ -7,10 +7,15 @@ use App\Http\Controllers\Controller;
 use App\PublicChat;
 use Illuminate\Support\Facades\Auth;
 use App\{User, Country, Replay};
+use App\Services\GeneralViewHelper;
 
 
 class ChatController extends Controller
 {
+    public function __construct(){
+        $this->general_helper = new GeneralViewHelper;	
+    }
+
     /**
      * Get 100 messages
      */
@@ -66,7 +71,7 @@ class ChatController extends Controller
     }
 
     public function setFullMessage($msg) {
-        $countries = Country::all();
+        $countries =$this->general_helper->getCountries();
         $country_code = ($msg->user->country_id) ? mb_strtolower($countries[$msg->user->country_id]->code) : '';
         $race = ($msg->user->race) ? Replay::$race_icons[$msg->user->race] : Replay::$race_icons['All'];
         return  array(
