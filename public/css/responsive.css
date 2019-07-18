@@ -52,8 +52,12 @@
     }
 
     .stream-section .stream-area.chat_open .stream-message-wrapper{       
-        left: 15px;
+        left: 50%;
+        top: 53%;
         z-index: 100000000000;
+        transform: translate(-50%, -50%);
+        position: fixed;
+        max-height: 670px;
     }
     .stream-section .stream-area.chat_close .stream-message-wrapper{       
         left: -300px;
