@@ -33,9 +33,9 @@
     .stream-section .stream-area .stream-message-wrapper {
         float: right;
         display: block;
-        width: 300px;
+        width: 300px !important;
         position: absolute;
-        left: -300px;
+        
     }
     .stream-section .stream-area .stream-wrapper {
         width: 100% !important;
@@ -50,6 +50,16 @@
         overflow-y: auto;
         height: 280px;
     }
+
+    .stream-section .stream-area.chat_open .stream-message-wrapper{       
+        left: 15px;
+        z-index: 100000000000;
+    }
+    .stream-section .stream-area.chat_close .stream-message-wrapper{       
+        left: -300px;
+        z-index: 100000000000;
+    }
+    
 }
 /* Small Devices, Tablets */
 @media only screen and (max-width: 767px) {

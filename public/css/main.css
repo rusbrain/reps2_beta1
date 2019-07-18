@@ -1225,6 +1225,9 @@ form label {
   background-size: 22px; 
   filter: invert(100%);
 }
+.stream-section .stream-area.chat_close .stream-message-wrapper .chat_container .chat_header .popup{
+  display:none
+}
 
 /* Stream wrapper */
 .stream-section .stream-area.chat_open .stream-wrapper {
@@ -1252,7 +1255,7 @@ form label {
   font-size: 30px;
   color: #2f6696;
 }
-.stream-section .stream-area .stream-wrapper .stream_view .widget-header .chat_button {
+.stream-section .stream-area .stream-wrapper .stream_view .widget-header .chat_button{
   position: absolute;
   width: 30px;
   height: 30px;
@@ -1261,7 +1264,8 @@ form label {
   left: 5px;
   z-index: 6;  
 }
-.stream-section .stream-area.chat_close .stream-wrapper .stream_view .widget-header .chat_button{
+.stream-section .stream-area.chat_close .stream-wrapper .stream_view .widget-header .chat_button
+{
   background: url(../images/icons/open-chat.png) no-repeat center center;
   background-size: 20px; 
   filter: invert(100%);
@@ -1270,6 +1274,17 @@ form label {
   background: url(../images/icons/close-chat.png) no-repeat center center;
   background-size: 20px; 
   filter: invert(100%);
+}
+
+.chat_container .chat_header .chat_button{
+  cursor: pointer;  
+  background: url(../images/icons/close-chat.png) no-repeat center center;
+  background-size: 20px; 
+  filter: invert(100%);
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  right: 20px;
 }
 
 .stream-section .stream-wrapper .stream_view .widget-header .list_menu,
