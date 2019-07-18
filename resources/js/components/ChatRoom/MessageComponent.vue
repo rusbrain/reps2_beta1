@@ -6,7 +6,7 @@
         </div>
         <vue-custom-scrollbar class="chat_text_container" id="chat_text_container">
             <div v-if="ignored_users.length > 0" class="ignoredUsers" v-for="(user,key) in ignored_users" :key="key">
-                <p >{{user.user_name}} #{{user.user_id}} {{user.timestamp}} Ignored <span class="show" @click="showUser(user.user_id)">Show</span></p>
+                <p >{{user.user_name}} #{{user.user_id}} {{user.timestamp}} IGNORED <span class="show" @click="showUser(user.user_id)">Show</span></p>
             </div>
             <div v-if="isMessages">               
                 <div v-for="(message,index) in messages" :key="`message-${index}`" v-if="!checkIgnore(message.user_id)" class="user_msg" :class="'user-' + message.user_id" >
