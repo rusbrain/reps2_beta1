@@ -9,6 +9,7 @@
         "doctrine/dbal": "^2.8",
         "eduardokum/laravel-mail-auto-embed": "^1.0",
         "fideloper/proxy": "^4.0",
+        "jenssegers/agent": "^2.6",
         "laravel/framework": "5.7.*",
         "laravel/tinker": "^1.0",
         "spatie/laravel-backup": "^5.12",
