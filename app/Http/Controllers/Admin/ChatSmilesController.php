@@ -50,7 +50,7 @@ class ChatSmilesController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function store(SmileStoreRequest $request)
-    {      
+    {      dd("DD",$request->all());
         $save = ChatSmileService::store($request);
         return redirect()->route('admin.chat.smiles');
     }
