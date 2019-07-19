@@ -429,6 +429,7 @@ function moveToTop(container) {
         });
 }
 
+
 /**Get all smiles for HTML text editor*/
 function getAllSmiles(extra_smiles) {
     var path = 'emoticons/smiles/';
