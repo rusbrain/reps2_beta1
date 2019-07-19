@@ -6,6 +6,8 @@ use App\Traits\ModelRelations\FileRelation;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Image;
+use Illuminate\Support\Facades\Storage; //Laravel Filesystem
 
 class File extends Model
 {
@@ -39,14 +41,20 @@ class File extends Model
      * @param bool $file_name
      * @return mixed
      */
-    public static function storeFile($file, $dir_name, $file_title = '')
+    public static function storeFile($file, $dir_name, $file_title = '', $flag= false)
     {
         $uploading_path = $dir_name.'/'.Carbon::now()->format('Y-m-d');
-        $original_name = Carbon::now()->timestamp. '_' .$file->getClientOriginalName();
+        $ext = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
+        $original_name = Carbon::now()->timestamp. '.' .$ext;
+        
+        $path = str_replace('public', '/storage',  $file->storeAs('public/' . $uploading_path, $original_name));
 
-        $path = str_replace('public', '/storage',
-            $file->storeAs('public/' . $uploading_path, $original_name));
-
+        if($flag == 'smile') {
+            $img = Image::make(public_path($path))->resize(15, 15, function($constraint) {
+                $constraint->aspectRatio();
+            });     
+            $img->save(public_path($path));        
+        }
         $file_boj = File::create([
             'user_id' => Auth::id(),
             'title' => $file_title,

@@ -8,7 +8,7 @@
 
 namespace App\Services\Base;
 
-use App\{ForumTopic, Replay, User, Banner, StreamHeader, Stream, StreamSetting};
+use App\{ForumTopic, Replay, User, Banner, StreamHeader, Stream, StreamSetting, ChatSmile};
 use App\Http\Requests\QuickEmailRequest;
 use App\Mail\QuickEmail;
 use Carbon\Carbon;
@@ -93,4 +93,17 @@ class BaseDataService
     public static function getStreamSettings() {
         return StreamSetting::first();
     }
-}
+
+    public static function getextraSmiles(){
+        $smiles = array();
+        $extraSmiles = ChatSmile::with('file')->orderBy('updated_at', 'Desc')->get();
+        foreach ($extraSmiles as $smile ) {
+            $smiles[] = array(
+                'charactor' => $smile->charactor,
+                'filename' => pathinfo($smile->file->link)["basename"]
+            );
+        }
+      
+        return $smiles;
+    }
+ }

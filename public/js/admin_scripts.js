@@ -1,5 +1,5 @@
 /**Get all smiles for HTML text editor*/
-function getAllSmiles() {
+ function getAllSmiles(extra_smiles) {
     var path = 'emoticons/smiles/';
     var smile = 's';
     var extension = '.gif';
@@ -12,8 +12,25 @@ function getAllSmiles() {
         key = ':'+ smile + i+':';
         result = path + smile + i + extension;
         smilesObject[key] = result;
-    }
-    return smilesObject
+    }                                                                                                                                           
+
+    /**Get extra smiles */
+    for (var i = 0; i < extra_smiles.length; i++) {
+        key = extra_smiles[i]['charactor'] ;
+        result = path + extra_smiles[i]['filename']
+        smilesObject[key] = result;
+    }         
+    return smilesObject;
+}
+
+
+async function getExtraSmiles() {
+    return $.ajax({
+        url: '/chat/get_externalsmiles',
+        type: 'get',
+        dataType: 'json',
+    })
+    .then(response => response);
 }
 /**Get additional smiles for HTML text editor*/
 function getMoreSmiles() {

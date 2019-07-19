@@ -430,7 +430,7 @@ function moveToTop(container) {
 }
 
 /**Get all smiles for HTML text editor*/
-function getAllSmiles() {
+function getAllSmiles(extra_smiles) {
     var path = 'emoticons/smiles/';
     var smile = 's';
     var extension = '.gif';
@@ -444,6 +444,14 @@ function getAllSmiles() {
         result = path + smile + i + extension;
         smilesObject[key] = result;
     }
+    
+    /**Get extra smiles */
+    for (var i = 0; i < extra_smiles.length; i++) {
+        key = extra_smiles[i]['charactor'] ;
+        result = path + extra_smiles[i]['filename']
+        smilesObject[key] = result;
+    }     
+              
     return smilesObject
 }
 

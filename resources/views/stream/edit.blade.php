@@ -1,5 +1,8 @@
 @extends('layouts.site')
 @inject('general_helper', 'App\Services\GeneralViewHelper')
+<?php
+$extraSmiles = $general_helper->getextraSmiles();
+?>
 
 @section('css')
     <!--SCEditor -  WYSIWYG BBCode editor -->
@@ -183,6 +186,7 @@ $races = \App\Replay::$races;
          * */
         $(function () {
             addStream();
+            var extraSmiles = <?php echo json_encode($extraSmiles) ?>;
             if ($('#content').length > 0) {
                 var content = document.getElementById('content');
 
@@ -198,7 +202,7 @@ $races = \App\Replay::$races;
                     'date,time',
                     emoticons: {
                         // Emoticons to be included in the dropdown
-                        dropdown: getAllSmiles(),
+                        dropdown: getAllSmiles(extraSmiles),
                         // Emoticons to be included in the more section
                         more: getMoreSmiles()
                     }

@@ -1,3 +1,7 @@
+@inject('general_helper', 'App\Services\GeneralViewHelper')
+<?php
+$extraSmiles = $general_helper->getextraSmiles();
+?>
 @section('css')
     <!--SCEditor -  WYSIWYG BBCode editor -->
     <link rel="stylesheet" href="{{route('home')}}/js/sceditor/minified/themes/default.min.css"/>
@@ -91,7 +95,7 @@
 
             if ($('body').find('#comment-content').length > 0) {
                 var textarea = document.getElementById('comment-content');
-
+                var extraSmiles = <?php echo json_encode($extraSmiles) ?>;
                 sceditor.create(textarea, {
                     format: 'xhtml',
                     style: '{{route('home')}}' + '/js/sceditor/minified/themes/content/default.min.css',
@@ -109,7 +113,7 @@
                     'upload|spoiler',
                     emoticons: {
                         // Emoticons to be included in the dropdown
-                        dropdown: getAllSmiles(),
+                        dropdown: getAllSmiles(extraSmiles),
                         // Emoticons to be included in the more section
                         more: getMoreSmiles()
                     }

@@ -52,6 +52,7 @@ class GeneralViewHelper
     protected static $instance;
     protected $footer_widgets;
     protected $footer_urls;
+    protected $getextraSmiles;
 
     public function __construct()
     {
@@ -271,6 +272,16 @@ class GeneralViewHelper
     {
         self::$instance->streamheader = self::$instance->streamheader ?? BaseDataService::getStreamHeader();
         return self::$instance->streamheader;
+    }
+
+    
+    /**
+     * @return mixed
+     */
+    public function getextraSmiles()
+    {
+        self::$instance->getextraSmiles = self::$instance->getextraSmiles ?? BaseDataService::getextraSmiles();
+        return self::$instance->getextraSmiles;
     }
 
     /**

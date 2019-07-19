@@ -1,5 +1,8 @@
 @extends('layouts.site')
 @inject('general_helper', 'App\Services\GeneralViewHelper')
+<?php
+$extraSmiles = $general_helper->getextraSmiles();
+?>
 {{-- @php dd($contacts);@endphp --}}
 @section('sidebar-left')
     <!-- User messages widget -->   
@@ -110,7 +113,7 @@
         $(function () {
             if ($('.user-message-form').length > 0) {
                 var textarea = document.getElementById('message');
-
+                var extraSmiles = <?php echo json_encode($extraSmiles) ?>;
                 sceditor.create(textarea, {
                     format: 'xhtml',
                     style: '{{route('home')}}' + '/js/sceditor/minified/themes/content/default.min.css',
@@ -125,7 +128,7 @@
                     'date,time',
                     emoticons: {
                         // Emoticons to be included in the dropdown
-                        dropdown: getAllSmiles(),
+                        dropdown: getAllSmiles(extraSmiles),
                         // Emoticons to be included in the more section
                         more: getMoreSmiles()
                     }
