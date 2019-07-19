@@ -12,6 +12,7 @@
 <?php
 $countries = $general_helper->getCountries();
 $races = \App\Replay::$races;
+$extraSmiles = $general_helper->getextraSmiles();
 ?>
 
 @section('sidebar-left')
@@ -184,9 +185,10 @@ $races = \App\Replay::$races;
         
         $(function () {
             addStream();
+            
             if ($('#content').length > 0) {
                 var content = document.getElementById('content');
-
+                var extraSmiles = <?php echo json_encode($extraSmiles) ?>;
                 sceditor.create(content, {
                     format: 'xhtml',
                     style: '{{route("home")}}' + '/js/sceditor/minified/themes/content/default.min.css',
@@ -199,7 +201,7 @@ $races = \App\Replay::$races;
                     'date,time',
                     emoticons: {
                         // Emoticons to be included in the dropdown
-                        dropdown: getAllSmiles(),
+                        dropdown: getAllSmiles(extraSmiles),
                         // Emoticons to be included in the more section
                         more: getMoreSmiles()
                     }

@@ -26,11 +26,11 @@ class ChatSmilesController extends Controller
      */
     public function pagination()
     {
-        $pictures = ChatSmile::with('file', 'user')->orderBy('updated_at', 'Desc')->paginate(20);
+        $smiles = ChatSmile::with('file', 'user')->orderBy('updated_at', 'Desc')->paginate(20);
         return BaseDataService::getPaginationData(
-            AdminViewService::getChatSmiles($pictures), 
-            AdminViewService::getPagination($pictures),
-            AdminViewService::getChatSmilesPopUp($pictures)
+            AdminViewService::getChatSmiles($smiles), 
+            AdminViewService::getPagination($smiles),
+            AdminViewService::getChatSmilesPopUp($smiles)
         );
     
     }

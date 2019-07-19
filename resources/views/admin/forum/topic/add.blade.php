@@ -1,5 +1,10 @@
 @extends('admin.layouts.admin')
-
+@inject('general_helper', 'App\Services\GeneralViewHelper')
+<?php
+$countries = $general_helper->getCountries();
+$races = \App\Replay::$races;
+$extraSmiles = $general_helper->getextraSmiles();
+?>
 @section('css')
     <link rel="stylesheet" href="{{route('home')}}/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
     <link rel="stylesheet" href="{{route('home')}}/plugins/iCheck/all.css">
@@ -203,10 +208,10 @@
             addCountries();
             addRaces();
             addUpload();
-
+            var extraSmiles = <?php echo json_encode($extraSmiles) ?>;
             if ($('#content').length > 0) {
                 var content = document.getElementById('content');
-
+                
                 sceditor.create(content, {
                     format: 'xhtml',
                     style: '{{route("home")}}' + '/js/sceditor/minified/themes/content/default.min.css',
@@ -225,7 +230,7 @@
                     'upload',
                     emoticons: {
                         // Emoticons to be included in the dropdown
-                        dropdown: getAllSmiles(),
+                        dropdown: getAllSmiles(extraSmiles),
                         // Emoticons to be included in the more section
                         more: getMoreSmiles()
                     }
@@ -253,7 +258,7 @@
                     'upload',
                     emoticons: {
                         // Emoticons to be included in the dropdown
-                        dropdown: getAllSmiles(),
+                        dropdown: getAllSmiles(extraSmiles),
                         // Emoticons to be included in the more section
                         more: getMoreSmiles()
                     }

@@ -1,5 +1,8 @@
 @extends('layouts.site')
 @inject('general_helper', 'App\Services\GeneralViewHelper')
+<?php
+$extraSmiles = $general_helper->getextraSmiles();
+?>
 
 @section('css')
     <!--SCEditor -  WYSIWYG BBCode editor -->
@@ -186,6 +189,7 @@
             addCountries();
             addRaces();
             addSpoiler();
+            var extraSmiles = <?php echo json_encode($extraSmiles) ?>;
             // Check user is admin or morderate
             @if (Auth::user())
                 var isUpload = {{Auth::user()->user_role_id}};
@@ -213,7 +217,7 @@
                     'upload|spoiler',
                     emoticons: {
                         // Emoticons to be included in the dropdown
-                        dropdown: getAllSmiles(),
+                        dropdown: getAllSmiles(extraSmiles),
                         // Emoticons to be included in the more section
                         more: getMoreSmiles()
                     }
@@ -241,7 +245,7 @@
                     'upload|spoiler',
                     emoticons: {
                         // Emoticons to be included in the dropdown
-                        dropdown: getAllSmiles(),
+                        dropdown: getAllSmiles(extraSmiles),
                         // Emoticons to be included in the more section
                         more: getMoreSmiles()
                     }

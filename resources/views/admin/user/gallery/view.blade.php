@@ -1,5 +1,10 @@
  @extends('admin.layouts.admin')
-
+ @inject('general_helper', 'App\Services\GeneralViewHelper')
+ <?php
+ $countries = $general_helper->getCountries();
+ $races = \App\Replay::$races;
+ $extraSmiles = $general_helper->getextraSmiles();
+ ?>
 @section('css')
     <!--SCEditor -  WYSIWYG BBCode editor -->
     <link rel="stylesheet" href="{{route('home')}}/js/sceditor/minified/themes/default.min.css"/>
@@ -135,7 +140,7 @@
 
             if ($('#comment_content').length > 0) {
                 var comment_content = document.getElementById('comment_content');
-
+                var extraSmiles = <?php echo json_encode($extraSmiles) ?>;
                 sceditor.create(comment_content, {
                     format: 'xhtml',
                     style: '{{route("home")}}' + '/js/sceditor/minified/themes/content/default.min.css',
@@ -154,7 +159,7 @@
                         'upload',
                     emoticons: {
                         // Emoticons to be included in the dropdown
-                        dropdown: getAllSmiles(),
+                        dropdown: getAllSmiles(extraSmiles),
                         // Emoticons to be included in the more section
                         more: getMoreSmiles()
                     }

@@ -1,5 +1,8 @@
 @extends('layouts.site')
 @inject('general_helper', 'App\Services\GeneralViewHelper')
+<?php
+$extraSmiles = $general_helper->getextraSmiles();
+?>
 
 @section('css')
     <!--SCEditor -  WYSIWYG BBCode editor -->
@@ -325,6 +328,7 @@ $game_versions = $general_helper->getGameVersion();
          * https://www.sceditor.com/
          * */
         $(function () {
+            var extraSmiles = <?php echo json_encode($extraSmiles) ?>;
             if ($('#content').length > 0) {
                 var content = document.getElementById('content');
 
@@ -340,7 +344,7 @@ $game_versions = $general_helper->getGameVersion();
                     'date,time',
                     emoticons: {
                         // Emoticons to be included in the dropdown
-                        dropdown: getAllSmiles(),
+                        dropdown: getAllSmiles(extraSmiles),
                         // Emoticons to be included in the more section
                         more: getMoreSmiles()
                     }

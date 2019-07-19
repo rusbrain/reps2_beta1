@@ -8,6 +8,7 @@ use App\PublicChat;
 use Illuminate\Support\Facades\Auth;
 use App\{User, Country, Replay};
 use App\Services\GeneralViewHelper;
+use App\ChatSmile;
 
 
 class ChatController extends Controller
