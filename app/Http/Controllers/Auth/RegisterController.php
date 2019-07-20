@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Mail;
+use App\Rules\Captcha;
 
 class RegisterController extends Controller
 {
@@ -54,6 +55,7 @@ class RegisterController extends Controller
                 'race'      => 'required|in:'.$races,
                 'password'  => 'required|string|min:8|max:255|confirmed',
                 'country'   => 'required|exists:countries,id',
+                'g-recaptcha-response' => new Captcha()
             ],
             [
                 'race.required'      => 'Раса обязательна для заполнения.',
@@ -70,6 +72,7 @@ class RegisterController extends Controller
                 'email.max'          => 'Максимальная длина Email 30 символов.',
                 'country.exists'     => 'Не верно указана страна.',
                 'country.required'   => 'Страна обязательна для заполнения.',
+                'recaptcha'=>'Please ensure that you are a human!'
             ]
         );
     }
@@ -82,6 +85,16 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        // $recaptcha = $request['g-recaptcha-response'];
+      
+        // $captchaSecretkey = env("CAPTCHA_SECRET_KEY");
+        // // verify
+        // $verifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$captchaSecretkey.'&response='.$recaptcha);
+        // $responseData = json_decode($verifyResponse);
+        
+        // if(!$responseData->success) {
+        //     return redirect()->back()->withInput($request->all())->with("status", " Google recaptcah verify is failed.");
+        // }
         $data_save = [
             'name' => $data['name'],
             'email' => $data['email'],

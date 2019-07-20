@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="{{route('home')}}/css/select2.min.css"/>
 @endsection
 
+<script src='https://www.google.com/recaptcha/api.js'></script>
 <!--JS plugin Select2 - autocomplete -->
 <link rel="stylesheet" href="{{route('home')}}/css/select2.min.css"/>
 
@@ -109,6 +110,17 @@
                                 <strong>{{ $errors->first('password_confirmation') }}</strong>
                             </span>
                         @endif
+                    </div>
+
+                    <div class="form-group">
+                        <div class="g-recaptcha" data-sitekey="{{ env('CAPTCHA_SITE_KEY') }}"></div>
+                        @if ($errors->has('g-recaptcha-response'))
+                        <span class="invalid-feedback" style="display: block;">{{ $errors->first('g-recaptcha-response') }}</span>
+                        <!-- end if -->
+                        @endif
+                        <span class="invalid-feedback" style="display: none;">
+                            Complete the reCAPTCHA to submit the form
+                        </span>
                     </div>
 
                     <div class="form-group">
