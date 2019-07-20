@@ -36,12 +36,12 @@
                 <p class="italic" @click="italic()"></p>
                 <p class="underline" @click="underline()"></p>
 
-                <p class="font_size" ></p>
-                <p class="font_color"></p>
+                <p class="font_size" @click="fontSize()"></p>
+                <p class="font_color" @click="fontColor()"></p>
 
-                <p class="pic"></p>
-                <p class="smile"></p>               
-                <p class="at"></p>
+                <p class="pic" @click="selectImage()"></p>
+                <p class="smile" @click="selectSmile()"></p>               
+                <p class="at" @click="atmark()"></p>
               </div>
               <div class="input-group">
                 <textarea-autosize
@@ -273,15 +273,20 @@ export default {
       }
     },
     atmark: function() {
+      
+    },
+    selectSmile: function() {
 
     },
-    selectSmiles: function() {
+    selectImage: function() {
 
     },
-    selectImages: function() {
+    fontColor: function() {
 
     },
-
+    fontSize: function(){
+      
+    }
   }
 };
 </script>
