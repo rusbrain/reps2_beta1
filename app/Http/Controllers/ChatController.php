@@ -41,6 +41,7 @@ class ChatController extends Controller
         $message_data = $request->all();
         if (Auth::id() == $request->user_id) {
             $message_data['user_name'] = Auth::user()->name;
+            $message_data['message'] = $this->general_helper->oldContentFilter($message_data['message']);
             $insert = PublicChat::create($message_data);           
             if($insert) {               
                 return response()->json([
