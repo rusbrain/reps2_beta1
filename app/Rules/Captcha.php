@@ -39,6 +39,6 @@ class Captcha implements Rule
      */
     public function message()
     {
-        return 'Complete the reCAPTCHA to submit the form';
+        return 'Please complete the reCAPTCHA to submit the form';
     }
 }
