@@ -76,11 +76,8 @@ class LoginController extends Controller
 
         $credentials = $request->only('email', 'password');
         $token = JWTAuth::attempt($credentials);
-
         $user = User::where('id', Auth::id())->update(['jwt_token' => $token]);
-
         UserActivityLogService::log(UserActivityLogService::EVENT_USER_LOGIN);
-
         return redirect('/');
     }
 
