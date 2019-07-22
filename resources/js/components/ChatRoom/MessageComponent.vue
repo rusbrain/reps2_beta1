@@ -172,6 +172,7 @@ export default {
         alert("Please Enter Your Message.");
       }      
     },
+    
     createMsgObj: function(message) {
       return {
         user_id: this.auth.id,
