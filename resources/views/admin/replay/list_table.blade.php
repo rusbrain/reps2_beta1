@@ -1,4 +1,5 @@
 @foreach($data->items() as $replay)
+    @if($replay->user)
     <tr>
         <td>{{$replay->id}}</td>
         <td><a href="{{route('admin.user.profile', ['id' => $replay->user->id])}}">{{$replay->user->name}}</a></td>
@@ -32,4 +33,5 @@
             </div>
         </td>
     </tr>
+    @endif
 @endforeach

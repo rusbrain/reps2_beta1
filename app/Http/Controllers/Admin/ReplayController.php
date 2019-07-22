@@ -28,8 +28,13 @@ class ReplayController extends Controller
      */
     public function pagination(ReplaySearchAdminRequest $request)
     {
-        $data = $data = Replay::getReplay($request);
-        return BaseDataService::getPaginationData(AdminViewService::getReplay($data), AdminViewService::getPagination($data), AdminViewService::getReplayPopUp($data));
+       
+        $data = Replay::getReplay($request);//dd($data);
+        return BaseDataService::getPaginationData(
+            AdminViewService::getReplay($data), 
+            AdminViewService::getPagination($data), 
+            AdminViewService::getReplayPopUp($data)
+        );
     }
 
     /**
