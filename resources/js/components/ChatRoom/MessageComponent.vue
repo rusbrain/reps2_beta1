@@ -70,6 +70,8 @@ import axios from 'axios';
 import moment from 'moment';
 import vueCustomScrollbar from 'vue-custom-scrollbar';
 import * as chatHelper from '../../helper/chatHelper';
+import * as utilsHelper from '../../helper/utilsHelper';
+
 export default {
   components: {
     vueCustomScrollbar,    
@@ -152,7 +154,7 @@ export default {
     },
     sendMessage(event) {
       if (this.message.length > 0) {
-        let messagePacket = this.createMsgObj(chatHelper.wrapperTxt(this.message));
+        let messagePacket = this.createMsgObj(utilsHelper.wrapperTxt(this.message));
         event.preventDefault();
         let currentObj = this;
         let self = this;
@@ -172,7 +174,7 @@ export default {
         alert("Please Enter Your Message.");
       }      
     },
-    
+
     createMsgObj: function(message) {
       return {
         user_id: this.auth.id,
@@ -182,9 +184,9 @@ export default {
       };
     },
 
-    urlify: chatHelper.urlify,
-    convertTo: chatHelper.convertTo,
-    isMobile: chatHelper.isMobile,
+    urlify: utilsHelper.urlify,
+    convertTo: utilsHelper.convertTo,
+    isMobile: utilsHelper.isMobile,
    
     addChatMessage: function(data) {
       this.messages.unshift(data);
@@ -193,7 +195,7 @@ export default {
 
     ignoreUser: function(userMsg) {      
       this.ignored_userIDs.push(userMsg.user_id);    
-      let ignoreUser = {'user_id': userMsg.user_id, 'user_name': userMsg.user_name, 'timestamp': chatHelper.convertTo(new Date)}  
+      let ignoreUser = {'user_id': userMsg.user_id, 'user_name': userMsg.user_name, 'timestamp': utilsHelper.convertTo(new Date)}  
       this.ignored_users.push(ignoreUser);    
     },
 
@@ -222,49 +224,15 @@ export default {
       });
     },
     
-    getSelection: function() {
-      var txtarea = document.getElementById("editor");
-      var start = txtarea.selectionStart;
-      var finish = txtarea.selectionEnd;
-      var sel = txtarea.value.substring(start, finish);
-      return sel;
-    },
-    bold: function () {
-      let sel = this.getSelection();
-      if (sel.length > 0) {
-        let newValue = document.getElementById("editor").value.replace(sel, '[b]'+sel+'[/b]');
-        document.getElementById("editor").value = newValue;
-      }
-    },
-    italic: function() {
-      let sel = this.getSelection();
-      if (sel.length > 0) {
-        let newValue = document.getElementById("editor").value.replace(sel, '[i]'+sel+'[/i]');
-        document.getElementById("editor").value = newValue;
-      }
-    },
-    underline: function() {
-      let sel = this.getSelection();
-      if (sel.length > 0) {
-        let newValue = document.getElementById("editor").value.replace(sel, '[u]'+sel+'[/u]');
-        document.getElementById("editor").value = newValue;
-      }
-    },
-    atmark: function() {
-      
-    },
-    selectSmile: function() {
-
-    },
-    selectImage: function() {
-
-    },
-    fontColor: function() {
-
-    },
-    fontSize: function(){
-      
-    }
+    getSelection: chatHelper.getSelection,
+    bold: chatHelper.bold,
+    italic: chatHelper.italic,
+    underline: chatHelper.underline,
+    atmark: chatHelper.atmark,
+    selectSmile: chatHelper.selectSmile,
+    selectImage: chatHelper.selectImage,
+    fontColor: chatHelper.fontColor,
+    fontSize: chatHelper.fontSize
   }
 };
 </script>
