@@ -190,7 +190,7 @@ export default {
       });
       return wrap_text;
     },
-    addChatMessage: function(data) {console.log(data)
+    addChatMessage: function(data) {
       this.messages.unshift(data);
       this.scrollToTop();
     },

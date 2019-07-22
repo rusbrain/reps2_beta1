@@ -14,7 +14,6 @@ class Helper {
 					 	form: userInfo
 					}, 
 					function(err,httpResponse,body){
-						console.log(body)
 						  const response = JSON.parse(body)
 						  if(response.status ===  'ok') {
 							  return true
