@@ -41,11 +41,11 @@ class File extends Model
      * @param bool $file_name
      * @return mixed
      */
-    public static function storeFile($file, $dir_name, $file_title = '', $flag= false)
+    public static function storeFile($file, $dir_name, $file_title = '', $flag= false, $charactor = false)
     {
         $uploading_path = $dir_name.'/'.Carbon::now()->format('Y-m-d');
-        $ext = $flag == 'smile' ? 'gif' : pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
-        $original_name = Carbon::now()->timestamp. '.' .$ext;
+        $ext =  pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
+        $original_name = (!$charactor) ? Carbon::now()->timestamp. '.' .$ext : str_replace(":","",$charactor) . '.gif';
         
         $path = str_replace('public', '/storage',  $file->storeAs('public/' . $uploading_path, $original_name));
 

@@ -76,7 +76,7 @@ class ChatSmileService
     {
         $title = 'Изображение чата '.Auth::user()->name;
 
-        $file = File::storeFile($data['image'], 'chat/smiles', $title, 'smile');
+        $file = File::storeFile($data['image'], 'chat/smiles', $title, 'smile', $data['charactor']);
         $success = \File::copy(base_path('public/'.$file->link),base_path('public/images/emoticons/smiles/'.pathinfo($file->link)["basename"]));
       
         $data['file_id'] = $file->id;

@@ -40,9 +40,35 @@ class ChatSmilesController extends Controller
      */
     public function create()
     {
-        $count = ChatSmile::count();
-        $charactor = ':smile'. $count .':';
-        return view('admin.chat.smiles.create')->with(['charactor'=>$charactor]);
+        $charactor_arr = array();  
+        $smiles = ChatSmile::all();
+        foreach ($smiles as $smile) {
+            $charactor_arr[] = $smile->charactor;
+        }
+        $gen   = $this->get_charactor($charactor_arr);
+        return view('admin.chat.smiles.create')->with(['charactor'=>$gen]);
+    }
+
+    /**
+     * :smile:
+     */
+    private function get_charactor($charactor_arr){
+        $check = true;
+        $gen = "";
+        while($check){
+            $gen   = ':smile'. rand(1, 99) .':';
+            if (!in_array($gen, $charactor_arr)) {
+                $check = false;
+            }
+        }
+        return $gen;
+    }
+    private function check_charactor($gen, $charactor_arr) 
+    {        
+        if (in_array($gen, $charactor_arr)) {
+            return true;
+        }
+        return false;
     }
 
     /**
