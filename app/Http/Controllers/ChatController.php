@@ -85,4 +85,21 @@ class ChatController extends Controller
         );
         return $msg;
     }
+
+    public function get_externalsmiles() {
+        $smiles = array();
+        $extraSmiles = ChatSmile::with('file')->orderBy('updated_at', 'Desc')->get();
+        foreach ($extraSmiles as $smile ) {
+            $smiles[] = array(
+                'charactor' => $smile->charactor,
+                'filename' => pathinfo($smile->file->link)["basename"]
+            );
+        }
+      
+        return response()->json([
+            'status' => "ok",
+            'smiles' =>  $smiles
+        ], 200); 
+        
+    }
 }

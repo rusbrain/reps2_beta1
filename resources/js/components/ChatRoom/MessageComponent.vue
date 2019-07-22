@@ -20,7 +20,7 @@
                       <span class="msg_timestamp">{{convertTo(message.created_at)}}</span>
                   </p>
                   <p class="msg_text">
-                    <span v-html="urlify(message.message)"></span>
+                    <span v-html="message.message"></span>
                   </p>
                 </div>
             </div>
@@ -30,7 +30,8 @@
            
         </vue-custom-scrollbar>
         <div class="chat_footer" v-if="userLoggedin">           
-            <div class="send">
+            <div class="send" style="position: relative">
+              <SmileComponent :status="smile_status"></SmileComponent>
               <div class="extra">
                 <p class="bold" @click="bold()"></p>
                 <p class="italic" @click="italic()"></p>
@@ -61,7 +62,12 @@
         </div>
         <div class="chat_footer" v-if="!userLoggedin">    
           <p class='guests_message'> Please login to chat!</p> 
-        </div>        
+        </div> 
+
+        
+        <!-- <ImageComponent v-if="font_component"></ImageComponent>
+        <SmileComponent v-if="font_component"></SmileComponent>
+        <UserComponent v-if="font_component"></UserComponent> -->
     </div>    
 </template>
 
@@ -72,9 +78,18 @@ import vueCustomScrollbar from 'vue-custom-scrollbar';
 import * as chatHelper from '../../helper/chatHelper';
 import * as utilsHelper from '../../helper/utilsHelper';
 
+// import FontComponent from './FontComponent.vue';
+// import ImageComponent from './ImageComponent.vue';
+import SmileComponent from './SmileComponent.vue';
+// import UserComponent from './UserComponent.vue';
+
 export default {
   components: {
-    vueCustomScrollbar,    
+    vueCustomScrollbar,  
+    // FontComponent,
+    // ImageComponent,
+    SmileComponent,
+    // UserComponent
   },
   props: {
     auth: [Object, Number],
@@ -94,12 +109,10 @@ export default {
       messages: [],
       isMessages: false,
       message: "",
-      typing: "",
-      timeout: "",
       user: this.auth,
       ignored_userIDs: [],
       ignored_users: [],
-      instance: null
+      smile_status: false,
     };
   },
   computed: {
@@ -184,7 +197,6 @@ export default {
       };
     },
 
-    urlify: utilsHelper.urlify,
     convertTo: utilsHelper.convertTo,
     isMobile: utilsHelper.isMobile,
    
@@ -229,9 +241,13 @@ export default {
     italic: chatHelper.italic,
     underline: chatHelper.underline,
     atmark: chatHelper.atmark,
-    selectSmile: chatHelper.selectSmile,
+    selectSmile: function(){
+      this.smile_status = !this.smile_status
+    },
     selectImage: chatHelper.selectImage,
-    fontColor: chatHelper.fontColor,
+    fontColor: function(){
+      
+    },    
     fontSize: chatHelper.fontSize
   }
 };

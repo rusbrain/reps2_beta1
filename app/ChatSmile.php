@@ -3,7 +3,7 @@
 namespace App;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\{
-    Model, SoftDeletes
+    Model
 };
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\DB;
  * @property integer $file_id
  * @property string  $comment
  *
- * @property Carbon $deleted_at
  * @property Carbon $created_at
  * @property Carbon $updated_at
  *
@@ -22,7 +21,7 @@ use Illuminate\Support\Facades\DB;
 
 class ChatSmile extends Model
 {
-    use SoftDeletes, Notifiable;
+    use  Notifiable;
     
     /**
      * Using table name

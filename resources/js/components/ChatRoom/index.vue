@@ -26,7 +26,7 @@ export default {
 
    methods: {
     popup: function() {
-      this.visibleFormCrud = true;
+      this.visibleFormCrud = false;
     },
 
     popupClose: function() {

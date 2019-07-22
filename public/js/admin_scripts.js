@@ -23,15 +23,6 @@
     return smilesObject;
 }
 
-
-async function getExtraSmiles() {
-    return $.ajax({
-        url: '/chat/get_externalsmiles',
-        type: 'get',
-        dataType: 'json',
-    })
-    .then(response => response);
-}
 /**Get additional smiles for HTML text editor*/
 function getMoreSmiles() {
     var path = 'emoticons/smiles/';

@@ -13,7 +13,7 @@ export const bold = () => {
       let newValue = textareaObj().value.replace(sel, '[b]'+sel+'[/b]');
       textareaObj().value = newValue;
     } else {
-        insertAtCaret('[b][/b]')
+      insertText('[b][/b]')
     }
 };
 export const italic = () => {
@@ -22,7 +22,7 @@ export const italic = () => {
       let newValue = textareaObj().value.replace(sel, '[i]'+sel+'[/i]');
       textareaObj().value = newValue;
     }  else {
-        insertAtCaret('[i][/i]')
+      insertText('[i][/i]')
     }
 };
 export const underline = () => {
@@ -31,7 +31,7 @@ export const underline = () => {
       let newValue = textareaObj().value.replace(sel, '[u]'+sel+'[/u]');
       textareaObj().value = newValue;
     } else {
-        insertAtCaret('[u][/u]')
+      insertText('[u][/u]')
     }
 };
 export const atmark = () => {
@@ -47,14 +47,14 @@ export const selectImage = () => {
 };
 
 export const fontColor = () => {
-
+  
 };
 
 export const fontSize = () => {
 
 };
 
-export const insertAtCaret = (text) => {
+export const insertText = (text) => {
     var txtarea = textareaObj();
     if (!txtarea) {
       return;
