@@ -31,7 +31,7 @@
         </vue-custom-scrollbar>
         <div class="chat_footer" v-if="userLoggedin">           
             <div class="send" style="position: relative">
-              <SmileComponent :status="smile_status"></SmileComponent>
+              <SmileComponent :status="smile_status" @turnOffStatus="turnOffStatus"></SmileComponent>
               <div class="extra">
                 <p class="bold" @click="bold()"></p>
                 <p class="italic" @click="italic()"></p>
@@ -248,7 +248,10 @@ export default {
     fontColor: function(){
       
     },    
-    fontSize: chatHelper.fontSize
+    fontSize: chatHelper.fontSize,
+    turnOffStatus: function() {
+      this.smile_status = false;
+    }
   }
 };
 </script>
