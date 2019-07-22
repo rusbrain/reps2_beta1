@@ -32,6 +32,7 @@
         <div class="chat_footer" v-if="userLoggedin">           
             <div class="send" style="position: relative">
               <SmileComponent :status="smile_status" @turnOffStatus="turnOffStatus"></SmileComponent>
+              <ImageComponent :status="image_status" @turnOffStatus="turnOffStatus"></ImageComponent>
               <div class="extra">
                 <p class="bold" @click="bold()"></p>
                 <p class="italic" @click="italic()"></p>
@@ -65,7 +66,7 @@
         </div> 
 
         
-        <!-- <ImageComponent v-if="font_component"></ImageComponent>
+        <!-- 
         <SmileComponent v-if="font_component"></SmileComponent>
         <UserComponent v-if="font_component"></UserComponent> -->
     </div>    
@@ -79,7 +80,7 @@ import * as chatHelper from '../../helper/chatHelper';
 import * as utilsHelper from '../../helper/utilsHelper';
 
 // import FontComponent from './FontComponent.vue';
-// import ImageComponent from './ImageComponent.vue';
+import ImageComponent from './ImageComponent.vue';
 import SmileComponent from './SmileComponent.vue';
 // import UserComponent from './UserComponent.vue';
 
@@ -87,7 +88,7 @@ export default {
   components: {
     vueCustomScrollbar,  
     // FontComponent,
-    // ImageComponent,
+    ImageComponent,
     SmileComponent,
     // UserComponent
   },
@@ -113,6 +114,7 @@ export default {
       ignored_userIDs: [],
       ignored_users: [],
       smile_status: false,
+      image_status: false
     };
   },
   computed: {
@@ -244,13 +246,16 @@ export default {
     selectSmile: function(){
       this.smile_status = !this.smile_status
     },
-    selectImage: chatHelper.selectImage,
+    selectImage: function() {
+      this.image_status = !this.image_status
+    },
     fontColor: function(){
       
     },    
     fontSize: chatHelper.fontSize,
     turnOffStatus: function() {
       this.smile_status = false;
+      this.image_status = false;
     }
   }
 };

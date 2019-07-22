@@ -256,6 +256,7 @@ Route::group(['middleware' => 'activity'], function () {
         Route::post('/get_message', 'ChatController@get_message')->name('chat.get_message'); 
 
         Route::get('/get_externalsmiles','ChatController@get_externalsmiles')->name('chat.get_smiles');
+        Route::get('/get_externalimages','ChatController@get_externalimages')->name('chat.get_images');
     });
 
     // Admin Routes

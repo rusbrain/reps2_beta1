@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\{User, Country, Replay};
 use App\Services\GeneralViewHelper;
 use App\ChatSmile;
+use App\ChatImage;
 
 
 class ChatController extends Controller
@@ -86,6 +87,9 @@ class ChatController extends Controller
         return $msg;
     }
 
+    /**
+     * Get Chat Smiles
+     */
     public function get_externalsmiles() {
         $smiles = array();
         $extraSmiles = ChatSmile::with('file')->orderBy('updated_at', 'Desc')->get();
@@ -99,6 +103,26 @@ class ChatController extends Controller
         return response()->json([
             'status' => "ok",
             'smiles' =>  $smiles
+        ], 200); 
+        
+    }
+
+    /**
+     * Get Chat Images
+     */
+    public function get_externalimages() {
+        $images = array();
+        $extraImages = ChatPicture::with('file')->orderBy('updated_at', 'Desc')->get();
+        foreach ($extraImages as $image ) {
+            $images[] = array(
+                'charactor' => $image->charactor,
+                'filename' => pathinfo($smile->file->link)["basename"]
+            );
+        }
+      
+        return response()->json([
+            'status' => "ok",
+            'images' =>  $images
         ], 200); 
         
     }
