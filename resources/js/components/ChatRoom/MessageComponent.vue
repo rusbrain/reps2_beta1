@@ -67,7 +67,7 @@
 
         
         <!-- 
-        <SmileComponent v-if="font_component"></SmileComponent>
+        <SmileComponent v-if="font_component"><./SmileComponent>
         <UserComponent v-if="font_component"></UserComponent> -->
     </div>    
 </template>
@@ -245,17 +245,18 @@ export default {
     atmark: chatHelper.atmark,
     selectSmile: function(){
       this.smile_status = !this.smile_status
+      this.image_status = false;
     },
     selectImage: function() {
       this.image_status = !this.image_status
+      this.smile_status = false;
     },
     fontColor: function(){
       
     },    
     fontSize: chatHelper.fontSize,
     turnOffStatus: function() {
-      this.smile_status = false;
-      this.image_status = false;
+      this.smile_status = this.image_status = false;
     }
   }
 };
