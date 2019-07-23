@@ -42,7 +42,7 @@ class ChatController extends Controller
         $message_data = $request->all();
         if (Auth::id() == $request->user_id) {
             $message_data['user_name'] = Auth::user()->name;
-            $message_data['message'] = $this->general_helper->oldContentFilter($message_data['message']);
+            $message_data['message'] = $this->rewrapperText($this->general_helper->oldContentFilter($message_data['message']));
             $insert = PublicChat::create($message_data);           
             if($insert) {               
                 return response()->json([
@@ -55,6 +55,13 @@ class ChatController extends Controller
                 'status' => 'fail'
             ], 200);
         } 
+    }
+
+    private function rewrapperText($text) {
+         $text = preg_replace("/:smile([0-9]{1,}):/", '<img src="/images/emoticons/smiles/smile$1.gif" border="0">', $text);
+         $text = preg_replace("/:s([0-9]{1,}):/", '<img src="/images/emoticons/smiles/s$1.gif" border="0">', $text);
+         $text = preg_replace("/:cpic([0-9]{1,}):/", '<img src="/storage/chat/pictures/cpic$1.gif" border="0">', $text);
+         return $text;
     }
 
     /**

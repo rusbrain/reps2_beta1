@@ -46,7 +46,7 @@ export default {
         var result;
 
         for (var i = 0; i <= qty; i++) {
-            key = ':'+ smile + smile + i+':';
+            key = ':'+ smile + i+':';
             result = path + smile + i + extension;
             smilesObject.push({'charactor': key, 'filename': result});
         } 
