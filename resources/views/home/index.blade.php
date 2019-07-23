@@ -97,12 +97,12 @@
             })
 
             // Last News
-            getLastNews(1);
+            getLastNews(1,false);
             $('.pagination-content').on('click', '.page-link', function (e) {
                 e.preventDefault();
                 $('.load-wrapp').show();
                 var page = $(this).attr('data-page');
-                getLastNews(page);
+                getLastNews(page,true);
             })
 
             // Stream section collapse and expand
@@ -119,17 +119,16 @@
             })            
         });
 
-        function getLastNews(page) {
+        function getLastNews(page,shouldScroll) {
             var container = $('#ajax_last_forums');
-            var body = $("html, body");
 
             $.get('{{route('home.last_forum.pagination')}}'+'?page='+page, {}, function (data) {
                 container.html(data.news);
                 $('.pagination-content').html(data.pagination);
                 $('#ajax_last_forums .load-wrapp').hide();
 
-                /**move to top of page*/
-                moveToTop(container);
+                /**move to news header*/
+                shouldScroll ? moveToTop(container) : null;
             });
         }
 
