@@ -74,7 +74,7 @@ class ChatPicturesService
     {
         $title = 'Изображение чата '.Auth::user()->name;
 
-        $file = File::storeFile($data['image'], 'chat/pictures', $title);
+        $file = File::storeFile($data['image'], 'chat/pictures', $title, 'picture', $data['charactor']);
         $data['file_id'] = $file->id;
         unset($data['image']);
         return $data;

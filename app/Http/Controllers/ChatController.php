@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\{User, Country, Replay};
 use App\Services\GeneralViewHelper;
 use App\ChatSmile;
-use App\ChatImage;
+use App\ChatPicture;
 
 
 class ChatController extends Controller
@@ -116,7 +116,7 @@ class ChatController extends Controller
         foreach ($extraImages as $image ) {
             $images[] = array(
                 'charactor' => $image->charactor,
-                'filename' => pathinfo($smile->file->link)["basename"]
+                'filepath' => $image->file->link
             );
         }
       

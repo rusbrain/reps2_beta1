@@ -2,7 +2,7 @@
     <div v-if="status" class="component_image">
       <div class="">
         <img v-for="(image, index) in images" :key ="`image-${index}`" 
-          :src="`${image.filename}`" 
+          :src="`${image.filepath}`" 
           :alt="`${image.charactor}`" 
           :title="`${image.charactor}`" @click="selImage(image.charactor)">
       </div>
@@ -42,8 +42,8 @@ export default {
          /**Get images */
         for (var i = 0; i < data.length; i++) {
             key = data[i]['charactor'];
-            result = path + data[i]['filename'];
-            ImagesObject.push({'charactor': key, 'filename': result});
+            result = data[i]['filepath'];
+            ImagesObject.push({'charactor': key, 'filepath': result});
         }         
         return ImagesObject;
       },
@@ -62,8 +62,9 @@ export default {
     border: solid 1px gray;
     padding: 4px;
     right: 6px;
-    width: 205px;
-    height: auto;
+    width: 230px;
+    max-height: 197px;
+    overflow-y: auto;
     background: white;
     div {
         img {

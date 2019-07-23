@@ -12,4 +12,20 @@ export const getSmiles = (url) => {
             reject(false)
         });
     });
-}
+};
+
+export const getImages = (url) => {
+    return new Promise((resolve, reject) => {
+      
+        axios.get(url)
+        .then(function (response) {           
+            if(response.data.status == 'ok') {                            
+                return resolve(response.data.images);
+            }
+            return reject([]);
+        })
+        .catch(function (error) {
+            reject(false)
+        });
+    });
+};

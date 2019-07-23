@@ -457,6 +457,7 @@ class GeneralViewHelper
 
         $text = preg_replace("/:smile([0-9]{1,}):/", '<img src="/images/emoticons/smiles/smile$1.gif" border="0">', $text);
         $text = preg_replace("/:ss([0-9]{1,}):/", '<img src="/images/emoticons/smiles/s$1.gif" border="0">', $text);
+        $text = preg_replace("/:cpic([0-9]{1,}):/", '<img src="/storage/chat/pictures/cpic$1.gif" border="0">', $text);
 
         /***additional smiles*/
         $text = preg_replace_callback("/:([a-z]{1,2}):/", function ($matches) {

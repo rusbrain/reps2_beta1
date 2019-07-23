@@ -45,16 +45,29 @@ class File extends Model
     {
         $uploading_path = $dir_name.'/'.Carbon::now()->format('Y-m-d');
         $ext =  pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
-        $original_name = (!$charactor) ? Carbon::now()->timestamp. '.' .$ext : str_replace(":","",$charactor) . '.gif';
-        
+        $original_name = Carbon::now()->timestamp. '.' .$ext;
+
+        if ($flag && $charactor) {
+            $original_name = str_replace(":","",$charactor) . '.gif';
+            $uploading_path = $dir_name;
+        }
+       
         $path = str_replace('public', '/storage',  $file->storeAs('public/' . $uploading_path, $original_name));
 
         if($flag == 'smile') {
-            $img = Image::make(public_path($path))->resize(15, 15, function($constraint) {
+            $img = Image::make(public_path($path))->resize(16, 16, function($constraint) {
                 $constraint->aspectRatio();
             });     
             $img->save(public_path($path));        
         }
+
+        if($flag == 'picture') {
+            $img = Image::make(public_path($path))->resize(100, 100, function($constraint) {
+                $constraint->aspectRatio();
+            });     
+            $img->save(public_path($path));        
+        }
+
         $file_boj = File::create([
             'user_id' => Auth::id(),
             'title' => $file_title,
