@@ -39,11 +39,11 @@ window.axios.defaults.headers.common = {
     'X-CSRF-TOKEN' : document.querySelector('meta[name="csrf-token"]').getAttribute('content')
 };
 
+// import textarea auto-resize package
 window.VueTextareaAutosize = require('vue-textarea-autosize') 
 Vue.use(VueTextareaAutosize)
 
 Vue.component('chat', require('./components/ChatRoom/index.vue').default);
-
 Vue.config.productionTip = false;
 
 var app = new Vue({

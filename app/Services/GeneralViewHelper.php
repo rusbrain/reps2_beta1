@@ -378,27 +378,6 @@ class GeneralViewHelper
         }
         return false;
     }
-    // /**
-    //  * @return mixed
-    //  */
-    // public function getStreams()
-    // {   //jzkbprff40iqj646a697cyrvl0zt2m6
-    //     $activeStreams = array();   
-    //     $streams = BaseDataService::streams_list();      
-    //     foreach($streams as $stream) {
-    //         if(empty($activeStreams)) {
-    //             $live_check = $this->liveStreamCheck($this->UrlFilter($stream->stream_url));
-    //             if($live_check) {
-    //                 $activeStreams[] = $stream;     
-    //             }
-    //         } 
-    //         // else  {
-    //         //     $activeStreams[] = $stream;   
-    //         // }
-    //     }
-            
-    //     return $activeStreams;
-    // }
 
     public function getActivePath()
     {

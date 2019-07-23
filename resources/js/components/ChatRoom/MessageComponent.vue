@@ -31,21 +31,22 @@
         </vue-custom-scrollbar>
         <div class="chat_footer" v-if="userLoggedin">           
             <div class="send" style="position: relative">
-              <SmileComponent :status="smile_status" @turnOffStatus="turnOffStatus"></SmileComponent>
-              <ImageComponent :status="image_status" @turnOffStatus="turnOffStatus"></ImageComponent>
-              <FSizeComponent :status="size_status" @turnOffStatus="turnOffStatus"></FSizeComponent>
-              <FColorComponent :status="color_status" @turnOffStatus="turnOffStatus"></FColorComponent>
+              <SmileComponent :status="chat_action.smile" @turnOffStatus="turnOffStatus"></SmileComponent>
+              <ImageComponent :status="chat_action.image" @turnOffStatus="turnOffStatus"></ImageComponent>
+              <FSizeComponent :status="chat_action.size" @turnOffStatus="turnOffStatus"></FSizeComponent>
+              <FColorComponent :status="chat_action.color" @turnOffStatus="turnOffStatus"></FColorComponent>
+              <!-- <UserComponent :status="chat_action.user" @turnOffStatus="turnOffStatus"></UserComponent> -->
               <div class="extra">
                 <p class="bold" @click="bold()"></p>
                 <p class="italic" @click="italic()"></p>
                 <p class="underline" @click="underline()"></p>
 
-                <p class="font_size" @click="fontSize()"></p>
-                <p class="font_color" @click="fontColor()"></p>
+                <p class="font_size" @click="selectItem('size')"></p>
+                <p class="font_color" @click="selectItem('color')"></p>
 
-                <p class="pic" @click="selectImage()"></p>
-                <p class="smile" @click="selectSmile()"></p>               
-                <p class="at" @click="atmark()"></p>
+                <p class="pic" @click="selectItem('image')"></p>
+                <p class="smile" @click="selectItem('smile')"></p>               
+                <p class="at" @click="selectItem('user')"></p>
               </div>
               <div class="input-group">
                 <textarea-autosize
@@ -70,11 +71,12 @@
 </template>
 
 <script>
-import axios from 'axios';
 import moment from 'moment';
-import vueCustomScrollbar from 'vue-custom-scrollbar';
+
 import * as chatHelper from '../../helper/chatHelper';
 import * as utilsHelper from '../../helper/utilsHelper';
+
+import vueCustomScrollbar from 'vue-custom-scrollbar';
 
 import FColorComponent from './FontColorComponent.vue';
 import FSizeComponent from './FontSizeComponent.vue';
@@ -84,12 +86,7 @@ import UserComponent from './UserComponent.vue';
 
 export default {
   components: {
-    vueCustomScrollbar,  
-    FColorComponent,
-    FSizeComponent,
-    ImageComponent,
-    SmileComponent,
-    UserComponent
+    vueCustomScrollbar,FColorComponent, FSizeComponent, ImageComponent, SmileComponent, UserComponent
   },
   props: {
     auth: [Object, Number],
@@ -112,10 +109,13 @@ export default {
       user: this.auth,
       ignored_userIDs: [],
       ignored_users: [],
-      smile_status: false,
-      image_status: false,
-      color_status: false,
-      size_status: false,
+      chat_action : {
+        'smile': false,
+        'image': false,
+        'color': false,
+        'size': false,
+        'user': false,
+      }  
     };
   },
   computed: {
@@ -134,8 +134,8 @@ export default {
       } else {
         return 0;
       }
-    }
-
+    },
+    
   },
   mounted() {    
     var socket = io(process.env.MIX_SOCKET_SERVER, { query: "id= " + this.auth.id });
@@ -244,21 +244,20 @@ export default {
     italic: chatHelper.italic,
     underline: chatHelper.underline,
     atmark: chatHelper.atmark,
-    selectSmile: function(){
-      this.smile_status = !this.smile_status
-      this.image_status = this.color_status = false;
+   
+    selectItem: function(type) {
+      let self = this;
+      Object.keys(self.chat_action).forEach(function(key) {        
+        if(type === key) self.chat_action[key] = !self.chat_action[key]
+        else self.chat_action[key] = false;
+      })     
     },
-    selectImage: function() {
-      this.image_status = !this.image_status
-      this.smile_status = this.color_status = false;
-    },
-    fontColor: function(){
-      this.color_status = !this.color_status
-      this.smile_status = this.image_status = false;
-    },    
-    fontSize: chatHelper.fontSize,
+   
     turnOffStatus: function() {
-      this.smile_status = this.image_status = this.color_status = false;
+      let self = this;
+      Object.keys(self.chat_action).forEach(function(key) {   
+        self.chat_action[key] = false;
+      }) 
     }
   }
 };
