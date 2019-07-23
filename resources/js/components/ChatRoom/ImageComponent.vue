@@ -63,16 +63,16 @@ export default {
     padding: 4px;
     right: 6px;
     width: 230px;
-    max-height: 197px;
+    max-height: 400px;
     overflow-y: auto;
     background: white;
     div {
         img {
-          max-width: 100px;
+            max-width: 100px;
             padding: 2px;
             cursor: pointer;
             &:hover {
-            background: #e6e6e6;
+              background: #e6e6e6;
             }
         }
     }

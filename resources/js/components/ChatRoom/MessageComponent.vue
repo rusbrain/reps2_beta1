@@ -33,6 +33,8 @@
             <div class="send" style="position: relative">
               <SmileComponent :status="smile_status" @turnOffStatus="turnOffStatus"></SmileComponent>
               <ImageComponent :status="image_status" @turnOffStatus="turnOffStatus"></ImageComponent>
+              <FSizeComponent :status="size_status" @turnOffStatus="turnOffStatus"></FSizeComponent>
+              <FColorComponent :status="color_status" @turnOffStatus="turnOffStatus"></FColorComponent>
               <div class="extra">
                 <p class="bold" @click="bold()"></p>
                 <p class="italic" @click="italic()"></p>
@@ -64,11 +66,6 @@
         <div class="chat_footer" v-if="!userLoggedin">    
           <p class='guests_message'> Please login to chat!</p> 
         </div> 
-
-        
-        <!-- 
-        <SmileComponent v-if="font_component"><./SmileComponent>
-        <UserComponent v-if="font_component"></UserComponent> -->
     </div>    
 </template>
 
@@ -79,18 +76,20 @@ import vueCustomScrollbar from 'vue-custom-scrollbar';
 import * as chatHelper from '../../helper/chatHelper';
 import * as utilsHelper from '../../helper/utilsHelper';
 
-// import FontComponent from './FontComponent.vue';
+import FColorComponent from './FontColorComponent.vue';
+import FSizeComponent from './FontSizeComponent.vue';
 import ImageComponent from './ImageComponent.vue';
 import SmileComponent from './SmileComponent.vue';
-// import UserComponent from './UserComponent.vue';
+import UserComponent from './UserComponent.vue';
 
 export default {
   components: {
     vueCustomScrollbar,  
-    // FontComponent,
+    FColorComponent,
+    FSizeComponent,
     ImageComponent,
     SmileComponent,
-    // UserComponent
+    UserComponent
   },
   props: {
     auth: [Object, Number],
@@ -114,7 +113,9 @@ export default {
       ignored_userIDs: [],
       ignored_users: [],
       smile_status: false,
-      image_status: false
+      image_status: false,
+      color_status: false,
+      size_status: false,
     };
   },
   computed: {
@@ -245,18 +246,19 @@ export default {
     atmark: chatHelper.atmark,
     selectSmile: function(){
       this.smile_status = !this.smile_status
-      this.image_status = false;
+      this.image_status = this.color_status = false;
     },
     selectImage: function() {
       this.image_status = !this.image_status
-      this.smile_status = false;
+      this.smile_status = this.color_status = false;
     },
     fontColor: function(){
-      
+      this.color_status = !this.color_status
+      this.smile_status = this.image_status = false;
     },    
     fontSize: chatHelper.fontSize,
     turnOffStatus: function() {
-      this.smile_status = this.image_status = false;
+      this.smile_status = this.image_status = this.color_status = false;
     }
   }
 };
