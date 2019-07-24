@@ -14,7 +14,7 @@ export const wrapperTxt = (text) => {
   let wrap_text = '';
   lines.forEach(function(item, index){
     if(item != ''){
-        wrap_text += '<p>' +item+ '</p>'
+        wrap_text += '<p>' +item.replace('\n','')+ '</p>'
     }
   });
   return wrap_text;
@@ -33,7 +33,7 @@ export const isMobile = () => {
     return check;
 };
 
-// export const regex_test =(string) => {
-//     var regex_string = /(\[url\]|\[\/url\]|\[img\]|\[\/img\]|\[b\]|\[\/b\]|\[u\]|\[\/u\]|\[i\]|\[\/i\]|\[c1\]|\[\/c1\]|\[c2\]|\[\/c2\]|\[c3\]|\[\/c3\]|\[c4\]|\[\/c4\]|\[c5\]|\[\/c5\]|\[c6\]|\[\/c6\]|\[f1\]|\[\/f1\]|\[f2\]|\[\/f2\]|\[f3\]|\[\/f3\]|\[d\]|\[\/d\]|\[n\]|\[\/n\])/
-//     return regex_string.test(string)    
-// };
+export const regex_test =(string) => {
+    var regex_string = /(\[url\]|\[\/url\]|\[img\]|\[\/img\]|\[b\]|\[\/b\]|\[u\]|\[\/u\]|\[i\]|\[\/i\]|\[c1\]|\[\/c1\]|\[c2\]|\[\/c2\]|\[c3\]|\[\/c3\]|\[c4\]|\[\/c4\]|\[c5\]|\[\/c5\]|\[c6\]|\[\/c6\]|\[f1\]|\[\/f1\]|\[f2\]|\[\/f2\]|\[f3\]|\[\/f3\]|\[d\]|\[\/d\]|\[n\]|\[\/n\])/
+    return regex_string.test(string)    
+};

@@ -1,3 +1,5 @@
+import * as utilsHelper from './utilsHelper';
+
 export const textareaObj = () => {
     return document.getElementById("editor");
 };
@@ -95,7 +97,7 @@ export const insertText = (text) => {
     var front = (txtarea.value).substring(0, strPos);
     var back = (txtarea.value).substring(strPos, txtarea.value.length);
     txtarea.value = front + text + back;
-    strPos = strPos + (Math.floor(text.length / 2));
+    strPos = (utilsHelper.regex_test(text)) ? strPos + (Math.floor(text.length / 2)) : text.length;
     if (br == "ie") {
       txtarea.focus();
       var ieRange = document.selection.createRange();
