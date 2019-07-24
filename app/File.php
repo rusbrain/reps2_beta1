@@ -44,11 +44,11 @@ class File extends Model
     public static function storeFile($file, $dir_name, $file_title = '', $flag= false, $charactor = false)
     {
         $uploading_path = $dir_name.'/'.Carbon::now()->format('Y-m-d');
-        $ext =  pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
+        $ext =  !$flag  ? pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION) : 'gif';
         $original_name = Carbon::now()->timestamp. '.' .$ext;
 
         if ($flag && $charactor) {
-            $original_name = str_replace(":","",$charactor) . '.gif';
+            $original_name = str_replace(":","",$charactor) . '.' . $ext;
             $uploading_path = $dir_name;
         }
        
@@ -62,10 +62,13 @@ class File extends Model
         }
 
         if($flag == 'picture') {
-            $img = Image::make(public_path($path))->resize(100, 100, function($constraint) {
-                $constraint->aspectRatio();
-            });     
-            $img->save(public_path($path));        
+            list($width, $height) = getimagesize(public_path($path)); 
+            if ($width > 200 || $height > 200) {
+                $img = Image::make(public_path($path))->resize(200, 200, function($constraint) {
+                    $constraint->aspectRatio();
+                });     
+                $img->save(public_path($path)); 
+            }                   
         }
 
         $file_boj = File::create([

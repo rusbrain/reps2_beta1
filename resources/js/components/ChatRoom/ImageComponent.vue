@@ -62,13 +62,13 @@ export default {
     border: solid 1px gray;
     padding: 4px;
     right: 6px;
-    width: 230px;
-    max-height: 400px;
+    width: 256px;
+    max-height: 500px;
     overflow-y: auto;
     background: white;
     div {
         img {
-            max-width: 100px;
+            max-width: 75px;
             padding: 2px;
             cursor: pointer;
             &:hover {
