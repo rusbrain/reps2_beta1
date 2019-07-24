@@ -41,6 +41,9 @@
                 <p class="italic" @click="italic()"></p>
                 <p class="underline" @click="underline()"></p>
 
+                <p class="link" @click="link()"></p>
+                <p class="img" @click="img()"></p>
+
                 <p class="font_size" @click="selectItem('size')"></p>
                 <p class="font_color" @click="selectItem('color')"></p>
 
@@ -243,6 +246,8 @@ export default {
     bold: chatHelper.bold,
     italic: chatHelper.italic,
     underline: chatHelper.underline,
+    link: chatHelper.link,
+    img: chatHelper.img,
     atmark: chatHelper.atmark,
    
     selectItem: function(type) {

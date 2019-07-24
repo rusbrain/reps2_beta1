@@ -502,7 +502,7 @@ class GeneralViewHelper
         return $this->regex_build_url(array(
             'st' => '',
             'html' => $matches[1],
-            'show' => $matches[2] ? $matches[2] : $matches[1],
+            'show' => isset($matches[2]) && $matches[2] ? $matches[2] : $matches[1],
             'end' => ''
         ));
     }

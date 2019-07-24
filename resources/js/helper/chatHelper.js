@@ -34,6 +34,24 @@ export const underline = () => {
       insertText('[u][/u]')
     }
 };
+export const link = () => {
+  let sel = getSelection();
+  if (sel.length > 0) {
+    let newValue = textareaObj().value.replace(sel, '[url]'+sel+'[/url]');
+    textareaObj().value = newValue;
+  } else {
+    insertText('[url][/url]')
+  }
+};
+export const img = () => {
+  let sel = getSelection();
+  if (sel.length > 0) {
+    let newValue = textareaObj().value.replace(sel, '[img]'+sel+'[/img]');
+    textareaObj().value = newValue;
+  } else {
+    insertText('[img][/img]')
+  }
+};
 export const atmark = () => {
     
 };

@@ -142,7 +142,15 @@
         }
         .font_color {         
           background-position: 0 -560px;
-          margin-right: 15px;       
+          margin-right: 10px;       
+        }
+        .link {
+          background-position: 0 -16px; 
+        }
+        .img{
+          background: url(/images/icons/picture.png) no-repeat center center;
+          background-size: 20px;   
+          margin-right: 10px;
         }
         .at {         
           background: url(/images/icons/at.png) no-repeat center center;
@@ -156,7 +164,7 @@
         }
         .underline {         
           background-position: 0 -48px;
-          margin-right: 15px;
+          margin-right: 10px;
         }
       }
       textarea {

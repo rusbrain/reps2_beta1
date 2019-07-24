@@ -88,6 +88,14 @@ class ChatController extends Controller
         }, $text);
 
         $text = preg_replace("/:cpic([0-9]{1,}):/", '<img src="/storage/chat/pictures/cpic$1.gif" border="0">', $text);
+
+        $text = preg_replace("/\[img\](\r\n|\r|\n)*((http|https):\/\/([^;<>\*\"]+)|[a-z0-9\/\\\._\- ]+)\[\/img\]/siU",
+            "<img src=\"\\2\" class=\"imgl\" border=\"0\" alt=\"\"> ", $text);
+
+        $text = preg_replace_callback("#\[url\](.*?)\[/url\]#is", function ($matches) {
+            return $this->general_helper->_regex_build_url_tags($matches);
+        }, $text);
+        
         return $text;
     }
 
