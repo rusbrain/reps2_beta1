@@ -62,8 +62,15 @@ export const img = () => {
   }
   textareaObj().focus();
 };
-export const atmark = () => {
-    
+export const meme = () => {
+  let sel = getSelection();
+  if (sel.length > 0) {
+    let newValue = textareaObj().value.replace(sel, '[d]'+sel+'[/d]');
+    textareaObj().value = newValue;
+  } else {
+    insertText('[d][/d]')
+  }
+  textareaObj().focus();
 };
 
 export const insertText = (text) => {

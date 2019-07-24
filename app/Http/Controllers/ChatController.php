@@ -95,6 +95,14 @@ class ChatController extends Controller
         $text = preg_replace_callback("#\[url\](.*?)\[/url\]#is", function ($matches) {
             return $this->general_helper->_regex_build_url_tags($matches);
         }, $text);
+
+
+        $text = preg_replace_callback("#\[(d)\](.+?)\[/\\1\]#is", function ($matches) { 
+            $url = isset($matches[2]) ? $matches[2] : $matches[1];         
+            return '<center><a title="'.$url.'" target="_blank" href="'.$url.'" class="id_link">
+                    <img class="smile_inchat" src="'.$url.'"></a><center>';
+        }, $text);
+        
         
         return $text;
     }

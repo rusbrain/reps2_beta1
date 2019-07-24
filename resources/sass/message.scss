@@ -152,9 +152,13 @@
           background-size: 20px;   
           margin-right: 10px;
         }
-        .at {         
-          background: url(/images/icons/at.png) no-repeat center center;
-          background-size: 14px;          
+        .meme {         
+          background-image: inherit;
+          text-align: center;
+          padding: 0;
+          font-size: 14px;
+          color: #484848;
+          font-weight: bold;         
         }
         .bold {         
           background-position: 0 -624px;   

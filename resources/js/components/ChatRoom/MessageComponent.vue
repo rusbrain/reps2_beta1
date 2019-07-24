@@ -35,7 +35,7 @@
               <ImageComponent :status="chat_action.image" @turnOffStatus="turnOffStatus"></ImageComponent>
               <FSizeComponent :status="chat_action.size" @turnOffStatus="turnOffStatus"></FSizeComponent>
               <FColorComponent :status="chat_action.color" @turnOffStatus="turnOffStatus"></FColorComponent>
-              <!-- <UserComponent :status="chat_action.user" @turnOffStatus="turnOffStatus"></UserComponent> -->
+
               <div class="extra">
                 <p class="bold" @click="bold()"></p>
                 <p class="italic" @click="italic()"></p>
@@ -49,7 +49,7 @@
 
                 <p class="pic" @click="selectItem('image')"></p>
                 <p class="smile" @click="selectItem('smile')"></p>               
-                <p class="at" @click="selectItem('user')"></p>
+                <p class="meme" @click="meme()">[d]</p>
               </div>
               <div class="input-group">
                 <textarea-autosize
@@ -85,11 +85,10 @@ import FColorComponent from './FontColorComponent.vue';
 import FSizeComponent from './FontSizeComponent.vue';
 import ImageComponent from './ImageComponent.vue';
 import SmileComponent from './SmileComponent.vue';
-import UserComponent from './UserComponent.vue';
 
 export default {
   components: {
-    vueCustomScrollbar,FColorComponent, FSizeComponent, ImageComponent, SmileComponent, UserComponent
+    vueCustomScrollbar,FColorComponent, FSizeComponent, ImageComponent, SmileComponent
   },
   props: {
     auth: [Object, Number],
@@ -250,7 +249,7 @@ export default {
     underline: chatHelper.underline,
     link: chatHelper.link,
     img: chatHelper.img,
-    atmark: chatHelper.atmark,
+    meme: chatHelper.meme,
    
     selectItem: function(type) {
       let self = this;
