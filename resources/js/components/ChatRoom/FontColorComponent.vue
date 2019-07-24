@@ -36,9 +36,8 @@ export default {
             let newValue = textareaObj.value.replace(sel, '[' + color.key + ']' + sel +'[/' + color.key + ']');
                 textareaObj.value = newValue;
             } else {
-                chatHelper.insertText('[' + color.key + '][/' + color.key + ']')
+                chatHelper.insertText('[' + color.key + '][/' + color.key + ']')               
             }
-            
             this.$emit("turnOffStatus");
         }  
     }

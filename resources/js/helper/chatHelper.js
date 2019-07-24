@@ -1,6 +1,7 @@
 export const textareaObj = () => {
     return document.getElementById("editor");
 };
+
 export const getSelection = () => {    
     var start = textareaObj().selectionStart;
     var finish = textareaObj().selectionEnd;
@@ -8,6 +9,7 @@ export const getSelection = () => {
     return sel;
 };
 export const bold = () => {
+  
     let sel = getSelection();
     if (sel.length > 0) {
       let newValue = textareaObj().value.replace(sel, '[b]'+sel+'[/b]');
@@ -15,15 +17,18 @@ export const bold = () => {
     } else {
       insertText('[b][/b]')
     }
+    textareaObj().focus();
 };
 export const italic = () => {
     let sel = getSelection();
     if (sel.length > 0) {
       let newValue = textareaObj().value.replace(sel, '[i]'+sel+'[/i]');
       textareaObj().value = newValue;
+      
     }  else {
       insertText('[i][/i]')
     }
+    textareaObj().focus();
 };
 export const underline = () => {
     let sel = getSelection();
@@ -33,43 +38,32 @@ export const underline = () => {
     } else {
       insertText('[u][/u]')
     }
+    textareaObj().focus();
 };
 export const link = () => {
   let sel = getSelection();
   if (sel.length > 0) {
     let newValue = textareaObj().value.replace(sel, '[url]'+sel+'[/url]');
     textareaObj().value = newValue;
+    
   } else {
     insertText('[url][/url]')
   }
+  textareaObj().focus();
 };
 export const img = () => {
   let sel = getSelection();
   if (sel.length > 0) {
     let newValue = textareaObj().value.replace(sel, '[img]'+sel+'[/img]');
     textareaObj().value = newValue;
+    
   } else {
     insertText('[img][/img]')
   }
+  textareaObj().focus();
 };
 export const atmark = () => {
     
-};
-
-export const selectSmile = () => {
-    
-};
-
-export const selectImage = () => {
-    
-};
-
-export const fontColor = () => {
-  
-};
-
-export const fontSize = () => {
-
 };
 
 export const insertText = (text) => {
@@ -94,7 +88,7 @@ export const insertText = (text) => {
     var front = (txtarea.value).substring(0, strPos);
     var back = (txtarea.value).substring(strPos, txtarea.value.length);
     txtarea.value = front + text + back;
-    strPos = strPos + text.length;
+    strPos = strPos + (Math.floor(text.length / 2));
     if (br == "ie") {
       txtarea.focus();
       var ieRange = document.selection.createRange();
