@@ -10,7 +10,7 @@ export const urlify =(text) => {
     })
 };
 export const wrapperTxt = (text) => {
-  let lines = text.split('\n');
+  let lines = text.split('\r\n');
   let wrap_text = '';
   lines.forEach(function(item, index){
     if(item != ''){

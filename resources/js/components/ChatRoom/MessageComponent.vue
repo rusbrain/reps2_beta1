@@ -54,7 +54,7 @@
               <div class="input-group">
                 <textarea-autosize
                   v-model="message"   
-                  @keydown.enter.exact.native="sendMessage($event)"
+                  @keyup.enter.exact.native="sendMessage($event)"
                   @keydown.enter.ctrl.exact.native="newline"
                   @keydown.enter.shift.exact.native="newline"
                   placeholder="Введите сообщение и нажмите Enter"                       
@@ -169,13 +169,15 @@ export default {
       }
     },
     newline() {
-      this.message = `${this.message}\n`;
+      this.message = `${this.message}\r\n`;
     },
     sendMessage(event) {
-      event.preventDefault();
+      
       if (this.message.length > 0) {
-        let messagePacket = this.createMsgObj(utilsHelper.wrapperTxt(this.message));        
+        let messagePacket = this.createMsgObj(utilsHelper.wrapperTxt(this.message));     
+        console.log(messagePacket)   
         let currentObj = this;
+        event.preventDefault();
         let self = this;
         axios.post('/chat/insert_message', messagePacket)
         .then(function (response) {           
