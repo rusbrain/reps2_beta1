@@ -50,15 +50,17 @@ class RegisterController extends Controller
      */
     public function register(Request $request)
     {
-        /** Email Validation with Neverbounce */
-        $validEmail = EmailValidation::check_email($request->email);    
-           
+
+        // Form validation
+        $this->validator($request->all())->validate();
+
+        // Email Validation with Neverbounce
+        $validEmail = EmailValidation::check_email($request->email); 
+
         if (!$validEmail) {
             return redirect()->route('error',
                 ['error' => 'Твой емейл фуфло. Нормально зарегистрируйся.']);
-        }
-
-        $this->validator($request->all())->validate();
+        }        
 
         event(new Registered($user = $this->create($request->all())));
 
