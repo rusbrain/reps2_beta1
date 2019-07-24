@@ -24,7 +24,8 @@ export default {
         }
     },
    
-    methods: {      
+    methods: {
+       
         selSize: function(size) {
             let textareaObj = chatHelper.textareaObj();
 

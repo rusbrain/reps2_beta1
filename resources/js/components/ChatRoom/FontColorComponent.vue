@@ -17,12 +17,12 @@ export default {
     data() {
         return {
             colors: [
-              {'key': 'c1', 'color': '#ec3131'},
-              {'key': 'c2', 'color': '#0754e6'},
-              {'key': 'c3', 'color': '#ecec0a'},
-              {'key': 'c4', 'color': '#11a011'},
-              {'key': 'c5', 'color': '#11d5ea'},
-              {'key': 'c6', 'color': '#e00ae0'},
+              {'key': 'c1', 'color': '#FFFF77'},
+              {'key': 'c2', 'color': '#FF77FF'},
+              {'key': 'c3', 'color': '#77FFFF'},
+              {'key': 'c4', 'color': '#FFAAAA'},
+              {'key': 'c5', 'color': '#AAFFAA'},
+              {'key': 'c6', 'color': '#AAAAFF'},
             ]
         }
     },
@@ -61,13 +61,14 @@ export default {
     div {
         margin: 4px;
         text-align: center;
-        span {         
+        span {
             padding: 5px;
             cursor: pointer;
             border: solid 1px #e0dddd;
             margin: 2px;
+            background: gray;
             &:hover {
-                background: #e6e6e6;
+                background: #1b1a1a;
             }
         }
     }
