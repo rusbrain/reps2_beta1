@@ -14,8 +14,22 @@ use App\ChatPicture;
 
 class ChatController extends Controller
 {
+    private $font_colors = array(
+         'c1' => '#FFFF77',
+         'c2' => '#FF77FF',
+         'c3' => '#77FFFF',
+         'c4' => '#FFAAAA',
+         'c5' => '#AAFFAA',
+         'c6' => '#AAAAFF'
+    );
+    private $font_sizes = array(
+        'f1' => '14px',
+        'f2' => '16px',
+        'f3' => '18px',
+    );
+   
     public function __construct(){
-        $this->general_helper = new GeneralViewHelper;	
+        $this->general_helper = new GeneralViewHelper;
     }
 
     /**
@@ -42,7 +56,7 @@ class ChatController extends Controller
         $message_data = $request->all();
         if (Auth::id() == $request->user_id) {
             $message_data['user_name'] = Auth::user()->name;
-            $message_data['message'] = $this->rewrapperText($this->general_helper->oldContentFilter($message_data['message']));
+            $message_data['message'] = $this->rewrapperText($message_data['message']);
             $insert = PublicChat::create($message_data);           
             if($insert) {               
                 return response()->json([
@@ -58,10 +72,23 @@ class ChatController extends Controller
     }
 
     private function rewrapperText($text) {
-         $text = preg_replace("/:smile([0-9]{1,}):/", '<img src="/images/emoticons/smiles/smile$1.gif" border="0">', $text);
-         $text = preg_replace("/:s([0-9]{1,}):/", '<img src="/images/emoticons/smiles/s$1.gif" border="0">', $text);
-         $text = preg_replace("/:cpic([0-9]{1,}):/", '<img src="/storage/chat/pictures/cpic$1.gif" border="0">', $text);
-         return $text;
+        $text = preg_replace("/:smile([0-9]{1,}):/", '<img src="/images/emoticons/smiles/smile$1.gif" border="0">', $text);
+        $text = preg_replace("/:s([0-9]{1,}):/", '<img src="/images/emoticons/smiles/s$1.gif" border="0">', $text);
+
+        $text = preg_replace("#\[(b)\](.+?)\[/\\1\]#is", "<\\1>\\2</\\1>", $text);
+        $text = preg_replace("#\[(i)\](.+?)\[/\\1\]#is", "<\\1>\\2</\\1>", $text);
+        $text = preg_replace("#\[(u)\](.+?)\[/\\1\]#is", "<\\1>\\2</\\1>", $text);
+
+        $text = preg_replace_callback("#\[(c[0-9]{1,})\](.+?)\[/\\1\]#is", function ($matches) {          
+            return "<span style='color: ".$this->font_colors[$matches[1]]."'>$matches[2]</span>";
+        }, $text);
+
+        $text = preg_replace_callback("#\[(f[0-9]{1,})\](.+?)\[/\\1\]#is", function ($matches) {          
+            return "<span style='font-size: ".$this->font_sizes[$matches[1]]."'>$matches[2]</span>";
+        }, $text);
+
+        $text = preg_replace("/:cpic([0-9]{1,}):/", '<img src="/storage/chat/pictures/cpic$1.gif" border="0">', $text);
+        return $text;
     }
 
     /**
@@ -133,4 +160,5 @@ class ChatController extends Controller
         ], 200); 
         
     }
+
 }
