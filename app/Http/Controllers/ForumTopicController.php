@@ -56,7 +56,7 @@ class ForumTopicController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(ForumTopicStoreRequest $request)
-    {
+    {       
         $newTopic = TopicService::storeTopic($request);
 
         UserActivityLogService::log(UserActivityLogService::EVENT_CREATE_POST, $newTopic);
