@@ -81,7 +81,9 @@ class ForumTopic extends Model implements CommentContainerInterface, LikeContain
         'negative_count',
         'positive_count',
         'comments_count',
-        'approved'
+        'approved',
+        'commented_at',
+        'upgraded_date'
     ];
 
     /**
