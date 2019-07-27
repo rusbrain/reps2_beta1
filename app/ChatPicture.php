@@ -40,6 +40,7 @@ class ChatPicture extends Model
         'user_id',
         'file_id',
         'comment',
+        'category',
         'charactor'
     ];
 

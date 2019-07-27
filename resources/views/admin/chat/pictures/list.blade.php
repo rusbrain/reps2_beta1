@@ -34,7 +34,7 @@
             <div class="box">
                 <div class="box-header with-border">
                     <h3 class="box-title">Изображение ({{$pictures_count}})</h3>
-                    <a class="btn btn-info" data-toggle="modal" data-target="#modal-default-add"  href="{{route('admin.chat.pictures.create')}}">Создать</a>
+                    <a class="btn btn-info"   href="{{route('admin.chat.pictures.create')}}">Создать</a>
                     <div class="box-tools pagination-content">
                     </div>
                 </div>
@@ -46,8 +46,9 @@
                             <th style="width: 30px">ID</th>
                             <th>Изображение</th>
                             <th>Пользователь</th>
-                            <th>Подпись</th>
-                            <th>Персонажи</th>                    
+                            <th>Kатегория</th>
+                            <th>Персонажи</th>   
+                            <th>Подпись</th>                                             
                             <th>Дата и время</th>
                             <th>Действия</th>
                         </tr>
@@ -64,7 +65,7 @@
         <!-- /.col -->
     </div>
     <div class="pop-up-content"></div>
-    <div class="modal fade" id="modal-default-add">
+    {{-- <div class="modal fade" id="modal-default-add">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -84,7 +85,7 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-    <!-- /.modal -->
+    <!-- /.modal --> --}}
 @endsection
 
 @section('js')

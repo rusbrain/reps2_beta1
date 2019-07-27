@@ -5,8 +5,9 @@
             <img class="img-preview" src="{{route('home').($picture->file->link??'/dist/img/default-50x50.gif')}}" alt="Изображение">
         </td>
         <td><a href="{{route('admin.user.profile', ['id' => $picture->user->id])}}">{{$picture->user->name}}</a></td>
-        <td>{{$picture->comment}}</td>
+        <td>{{$picture->category}}</td>
         <td>{{$picture->charactor}}</td>
+        <td>{{$picture->comment}}</td>        
         <td>{{$picture->created_at}}</td>
 
         <td>
