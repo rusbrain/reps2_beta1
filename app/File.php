@@ -44,7 +44,7 @@ class File extends Model
     public static function storeFile($file, $dir_name, $file_title = '', $flag= false, $charactor = false)
     {
         $uploading_path = $dir_name.'/'.Carbon::now()->format('Y-m-d');
-        $ext =  !$flag  ? pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION) : 'gif';
+        $ext =  (!$flag || $flag == 'picture')  ? pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION) : 'gif';
         $original_name = Carbon::now()->timestamp. '.' .$ext;
 
         if ($flag && $charactor) {

@@ -174,7 +174,7 @@ export default {
       
       if (this.message.length > 0) {
         let messagePacket = this.createMsgObj(utilsHelper.wrapperTxt(this.message));     
-        console.log(messagePacket)   
+        // console.log(messagePacket)   
         let currentObj = this;
         event.preventDefault();
         let self = this;
