@@ -1,9 +1,5 @@
 
 @extends('admin.layouts.admin')
-@inject('general_helper', 'App\Services\GeneralViewHelper')
-<?php
-    $extraSmiles = $general_helper->getextraSmiles();
-?>
 
 @section('css')
     <link rel="stylesheet"
@@ -59,14 +55,10 @@
                                     <div class="input-group">
                                         <span class="">Kатегория</span>
                                         <select class="form-control select2" name="category">
-                                            <option value=''>Select Category</option>
-                                            <option value='pics'>pics</option>
-                                            <option value='koreans'>koreans</option>
-                                            <option value='starcrafters'>starcrafters</option>
-                                            <option value='gif'>gif</option>
-                                            <option value='users'>users</option>
-                                            <option value='trash'>trash</option>
-                                            <option value='anime'>anime</option>
+                                            <option value=''>Select Category</oteanion>
+                                            @foreach ($categories as $category)
+                                                <option value='{{$category}}'>{{$category}}</option>                                             
+                                            @endforeach
                                         </select>                
                                     </div> 
                                     @if ($errors->has('category'))

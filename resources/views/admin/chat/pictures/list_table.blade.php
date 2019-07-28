@@ -12,7 +12,7 @@
 
         <td>
             <div class="btn-group">
-                <a type="button" class="btn btn-default text-orange"  data-toggle="modal" data-target="#modal-default_{{$picture->id}}" title="Править"  href="{{route('admin.chat.pictures.edit', ['role' => $picture->id])}}"><i class="fa fa-edit"></i></a>
+                <a type="button" class="btn btn-default text-orange"  title="Править"  href="{{route('admin.chat.pictures.edit', ['role' => $picture->id])}}"><i class="fa fa-edit"></i></a>
                 <a type="button" class="btn btn-default text-red"  title="Удалить" href="{{route('admin.chat.pictures.remove', ['id' => $picture->id])}}"><i class="fa fa-trash"></i></a>
             </div>
         </td>
