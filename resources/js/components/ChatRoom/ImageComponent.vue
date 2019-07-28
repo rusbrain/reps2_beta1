@@ -1,82 +1,101 @@
 <template>
     <div v-if="status" class="component_image">
-      <div class="">
-        <img v-for="(image, index) in images" :key ="`image-${index}`" 
-          :src="`${image.filepath}`" 
-          :alt="`${image.charactor}`" 
-          :title="`${image.charactor}`" @click="selImage(image.charactor)">
-      </div>
+      <b-card no-body>
+        <b-tabs v-model="tabIndex" card>
+          <b-tab v-for="(imagesbycategory, key ) in images" :key ="`${key}`" :title="`${key}`" :title-link-class="linkClass(key)" >
+            <div class="">
+              <img v-for="(image, index) in imagesbycategory" :key ="`image-${index}`" 
+                :src="`${image.filepath}`" 
+                :alt="`${image.charactor}`" 
+                :title="`${image.charactor}`" @click="selImage(image.charactor)">
+            </div>
+          </b-tab>         
+        </b-tabs>
+      </b-card>      
     </div>
 </template>
 
 <script>
-
-import * as apiService from '../../helper/serviceHelper';
-import * as chatHelper from '../../helper/chatHelper';
+import * as apiService from "../../helper/serviceHelper";
+import * as chatHelper from "../../helper/chatHelper";
 
 export default {
-    props: ['status'],
-    data() {
-        return {
-          images: []
-        }
-    },
-    mounted() {     
-      this.getImages();
-    },
-    methods: {
-      getImages: async function(){
-        try {      
-          let url = '/chat/get_externalimages';  
-          let totalImages = this.get_allImages(await apiService.getImages(url));
-          this.images = totalImages;
-        } catch (err) {
-          return [];
-        }
-      },
-      get_allImages: function(data){
-        var ImagesObject = [];
-        var key;
-        var result;      
+  props: ["status"],
+  data() {
+    return {
+      images: [],
+      tabIndex: 0
+    };
+  },
 
-         /**Get images */
-        for (var i = 0; i < data.length; i++) {
-            key = data[i]['charactor'];
-            result = data[i]['filepath'];
-            ImagesObject.push({'charactor': key, 'filepath': result});
-        }         
-        return ImagesObject;
-      },
-      selImage: function(image) {
-        chatHelper.insertText(image);
-        this.$emit("turnOffStatus");
-      }  
+  mounted() {
+    this.getImages();
+  },
+
+  methods: {
+    linkClass(idx) {
+      if (this.tabIndex === idx) {
+        return ["bg-primary", "text-light"];
+      } else {
+        return ["bg-light", "text-info"];
+      }
+    },
+    getImages: async function() {
+      try {
+        let url = "/chat/get_externalimages";
+        let totalImages = this.get_allImages(await apiService.getImages(url));
+        if (totalImages.length > 0) this.tabIndex = Object.keys(totalImages)[0];
+        this.images = totalImages;
+      } catch (err) {
+        return [];
+      }
+    },
+    get_allImages: function(data) {
+      return data;
+    },
+    selImage: function(image) {
+      chatHelper.insertText(image);
+      this.$emit("turnOffStatus");
     }
-}
+  }
+};
 </script>
 
 <style lang="scss">
-.component_image{
-    position: absolute;
-    bottom: 85px;
-    border: solid 1px gray;
-    padding: 4px;
-    right: 6px;
-    width: 256px;
-    max-height: 500px;
-    overflow-y: auto;
-    background: white;
-    div {
-        img {
-            max-width: 75px;
-            padding: 2px;
-            cursor: pointer;
-            &:hover {
-              background: #e6e6e6;
-            }
+.component_image {
+  position: absolute;
+  bottom: 85px;
+  border: solid 1px gray;
+  padding: 4px;
+  right: 6px;
+  width: 256px;
+  max-height: 500px;
+  overflow-y: auto;
+  background: white;
+  .card {
+    .tabs {
+      .card-header {
+        margin: 0;
+        ul {
+          margin: 2px 0;
+          li a {
+            padding: 3px !important;
+            font-size: 12px;
+          }
         }
+      }
     }
+  }
+  div {
+    img {
+      max-width: 75px;
+      padding: 2px;
+      cursor: pointer;
+      &:hover {
+        background: #e6e6e6;
+      }
+    }
+  }
 }
- 
 </style>
 

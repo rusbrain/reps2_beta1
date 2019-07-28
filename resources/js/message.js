@@ -46,6 +46,12 @@ Vue.use(VueTextareaAutosize)
 Vue.component('chat', require('./components/ChatRoom/index.vue').default);
 Vue.config.productionTip = false;
 
+import BootstrapVue from 'bootstrap-vue'
+Vue.use(BootstrapVue)
+
+// import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+
 var app = new Vue({
     el: '#chatroom',
 });
