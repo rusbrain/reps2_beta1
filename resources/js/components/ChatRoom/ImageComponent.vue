@@ -2,7 +2,7 @@
     <div v-if="status" class="component_image">
       <b-card no-body>
         <b-tabs v-model="tabIndex" card>
-          <b-tab v-for="(imagesbycategory, key ) in images" :key ="`${key}`" :title="`${key}`" :title-link-class="linkClass(key)" >
+          <b-tab v-for="(imagesbycategory, key ) in images" :key ="`${key}`" :title="`${key}`" >
             <div class="">
               <img v-for="(image, index) in imagesbycategory" :key ="`image-${index}`" 
                 :src="`${image.filepath}`" 
@@ -32,14 +32,7 @@ export default {
     this.getImages();
   },
 
-  methods: {
-    linkClass(idx) {
-      if (this.tabIndex === idx) {
-        return ["bg-primary", "text-light"];
-      } else {
-        return ["bg-light", "text-info"];
-      }
-    },
+  methods: {    
     getImages: async function() {
       try {
         let url = "/chat/get_externalimages";
@@ -81,6 +74,10 @@ export default {
           li a {
             padding: 3px !important;
             font-size: 12px;
+            &.active {
+              background: #2f6696;
+              color: #fff;
+            }
           }
         }
       }
