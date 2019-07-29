@@ -61,12 +61,22 @@ class UserActivityLogService
     {
         $logsQuery = UserActivityLogEntry::with('user');
 
-        if ($request->has('type') && null !==$request->get('type')){
+        if ($request->has('type') && null !== $request->get('type')){
             $logsQuery->where('type', '=', $request->get('type'));
         }
 
-        if ($request->has('user') && null !==$request->get('user')){
-            $logsQuery->where('user_id', '=', $request->get('user'));
+        if ($request->has('user_id') && null !== $request->get('user_id')){
+            $logsQuery->where('user_id', '=', $request->get('user_id'));
+        }
+
+        if ($request->has('start')) {
+            $startTime = $request->get('start') . ' 00:00:00';
+            $logsQuery->where('time', '>=', $startTime);
+        }
+
+        if ($request->has('end')) {
+            $endTime = $request->get('end') . ' 23:59:59';
+            $logsQuery->where('time', '<=', $endTime);
         }
 
         if($request->has('sort') && null !==$request->get('sort')){

@@ -345,6 +345,7 @@ Route::group(['middleware' => 'activity'], function () {
                 Route::group(['prefix' => 'activity-log'], function() {
                     Route::get('/', 'UserActivityLogsController@index')->name('admin.user.activity-log');
                     Route::get('/pagination', 'UserActivityLogsController@pagination')->name('admin.user.activity-log.pagination');
+                    Route::get('/users', 'UserActivityLogsController@usersWithActivity')->name('admin.user.activity-log.users-query');
                 });
             });
 

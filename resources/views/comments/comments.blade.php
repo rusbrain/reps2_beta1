@@ -5,7 +5,7 @@ $extraSmiles = $general_helper->getextraSmiles();
 @section('css')
     <!--SCEditor -  WYSIWYG BBCode editor -->
     <link rel="stylesheet" href="{{route('home')}}/js/sceditor/minified/themes/default.min.css"/>
-  
+
 @endsection
 
 <!--Comments-->
@@ -30,7 +30,7 @@ $extraSmiles = $general_helper->getextraSmiles();
         <div class="col-md-12 section-title">
             <div>Комментарии:</div>
         </div>
-        <div class="col-md-12 comment-content-wrapper">                
+        <div class="col-md-12 comment-content-wrapper">
             <div class="comment-content">
                 Комментарии отсутствуют
             </div>
@@ -45,10 +45,10 @@ $extraSmiles = $general_helper->getextraSmiles();
     <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.bbcode.min.js"></script>
     <script src="{{route('home')}}/js/sceditor/languages/ru.js"></script>
 
-    
+
     <script>
         var lastPage = $('#ajax_section_comments').attr('data-pages');
-        $(function () {            
+        $(function () {
             getSections(lastPage);
             $('.pagination-content').on('click', '.page-link', function (e) {
                 e.preventDefault();
@@ -122,7 +122,7 @@ $extraSmiles = $general_helper->getextraSmiles();
             /**add quote*/
             $('body').on('click', '.quote img', function () {
                 addText(textarea, $(this));
-            });          
+            });
         });
 
         /**
