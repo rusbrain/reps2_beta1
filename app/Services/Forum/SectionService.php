@@ -127,11 +127,10 @@ class SectionService
     /**
      * @return static
      */
-    public static function getRecentForums() {
+    public static function getRecentForums() {       
         $time = Carbon::now()->format('Y-m-d');
         $sql = "( select *, GREATEST(upgraded_date, commented_at) as lastest_date from `forum_topics` where `approved` = 1  ORDER BY lastest_date desc limit 10 )";
         $recent_forums = collect(\DB::select($sql));
-
         return $recent_forums;
     }
 }

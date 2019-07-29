@@ -33,7 +33,19 @@
                     <span>{{\Carbon\Carbon::parse($single_news->created_at)->format('H:i d.m.Y')}}</span>
                 </div>
                 <div class="news-content">
-                    {!! $general_helper->closeAllTags($general_helper->oldContentFilter(mb_substr($single_news->preview_content,0,250,'UTF-8').' ...' ?? mb_substr($single_news->content,0,250,'UTF-8').' ...'))!!}
+                    @php                        
+                        $preview_content_text =  str_replace(array("\n","\r","\t"), "", strip_tags ($single_news->preview_content ));
+                        $preview_content = mb_substr($preview_content_text,0,250,'utf-8').' ...';                    
+
+                        $full_content_text = str_replace(array("\n","\r","\t"), "", strip_tags ($single_news->content ));
+                        $full_content = mb_substr($full_content_text,0,250,'utf-8').' ...';                  
+                    @endphp
+                    {!! $general_helper->closeAllTags(
+                        $general_helper->oldContentFilter(
+                        str_replace($preview_content_text, $preview_content, $single_news->preview_content) ??
+                        str_replace($full_content_text, $full_content, $single_news->content).' ...')
+                        )
+                    !!}
                     <a href="{{route('forum.topic.index',['id' => $single_news->id])}}" class="read-more-link">
                         <img src="{{route('home')}}/images/icons/arrow-right.png" alt="">
                     </a>

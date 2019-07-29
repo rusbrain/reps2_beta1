@@ -8,7 +8,7 @@
 
 namespace App\Services\Base;
 
-use App\{ForumTopic, Replay, User, Banner, StreamHeader, Stream, StreamSetting, ChatSmile};
+use App\{ForumTopic, Replay, User, Banner, StreamHeader, Stream, StreamSetting, ChatSmile, ChatPicture};
 use App\Http\Requests\QuickEmailRequest;
 use App\Mail\QuickEmail;
 use Carbon\Carbon;
@@ -105,5 +105,16 @@ class BaseDataService
         }
       
         return $smiles;
+    }
+
+    public static function getChatPictures(){
+        $images = array();
+        $chatPictures = ChatPicture::with('file')->orderBy('updated_at', 'Desc')->get();
+        foreach ($chatPictures as $picture ) {
+            $key = str_replace(':', '', $picture->charactor);
+            $images[$key] = $picture->file->link;
+        }
+      
+        return $images;
     }
  }

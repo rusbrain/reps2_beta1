@@ -53,6 +53,7 @@ class GeneralViewHelper
     protected $footer_widgets;
     protected $footer_urls;
     protected $getextraSmiles;
+    protected $getChatPictures;
 
     public function __construct()
     {
@@ -284,6 +285,14 @@ class GeneralViewHelper
         return self::$instance->getextraSmiles;
     }
 
+    /**
+     * 
+     */
+    public function getAllChatImages()
+    {
+        self::$instance->getChatPictures = self::$instance->getChatPictures ?? BaseDataService::getChatPictures();
+        return self::$instance->getChatPictures;
+    }
     /**
      * Check Streaming live status
      */

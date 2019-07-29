@@ -11,7 +11,8 @@ use App\ChatPicture;
 
 class ChatPicturesController extends Controller
 {
-     /**
+    private $categories = array('pics', 'koreans', 'starcrafters', 'users', 'gif', 'trash', 'anime');
+    /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
@@ -40,44 +41,37 @@ class ChatPicturesController extends Controller
      */
     public function create()
     {
-
-        $charactor_arr = array();  
-        $images = ChatPicture::all();
-        foreach ($images as $image) {
-            $charactor_arr[] = $image->charactor;
-        }
-        $gen   = $this->get_charactor($charactor_arr);
-        return view('admin.chat.pictures.create')->with(['charactor'=>$gen]);       
+        return view('admin.chat.pictures.create')->with(['categories' => $this->categories]);       
     }
 
-    /**
-     * :image:
-     */
-    private function get_charactor($charactor_arr){
-        $check = true;
-        $gen = "";
-        while($check){
-            $gen   = ':cpic'. rand(1, 299) .':';
-            if (!in_array($gen, $charactor_arr)) {
-                $check = false;
-            }
-        }
-        return $gen;
-    }
-    private function check_charactor($gen, $charactor_arr) 
-    {        
-        if (in_array($gen, $charactor_arr)) {
-            return true;
-        }
-        return false;
-    }
+    // /**
+    //  * :image:
+    //  */
+    // private function get_charactor($charactor_arr){
+    //     $check = true;
+    //     $gen = "";
+    //     while($check){
+    //         $gen   = ':cpic'. rand(1, 299) .':';
+    //         if (!in_array($gen, $charactor_arr)) {
+    //             $check = false;
+    //         }
+    //     }
+    //     return $gen;
+    // }
+    // private function check_charactor($gen, $charactor_arr) 
+    // {        
+    //     if (in_array($gen, $charactor_arr)) {
+    //         return true;
+    //     }
+    //     return false;
+    // }
 
     /**
      * @param PictureStoreRequest $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function store(PictureStoreRequest $request)
-    {      
+    {
         $save = ChatPicturesService::store($request);
         return redirect()->route('admin.chat.pictures');
     }
@@ -99,7 +93,7 @@ class ChatPicturesController extends Controller
      */
     public function edit($picture_id)
     {
-        return view('admin.chat.pictures.edit')->with(['picture'=> $this->getPictureObject($picture_id)]);
+        return view('admin.chat.pictures.edit')->with(['picture'=> $this->getPictureObject($picture_id), 'categories' => $this->categories]);
     }
 
     /**
@@ -113,7 +107,7 @@ class ChatPicturesController extends Controller
 
         if($picture){
             ChatPicturesService::update($request, $picture);
-            return back();
+            return redirect()->route('admin.chat.pictures');
         }
         return abort(404);
     }

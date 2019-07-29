@@ -27,9 +27,12 @@ class ChatController extends Controller
         'f2' => '16px',
         'f3' => '18px',
     );
+
+    private $allChatImages = array();
    
     public function __construct(){
         $this->general_helper = new GeneralViewHelper;
+        $this->allChatImages = $this->general_helper->getAllChatImages();
     }
 
     /**
@@ -86,8 +89,11 @@ class ChatController extends Controller
         $text = preg_replace_callback("#\[(f[0-9]{1,})\](.+?)\[/\\1\]#is", function ($matches) {          
             return "<span style='font-size: ".$this->font_sizes[$matches[1]]."'>$matches[2]</span>";
         }, $text);
-
-        $text = preg_replace("/:cpic([0-9]{1,}):/", '<img src="/storage/chat/pictures/cpic$1.gif" border="0">', $text);
+      
+        
+        $text = preg_replace_callback("#(:{1,})(.+?)\\1#is", function ($matches) {          
+            return '<img src="'.$this->allChatImages[$matches[2]].'" border="0">';
+        }, $text);
 
         $text = preg_replace("/\[img\](\r\n|\r|\n)*((http|https):\/\/([^;<>\*\"]+)|[a-z0-9\/\\\._\- ]+)\[\/img\]/siU",
             "<img src=\"\\2\" class=\"imgl\" border=\"0\" alt=\"\"> ", $text);
@@ -163,11 +169,14 @@ class ChatController extends Controller
     public function get_externalimages() {
         $images = array();
         $extraImages = ChatPicture::with('file')->orderBy('updated_at', 'Desc')->get();
-        foreach ($extraImages as $image ) {
-            $images[] = array(
+        foreach ($extraImages as $image ) { 
+            if(!isset($images[$image->category])) {
+                $images[$image->category] = array();   
+            }       
+            array_push($images[$image->category], array(
                 'charactor' => $image->charactor,
                 'filepath' => $image->file->link
-            );
+            ));  
         }
       
         return response()->json([
