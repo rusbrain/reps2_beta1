@@ -1228,7 +1228,9 @@ form label {
 .stream-section .stream-area.chat_close .stream-message-wrapper .chat_container .chat_header .popup{
   display:none
 }
-
+.stream-section .stream-area.theatre-on .stream-message-wrapper .chat_container .chat_text_container {
+  max-height: calc( 100vh - 130px);
+}
 /* Stream wrapper */
 .stream-section .stream-area.chat_open .stream-wrapper {
   width: 75%;
