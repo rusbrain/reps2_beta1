@@ -1339,17 +1339,18 @@ form label {
 
 .stream-section .stream-wrapper .stream_view .ifram_container .twitch_chat{
   position: absolute;
-  height: calc(100% - 60px);
+  height: calc(100% - 30px);
 }
 
 .stream-section .stream-wrapper .stream_view .ifram_container .twitch_chat .twitch_chat_header {
-    background: rgba(47, 102, 150, 0.8);
+    background: #212529;
     height: 30px;
     text-align: center;
     line-height: 30px;
     font-size: 14px;
     color: white;
     min-width: 135px;
+    position: absolute;
 }
 
 .stream-section .stream-wrapper .stream_view .ifram_container .twitch_chat .twitch_chat_header .button {

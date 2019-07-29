@@ -42,7 +42,7 @@
                 <iframe frameborder="0"
                     scrolling="no"
                     id="{{$channel}}"
-                    src="https://www.twitch.tv/embed/{{$channel}}/chat"
+                    src="https://www.twitch.tv/embed/{{$channel}}/chat?darkpopout"
                     height="500"
                     width="300">
                 </iframe>
