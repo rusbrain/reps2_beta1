@@ -42,7 +42,7 @@ $dbbackup = ($menu_name == 'dbbackup') ? true :false;
                 <li @if($menu_name == 'user/role') class="active" @endif><a href="{{route('admin.users.role')}}"><i class="fa fa-users"></i> <span>Роли пользователей</span></a></li>
             @endif
             <li @if($menu_name == 'user/gallery') class="active" @endif><a href="{{route('admin.users.gallery')}}"><i class="fa fa-image"></i> <span>Галерея</span></a></li>
-            <li @if($menu_name == 'user/activity-log') class="active" @endif><a href="{{route('admin.user.activity-log')}}"><i class="fa fa-image"></i> <span>Лог активности</span></a></li>
+            <li @if($menu_name == 'user/activity-log') class="active" @endif><a href="{{route('admin.user.activity-log')}}"><i class="fa fa-history"></i> <span>Лог активности</span></a></li>
 
         </ul>
     </li>
