@@ -10,6 +10,21 @@
     <li class="active">Лог активности</li>
 @endsection
 
+@section('css')
+    <link rel="stylesheet" href="{{route('home')}}/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css" />
+    <link rel="stylesheet" href="{{route('home')}}/bower_components/select2/dist/css/select2.css" />
+
+    <style>
+        .select2-container .select2-selection--single {
+            height: 34px;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 32px;
+        }
+    </style>
+@endsection
+
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -38,8 +53,28 @@
                                         @endforeach
                                     </select>
                                 </div>
+
+                                <div class="form-group col-md-3">
+                                    <label>Пользователь:</label>
+                                    <select id="user-filter-dropdown" class="form-control" style="width: 100%;" name="user_id" value="{{$request_data['user_id'] ?? null}}">
+                                        @if ($selectedUser)
+                                            <option value="{{$selectedUser->id}}" selected="selected">{{$selectedUser->name}}</option>
+                                        @endif
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-md-3">
+                                    <label>Дни:</label>
+                                    <div class="input-daterange input-group" id="datepicker">
+                                        <input type="text" class="input form-control" name="start" autocomplete="off" value="{{$request_data['start']}}"/>
+                                        <span class="input-group-addon">to</span>
+                                        <input type="text" class="input form-control" name="end" autocomplete="off" value="{{$request_data['end']}}"/>
+                                    </div>
+                                </div>
+
                                 <div class="form-group col-md-12">
                                     <div class="text-right">
+                                        <a href="{{route('admin.user.activity-log')}}" class="btn btn-default">Сброс</a>
                                         <button type="submit" class="btn btn-primary">Поиск</button>
                                     </div>
                                 </div>
@@ -80,6 +115,9 @@
 @endsection
 
 @section('js')
+    <script src="{{route('home')}}/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
+    <script src="{{route('home')}}/bower_components/select2/dist/js/select2.js"></script>
+
     <script>
         $(function () {
             getLogs(1);
@@ -88,6 +126,17 @@
                 let page = $(this).data('to-page');
                 getLogs(page);
             })
+
+            $('.input-daterange').datepicker({
+                format: "yyyy-mm-dd"
+            });
+
+            $('#user-filter-dropdown').select2({
+                ajax: {
+                    url: "{{route('admin.user.activity-log.users-query')}}",
+                },
+                // minimumInputLength: 3
+            });
         });
 
         function getLogs(page) {
