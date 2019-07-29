@@ -293,11 +293,15 @@ class GeneralViewHelper
         self::$instance->getChatPictures = self::$instance->getChatPictures ?? BaseDataService::getChatPictures();
         return self::$instance->getChatPictures;
     }
+
+    public function parse_stream_url($url) {
+        return parse_url(htmlspecialchars_decode($url));
+    }
     /**
      * Check Streaming live status
      */
     public function liveStreamCheck($stream_url) {
-        $parts = parse_url(htmlspecialchars_decode($stream_url));
+        $parts = $this->parse_stream_url($stream_url);
         $host = $parts['host'];
        
         if($host == 'play.afreecatv.com') {

@@ -1,4 +1,17 @@
 
+@inject('general_helper', 'App\Services\GeneralViewHelper')
+@php
+    $stream_type = '';
+    $channel = '';
+    $url = $general_helper->UrlFilter($stream->stream_url);
+    $parts = $general_helper->parse_stream_url( $url);
+    $host = $parts['host'];
+    if($host == 'player.twitch.tv') {
+        $stream_type = 'twitch';        
+        parse_str($parts['query'], $query);               
+        $channel = $query['channel'];
+    }
+@endphp
 <div class="stream_view">
    
     @if(!empty($stream))
@@ -21,6 +34,20 @@
             </div>                  
         </div>
         <div class="ifram_container">
+            @if($stream_type == 'twitch')
+            <div class="twitch_chat active">
+                <div class="twitch_chat_header">Twitch Chat
+                    <a href="#" class="button" onclick="twitch_chatroom_toggle(event, $(this))"></a>
+                </div>
+                <iframe frameborder="0"
+                    scrolling="no"
+                    id="{{$channel}}"
+                    src="https://www.twitch.tv/embed/{{$channel}}/chat"
+                    height="500"
+                    width="300">
+                </iframe>
+            </div>
+            @endif
             {!! $stream->stream_url !!}
         </div>
     @else 

@@ -200,6 +200,18 @@
                 streamArea.addClass('chat_open')
             }
         }
+
+
+        function twitch_chatroom_toggle(event, twtChatBtn) {
+            event.preventDefault();          
+            // stream menu action
+            var twitchChatArea = $(".twitch_chat");
+            if(twitchChatArea.hasClass('active') == true) {
+                twitchChatArea.removeClass('active')
+            }else {
+                twitchChatArea.addClass('active')
+            }
+        }
        
     </script>
 @endsection

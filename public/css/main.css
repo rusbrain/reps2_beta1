@@ -1337,6 +1337,51 @@ form label {
   height: calc(100% - 30px);
 }
 
+.stream-section .stream-wrapper .stream_view .ifram_container .twitch_chat{
+  position: absolute;
+  height: calc(100% - 60px);
+}
+
+.stream-section .stream-wrapper .stream_view .ifram_container .twitch_chat .twitch_chat_header {
+    background: rgba(47, 102, 150, 0.8);
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    font-size: 14px;
+    color: white;
+    min-width: 135px;
+}
+
+.stream-section .stream-wrapper .stream_view .ifram_container .twitch_chat .twitch_chat_header .button {
+  height: 30px;
+  right: 0;
+  padding: 5px 10px;
+  z-index: 6;
+  cursor: pointer;
+  margin-left: 10px;  
+  background: url(../images/icons/expand.png) no-repeat center center;
+  background-size: 22px;
+  filter: invert(100%);
+}
+.stream-section .stream-wrapper .stream_view .ifram_container .twitch_chat.active .twitch_chat_header .button {
+  background: url(../images/icons/collapse.png) no-repeat center center;
+  background-size: 22px;
+  filter: invert(100%);
+}
+
+
+.stream-section .stream-wrapper .stream_view .ifram_container .twitch_chat iframe {
+  height: 100% !important;
+  width: 100% !important;
+  display:none;
+}
+
+.stream-section .stream-wrapper .stream_view .ifram_container .twitch_chat.active iframe {
+  height: 100% !important;
+  width: 100% !important;
+  display:block;
+}
+
 .stream-section .stream-wrapper .stream_view .ifram_container p{
   height: 100%;
 }
