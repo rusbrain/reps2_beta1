@@ -87,6 +87,11 @@
       .msg_text {
           overflow-wrap: break-word;
           color: #d8d8d8;
+          .highlight{
+            color: #efedd8;
+            font-size: 14px;
+            font-weight: 600;
+          }
           p{
             .username{
               color: #deb045;

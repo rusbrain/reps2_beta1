@@ -18,6 +18,7 @@ class PublicChat extends Model
       'user_name',
       'file_path',
       'message',
+      'to',
       'imo'
     ];
 

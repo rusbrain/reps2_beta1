@@ -20,7 +20,7 @@
                       <span class="msg_timestamp">{{convertTo(message.created_at)}}</span>
                   </p>
                   <p class="msg_text">
-                    <span v-html="message.message"></span>
+                    <span :class="setClass(message.to)" v-html="message.message"></span>
                   </p>
                 </div>
             </div>
@@ -139,6 +139,7 @@ export default {
       }
     },
     
+    
   },
   mounted() {    
     var socket = io(process.env.MIX_SOCKET_SERVER, { query: "id= " + this.auth.id });
@@ -158,6 +159,12 @@ export default {
   },  
 
   methods: {
+    setClass: function(username) {
+      console.log(username, this.user.name)
+      if(username == this.user.name) {
+        return 'highlight';
+      }
+    },
     getMessagesResponse: function(data) {
       if (data != null) {
         this.messages = data.result;

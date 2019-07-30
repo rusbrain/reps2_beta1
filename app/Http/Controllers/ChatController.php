@@ -29,6 +29,8 @@ class ChatController extends Controller
     );
 
     private $allChatImages = array();
+
+    private $selected_user = '';
    
     public function __construct(){
         $this->general_helper = new GeneralViewHelper;
@@ -39,7 +41,7 @@ class ChatController extends Controller
      * Get 100 messages
      */
     public function get_messages() {
-        $messages = PublicChat::select('user_id', 'user_name', 'message', 'file_path', 'imo', 'created_at')->with('user')
+        $messages = PublicChat::select('user_id', 'user_name', 'message', 'to', 'file_path', 'imo', 'created_at')->with('user')
                 ->orderBy('created_at', 'desc')
                 ->limit(100)
                 ->get();
@@ -60,6 +62,7 @@ class ChatController extends Controller
         if (Auth::id() == $request->user_id) {
             $message_data['user_name'] = Auth::user()->name;
             $message_data['message'] = $this->rewrapperText($message_data['message']);
+            $message_data['to'] = $this->selected_user;
             $insert = PublicChat::create($message_data);           
             if($insert) {               
                 return response()->json([
@@ -107,9 +110,16 @@ class ChatController extends Controller
             $url = isset($matches[2]) ? $matches[2] : $matches[1];         
             return '<center><a title="'.$url.'" target="_blank" href="'.$url.'" class="id_link">
                     <img class="smile_inchat" src="'.$url.'"></a><center>';
-        }, $text);    
+        }, $text); 
         
-        $text =  preg_replace('/@([[:alnum:]\-_) ]+),/', '<span class="username">@$1,</span>', $text);
+        $text = preg_replace_callback('/@([[:alnum:]\-_) ]+),/', function ($matches) {
+            $this->selected_user = $matches[1];
+            return '<span class="username">@'.$this->selected_user.',</span>';
+        }, $text); 
+        //dd($this->selected_user, Auth::user()->name);
+        // if($this->selected_user == Auth::user()->name) {
+        //     return '<span class="'.$this->selected_user.'">'. $text .'</span';
+        // }
         
         return $text;
     }
@@ -135,6 +145,7 @@ class ChatController extends Controller
             'user_id'=>$msg->user_id, 
             'user_name'=>$msg->user_name, 
             'message'=>$msg->message, 
+            'to' => $msg->to,
             'file_path'=>$msg->file_path, 
             'imo'=>$msg->imo, 
             'created_at'=>$msg->created_at,
