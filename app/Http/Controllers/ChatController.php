@@ -107,7 +107,9 @@ class ChatController extends Controller
             $url = isset($matches[2]) ? $matches[2] : $matches[1];         
             return '<center><a title="'.$url.'" target="_blank" href="'.$url.'" class="id_link">
                     <img class="smile_inchat" src="'.$url.'"></a><center>';
-        }, $text);
+        }, $text);    
+        
+        $text =  preg_replace('/@([\w\s]+),?/', '<span class="username">@$1,</span>', $text);
         
         return $text;
     }

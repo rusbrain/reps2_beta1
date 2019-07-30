@@ -154,13 +154,7 @@ export default {
 
     socket.on("addMessageResponse", data => {
       this.addChatMessage(data);
-    });
-    socket.on("user-join", data => {
-      this.log(data + " joined at this room");
-    });
-    socket.on("user-unjoin", data => {
-      this.log(data + " left this room");
-    });
+    });   
   },  
 
   methods: {
@@ -174,7 +168,7 @@ export default {
       this.message = `${this.message}\r\n`;
     },
     selectUser(user) {
-      chatHelper.insertText('@' + user);
+      chatHelper.insertText('@' + user + ',');
     },   
     sendMessage(event) {
       
