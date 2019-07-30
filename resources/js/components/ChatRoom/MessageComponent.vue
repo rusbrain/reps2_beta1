@@ -14,7 +14,7 @@
                   <p class="user_info">                    
                       <span :class="'flag-icon flag-icon-' + message.country_code"></span>
                       <img class="margin-left-5" :src="'/images/emoticons/smiles/'+message.race" alt="">                  
-                      <span class="username">{{message.user_name}}</span>
+                      <span class="username" @click="selectUser(`${message.user_name}`)">{{message.user_name}}</span>
                       <span class="user_id"><a :href="'/user/' + message.user_id" >#{{message.user_id}}</a></span>
                       <span class="ignore_user" v-if="userId!=message.user_id" @click="ignoreUser(message)">Ignore</span>
                       <span class="msg_timestamp">{{convertTo(message.created_at)}}</span>
@@ -35,7 +35,7 @@
               <ImageComponent :status="chat_action.image" @turnOffStatus="turnOffStatus"></ImageComponent>
               <FSizeComponent :status="chat_action.size" @turnOffStatus="turnOffStatus"></FSizeComponent>
               <FColorComponent :status="chat_action.color" @turnOffStatus="turnOffStatus"></FColorComponent>
-              <UserComponent :status="chat_action.user" :filter_user="filter_user" @turnOffStatus="turnOffStatus" ></UserComponent>
+              <!-- <UserComponent :status="chat_action.user" :filter_user="filter_user" @turnOffStatus="turnOffStatus" ></UserComponent> -->
 
               <div class="extra">
                 <p class="bold" @click="bold()"></p>
@@ -86,11 +86,11 @@ import FColorComponent from './FontColorComponent.vue';
 import FSizeComponent from './FontSizeComponent.vue';
 import ImageComponent from './ImageComponent.vue';
 import SmileComponent from './SmileComponent.vue';
-import UserComponent from './UserComponent.vue';
+// import UserComponent from './UserComponent.vue';
 
 export default {
   components: {
-    vueCustomScrollbar,FColorComponent, FSizeComponent, ImageComponent, SmileComponent, UserComponent
+    vueCustomScrollbar,FColorComponent, FSizeComponent, ImageComponent, SmileComponent
   },
   props: {
     auth: [Object, Number],
@@ -118,8 +118,7 @@ export default {
         'image': false,
         'color': false,
         'size': false,
-      } ,
-      filter_user : ''
+      } 
     };
   },
   computed: {
@@ -174,9 +173,9 @@ export default {
     newline() {
       this.message = `${this.message}\r\n`;
     },
-    inputHandle() {
-     this.chat_action.user = true;
-    },
+    selectUser(user) {
+      chatHelper.insertText('@' + user);
+    },   
     sendMessage(event) {
       
       if (this.message.length > 0) {

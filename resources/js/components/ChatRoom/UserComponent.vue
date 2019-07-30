@@ -23,24 +23,7 @@ export default {
     mounted() {     
       this.getusers();
     },
-    watch: {
-        filter_user: function() {
-            let self = this 
-            var filterusers = this.users.filter(function(user) {
-                return user.includes(self.filter_user);
-            });
-        }
-    },
-    // computed: {
-    //     filtered_users: function() {
-    //         let self = this           
-    //         var users = this.users.filter(function(user) {
-    //             return user.includes(self.filter_user);
-    //         });
-    //         console.log("total",users)
-    //         return users;
-    //     }
-    // },
+  
     methods: {
       getusers: async function(){
         try {      

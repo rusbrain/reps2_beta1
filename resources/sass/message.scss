@@ -57,6 +57,11 @@
         .username {
           color: #f1df87;
           font-weight: 600;
+          &:hover {
+            color: #d29d00;
+            text-decoration: underline;
+            cursor: pointer;
+          }
         }
         .user_id {
           a{
