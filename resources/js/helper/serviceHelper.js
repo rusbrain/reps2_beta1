@@ -29,3 +29,18 @@ export const getImages = (url) => {
         });
     });
 };
+
+export const getChatUsers = (url) => {
+    return new Promise ((resolve, reject) => {
+        axios.get(url)
+        .then(function (response) {
+            if(response.data.status == 'ok') {
+                return resolve(response.data.users)
+            }
+            return reject([])
+        })
+        .catch(function (error) {
+            reject(false)
+        })
+    });
+}

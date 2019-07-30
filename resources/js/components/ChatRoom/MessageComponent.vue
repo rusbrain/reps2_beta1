@@ -27,7 +27,7 @@
              <div v-if="!isMessages">
                  Empty messages
              </div>
-           
+          
         </vue-custom-scrollbar>
         <div class="chat_footer" v-if="userLoggedin">           
             <div class="send" style="position: relative">
@@ -35,6 +35,7 @@
               <ImageComponent :status="chat_action.image" @turnOffStatus="turnOffStatus"></ImageComponent>
               <FSizeComponent :status="chat_action.size" @turnOffStatus="turnOffStatus"></FSizeComponent>
               <FColorComponent :status="chat_action.color" @turnOffStatus="turnOffStatus"></FColorComponent>
+              <UserComponent :status="chat_action.user" :filter_user="filter_user" @turnOffStatus="turnOffStatus" ></UserComponent>
 
               <div class="extra">
                 <p class="bold" @click="bold()"></p>
@@ -85,10 +86,11 @@ import FColorComponent from './FontColorComponent.vue';
 import FSizeComponent from './FontSizeComponent.vue';
 import ImageComponent from './ImageComponent.vue';
 import SmileComponent from './SmileComponent.vue';
+import UserComponent from './UserComponent.vue';
 
 export default {
   components: {
-    vueCustomScrollbar,FColorComponent, FSizeComponent, ImageComponent, SmileComponent
+    vueCustomScrollbar,FColorComponent, FSizeComponent, ImageComponent, SmileComponent, UserComponent
   },
   props: {
     auth: [Object, Number],
@@ -116,8 +118,8 @@ export default {
         'image': false,
         'color': false,
         'size': false,
-        'user': false,
-      }  
+      } ,
+      filter_user : ''
     };
   },
   computed: {
@@ -142,6 +144,7 @@ export default {
   mounted() {    
     var socket = io(process.env.MIX_SOCKET_SERVER, { query: "id= " + this.auth.id });
     this.socket = socket;
+    var self = this;
 
     socket.on("connect", () => {
       socket.emit("getMessages");
@@ -159,7 +162,8 @@ export default {
     socket.on("user-unjoin", data => {
       this.log(data + " left this room");
     });
-  },
+  },  
+
   methods: {
     getMessagesResponse: function(data) {
       if (data != null) {
@@ -170,11 +174,13 @@ export default {
     newline() {
       this.message = `${this.message}\r\n`;
     },
+    inputHandle() {
+     this.chat_action.user = true;
+    },
     sendMessage(event) {
       
       if (this.message.length > 0) {
         let messagePacket = this.createMsgObj(utilsHelper.wrapperTxt(this.message));     
-        // console.log(messagePacket)   
         let currentObj = this;
         event.preventDefault();
         let self = this;

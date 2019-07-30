@@ -186,4 +186,20 @@ class ChatController extends Controller
         
     }
 
+    /**
+     * Ge Chat users
+     */
+    public function get_chatusers() {
+        $users = array();
+        $chatusers = User::orderBy('name', 'ASC')->get();
+        foreach ($chatusers as $user) {
+            $users[] = $user->name;
+        }
+
+        return response()->json([
+            'status' => "ok",
+            'users' =>  $users
+        ], 200); 
+    }
+
 }

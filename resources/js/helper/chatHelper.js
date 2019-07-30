@@ -10,6 +10,16 @@ export const getSelection = () => {
     var sel = textareaObj().value.substring(start, finish);
     return sel;
 };
+export const getFilterUser = () => {
+  var string_array = textareaObj().value.split(' ');
+  var focus_word = '';
+  string_array.forEach(word => {
+    if(word.substring(0, 1)) {
+      focus_word = word.substring(1)
+    }
+  });
+  return focus_word;
+}
 export const bold = () => {
   
     let sel = getSelection();
