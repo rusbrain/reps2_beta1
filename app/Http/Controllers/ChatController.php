@@ -109,7 +109,6 @@ class ChatController extends Controller
                     <img class="smile_inchat" src="'.$url.'"></a><center>';
         }, $text);
         
-        
         return $text;
     }
 

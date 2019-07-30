@@ -1,6 +1,6 @@
 
 import moment from 'moment';
-
+import * as chatHelper from '../helper/chatHelper';
 export const urlify =(text) => {
       
     text.replace(/(\\r)*\\n/g, '<br>')
@@ -14,7 +14,8 @@ export const wrapperTxt = (text) => {
   let wrap_text = '';
   lines.forEach(function(item, index){
     if(item != ''){
-        wrap_text += '<p>' +item.replace('\n','')+ '</p>'
+        let lineTxt = item.replace('\n','');
+        wrap_text += '<p>' + lineTxt + '</p>'
     }
   });
   return wrap_text;

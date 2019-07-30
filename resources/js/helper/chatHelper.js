@@ -10,8 +10,8 @@ export const getSelection = () => {
     var sel = textareaObj().value.substring(start, finish);
     return sel;
 };
-export const getFilterUser = () => {
-  var string_array = textareaObj().value.split(' ');
+export const getFilterUser = (text) => {
+  var string_array = text.split(' ');
   var focus_word = '';
   string_array.forEach(word => {
     if(word.substring(0, 1)) {
