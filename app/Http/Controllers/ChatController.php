@@ -109,7 +109,7 @@ class ChatController extends Controller
                     <img class="smile_inchat" src="'.$url.'"></a><center>';
         }, $text);    
         
-        $text =  preg_replace('/@([\w\s]+),?/', '<span class="username">@$1,</span>', $text);
+        $text =  preg_replace('/@([[:alnum:]\-_) ]+),/', '<span class="username">@$1,</span>', $text);
         
         return $text;
     }
