@@ -44,7 +44,7 @@
                 @endif
                 <a href="{{route('user_profile',['id' =>Auth::id()])}}" class="logged-user-nickname">{{Auth::user()->name}}</a>
             </div>
-        @if(Auth::user()->user_role_id == 1 || Auth::user()->user_role_id == 2)
+        @if(Auth::user()->user_role_id != 0 )
             <!--IF user is admin-->
                 <a href="{{route('admin.home')}}" class="btn-blue admin-button">
                     <img src="{{route('home')}}/images/icons/admin_icon.png" class="margin-right-5" alt="">

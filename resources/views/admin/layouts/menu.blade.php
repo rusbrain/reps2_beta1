@@ -22,30 +22,50 @@ $dbbackup = ($menu_name == 'dbbackup') ? true :false;
         </a>
         <ul class="treeview-menu  {{ $general ? 'menu-open' : ''}}">
             <li @if($menu_name == 'admin_panel') class="active" @endif><a href="{{route('admin.home')}}"><i class="fa fa-home"></i> <span>Главная панель</span></a></li>
-            <li @if($menu_name == 'country') class="active" @endif><a href="{{route('admin.country')}}"><i class="fa fa-map-signs"></i> <span>Страны</span></a></li>
-            <li @if($menu_name == 'question') class="active" @endif><a href="{{route('admin.question')}}"><i class="fa fa-question-circle"></i> <span>Опросы</span></a></li>
-            <li @if($menu_name == 'file') class="active" @endif><a href="{{route('admin.file')}}"><i class="fa fa-files-o"></i> <span>Файлы</span></a></li>
-        </ul>
-    </li>
-    {{-- Users --}}
-    <li class="treeview {{ $user ? 'active' : ''}}">
-        <a href="#">
-            <span>ПОЛЬЗОВАТЕЛИ</span>
-            <span class="pull-right-container">
-            <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        </a>
-        <ul class="treeview-menu  {{ $user ? 'menu-open' : ''}}">
-            <!-- Optionally, you can add icons to the links -->
-            <li @if($menu_name == 'user') class="active" @endif><a href="{{route('admin.users')}}"><i class="fa fa-users"></i> <span>Список пользователей</span></a></li>
-            @if($admin_helper->superadmin())
-                <li @if($menu_name == 'user/role') class="active" @endif><a href="{{route('admin.users.role')}}"><i class="fa fa-users"></i> <span>Роли пользователей</span></a></li>
+            @if($admin_helper->admin())
+                <li @if($menu_name == 'country') class="active" @endif><a href="{{route('admin.country')}}"><i class="fa fa-map-signs"></i> <span>Страны</span></a></li>
+                <li @if($menu_name == 'question') class="active" @endif><a href="{{route('admin.question')}}"><i class="fa fa-question-circle"></i> <span>Опросы</span></a></li>
+                <li @if($menu_name == 'file') class="active" @endif><a href="{{route('admin.file')}}"><i class="fa fa-files-o"></i> <span>Файлы</span></a></li>
             @endif
-            <li @if($menu_name == 'user/gallery') class="active" @endif><a href="{{route('admin.users.gallery')}}"><i class="fa fa-image"></i> <span>Галерея</span></a></li>
-            <li @if($menu_name == 'user/activity-log') class="active" @endif><a href="{{route('admin.user.activity-log')}}"><i class="fa fa-history"></i> <span>Лог активности</span></a></li>
-
         </ul>
     </li>
+    @if($admin_helper->admin())
+        {{-- Users --}}
+        <li class="treeview {{ $user ? 'active' : ''}}">
+            <a href="#">
+                <span>ПОЛЬЗОВАТЕЛИ</span>
+                <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu  {{ $user ? 'menu-open' : ''}}">
+                <!-- Optionally, you can add icons to the links -->
+                <li @if($menu_name == 'user') class="active" @endif><a href="{{route('admin.users')}}"><i class="fa fa-users"></i> <span>Список пользователей</span></a></li>
+                @if($admin_helper->superadmin())
+                    <li @if($menu_name == 'user/role') class="active" @endif><a href="{{route('admin.users.role')}}"><i class="fa fa-users"></i> <span>Роли пользователей</span></a></li>
+                @endif
+                <li @if($menu_name == 'user/gallery') class="active" @endif><a href="{{route('admin.users.gallery')}}"><i class="fa fa-image"></i> <span>Галерея</span></a></li>
+                <li @if($menu_name == 'user/activity-log') class="active" @endif><a href="{{route('admin.user.activity-log')}}"><i class="fa fa-history"></i> <span>Лог активности</span></a></li>
+
+            </ul>
+        </li>
+
+        {{-- Stream --}}
+        <li class="treeview {{ $stream ? 'active' : ''}}">
+            <a href="#">
+                <span>Stream</span>
+                <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu  {{ $stream ? 'menu-open' : ''}}">
+                <li @if($menu_name == 'stream/settings') class="active" @endif><a href="{{route('admin.stream.setting')}}"><i class="fa fa-gear"></i> <span>Hастройки</span></a></li>
+                <li @if($menu_name == 'stream') class="active" @endif><a href="{{route('admin.stream')}}"><i class="fa fa-film"></i> <span>Streams</span></a></li>
+                <li @if($menu_name == 'stream/header') class="active" @endif><a href="{{route('admin.stream.header')}}"><i class="fa fa-header"></i> <span>Заголовок</span></a></li>
+            </ul>
+        </li>
+    @endif
+
     {{-- Forum --}}
     <li class="treeview {{ $forum ? 'active' : ''}}">
         <a href="#">
@@ -58,23 +78,6 @@ $dbbackup = ($menu_name == 'dbbackup') ? true :false;
            <!-- Optionally, you can add icons to the links -->
             <li @if($menu_name == 'forum') class="active" @endif><a href="{{route('admin.forum_sections')}}"><i class="fa fa-list"></i> <span>Разделы форума</span></a></li>
             <li @if($menu_name == 'forum/topic') class="active" @endif><a href="{{route('admin.forum_topic')}}"><i class="fa fa-list"></i> <span>Темы форума</span></a></li>
-        </ul>
-    </li>
-
-    {{-- Stream --}}
-    <li class="treeview {{ $stream ? 'active' : ''}}">
-        <a href="#">
-            <span>Stream</span>
-            <span class="pull-right-container">
-            <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        </a>
-        <ul class="treeview-menu  {{ $stream ? 'menu-open' : ''}}">
-            @if($admin_helper->admin())
-                <li @if($menu_name == 'stream/settings') class="active" @endif><a href="{{route('admin.stream.setting')}}"><i class="fa fa-gear"></i> <span>Hастройки</span></a></li>
-            @endif
-            <li @if($menu_name == 'stream') class="active" @endif><a href="{{route('admin.stream')}}"><i class="fa fa-film"></i> <span>Streams</span></a></li>
-            <li @if($menu_name == 'stream/header') class="active" @endif><a href="{{route('admin.stream.header')}}"><i class="fa fa-header"></i> <span>Заголовок</span></a></li>
         </ul>
     </li>
 
@@ -94,63 +97,63 @@ $dbbackup = ($menu_name == 'dbbackup') ? true :false;
         </ul>
     </li>
 
-    {{-- Chat --}}
-
-    <li class="treeview {{ $chat ? 'active' : ''}}">
-        <a href="#">
-            <span>Болтаем</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        </a>
-        <ul class="treeview-menu {{ $chat ? 'menu-open' : ''}}">
-            <li @if($menu_name == 'chat') class="active" @endif><a href="{{route('admin.chat')}}"><i class="fa fa-commenting"></i> <span>Cообщения чата</span></a></li>
-            <li @if($menu_name == 'chat/smiles') class="active" @endif><a href="{{route('admin.chat.smiles')}}"><i class="fa fa-smile-o"></i> <span>Улыбки</span></a></li>
-            <li @if($menu_name == 'chat/picture') class="active" @endif><a href="{{route('admin.chat.pictures')}}"><i class="fa fa-file-image-o"></i> <span>Изображение</span></a></li>
-        </ul>
-    </li>
-    {{-- Basement / Footer --}}
-    <li class="treeview {{ $footer ? 'active' : ''}}">
-        <a href="#">
-            <span>Подвал/Footer</span>
-            <span class="pull-right-container">
-            <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        </a>
-        <ul class="treeview-menu  {{ $footer ? 'menu-open' : ''}}">
-            <!-- Optionally, you can add icons to the links -->
-            <li @if($menu_name == 'footer') class="active" @endif><a href="{{route('admin.footer')}}"><i class="fa fa-film"></i> <span>Подвал/Footer сайта</span></a></li>
-            <li @if($menu_name == 'footer/customurl') class="active" @endif><a href="{{route('admin.footer.customurl')}}"><i class="fa fa-film"></i> <span>Подвал/Footer Urls</span></a></li>
-        </ul>
-    </li>
-    {{-- Banner --}}
-    <li class="treeview {{ $banner ? 'active' : ''}}">
-        <a href="#">
-            <span>Баннеры</span>
-            <span class="pull-right-container">
-            <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        </a>
-        <ul class="treeview-menu  {{ $banner ? 'menu-open' : ''}}">
-            <li @if($menu_name == 'banner') class="active" @endif><a href="{{route('admin.banner')}}"><i class="fa fa-film"></i> <span>Баннеры</span></a></li>
-        </ul>
-    </li>
-    {{-- Banner --}}
-    @if($admin_helper->superadmin())
-        <li class="treeview {{ $dbbackup ? 'active' : ''}}">
+    @if($admin_helper->admin())
+        {{-- Chat --}}
+        <li class="treeview {{ $chat ? 'active' : ''}}">
             <a href="#">
-                <span>DB Backup</span>
+                <span>Болтаем</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu {{ $chat ? 'menu-open' : ''}}">
+                <li @if($menu_name == 'chat') class="active" @endif><a href="{{route('admin.chat')}}"><i class="fa fa-commenting"></i> <span>Cообщения чата</span></a></li>
+                <li @if($menu_name == 'chat/smiles') class="active" @endif><a href="{{route('admin.chat.smiles')}}"><i class="fa fa-smile-o"></i> <span>Улыбки</span></a></li>
+                <li @if($menu_name == 'chat/picture') class="active" @endif><a href="{{route('admin.chat.pictures')}}"><i class="fa fa-file-image-o"></i> <span>Изображение</span></a></li>
+            </ul>
+        </li>
+        {{-- Basement / Footer --}}
+        <li class="treeview {{ $footer ? 'active' : ''}}">
+            <a href="#">
+                <span>Подвал/Footer</span>
                 <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
                 </span>
             </a>
-            <ul class="treeview-menu  {{ $dbbackup ? 'menu-open' : ''}}">
-                <li @if($menu_name == 'dbbackup') class="active" @endif><a href="{{route('admin.dbbackup')}}"><i class="fa fa-database"></i> <span>Backup</span></a></li>
-                @if(Auth::user()->name == env('ADMIN_USER'))
-                <li @if($menu_name == 'dbbackup') class="active" @endif><a href="{{route('admin.import')}}"><i class="fa fa-database"></i> <span>Import</span></a></li>
-                @endif
+            <ul class="treeview-menu  {{ $footer ? 'menu-open' : ''}}">
+                <!-- Optionally, you can add icons to the links -->
+                <li @if($menu_name == 'footer') class="active" @endif><a href="{{route('admin.footer')}}"><i class="fa fa-film"></i> <span>Подвал/Footer сайта</span></a></li>
+                <li @if($menu_name == 'footer/customurl') class="active" @endif><a href="{{route('admin.footer.customurl')}}"><i class="fa fa-film"></i> <span>Подвал/Footer Urls</span></a></li>
             </ul>
         </li>
-    @endif
-    
+        {{-- Banner --}}
+        <li class="treeview {{ $banner ? 'active' : ''}}">
+            <a href="#">
+                <span>Баннеры</span>
+                <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu  {{ $banner ? 'menu-open' : ''}}">
+                <li @if($menu_name == 'banner') class="active" @endif><a href="{{route('admin.banner')}}"><i class="fa fa-film"></i> <span>Баннеры</span></a></li>
+            </ul>
+        </li>
+        {{-- Banner --}}
+        @if($admin_helper->superadmin())
+            <li class="treeview {{ $dbbackup ? 'active' : ''}}">
+                <a href="#">
+                    <span>DB Backup</span>
+                    <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu  {{ $dbbackup ? 'menu-open' : ''}}">
+                    <li @if($menu_name == 'dbbackup') class="active" @endif><a href="{{route('admin.dbbackup')}}"><i class="fa fa-database"></i> <span>Backup</span></a></li>
+                    @if(Auth::user()->name == env('ADMIN_USER'))
+                    <li @if($menu_name == 'dbbackup') class="active" @endif><a href="{{route('admin.import')}}"><i class="fa fa-database"></i> <span>Import</span></a></li>
+                    @endif
+                </ul>
+            </li>
+        @endif
+    @endif    
 </ul>
