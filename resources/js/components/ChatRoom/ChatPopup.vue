@@ -1,11 +1,14 @@
 <template>
-    <div class="chat_container">
-        <div class="chat_header">
-            <span>{{ user_email }}</span>            
-            <a v-if="isMobile()" href="#" class="chat_button" data-tip="Chatroom" onclick="chatroom_toggle(event, $(this))"></a>
-            <p v-if="!isMobile()" class="popup" @click="popupChat"></p>
-        </div>
-        <vue-custom-scrollbar class="chat_text_container" id="chat_text_container">
+  <vue-window-modal  
+      :active="visibleFormCrud"  
+      :title="user_email"  
+      v-on:clickClose="visibleFormCrudUpdate(false)"
+      :height="`668px`"
+      :width="`350px`"
+      :backgroundColor="`#222222`"
+      >
+      <div class="chat_container popup">     
+        <vue-custom-scrollbar class="chat_text_container " id="chat_text_container">
             <div v-if="ignored_users.length > 0" class="ignoredUsers" v-for="(user,key) in ignored_users" :key="key">
                 <p >{{user.user_name}} #{{user.user_id}} {{user.timestamp}} IGNORED <span class="show" @click="showUser(user.user_id)">Show</span></p>
             </div>
@@ -62,7 +65,7 @@
                   :min-height="49"
                   :max-height="350"
                   class="form-control"
-                  id="editor"
+                  id="pop_editor"
                   ref="input"
                 ></textarea-autosize>                
               </div>
@@ -71,9 +74,9 @@
         <div class="chat_footer" v-if="!userLoggedin">    
           <p class='guests_message'> Please login to chat!</p> 
         </div> 
-    </div>  
+      </div>  
+    </vue-window-modal>
 </template>
-
 <script>
 import moment from 'moment';
 
@@ -81,11 +84,14 @@ import * as chatHelper from '../../helper/chatHelper';
 import * as utilsHelper from '../../helper/utilsHelper';
 
 import vueCustomScrollbar from 'vue-custom-scrollbar';
+import  VueWindowModal  from  'vue-window-modal';
+Vue.use(VueWindowModal)
 
 import FColorComponent from './FontColorComponent.vue';
 import FSizeComponent from './FontSizeComponent.vue';
 import ImageComponent from './ImageComponent.vue';
 import SmileComponent from './SmileComponent.vue';
+// import UserComponent from './UserComponent.vue';
 
 export default {
   components: {
@@ -95,14 +101,14 @@ export default {
     auth: [Object, Number],    
     socket: [Object],
     messages: [Array],
-    isMessages: [Boolean]
+    isMessages: [Boolean],
+    visibleFormCrud: [Boolean]
   },
   data() {
     return {
       settings: {
         maxScrollbarLength: 60
-      },    
-     
+      },     
       userLoggedin: false,
       message: "",
       user: this.auth,
@@ -132,17 +138,18 @@ export default {
       } else {
         return 0;
       }
-    },   
+    },
+    
     
   },
-
+  
   methods: {
     setClass: function(username) {
       if(username == this.user.name) {
         return 'highlight';
       }
     },
-    
+   
     newline() {
       this.message = `${this.message}\r\n`;
     },
@@ -202,14 +209,8 @@ export default {
         element => element.user_id === user_id
       );
       this.ignored_users.splice(index, 1);    
-    },    
-   
-    popupChat: function() {     
-      this.$emit("onPopup", {
-        visibleFormCrud: true
-      });
     },
-    
+   
     getSelection: chatHelper.getSelection,
     bold: chatHelper.bold,
     italic: chatHelper.italic,
@@ -231,8 +232,12 @@ export default {
       Object.keys(self.chat_action).forEach(function(key) {   
         self.chat_action[key] = false;
       }) 
-    },
-   
+    },  
+    visibleFormCrudUpdate: function() {
+      this.$emit("onPopupClose", {
+        visibleFormCrud: false
+      });
+    } 
   }
 };
 </script>

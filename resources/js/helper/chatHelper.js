@@ -1,7 +1,9 @@
 import * as utilsHelper from './utilsHelper';
 
 export const textareaObj = () => {
-    return document.getElementById("editor");
+  var popupStatus = document.getElementById("popupStatus").value;
+  var textareaObject = (!popupStatus)?'editor':'pop_editor'
+  return document.getElementById(textareaObject);
 };
 
 export const getSelection = () => {    
