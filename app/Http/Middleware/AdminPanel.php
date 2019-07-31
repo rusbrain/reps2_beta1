@@ -30,7 +30,11 @@ class AdminPanel
 
         // Morderators
         if (Auth::user()->user_role_id == 3) {
-            if(!$request->is("admin_panel/forum/*") && !$request->is("admin_panel/replay/*") && !$request->is("admin_panel")) {
+            if(
+                $request->is("admin_panel/user/*") ||  $request->is("admin_panel/stream/*") || $request->is("admin_panel/chat/*") ||
+                $request->is("admin_panel/country/*") || $request->is("admin_panel/question/*") ||  $request->is("admin_panel/file/*") ||
+                $request->is("admin_panel/footer/*") ||  $request->is("admin_panel/banner/*") || $request->is("admin_panel/dbbackup/*") 
+                ) {
                 return redirect('admin_panel/');
             }
         }        
