@@ -1,4 +1,5 @@
 <template>
+<div>
     <div class="chat_container">
         <div class="chat_header">
             <span>{{ user_email }}</span>            
@@ -71,7 +72,86 @@
         <div class="chat_footer" v-if="!userLoggedin">    
           <p class='guests_message'> Please login to chat!</p> 
         </div> 
-    </div>    
+    </div>   
+
+    <vue-window-modal  
+      :active="visibleFormCrud"  
+      :title="user_email"  
+      v-on:clickClose="visibleFormCrudUpdate(false)"
+      :height="`668px`"
+      :width="`350px`"
+      :backgroundColor="`#222222`"
+      >
+      <div class="chat_container popup">     
+        <vue-custom-scrollbar class="chat_text_container " id="chat_text_container">
+            <div v-if="ignored_users.length > 0" class="ignoredUsers" v-for="(user,key) in ignored_users" :key="key">
+                <p >{{user.user_name}} #{{user.user_id}} {{user.timestamp}} IGNORED <span class="show" @click="showUser(user.user_id)">Show</span></p>
+            </div>
+            <div v-if="isMessages">               
+                <div v-for="(message,index) in messages" :key="`message-${index}`" v-if="!checkIgnore(message.user_id)" class="user_msg" :class="'user-' + message.user_id" >
+                  <p class="user_info">                    
+                      <span :class="'flag-icon flag-icon-' + message.country_code"></span>
+                      <img class="margin-left-5" :src="'/images/emoticons/smiles/'+message.race" alt="">                  
+                      <span class="username" @click="selectUser(`${message.user_name}`)">{{message.user_name}}</span>
+                      <span class="user_id"><a :href="'/user/' + message.user_id" >#{{message.user_id}}</a></span>
+                      <span class="ignore_user" v-if="userId!=message.user_id" @click="ignoreUser(message)">Ignore</span>
+                      <span class="msg_timestamp">{{convertTo(message.created_at)}}</span>
+                  </p>
+                  <p class="msg_text">
+                    <span :class="setClass(message.to)" v-html="message.message"></span>
+                  </p>
+                </div>
+            </div>
+             <div v-if="!isMessages">
+                 Empty messages
+             </div>
+          
+        </vue-custom-scrollbar>
+        <div class="chat_footer" v-if="userLoggedin">           
+            <div class="send" style="position: relative">
+              <SmileComponent :status="chat_action.smile" @turnOffStatus="turnOffStatus"></SmileComponent>
+              <ImageComponent :status="chat_action.image" @turnOffStatus="turnOffStatus"></ImageComponent>
+              <FSizeComponent :status="chat_action.size" @turnOffStatus="turnOffStatus"></FSizeComponent>
+              <FColorComponent :status="chat_action.color" @turnOffStatus="turnOffStatus"></FColorComponent>
+              <!-- <UserComponent :status="chat_action.user" :filter_user="filter_user" @turnOffStatus="turnOffStatus" ></UserComponent> -->
+
+              <div class="extra">
+                <p class="bold" @click="bold()"></p>
+                <p class="italic" @click="italic()"></p>
+                <p class="underline" @click="underline()"></p>
+
+                <p class="link" @click="link()"></p>
+                <p class="img" @click="img()"></p>
+
+                <p class="font_size" @click="selectItem('size')"></p>
+                <p class="font_color" @click="selectItem('color')"></p>
+
+                <p class="pic" @click="selectItem('image')"></p>
+                <p class="smile" @click="selectItem('smile')"></p>               
+                <p class="meme" @click="meme()">[d]</p>
+              </div>
+              <div class="input-group">
+                <textarea-autosize
+                  v-model="message"   
+                  @keyup.enter.exact.native="sendMessage($event)"
+                  @keydown.enter.ctrl.exact.native="newline"
+                  @keydown.enter.shift.exact.native="newline"
+                  placeholder="Введите сообщение и нажмите Enter"                       
+                  :min-height="49"
+                  :max-height="350"
+                  class="form-control"
+                  id="editor"
+                  ref="input"
+                ></textarea-autosize>                
+              </div>
+            </div>
+        </div>
+        <div class="chat_footer" v-if="!userLoggedin">    
+          <p class='guests_message'> Please login to chat!</p> 
+        </div> 
+      </div>  
+    </vue-window-modal>
+</div> 
 </template>
 
 <script>
@@ -81,6 +161,8 @@ import * as chatHelper from '../../helper/chatHelper';
 import * as utilsHelper from '../../helper/utilsHelper';
 
 import vueCustomScrollbar from 'vue-custom-scrollbar';
+import  VueWindowModal  from  'vue-window-modal';
+Vue.use(VueWindowModal)
 
 import FColorComponent from './FontColorComponent.vue';
 import FSizeComponent from './FontSizeComponent.vue';
@@ -94,6 +176,7 @@ export default {
   },
   props: {
     auth: [Object, Number],
+    visibleFormCrud: [Boolean]
     
   },
   data() {
@@ -160,7 +243,6 @@ export default {
 
   methods: {
     setClass: function(username) {
-      console.log(username, this.user.name)
       if(username == this.user.name) {
         return 'highlight';
       }
@@ -270,6 +352,11 @@ export default {
       Object.keys(self.chat_action).forEach(function(key) {   
         self.chat_action[key] = false;
       }) 
+    },
+    visibleFormCrudUpdate: function() {
+      this.$emit("onPopupClose", {
+        visibleFormCrud: false
+      });
     }
   }
 };
