@@ -271,7 +271,7 @@ Route::group(['middleware' => 'activity'], function () {
                 Route::get('/{id}', 'CommentController@removeComment')->name('admin.comments.remove');
             });
 
-            Route::group(['prefix' => 'user'], function () {
+            Route::group(['middleware' => 'is_admin', 'prefix' => 'user'], function () {
                 Route::get('{id}/email', 'UserEmailController@index')->name('admin.user.email');
                 Route::get('{id}/replay', 'ReplayController@getReplayByUser')->name('admin.user.replay');
                 Route::get('{id}/topic', 'ForumTopicController@getUsersTopics')->name('admin.user.topic');
@@ -292,7 +292,7 @@ Route::group(['middleware' => 'activity'], function () {
                 Route::get('{id}/change_password', 'UserController@changePassword')->name('admin.user.change_password');
                 Route::post('/update_password', 'UserController@updatePassword')->name('admin.user.update_password');
 
-                Route::group(['prefix' => 'role'], function () {
+                Route::group(['middleware' => 'is_superadmin', 'prefix' => 'role'], function () {
                     Route::get('/', 'UserRoleController@index')->name('admin.users.role');
                     Route::get('/{id}/edit', 'UserRoleController@edit')->name('admin.user.role.edit');
                     Route::get('/{id}/remove', 'UserRoleController@remove')->name('admin.user.role.remove');
@@ -418,7 +418,7 @@ Route::group(['middleware' => 'activity'], function () {
                 });
             });
 
-            Route::group(['prefix' => 'stream'], function () {
+            Route::group(['middleware' => 'is_admin','prefix' => 'stream'], function () {
                 Route::get('/', 'StreamController@index')->name('admin.stream');
                 Route::get('/pagination', 'StreamController@pagination')->name('admin.stream.pagination');
                 Route::get('/{id}/approve', 'StreamController@approve')->name('admin.stream.approve');
@@ -444,7 +444,7 @@ Route::group(['middleware' => 'activity'], function () {
                 });
             });
 
-            Route::group(['prefix' => 'chat'], function () {
+            Route::group(['middleware' => 'is_admin','prefix' => 'chat'], function () {
                 Route::get('/', 'ChatController@index')->name('admin.chat');
                 Route::get('/pagination', 'ChatController@pagination')->name('admin.chat.pagination');
                 Route::get('/{id}/view', 'ChatController@view')->name('admin.chat.view');
@@ -473,7 +473,7 @@ Route::group(['middleware' => 'activity'], function () {
 
             });
 
-            Route::group(['prefix' => 'country'], function () {
+            Route::group(['middleware' => 'is_admin','prefix' => 'country'], function () {
                 Route::get('/', 'CountryController@index')->name('admin.country');
                 Route::get('/pagination', 'CountryController@pagination')->name('admin.country.pagination');
                 Route::get('/{id}/edit', 'CountryController@edit')->name('admin.country.edit');
@@ -483,7 +483,7 @@ Route::group(['middleware' => 'activity'], function () {
                 Route::post('/{id}/save', 'CountryController@save')->name('admin.country.save');
             });
 
-            Route::group(['prefix' => 'question'], function () {
+            Route::group(['middleware' => 'is_admin','prefix' => 'question'], function () {
                 Route::get('/', 'InterviewQuestionController@index')->name('admin.question');
                 Route::get('/pagination', 'InterviewQuestionController@pagination')->name('admin.question.pagination');
                 Route::get('/{id}/active', 'InterviewQuestionController@active')->name('admin.question.active');
@@ -503,7 +503,7 @@ Route::group(['middleware' => 'activity'], function () {
                 Route::post('/{id}/save', 'InterviewQuestionController@save')->name('admin.question.save');
             });
 
-            Route::group(['prefix' => 'file'], function () {
+            Route::group(['middleware' => 'is_admin','prefix' => 'file'], function () {
                 Route::get('/', 'FileManagementController@index')->name('admin.file');
                 Route::get('/pagination', 'FileManagementController@pagination')->name('admin.file.pagination');
                 Route::get('/{id}/edit', 'FileManagementController@edit')->name('admin.file.edit');
@@ -512,7 +512,7 @@ Route::group(['middleware' => 'activity'], function () {
                 Route::get('/{id}/download', 'FileManagementController@download')->name('admin.file.download');
             });
 
-            Route::group(['prefix' => 'footer'], function () {
+            Route::group(['middleware' => 'is_admin','prefix' => 'footer'], function () {
                 Route::get('/', 'FooterManagementController@index')->name('admin.footer');
                 Route::get('/create', 'FooterManagementController@create')->name('admin.footer.create');
                 Route::get('/{id}/edit', 'FooterManagementController@edit')->name('admin.footer.edit');
@@ -535,7 +535,7 @@ Route::group(['middleware' => 'activity'], function () {
                 });
             });
 
-            Route::group(['prefix' => 'banner'], function () {
+            Route::group(['middleware' => 'is_admin','prefix' => 'banner'], function () {
                 Route::get('/', 'BannerManagementController@index')->name('admin.banner');
                 Route::get('/create', 'BannerManagementController@create')->name('admin.banner.create');
                 Route::get('/{id}/edit', 'BannerManagementController@edit')->name('admin.banner.edit');
@@ -547,7 +547,7 @@ Route::group(['middleware' => 'activity'], function () {
                 Route::get('/{id}/not_active','BannerManagementController@notActive')->name('admin.banner.not_active');
             });
 
-            Route::group(['prefix' => 'dbbackup'], function () {
+            Route::group(['middleware' => 'is_superadmin','prefix' => 'dbbackup'], function () {
                 Route::get('/', 'DBManagementController@index')->name('admin.dbbackup');
                 Route::get("/download/{dbname}", 'DBManagementController@filedownload')->name('admin.dbbackup.download');//
                 Route::get("/delete/{dbname}", 'DBManagementController@filedelete')->name('admin.dbbackup.filedelete');//

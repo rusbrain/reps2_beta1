@@ -25,6 +25,16 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('AdminAccess', function ($user) {
+            return (in_array($user->user_role_id, [1, 2, 3]) AND $user->is_ban == 0);
+        });
+
+        Gate::define('NormalAdminAcess', function ($user) {
+            return (in_array($user->user_role_id, [1, 2]) AND $user->is_ban == 0);
+        });
+
+        Gate::define('SuperAdminAccess', function ($user) {
+            return (in_array($user->user_role_id, [1]) AND $user->is_ban == 0);
+        });
     }
 }
