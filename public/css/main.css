@@ -1207,11 +1207,14 @@ form label {
   width: 0;
   /* transition-duration: 0.1s; */
 }
-.stream-section .stream-area.chat_close .stream-message-wrapper .chat_text_container {
-  display: none;
-}
+.stream-section .stream-area.chat_close .stream-message-wrapper .chat_text_container ,
 .stream-section .stream-area.chat_close .stream-message-wrapper .chat_footer{
   display: none;
+}
+
+.stream-section .stream-area.chat_close .stream-message-wrapper .chat_container.popup .chat_text_container,
+.stream-section .stream-area.chat_close .stream-message-wrapper .chat_container.popup .chat_footer{
+  display: block !important;
 }
 .stream-section .stream-area.chat_open .stream-message-wrapper {
   width: 25%;

@@ -1,19 +1,20 @@
 <template>
     <div>
-        <MessageComponent :auth="auth" @onPopup="popup" ></MessageComponent>
-        <ChatPopup :auth="auth" :visibleFormCrud="visibleFormCrud" @onPopupClose="popupClose"></ChatPopup>
+        <MessageComponent 
+          :auth="auth" @onPopup="popup" 
+          :visibleFormCrud="visibleFormCrud" 
+          @onPopupClose="popupClose">
+        </MessageComponent>
     </div>
 </template>
 
 <script>
 
 import MessageComponent from './MessageComponent.vue'
-import ChatPopup from './ChatPopup.vue'
 
 export default {
   components: {
     MessageComponent,
-    ChatPopup
   }, 
   props: {
     auth: [Object, Number]
@@ -26,7 +27,7 @@ export default {
 
    methods: {
     popup: function() {
-      this.visibleFormCrud = false;
+      this.visibleFormCrud = true;
     },
 
     popupClose: function() {
