@@ -35,6 +35,7 @@ class ChatController extends Controller
     public function __construct(){
         $this->general_helper = new GeneralViewHelper;
         $this->allChatImages = $this->general_helper->getAllChatImages();
+        $this->host = request()->getSchemeAndHttpHost();        
     }
 
     /**
@@ -78,9 +79,8 @@ class ChatController extends Controller
     }
 
     private function rewrapperText($text) {
-        $text = preg_replace("/:smile([0-9]{1,}):/", '<img src="/images/emoticons/smiles/smile$1.gif" border="0">', $text);
-        $text = preg_replace("/:s([0-9]{1,}):/", '<img src="/images/emoticons/smiles/s$1.gif" border="0">', $text);
-
+        $text = preg_replace("/:smile([0-9]{1,}):/", '<img src="'.$this->host.'/images/emoticons/smiles/smile$1.gif" border="0">', $text);
+        $text = preg_replace("/:s([0-9]{1,}):/", '<img src="'.$this->host.'/images/emoticons/smiles/s$1.gif" border="0">', $text);
         $text = preg_replace("#\[(b)\](.+?)\[/\\1\]#is", "<\\1>\\2</\\1>", $text);
         $text = preg_replace("#\[(i)\](.+?)\[/\\1\]#is", "<\\1>\\2</\\1>", $text);
         $text = preg_replace("#\[(u)\](.+?)\[/\\1\]#is", "<\\1>\\2</\\1>", $text);
@@ -92,12 +92,11 @@ class ChatController extends Controller
         $text = preg_replace_callback("#\[(f[0-9]{1,})\](.+?)\[/\\1\]#is", function ($matches) {          
             return "<span style='font-size: ".$this->font_sizes[$matches[1]]."'>$matches[2]</span>";
         }, $text);
-      
-        
-        $text = preg_replace_callback("#(:{1,})(.+?)\\1#is", function ($matches) {          
-            return '<img src="'.$this->allChatImages[$matches[2]].'" border="0">';
-        }, $text);
 
+        $text = preg_replace_callback('/:([a-zA-Z0-9]{1,}):/', function ($matches) {          
+            return '<img src="'.$this->host.$this->allChatImages[$matches[1]].'" border="0">';            
+        }, $text);
+      
         $text = preg_replace("/\[img\](\r\n|\r|\n)*((http|https):\/\/([^;<>\*\"]+)|[a-z0-9\/\\\._\- ]+)\[\/img\]/siU",
             "<img src=\"\\2\" class=\"imgl\" border=\"0\" alt=\"\"> ", $text);
 
@@ -107,7 +106,12 @@ class ChatController extends Controller
 
 
         $text = preg_replace_callback("#\[(d)\](.+?)\[/\\1\]#is", function ($matches) { 
-            $url = isset($matches[2]) ? $matches[2] : $matches[1];         
+           
+            $url = isset($matches[2]) ? $matches[2] : $matches[1];   
+            
+            if(preg_match_all('#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', $url, $match)) {
+                $url = $match[0][0];
+            }
             return '<center><a title="'.$url.'" target="_blank" href="'.$url.'" class="id_link">
                     <img class="smile_inchat" src="'.$url.'"></a><center>';
         }, $text); 
