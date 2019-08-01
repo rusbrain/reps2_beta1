@@ -15,7 +15,7 @@ export const wrapperTxt = (text) => {
   lines.forEach(function(item, index){
     if(item != ''){
         let lineTxt = item.replace('\n','');
-        wrap_text += '<p>' + lineTxt + '</p>'
+        wrap_text +=  lineTxt + '\n'
     }
   });
   return wrap_text;

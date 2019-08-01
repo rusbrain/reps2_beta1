@@ -62,7 +62,7 @@ class ChatController extends Controller
         $message_data = $request->all();
         if (Auth::id() == $request->user_id) {
             $message_data['user_name'] = Auth::user()->name;
-            $message_data['message'] = $this->rewrapperText($message_data['message']);
+            $message_data['message'] = $this->rewrapperText(strip_tags($message_data['message']));
             $message_data['to'] = $this->selected_user;
             $insert = PublicChat::create($message_data);           
             if($insert) {               
@@ -79,6 +79,14 @@ class ChatController extends Controller
     }
 
     private function rewrapperText($text) {
+        
+        // $array = explode("\n", $message);
+        // $text = array_map(
+        //     function ($el) {
+        //        return "<p>".$el."</p>";
+        //     },
+        //     $array
+        // );
         $text = preg_replace("/:smile([0-9]{1,}):/", '<img src="'.$this->host.'/images/emoticons/smiles/smile$1.gif" border="0">', $text);
         $text = preg_replace("/:s([0-9]{1,}):/", '<img src="'.$this->host.'/images/emoticons/smiles/s$1.gif" border="0">', $text);
         $text = preg_replace("#\[(b)\](.+?)\[/\\1\]#is", "<\\1>\\2</\\1>", $text);
