@@ -112,14 +112,10 @@ class ChatController extends Controller
                     <img class="smile_inchat" src="'.$url.'"></a><center>';
         }, $text); 
         
-        $text = preg_replace_callback('/@([[:alnum:]\-_) ]+),/', function ($matches) {
+        $text = preg_replace_callback('/@([[:alnum:]\-_.,) ]+),/', function ($matches) {
             $this->selected_user = $matches[1];
             return '<span class="username">@'.$this->selected_user.',</span>';
-        }, $text); 
-        //dd($this->selected_user, Auth::user()->name);
-        // if($this->selected_user == Auth::user()->name) {
-        //     return '<span class="'.$this->selected_user.'">'. $text .'</span';
-        // }
+        }, $text);
         
         return $text;
     }

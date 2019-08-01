@@ -1,6 +1,6 @@
 
 import moment from 'moment';
-import * as chatHelper from '../helper/chatHelper';
+
 export const urlify =(text) => {
       
     text.replace(/(\\r)*\\n/g, '<br>')
