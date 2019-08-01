@@ -93,6 +93,21 @@
             font-size: 14px;
             font-weight: 600;
           }
+       
+          .demotivator{
+            max-width: 150px;
+            background: black;
+            padding: 15px 15px 5px 15px;
+            a{
+              img{
+                border: solid 2px white;
+              }
+            }
+            p{
+              font-weight: 600;
+            }
+          }
+         
           p{
             .username{
               color: #deb045;

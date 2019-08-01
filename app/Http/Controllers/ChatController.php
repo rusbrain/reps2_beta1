@@ -106,14 +106,15 @@ class ChatController extends Controller
 
 
         $text = preg_replace_callback("#\[(d)\](.+?)\[/\\1\]#is", function ($matches) { 
-           
-            $url = isset($matches[2]) ? $matches[2] : $matches[1];   
-            
-            if(preg_match_all('#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', $url, $match)) {
+
+            $content = isset($matches[2]) ? $matches[2] : $matches[1];   
+            $url = '';
+            if(preg_match_all('#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', $content, $match)) {
                 $url = $match[0][0];
             }
-            return '<center><a title="'.$url.'" target="_blank" href="'.$url.'" class="id_link">
-                    <img class="smile_inchat" src="'.$url.'"></a><center>';
+            $string = substr($content , strlen($url), strlen($content));
+            $image_content = !empty($url) ? '<a title="'.$url.'" target="_blank" href="'.$url.'" class="id_link"> <img class="smile_inchat" src="'.$url.'"></a>' : '';
+            return '<center><div class="demotivator">'.$image_content.'<p>'.$string.'</p></div><center>';
         }, $text); 
         
         $text = preg_replace_callback('/@([0-9]+),/', function ($matches) {
