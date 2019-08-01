@@ -68,7 +68,7 @@ class StreamController extends Controller
      */
     private function getStreamObject($stream_id)
     {
-        return Stream::getstreamById($stream_id);
+        return Stream::where('id', $stream_id)->where('user_id', Auth::user()->id)->with('user.avatar')->first();
     }
 
     /**
@@ -112,12 +112,12 @@ class StreamController extends Controller
 
     /**
      * @param StreamUpdateRequest $request
-     * @param $replay_id
+     * @param $stream_id
      * @return \Illuminate\Http\RedirectResponse
      */
     public function save(StreamUpdateRequest $request, $stream_id)
     {
-        $stream = Stream::find($stream_id);
+        $stream = Stream::where('id', $stream_id)->where('user_id', Auth::user()->id)->first();
 
         if($stream){
             StreamService::updateStream($request, $stream);
