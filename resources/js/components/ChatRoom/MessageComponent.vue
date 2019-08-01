@@ -14,7 +14,7 @@
                   <p class="user_info">                    
                       <span :class="'flag-icon flag-icon-' + message.country_code"></span>
                       <img class="margin-left-5" :src="'/images/emoticons/smiles/'+message.race" alt="">                  
-                      <span class="username" @click="selectUser(`${message.user_name}`)">{{message.user_name}}</span>
+                      <span class="username" @click="selectUser(`${message.user_id}`)">{{message.user_name}}</span>
                       <span class="user_id"><a :href="'/user/' + message.user_id" >#{{message.user_id}}</a></span>
                       <span class="ignore_user" v-if="userId!=message.user_id" @click="ignoreUser(message)">Ignore</span>
                       <span class="msg_timestamp">{{convertTo(message.created_at)}}</span>
@@ -137,8 +137,8 @@ export default {
   },
 
   methods: {
-    setClass: function(username) {
-      if(username == this.user.name) {
+    setClass: function(user_id) {
+      if(user_id == this.user.id) {
         return 'highlight';
       }
     },

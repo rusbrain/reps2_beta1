@@ -112,11 +112,12 @@ class ChatController extends Controller
                     <img class="smile_inchat" src="'.$url.'"></a><center>';
         }, $text); 
         
-        $text = preg_replace_callback('/@([[:alnum:]\-_.,) ]+),/', function ($matches) {
+        $text = preg_replace_callback('/@([0-9]+),/', function ($matches) {
             $this->selected_user = $matches[1];
-            return '<span class="username">@'.$this->selected_user.',</span>';
+            $chatusers = User::find($this->selected_user);
+            return '<span class="username '.$this->selected_user.'">@'.$chatusers->name.',</span>';
         }, $text);
-        
+
         return $text;
     }
 
@@ -193,21 +194,4 @@ class ChatController extends Controller
         ], 200); 
         
     }
-
-    /**
-     * Ge Chat users
-     */
-    public function get_chatusers() {
-        $users = array();
-        $chatusers = User::orderBy('name', 'ASC')->get();
-        foreach ($chatusers as $user) {
-            $users[] = $user->name;
-        }
-
-        return response()->json([
-            'status' => "ok",
-            'users' =>  $users
-        ], 200); 
-    }
-
 }
