@@ -10,23 +10,9 @@ export const urlify =(text) => {
     })
 };
 export const convertHTML = (str) => {
-//     // &colon;&rpar;
-//     var Regcheck = /\W\s/gi;
-//      var htmlListObj = {'&':"&amp;",
-//                         "<":"&lt;",
-//                         ">":"&gt;",
-//                         "'":"&quot;",
-//                         '"':"&apos;"};
-
-//    for(var i = 0;i<str.length;i++){
-//      if(str[i].match(Regcheck) === htmlListObj[i]){
-//        return str.replace(htmlListObj[key],htmlListObj[value]);
-//      }
-//    }    
     return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/'/g, "&apos;").replace(/"/g, "&quot;")
   };
 export const wrapperTxt = (text) => {
-//   let convertedText = convertHTML(text);
   let lines = text.split('\r\n');
   let wrap_text = '';
   lines.forEach(function(item, index){
