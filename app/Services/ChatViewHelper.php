@@ -73,7 +73,7 @@ class ChatViewHelper
                 if($this->does_url_exists($url)) {
                     $image_content = '<a title="'.$url.'" target="_blank" href="'.$url.'" class="id_link"> <img class="smile_inchat" src="'.$url.'"></a>';
                 } else {
-                    $image_content = '<p>Incorrect image code</p>';
+                    $image_content = '<p title="'.$url.'">Incorrect image code</p>';
                 }
             }
 
