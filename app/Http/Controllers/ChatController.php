@@ -35,9 +35,7 @@ class ChatController extends Controller
    
     public function __construct(){
         $this->general_helper = new GeneralViewHelper;
-        $this->chat_helper = new ChatViewHelper;
-
-        $this->allChatImages = $this->general_helper->getAllChatImages();           
+        $this->chat_helper = new ChatViewHelper;       
     }
 
     /**

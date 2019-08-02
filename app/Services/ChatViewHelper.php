@@ -11,12 +11,15 @@ namespace App\Services;
 use App\Services\Base\BaseDataService;
 use App\User;
 use Illuminate\Http\Request;
+use App\Services\GeneralViewHelper;
 
 class ChatViewHelper
 {
     public function __construct()
     {
-        $this->host = request()->getSchemeAndHttpHost();     
+        $this->host = request()->getSchemeAndHttpHost();  
+        $this->general_helper = new GeneralViewHelper;
+        $this->allChatImages = $this->general_helper->getAllChatImages();   
     }
     public function UrlFilter($text)
     {
