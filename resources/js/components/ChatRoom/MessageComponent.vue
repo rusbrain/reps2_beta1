@@ -152,7 +152,7 @@ export default {
     },   
     sendMessage(event) {
       
-      if (this.message.length > 0 || this.extractContent(this.message).length > 0) {
+      if (this.message.length > 0) {
         let messagePacket = this.createMsgObj(utilsHelper.wrapperTxt(this.message));     
         let currentObj = this;
         event.preventDefault();
@@ -173,13 +173,6 @@ export default {
         alert("Please Enter Your Message.");
       }      
     },
-
-    extractContent: function(s) {
-      var span = document.createElement('span');
-      span.innerHTML = s;
-      return span.textContent || span.innerText;
-    },    
-
     createMsgObj: function(message) {
       return {
         user_id: this.auth.id,
