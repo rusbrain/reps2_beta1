@@ -107,20 +107,19 @@
               font-weight: 600;
               text-transform: uppercase;
             }
+          }         
+         
+          .username{
+            color: #deb045;
+            font-weight: 600;              
+          }
+          a{
+            color:#99a589;
+            &:hover {
+              color:#5083d0;
+            }
           }
          
-          p{
-            .username{
-              color: #deb045;
-              font-weight: 600;              
-            }
-            a{
-              color:#99a589;
-              &:hover {
-                color:#5083d0;
-              }
-            }
-          }
       }
     }
   }
