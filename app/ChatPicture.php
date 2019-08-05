@@ -3,7 +3,7 @@
 namespace App;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\{
-    Model, SoftDeletes
+    Model
 };
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\DB;
 
 class ChatPicture extends Model
 {
-    use Notifiable, SoftDeletes;
+    use Notifiable;
     
     /**
      * Using table name
