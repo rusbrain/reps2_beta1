@@ -24,8 +24,8 @@ class PictureUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'image'         =>'required|image|max:2048',
-            'category'      =>'required|string',
+            // 'image'         =>'required|image|max:2048',
+            'category_id'   =>'required',
             'comment'       =>'nullable|string|max:1000',
         ];
     }
@@ -38,8 +38,8 @@ class PictureUpdateRequest extends FormRequest
     public function messages()
     {
         return [
-            'image.required'        => 'Не выбран файл картинки.',
-            'category.required'     => 'Пожалуйста, введите категория',
+            // 'image.required'        => 'Не выбран файл картинки.',
+            'category_id.required'  => 'Пожалуйста, введите категория',
             'image.image'           => 'Файл должен быть картинкой.',
             'image.max'             => 'Максимальный размер загрузаемого файла 2 мб',
             'comment.string'        => 'Комментарий должен быть строкой',

@@ -8,10 +8,10 @@ use App\Services\Base\{BaseDataService, AdminViewService};
 use App\Services\Chat\ChatPicturesService;
 use App\Http\Controllers\Controller;
 use App\ChatPicture;
+use App\ChatPictureCategory;
 
 class ChatPicturesController extends Controller
-{
-    private $categories = array('pics', 'koreans', 'starcrafters', 'users', 'gif', 'trash', 'anime');
+{   
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -27,7 +27,7 @@ class ChatPicturesController extends Controller
      */
     public function pagination()
     {
-        $pictures = ChatPicture::with('file', 'user')->orderBy('updated_at', 'Desc')->paginate(20);
+        $pictures = ChatPicture::with('file', 'user', 'category')->orderBy('updated_at', 'Desc')->paginate(20);
         return BaseDataService::getPaginationData(
             AdminViewService::getChatPictures($pictures), 
             AdminViewService::getPagination($pictures),
@@ -40,7 +40,8 @@ class ChatPicturesController extends Controller
      */
     public function create()
     {
-        return view('admin.chat.pictures.create')->with(['categories' => $this->categories]);       
+        $categories = ChatPictureCategory::orderBy('id')->get();
+        return view('admin.chat.pictures.create')->with(['categories' => $categories]);       
     }
 
     /**
@@ -61,8 +62,6 @@ class ChatPicturesController extends Controller
     {
         return ChatPicture::getpictureById($picture_id);
     }
-
-
     
     /**
      * @param $stream_id
@@ -70,7 +69,8 @@ class ChatPicturesController extends Controller
      */
     public function edit($picture_id)
     {
-        return view('admin.chat.pictures.edit')->with(['picture'=> $this->getPictureObject($picture_id), 'categories' => $this->categories]);
+        $categories = ChatPictureCategory::orderBy('id')->get();
+        return view('admin.chat.pictures.edit')->with(['picture'=> $this->getPictureObject($picture_id), 'categories' => $categories]);
     }
 
     /**

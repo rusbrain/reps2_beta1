@@ -40,7 +40,7 @@ class ChatPicture extends Model
         'user_id',
         'file_id',
         'comment',
-        'category',
+        'category_id',
         'charactor'
     ];
 
@@ -50,6 +50,14 @@ class ChatPicture extends Model
     public function user()
     {
         return $this->belongsTo('App\User');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function category()
+    {
+        return $this->belongsTo('App\ChatPictureCategory');
     }
 
     /**

@@ -54,16 +54,16 @@
                                 <div class="col-md-4">
                                     <div class="input-group">
                                         <span class="">Kатегория</span>
-                                        <select class="form-control select2" name="category">
+                                        <select class="form-control select2" name="category_id">
                                             <option value=''>Select Category</oteanion>
                                             @foreach ($categories as $category)
-                                                <option value='{{$category}}'>{{$category}}</option>                                             
+                                                <option value='{{$category->id}}'>{{$category->name}}</option>                                             
                                             @endforeach
                                         </select>                
                                     </div> 
-                                    @if ($errors->has('category'))
+                                    @if ($errors->has('category_id'))
                                         <span class="invalid-feedback">
-                                            <strong>{{ $errors->first('category') }}</strong>
+                                            <strong>{{ $errors->first('category_id') }}</strong>
                                         </span>
                                     @endif        
                                 </div>
