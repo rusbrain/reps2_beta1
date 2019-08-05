@@ -32,8 +32,7 @@ class ChatPicturesController extends Controller
             AdminViewService::getChatPictures($pictures), 
             AdminViewService::getPagination($pictures),
             AdminViewService::getChatPicturesPopUp($pictures)
-        );
-    
+        );    
     }
 
     /**
@@ -43,28 +42,6 @@ class ChatPicturesController extends Controller
     {
         return view('admin.chat.pictures.create')->with(['categories' => $this->categories]);       
     }
-
-    // /**
-    //  * :image:
-    //  */
-    // private function get_charactor($charactor_arr){
-    //     $check = true;
-    //     $gen = "";
-    //     while($check){
-    //         $gen   = ':cpic'. rand(1, 299) .':';
-    //         if (!in_array($gen, $charactor_arr)) {
-    //             $check = false;
-    //         }
-    //     }
-    //     return $gen;
-    // }
-    // private function check_charactor($gen, $charactor_arr) 
-    // {        
-    //     if (in_array($gen, $charactor_arr)) {
-    //         return true;
-    //     }
-    //     return false;
-    // }
 
     /**
      * @param PictureStoreRequest $request

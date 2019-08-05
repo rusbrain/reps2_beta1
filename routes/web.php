@@ -469,6 +469,16 @@ Route::group(['middleware' => 'activity'], function () {
                     Route::get('/{id}/edit', 'ChatPicturesController@edit')->name('admin.chat.pictures.edit');
                     Route::post('/{id}/update', 'ChatPicturesController@update')->name('admin.chat.pictures.update');
                     Route::get('/{id}/remove', 'ChatPicturesController@destroy')->name('admin.chat.pictures.remove');
+
+                    Route::group(['prefix' => 'category'], function (){
+                        Route::get('/', 'ChatPictureCategoryController@index')->name('admin.chat.pictures.category');
+                        Route::get('/pagination', 'ChatPictureCategoryController@pagination')->name('admin.chat.pictures.category.pagination');
+                        Route::get('/create', 'ChatPictureCategoryController@create')->name('admin.chat.pictures.category.create');
+                        Route::post('/store', 'ChatPictureCategoryController@store')->name('admin.chat.pictures.category.store');
+                        Route::get('/{id}/edit', 'ChatPictureCategoryController@edit')->name('admin.chat.pictures.category.edit');
+                        Route::post('/{id}/update', 'ChatPictureCategoryController@update')->name('admin.chat.pictures.category.update');
+                        Route::get('/{id}/remove', 'ChatPictureCategoryController@destroy')->name('admin.chat.pictures.category.remove');
+                    });
                 });
 
             });

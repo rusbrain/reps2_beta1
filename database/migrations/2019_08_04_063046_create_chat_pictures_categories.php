@@ -15,6 +15,8 @@ class CreateChatPicturesCategories extends Migration
     {
         Schema::create('chat_pictures_categories', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('name');
+            $table->string('comment');
             $table->timestamps();
         });
     }

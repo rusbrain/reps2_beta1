@@ -70,6 +70,25 @@ class AdminViewService extends ViewService
         return self::getView('admin.chat.pictures.list_pop_up',$pictures);
     }
 
+      /**
+     * @param $data
+     * @return string
+     */
+
+    public static function getChatPicturesCategory(LengthAwarePaginator $categories)
+    {
+        return self::getView('admin.chat.pictures.categories.list_table', $categories);
+    }
+
+     /**
+     * @param LengthAwarePaginator $pictures
+     * @return string
+     */
+    public static function getChatPicturesCategoryPopUp(LengthAwarePaginator $categories)
+    {
+        return self::getView('admin.chat.pictures.categories.list_pop_up',$categories);
+    }
+
      /**
      * @param $data
      * @return string

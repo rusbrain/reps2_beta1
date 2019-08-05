@@ -5,7 +5,7 @@ $user = ($menu_name == 'user' || $menu_name == 'user/role' || $menu_name == 'use
 $forum = ($menu_name == 'forum' || $menu_name == 'forum/topic') ? true :false;
 $replay = ($menu_name == 'replay' || $menu_name == 'replay/map' || $menu_name == 'replay/type') ? true :false;
 $stream = ($menu_name == 'stream' || $menu_name == 'stream/header' || $menu_name == 'stream/settings') ? true :false;
-$chat = ($menu_name == 'chat' || $menu_name == 'chat/smiles' || $menu_name == 'chat/pictures') ? true :false;
+$chat = ($menu_name == 'chat' || $menu_name == 'chat/smiles' || $menu_name == 'chat/pictures' || $menu_name == 'chat/pictures/category') ? true :false;
 $footer = ($menu_name == 'footer' || $menu_name == 'footer/customurl') ? true :false;
 $banner = ($menu_name == 'banner') ? true :false;
 $dbbackup = ($menu_name == 'dbbackup') ? true :false;
@@ -110,7 +110,8 @@ $dbbackup = ($menu_name == 'dbbackup') ? true :false;
                 <ul class="treeview-menu {{ $chat ? 'menu-open' : ''}}">
                     <li @if($menu_name == 'chat') class="active" @endif><a href="{{route('admin.chat')}}"><i class="fa fa-commenting"></i> <span>Cообщения чата</span></a></li>
                     <li @if($menu_name == 'chat/smiles') class="active" @endif><a href="{{route('admin.chat.smiles')}}"><i class="fa fa-smile-o"></i> <span>Улыбки</span></a></li>
-                    <li @if($menu_name == 'chat/picture') class="active" @endif><a href="{{route('admin.chat.pictures')}}"><i class="fa fa-file-image-o"></i> <span>Изображение</span></a></li>
+                    <li @if($menu_name == 'chat/pictures') class="active" @endif><a href="{{route('admin.chat.pictures')}}"><i class="fa fa-file-image-o"></i> <span>Изображение</span></a></li>
+                    <li @if($menu_name == 'chat/pictures/category') class="active" @endif><a href="{{route('admin.chat.pictures.category')}}"><i class="fa fa-file-image-o"></i> <span>Изображение категория</span></a></li>
                 </ul>
             </li>
             {{-- Basement / Footer --}}
