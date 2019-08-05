@@ -135,12 +135,12 @@ class ChatController extends Controller
      */
     public function get_externalimages() {
         $images = array();
-        $extraImages = ChatPicture::with('file')->orderBy('updated_at', 'Desc')->get();
+        $extraImages = ChatPicture::with('file','category')->orderBy('updated_at', 'Desc')->get();
         foreach ($extraImages as $image ) { 
-            if(!isset($images[$image->category])) {
-                $images[$image->category] = array();   
+            if(!isset($images[$image->category->name])) {
+                $images[$image->category->name] = array();   
             }       
-            array_push($images[$image->category], array(
+            array_push($images[$image->category->name], array(
                 'charactor' => $image->charactor,
                 'filepath' => $image->file->link
             ));  
