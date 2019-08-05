@@ -2,7 +2,7 @@
     <tr>
         <td>{{$picture->id}}</td>
         <td>
-            <img class="img-preview" src="{{route('home').($picture->file->link??'/dist/img/default-50x50.gif')}}" alt="Изображение">
+            <img class="img-preview" src="{{route('home').$picture->file->link}}" alt="Изображение">
         </td>
         <td><a href="{{route('admin.user.profile', ['id' => $picture->user->id])}}">{{$picture->user->name}}</a></td>
         <td>{{$picture->category->name}}</td>

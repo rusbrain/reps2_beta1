@@ -95,7 +95,8 @@ class ChatPictureCategoryController extends Controller
     public function destroy($category_id)
     {
         $category = ChatPictureCategory::find($category_id);
-        $category->delete();        
+        $category->delete();
+        
         return back();       
     }
 }

@@ -126,8 +126,7 @@ class ChatController extends Controller
         return response()->json([
             'status' => "ok",
             'smiles' =>  $smiles
-        ], 200); 
-        
+        ], 200);        
     }
 
     /**
@@ -149,7 +148,6 @@ class ChatController extends Controller
         return response()->json([
             'status' => "ok",
             'images' =>  $images
-        ], 200); 
-        
+        ], 200);         
     }
 }
