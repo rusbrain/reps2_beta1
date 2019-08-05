@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\{ CategoryStoreRequest, CategoryUpdateRequest};
 use App\Services\Base\{BaseDataService, AdminViewService};
 use App\Services\Chat\ChatPicturesService;
-use App\ChatPictureCategory;
+use App\{ChatPictureCategory, ChatPicture};
 
 class ChatPictureCategoryController extends Controller
 {
@@ -96,7 +96,11 @@ class ChatPictureCategoryController extends Controller
     {
         $category = ChatPictureCategory::find($category_id);
         $category->delete();
-        
+
+        $pictures = ChatPicture::where('category_id', $category_id)->get(); 
+        foreach ($pictures as $picture) {
+            ChatPicturesService::destroy(ChatPicture::find($picture->id));
+        }       
         return back();       
     }
 }
