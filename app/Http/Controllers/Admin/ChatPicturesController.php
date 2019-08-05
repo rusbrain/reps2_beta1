@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\{ PictureStoreRequest, PictureUpdateRequest};
+use App\Http\Requests\{ ChatPictureSearchAdminRequest, PictureStoreRequest, PictureUpdateRequest};
 use App\Services\Base\{BaseDataService, AdminViewService};
 use App\Services\Chat\ChatPicturesService;
 use App\Http\Controllers\Controller;
@@ -15,9 +15,11 @@ class ChatPicturesController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index(ChatPictureSearchAdminRequest $request)
     {
-        return view('admin.chat.pictures.list')->with(['pictures_count'=> ChatPicture::count(), 'request_data' => []]);
+        $data = ChatPicturesService::search($request)->count();
+        $categories = ChatPictureCategory::orderBy('id')->get();
+        return view('admin.chat.pictures.list')->with(['pictures_count'=> $data,'categories'=>$categories, 'request_data' => $request->validated()]);
     }
 
     /**
@@ -25,9 +27,11 @@ class ChatPicturesController extends Controller
      *
      * @return array
      */
-    public function pagination()
+    public function pagination(ChatPictureSearchAdminRequest $request)
     {
-        $pictures = ChatPicture::with('file', 'user', 'category')->orderBy('updated_at', 'Desc')->paginate(20);
+        
+        $pictures = ChatPicture::getPictures($request);
+   
         return BaseDataService::getPaginationData(
             AdminViewService::getChatPictures($pictures), 
             AdminViewService::getPagination($pictures),

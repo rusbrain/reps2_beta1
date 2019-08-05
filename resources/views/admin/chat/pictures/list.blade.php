@@ -31,6 +31,38 @@
                     <div class="line"></div>
                 </div>
             </div>
+            <div class="box">              
+                <div class="box-body">
+                    <div class="box-tools col-md-12">
+                        <form>
+                            <div class="row">                               
+                                                            
+                                <div class="form-group col-md-3">
+                                    <label>Kатегория:</label>
+                                    <select class="form-control" style="width: 100%;" name="category_id">
+                                        <option value="">Select...</option>
+                                        @foreach($categories as $category)
+                                            <option value="{{$category->id}}"  @if(isset($request_data['category_id']) && $request_data['category_id'] == $category->id) selected @endif>{{$category->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-md-3">
+                                    <label>Персонажи:</label>
+                                    <input type="text" class="form-control" name="charactor" 
+                                    placeholder="Charactor" value="{{$request_data['charactor']??''}}">
+                                </div>
+                               
+                                <div class="form-group col-md-12">
+                                    <div class="text-right">
+                                        <button type="submit" class="btn btn-primary">Поиск</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
             <div class="box">
                 <div class="box-header with-border">
                     <h3 class="box-title">Изображение ({{$pictures_count}})</h3>
