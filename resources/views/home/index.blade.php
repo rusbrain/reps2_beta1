@@ -214,18 +214,17 @@
         }
 
         function popupChat(event, popChatBtn) {
-            event.preventDefault();       
+            event.preventDefault();    
 
             var browser=navigator.appName;
             if (browser=="Microsoft Internet Explorer")
             {
                 window.opener=self;
             }
-            window.open('popup/chat','Chat','toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=350, height=680,resizable =yes');
+            var win = window.open('popup/chat','Chat','toolbar=no,scrollbars=no,location=no,statusbar=no,menubar=no,resizable=no,width=350, height=650,resizable =yes');
             window.moveTo(0,0);
             window.resizeTo(screen.width,screen.height-100);
             self.close();
-        }
-       
+        }       
     </script>
 @endsection

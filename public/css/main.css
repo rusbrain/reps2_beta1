@@ -23,6 +23,12 @@ body.theatre {
   overflow: hidden
 }
 
+body.popchat {
+  background: #292929;
+  overflow: hidden;
+}
+
+
 [data-tip] {
 	position:relative;
 
@@ -1060,9 +1066,6 @@ form label {
 }
 /*******End HEADER********/
 
-#chatroom {
-  background: #292929;
-}
 
 /****************Stream Setion Style*****************/
 

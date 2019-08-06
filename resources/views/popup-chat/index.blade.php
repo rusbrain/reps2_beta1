@@ -13,8 +13,9 @@
     <link rel="stylesheet" href="{{route('home')}}/css/main.css">
     <link rel="stylesheet" href="{{route('home')}}/css/responsive.css">
     <link rel="stylesheet" href="{{route('home')}}/css/message.css">
+    <title>Reps.ru Chat</title>
 </head>
-<body>
+<body class="popchat">
     <div id="chatroom">    
         <chat :auth = "{{ Auth::check() ? Auth::user() : 0 }}">
         </chat>
@@ -24,6 +25,6 @@
     <!--Custom scripts-->
     <script src="{{route('home')}}/js/scripts.js"></script>
     <script src="{{route('home')}}/js/socket.io.js"></script>
-    <script src="{{route('home')}}/js/message.js"></script>
+    <script src="{{route('home')}}/js/message.js"></script>   
 </body>
 </html>
