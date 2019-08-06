@@ -1,6 +1,48 @@
 /* Large Devices, Wide Screens */
+@media only screen and (min-width: 768px)  and (max-width: 992px){
+    .widget-footer a {
+        font-size: 10px;
+    }
+
+    .widget-new-user {
+        margin-top: 10px;
+    }
+
+    .widget-new-user a {
+        display: initial;
+    }
+
+    .widget-new-user a .user-mini-icons-wrapper {
+        float: right;
+    }
+
+    .widget-wrapper .widget-new-user a > span:last-of-type {
+        display: block;
+        text-align: center;
+        width: 100%;
+        max-width: initial;
+    }
+
+    .password-repairing {
+        margin-left: -14px;
+    }
+}
 @media only screen and (min-width: 768px) {
-    
+    .logged-user {
+        height: 230px;
+    }
+    .no-logged-user {
+        height: 230px;
+    }
+    .login-form .login-wrapper {
+        padding-right: 0;
+    }
+}
+/* Medium Devices, Desktops */
+@media only screen and (min-width: 992px) {
+    .widget-footer a {
+        font-size: inherit;
+    }
 }
 /* Large Devices, Wide Screens */
 @media only screen and (max-width: 1415px) {
@@ -23,6 +65,13 @@
 
 }
 @media only screen and (max-width: 768px) {
+    .logo-wrapper a {
+        margin: 26px 0;
+    }
+    .logged-user {
+        padding-bottom: 10px;
+        height: 133px;
+    }
     .stream-section {
         min-height: 420px;
     }
@@ -35,13 +84,13 @@
         display: block;
         width: 300px !important;
         position: absolute;
-        
+
     }
     .stream-section .stream-area .stream-wrapper {
         width: 100% !important;
         float: left;
     }
-    .stream-section .streamlist {        
+    .stream-section .streamlist {
         height: 100%;
     }
     .stream-section .stream-list-wrapper .streams_list {
@@ -51,7 +100,7 @@
         height: 280px;
     }
 
-    .stream-section .stream-area.chat_open .stream-message-wrapper{       
+    .stream-section .stream-area.chat_open .stream-message-wrapper{
         left: 50%;
         top: 53%;
         z-index: 100000000000;
@@ -59,15 +108,26 @@
         position: fixed;
         max-height: 670px;
     }
-    .stream-section .stream-area.chat_close .stream-message-wrapper{       
+    .stream-section .stream-area.chat_close .stream-message-wrapper{
         left: -300px;
         z-index: 100000000000;
     }
-    
 }
 /* Small Devices, Tablets */
 @media only screen and (max-width: 767px) {
-
+    .header-wrapper .admin-button {
+        display: none;
+    }
+    .no-logged-user {
+        height: 133px;
+    }
+    .registration-link {
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+    .login-form .remember input {
+        margin-top: 0 !important;
+    }
 }
 /* Extra Small Devices, Phones */
 @media only screen and (max-width: 728px) {
@@ -92,8 +152,24 @@
 }
 /* Extra Small Devices, Phones */
 @media only screen and (max-width: 440px) {
-
+    .search-form-wrapper .form-group:first-of-type {
+        margin-bottom: 0;
+        width: 100%;
+    }
+    .search-form-wrapper .form-group:last-of-type {
+        margin-bottom: 8px;
+        width: 100%;
+        margin-right: 5px;
+    }
+    .password-repairing {
+        float: right;
+        margin-top: -16px;
+    }
+    .registration-link {
+        margin-bottom: 5px;
+    }
 }
+
 /* Extra Small Devices, Phones */
 @media only screen and (max-width: 420px) {
 
@@ -109,4 +185,18 @@
 /* Extra Small Devices, Phones */
 @media only screen and (max-width: 330px) {
 
+}
+@media only screen and (min-width: 441px) and (max-width: 575px) {
+    .registration-link {
+        margin-top: -34px;
+        margin-bottom: 5px;
+    }
+}
+@media only screen and (max-width: 575px) {
+    .login-form .login-wrapper {
+        padding-right: 0;
+    }
+    .section-header .row-header-wrapper {
+        height: 230px;
+    }
 }

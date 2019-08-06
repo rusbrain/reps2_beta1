@@ -10,12 +10,12 @@
     <div class="widget-header">Pеплеи</div>
     {{-- Rotw Replays --}}
     <div class="widget-replay row">
-        <div class="widget-map col-md-4">
+        <div class="widget-map col-lg-4">
             <a href="{{route('replay.get',['id' => $rotw_replay->id])}}">
                 <img src="{{$rotw_replay->map->url}}" alt="">
             </a>
         </div>
-        <div class="widget-replay-desc col-md-8">
+        <div class="widget-replay-desc col-lg-8">
             <div class="widget-replay-desc-row">
                 <span class="widget-replay-title"></span>
                 <a class="color-blue"
@@ -40,7 +40,7 @@
             <div class="widget-replay-desc-row">
                 <span class="widget-replay-title">Матчап:</span>
                 <span>{{$rotw_replay->first_race}} vs {{$rotw_replay->second_race}}</span>
-            </div>                   
+            </div>
         </div>
     </div>
 
@@ -48,8 +48,8 @@
     @foreach($gosu_replays as $replay)
         @if(($count % 2)==0)
             <div class="widget-replay row">
-            @endif        
-            <div class="widget-replay-sec col-md-6">
+            @endif
+            <div class="widget-replay-sec col-lg-6">
                 <div class="widget-replay-desc-row">
                     <span class="widget-replay-title"></span>
                     <a class="color-blue"
@@ -74,12 +74,12 @@
                 <div class="widget-replay-desc-row">
                     <span class="widget-replay-title">Матчап:</span>
                     <span>{{$replay->first_race}} vs {{$replay->second_race}}</span>
-                </div>                   
+                </div>
             </div>
             @if(($count % 2)==1)
             </div>
-            @endif  
-        
+            @endif
+
         @php $count++; @endphp
     @endforeach
     <div class="justify-content-center display-flex gosu-btn">
@@ -92,8 +92,8 @@
     @foreach($user_replays as $replay)
         @if(($count % 2)==0)
             <div class="widget-replay row">
-            @endif        
-            <div class="widget-replay-sec col-md-6">
+            @endif
+            <div class="widget-replay-sec col-lg-6">
                 <div class="widget-replay-desc-row">
                     <span class="widget-replay-title"></span>
                     <a class="color-blue"
@@ -118,12 +118,12 @@
                 <div class="widget-replay-desc-row">
                     <span class="widget-replay-title">Матчап:</span>
                     <span>{{$replay->first_race}} vs {{$replay->second_race}}</span>
-                </div>                   
+                </div>
             </div>
             @if(($count % 2)==1)
             </div>
-            @endif  
-        
+            @endif
+
         @php $count++; @endphp
     @endforeach
 

@@ -34,7 +34,7 @@ body.theatre {
 	content:'';
 	border-left: 5px solid transparent;
 	border-right: 5px solid transparent;
-	border-bottom: 5px solid #c3c3c3;	
+	border-bottom: 5px solid #c3c3c3;
 	position:absolute;
 	top:30px;
 	left:0;
@@ -877,10 +877,25 @@ form label {
   height: 229px;
   display: flex;
 }
+.logo-wrapper {
+    display: flex;
+    align-items: center;
+}
+.login-form .login-wrapper {
+    padding: 0 5px 0 0;
+}
+.search-form-wrapper {
+    display: flex;
+    justify-content: center;
+}
+.search-form-wrapper .form-group:first-of-type {
+    margin-right: 5px;
+}
 .registration-link {
   font-family: "Roboto-Bold", sans-serif;
   color: #fff;
   margin-bottom: 24px;
+  margin-top: 24px;
   display: block;
   text-align: right;
 }
@@ -893,7 +908,7 @@ form label {
   font-family: "Roboto-Bold", sans-serif;
   color: #fff;
   display: block;
-  text-align: right;
+  text-align: left;
   margin-top: 10px;
 }
 .password-repairing img {
@@ -903,8 +918,8 @@ form label {
   text-decoration: underline;
   color: #fff;
 }
-.login-form div:first-of-type {
-  margin-bottom: 10px;
+#email-error, #password-error {
+    position: absolute;
 }
 .login-form button {
   position: absolute;
@@ -1168,7 +1183,7 @@ form label {
 .stream-section .stream-wrapper,
 .stream-section .stream-list-wrapper  {
   background: #fff;
-  height: 100%;  
+  height: 100%;
 }
 .stream-section .stream-list-wrapper  {
   right: -255px;
@@ -1223,9 +1238,9 @@ form label {
 }
 
 .chat_container .chat_header .popup{
-  cursor: pointer;  
+  cursor: pointer;
   background: url(../images/icons/popup.png) no-repeat center center;
-  background-size: 22px; 
+  background-size: 22px;
   filter: invert(100%);
 }
 .stream-section .stream-area.chat_close .stream-message-wrapper .chat_container .chat_header .popup{
@@ -1265,26 +1280,26 @@ form label {
   width: 30px;
   height: 30px;
   padding: 10px;
-  cursor: pointer;  
+  cursor: pointer;
   left: 5px;
-  z-index: 6;  
+  z-index: 6;
 }
 .stream-section .stream-area.chat_close .stream-wrapper .stream_view .widget-header .chat_button
 {
   background: url(../images/icons/open-chat.png) no-repeat center center;
-  background-size: 20px; 
+  background-size: 20px;
   filter: invert(100%);
 }
 .stream-section .stream-area.chat_open .stream-wrapper .stream_view .widget-header .chat_button{
   background: url(../images/icons/close-chat.png) no-repeat center center;
-  background-size: 20px; 
+  background-size: 20px;
   filter: invert(100%);
 }
 
 .chat_container .chat_header .chat_button{
-  cursor: pointer;  
+  cursor: pointer;
   background: url(../images/icons/close-chat.png) no-repeat center center;
-  background-size: 20px; 
+  background-size: 20px;
   filter: invert(100%);
   width: 30px;
   height: 30px;
@@ -1299,13 +1314,13 @@ form label {
   height: 30px;
   padding: 10px;
   float: right;
- 
+
   cursor: pointer;
 
 }
 .stream-section .stream-wrapper .stream_view .widget-header .list_menu{
   background: url(../images/icons/menu.png) no-repeat center center;
-  background-size: 20px; 
+  background-size: 20px;
   filter: invert(100%);
   right: 20px;
   z-index: 6;
@@ -1313,7 +1328,7 @@ form label {
 /* .stream-section .streamlist .close_menu { */
 .stream-section .stream-wrapper .stream_view .widget-header .list_menu.active{
   background: url(../images/icons/close.png) no-repeat center center;
-  background-size: 30px;  
+  background-size: 30px;
   right: 20px;
   z-index: 6;
   filter: invert(100%);
@@ -1324,17 +1339,17 @@ form label {
   height: 30px;
   padding: 10px;
   right: 60px;
-  float: right; 
+  float: right;
   cursor: pointer;
 }
 .stream-section .stream-area.theatre-off .stream-wrapper .stream_view .widget-header .theatre_mode{
   background: url(../images/icons/theatre_on.png) no-repeat center center;
-  background-size: 30px; 
+  background-size: 30px;
   filter: invert(100%);
 }
 .stream-section .stream-area.theatre-on .stream-wrapper .stream_view .widget-header .theatre_mode{
   background: url(../images/icons/theatre_off.png) no-repeat center center;
-  background-size: 30px; 
+  background-size: 30px;
   filter: invert(100%);
 }
 
@@ -1364,7 +1379,7 @@ form label {
   padding: 5px 10px;
   z-index: 6;
   cursor: pointer;
-  margin-left: 10px;  
+  margin-left: 10px;
   background: url(../images/icons/expand.png) no-repeat center center;
   background-size: 22px;
   filter: invert(100%);
@@ -1406,7 +1421,7 @@ form label {
   visibility: hidden;
 }
 
-.stream-section .stream-list-wrapper .streams_list{  
+.stream-section .stream-list-wrapper .streams_list{
   margin: 10px 0;
   max-height: 590px;
   overflow-y: auto;
@@ -1417,9 +1432,9 @@ form label {
 }
 .widget-wrapper .widget-stream-lists a > span:first-of-type {
   flex:none;
-  
+
 }
-.widget-wrapper .widget-stream-lists a > span:last-of-type {  
+.widget-wrapper .widget-stream-lists a > span:last-of-type {
   text-align: left;
   max-width: 150px;
   word-break: break-word;
@@ -1666,7 +1681,7 @@ form label {
   color: #737373;
 }
 .widget-wrapper .widget-new-user a > span:first-of-type {
-  flex: 0 0 90px;
+  flex: 0 0 60px;
 }
 .widget-wrapper .widget-new-user a > span:last-of-type {
 
@@ -3139,7 +3154,7 @@ body.upload-overlay-open .upload-overlay .showImages{
   background: white;
   position: relative;
   display: inline-block;
-  
+
 }
 body.upload-overlay-open .upload-overlay .open_img {
   padding: 5px 15px;
@@ -3204,7 +3219,7 @@ body.upload-overlay-open .upload-overlay .showImages .images_wrapper .images .pr
   padding:0px !important;
   display: inline-grid;
   position: relative;
- 
+
   cursor: pointer;
   height: 145px;
   margin: auto;
@@ -3238,11 +3253,11 @@ body.upload-overlay-open .upload-overlay .showImages .images_wrapper .images .pr
   max-height: 145px;
 }
 
-:checked 
+:checked
 + label {
   border: solid 1px #0052ff !important;
 }
-:checked 
+:checked
 + label:before {
   background-repeat: no-repeat;
   background-image: url(../images/icons/checkmark.png);
@@ -3252,7 +3267,7 @@ body.upload-overlay-open .upload-overlay .showImages .images_wrapper .images .pr
   background-size: 25px;
 }
 
-:checked 
+:checked
 + label img {
   /* transform: scale(0.9); */
   box-shadow: 0 0 5px #333;
