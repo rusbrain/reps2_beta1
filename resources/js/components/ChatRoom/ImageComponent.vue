@@ -32,7 +32,7 @@ export default {
     this.getImages();
   },
 
-  methods: {    
+  methods: {
     getImages: async function() {
       try {
         let url = "/chat/get_externalimages";

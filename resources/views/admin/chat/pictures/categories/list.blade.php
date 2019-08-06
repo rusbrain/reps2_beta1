@@ -12,13 +12,13 @@
 @endsection
 
 @section('page_header')
-    Изображение
+Категория изображения
 @endsection
 
 @section('breadcrumb')
     <li><a href="{{route('admin.home')}}"><i class="fa fa-dashboard"></i>Главная панель</a></li>
-    <li><a href="{{route('admin.users')}}">Пользователи</a></li>
-    <li class="active">Изображение</li>
+    <li><a href="{{route('admin.chat.pictures')}}">Категория</a></li>
+    <li class="active">Категория изображения</li>
 @endsection
 
 @section('content')
@@ -31,42 +31,10 @@
                     <div class="line"></div>
                 </div>
             </div>
-            <div class="box">              
-                <div class="box-body">
-                    <div class="box-tools col-md-12">
-                        <form>
-                            <div class="row">                               
-                                                            
-                                <div class="form-group col-md-3">
-                                    <label>Kатегория:</label>
-                                    <select class="form-control" style="width: 100%;" name="category_id">
-                                        <option value="">Select...</option>
-                                        @foreach($categories as $category)
-                                            <option value="{{$category->id}}"  @if(isset($request_data['category_id']) && $request_data['category_id'] == $category->id) selected @endif>{{$category->name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                <div class="form-group col-md-3">
-                                    <label>Персонажи:</label>
-                                    <input type="text" class="form-control" name="charactor" 
-                                    placeholder="Charactor" value="{{$request_data['charactor']??''}}">
-                                </div>
-                               
-                                <div class="form-group col-md-12">
-                                    <div class="text-right">
-                                        <button type="submit" class="btn btn-primary">Поиск</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Изображение ({{$pictures_count}})</h3>
-                    <a class="btn btn-info"   href="{{route('admin.chat.pictures.create')}}">Создать</a>
+                    <h3 class="box-title">изображения ({{$categories_count}})</h3>
+                    <a class="btn btn-info" data-toggle="modal" data-target="#modal-default-add"  href="{{route('admin.chat.pictures.category.create')}}">Создать</a>
                     <div class="box-tools pagination-content">
                     </div>
                 </div>
@@ -76,12 +44,8 @@
                         <thead>
                         <tr>
                             <th style="width: 30px">ID</th>
-                            <th>Изображение</th>
-                            <th>Пользователь</th>
-                            <th>Kатегория</th>
-                            <th>Персонажи</th>   
-                            <th>Подпись</th>                                             
-                            <th>Дата и время</th>
+                            <th>Hазвание</th>
+                            <th>Подпись</th>
                             <th>Действия</th>
                         </tr>
                         </thead>
@@ -97,7 +61,7 @@
         <!-- /.col -->
     </div>
     <div class="pop-up-content"></div>
-    {{-- <div class="modal fade" id="modal-default-add">
+    <div class="modal fade" id="modal-default-add">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -117,7 +81,7 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-    <!-- /.modal --> --}}
+    <!-- /.modal -->
 @endsection
 
 @section('js')
@@ -127,16 +91,16 @@
         $(function () {
             $('.select2').select2();
 
-            getPictures(1);
+            getCategories(1);
             $('.pagination-content').on('click', '.pagination-push', function () {
                 $('.load-wrapp').show();
                 let page = $(this).data('to-page');
-                getPictures(page);
+                getCategories(page);
             })
         });
 
-        function getPictures(page) {
-            $.get('{{route('admin.chat.pictures.pagination')}}?page='+page, {!! json_encode($request_data) !!}, function (data) {
+        function getCategories(page) {
+            $.get('{{route('admin.chat.pictures.category.pagination')}}?page='+page, {!! json_encode($request_data) !!}, function (data) {
                 $('.table-content').html(data.table);
                 $('.pagination-content').html(data.pagination);
                 $('.pop-up-content').html(data.pop_up);

@@ -23,6 +23,16 @@ body.theatre {
   overflow: hidden
 }
 
+body.popchat {
+  background: #292929;
+  overflow: hidden;
+}
+
+body.popchat .chat_container .chat_header .popup{
+  display:none
+}
+
+
 [data-tip] {
 	position:relative;
 

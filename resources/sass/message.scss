@@ -93,18 +93,33 @@
             font-size: 14px;
             font-weight: 600;
           }
-          p{
-            .username{
-              color: #deb045;
-              font-weight: 600;              
-            }
+       
+          .demotivator{
+            max-width: 150px;
+            background: black;
+            padding: 15px 15px 5px 15px;
             a{
-              color:#99a589;
-              &:hover {
-                color:#5083d0;
+              img{
+                border: solid 2px white;
               }
             }
+            p{
+              font-weight: 600;
+              text-transform: uppercase;
+            }
+          }         
+         
+          .username{
+            color: #deb045;
+            font-weight: 600;              
           }
+          a{
+            color:#99a589;
+            &:hover {
+              color:#5083d0;
+            }
+          }
+         
       }
     }
   }

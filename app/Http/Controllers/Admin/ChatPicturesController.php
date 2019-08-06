@@ -3,21 +3,23 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\{ PictureStoreRequest, PictureUpdateRequest};
+use App\Http\Requests\{ ChatPictureSearchAdminRequest, PictureStoreRequest, PictureUpdateRequest};
 use App\Services\Base\{BaseDataService, AdminViewService};
 use App\Services\Chat\ChatPicturesService;
 use App\Http\Controllers\Controller;
 use App\ChatPicture;
+use App\ChatPictureCategory;
 
 class ChatPicturesController extends Controller
-{
-    private $categories = array('pics', 'koreans', 'starcrafters', 'users', 'gif', 'trash', 'anime');
+{   
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index(ChatPictureSearchAdminRequest $request)
     {
-        return view('admin.chat.pictures.list')->with(['pictures_count'=> ChatPicture::count(), 'request_data' => []]);
+        $data = ChatPicturesService::search($request)->count();
+        $categories = ChatPictureCategory::orderBy('id')->get();
+        return view('admin.chat.pictures.list')->with(['pictures_count'=> $data,'categories'=>$categories, 'request_data' => $request->validated()]);
     }
 
     /**
@@ -25,15 +27,16 @@ class ChatPicturesController extends Controller
      *
      * @return array
      */
-    public function pagination()
+    public function pagination(ChatPictureSearchAdminRequest $request)
     {
-        $pictures = ChatPicture::with('file', 'user')->orderBy('updated_at', 'Desc')->paginate(20);
+        
+        $pictures = ChatPicture::getPictures($request);
+   
         return BaseDataService::getPaginationData(
             AdminViewService::getChatPictures($pictures), 
             AdminViewService::getPagination($pictures),
             AdminViewService::getChatPicturesPopUp($pictures)
-        );
-    
+        );    
     }
 
     /**
@@ -41,30 +44,9 @@ class ChatPicturesController extends Controller
      */
     public function create()
     {
-        return view('admin.chat.pictures.create')->with(['categories' => $this->categories]);       
+        $categories = ChatPictureCategory::orderBy('id')->get();
+        return view('admin.chat.pictures.create')->with(['categories' => $categories]);       
     }
-
-    // /**
-    //  * :image:
-    //  */
-    // private function get_charactor($charactor_arr){
-    //     $check = true;
-    //     $gen = "";
-    //     while($check){
-    //         $gen   = ':cpic'. rand(1, 299) .':';
-    //         if (!in_array($gen, $charactor_arr)) {
-    //             $check = false;
-    //         }
-    //     }
-    //     return $gen;
-    // }
-    // private function check_charactor($gen, $charactor_arr) 
-    // {        
-    //     if (in_array($gen, $charactor_arr)) {
-    //         return true;
-    //     }
-    //     return false;
-    // }
 
     /**
      * @param PictureStoreRequest $request
@@ -84,8 +66,6 @@ class ChatPicturesController extends Controller
     {
         return ChatPicture::getpictureById($picture_id);
     }
-
-
     
     /**
      * @param $stream_id
@@ -93,7 +73,8 @@ class ChatPicturesController extends Controller
      */
     public function edit($picture_id)
     {
-        return view('admin.chat.pictures.edit')->with(['picture'=> $this->getPictureObject($picture_id), 'categories' => $this->categories]);
+        $categories = ChatPictureCategory::orderBy('id')->get();
+        return view('admin.chat.pictures.edit')->with(['picture'=> $this->getPictureObject($picture_id), 'categories' => $categories]);
     }
 
     /**

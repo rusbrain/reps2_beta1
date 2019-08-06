@@ -25,7 +25,7 @@ class PictureStoreRequest extends FormRequest
     {
         return [
             'image'         =>'required|image|max:2048',
-            'category'      =>'required|string',
+            'category_id'   =>'required|string',
             'charactor'     =>'required|string|unique:chat_pictures',
             'comment'       =>'nullable|string|max:1000',
         ];
@@ -40,7 +40,7 @@ class PictureStoreRequest extends FormRequest
     {
         return [
             'image.required'        => 'Не выбран файл картинки.',
-            'category.required'     => 'Пожалуйста, введите категория',
+            'category_id.required'  => 'Пожалуйста, введите категория',
             'charactor.required'    => 'Пожалуйста, введите строку символов',
             'charactor.unique'      => 'Cтроку уже зарегестрирован.',
             'image.image'           => 'Файл должен быть картинкой.',

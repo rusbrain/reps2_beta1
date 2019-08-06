@@ -79,4 +79,28 @@ class ChatPicturesService
         unset($data['image']);
         return $data;
     }
+
+    
+    /**
+     * @param Request $request
+     * @param bool $query
+     * @return bool
+     */
+    public static function search(Request $request)
+    {
+        $query = ChatPicture::where('id', '>', 0);
+
+        $request_data = $request->validated();
+
+        if (isset($request_data['charactor']) && $request_data['charactor']) {
+            $query->where(function ($q) use ($request_data) {
+                $q->where('charactor', 'like', "%{$request_data['charactor']}%");
+            });
+        }
+        if (isset($request_data['category_id']) && $request_data['category_id']) {
+            $query->where('category_id', $request_data['category_id']);
+        }
+       
+        return $query;
+    }
 }

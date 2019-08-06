@@ -8,6 +8,7 @@ use App\PublicChat;
 use Illuminate\Support\Facades\Auth;
 use App\{User, Country, Replay};
 use App\Services\GeneralViewHelper;
+use App\Services\ChatViewHelper;
 use App\ChatSmile;
 use App\ChatPicture;
 
@@ -34,7 +35,7 @@ class ChatController extends Controller
    
     public function __construct(){
         $this->general_helper = new GeneralViewHelper;
-        $this->allChatImages = $this->general_helper->getAllChatImages();
+        $this->chat_helper = new ChatViewHelper;       
     }
 
     /**
@@ -61,7 +62,7 @@ class ChatController extends Controller
         $message_data = $request->all();
         if (Auth::id() == $request->user_id) {
             $message_data['user_name'] = Auth::user()->name;
-            $message_data['message'] = $this->rewrapperText($message_data['message']);
+            $message_data['message'] = $this->chat_helper->rewrapperText($message_data['message']);
             $message_data['to'] = $this->selected_user;
             $insert = PublicChat::create($message_data);           
             if($insert) {               
@@ -77,50 +78,7 @@ class ChatController extends Controller
         } 
     }
 
-    private function rewrapperText($text) {
-        $text = preg_replace("/:smile([0-9]{1,}):/", '<img src="/images/emoticons/smiles/smile$1.gif" border="0">', $text);
-        $text = preg_replace("/:s([0-9]{1,}):/", '<img src="/images/emoticons/smiles/s$1.gif" border="0">', $text);
-
-        $text = preg_replace("#\[(b)\](.+?)\[/\\1\]#is", "<\\1>\\2</\\1>", $text);
-        $text = preg_replace("#\[(i)\](.+?)\[/\\1\]#is", "<\\1>\\2</\\1>", $text);
-        $text = preg_replace("#\[(u)\](.+?)\[/\\1\]#is", "<\\1>\\2</\\1>", $text);
-
-        $text = preg_replace_callback("#\[(c[0-9]{1,})\](.+?)\[/\\1\]#is", function ($matches) {          
-            return "<span style='color: ".$this->font_colors[$matches[1]]."'>$matches[2]</span>";
-        }, $text);
-
-        $text = preg_replace_callback("#\[(f[0-9]{1,})\](.+?)\[/\\1\]#is", function ($matches) {          
-            return "<span style='font-size: ".$this->font_sizes[$matches[1]]."'>$matches[2]</span>";
-        }, $text);
-      
-        
-        $text = preg_replace_callback("#(:{1,})(.+?)\\1#is", function ($matches) {          
-            return '<img src="'.$this->allChatImages[$matches[2]].'" border="0">';
-        }, $text);
-
-        $text = preg_replace("/\[img\](\r\n|\r|\n)*((http|https):\/\/([^;<>\*\"]+)|[a-z0-9\/\\\._\- ]+)\[\/img\]/siU",
-            "<img src=\"\\2\" class=\"imgl\" border=\"0\" alt=\"\"> ", $text);
-
-        $text = preg_replace_callback("#\[url\](.*?)\[/url\]#is", function ($matches) {
-            return $this->general_helper->_regex_build_url_tags($matches);
-        }, $text);
-
-
-        $text = preg_replace_callback("#\[(d)\](.+?)\[/\\1\]#is", function ($matches) { 
-            $url = isset($matches[2]) ? $matches[2] : $matches[1];         
-            return '<center><a title="'.$url.'" target="_blank" href="'.$url.'" class="id_link">
-                    <img class="smile_inchat" src="'.$url.'"></a><center>';
-        }, $text); 
-        
-        $text = preg_replace_callback('/@([0-9]+),/', function ($matches) {
-            $this->selected_user = $matches[1];
-            $chatusers = User::find($this->selected_user);
-            return '<span class="username '.$this->selected_user.'">@'.$chatusers->name.',</span>';
-        }, $text);
-
-        return $text;
-    }
-
+    
     /**
      * Get just updated message
      */
@@ -168,8 +126,7 @@ class ChatController extends Controller
         return response()->json([
             'status' => "ok",
             'smiles' =>  $smiles
-        ], 200); 
-        
+        ], 200);        
     }
 
     /**
@@ -177,12 +134,12 @@ class ChatController extends Controller
      */
     public function get_externalimages() {
         $images = array();
-        $extraImages = ChatPicture::with('file')->orderBy('updated_at', 'Desc')->get();
+        $extraImages = ChatPicture::with('file','category')->orderBy('updated_at', 'Desc')->get();
         foreach ($extraImages as $image ) { 
-            if(!isset($images[$image->category])) {
-                $images[$image->category] = array();   
+            if(!isset($images[$image->category->name])) {
+                $images[$image->category->name] = array();   
             }       
-            array_push($images[$image->category], array(
+            array_push($images[$image->category->name], array(
                 'charactor' => $image->charactor,
                 'filepath' => $image->file->link
             ));  
@@ -191,7 +148,14 @@ class ChatController extends Controller
         return response()->json([
             'status' => "ok",
             'images' =>  $images
-        ], 200); 
-        
+        ], 200);         
+    }
+
+    /**
+     * popup chat
+     */
+    public function popup()
+    {
+        return view('popup-chat.index');
     }
 }

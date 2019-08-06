@@ -6,15 +6,7 @@
           :socket="socket"
           :messages="messages" 
           :isMessages="isMessages">
-        </MessageComponent>
-        <ChatPopup 
-          :auth="auth" 
-          :visibleFormCrud="visibleFormCrud" 
-          @onPopupClose="popupClose"
-          :socket="socket"
-          :messages="messages"
-          :isMessages="isMessages">
-        </ChatPopup>
+        </MessageComponent>      
         <input type="hidden" id="popupStatus"/>
     </div>
 </template>
@@ -22,12 +14,10 @@
 <script>
 
 import MessageComponent from './MessageComponent.vue'
-import ChatPopup from './ChatPopup.vue'
 
 export default {
   components: {
     MessageComponent,
-    ChatPopup
   }, 
   props: {
     auth: [Object, Number]

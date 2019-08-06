@@ -9,13 +9,16 @@ export const urlify =(text) => {
         return '<a href="' + url + '" target="_blank">' + url + '</a>';
     })
 };
+export const convertHTML = (str) => {
+    return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/'/g, "&apos;").replace(/"/g, "&quot;")
+};
 export const wrapperTxt = (text) => {
   let lines = text.split('\r\n');
   let wrap_text = '';
   lines.forEach(function(item, index){
     if(item != ''){
         let lineTxt = item.replace('\n','');
-        wrap_text += '<p>' + lineTxt + '</p>'
+        wrap_text +=  lineTxt + '\n';
     }
   });
   return wrap_text;

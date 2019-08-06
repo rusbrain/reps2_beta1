@@ -48,17 +48,16 @@ class StreamService
   
 
     /**
-     * @param Request $request
-     * @param Replay $replay
-     * @return bool|void
+     * @param StreamUpdateRequest $request
+     * @return mixed
      */
-    public static function updateStream(Request $request, Stream $stream)
+    public static function updateStream(StreamUpdateRequest $request, Stream $stream)
     {
         $stream_data = $request->validated();
 
         if (!$request->has('approved')) {
             $stream_data['approved'] = "0";
-        }      
+        }     
         
         Stream::where('id', $stream->id)->update($stream_data);
     }

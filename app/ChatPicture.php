@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\{
 };
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\ChatPictureSearchAdminRequest;
+use App\Services\Chat\ChatPicturesService;
 
 /**
  * @property integer $id
@@ -40,7 +42,7 @@ class ChatPicture extends Model
         'user_id',
         'file_id',
         'comment',
-        'category',
+        'category_id',
         'charactor'
     ];
 
@@ -55,6 +57,14 @@ class ChatPicture extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
+    public function category()
+    {
+        return $this->belongsTo('App\ChatPictureCategory');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function file()
     {
         return $this->belongsTo('App\File');
@@ -64,6 +74,16 @@ class ChatPicture extends Model
         return ChatPicture::where('id', $id)
         ->with('user', 'file')
         ->first();
+    }
+
+    /**
+     * @param ChatPictureSearchAdminRequest $request
+     * @return mixed
+     */
+    public static function getPictures(ChatPictureSearchAdminRequest $request)
+    {
+        return ChatPicturesService::search($request)
+            ->with('file', 'user', 'category')->orderBy('updated_at', 'Desc')->paginate(20);
     }
 
 }
