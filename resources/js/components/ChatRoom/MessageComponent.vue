@@ -3,7 +3,7 @@
         <div class="chat_header">
             <span>{{ user_email }}</span>            
             <a v-if="isMobile()" href="#" class="chat_button" data-tip="Chatroom" onclick="chatroom_toggle(event, $(this))"></a>
-            <p v-if="!isMobile()" class="popup" @click="popupChat"></p>
+            <a v-if="!isMobile()" href="#" class="popup" data-tip="Popup" onclick="popupChat(event, $(this))"></a>
         </div>
         <vue-custom-scrollbar class="chat_text_container" id="chat_text_container">
             <div v-if="ignored_users.length > 0" class="ignoredUsers" v-for="(user,key) in ignored_users" :key="key">
@@ -21,7 +21,6 @@
                   </p>
                   <p class="msg_text">
                     <span :class="setClass(message.to)" v-html="message.message"></span>
-                    <!-- <span :class="setClass(message.to)">{{message.message}}</span> -->
                   </p>
                 </div>
             </div>
@@ -36,19 +35,18 @@
               <ImageComponent :status="chat_action.image" @turnOffStatus="turnOffStatus"></ImageComponent>
               <FSizeComponent :status="chat_action.size" @turnOffStatus="turnOffStatus"></FSizeComponent>
               <FColorComponent :status="chat_action.color" @turnOffStatus="turnOffStatus"></FColorComponent>
-              <!-- <UserComponent :status="chat_action.user" :filter_user="filter_user" @turnOffStatus="turnOffStatus" ></UserComponent> -->
 
               <div class="extra">
                 <p class="bold" @click="bold()"></p>
                 <p class="italic" @click="italic()"></p>
                 <p class="underline" @click="underline()"></p>
-
+                <!--  -->
                 <p class="link" @click="link()"></p>
                 <p class="img" @click="img()"></p>
-
+                <!--  -->
                 <p class="font_size" @click="selectItem('size')"></p>
                 <p class="font_color" @click="selectItem('color')"></p>
-
+                <!--  -->
                 <p class="pic" @click="selectItem('image')"></p>
                 <p class="smile" @click="selectItem('smile')"></p>               
                 <p class="meme" @click="meme()">[d]</p>
@@ -126,15 +124,13 @@ export default {
         return "Guest";
       }
     },
-
     userId: function() {
       if (this.auth != 0) {
         return this.auth.id;
       } else {
         return 0;
       }
-    },   
-    
+    }    
   },
 
   methods: {
@@ -147,9 +143,11 @@ export default {
     newline() {
       this.message = `${this.message}\r\n`;
     },
+
     selectUser(user) {
       chatHelper.insertText('@' + user + ',');
-    },   
+    },  
+
     sendMessage(event) {
       
       if (this.message.length > 0) {
@@ -173,6 +171,7 @@ export default {
         alert("Please Enter Your Message.");
       }      
     },
+    
     createMsgObj: function(message) {
       return {
         user_id: this.auth.id,

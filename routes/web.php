@@ -260,6 +260,9 @@ Route::group(['middleware' => 'activity'], function () {
         // Route::get('/get_chatusers', 'ChatController@get_chatusers')->name('chat.get_chatusers');
     });
 
+    // Pop up chat
+    Route::get('popup/chat', 'ChatController@popup')->name('popup.chat');
+
     // Admin Routes
 
     Route::group(['middleware' => ['auth', 'admin_panel'], 'prefix' => 'admin_panel', 'namespace' => 'Admin'],

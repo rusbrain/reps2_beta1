@@ -212,6 +212,11 @@
                 twitchChatArea.addClass('active')
             }
         }
+
+        function popupChat(event, popChatBtn) {
+            event.preventDefault();       
+            window.open('popup/chat', 'Chat', 'width=350, height=680');
+        }
        
     </script>
 @endsection

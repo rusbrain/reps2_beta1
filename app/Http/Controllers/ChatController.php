@@ -150,4 +150,12 @@ class ChatController extends Controller
             'images' =>  $images
         ], 200);         
     }
+
+    /**
+     * popup chat
+     */
+    public function popup()
+    {
+        return view('popup-chat.index');
+    }
 }
