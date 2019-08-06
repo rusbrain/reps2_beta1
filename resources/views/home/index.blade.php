@@ -215,7 +215,16 @@
 
         function popupChat(event, popChatBtn) {
             event.preventDefault();       
-            window.open('popup/chat', 'Chat', 'width=350, height=680');
+
+            var browser=navigator.appName;
+            if (browser=="Microsoft Internet Explorer")
+            {
+                window.opener=self;
+            }
+            window.open('popup/chat','Chat','toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=350, height=680,resizable =yes');
+            window.moveTo(0,0);
+            window.resizeTo(screen.width,screen.height-100);
+            self.close();
         }
        
     </script>
