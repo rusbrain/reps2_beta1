@@ -60,6 +60,8 @@
                   placeholder="Введите сообщение и нажмите Enter"                       
                   :min-height="49"
                   :max-height="350"
+                  :autosize="false"
+                  maxlength="120"
                   class="form-control"
                   id="editor"
                   ref="input"
