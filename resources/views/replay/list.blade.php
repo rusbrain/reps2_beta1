@@ -3,6 +3,9 @@
 @php $countries = $general_helper->getCountries();@endphp
 
 @section('sidebar-left')
+    <!-- Gosu Replay -->
+    @include('sidebar-widgets.gosu-replays')
+    <!-- END Gosu Replay -->
     <!-- All Forum Topics -->
     @include('sidebar-widgets.search-replay-form')
     <!-- END All Forum Topics -->
