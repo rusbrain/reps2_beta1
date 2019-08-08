@@ -398,7 +398,7 @@ Route::group(['middleware' => 'activity'], function () {
                 Route::get('/{id}/edit', 'ReplayController@edit')->name('admin.replay.edit');
                 Route::get('/add', 'ReplayController@add')->name('admin.replay.add');
                 Route::post('/create', 'ReplayController@create')->name('admin.replay.create');
-                Route::post('/{id}/edit', 'ReplayController@save')->name('admin.replay.save');
+                Route::post('/{id}/save', 'ReplayController@save')->name('admin.replay.save');
                 Route::post('/{id}/send_comment', 'ReplayController@sendComment')->name('admin.replay.comment_send');
 
                 Route::group(['prefix' => 'map'], function () {
