@@ -132,17 +132,17 @@ class ReplayController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit($id)
-    {
-        //check editable users
+    {       
         $replay = Replay::where('id', $id)->with('file')->first();
 
-        if(Auth::id() == $replay->user_id || $this->general_helper->isAdmin() || $this->general_helper->isModerator()){
-            if (!$replay) {
-                return abort(404);
+        if ($replay) {
+            if(Auth::id() == $replay->user_id || $this->general_helper->isAdmin() || $this->general_helper->isModerator()){
+                return view('replay.edit', ['replay' => $replay]);
+            } else {
+                return abort(403);
             }
-            return view('replay.edit', ['replay' => $replay]);
         }
-        return abort(404);        
+        return abort(404);     
     }
 
     /**
@@ -155,10 +155,13 @@ class ReplayController extends Controller
     public function update(ReplayUpdateRequest $request, $id)
     {
         $replay = Replay::find($id);
-        if(Auth::id() == $replay->user_id || $this->general_helper->isAdmin() || $this->general_helper->isModerator()){
-            if ($replay) {
+        
+        if ($replay) {
+            if(Auth::id() == $replay->user_id || $this->general_helper->isAdmin() || $this->general_helper->isModerator()){
                 ReplayService::updateReplay($request, $replay);
                 return redirect()->route('replay.get', ['id' => $replay->id]);
+            } else {
+                return abort(403);
             }
         }
         return abort(404);
