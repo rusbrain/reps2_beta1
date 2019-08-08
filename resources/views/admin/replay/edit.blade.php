@@ -41,7 +41,7 @@ $extraSmiles = $general_helper->getextraSmiles();
             <div class="box-body">
                 <div class="box-tools col-md-12">
                     <div class="post">
-                        <form method="post" enctype="multipart/form-data">
+                        <form method="post" enctype="multipart/form-data" action="{{route('admin.replay.save',['id' => $replay->id])}}">
                             @csrf
                             <div class="row">
                                 <div class="col-md-4">
@@ -235,11 +235,11 @@ $extraSmiles = $general_helper->getextraSmiles();
                                         <!-- /. tools -->
                                     </div>
                                     <div class="form-group">
-                                        <input type="file" id="preview_img" name="preview_img">
+                                        <input type="file" id="replay" name="replay">
                                     </div>
-                                    @if ($errors->has('avatar'))
+                                    @if ($errors->has('replay'))
                                         <span class="invalid-feedback text-red" role="alert">
-                                        <strong>{{ $errors->first('avatar') }}</strong>
+                                        <strong>{{ $errors->first('replay') }}</strong>
                                     </span>
                                     @endif
                                 </div>

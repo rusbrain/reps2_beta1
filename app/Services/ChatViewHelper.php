@@ -35,7 +35,6 @@ class ChatViewHelper
     }
 
     public function rewrapperText($text) {
-
         $text = $this->html_encode($text);
         $text = preg_replace("/:smile([0-9]{1,}):/", '<img src="'.$this->host.'/images/emoticons/smiles/smile$1.gif" border="0">', $text);
         $text = preg_replace("/:s([0-9]{1,}):/", '<img src="'.$this->host.'/images/emoticons/smiles/s$1.gif" border="0">', $text);

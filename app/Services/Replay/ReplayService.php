@@ -235,7 +235,9 @@ class ReplayService
             }
         }
         if ($request->has('replay')) {
-            FileService::removeFile($replay->file_id);
+            if($replay->file_id){
+                FileService::removeFile($replay->file_id);
+            }
 
             $title = 'Replay ' . $request->has('title') ? $request->get('title') : '';
             $file = File::storeFile($replay_data['replay'], 'replays', $title);

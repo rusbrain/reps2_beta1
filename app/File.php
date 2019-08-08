@@ -44,16 +44,22 @@ class File extends Model
     public static function storeFile($file, $dir_name, $file_title = '', $flag= false, $charactor = false)
     {
         $uploading_path = $dir_name.'/'.Carbon::now()->format('Y-m-d');
-        $ext =  (!$flag || $flag == 'picture')  ? pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION) : 'gif';
-        $original_name = Carbon::now()->timestamp. '.' .$ext;
 
-        if ($flag && $charactor) {
-            $original_name = str_replace(":","",$charactor) . '.' . $ext;
-            $uploading_path = $dir_name;
-        }
+        // check chat smile or picture
+        if ($charactor) {
+            $ext =  (!$flag || $flag == 'picture')  ? pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION) : 'gif';
+            $original_name = Carbon::now()->timestamp. '.' .$ext;   
+    
+            if ($flag && $charactor) {
+                $original_name = str_replace(":","",$charactor) . '.' . $ext;
+                $uploading_path = $dir_name;
+            }
+        } else {
+            $original_name = Carbon::now()->timestamp. '_' . $file->getClientOriginalName();
+        }     
        
         $path = str_replace('public', '/storage',  $file->storeAs('public/' . $uploading_path, $original_name));
-
+        
         if($flag == 'smile') {
             $img = Image::make(public_path($path))->resize(16, 16, function($constraint) {
                 $constraint->aspectRatio();
