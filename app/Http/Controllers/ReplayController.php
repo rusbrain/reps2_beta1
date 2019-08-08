@@ -10,6 +10,7 @@ use App\Services\Replay\ReplayService;
 use Illuminate\Support\Facades\{
     Auth, Storage
 };
+use App\Services\GeneralViewHelper;
 
 class ReplayController extends Controller
 {
@@ -41,6 +42,13 @@ class ReplayController extends Controller
      * @param ReplaySearchRequest $request
      * @return $this
      */
+
+    public $general_helper;
+
+    public function __construct() {
+        $this->general_helper = new GeneralViewHelper;
+    }
+    
     public function index($type = false, ReplaySearchRequest $request)
     {
         $request_data = '';
@@ -125,11 +133,16 @@ class ReplayController extends Controller
      */
     public function edit($id)
     {
+        //check editable users
         $replay = Replay::where('id', $id)->with('file')->first();
-        if (!$replay) {
-            return abort(404);
+
+        if(Auth::id() == $replay->user_id || $this->general_helper->isAdmin() || $this->general_helper->isModerator()){
+            if (!$replay) {
+                return abort(404);
+            }
+            return view('replay.edit', ['replay' => $replay]);
         }
-        return view('replay.edit', ['replay' => $replay]);
+        return abort(404);        
     }
 
     /**
@@ -142,9 +155,11 @@ class ReplayController extends Controller
     public function update(ReplayUpdateRequest $request, $id)
     {
         $replay = Replay::find($id);
-        if ($replay) {
-            ReplayService::updateReplay($request, $replay);
-            return redirect()->route('replay.get', ['id' => $replay->id]);
+        if(Auth::id() == $replay->user_id || $this->general_helper->isAdmin() || $this->general_helper->isModerator()){
+            if ($replay) {
+                ReplayService::updateReplay($request, $replay);
+                return redirect()->route('replay.get', ['id' => $replay->id]);
+            }
         }
         return abort(404);
     }
