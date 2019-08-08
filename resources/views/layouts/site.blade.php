@@ -27,7 +27,7 @@
 <body>
 @inject('general_helper', 'App\Services\GeneralViewHelper')
 
-@php 
+@php
     $streamSettings = $general_helper->getStreamSettings();
     $path = $general_helper->getActivePath();
     $isDesktop = (new \Jenssegers\Agent\Agent())->isDesktop();
@@ -42,12 +42,12 @@
     <!--END SECTION HEADER-->
 
     <!--SECTION CONTENT-->
-    
+
     <section>
         <div class="container">
-            <!--Stream Section-->  
-            @if(!empty($streamSettings) && $path == '/')  
-                @if($streamSettings->headline)        
+            <!--Stream Section-->
+            @if(!empty($streamSettings) && $path == '/')
+                @if($streamSettings->headline)
                     <div class="row">
                         <div class="col-md-12">
                             <div class="stream-headline-wrapper">
@@ -57,8 +57,8 @@
                     </div>
                 @endif
                 @if($streamSettings->main_section)
-                    <div class="row stream-section">               
-                                            
+                    <div class="row stream-section">
+
                         <div class="col-md-12 stream-area {{$isDesktop?'chat_open':'chat_close'}} theatre-off">
                             <div class="stream-message-wrapper">
                                 @yield('stream-message')
@@ -78,8 +78,8 @@
                 @endif
             @endif
             <!--END Stream Section-->
-           
-            <div class="row">                
+
+            <div class="row">
                 <!--SIDEBAR LEFT-->
                 <div class="col-md-3">
                     <div class="sidebar-wrapper">
@@ -177,13 +177,13 @@
 <!-- ========== END ALL MODAL WINDOWS ============ -->
 
 {{-- Sceditor UPload overlay --}}
-<div class="upload-overlay">    
+<div class="upload-overlay">
     <div class="showImages">
         <span class="close_overlay"></span>
         <div class="all_images"></div>
-       
+
         <button class="open_img">Open</span>
-          
+
     </div>
 </div>
 
