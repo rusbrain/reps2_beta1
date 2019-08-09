@@ -110,6 +110,7 @@ class CommentController extends Controller
      */
     public function destroy($id)
     {
+        return abort(403); // Not allowed this method
         $object = Comment::find($id);
 
         if (!$object){

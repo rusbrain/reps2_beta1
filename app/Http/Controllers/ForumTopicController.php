@@ -139,6 +139,9 @@ class ForumTopicController extends Controller
      */
     public function destroy($id)
     {
+        // Not allowed 
+        return abort(403);
+        
         $topic = ForumTopic::find($id);
 
         if (!$topic){

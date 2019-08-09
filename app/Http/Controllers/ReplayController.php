@@ -268,6 +268,7 @@ class ReplayController extends Controller
      */
     public function destroy($id)
     {
+        return abort(403); //Not allowed this method
         $replay = Replay::find($id);
         if (!$replay) {
             return abort(404);

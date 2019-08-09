@@ -128,7 +128,7 @@ Route::group(['middleware' => 'activity'], function () {
                 Route::get('/my', 'ForumTopicController@getUserTopic')->name('forum.topic.my_list');
                 Route::get('/create', 'ForumTopicController@create')->name('forum.topic.create');
                 Route::post('/store', 'ForumTopicController@store')->name('forum.topic.store');
-                Route::get('{id}/delete', 'ForumTopicController@destroy')->name('forum.topic.delete');
+                Route::get('{id}/delete', 'ForumTopicController@destroy')->name('forum.topic.delete'); // not allowed on front
                 Route::get('{id}/edit', 'ForumTopicController@edit')->name('forum.topic.edit');
                 Route::post('{id}/update', 'ForumTopicController@update')->name('forum.topic.update');
                 Route::post('{id}/rebase', 'ForumTopicController@rebase')->name('forum.topic.rebase');
@@ -138,7 +138,7 @@ Route::group(['middleware' => 'activity'], function () {
 
                 Route::group(['prefix' => 'comment'], function () {
                     Route::post('/store', 'TopicCommentController@store')->name('forum.topic.comment.store');
-                    Route::get('{id}/delete', 'TopicCommentController@destroy')->name('forum.topic.comment.delete');
+                    Route::get('{id}/delete', 'TopicCommentController@destroy')->name('forum.topic.comment.delete'); // not allowed on front
                     Route::get('{comment}/edit', 'TopicCommentController@edit')->name('forum.topic.comment.edit');
                     Route::post('{comment}/update', 'TopicCommentController@update')->name('forum.topic.comment.update');
                 });
@@ -184,7 +184,7 @@ Route::group(['middleware' => 'activity'], function () {
             Route::post('/store', 'ReplayController@store')->name('replay.store');
             Route::get('/{id}/edit', 'ReplayController@edit')->name('replay.edit');
             Route::post('/{id}/update', 'ReplayController@update')->name('replay.update');
-            Route::get('{id}/delete', 'ReplayController@destroy')->name('replay.delete');
+            Route::get('{id}/delete', 'ReplayController@destroy')->name('replay.delete'); // not allowed on front
 
             Route::get('/my', 'ReplayUsersController@getUserReplay')->name('replay.my_user');
             Route::get('/my/paginate', 'ReplayUsersController@getUserReplayPaginate')->name('replay.my_users.paginate');
@@ -196,7 +196,7 @@ Route::group(['middleware' => 'activity'], function () {
             Route::post('{id}/set_evaluation', 'ReplayRatingController@setEvaluation')->name('replay.set_evaluation');
             Route::group(['prefix' => 'comment'], function () {
                 Route::post('/store', 'ReplayCommentController@store')->name('replay.comment.store');
-                Route::get('{id}/delete', 'ReplayCommentController@destroy')->name('replay.comment.delete');
+                Route::get('{id}/delete', 'ReplayCommentController@destroy')->name('replay.comment.delete'); // not allowed on front
                 Route::get('{comment}/edit', 'ReplayCommentController@edit')->name('replay.comment.edit');
                 Route::post('{comment}/update', 'ReplayCommentController@update')->name('replay.comment.update');
             });
@@ -236,7 +236,7 @@ Route::group(['middleware' => 'activity'], function () {
 
             Route::group(['prefix' => 'comment'], function () {
                 Route::post('/store', 'UserGalleryCommentController@store')->name('gallery.comment.store');
-                Route::get('{id}/delete', 'UserGalleryCommentController@destroy')->name('gallery.comment.delete');
+                Route::get('{id}/delete', 'UserGalleryCommentController@destroy')->name('gallery.comment.delete'); // not allowed on front
                 Route::get('{comment}/edit', 'UserGalleryCommentController@edit')->name('gallery.comment.edit');
                 Route::post('{comment}/update', 'UserGalleryCommentController@update')->name('gallery.comment.update');
             });
