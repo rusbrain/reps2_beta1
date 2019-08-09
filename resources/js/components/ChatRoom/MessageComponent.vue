@@ -20,7 +20,9 @@
                       <span class="msg_timestamp">{{convertTo(message.created_at)}}</span>
                   </p>
                   <p class="msg_text">
-                    <span :class="setClass(message.to)" v-html="message.message"></span>
+                    <span  :class="setClass(message.to)" v-html="showMessage(index)"></span>
+                    <span class="more_less" v-if="message.more_length && message.show_more" @click="show_more(index)"> More</span>
+                    <span class="more_less" v-if="message.more_length && !message.show_more" @click="show_less(index)"> Less</span>
                   </p>
                 </div>
             </div>
@@ -53,7 +55,7 @@
               </div>
               <div class="input-group">
                 <textarea-autosize
-                  v-model="message"   
+                  v-model="message"
                   @keyup.enter.exact.native="sendMessage($event)"
                   @keydown.enter.ctrl.exact.native="newline"
                   @keydown.enter.shift.exact.native="newline"
@@ -61,7 +63,6 @@
                   :min-height="49"
                   :max-height="350"
                   :autosize="false"
-                  maxlength="120"
                   class="form-control"
                   id="editor"
                   ref="input"
@@ -233,6 +234,18 @@ export default {
         self.chat_action[key] = false;
       }) 
     },
+
+    showMessage: function(index) {
+      return this.messages[index].show_more ? this.messages[index].short_msg : this.messages[index].message;
+    },
+
+    show_more: function(index) {
+      this.messages[index].show_more = false;
+    },
+
+    show_less: function(index) {
+      this.messages[index].show_more = true;
+    },  
    
   }
 };

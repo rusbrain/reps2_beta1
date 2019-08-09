@@ -119,6 +119,13 @@
               color:#5083d0;
             }
           }
+          .more_less {
+            color: #2e698c;
+            cursor: pointer;
+            &:hover {
+              color: #0663d3;
+            }
+          }
          
       }
     }
