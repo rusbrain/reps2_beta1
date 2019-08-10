@@ -155,9 +155,9 @@ export default {
       if (this.message.length > 0) {
         let message = utilsHelper.wrapperTxt(this.message);
         if (message.trim().length == 0) {
-           alert("Please input text.");
-           this.message = '';
-           return false;
+          this.message = '';
+          alert("Please input text.");
+          return false;
         }
         let messagePacket = this.createMsgObj(message);     
         let currentObj = this;

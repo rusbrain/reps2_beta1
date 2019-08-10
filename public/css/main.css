@@ -26,12 +26,18 @@ body.theatre {
 body.popchat {
   background: #292929;
   overflow: hidden;
+  width: 350px !important;
+  margin: auto;
+  border: solid 1px #424242;
 }
-
 body.popchat .chat_container .chat_header .popup{
   display:none
 }
 
+body.popchat .chat_container .chat_text_container {
+  max-height: calc( 100vh - 140px) !important;
+  min-height: calc( 100vh - 140px) !important;
+}
 
 [data-tip] {
 	position:relative;
@@ -1256,9 +1262,7 @@ form label {
 .stream-section .stream-area.chat_close .stream-message-wrapper .chat_container .chat_header .popup{
   display:none
 }
-.stream-section .stream-area.theatre-on .stream-message-wrapper .chat_container .chat_text_container {
-  max-height: calc( 100vh - 130px);
-}
+
 /* Stream wrapper */
 .stream-section .stream-area.chat_open .stream-wrapper {
   width: 75%;

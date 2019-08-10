@@ -1,17 +1,18 @@
 
 import moment from 'moment';
 
-export const urlify =(text) => {
-      
+export const urlify =(text) => {      
     text.replace(/(\\r)*\\n/g, '<br>')
     var urlRegex = /(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/igm;
     return text.replace(urlRegex, function(url) {
         return '<a href="' + url + '" target="_blank">' + url + '</a>';
     })
 };
+
 export const convertHTML = (str) => {
     return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/'/g, "&apos;").replace(/"/g, "&quot;")
 };
+
 export const wrapperTxt = (text) => {
   let lines = text.split('\r\n');
   let wrap_text = '';

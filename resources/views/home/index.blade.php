@@ -214,17 +214,28 @@
         }
 
         function popupChat(event, popChatBtn) {
-            event.preventDefault();    
+            event.preventDefault(); 
+            PopupCenter('popup/chat','Chat','350',(screen.height-150))
 
-            var browser=navigator.appName;
-            if (browser=="Microsoft Internet Explorer")
-            {
-                window.opener=self;
-            }
-            var win = window.open('popup/chat','Chat','toolbar=no,scrollbars=no,location=no,statusbar=no,menubar=no,resizable=no,width=350, height=650,resizable =yes');
-            window.moveTo(0,0);
-            window.resizeTo(screen.width,screen.height-100);
-            self.close();
-        }       
+            // var win = window.open('popup/chat','Chat','toolbar=no,scrollbars=no,location=no,statusbar=no,menubar=no,resizable=no,width=350, height=650,resizable =yes');
+           
+        }   
+        
+        function PopupCenter(url, title, w, h) {
+            // Fixes dual-screen position                         Most browsers      Firefox
+            var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : window.screenX;
+            var dualScreenTop = window.screenTop != undefined ? window.screenTop : window.screenY;
+
+            var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+            var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+
+            var systemZoom = width / window.screen.availWidth;
+            var left = (width - w) / 2 / systemZoom + dualScreenLeft
+            var top = (height - h - 50) / 2 / systemZoom + dualScreenTop
+                var newWindow = window.open(url, title, 'toolbar=no,scrollbars=no,location=no,statusbar=no,menubar=no,resizable=no, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
+
+            // Puts focus on the newWindow
+            if (window.focus) newWindow.focus();
+        }
     </script>
 @endsection
