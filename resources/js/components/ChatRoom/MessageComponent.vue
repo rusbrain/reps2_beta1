@@ -152,9 +152,14 @@ export default {
     },  
 
     sendMessage(event) {
-      
       if (this.message.length > 0) {
-        let messagePacket = this.createMsgObj(utilsHelper.wrapperTxt(this.message));     
+        let message = utilsHelper.wrapperTxt(this.message);
+        if (message.trim().length == 0) {
+           alert("Please input text.");
+           this.message = '';
+           return false;
+        }
+        let messagePacket = this.createMsgObj(message);     
         let currentObj = this;
         event.preventDefault();
         let self = this;

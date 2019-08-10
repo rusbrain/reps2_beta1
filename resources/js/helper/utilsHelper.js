@@ -20,7 +20,7 @@ export const wrapperTxt = (text) => {
         let lineTxt = item.replace('\n','');
         wrap_text += lineTxt;
     }
-  });
+  });  
   return wrap_text;
 };
 
