@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
 //         $this->call(TestBannerSedding::class);//TODO: hide for production
          $this->call(ForumSectionIconsSeed::class);
          $this->call(DBRelocationDataSeed::class);
+         $this->call(TourneyTableSeeder::class);
 
 //         $this->call(UserBirthdaysSeeder::class);//TODO: hide for production
     }
