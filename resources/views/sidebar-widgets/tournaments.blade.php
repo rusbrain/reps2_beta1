@@ -4,7 +4,7 @@
 @endphp
 
 <div class="widget-wrapper">
-    <div class="widget-header">Турниры</div>
+    <div class="widget-header">Предстоящие турниры</div>
     {{-- Rotw Replays --}}
     @foreach($upcoming_tournaments as $tournament)
         <div class="widget-tournament row">
