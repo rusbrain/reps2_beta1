@@ -1604,6 +1604,18 @@ form label {
   font-family: "Roboto-Medium", sans-serif;
   color: #4d4d4d !important;
 }
+
+.widget-tournament {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  line-height: 17px;
+  align-items: center;
+}
+
+.widget-tournament .widget-map {
+  padding-right: 0px !important;
+}
+
 .widget-title img {
   margin-right: 15px;
 }

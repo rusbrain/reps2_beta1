@@ -54,6 +54,7 @@ class GeneralViewHelper
     protected $footer_urls;
     protected $getextraSmiles;
     protected $getChatPictures;
+    protected $upcomingtournaments;
 
     public function __construct()
     {
@@ -273,6 +274,15 @@ class GeneralViewHelper
     {
         self::$instance->streamheader = self::$instance->streamheader ?? BaseDataService::getStreamHeader();
         return self::$instance->streamheader;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUpcomingTournaments()
+    {
+        self::$instance->upcomingtournaments = self::$instance->upcomingtournaments ?? BaseDataService::getUpTournaments();
+        return self::$instance->upcomingtournaments;
     }
 
     

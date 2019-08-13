@@ -55,6 +55,10 @@
     @include('sidebar-widgets.banner')
     <!-- END Banners -->
 
+    <!-- Tournaments -->
+    @include('sidebar-widgets.tournaments')
+    <!-- END Tournaments -->
+
     <!--Votes-->
     @include('sidebar-widgets.votes')
     <!-- END Vote -->

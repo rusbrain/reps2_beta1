@@ -8,7 +8,7 @@
 
 namespace App\Services\Base;
 
-use App\{ForumTopic, Replay, User, Banner, StreamHeader, Stream, StreamSetting, ChatSmile, ChatPicture};
+use App\{ForumTopic, Replay, User, Banner, StreamHeader, Stream, StreamSetting, ChatSmile, ChatPicture, TourneyList};
 use App\Http\Requests\QuickEmailRequest;
 use App\Mail\QuickEmail;
 use Carbon\Carbon;
@@ -81,6 +81,11 @@ class BaseDataService
     public static function getStreamHeader()
     {
         return StreamHeader::orderBy('updated_at', 'Desc')->get();
+    }
+
+    public static function getUpTournaments()
+    {
+        return TourneyList::where('visible', 1)->orderBy('created_at', 'Desc')->limit(5)->get();
     }
 
     public static function streams_list() {
