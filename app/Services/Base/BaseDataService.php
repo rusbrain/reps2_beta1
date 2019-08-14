@@ -83,11 +83,6 @@ class BaseDataService
         return StreamHeader::orderBy('updated_at', 'Desc')->get();
     }
 
-    public static function getUpTournaments()
-    {
-        return TourneyList::where('visible', 1)->orderBy('created_at', 'Desc')->limit(5)->get();
-    }
-
     public static function streams_list() {
         return Stream::where('approved', 1)->where('active', 1)->orderBy('updated_at', 'Desc')->get(); // how many limit ???
     }

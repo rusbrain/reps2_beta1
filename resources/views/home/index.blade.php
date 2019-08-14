@@ -27,6 +27,10 @@
 
 {{-- Main Section --}}
 @section('sidebar-left')
+    <!-- Tournaments -->
+    @include('sidebar-widgets.tournaments')
+    <!-- END Tournaments -->
+
     <!-- Gosu Replay -->
     @include('sidebar-widgets.gosu-replays')
     <!-- END Gosu Replay -->
@@ -54,10 +58,6 @@
     <!--Banners-->
     @include('sidebar-widgets.banner')
     <!-- END Banners -->
-
-    <!-- Tournaments -->
-    @include('sidebar-widgets.tournaments')
-    <!-- END Tournaments -->
 
     <!--Votes-->
     @include('sidebar-widgets.votes')

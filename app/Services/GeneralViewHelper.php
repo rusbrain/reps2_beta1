@@ -17,7 +17,7 @@ use App\Services\Base\{BaseDataService, InterviewQuestionsService, UserbarServic
 use App\Services\Comment\CommentService;
 use App\Services\Forum\TopicService;
 use App\Traits\ViewHelper\{
-    ForumData, ReplayData, UserData
+    ForumData, ReplayData, UserData, TournamentData
 };
 use App\User;
 use App\UserGallery;
@@ -25,7 +25,7 @@ use Illuminate\Http\Request;
 
 class GeneralViewHelper
 {
-    use UserData, ReplayData, ForumData;
+    use UserData, ReplayData, ForumData, TournamentData;
 
     protected $last_forum;
     protected $last_forum_home;
@@ -61,8 +61,7 @@ class GeneralViewHelper
         if (!self::$instance) {
             self::$instance = $this;
         }
-    }
-   
+    }   
 
     /**
      * Get footer's widgets
@@ -276,16 +275,6 @@ class GeneralViewHelper
         return self::$instance->streamheader;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getUpcomingTournaments()
-    {
-        self::$instance->upcomingtournaments = self::$instance->upcomingtournaments ?? BaseDataService::getUpTournaments();
-        return self::$instance->upcomingtournaments;
-    }
-
-    
     /**
      * @return mixed
      */
