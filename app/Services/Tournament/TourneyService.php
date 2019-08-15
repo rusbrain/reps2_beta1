@@ -19,7 +19,7 @@ class TourneyService
      * @param int $limit
      * @return mixed
      */
-    
+
     public static function getUpTournaments($limit = 5)
     {
         $upcoming_tournaments = TourneyList::where('visible', 1)
@@ -37,13 +37,14 @@ class TourneyService
         $tournaments = TourneyList::orderBy('updated_at', 'Desc')
             ->withCount('players')
             ->withCount('checkin_players')
+            ->with('admin_user')
             ->with(['win_player' => function($query){
                 $query->with(['user'=> function($q){
                     $q->with('avatar')->withTrashed();
                 }]);
             }])
             ->paginate(20);
-        return $tournaments; 
+        return $tournaments;
     }
 
 }

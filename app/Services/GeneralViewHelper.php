@@ -61,7 +61,7 @@ class GeneralViewHelper
         if (!self::$instance) {
             self::$instance = $this;
         }
-    }   
+    }
 
     /**
      * Get footer's widgets
@@ -86,9 +86,9 @@ class GeneralViewHelper
     public function getFooterUrls()
     {
         if (!self::$instance->footer_urls) {
-            $footer_urls = Footerurl::where('approved', 1)->orderBy('updated_at', 'desc')->limit(10)->get();         
+            $footer_urls = Footerurl::where('approved', 1)->orderBy('updated_at', 'desc')->limit(10)->get();
             self::$instance->footer_urls = $footer_urls;
-          
+
         }
         return self::$instance->footer_urls;
     }
@@ -151,7 +151,7 @@ class GeneralViewHelper
      * @return mixed
      */
     public function getUserQuestions()
-    {        
+    {
         self::$instance->answers = self::$instance->answers ?? InterviewQuestionsService::getUserQuestion();
         return self::$instance->answers;
     }
@@ -162,7 +162,7 @@ class GeneralViewHelper
      * @return mixed
      */
     public function getUserAnswers($question_id)
-    {        
+    {
         return InterviewQuestionsService::getUserAnswer($question_id);
     }
 
@@ -183,10 +183,10 @@ class GeneralViewHelper
 
     public function getUserbarForFilter($selectedItem)
     {
-        return collect(UserbarService::getItems())->prepend('Не выбрано', 0)->map(function($item, $key) use ($selectedItem) {
+        return collect(UserbarService::getItems())->prepend('Не выбрано', 0)->map(function ($item, $key) use ($selectedItem) {
             return [
                 'id' => $key,
-                'text' => $key ? '/images/userbars/'.$item : $item,
+                'text' => $key ? '/images/userbars/' . $item : $item,
                 'selected' => $selectedItem && $selectedItem == $key
             ];
         })->values()->toJson();
@@ -285,7 +285,7 @@ class GeneralViewHelper
     }
 
     /**
-     * 
+     *
      */
     public function getAllChatImages()
     {
@@ -293,50 +293,54 @@ class GeneralViewHelper
         return self::$instance->getChatPictures;
     }
 
-    public function parse_stream_url($url) {
+    public function parse_stream_url($url)
+    {
         return parse_url(htmlspecialchars_decode($url));
     }
+
     /**
      * Check Streaming live status
      */
-    public function liveStreamCheck($stream_url) {
+    public function liveStreamCheck($stream_url)
+    {
         $parts = $this->parse_stream_url($stream_url);
         $host = $parts['host'];
-       
-        if($host == 'play.afreecatv.com') {
+
+        if ($host == 'play.afreecatv.com') {
             $channel = explode("/", $parts['path'])[1];
-            return $this->afreecaTvStream($channel); 
+            return $this->afreecaTvStream($channel);
         }
-       
-        if($host == 'player.twitch.tv') {        
-            parse_str($parts['query'], $query);               
+
+        if ($host == 'player.twitch.tv') {
+            parse_str($parts['query'], $query);
             $channel = $query['channel'];
             return $this->twitchTvStream($channel);
         }
-        
-        if($host == 'goodgame.ru') {
+
+        if ($host == 'goodgame.ru') {
             $channel_id = $parts['query'];
             return $this->goodgameTvStream($channel_id);
         }
     }
-  
-    private function afreecaTvStream($channel) {
-        if(!empty($channel)){
+
+    private function afreecaTvStream($channel)
+    {
+        if (!empty($channel)) {
             $url = "https://live.afreecatv.com/afreeca/player_live_api.php";
-            $data = 'bid='.$channel.'&bno=&pwd=&type=&player_type=html5&stream_type=common&quality=&mode=embed';   
+            $data = 'bid=' . $channel . '&bno=&pwd=&type=&player_type=html5&stream_type=common&quality=&mode=embed';
             $ch = curl_init();
-    
+
             curl_setopt($ch, CURLOPT_URL, $url);
             curl_setopt($ch, CURLOPT_HTTPHEADER, array(
                 "Accept:application/json",
             ));
             curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);    
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    
+
             $response = curl_exec($ch);
             $err = curl_error($ch);
-            curl_close ($ch);
+            curl_close($ch);
 
             $response = json_decode($response, true);
             if ($response['CHANNEL']['RESULT']) {
@@ -346,9 +350,10 @@ class GeneralViewHelper
         return false;
     }
 
-    private function twitchTvStream($channel) {
-        if(!empty($channel)) {
-            $url = 'https://api.twitch.tv/kraken/streams/'.$channel;  
+    private function twitchTvStream($channel)
+    {
+        if (!empty($channel)) {
+            $url = 'https://api.twitch.tv/kraken/streams/' . $channel;
             $curlHeader = array(
                 'Client-ID: jzkbprff40iqj646a697cyrvl0zt2m6', /* SET CLIENT ID HERE */
                 'Accept: application/json'
@@ -364,15 +369,16 @@ class GeneralViewHelper
             curl_close($ch);
 
             $response = json_decode($data, true);
-            if($response['stream'] != null) {
+            if ($response['stream'] != null) {
                 return true;
             }
         }
-        return false;        
+        return false;
     }
 
-    private function goodgameTvStream($channel_id){
-        if(!empty($channel_id)) {
+    private function goodgameTvStream($channel_id)
+    {
+        if (!empty($channel_id)) {
             $url = 'https://goodgame.ru/api/player?src=' . $channel_id;
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_AUTOREFERER, TRUE);
@@ -384,7 +390,7 @@ class GeneralViewHelper
             curl_close($ch);
 
             $response = json_decode($data, true);
-            if($response['channel_status'] == 'online') {
+            if ($response['channel_status'] == 'online') {
                 return true;
             }
         }
@@ -393,13 +399,13 @@ class GeneralViewHelper
 
     public function getActivePath()
     {
-        $this->path = $this->path??str_ireplace('admin_panel/','',Request::capture()->path());
+        $this->path = $this->path ?? str_ireplace('admin_panel/', '', Request::capture()->path());
         return $this->path;
     }
 
     public function UrlFilter($text)
     {
-        if(preg_match_all('#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', $text, $match)) {
+        if (preg_match_all('#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', $text, $match)) {
             return $match[0][0];
         }
         return '';
@@ -423,7 +429,7 @@ class GeneralViewHelper
             </div><div class="spoilmain" style="display:none;">
             <font color="#555599" size="2">\\1</font></div>
             </div
-            <p class="page_content_text" align="justify">',  $text);
+            <p class="page_content_text" align="justify">', $text);
         $text = preg_replace("#\[(quote)\](.+?)\[/\\1\]#is",
             "</p><p class=\"page_content_info2\" align=\"left\" align=\"justify\"><font color=\"#555599\">\\2</font></p><p align=\"justify\">",
             $text);
@@ -449,7 +455,7 @@ class GeneralViewHelper
 
         $text = preg_replace("/([\w\.]+)(@)([\w\.]+)/i", "<a rel=\"nofollow\" href=\"mailto:$0\"><b>Mail»</b></a>",
             $text);
-            
+
 
         /***additional smiles*/
         $text = preg_replace_callback("/:([a-z]{1,2}):/", function ($matches) {
@@ -474,7 +480,7 @@ class GeneralViewHelper
             't' => 'terran.gif',
             'p' => 'protoss.gif'
         );
-        
+
 
         if (array_key_exists($string[1], $smile_map)) {
             return '<img src="editor/' . $smile_map[$string[1]] . '" border="0">';
@@ -487,7 +493,7 @@ class GeneralViewHelper
      * Convert manual URLs
      * _regex_build_url_manual: Checks, and builds the a href
      *
-     * @param    array    Input vars
+     * @param array    Input vars
      * @return    string    Converted text
      */
     public function _regex_build_url_manual($matches = array())
@@ -505,7 +511,7 @@ class GeneralViewHelper
      * Convert tagged URLs
      * _regex_build_url_tags: Checks, and builds the a href
      *
-     * @param    array    Input vars
+     * @param array    Input vars
      * @return    string    Converted text
      */
     public function _regex_build_url_tags($matches = array())
@@ -524,7 +530,7 @@ class GeneralViewHelper
      *
      * regex_build_url: Checks, and builds the a href
      *
-     * @param    array    Input vars
+     * @param array    Input vars
      * @return    string    Converted text
      */
     public function regex_build_url($url = array())
@@ -692,10 +698,10 @@ class GeneralViewHelper
     {
         if (preg_match('/^(http|https):\/\//i', $str)) {
             $url = $str;
-        }else{
+        } else {
             $url = 'http://' . $str;
         }
-        if(filter_var($url, FILTER_VALIDATE_URL)){
+        if (filter_var($url, FILTER_VALIDATE_URL)) {
             return $url;
         }
         return false;

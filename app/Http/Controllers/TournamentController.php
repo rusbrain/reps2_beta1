@@ -21,16 +21,16 @@ class TournamentController extends Controller
      * @return mixed
      */
     public function index()
-    {      
+    {
         return view('tourney.list')->with('request', '');
     }
 
     /**
-     * 
+     *
      */
     public function paginate()
     {
-        $tournaments = TourneyService::getTournaments();   
+        $tournaments = TourneyService::getTournaments();
         return [
             'tournaments'   => UserViewService::getTournaments($tournaments),
             'pagination' => UserViewService::getPagination($tournaments)

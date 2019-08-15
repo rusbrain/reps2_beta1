@@ -5,7 +5,7 @@ namespace App\Traits\ModelRelations;
 trait TournamentRelation
 {
     /**
-     * Relations. 
+     * Relations.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -14,11 +14,16 @@ trait TournamentRelation
         return $this->hasMany('App\TourneyPlayer', 'tourney_id');
     }
 
+    public function admin_user()
+    {
+        return $this->belongsTo('App\User', 'admin_id');
+    }
+
     public function checkin_players()
     {
         return $this->hasMany('App\TourneyPlayer', 'tourney_id')->where('check_in', 1);
     }
-   
+
     public function win_player()
     {
         return $this->hasMany('App\TourneyPlayer', 'tourney_id')->where('place_result', 1);
@@ -31,5 +36,5 @@ trait TournamentRelation
     {
         return $this->belongsTo('App\File', 'file_id');
     }
-    
+
 }

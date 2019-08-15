@@ -16,19 +16,19 @@ class TourneyList extends Model
      * var array
      */
     public static $status = array(
-        0=> 'ANNOUNCE', 1=> 'REGISTRATION', 2=> 'CHECK-IN', 3=> 'GENERATION', 4=> 'STARTED', 5=> 'FINISHED'
+        0 => 'ANNOUNCE', 1 => 'REGISTRATION', 2 => 'CHECK-IN', 3 => 'GENERATION', 4 => 'STARTED', 5 => 'FINISHED'
     );
 
     public static $map_types = [
-        0=> 'NONE', 1=> 'FIRSTBYREMOVING', 2=> 'FIRSTBYROUND'
+        0 => 'NONE', 1 => 'FIRSTBYREMOVING', 2 => 'FIRSTBYROUND'
     ];
-        
+
     /**
      * Using table name
      *
      * @var string
      */
-    protected $table='tourney_lists';
+    protected $table = 'tourney_lists';
 
     /**
      * The attributes that are mass assignable.
@@ -36,7 +36,7 @@ class TourneyList extends Model
      * @var array
      */
     protected $fillable = [
-        'tourney_id',    
+        'tourney_id',
         'admin_id',
         'name',
         'place',
@@ -66,8 +66,4 @@ class TourneyList extends Model
      * @param status_id
      * @return string
      */
-    public static function getStatus($key)
-    {
-        return $this->status[$key];
-    }
 }
