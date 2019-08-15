@@ -2,10 +2,27 @@
 
 namespace App;
 
+use App\Services\Tournament\TourneyService;
+use App\Traits\ModelRelations\TournamentRelation;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 
 class TourneyList extends Model
 {
+    use Notifiable, TournamentRelation;
+    /**
+     * var array
+     */
+    public static $status = array(
+        0=> 'ANNOUNCE', 1=> 'REGISTRATION', 2=> 'CHECK-IN', 3=> 'GENERATION', 4=> 'STARTED', 5=> 'FINISHED'
+    );
+
+    public static $map_types = [
+        0=> 'NONE', 1=> 'FIRSTBYREMOVING', 2=> 'FIRSTBYROUND'
+    ];
+        
     /**
      * Using table name
      *
@@ -43,4 +60,14 @@ class TourneyList extends Model
      * @var bool
      */
     public $timestamps = true;
+
+    /**
+     * get_status
+     * @param status_id
+     * @return string
+     */
+    public static function getStatus($key)
+    {
+        return $this->status[$key];
+    }
 }

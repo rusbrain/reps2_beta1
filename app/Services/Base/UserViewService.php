@@ -100,5 +100,15 @@ class UserViewService extends ViewService
        return (string) view('replay.replays_list')->with(['replays' => $data]);
    }
 
+    /**
+     * @param LengthAwarePaginator $data
+     * @return string
+     */
+    public static function getTournaments(LengthAwarePaginator $data)
+    {
+        // dd($data[0]);
+        return (string) view('tourney.tournaments_list')->with(['tournaments' => $data]);
+    }
+
 
 }

@@ -2,10 +2,16 @@
 
 namespace App;
 
+use App\Services\Tournament\TourneyPlayerService;
+use App\Traits\ModelRelations\TourneyPlayerRelation;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 
 class TourneyPlayer extends Model
 {
+    use Notifiable, TourneyPlayerRelation;
     /**
      * Using table name
      *
@@ -31,5 +37,6 @@ class TourneyPlayer extends Model
      *
      * @var bool
      */
-    public $timestamps = true;
+    public $timestamps = true;    
+
 }

@@ -29,4 +29,21 @@ class TourneyService
         return $upcoming_tournaments;
     }
 
+    /**
+     * @return mixed
+     */
+    public static function getTournaments()
+    {
+        $tournaments = TourneyList::orderBy('updated_at', 'Desc')
+            ->withCount('players')
+            ->withCount('checkin_players')
+            ->with(['win_player' => function($query){
+                $query->with(['user'=> function($q){
+                    $q->with('avatar')->withTrashed();
+                }]);
+            }])
+            ->paginate(20);
+        return $tournaments; 
+    }
+
 }

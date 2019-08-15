@@ -206,8 +206,9 @@ Route::group(['middleware' => 'activity'], function () {
         Route::get('/{id}', 'ReplayController@show')->name('replay.get');
     });
     Route::group(['prefix' => 'tournament'], function () {
-        Route::get('/{id}', 'TournamentController@show')->name('tournament.get');
-        Route::get('/', 'TournamentController@getAll')->name('tournament.all');
+        Route::get('/{id}/show', 'TournamentController@show')->name('tournament.get');
+        Route::get('/', 'TournamentController@index')->name('tournament.all');
+        Route::get('/paginate', 'TournamentController@paginate')->name('tournament.paginate');
     });
     Route::group(['prefix' => 'stream'], function () {
         Route::group(['middleware' => 'auth'], function () {
