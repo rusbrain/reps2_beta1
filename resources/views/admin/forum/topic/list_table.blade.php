@@ -1,7 +1,7 @@
 @foreach($data->items() as $topic)
     <tr>
         <td>{{$topic->id}}</td>
-        <td><a href="{{route('forum.topic.index', ['id' => $topic->id])}}">{{$topic->title}}</a></td>
+        <td><a href="{{route('forum.topic.index', ['id' => $topic->id])}}">{!! $topic->title !!}</a></td>
         <td><a href="{{route('admin.forum_topic', ['section_id' => $topic->section->id])}}">{{$topic->section->title}}</a></td>
         <td>
             <a href="{{route('admin.user.profile', ['id' => $topic->user->id])}}">{{$topic->user->name}}</a>

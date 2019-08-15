@@ -29,7 +29,7 @@ $extraSmiles = $general_helper->getextraSmiles();
     <div class="col-md-10 col-md-offset-1">
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title text-blue">{{$topic->section->title}} / {{$topic->title}}</h3>
+                <h3 class="box-title text-blue">{{$topic->section->title}} / {!! $topic->title !!}</h3>
             </div>
             <div class="box-body">
                 <div class="box-tools col-md-12">
@@ -53,7 +53,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                                     <div class="box-header">
                                         <h3 class="box-title">Название:</h3>
                                     </div><!-- /.box-header -->
-                                    <input type="text" name="title" class="form-control" placeholder="Название..." value="{{old('title')??$topic->title}}">
+                                    <input type="text" name="title" class="form-control" placeholder="Название..." value="{!! old('title')??$topic->title !!}">
                                     @if ($errors->has('title'))
                                         <span class="invalid-feedback text-red" role="alert">
                                         <strong>{{ $errors->first('title') }}</strong>
@@ -86,7 +86,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                                             </div> <!-- /.box-header -->
                                             <div class="box-body pad">
                                         <textarea id="preview_content" name="preview_content" rows="5" cols="80">
-                                                                {!! old('preview_content')??$topic->preview_content !!}
+                                                                {{ old('preview_content')??$topic->preview_content }}
                                         </textarea>
                                             </div>
                                             @if ($errors->has('preview_content'))
@@ -106,7 +106,7 @@ $extraSmiles = $general_helper->getextraSmiles();
 
                                     <div class="box-body pad">
                                         <textarea id="content" name="content" rows="10" cols="80">
-                                                                {!! old('content')??$topic->content !!}
+                                            {{ old('content')??$topic->content }}
                                         </textarea>
                                     </div>
                                     @if ($errors->has('content'))
@@ -118,7 +118,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                             </div>
                             {{-- Thread Created Date --}}
                             <div class="row">
-                              
+
                                 <div class="col-md-4">
                                     <div class="box-header">
                                         <h3 class="box-title">Дата:</h3>
@@ -142,11 +142,11 @@ $extraSmiles = $general_helper->getextraSmiles();
                                                     <strong>{{ $errors->first('news') }}</strong>
                                                 </span>
                                             @endif
-                                        </div>                                       
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="row">
                                 <div class="col-md-1 col-md-offset-11">
                                     <br>
@@ -196,7 +196,7 @@ $extraSmiles = $general_helper->getextraSmiles();
             var extraSmiles = <?php echo json_encode($extraSmiles) ?>;
             if ($('#content').length > 0) {
                 var content = document.getElementById('content');
-                
+
                 sceditor.create(content, {
                     format: 'xhtml',
                     style: '{{route("home")}}' + '/js/sceditor/minified/themes/content/default.min.css',

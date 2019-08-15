@@ -26,7 +26,7 @@
         </div>
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title text-blue">{{$topic->section->title}} / {{$topic->title}}</h3>
+                <h3 class="box-title text-blue">{{$topic->section->title}} / {!! $topic->title !!}</h3>
             </div>
             <div class="box-body">
                 <div class="box-tools col-md-12">
