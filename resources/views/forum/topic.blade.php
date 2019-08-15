@@ -31,7 +31,7 @@
 
     <div class="content-box">
         <div class="col-md-12 section-title">
-            <div>{{$topic->title}}</div>
+            <div>{!! $topic->title !!}</div>
             <div>
                 @if(Auth::user())
                     <img src="{{route('home')}}/images/icons/arrow-right-white.png" alt="">
@@ -105,11 +105,11 @@
                         @else
                             <img class="margin-left-5" src="{{route('home')}}/images/emoticons/smiles/{{\App\Replay::$race_icons['All']}}" alt="">
                         @endif
-                        
+
                     </div>
-                    
+
                     <div>
-                        {{$topic->user->points . ' pts | '}}                  
+                        {{$topic->user->points . ' pts | '}}
                         <a href="{{route('user.get_rating', ['id' => $topic->user->id])}}"
                            class="user-rating">{{$topic->user->rating}} кг</a>
                     </div>
@@ -121,7 +121,7 @@
             </div>
             <div class="col-md-12 article-content-wrapper">
                 <div class="article-content">
-                   
+
                     {!! $general_helper->oldContentFilter($topic->content) !!}
 
                     @if ($general_helper->getUserbarForUser($topic->user))
@@ -142,9 +142,9 @@
                         </div>
                     @endif
                     <div class="article-rating">
-                        @php 
+                        @php
                         $modal = (!Auth::guest() &&  $topic->user->id == Auth::user()->id) ?'#no-rating':'#vote-modal';
-                        @endphp 
+                        @endphp
                         <a href="{{$modal}}" class="positive-vote vote-replay-up" data-toggle="modal"
                            data-rating="1" data-route="{{route('forum.topic.set_rating',['id'=>$topic->id])}}">
                             <img src="{{route('home')}}/images/icons/thumbs-up.png" alt="">

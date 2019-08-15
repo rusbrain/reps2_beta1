@@ -45,7 +45,6 @@ $extraSmiles = $general_helper->getextraSmiles();
         <div class="row">
             <div class="col"></div>
             <div class="col-md-10">
-                {{--{{dd($topic)}}--}}
                 <form action="{{route('forum.topic.update',['id' => $topic->id])}}" method="POST"
                       enctype="multipart/form-data"
                       class="user-create-theme-form">
@@ -70,7 +69,7 @@ $extraSmiles = $general_helper->getextraSmiles();
 
                     <div class="form-group">
                         <label for="title">* Название:</label>
-                        <input type="text" id="title" name="title" value="{{old('title')??$topic->title}}"
+                        <input type="text" id="title" name="title" value="{!! old('title')??$topic->title !!}"
                                class="form-control {{ $errors->has('title') ? ' is-invalid' : '' }}">
                         @if ($errors->has('title'))
                             <span class="invalid-feedback">
@@ -103,7 +102,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                         <label for="preview_content">* Сокращенное содержание:</label>
                         <textarea name="preview_content" id="preview_content"
                                   class="form-control {{ $errors->has('preview_content') ? ' is-invalid' : '' }}"
-                                  rows="15">{!! old('preview_content')??$topic->preview_content !!}</textarea>
+                                  rows="15">{{ old('preview_content')??$topic->preview_content }}</textarea>
                         @if ($errors->has('preview_content'))
                             <span class="invalid-feedback">
                                 <strong>{{ $errors->first('preview_content') }}</strong>
@@ -115,25 +114,13 @@ $extraSmiles = $general_helper->getextraSmiles();
                         <label for="content">* Содержание:</label>
                         <textarea name="content" id="content"
                                   class="form-control {{ $errors->has('content') ? ' is-invalid' : '' }}"
-                                  rows="15">{!! old('content')??$topic->content !!}</textarea>
+                                  rows="15">{{ old('content')??$topic->content }}</textarea>
                         @if ($errors->has('content'))
                             <span class="invalid-feedback">
                                 <strong>{{ $errors->first('content') }}</strong>
                             </span>
                         @endif
                     </div>
-
-                    {{--<div class="form-group form-group user-account-birthday">--}}
-                        {{--<label for="start_on">Опубликовать с:</label>--}}
-                        {{--<input type="date" id="start_on"--}}
-                               {{--class="form-control {{ $errors->has('start_on') ? ' is-invalid' : '' }}" name="start_on"--}}
-                               {{--value="{{old('start_on')?\Carbon\Carbon::parse(old('start_on'))->format('Y-m-d'):\Carbon\Carbon::parse($topic->start_on)->format('Y-m-d')}}">--}}
-                        {{--@if ($errors->has('start_on'))--}}
-                            {{--<span class="invalid-feedback">--}}
-                                {{--<strong>{{ $errors->first('start_on') }}</strong>--}}
-                            {{--</span>--}}
-                        {{--@endif--}}
-                    {{--</div>--}}
 
                     <div class="form-group">
                         <button type="submit" class="btn-blue btn-form">Сохранить</button>

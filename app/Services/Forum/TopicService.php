@@ -82,7 +82,7 @@ class TopicService
     public static function update(ForumTopicUpdateRequest $request, ForumTopic $topic, $admin = false)
     {
         $topic_data = [
-            'title'=> $request->get('title'),
+            'title'=> htmlspecialchars($request->get('title')),
             'content'=> $request->get('content'),
         ];
 
@@ -101,8 +101,8 @@ class TopicService
         } else {
             $topic_data['start_on'] = null;
         }
-        
-        if ($admin){            
+
+        if ($admin){
             $topic_data['news']       = $request->get('news', 0);
         }
 
@@ -120,8 +120,8 @@ class TopicService
         }
 
         if ($request->has('created_at') && $request->get('created_at') != ''){
-            $topic_data['created_at'] = $request->get('created_at'). " " . Carbon::now()->format('H:i:s');            
-        } 
+            $topic_data['created_at'] = $request->get('created_at'). " " . Carbon::now()->format('H:i:s');
+        }
 
         $topic_data['approved']   = 1;
 
