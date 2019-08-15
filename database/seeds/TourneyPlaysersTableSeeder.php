@@ -29,7 +29,7 @@ class TourneyPlaysersTableSeeder extends Seeder
                     $insert_player = array( 
                         'tourney_id' => $tourney_id,
                         'user_id' => $user_id,
-                        'check_in' => $player->checkin == 'Yes' ? 1 : 0,
+                        'check_in' => $player->checkin == 'YES' ? 1 : 0,
                         'description' => $player->description,
                         'place_result' => $player->place_result  
                     );
