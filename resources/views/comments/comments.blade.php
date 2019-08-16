@@ -44,8 +44,6 @@ $extraSmiles = $general_helper->getextraSmiles();
     <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.xhtml.min.js"></script>
     <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.bbcode.min.js"></script>
     <script src="{{route('home')}}/js/sceditor/languages/ru.js"></script>
-
-
     <script>
         var lastPage = $('#ajax_section_comments').attr('data-pages');
         $(function () {

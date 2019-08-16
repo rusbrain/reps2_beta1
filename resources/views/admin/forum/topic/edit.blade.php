@@ -85,9 +85,9 @@ $extraSmiles = $general_helper->getextraSmiles();
                                                 <h3 class="box-title">Сокращенное содержание:</h3>
                                             </div> <!-- /.box-header -->
                                             <div class="box-body pad">
-                                        <textarea id="preview_content" name="preview_content" rows="5" cols="80">
-                                                                {{ old('preview_content')??$topic->preview_content }}
-                                        </textarea>
+                                                <textarea id="preview_content" name="preview_content" rows="5" cols="80">
+                                                    {!! old('preview_content')??$topic->preview_content !!}
+                                                </textarea>
                                             </div>
                                             @if ($errors->has('preview_content'))
                                                 <span class="invalid-feedback text-red" role="alert">
@@ -106,7 +106,7 @@ $extraSmiles = $general_helper->getextraSmiles();
 
                                     <div class="box-body pad">
                                         <textarea id="content" name="content" rows="10" cols="80">
-                                            {{ old('content')??$topic->content }}
+                                            {!! old('content')??$topic->content !!}
                                         </textarea>
                                     </div>
                                     @if ($errors->has('content'))

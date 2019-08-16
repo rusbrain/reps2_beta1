@@ -29,7 +29,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                     <div class="form-group">
                         <label for="comment-content">Комментарий</label>
                         <textarea name="content" id="comment-content"
-                                  class="form-control comment-content" rows="8">{!! old('content', $comment->content)!!}</textarea>
+                                  class="form-control comment-content" rows="8">{{ old('content', $comment->content) }}</textarea>
                     </div>
                     <input type="hidden" name="relation" value="{{$relation}}">
                     <input type="hidden" name="{{$comment_type}}" value="{{$object_id}}">
