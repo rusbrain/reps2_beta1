@@ -55,12 +55,12 @@ class RegisterController extends Controller
         $this->validator($request->all())->validate();
 
         // Email Validation with Neverbounce
-        $validEmail = EmailValidation::check_email($request->email); 
+        $validEmail = EmailValidation::check_email($request->email);
 
         if (!$validEmail) {
             return redirect()->route('error',
                 ['error' => 'Твой емейл фуфло. Нормально зарегистрируйся.']);
-        }        
+        }
 
         event(new Registered($user = $this->create($request->all())));
 
@@ -80,7 +80,7 @@ class RegisterController extends Controller
         $races = implode(",", Replay::$races);
         return Validator::make($data,
             [
-                'name'      => 'required|string|max:30|unique:users',
+                'name'      => 'required|regex:/^[\p{L}0-9,.-)\s]+$/u|string|max:30|unique:users',
                 'email'     => 'required|string|email|max:30|unique:users',
                 'race'      => 'required|in:'.$races,
                 'password'  => 'required|string|min:8|max:255|confirmed',
@@ -97,6 +97,7 @@ class RegisterController extends Controller
                 'name.required'      => 'Не указно имя.',
                 'name.unique'        => 'Пользователь с таким имени уже зарегестрирован.',
                 'name.max'           => 'Максимальная длина имени 30 символов.',
+                'name.regex'         => 'Неверный формат имени (Не допускаются специальные символы, кроме `-.,)`)',
                 'email.required'     => 'Email обязательный для заполнения.',
                 'email.email'        => 'Введен не верный формат Email.',
                 'email.unique'       => 'Пользователь с таким Email уже зарегестрирован.',
@@ -114,7 +115,7 @@ class RegisterController extends Controller
      * @return \App\User
      */
     protected function create(array $data)
-    {        
+    {
         $data_save = [
             'name' => $data['name'],
             'email' => $data['email'],

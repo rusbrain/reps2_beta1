@@ -35,7 +35,7 @@ class UserController extends Controller
         if (!$user){
             abort(404);
         }
-        
+
         $friends = UserFriend::getFriends($user);
         $friendly = UserFriend::getFriendlies($user);
 
@@ -66,13 +66,14 @@ class UserController extends Controller
     {
         $this->validate($request,
             [
-                'name'      => 'required|max:30',
+                'name'      => 'required|regex:/^[\p{L}0-9,.-)\s]+$/u|max:30',
                 'email'     => 'required|string|email|max:30',
                 'country'   => 'required|exists:countries,id',
             ],
             [
                 'name.required'      => 'Не указно имя.',
                 'name.max'           => 'Максимальная длина имени 30 символов.',
+                'name.regex'         => 'Неверный формат имени (Не допускаются специальные символы, кроме `.,-)`)',
                 'email.required'     => 'Email обязательный для заполнения.',
                 'email.email'        => 'Введен не верный формат Email.',
                 'email.unique'       => 'Пользователь с таким Email уже зарегестрирован.',
