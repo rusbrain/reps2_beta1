@@ -28,11 +28,11 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        if (Auth::user() && IgnoreUser::me_ignore($id)){
+        if (Auth::user() && IgnoreUser::me_ignore($id)) {
             return abort(403);
         }
         $user = User::getUserDataById($id);
-        if (!$user){
+        if (!$user) {
             abort(404);
         }
 
@@ -53,7 +53,7 @@ class UserController extends Controller
      */
     public function edit()
     {
-        return view('user.edit_profile')->with(['user'=> Auth::user(), 'countries' => Country::all()]);
+        return view('user.edit_profile')->with(['user' => Auth::user(), 'countries' => Country::all()]);
     }
 
     /**
@@ -66,22 +66,22 @@ class UserController extends Controller
     {
         $this->validate($request,
             [
-                'name'      => 'required|regex:/^[\p{L}0-9,.\-_)\s]+$/u|max:30',
-                'email'     => 'required|string|email|max:30',
-                'country'   => 'required|exists:countries,id',
+                'name' => 'required|regex:/^[\p{L}0-9,.\-_)\s]+$/u|max:30',
+                'email' => 'required|string|email|max:30',
+                'country' => 'required|exists:countries,id',
             ],
             [
-                'name.required'      => 'Не указно имя.',
-                'name.max'           => 'Максимальная длина имени 30 символов.',
-                'name.regex'         => 'Неверный формат имени (Не допускаются специальные символы, кроме `.,)_-`)',
-                'email.required'     => 'Email обязательный для заполнения.',
-                'email.email'        => 'Введен не верный формат Email.',
-                'email.unique'       => 'Пользователь с таким Email уже зарегестрирован.',
-                'email.max'          => 'Максимальная длина Email 30 символов.',
-                'country.exists'     => 'Не верно указана страна.',
-                'country.required'   => 'Страна обязательна для заполнения.',
+                'name.required' => 'Не указно имя.',
+                'name.max' => 'Максимальная длина имени 30 символов.',
+                'name.regex' => 'Неверный формат имени (Не допускаются специальные символы, кроме `.,)_-`)',
+                'email.required' => 'Email обязательный для заполнения.',
+                'email.email' => 'Введен не верный формат Email.',
+                'email.unique' => 'Пользователь с таким Email уже зарегестрирован.',
+                'email.max' => 'Максимальная длина Email 30 символов.',
+                'country.exists' => 'Не верно указана страна.',
+                'country.required' => 'Страна обязательна для заполнения.',
             ]
-     );
+        );
 
         UserService::updateData($request, Auth::id());
 

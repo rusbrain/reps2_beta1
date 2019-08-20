@@ -183,7 +183,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                         <label for="signature">Подпись:</label>
                         <textarea name="signature" id="signature"
                                   class="form-control {{ $errors->has('signature') ? ' is-invalid' : '' }}"
-                                  rows="10">{!! old('skype')??$user->signature !!}</textarea>
+                                  rows="10">{!! old('signature')??$user->signature !!}</textarea>
                         @if ($errors->has('signature'))
                             <span class="invalid-feedback">
                                 <strong>{{ $errors->first('signature') }}</strong>
@@ -311,10 +311,9 @@ $extraSmiles = $general_helper->getextraSmiles();
                     emoticonsRoot: '{{route("home")}}' + '/images/',
                     locale: 'ru',
                     toolbar: 'bold,italic,underline|' +
-                    'left,center,right,justify|' +
                     'font,size,color,removeformat|' +
-                    'source,quote,code|' +
-                    'image,link,unlink|' +
+                    'quote,code|' +
+                    'image,link|' +
                     'emoticon|' +
                     'date,time',
                     emoticons: {
@@ -322,7 +321,6 @@ $extraSmiles = $general_helper->getextraSmiles();
                         dropdown: getAllSmiles(extraSmiles),
                         // Emoticons to be included in the more section
                         more: getMoreSmiles(),
-
                     }
                 });
             }

@@ -12,14 +12,14 @@ class Helper {
 					{
 						url:process.env.HOST + '/chat/socket_user',
 					 	form: userInfo
-					}, 
+					},
 					function(err,httpResponse,body){
 						  const response = JSON.parse(body)
 						  if(response.status ===  'ok') {
 							  return true
 						  }
 					})
-				
+
 			} catch (error) {
 				console.warn(error);
 				resolve(null);
@@ -34,14 +34,14 @@ class Helper {
 					{
 						url:process.env.HOST + '/chat/get_message',
 					 	form: params
-					}, 
+					},
 					function(err,httpResponse,body){
-						  const response = JSON.parse(body);						 
+						  const response = JSON.parse(body);
 						  if(response.status ===  'ok') {
 							resolve(response.message)
 						  }
 					})
-				
+
 			} catch (error) {
 				console.warn(error);
 				resolve(null);
@@ -52,7 +52,7 @@ class Helper {
 	async getMessages() {
 		return new Promise((resolve, reject) => {
 			try {
-				request(process.env.HOST + '/chat/get_messages', function (error, response, body) {				
+				request(process.env.HOST + '/chat/get_messages', function (error, response, body) {
 					resolve(JSON.parse(body))
 				})
 			} catch (error) {
