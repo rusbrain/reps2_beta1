@@ -28,7 +28,7 @@ class UpdateProfileRequest extends FormRequest
         $races = implode(",", Replay::$races);
         return [
             'email'         => 'required|string|email|max:255|unique:users,email,'.$this->get('id'),
-            'name'          => 'required|regex:/^[\p{L}0-9,.-)\s]+$/u|max:255',
+            'name'          => 'required|regex:/^[\p{L}0-9,.)_\s]+$/u|max:255',
             'country'       => 'required|exists:countries,id',
             'userbar'       => 'nullable|in:0,'.implode(',', UserbarService::getItemsIds()),
             'race'          => 'required|in:'.$races,
@@ -62,7 +62,7 @@ class UpdateProfileRequest extends FormRequest
             'email.max'      => 'Максимальная длина Email 255 символов.',
             'name.required'  => 'Не указно имя.',
             'name.max'       => 'Максимальная длина имени 255 символов.',
-            'name.regex'     => 'Неверный формат имени (Не допускаются специальные символы, кроме `.,-)`)',
+            'name.regex'     => 'Неверный формат имени (Не допускаются специальные символы, кроме `.,)_`)',
             'country.exists' => 'Не верно указана страна.',
             'country.required' => 'Страна обязательна для заполнения.',
             'homepage.url'   => 'Домашняя страница должна быть ссылкой.',

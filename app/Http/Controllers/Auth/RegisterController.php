@@ -80,7 +80,7 @@ class RegisterController extends Controller
         $races = implode(",", Replay::$races);
         return Validator::make($data,
             [
-                'name'      => 'required|regex:/^[\p{L}0-9,.-)\s]+$/u|string|max:30|unique:users',
+                'name'      => 'required|regex:/^[\p{L}0-9,.)_\s]+$/u|string|max:30|unique:users',
                 'email'     => 'required|string|email|max:30|unique:users',
                 'race'      => 'required|in:'.$races,
                 'password'  => 'required|string|min:8|max:255|confirmed',
@@ -97,7 +97,7 @@ class RegisterController extends Controller
                 'name.required'      => 'Не указно имя.',
                 'name.unique'        => 'Пользователь с таким имени уже зарегестрирован.',
                 'name.max'           => 'Максимальная длина имени 30 символов.',
-                'name.regex'         => 'Неверный формат имени (Не допускаются специальные символы, кроме `-.,)`)',
+                'name.regex'         => 'Неверный формат имени (Не допускаются специальные символы, кроме `.,)_`)',
                 'email.required'     => 'Email обязательный для заполнения.',
                 'email.email'        => 'Введен не верный формат Email.',
                 'email.unique'       => 'Пользователь с таким Email уже зарегестрирован.',
