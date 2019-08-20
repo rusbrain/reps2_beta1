@@ -26,17 +26,20 @@ class UpdateProfileRequest extends FormRequest
     public function rules()
     {
         $races = implode(",", Replay::$races);
+        $url_regex = '/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/';
+        $name_regex = '/^[\p{L}0-9,.)\-_\s]+$/u';
+        $skype_regex = '/^[a-z][a-z0-9\.,\-_\:]{5,31}$/i';
         return [
             'email'         => 'required|string|email|max:255|unique:users,email,'.$this->get('id'),
-            'name'          => 'required|regex:/^[\p{L}0-9,.)\-_\s]+$/u|max:255',
+            'name'          => 'required|regex:'.$name_regex.'|max:255',
             'country'       => 'required|exists:countries,id',
             'userbar'       => 'nullable|in:0,'.implode(',', UserbarService::getItemsIds()),
             'race'          => 'required|in:'.$races,
-            'homepage'      => 'nullable|url|max:255',
-            'vk_link'       => 'nullable|url|max:255',
-            'fb_link'       => 'nullable|url|max:255',
+            'homepage'      => 'nullable|url|regex:'.$url_regex.'|max:255',
+            'vk_link'       => 'nullable|url|regex:'.$url_regex.'|max:255',
+            'fb_link'       => 'nullable|url|regex:'.$url_regex.'|max:255',
             'isq'           => 'nullable|string|max:255',
-            'skype'         => 'nullable|string|regex:/^[a-z][a-z0-9\.,\-_\:]{5,31}$/i|max:255',
+            'skype'         => 'nullable|string|regex:'.$skype_regex.'|max:255',
             'signature'     => 'nullable|string|max:255',
             'mouse'         => 'nullable|string|max:255',
             'keyboard'      => 'nullable|string|max:255',
@@ -66,8 +69,11 @@ class UpdateProfileRequest extends FormRequest
             'country.exists' => 'Не верно указана страна.',
             'country.required' => 'Страна обязательна для заполнения.',
             'homepage.url'   => 'Домашняя страница должна быть ссылкой.',
+            'homepage.regex'  => 'Это недействительный URL',
             'vk_link.url'    => 'Страница Вконтакте должна быть ссылкой.',
+            'vk_link.regex'  => 'Это недействительный URL',
             'fb_link.url'    => 'Страница Facebook должна быть ссылкой.',
+            'fb_link.regex'  => 'Это недействительный URL',
             'homepage.max'   => 'Максимальная длина ссылки домашней страниы 255 символов.',
             'vk_link.max'    => 'Максимальная длина ссылки на сраницу вконтакте 255 символов.',
             'fb_link.max'    => 'Максимальная длина ссылки на страницу Facebook 255 символов.',
