@@ -4,6 +4,7 @@ namespace App\Http\Requests\User;
 
 use App\Replay;
 use App\Services\Base\UserbarService;
+use App\Services\Base\RegexService;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateProfileRequest extends FormRequest
@@ -26,20 +27,18 @@ class UpdateProfileRequest extends FormRequest
     public function rules()
     {
         $races = implode(",", Replay::$races);
-        $url_regex = '/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/';
-        $name_regex = '/^[\p{L}0-9,.)\-_\s]+$/u';
-        $skype_regex = '/^[a-z][a-z0-9\.,\-_\:]{5,31}$/i';
+
         return [
             'email'         => 'required|string|email|max:255|unique:users,email,'.$this->get('id'),
-            'name'          => 'required|regex:'.$name_regex.'|max:255',
+            'name'          => 'required|regex:'.RegexService::regex('name').'|max:255',
             'country'       => 'required|exists:countries,id',
             'userbar'       => 'nullable|in:0,'.implode(',', UserbarService::getItemsIds()),
             'race'          => 'required|in:'.$races,
-            'homepage'      => 'nullable|url|regex:'.$url_regex.'|max:255',
-            'vk_link'       => 'nullable|url|regex:'.$url_regex.'|max:255',
-            'fb_link'       => 'nullable|url|regex:'.$url_regex.'|max:255',
+            'homepage'      => 'nullable|url|regex:'.RegexService::regex('url').'|max:255',
+            'vk_link'       => 'nullable|url|regex:'.RegexService::regex('url').'|max:255',
+            'fb_link'       => 'nullable|url|regex:'.RegexService::regex('url').'|max:255',
             'isq'           => 'nullable|string|max:255',
-            'skype'         => 'nullable|string|regex:'.$skype_regex.'|max:255',
+            'skype'         => 'nullable|string|regex:'.RegexService::regex('skype').'|max:255',
             'signature'     => 'nullable|string|max:255',
             'mouse'         => 'nullable|string|max:255',
             'keyboard'      => 'nullable|string|max:255',
