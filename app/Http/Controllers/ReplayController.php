@@ -2,13 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\{Comment, Country, Replay, ReplayMap, ReplayType, Services\Base\UserActivityLogService};
-use App\Http\Requests\{
-    ReplaySearchRequest, ReplayStoreRequest, ReplayUpdateRequest
-};
+use App\{Comment,
+    Country,
+    File,
+    Replay,
+    ReplayMap,
+    ReplayType,
+    Services\Base\UserActivityLogService,
+    Services\Replay\ReplayParserService};
+use Illuminate\Http\UploadedFile;
+use App\Http\Requests\{ReplaySearchRequest, ReplayStoreRequest, ReplayUpdateRequest, UploadReplayRequest};
 use App\Services\Replay\ReplayService;
 use Illuminate\Support\Facades\{
-    Auth, Storage
+    Auth, Response, Storage
 };
 use App\Services\GeneralViewHelper;
 
@@ -48,7 +54,7 @@ class ReplayController extends Controller
     public function __construct() {
         $this->general_helper = new GeneralViewHelper;
     }
-    
+
     public function index($type = false, ReplaySearchRequest $request)
     {
         $request_data = '';
@@ -103,10 +109,16 @@ class ReplayController extends Controller
      */
     public function create()
     {
+        $file = null;
+        if (old('file_id')) {
+            $file = File::find(old('file_id'));
+        }
+
         return view('replay.create')->with([
             'types' => ReplayType::all(),
             'maps' => ReplayMap::all(),
             'countries' => Country::all(),
+            'file' => $file
         ]);
     }
 
@@ -132,17 +144,23 @@ class ReplayController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit($id)
-    {       
+    {
         $replay = Replay::where('id', $id)->with('file')->first();
-
-        if ($replay) {
-            if(Auth::id() == $replay->user_id || $this->general_helper->isAdmin() || $this->general_helper->isModerator()){
-                return view('replay.edit', ['replay' => $replay]);
-            } else {
-                return abort(403);
-            }
+        if (!$replay) {
+            return abort(404);
         }
-        return abort(404);     
+
+        if(Auth::id() == $replay->user_id || $this->general_helper->isAdmin() || $this->general_helper->isModerator()){
+            $currentFileId = old('file_id', $replay->file_id);
+            $file = null;
+            if ($currentFileId) {
+                $file = File::find($currentFileId);
+            }
+
+            return view('replay.edit', ['replay' => $replay, 'file' => $file]);
+        }
+
+        return abort(403);
     }
 
     /**
@@ -155,7 +173,7 @@ class ReplayController extends Controller
     public function update(ReplayUpdateRequest $request, $id)
     {
         $replay = Replay::find($id);
-        
+
         if ($replay) {
             if(Auth::id() == $replay->user_id || $this->general_helper->isAdmin() || $this->general_helper->isModerator()){
                 ReplayService::updateReplay($request, $replay);
@@ -221,7 +239,7 @@ class ReplayController extends Controller
      */
     public function getReplayByType($type)
     {
-        $type = $this->checkReplayType($type); 
+        $type = $this->checkReplayType($type);
         $method = $this->method_get;
         return ReplayService::getList(Replay::$method()->where('type_id', $type->id),
             $this->replay_group . ': ' . $type->title);
@@ -290,5 +308,22 @@ class ReplayController extends Controller
             return abort(404);
         }
         return $type;
+    }
+
+    public function uploadReplayFile(UploadReplayRequest $request, ReplayParserService $replayParserService)
+    {
+        $file = $request->file;
+        /* @var UploadedFile $file */
+
+        try {
+            $replayData = $replayParserService->parseFile($file);
+        } catch (\Exception $e) {
+            return Response::json(['errors' => ['file' => [$e->getMessage()]]], 422);
+        }
+
+        $fileModel = File::storeFile($file, 'replays', '', false, false, 'replay');
+        $replayData['file_id'] = $fileModel->id;
+
+        return Response::json($replayData, 200);
     }
 }

@@ -28,4 +28,10 @@ class ReplayMap extends Model
      * @var bool
      */
     public $timestamps = false;
+
+    public static function findByTitle($mapTitle)
+    {
+        return ReplayMap::where('name', 'LIKE', "%$mapTitle%")
+            ->orWhereRaw('? LIKE CONCAT("%", name, "%")', [$mapTitle])->first();
+    }
 }
