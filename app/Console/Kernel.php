@@ -30,6 +30,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('backup:run')->daily()->at('23:00');
         $schedule->command('streamActiveCheck:start')->everyMinute();//->appendOutputTo(storage_path('logs/test.log'))
         $schedule->command('ChatMessageClean:start')->daily()->at('23:00');
+        $schedule->command('replays:clean_files')->daily()->at('01:00');
+
     }
 
     /**
