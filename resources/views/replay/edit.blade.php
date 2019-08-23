@@ -10,6 +10,7 @@ $extraSmiles = $general_helper->getextraSmiles();
 
     <!--JS plugin Select2 - autocomplete -->
     <link rel="stylesheet" href="{{route('home')}}/css/select2.min.css"/>
+    <link rel="stylesheet" href="{{route('home')}}/css/dropzone.css"/>
 @endsection
 
 <?php
@@ -56,13 +57,18 @@ $game_versions = $general_helper->getGameVersion();
         <div class="row">
             <div class="col"></div>
             <div class="col-md-10">
-                <form action="{{route('replay.update',['id' => $replay->id])}}" enctype="multipart/form-data"
-                      class="user-create-replay-form" method="post">
+                {{ Form::model($replay, [
+                    'route' => ['replay.update', $replay->id],
+                    'enctype' => 'multipart/form-data',
+                    'class' => 'user-create-replay-form',
+                    'method' => 'post'
+                ]) }}
+
                     @csrf
                     <div class="form-fields-box">
                         <div class="form-group">
                             <label for="name">* Название:</label>
-                            <input type="text" id="name" value="{{$replay->title??old('title')}}" name="title"
+                            <input type="text" id="name" value="{{ old('title', $replay->title) }}" name="title"
                                    class="form-control {{ $errors->has('title') ? ' is-invalid' : '' }}">
                             @if ($errors->has('title'))
                                 <span class="invalid-feedback">
@@ -77,9 +83,9 @@ $game_versions = $general_helper->getGameVersion();
                                     @if($general_helper->isModerator() || $general_helper->isAdmin())
                                         <select class="custom-select {{ $errors->has('user_replay') ? ' is-invalid' : '' }}"
                                                 id="user_replay" name="user_replay">
-                                            <option value="0" {{0 == $replay->user_replay??old('user_replay')?'selected':''}}>Госу
+                                            <option value="0" {{ 0 == old('user_replay', $replay->user_replay) ? 'selected' : '' }}>Госу
                                             </option>
-                                            <option value="1" {{1 == $replay->user_replay??old('user_replay')?'selected':''}}>
+                                            <option value="1" {{ 1 == old('user_replay', $replay->user_replay) ? 'selected' : '' }}>
                                                 Пользовательский
                                             </option>
                                         </select>
@@ -102,7 +108,7 @@ $game_versions = $general_helper->getGameVersion();
                                     <select class="custom-select {{ $errors->has('type_idy') ? ' is-invalid' : '' }}"
                                             id="type_id" name="type_id">
                                         @foreach($types as $type)
-                                            <option value="{{$type->id}}" {{($type->id == $replay->type_id || $type->id ==old('type_id'))?'selected':''}}>
+                                            <option value="{{$type->id}}" {{ $type->id == old('type_id', $replay->type_id) ? 'selected' : '' }}>
                                                 {{$type->name}}
                                             </option>
                                         @endforeach
@@ -120,7 +126,7 @@ $game_versions = $general_helper->getGameVersion();
                             <select class="form-select-2 custom-select {{ $errors->has('map_id') ? ' is-invalid' : '' }}"
                                     id="map_id" name="map_id">
                                 @foreach($maps as $map)
-                                    <option value="{{$map->id}}" {{($map->id == $replay->map_id || $map->id == old('map_id'))?'selected':''}}>
+                                    <option value="{{$map->id}}" {{ $map->id == old('map_id', $replay->map_id) ? 'selected' : '' }}>
                                         {{$map->name}}
                                     </option>
                                 @endforeach
@@ -141,7 +147,7 @@ $game_versions = $general_helper->getGameVersion();
                                     <select class="custom-select {{ $errors->has('first_race') ? ' is-invalid' : '' }}"
                                             id="first_race" name="first_race">
                                         @foreach(\App\Replay::$races as $race)
-                                            <option value="{{$race}}" {{($race == $replay->first_race|| $race == old('first_race'))?'selected':''}}>
+                                            <option value="{{$race}}" {{ $race == old('first_race', $replay->first_race) ? 'selected' : '' }}>
                                                 {{$race}}
                                             </option>
                                         @endforeach
@@ -161,7 +167,7 @@ $game_versions = $general_helper->getGameVersion();
                                             name="first_country_id">
                                         @foreach($countries as $country)
                                             <option
-                                                    value="{{$country->id}}" {{($country->id == $replay->first_country_id || $country->id == old('first_country_id'))?'selected':''}}>
+                                                    value="{{$country->id}}" {{ $country->id == old('first_country_id', $replay->first_country_id) ? 'selected' : '' }}>
                                                 {{$country->name}}</option>
                                         @endforeach
                                     </select>
@@ -175,7 +181,7 @@ $game_versions = $general_helper->getGameVersion();
                         </div>
                         <div class="form-group">
                             <label for="first_location">* Первая локация:</label>
-                            <input type="text" id="first_location" value="{{$replay->first_location??old('first_location')}}"
+                            <input type="text" id="first_location" value="{{ old('first_location', $replay->first_location) }}"
                                    name="first_location"
                                    class="form-control {{ $errors->has('first_location') ? ' is-invalid' : '' }}">
                             @if ($errors->has('first_location'))
@@ -194,7 +200,7 @@ $game_versions = $general_helper->getGameVersion();
                                     <select class="custom-select {{ $errors->has('second_race') ? ' is-invalid' : '' }}"
                                             id="second_race" name="second_race">
                                         @foreach(\App\Replay::$races as $race)
-                                            <option value="{{$race}}" {{$race == $replay->second_race || $race == old('second_race')?'selected':''}}>
+                                            <option value="{{$race}}" {{ $race == old('second_race', $replay->second_race) ? 'selected':'' }}>
                                                 {{$race}}
                                             </option>
                                         @endforeach
@@ -214,7 +220,7 @@ $game_versions = $general_helper->getGameVersion();
                                             name="second_country_id">
                                         @foreach($countries as $country)
                                             <option
-                                                    value="{{$country->id}}" {{($country->id == $replay->second_country_id || $country->id ==old('second_country_id'))?'selected':''}}>
+                                                    value="{{$country->id}}" {{ $country->id ==old('second_country_id', $replay->second_country_id) ? 'selected' : '' }}>
                                                 {{$country->name}}</option>
                                         @endforeach
                                     </select>
@@ -228,7 +234,7 @@ $game_versions = $general_helper->getGameVersion();
                         </div>
                         <div class="form-group">
                             <label for="second_location">* Вторая локация:</label>
-                            <input type="text" id="second_location" value="{{$replay->second_location??old('second_location')}}"
+                            <input type="text" id="second_location" value="{{ old('second_location', $replay->second_location) }}"
                                    name="second_location"
                                    class="form-control {{ $errors->has('second_location') ? ' is-invalid' : '' }}">
                             @if ($errors->has('second_location'))
@@ -238,13 +244,13 @@ $game_versions = $general_helper->getGameVersion();
                             @endif
                         </div>
                     </div><!--close div /.form-fields-box-->
-                
+
 
                     <div class="form-group margin-top-30">
                         <label for="video_iframe">Вставить HTML код с Youtube с видео реплеем</label>
                         <textarea name="video_iframe"
                                   class="form-control {{ $errors->has('video_iframe') ? ' is-invalid' : '' }}"
-                                  id="video_iframe" rows="16">{!! $replay->video_iframe??old('video_iframe') !!}</textarea>
+                                  id="video_iframe" rows="16">{!! old('video_iframe', $replay->video_iframe) !!}</textarea>
                         @if ($errors->has('video_iframe'))
                             <span class="invalid-feedback">
                                 <strong>{{ $errors->first('video_iframe') }}</strong>
@@ -252,27 +258,39 @@ $game_versions = $general_helper->getGameVersion();
                         @endif
                     </div>
 
-                    <div class="form-group">
-                        <label for="replay">*Загрузить новый Replay:
-                            <span class="preview-image-wrapper">
-                                <img src="{{route('home')}}/images/icons/add_photo_icon.png" alt="">
-                            </span>
-                        </label>
-                        <input type="file" id="replay"
-                               class="form-control-file {{ $errors->has('replay') ? ' is-invalid' : '' }}"
-                               name="replay">
-                        @if ($errors->has('replay'))
-                            <span class="invalid-feedback">
-                                <strong>{{ $errors->first('replay') }}</strong>
-                            </span>
-                        @endif
+                    <div class="form-group" id="replay-uploader-wrapper" data-upload-url="{{route('replay.upload')}}">
+                        <label>*Загрузить новый Replay:</label>
+                        <div id="file-uploader-dropzone">
+                            @if ($file)
+                                <div class="dz-preview dz-file-preview dz-processing dz-success dz-complete js-file-preview">
+                                    <div class="dz-image"></div>
+                                    <div class="dz-details">
+                                        <div class="dz-size">
+                                            <span data-dz-size=""><strong>{{ $file->getSizeFormatted() }}</strong> KB</span>
+                                        </div>
+                                        <div class="dz-filename">
+                                            <span data-dz-name="">{{ $file->getFileName() }}</span>
+                                        </div>
+                                    </div>
+
+                                    <a class="dz-remove js-remove-preloaded-file" href="#" data-dz-remove="">Remove file</a>
+                                </div>
+                            @endif
+                        </div>
+
+                        <input type="hidden" name="file_id" id="file_id"  data-is-uploaded="true" value="{{old('file_id', $replay->file_id)}}"
+                               class="@if(old('file_id', $replay->file_id)) js-file-preloaded @endif"/>
+
+                        <span id="replay-file-error-container" class="invalid-feedback" @if ($errors->has('replay')) style="display: none; " @endif>
+                            <strong>{{ $errors->first('replay') }}</strong>
+                        </span>
                     </div>
 
                     <div class="form-group">
                         <label for="content">Короткое описание:</label>
                         <textarea name="content" id="content"
                                   class="form-control {{ $errors->has('content') ? ' is-invalid' : '' }}"
-                                  rows="10">{{$replay->content??old('content')}}</textarea>
+                                  rows="10">{{ old('content', $replay->content) }}</textarea>
                         @if ($errors->has('content'))
                             <span class="invalid-feedback">
                                 <strong>{{ $errors->first('content') }}</strong>
@@ -325,6 +343,8 @@ $game_versions = $general_helper->getGameVersion();
 
     <!--JS plugin Select2 - autocomplete -->
     <script src="{{route('home')}}/js/select2.full.min.js"></script>
+    <script src="{{route('home')}}/js/dropzone.js"></script>
+    <script src="{{route('home')}}/js/replay_form.js"></script>
 
     <script>
         /**

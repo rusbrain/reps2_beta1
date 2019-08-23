@@ -19,7 +19,6 @@
 /storage/debugbar
 
 /storage/*.key
-/storage/debugbar
 /vendor
 /.idea
 /.vscode

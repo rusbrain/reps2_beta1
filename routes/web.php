@@ -181,6 +181,7 @@ Route::group(['middleware' => 'activity'], function () {
 
         Route::group(['middleware' => 'auth'], function () {
             Route::get('/create', 'ReplayController@create')->name('replay.create');
+            Route::post('/upload', 'ReplayController@uploadReplayFile')->name('replay.upload');
             Route::post('/store', 'ReplayController@store')->name('replay.store');
             Route::get('/{id}/edit', 'ReplayController@edit')->name('replay.edit');
             Route::post('/{id}/update', 'ReplayController@update')->name('replay.update');
@@ -250,15 +251,15 @@ Route::group(['middleware' => 'activity'], function () {
         Route::get('/photo/{id}/comments', 'UserGalleryCommentController@pagination')->name('gallery.comment.pagination');
         Route::get('/photo/{id}', 'UserGalleryController@show')->name('gallery.view');
 
-       
+
     });
 
     Route::group(['prefix' => 'chat'], function () {
         Route::group(['middleware' => 'auth'], function () {
             Route::post('/insert_message', 'ChatController@insert_message')->name('chat.add_message');
-        });        
+        });
         Route::get('/get_messages', 'ChatController@get_messages')->name('chat.get_messages');
-        Route::post('/get_message', 'ChatController@get_message')->name('chat.get_message'); 
+        Route::post('/get_message', 'ChatController@get_message')->name('chat.get_message');
 
         Route::get('/get_externalsmiles','ChatController@get_externalsmiles')->name('chat.get_smiles');
         Route::get('/get_externalimages','ChatController@get_externalimages')->name('chat.get_images');
@@ -389,7 +390,7 @@ Route::group(['middleware' => 'activity'], function () {
                     Route::post('/{id}/edit', 'ForumTopicController@saveTopic')->name('admin.forum.topic.edit.save');
                     Route::get('/{id}', 'ForumTopicController@getTopic')->name('admin.forum.topic.get');
                     Route::post('/{id}/send_comment', 'TopicCommentController@sendComment')->name('admin.forum.topic.comment_send');
-                  
+
                 });
             });
             Route::group(['prefix' => 'replay'], function () {
@@ -569,7 +570,10 @@ Route::group(['middleware' => 'activity'], function () {
                 Route::get('/', 'DBManagementController@index')->name('admin.dbbackup');
                 Route::get("/download/{dbname}", 'DBManagementController@filedownload')->name('admin.dbbackup.download');//
                 Route::get("/delete/{dbname}", 'DBManagementController@filedelete')->name('admin.dbbackup.filedelete');//
-            });            
+                Route::get('/import', 'DBManagementController@import')->name('admin.import');
+            });
+
+
         });
 });
 

@@ -25,7 +25,6 @@ class ReplayUpdateRequest extends FormRequest
     public function rules()
     {
         $races = implode(",", Replay::$races);
-        $rates = implode(",", Replay::$creating_rates);
 
         return [
             'user_replay'           => 'required|in:1,0',
@@ -33,8 +32,8 @@ class ReplayUpdateRequest extends FormRequest
             'title'                 => 'required|string|min:3|max:255',
             'content'               => 'required|string|min:3|max:1000',
             'map_id'                => 'nullable|exists:replay_maps,id',
-            'replay'                => 'nullable|file|max:50000',
-            'video_iframe'          => 'nullable|max:1000',
+            'file_id'               => 'required_without:video_iframe|exists:files,id',
+            'video_iframe'          => 'required_without:file_id|max:1000',
             'first_country_id'      => 'required|exists:countries,id',
             'second_country_id'     => 'required|exists:countries,id',
             'first_race'            => 'required|in:'.$races,
@@ -63,8 +62,8 @@ class ReplayUpdateRequest extends FormRequest
             'content.min'                   => 'Комментарий должен быть не меньше 3 символов',
             'content.max'                   => 'Комметнарий должен быть не больше 255 символов',
             'map_id.exists'                 => 'Не верно указана карта replay',
-            'replay.file'                   => 'Replay должн быть файлом',
-            'replay.max'                    => 'Максимальный размер файла replay 1mb',
+            'file_id.required_without'      => 'Необходимо указать файл с replay если не указана линка на видео',
+            'video_iframe.required_without' => 'Необходимо указать html код с видео повтором если не указан файл с реплеем',
             'game_version.required'         => 'Не указана версия игры',
             'championship.max'              => 'Название чемпионала должено быть не больше 255 символов',
             'first_country_id.required'     => 'Не выбрана страна первого играка',

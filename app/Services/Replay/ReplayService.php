@@ -124,10 +124,11 @@ class ReplayService
     public static function store(ReplayStoreRequest $request)
     {
         $replay_data = $request->validated();
-        $title = 'Replay ' . $request->has('title') ? $request->get('title') : '';
-        if ($request->file()) {
-            $file = File::storeFile($replay_data['replay'], 'replays', $title);
-            $replay_data['file_id'] = $file->id;
+        if ($request->get('file_id')) {
+            $replay_data['file_id'] = $request->get('file_id');
+            $file = File::find($replay_data['file_id']);
+            $file->title = 'Replay ' . $request->get('title', '');
+            $file->save();
         }
         if (!UserService::isAdmin() && !UserService::isModerator()) {
             $replay_data['user_replay'] = 1;
@@ -173,7 +174,7 @@ class ReplayService
             $query = $query->where('approved', 1);
         }
         $data = ReplayService::replayWithPagination(ReplayService::getReplayQuery($query));
-       
+
         return ['replays' => UserViewService::getReplay($data), 'pagination' => UserViewService::getPagination($data)];
     }
 
@@ -234,16 +235,18 @@ class ReplayService
                 $replay_data['user_replay'] = 1;
             }
         }
-        if ($request->has('replay')) {
+        if ($request->get('file_id') && $request->get('file_id') != $replay->file_id) {
             if($replay->file_id){
                 FileService::removeFile($replay->file_id);
             }
-
-            $title = 'Replay ' . $request->has('title') ? $request->get('title') : '';
-            $file = File::storeFile($replay_data['replay'], 'replays', $title);
-            
-            $replay_data['file_id'] = $file->id;
-            unset($replay_data['replay']);
+            $replay_data['file_id'] = $request->get('file_id');
+            $file = File::find($replay_data['file_id']);
+            $file->title = 'Replay ' . $request->get('title', '');
+            $file->save();
+            $replay_data['file_id'];
+        }
+        if (!$request->get('file_id') && $replay->file_id) {
+            FileService::removeFile($replay->file_id);
         }
         if ($request->has('map_id') && $request->get('map_id') === null) {
             $replay_data['map_id'] = 0;
@@ -260,7 +263,7 @@ class ReplayService
         if ($request->has('length') && $request->get('length') == '') {
             $replay_data['length'] = '00:00:00';
         }
-        
+
         Replay::where('id', $replay->id)->update($replay_data);
     }
 
