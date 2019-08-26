@@ -5,11 +5,9 @@ namespace App\Services\Base;
 use App\Comment;
 use App\ForumTopic;
 use App\Replay;
-use App\Services\Comment\CommentService;
 use App\UserActivityLogEntry;
 use App\UserGallery;
 use App\UserReputation;
-use http\Url;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -51,7 +49,8 @@ class UserActivityLogService
             'type' => $type,
             'time' => new \DateTime(),
             'user_id' => $userId ? : Auth::id(),
-            'parameters' => self::$handler($targetObject)
+            'parameters' => self::$handler($targetObject),
+            'ip' => \Illuminate\Support\Facades\Request::ip()
         ]);
 
         $newLogEntry->save();
