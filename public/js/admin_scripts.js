@@ -12,14 +12,14 @@
         key = ':'+ smile + i+':';
         result = path + smile + i + extension;
         smilesObject[key] = result;
-    }                                                                                                                                           
+    }
 
     /**Get extra smiles */
     for (var i = 0; i < extra_smiles.length; i++) {
         key = extra_smiles[i]['charactor'] ;
         result = path + extra_smiles[i]['filename']
         smilesObject[key] = result;
-    }         
+    }
     return smilesObject;
 }
 
@@ -267,8 +267,8 @@ function addUpload() {
                       '<div><input type="button" class="button" value="Upload" />' +
                       '</form>';
             $(content).append(div);
-            $(content).on("click", '.prev_imgs', function(){ 
-                $("body").addClass('upload-overlay-open')               
+            $(content).on("click", '.prev_imgs', function(){
+                $("body").addClass('upload-overlay-open')
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -276,7 +276,7 @@ function addUpload() {
                 });
                 $.ajax({
                     type: 'POST',
-                    url: '/forum/topic/get_prev_images',                 
+                    url: '/forum/topic/get_prev_images',
                     contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
                     processData: false, // NEEDED, DON'T OMIT THIS
                     data: [],
@@ -288,12 +288,12 @@ function addUpload() {
                         console.log(e)
                     }
                 });
-              
+
             });
 
             $("body").on('click', '.upload-overlay .showImages .close_overlay', function(e) {
                 $(".all_images").children().remove()
-                $("body").removeClass('upload-overlay-open')            
+                $("body").removeClass('upload-overlay-open')
             })
 
             $("body").on('click', '.upload-overlay .showImages .open_img', function(e){
@@ -303,7 +303,7 @@ function addUpload() {
                     }
                 })
                 $(".all_images").children().remove()
-                $("body").removeClass('upload-overlay-open') 
+                $("body").removeClass('upload-overlay-open')
                 editor.closeDropDown(true);
                 e.preventDefault();
             })
@@ -356,7 +356,7 @@ function addStream() {
         exec: function (caller) {
             var	editor  = this;
             var content =document.createElement("DIV");
-            var div = 
+            var div =
                 '<label for="link" unselectable="on">Stream URL:</label> '+
                 '<input type="text" id="stream" dir="ltr" placeholder="https://">'+
                 '</div>'+
@@ -386,5 +386,26 @@ function addStream() {
             editor.createDropDown(caller, "insertstream", content);
         },
         tooltip: "Video Stream"
+    });
+}
+
+function addSpoiler() {
+    $.sceditor.command.set("spoiler", {
+        exec: function(caller, html) {
+            var	before = '[spoiler]',
+                end    = '[/spoiler]';
+
+            // if there is HTML passed set end to null so any selected
+            // text is replaced
+            if (html) {
+                before = before + html + end;
+                end    = null;
+                // if not add a newline to the end of the inserted quote
+            } else if (this.getRangeHelper().selectedHtml() === '') {
+
+            }
+            this.wysiwygEditorInsertHtml(before, end);
+        },
+        tooltip: "Spoiler"
     });
 }

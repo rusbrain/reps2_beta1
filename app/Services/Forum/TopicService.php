@@ -48,9 +48,9 @@ class TopicService
 
         $topic_data['user_id'] = Auth::id();
         $topic_data['commented_at'] = Carbon::now();
-        $topic_data['title'] = htmlspecialchars($request->get('title'));
-        $topic_data['content'] = htmlspecialchars($$request->get('content'));
-        $topic_data['preview_content'] = htmlspecialchars($request->get('preview_content'));
+        $topic_data['title'] = $request->get('title');
+        $topic_data['content'] = $request->get('content');
+        $topic_data['preview_content'] = $request->get('preview_content');
 
         if ($request->file('preview_img')) {
             unset($topic_data['preview_img']);
@@ -86,8 +86,8 @@ class TopicService
     {
 //        dd($request->all());
         $topic_data = [
-            'title'=> htmlspecialchars($request->get('title')),
-            'content'=> htmlspecialchars($request->get('content')),
+            'title'=> $request->get('title'),
+            'content'=> $request->get('content'),
         ];
 
         if(UserService::isAdmin() || UserService::isModerator()){
@@ -95,7 +95,7 @@ class TopicService
         }
 
         if ($request->has('preview_content') && $request->get('preview_content') != ''){
-            $topic_data['preview_content'] = htmlspecialchars($request->get('preview_content'));
+            $topic_data['preview_content'] = $request->get('preview_content');
         } else {
             $topic_data['preview_content'] = null;
         }

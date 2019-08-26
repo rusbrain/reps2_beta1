@@ -176,6 +176,7 @@ $extraSmiles = $general_helper->getextraSmiles();
             addCountries();
             addRaces();
             addSpoiler();
+            addUpload();
             var extraSmiles = <?php echo json_encode($extraSmiles) ?>;
             // Check user is admin or morderate
             @if (Auth::user())

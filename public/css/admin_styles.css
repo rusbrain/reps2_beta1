@@ -125,7 +125,7 @@ body.upload-overlay-open .upload-overlay .showImages{
   background: white;
   position: relative;
   display: inline-block;
-  
+
 }
 body.upload-overlay-open .upload-overlay .open_img {
   padding: 5px 15px;
@@ -191,7 +191,7 @@ body.upload-overlay-open .upload-overlay .showImages .images_wrapper .images .pr
   padding:0px !important;
   display: inline-grid;
   position: relative;
- 
+
   cursor: pointer;
   height: 145px;
   margin: auto;
@@ -225,11 +225,11 @@ body.upload-overlay-open .upload-overlay .showImages .images_wrapper .images .pr
   max-height: 145px;
 }
 
-:checked 
+:checked
 + label {
   border: solid 1px #0052ff !important;
 }
-:checked 
+:checked
 + label:before {
   background-repeat: no-repeat;
   background-image: url(../images/icons/checkmark.png);
@@ -239,7 +239,7 @@ body.upload-overlay-open .upload-overlay .showImages .images_wrapper .images .pr
   background-size: 25px;
 }
 
-:checked 
+:checked
 + label img {
   /* transform: scale(0.9); */
   box-shadow: 0 0 5px #333;
@@ -262,4 +262,8 @@ div.sceditor-dropdown.sceditor-uploadimage .prev_imgs {
 table.dataTable th,
 table.dataTable td {
     white-space: nowrap;
+}
+
+.sceditor-button-spoiler div {
+    background: url('../images/icons/s.png') no-repeat center center !important;
 }
