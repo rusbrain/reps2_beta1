@@ -12,7 +12,7 @@ class UserActivityLogEntry extends Model
     protected $table = 'user_activity_logs';
 
     protected $fillable = [
-        'type', 'time', 'user_id', 'parameters'
+        'type', 'time', 'user_id', 'parameters', 'ip'
     ];
 
     protected $casts = [

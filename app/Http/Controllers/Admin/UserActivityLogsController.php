@@ -26,6 +26,10 @@ class UserActivityLogsController
             $selectedUser = User::whereId($request_data['user_id'])->first();
         }
 
+        if (!isset($request_data['ip'])) {
+            $request_data['ip'] = '';
+        }
+
         return view('admin.user-activity-logs.index', ['request_data' => $request_data, 'selectedUser' => $selectedUser]);
     }
 

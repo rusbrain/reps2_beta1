@@ -72,6 +72,11 @@
                                     </div>
                                 </div>
 
+                                <div class="form-group col-md-3">
+                                    <label>IP:</label>
+                                    <input type="text" class="input form-control" name="ip" autocomplete="off" value="{{$request_data['ip']}}"/>
+                                </div>
+
                                 <div class="form-group col-md-12">
                                     <div class="text-right">
                                         <a href="{{route('admin.user.activity-log')}}" class="btn btn-default">Сброс</a>
@@ -98,6 +103,7 @@
                                 <th>Событие</th>
                                 <th>Пользователь</th>
                                 <th>Время</th>
+                                <th>IP</th>
                                 <th>Описание</th>
                                 <th>Подробно</th>
                             </tr>

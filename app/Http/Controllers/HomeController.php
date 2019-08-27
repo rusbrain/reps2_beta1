@@ -36,7 +36,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-//        UserActivityLogService::log(UserActivityLogService::EVENT_USER_COMMENT, Comment::query()->first());
         return view('home.index');
     }
 
@@ -45,7 +44,7 @@ class HomeController extends Controller
      * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View|mixed
      */
     public function search(PortalSearchRequest $request)
-    {        
+    {
         switch ($request->get('section')) {
             case 'news':
                 return redirect()->route('news', $request->all());
@@ -74,7 +73,7 @@ class HomeController extends Controller
     /**
      * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View|mixed
      */
-    public function pagination() {       
+    public function pagination() {
         $lastForums = ForumTopic::getLastForums()->paginate(10);
         return ['news' => UserViewService::getlastNews($lastForums), 'pagination' => UserViewService::getPagination($lastForums)];
     }
