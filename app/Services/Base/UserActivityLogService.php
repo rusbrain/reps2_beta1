@@ -50,7 +50,7 @@ class UserActivityLogService
             'time' => new \DateTime(),
             'user_id' => $userId ? : Auth::id(),
             'parameters' => self::$handler($targetObject),
-            'ip' => \Illuminate\Support\Facades\Request::ip()
+            'ip' => \Illuminate\Support\Facades\Request::ip() ? : ''
         ]);
 
         $newLogEntry->save();
@@ -76,6 +76,10 @@ class UserActivityLogService
         if ($request->has('end')) {
             $endTime = $request->get('end') . ' 23:59:59';
             $logsQuery->where('time', '<=', $endTime);
+        }
+
+        if ($request->has('ip')) {
+            $logsQuery->where('ip', 'LIKE', '%'.$request->get('ip').'%');
         }
 
         if($request->has('sort') && null !==$request->get('sort')){
