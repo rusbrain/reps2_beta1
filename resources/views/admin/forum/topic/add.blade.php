@@ -87,7 +87,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                                             </div>
                                             <!-- /.box-header -->
                                             <div class="box-body pad">
-                                        <textarea id="preview_content" name="preview_content" rows="5" cols="80">
+                                        <textarea id="preview_content" name="preview_content" rows="8" cols="80">
                                                                 {!! old('preview_content')!!}
                                         </textarea>
                                             </div>
@@ -109,13 +109,13 @@ $extraSmiles = $general_helper->getextraSmiles();
                                     <!-- /.box-header -->
                                     <div class="box-body pad">
                                         <textarea id="content" name="content" rows="10" cols="80">
-                                                                {!! old('content')!!}
+                                            {!! old('content')!!}
                                         </textarea>
                                     </div>
                                     @if ($errors->has('content'))
                                         <span class="invalid-feedback text-red" role="alert">
-                                                <strong>{{ $errors->first('content') }}</strong>
-                                            </span>
+                                            <strong>{{ $errors->first('content') }}</strong>
+                                        </span>
                                     @endif
                                 </div>
                             </div>
@@ -154,7 +154,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                                                     <strong>{{ $errors->first('news') }}</strong>
                                                 </span>
                                             @endif
-                                        </div>                                       
+                                        </div>
                                         <!-- /.input group -->
                                     </div>
                                 </div>
@@ -208,10 +208,11 @@ $extraSmiles = $general_helper->getextraSmiles();
             addCountries();
             addRaces();
             addUpload();
+            addSpoiler();
             var extraSmiles = <?php echo json_encode($extraSmiles) ?>;
             if ($('#content').length > 0) {
                 var content = document.getElementById('content');
-                
+
                 sceditor.create(content, {
                     format: 'xhtml',
                     style: '{{route("home")}}' + '/js/sceditor/minified/themes/content/default.min.css',
@@ -227,7 +228,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                     'countries|'+
                     'races|'+
                     'img|' +
-                    'upload',
+                    'upload|spoiler',
                     emoticons: {
                         // Emoticons to be included in the dropdown
                         dropdown: getAllSmiles(extraSmiles),
@@ -255,7 +256,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                     'countries|'+
                     'races|'+
                     'img|' +
-                    'upload',
+                    'upload|spoiler',
                     emoticons: {
                         // Emoticons to be included in the dropdown
                         dropdown: getAllSmiles(extraSmiles),

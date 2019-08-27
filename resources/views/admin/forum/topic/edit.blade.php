@@ -85,7 +85,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                                                 <h3 class="box-title">Сокращенное содержание:</h3>
                                             </div> <!-- /.box-header -->
                                             <div class="box-body pad">
-                                                <textarea id="preview_content" name="preview_content" rows="5" cols="80">
+                                                <textarea id="preview_content" name="preview_content" rows="8" cols="80">
                                                     {!! old('preview_content')??$topic->preview_content !!}
                                                 </textarea>
                                             </div>
@@ -193,6 +193,7 @@ $extraSmiles = $general_helper->getextraSmiles();
             addCountries();
             addRaces();
             addUpload();
+            addSpoiler();
             var extraSmiles = <?php echo json_encode($extraSmiles) ?>;
             if ($('#content').length > 0) {
                 var content = document.getElementById('content');
@@ -211,7 +212,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                     'date,time|' +
                     'countries|'+
                     'races|' +
-                    'upload',
+                    'upload|spoiler',
                     emoticons: {
                         // Emoticons to be included in the dropdown
                         dropdown: getAllSmiles(extraSmiles),
@@ -238,7 +239,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                     'date,time|' +
                     'countries|'+
                     'races|' +
-                    'upload',
+                    'upload|spoiler',
                     emoticons: {
                         // Emoticons to be included in the dropdown
                         dropdown: getAllSmiles(extraSmiles),

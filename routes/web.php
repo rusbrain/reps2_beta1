@@ -250,8 +250,6 @@ Route::group(['middleware' => 'activity'], function () {
 
         Route::get('/photo/{id}/comments', 'UserGalleryCommentController@pagination')->name('gallery.comment.pagination');
         Route::get('/photo/{id}', 'UserGalleryController@show')->name('gallery.view');
-
-
     });
 
     Route::group(['prefix' => 'chat'], function () {
@@ -263,7 +261,6 @@ Route::group(['middleware' => 'activity'], function () {
 
         Route::get('/get_externalsmiles','ChatController@get_externalsmiles')->name('chat.get_smiles');
         Route::get('/get_externalimages','ChatController@get_externalimages')->name('chat.get_images');
-        // Route::get('/get_chatusers', 'ChatController@get_chatusers')->name('chat.get_chatusers');
     });
 
     // Pop up chat

@@ -157,15 +157,15 @@ $extraSmiles = $general_helper->getextraSmiles();
 
 @section('js')
 
-  
+
     <!--SCEditor -  WYSIWYG BBCode editor -->
     <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.min.js"></script>
     <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.xhtml.min.js"></script>
     <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.bbcode.min.js"></script>
     <script src="{{route('home')}}/js/sceditor/languages/ru.js"></script>
 
-    <script>       
-         
+    <script>
+
         /**
          * Comments box is the same for all pages
          *SCEditor -  WYSIWYG BBCode editor
@@ -176,13 +176,14 @@ $extraSmiles = $general_helper->getextraSmiles();
             addCountries();
             addRaces();
             addSpoiler();
+            addUpload();
             var extraSmiles = <?php echo json_encode($extraSmiles) ?>;
             // Check user is admin or morderate
             @if (Auth::user())
                 var isUpload = {{Auth::user()->user_role_id}};
                 if (isUpload == 1 || isUpload == 2) addUpload();
             @endif
-                        
+
             /**turn on HTML text editor for Topic's preview content**/
             if ($('#preview_content').length > 0) {
                 var preview_content = document.getElementById('preview_content');
@@ -200,7 +201,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                         'emoticon|' +
                         'date,time|' +
                         'countries|'+
-                        'races|'+                        
+                        'races|'+
                         'maximize|'+
                         'upload|spoiler' ,
                     emoticons: {
