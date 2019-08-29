@@ -280,7 +280,6 @@ Route::group(['middleware' => 'activity'], function () {
             Route::group(['middleware' => 'is_admin', 'prefix' => 'user'], function () {
                 Route::get('{id}/email', 'UserEmailController@index')->name('admin.user.email');
                 Route::get('{id}/replay', 'ReplayController@getReplayByUser')->name('admin.user.replay');
-                Route::post('/upload', 'ReplayController@uploadReplayFile')->name('admin.replay.upload');
                 Route::get('{id}/topic', 'ForumTopicController@getUsersTopics')->name('admin.user.topic');
                 Route::get('{id}/profile', 'UserController@getUserProfile')->name('admin.user.profile');
                 Route::get('{id}/ban', 'UserController@banUser')->name('admin.user.ban');
@@ -399,6 +398,7 @@ Route::group(['middleware' => 'activity'], function () {
                 Route::get('/{id}/not_approve', 'ReplayController@notApprove')->name('admin.replay.not_approve');
                 Route::get('/{id}/remove', 'ReplayController@remove')->name('admin.replay.remove');
                 Route::get('/{id}/view', 'ReplayController@getReplay')->name('admin.replay.view');
+                Route::post('/upload', 'ReplayController@uploadReplayFile')->name('admin.replay.upload');
                 Route::get('/{id}/edit', 'ReplayController@edit')->name('admin.replay.edit');
                 Route::get('/add', 'ReplayController@add')->name('admin.replay.add');
                 Route::post('/create', 'ReplayController@create')->name('admin.replay.create');
