@@ -15,6 +15,7 @@ $extraSmiles = $general_helper->getextraSmiles();
 
     <!--JS plugin Select2 - autocomplete -->
     <link rel="stylesheet" href="{{route('home')}}/css/select2.min.css"/>
+    <link rel="stylesheet" href="{{route('home')}}/css/dropzone.css"/>
     <style>
     .select2-container .select2-selection--single{
         height: 34px !important;
@@ -97,9 +98,9 @@ $extraSmiles = $general_helper->getextraSmiles();
                                         <!-- /. tools -->
                                     </div>
                                     <div class="form-group">
-                                       
+
                                         <select class="form-control form-select-2" name="map_id">
-                                            @foreach($maps as $map)                                          
+                                            @foreach($maps as $map)
                                                 <option value="{{$map->id}}" {{$map->id == $replay->map_id?'selected':''}}>{{$map->name}}</option>
                                             @endforeach
                                         </select>
@@ -213,7 +214,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                                         </div>
                                     </div>
                                 </div>
-                              
+
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <br>
@@ -229,19 +230,37 @@ $extraSmiles = $general_helper->getextraSmiles();
                                         @endif
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                            </div>
+                            <div class="row" >
+                                <div class="col-md-6" id="replay-uploader-wrapper" data-upload-url="{{route('replay.upload')}}">
                                     <div class="box-header">
                                         <h3 class="box-title">Загрузить новый Replay:</h3>
                                         <!-- /. tools -->
                                     </div>
-                                    <div class="form-group">
-                                        <input type="file" id="replay" name="replay">
+                                    <div id="file-uploader-dropzone">
+                                        @if ($file)
+                                            <div class="dz-preview dz-file-preview dz-processing dz-success dz-complete js-file-preview">
+                                                <div class="dz-image"></div>
+                                                <div class="dz-details">
+                                                    <div class="dz-size">
+                                                        <span data-dz-size=""><strong>{{ $file->getSizeFormatted() }}</strong> KB</span>
+                                                    </div>
+                                                    <div class="dz-filename">
+                                                        <span data-dz-name="">{{ $file->getFileName() }}</span>
+                                                    </div>
+                                                </div>
+
+                                                <a class="dz-remove js-remove-preloaded-file" href="#" data-dz-remove="">Remove file</a>
+                                            </div>
+                                        @endif
                                     </div>
-                                    @if ($errors->has('replay'))
-                                        <span class="invalid-feedback text-red" role="alert">
+
+                                    <input type="hidden" name="file_id" id="file_id"  data-is-uploaded="true" value="{{old('file_id', $replay->file_id)}}"
+                                           class="@if(old('file_id', $replay->file_id)) js-file-preloaded @endif"/>
+
+                                    <span id="replay-file-error-container" class="invalid-feedback" @if ($errors->has('replay')) style="display: none; " @endif>
                                         <strong>{{ $errors->first('replay') }}</strong>
                                     </span>
-                                    @endif
                                 </div>
                             </div>
                             <div class="row">
@@ -310,6 +329,8 @@ $extraSmiles = $general_helper->getextraSmiles();
 
     <!--JS plugin Select2 - autocomplete -->
     <script src="{{route('home')}}/js/select2.full.min.js"></script>
+    <script src="{{route('home')}}/js/dropzone.js"></script>
+    <script src="{{route('home')}}/js/replay_form.js"></script>
 
     <script>
         //Date picker

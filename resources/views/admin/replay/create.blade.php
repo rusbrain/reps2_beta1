@@ -17,11 +17,12 @@ $extraSmiles = $general_helper->getextraSmiles();
 
     <!--JS plugin Select2 - autocomplete -->
     <link rel="stylesheet" href="{{route('home')}}/css/select2.min.css"/>
+    <link rel="stylesheet" href="{{route('home')}}/css/dropzone.css"/>
 
     <style>
-    .select2-container .select2-selection--single{
-        height: 34px !important;
-    }
+        .select2-container .select2-selection--single {
+            height: 34px !important;
+        }
     </style>
 @endsection
 
@@ -87,7 +88,10 @@ $extraSmiles = $general_helper->getextraSmiles();
                                     <div class="form-group">
                                         <select class="form-control" name="type_id">
                                             @foreach($types as $type)
-                                                <option value="{{$type->id}}" {{$type->id == old('type_id')?'selected':''}}>{{$type->name}}</option>
+                                                <option
+                                                    value="{{$type->id}}" {{$type->id == old('type_id')?'selected':''}}>
+                                                    {{$type->name}}
+                                                </option>
                                             @endforeach
                                         </select>
                                         @if ($errors->has('type_id'))
@@ -105,7 +109,10 @@ $extraSmiles = $general_helper->getextraSmiles();
                                     <div class="form-group">
                                         <select class="form-control form-select-2" name="map_id">
                                             @foreach($maps as $map)
-                                                <option value="{{$map->id}}" {{$map->id == old('map_id')?'selected':''}}>{{$map->name}}</option>
+                                                <option
+                                                    value="{{$map->id}}" {{$map->id == old('map_id')?'selected':''}}>
+                                                    {{$map->name}}
+                                                </option>
                                             @endforeach
                                         </select>
                                         @if ($errors->has('map_id'))
@@ -126,7 +133,10 @@ $extraSmiles = $general_helper->getextraSmiles();
                                             <div class="form-group">
                                                 <select class="form-control" name="first_race">
                                                     @foreach(\App\Replay::$races as $race)
-                                                        <option value="{{$race}}" {{$race == old('first_race')?'selected':''}}>{{$race}}</option>
+                                                        <option
+                                                            value="{{$race}}" {{$race == old('first_race')?'selected':''}}>
+                                                            {{$race}}
+                                                        </option>
                                                     @endforeach
                                                 </select>
                                                 @if ($errors->has('first_race'))
@@ -144,7 +154,10 @@ $extraSmiles = $general_helper->getextraSmiles();
                                             <div class="form-group">
                                                 <select class="form-control form-select-2" name="first_country_id">
                                                     @foreach($admin_helper->getCountries() as $country)
-                                                        <option value="{{$country->id}}" {{$country->id == old('first_country_id')?'selected':''}}>{{$country->name}}</option>
+                                                        <option
+                                                            value="{{$country->id}}" {{$country->id == old('first_country_id')?'selected':''}}>
+                                                            {{$country->name}}
+                                                        </option>
                                                     @endforeach
                                                 </select>
                                                 @if ($errors->has('first_country_id'))
@@ -177,7 +190,10 @@ $extraSmiles = $general_helper->getextraSmiles();
                                             <div class="form-group">
                                                 <select class="form-control" name="second_race">
                                                     @foreach(\App\Replay::$races as $race)
-                                                        <option value="{{$race}}" {{$race == old('second_race')?'selected':''}}>{{$race}}</option>
+                                                        <option
+                                                            value="{{$race}}" {{$race == old('second_race')?'selected':''}}>
+                                                            {{$race}}
+                                                        </option>
                                                     @endforeach
                                                 </select>
                                                 @if ($errors->has('second_race'))
@@ -195,7 +211,10 @@ $extraSmiles = $general_helper->getextraSmiles();
                                             <div class="form-group">
                                                 <select class="form-control form-select-2" name="second_country_id">
                                                     @foreach($admin_helper->getCountries() as $country)
-                                                        <option value="{{$country->id}}" {{$country->id == old('second_country_id')?'selected':''}}>{{$country->name}}</option>
+                                                        <option
+                                                            value="{{$country->id}}" {{$country->id == old('second_country_id')?'selected':''}}>
+                                                            {{$country->name}}
+                                                        </option>
                                                     @endforeach
                                                 </select>
                                                 @if ($errors->has('second_country_id'))
@@ -219,7 +238,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                                             @endif
                                         </div>
                                     </div>
-                                </div>                               
+                                </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <br>
@@ -236,19 +255,37 @@ $extraSmiles = $general_helper->getextraSmiles();
                                         @endif
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6" id="replay-uploader-wrapper" data-upload-url="{{route('replay.upload')}}">
                                     <div class="box-header">
                                         <h3 class="box-title">Загрузить новый Replay:</h3>
                                         <!-- /. tools -->
                                     </div>
-                                    <div class="form-group">
-                                        <input type="file" id="replay" name="replay">
+                                    <div id="file-uploader-dropzone">
+                                        @if ($file)
+                                            <div class="dz-preview dz-file-preview dz-processing dz-success dz-complete js-file-preview">
+                                                <div class="dz-image"></div>
+                                                <div class="dz-details">
+                                                    <div class="dz-size">
+                                                        <span data-dz-size=""><strong>{{ $file->getSizeFormatted() }}</strong> KB</span>
+                                                    </div>
+                                                    <div class="dz-filename">
+                                                        <span data-dz-name="">{{ $file->getFileName() }}</span>
+                                                    </div>
+                                                </div>
+
+                                                <a class="dz-remove js-remove-preloaded-file" href="#" data-dz-remove="">Remove file</a>
+                                            </div>
+                                        @endif
                                     </div>
-                                    @if ($errors->has('replay'))
-                                        <span class="invalid-feedback text-red" role="alert">
+
+                                    <input type="hidden" name="file_id" id="file_id"  data-is-uploaded="true" value="{{old('file_id')}}"
+                                           class="@if(old('file_id')) js-file-preloaded @endif"/>
+
+                                    <span id="replay-file-error-container" class="invalid-feedback" @if ($errors->has('replay')) style="display: none; " @endif>
                                         <strong>{{ $errors->first('replay') }}</strong>
                                     </span>
-                                    @endif
                                 </div>
                             </div>
                             <div class="row">
@@ -258,10 +295,10 @@ $extraSmiles = $general_helper->getextraSmiles();
                                     </div><!-- /.box-header -->
                                     <div class="box-body pad">
                                             <textarea
-                                                    id="content"
-                                                    name="content"
-                                                    rows="10"
-                                                    cols="80">{!! old('content') !!}</textarea>
+                                                id="content"
+                                                name="content"
+                                                rows="10"
+                                                cols="80">{!! old('content') !!}</textarea>
                                     </div>
                                     @if ($errors->has('content'))
                                         <span class="invalid-feedback text-red" role="alert">
@@ -320,6 +357,7 @@ $extraSmiles = $general_helper->getextraSmiles();
 
     <!--JS plugin Select2 - autocomplete -->
     <script src="{{route('home')}}/js/select2.full.min.js"></script>
+    <script src="{{route('home')}}/js/dropzone.js"></script>
 
     <script>
         //Date picker
@@ -376,9 +414,49 @@ $extraSmiles = $general_helper->getextraSmiles();
             }
         });
         $(function () {
-            if($('.form-select-2').length > 0){
-                $('.form-select-2').select2({
+            if ($('.form-select-2').length > 0) {
+                $('.form-select-2').select2({});
+            }
 
+            if ($('div#file-uploader-dropzone').length) {
+                let replayFileDropzone = new Dropzone("div#file-uploader-dropzone", {
+                    url:'{{route('admin.replay.upload')}}',
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    createImageThumbnails: false,
+                    acceptedFiles: '.rep',
+                    maxFiles: 1,
+                    addRemoveLinks: true
+                });
+
+                $('div#file-uploader-dropzone').addClass('dropzone');
+
+                replayFileDropzone.on('success', function(file, response) {
+                    $('#replay-file-error-container').html('').hide();
+                    $('#file_id').val(response.file_id);
+                    if (response.map_id) {
+                        $('#map_id.form-select-2').val(response.map_id).change();
+                    }
+                    if (response.first_race) {
+                        $('select#first_race').val(response.first_race).change();
+                    }
+                    if (response.first_location) {
+                        $('#first_location').val(response.first_location);
+                    }
+                    if (response.second_race) {
+                        $('select#second_race').val(response.second_race).change();
+                    }
+                    if (response.second_location) {
+                        $('#second_location').val(response.second_location);
+                    }
+                }).on('error', function(file, errorResponse, xhr) {
+                    var $errorMessage = $('#replay-file-error-container');
+
+                    let errorHtml = '';
+                    for (let error of errorResponse.errors.file) {
+                        errorHtml += '<strong>' + error + '</strong>';
+                    }
+
+                    $errorMessage.html(errorHtml).show();
                 });
             }
         });

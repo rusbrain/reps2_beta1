@@ -3,8 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Comment;
-use App\Http\Requests\{CommentUpdateRequest, ReplaySearchAdminRequest, ReplayStoreRequest, ReplayUpdateRequest};
-use App\{Replay, ReplayMap, ReplayType, ReplayUserRating};
+use App\Http\Requests\{CommentUpdateRequest,
+    ReplaySearchAdminRequest,
+    ReplayStoreRequest,
+    ReplayUpdateRequest,
+    UploadReplayRequest};
+use Illuminate\Http\UploadedFile;
+use App\{File, Replay, ReplayMap, ReplayType, ReplayUserRating, Country, Services\Replay\ReplayParserService};
 use App\Services\Base\{BaseDataService, AdminViewService};
 use App\Services\Comment\CommentService;
 use App\Services\Replay\ReplayService;
@@ -28,11 +33,11 @@ class ReplayController extends Controller
      */
     public function pagination(ReplaySearchAdminRequest $request)
     {
-       
+
         $data = Replay::getReplay($request);//dd($data);
         return BaseDataService::getPaginationData(
-            AdminViewService::getReplay($data), 
-            AdminViewService::getPagination($data), 
+            AdminViewService::getReplay($data),
+            AdminViewService::getPagination($data),
             AdminViewService::getReplayPopUp($data)
         );
     }
@@ -116,7 +121,22 @@ class ReplayController extends Controller
      */
     public function edit($replay_id)
     {
-        return view('admin.replay.edit')->with(['replay'=> $this->getReplayObject($replay_id), 'types' => ReplayType::all(), 'maps' => ReplayMap::all()]);
+        $replay = $this->getReplayObject($replay_id);
+        if (!$replay) {
+            return abort(404);
+        }
+        $currentFileId = old('file_id', $replay->file_id);
+        $file = null;
+        if ($currentFileId) {
+            $file = File::find($currentFileId);
+        }
+        return view('admin.replay.edit')->with(
+            [
+                'replay'=> $replay,
+                'types' => ReplayType::all(),
+                'maps' => ReplayMap::all(),
+                'file' => $file
+            ]);
     }
 
     /**
@@ -149,7 +169,17 @@ class ReplayController extends Controller
      */
     public function add()
     {
-        return view('admin.replay.create')->with(['types' => ReplayType::all(), 'maps' => ReplayMap::all()]);
+        $file = null;
+        if (old('file_id')) {
+            $file = File::find(old('file_id'));
+        }
+
+        return view('admin.replay.create')->with([
+            'types' => ReplayType::all(),
+            'maps' => ReplayMap::all(),
+            'countries' => Country::all(),
+            'file' => $file
+        ]);
     }
 
     /**
@@ -159,5 +189,24 @@ class ReplayController extends Controller
     public function create(ReplayStoreRequest $request)
     {
         return redirect()->route('admin.replay.view', ['id' => ReplayService::store($request)->id]);
+    }
+
+
+    public function uploadReplayFile(UploadReplayRequest $request, ReplayParserService $replayParserService)
+    {
+        $file = $request->file;
+        /* @var UploadedFile $file */
+
+        try {
+            $replayData = $replayParserService->parseFile($file);
+        } catch (\Exception $e) {
+            return Response::json(['errors' => ['file' => [$e->getMessage()]]], 422);
+        }
+
+        $fileModel = File::storeFile($file, 'replays', '', false, false, 'replay');
+        $replayData['file_id'] = $fileModel->id;
+        dd($fileModel->id);
+
+        return Response::json($replayData, 200);
     }
 }
