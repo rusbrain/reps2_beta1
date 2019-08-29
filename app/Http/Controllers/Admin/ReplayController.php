@@ -205,8 +205,6 @@ class ReplayController extends Controller
 
         $fileModel = File::storeFile($file, 'replays', '', false, false, 'replay');
         $replayData['file_id'] = $fileModel->id;
-        dd($fileModel->id);
-
         return Response::json($replayData, 200);
     }
 }

@@ -257,7 +257,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6" id="replay-uploader-wrapper" data-upload-url="{{route('replay.upload')}}">
+                                <div class="col-md-6" id="replay-uploader-wrapper" data-upload-url="{{route('admin.replay.upload')}}">
                                     <div class="box-header">
                                         <h3 class="box-title">Загрузить новый Replay:</h3>
                                         <!-- /. tools -->
