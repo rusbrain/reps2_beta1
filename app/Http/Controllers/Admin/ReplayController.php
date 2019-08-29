@@ -14,6 +14,7 @@ use App\Services\Base\{BaseDataService, AdminViewService};
 use App\Services\Comment\CommentService;
 use App\Services\Replay\ReplayService;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Response;
 
 class ReplayController extends Controller
 {
