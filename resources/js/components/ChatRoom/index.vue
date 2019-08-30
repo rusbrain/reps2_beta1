@@ -1,12 +1,12 @@
 <template>
     <div>
-        <MessageComponent 
-          :auth="auth" 
+        <MessageComponent
+          :auth="auth"
           @onPopup="popup"
           :socket="socket"
-          :messages="messages" 
+          :messages="messages"
           :isMessages="isMessages">
-        </MessageComponent>      
+        </MessageComponent>
         <input type="hidden" id="popupStatus"/>
     </div>
 </template>
@@ -18,7 +18,7 @@ import MessageComponent from './MessageComponent.vue'
 export default {
   components: {
     MessageComponent,
-  }, 
+  },
   props: {
     auth: [Object, Number]
   },
@@ -31,7 +31,7 @@ export default {
     }
   },
 
-  mounted() {    
+  mounted() {
     var socket = io(process.env.MIX_SOCKET_SERVER, { query: "id= " + this.auth.id });
     this.socket = socket;
     var self = this;
@@ -45,8 +45,8 @@ export default {
 
     socket.on("addMessageResponse", data => {
       this.addChatMessage(data);
-    });   
-  },  
+    });
+  },
 
    methods: {
     getMessagesResponse: function(data) {
@@ -57,6 +57,7 @@ export default {
     },
     addChatMessage: function(data) {
       this.messages.unshift(data);
+      this.messages.pop();
       this.scrollToTop();
     },
 

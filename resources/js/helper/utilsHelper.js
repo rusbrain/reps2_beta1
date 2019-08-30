@@ -47,3 +47,26 @@ export const pregMatchFunction = (string) => {
     var regex_string = /(\[url\]|\[\/url\]|\[img\]|\[\/img\]|\[b\]|\[\/b\]|\[u\]|\[\/u\]|\[i\]|\[\/i\]|\[c1\]|\[\/c1\]|\[c2\]|\[\/c2\]|\[c3\]|\[\/c3\]|\[c4\]|\[\/c4\]|\[c5\]|\[\/c5\]|\[c6\]|\[\/c6\]|\[f1\]|\[\/f1\]|\[f2\]|\[\/f2\]|\[f3\]|\[\/f3\]|\[d\]|\[\/d\]|\[n\]|\[\/n\])/
     return string.replace(new RegExp(regex_string, 'gm'), '')
 };
+
+export const ValidImgUrl = (message) => {
+    var default_Incorrect_img = location.protocol + '//' + location.host + '/images/incorrect_img.png';
+    var matches = message.match(/\[d\](.*?)\[\/d\]/i)
+    if(matches != null){
+        var content = matches[1];
+        var url = content.split(' ')[0];
+        if ((/\.(gif|jpg|jpeg|tiff|png)$/i).test(url) && validationImg(url)) {
+            return message;
+        } else {
+            return message.replace(url, default_Incorrect_img);
+        }
+    }
+    return message;
+};
+
+export const validationImg = (url) => {
+    var http = new XMLHttpRequest();
+    http.open('HEAD', url, false);
+    http.send();
+
+    return http.status != 404;
+}

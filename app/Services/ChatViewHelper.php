@@ -17,9 +17,9 @@ class ChatViewHelper
 {
     public function __construct()
     {
-        $this->host = request()->getSchemeAndHttpHost();  
+        $this->host = request()->getSchemeAndHttpHost();
         $this->general_helper = new GeneralViewHelper;
-        $this->allChatImages = $this->general_helper->getAllChatImages();   
+        $this->allChatImages = $this->general_helper->getAllChatImages();
     }
     public function UrlFilter($text)
     {
@@ -42,18 +42,18 @@ class ChatViewHelper
         $text = preg_replace("#\[(i)\](.+?)\[/\\1\]#is", "<\\1>\\2</\\1>", $text);
         $text = preg_replace("#\[(u)\](.+?)\[/\\1\]#is", "<\\1>\\2</\\1>", $text);
 
-        $text = preg_replace_callback("#\[(c[0-9]{1,})\](.+?)\[/\\1\]#is", function ($matches) {          
+        $text = preg_replace_callback("#\[(c[0-9]{1,})\](.+?)\[/\\1\]#is", function ($matches) {
             return "<span style='color: ".$this->font_colors[$matches[1]]."'>$matches[2]</span>";
-        }, $text);
+        }, $text);@
 
-        $text = preg_replace_callback("#\[(f[0-9]{1,})\](.+?)\[/\\1\]#is", function ($matches) {          
+        $text = preg_replace_callback("#\[(f[0-9]{1,})\](.+?)\[/\\1\]#is", function ($matches) {
             return "<span style='font-size: ".$this->font_sizes[$matches[1]]."'>$matches[2]</span>";
         }, $text);
 
-        $text = preg_replace_callback('/:([a-zA-Z0-9]{1,}):/', function ($matches) {          
-            return '<img src="'.$this->host.$this->allChatImages[$matches[1]].'" border="0">';            
+        $text = preg_replace_callback('/:([a-zA-Z0-9]{1,}):/', function ($matches) {
+            return '<img src="'.$this->host.$this->allChatImages[$matches[1]].'" border="0">';
         }, $text);
-      
+
         $text = preg_replace("/\[img\](\r\n|\r|\n)*((http|https):\/\/([^;<>\*\"]+)|[a-z0-9\/\\\._\- ]+)\[\/img\]/siU",
             "<img src=\"\\2\" class=\"imgl\" border=\"0\" alt=\"\"> ", $text);
 
@@ -62,27 +62,20 @@ class ChatViewHelper
         }, $text);
 
 
-        $text = preg_replace_callback("#\[(d)\](.+?)\[/\\1\]#is", function ($matches) { 
+        $text = preg_replace_callback("#\[(d)\](.+?)\[/\\1\]#is", function ($matches) {
 
-            $content = isset($matches[2]) ? $matches[2] : $matches[1];   
+            $content = isset($matches[2]) ? $matches[2] : $matches[1];
             $url = '';
-            $image_content = '';
             if(preg_match_all('#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', $content, $match)) {
                 $url = $match[0][0];
             }
-            // dd($this->does_url_exists($url));
-            if(!empty($url)) {
-                if($this->does_url_exists($url)) {
-                    $image_content = '<a title="'.$url.'" target="_blank" href="'.$url.'" class="id_link"> <img class="smile_inchat" src="'.$url.'"></a>';
-                } else {
-                    $image_content = '<p title="'.$url.'">Incorrect image code</p>';
-                }
-            }
+
+            $image_content = '<a title="'.$url.'" target="_blank" href="'.$url.'" class="id_link"> <img class="smile_inchat" src="'.$url.'"></a>';
 
             $string = substr($content , strlen($url), strlen($content));
             return '<center><div class="demotivator">'.$image_content.'<p>'.$string.'</p></div><center>';
-        }, $text); 
-        
+        }, $text);
+
         $text = preg_replace_callback('/@([0-9]+),/', function ($matches) {
             $this->selected_user = $matches[1];
             $chatusers = User::find($this->selected_user);
@@ -92,17 +85,17 @@ class ChatViewHelper
         return $text;
     }
 
-    
+
 
     /**
      * file check
      */
-    public function does_url_exists($url) {
+    /**public function does_url_exists($url) {
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_NOBODY, true);
         curl_exec($ch);
         $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    
+
         if ($code == 200) {
             $status = true;
         } else {
@@ -110,6 +103,6 @@ class ChatViewHelper
         }
         curl_close($ch);
         return $status;
-    }
+    }*/
 
 }

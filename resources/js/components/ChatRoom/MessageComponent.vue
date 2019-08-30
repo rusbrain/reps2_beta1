@@ -161,6 +161,7 @@ export default {
           alert("Please input text.");
           return false;
         }
+        message = utilsHelper.ValidImgUrl(message);
         let messagePacket = this.createMsgObj(message);
         let currentObj = this;
         event.preventDefault();
