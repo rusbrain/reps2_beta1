@@ -1,7 +1,7 @@
 
 import moment from 'moment';
 
-export const urlify =(text) => {      
+export const urlify =(text) => {
     text.replace(/(\\r)*\\n/g, '<br>')
     var urlRegex = /(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/igm;
     return text.replace(urlRegex, function(url) {
@@ -21,7 +21,7 @@ export const wrapperTxt = (text) => {
         let lineTxt = item.replace('\n','');
         wrap_text += lineTxt;
     }
-  });  
+  });
   return wrap_text;
 };
 
@@ -40,5 +40,10 @@ export const isMobile = () => {
 
 export const regex_test =(string) => {
     var regex_string = /(\[url\]|\[\/url\]|\[img\]|\[\/img\]|\[b\]|\[\/b\]|\[u\]|\[\/u\]|\[i\]|\[\/i\]|\[c1\]|\[\/c1\]|\[c2\]|\[\/c2\]|\[c3\]|\[\/c3\]|\[c4\]|\[\/c4\]|\[c5\]|\[\/c5\]|\[c6\]|\[\/c6\]|\[f1\]|\[\/f1\]|\[f2\]|\[\/f2\]|\[f3\]|\[\/f3\]|\[d\]|\[\/d\]|\[n\]|\[\/n\])/
-    return regex_string.test(string)    
+    return regex_string.test(string)
+};
+
+export const pregMatchFunction = (string) => {
+    var regex_string = /(\[url\]|\[\/url\]|\[img\]|\[\/img\]|\[b\]|\[\/b\]|\[u\]|\[\/u\]|\[i\]|\[\/i\]|\[c1\]|\[\/c1\]|\[c2\]|\[\/c2\]|\[c3\]|\[\/c3\]|\[c4\]|\[\/c4\]|\[c5\]|\[\/c5\]|\[c6\]|\[\/c6\]|\[f1\]|\[\/f1\]|\[f2\]|\[\/f2\]|\[f3\]|\[\/f3\]|\[d\]|\[\/d\]|\[n\]|\[\/n\])/
+    return string.replace(new RegExp(regex_string, 'gm'), '')
 };
