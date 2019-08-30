@@ -50,14 +50,23 @@ export const pregMatchFunction = (string) => {
 
 export const ValidImgUrl = (message) => {
     var default_Incorrect_img = location.protocol + '//' + location.host + '/images/incorrect_img.png';
-    var matches = message.match(/\[d\](.*?)\[\/d\]/i)
-    if(matches != null){
-        var content = matches[1];
-        var url = content.split(' ')[0];
+    var demotivate_matches = message.match(/\[d\](.*?)\[\/d\]/i)
+    if(demotivate_matches != null){
+        var content = demotivate_matches[1];
+        let url = content.split(' ')[0];
         if ((/\.(gif|jpg|jpeg|tiff|png)$/i).test(url) && validationImg(url)) {
-            return message;
         } else {
-            return message.replace(url, default_Incorrect_img);
+            message =  message.replace(url, default_Incorrect_img);
+        }
+    }
+
+    var img_matches = message.match(/\[img\](.*?)\[\/img\]/i)
+    if(img_matches != null){
+        let img = img_matches[1];
+        if ((/\.(gif|jpg|jpeg|tiff|png)$/i).test(img) && validationImg(img)) {
+
+        } else {
+            message = message.replace(img, default_Incorrect_img);
         }
     }
     return message;
