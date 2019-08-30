@@ -281,8 +281,8 @@ $game_versions = $general_helper->getGameVersion();
                         <input type="hidden" name="file_id" id="file_id"  data-is-uploaded="true" value="{{old('file_id', $replay->file_id)}}"
                                class="@if(old('file_id', $replay->file_id)) js-file-preloaded @endif"/>
 
-                        <span id="replay-file-error-container" class="invalid-feedback" @if ($errors->has('replay')) style="display: none; " @endif>
-                            <strong>{{ $errors->first('replay') }}</strong>
+                        <span id="replay-file-error-container" class="invalid-feedback" @if ($errors->has('file_id')) style="display: block; " @endif>
+                            <strong>{{ $errors->first('file_id') }}</strong>
                         </span>
                     </div>
 

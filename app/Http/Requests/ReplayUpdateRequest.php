@@ -32,7 +32,7 @@ class ReplayUpdateRequest extends FormRequest
             'title'                 => 'required|string|min:3|max:255',
             'content'               => 'required|string|min:3|max:1000',
             'map_id'                => 'nullable|exists:replay_maps,id',
-            'file_id'               => 'required_without:video_iframe|exists:files,id',
+            'file_id'               => 'required_without:video_iframe|nullable|exists:files,id',
             'video_iframe'          => 'required_without:file_id|max:1000',
             'first_country_id'      => 'required|exists:countries,id',
             'second_country_id'     => 'required|exists:countries,id',

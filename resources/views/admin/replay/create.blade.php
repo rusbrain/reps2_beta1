@@ -53,7 +53,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                                         <h3 class="box-title">Название:</h3>
                                         <!-- /. tools -->
                                     </div>
-                                    <input type="text" name="title" class="form-control" placeholder="Название..."
+                                    <input type="text" id="title" name="title" class="form-control" placeholder="Название..."
                                            value="{{old('title')}}">
                                     @if ($errors->has('title'))
                                         <span class="invalid-feedback text-red" role="alert">
@@ -107,7 +107,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                                         <!-- /. tools -->
                                     </div>
                                     <div class="form-group">
-                                        <select class="form-control form-select-2" name="map_id">
+                                        <select class="form-control form-select-2" name="map_id" id="map_id">
                                             @foreach($maps as $map)
                                                 <option
                                                     value="{{$map->id}}" {{$map->id == old('map_id')?'selected':''}}>
@@ -131,7 +131,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                                                 <!-- /. tools -->
                                             </div>
                                             <div class="form-group">
-                                                <select class="form-control" name="first_race">
+                                                <select class="form-control" name="first_race" id="first_race">
                                                     @foreach(\App\Replay::$races as $race)
                                                         <option
                                                             value="{{$race}}" {{$race == old('first_race')?'selected':''}}>
@@ -173,7 +173,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                                                 <!-- /. tools -->
                                             </div>
                                             <input type="text" name="first_location" class="form-control"
-                                                   placeholder="Локация..." value="{{old('first_location')}}">
+                                                   placeholder="Локация..." value="{{old('first_location')}}" id="first_location">
                                             @if ($errors->has('first_location'))
                                                 <span class="invalid-feedback text-red" role="alert">
                                         <strong>{{ $errors->first('first_location') }}</strong>
@@ -188,7 +188,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                                                 <!-- /. tools -->
                                             </div>
                                             <div class="form-group">
-                                                <select class="form-control" name="second_race">
+                                                <select class="form-control" name="second_race" id="second_race">
                                                     @foreach(\App\Replay::$races as $race)
                                                         <option
                                                             value="{{$race}}" {{$race == old('second_race')?'selected':''}}>
@@ -230,7 +230,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                                                 <!-- /. tools -->
                                             </div>
                                             <input type="text" name="second_location" class="form-control"
-                                                   placeholder="Локация..." value="{{old('second_location')}}">
+                                                   placeholder="Локация..." value="{{old('second_location')}}" id="second_location">
                                             @if ($errors->has('second_location'))
                                                 <span class="invalid-feedback text-red" role="alert">
                                         <strong>{{ $errors->first('second_location') }}</strong>
@@ -283,8 +283,8 @@ $extraSmiles = $general_helper->getextraSmiles();
                                     <input type="hidden" name="file_id" id="file_id"  data-is-uploaded="true" value="{{old('file_id')}}"
                                            class="@if(old('file_id')) js-file-preloaded @endif"/>
 
-                                    <span id="replay-file-error-container" class="invalid-feedback" @if ($errors->has('replay')) style="display: none; " @endif>
-                                        <strong>{{ $errors->first('replay') }}</strong>
+                                    <span id="replay-file-error-container" class="invalid-feedback" @if ($errors->has('file_id')) style="display: block; " @endif>
+                                        <strong>{{ $errors->first('file_id') }}</strong>
                                     </span>
                                 </div>
                             </div>
@@ -358,6 +358,7 @@ $extraSmiles = $general_helper->getextraSmiles();
     <!--JS plugin Select2 - autocomplete -->
     <script src="{{route('home')}}/js/select2.full.min.js"></script>
     <script src="{{route('home')}}/js/dropzone.js"></script>
+    <script src="{{route('home')}}/js/replay_form.js"></script>
 
     <script>
         //Date picker
@@ -418,47 +419,47 @@ $extraSmiles = $general_helper->getextraSmiles();
                 $('.form-select-2').select2({});
             }
 
-            if ($('div#file-uploader-dropzone').length) {
-                let replayFileDropzone = new Dropzone("div#file-uploader-dropzone", {
-                    url:'{{route('admin.replay.upload')}}',
-                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                    createImageThumbnails: false,
-                    acceptedFiles: '.rep',
-                    maxFiles: 1,
-                    addRemoveLinks: true
-                });
+            {{--if ($('div#file-uploader-dropzone').length) {--}}
+            {{--    let replayFileDropzone = new Dropzone("div#file-uploader-dropzone", {--}}
+            {{--        url:'{{route('admin.replay.upload')}}',--}}
+            {{--        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},--}}
+            {{--        createImageThumbnails: false,--}}
+            {{--        acceptedFiles: '.rep',--}}
+            {{--        maxFiles: 1,--}}
+            {{--        addRemoveLinks: true--}}
+            {{--    });--}}
 
-                $('div#file-uploader-dropzone').addClass('dropzone');
+            {{--    $('div#file-uploader-dropzone').addClass('dropzone');--}}
 
-                replayFileDropzone.on('success', function(file, response) {
-                    $('#replay-file-error-container').html('').hide();
-                    $('#file_id').val(response.file_id);
-                    if (response.map_id) {
-                        $('#map_id.form-select-2').val(response.map_id).change();
-                    }
-                    if (response.first_race) {
-                        $('select#first_race').val(response.first_race).change();
-                    }
-                    if (response.first_location) {
-                        $('#first_location').val(response.first_location);
-                    }
-                    if (response.second_race) {
-                        $('select#second_race').val(response.second_race).change();
-                    }
-                    if (response.second_location) {
-                        $('#second_location').val(response.second_location);
-                    }
-                }).on('error', function(file, errorResponse, xhr) {
-                    var $errorMessage = $('#replay-file-error-container');
+            {{--    replayFileDropzone.on('success', function(file, response) {--}}
+            {{--        $('#replay-file-error-container').html('').hide();--}}
+            {{--        $('#file_id').val(response.file_id);--}}
+            {{--        if (response.map_id) {--}}
+            {{--            $('#map_id.form-select-2').val(response.map_id).change();--}}
+            {{--        }--}}
+            {{--        if (response.first_race) {--}}
+            {{--            $('select#first_race').val(response.first_race).change();--}}
+            {{--        }--}}
+            {{--        if (response.first_location) {--}}
+            {{--            $('#first_location').val(response.first_location);--}}
+            {{--        }--}}
+            {{--        if (response.second_race) {--}}
+            {{--            $('select#second_race').val(response.second_race).change();--}}
+            {{--        }--}}
+            {{--        if (response.second_location) {--}}
+            {{--            $('#second_location').val(response.second_location);--}}
+            {{--        }--}}
+            {{--    }).on('error', function(file, errorResponse, xhr) {--}}
+            {{--        var $errorMessage = $('#replay-file-error-container');--}}
 
-                    let errorHtml = '';
-                    for (let error of errorResponse.errors.file) {
-                        errorHtml += '<strong>' + error + '</strong>';
-                    }
+            {{--        let errorHtml = '';--}}
+            {{--        for (let error of errorResponse.errors.file) {--}}
+            {{--            errorHtml += '<strong>' + error + '</strong>';--}}
+            {{--        }--}}
 
-                    $errorMessage.html(errorHtml).show();
-                });
-            }
+            {{--        $errorMessage.html(errorHtml).show();--}}
+            {{--    });--}}
+            {{--}--}}
         });
     </script>
 @endsection
