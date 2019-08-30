@@ -22,7 +22,7 @@ class ReplayParserService
 
         exec($command, $cliOutput, $cliResult);
         if ($cliResult !== 0) {
-            throw new ReplayParserException($cliOutput);
+            throw new ReplayParserException($cliOutput ? : '', $cliResult);
         }
 
         $data = json_decode(implode('', $cliOutput));

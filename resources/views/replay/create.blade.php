@@ -338,6 +338,7 @@ $game_versions = $general_helper->getGameVersion();
     <!--JS plugin Select2 - autocomplete -->
     <script src="{{route('home')}}/js/select2.full.min.js"></script>
     <script src="{{route('home')}}/js/dropzone.js"></script>
+    <script src="{{route('home')}}/js/replay_form.js"></script>
     <script>
         /**
          * Comments box is the same for all pages
@@ -384,48 +385,6 @@ $game_versions = $general_helper->getGameVersion();
             if($('.form-select-2').length > 0){
                 $('.form-select-2').select2({
 
-                });
-            }
-
-            if ($('div#file-uploader-dropzone').length) {
-                let replayFileDropzone = new Dropzone("div#file-uploader-dropzone", {
-                    url:'{{route('replay.upload')}}',
-                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                    createImageThumbnails: false,
-                    acceptedFiles: '.rep',
-                    maxFiles: 1,
-                    addRemoveLinks: true
-                });
-
-                $('div#file-uploader-dropzone').addClass('dropzone');
-
-                replayFileDropzone.on('success', function(file, response) {
-                    $('#replay-file-error-container').html('').hide();
-                    $('#file_id').val(response.file_id);
-                    if (response.map_id) {
-                        $('#map_id.form-select-2').val(response.map_id).change();
-                    }
-                    if (response.first_race) {
-                        $('select#first_race').val(response.first_race).change();
-                    }
-                    if (response.first_location) {
-                        $('#first_location').val(response.first_location);
-                    }
-                    if (response.second_race) {
-                        $('select#second_race').val(response.second_race).change();
-                    }
-                    if (response.second_location) {
-                        $('#second_location').val(response.second_location);
-                    }
-                }).on('error', function(file, errorResponse, xhr) {
-                    var $errorMessage = $('#replay-file-error-container');
-
-                    let errorHtml = '';
-                    for (let error of errorResponse.errors.file) {
-                        errorHtml += '<strong>' + error + '</strong>';
-                    }
-
-                    $errorMessage.html(errorHtml).show();
                 });
             }
         });
