@@ -64,7 +64,7 @@ $races = \App\Replay::$races;
                                     <strong>{{ $errors->first('title') }}</strong>
                                 </span>
                                 @endif
-                            </div>                      
+                            </div>
                         </div><!--close div /.form-fields-box-->
 
                         <div class="form-fields-box">
@@ -106,14 +106,14 @@ $races = \App\Replay::$races;
                                         @endif
                                     </div>
                                 </div>
-                            </div>                      
+                            </div>
                         </div><!--close div /.form-fields-box-->
-                
+
                         <div class="form-group margin-top-30">
                             <label for="stream_url">Вставить HTML код с видео cтрим</label>
                             <textarea name="stream_url"
                                     class="form-control {{ $errors->has('stream_url') ? ' is-invalid' : '' }}"
-                                    id="stream_url" rows="16">{!! $stream->stream_url??old('stream_url') !!}</textarea>
+                                    id="stream_url" rows="16">{!! old('stream_url')??($stream->stream_url) !!}</textarea>
                             @if ($errors->has('stream_url'))
                                 <span class="invalid-feedback">
                                     <strong>{{ $errors->first('stream_url') }}</strong>
@@ -125,7 +125,7 @@ $races = \App\Replay::$races;
                             <label for="content">Короткое описание:</label>
                             <textarea name="content" id="content"
                                     class="form-control {{ $errors->has('content') ? ' is-invalid' : '' }}"
-                                    rows="10">{{$stream->content??old('content')}}</textarea>
+                                    rows="10">{{old('content')??$general_helper->removeExtraTag($stream->content) }}</textarea>
                             @if ($errors->has('content'))
                                 <span class="invalid-feedback">
                                     <strong>{{ $errors->first('content') }}</strong>
@@ -153,6 +153,7 @@ $races = \App\Replay::$races;
             </div>
         </div>
     @endif
+    <div id="preview" style="display:none"></div>
 @endsection
 
 @section('sidebar-right')
@@ -186,6 +187,8 @@ $races = \App\Replay::$races;
     <!--SCEditor -  WYSIWYG BBCode editor -->
     <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.min.js"></script>
     <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.xhtml.min.js"></script>
+    <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.bbcode.min.js"></script>
+    <script src="{{route('home')}}/js/html2bbcode.js"></script>
     <script src="{{route('home')}}/js/sceditor/languages/ru.js"></script>
 
     <!--JS plugin Select2 - autocomplete -->
@@ -198,13 +201,23 @@ $races = \App\Replay::$races;
          * https://www.sceditor.com/
          * */
         $(function () {
+            /**
+             * Convert Html to Bbcode
+             */
+            var div = $("#preview");
+
+            div.html($('#content').val());
+            output = bbencode(div);
+            $('#content').val(output);
+            div.html('');
+
             addStream();
             var extraSmiles = <?php echo json_encode($extraSmiles) ?>;
             if ($('#content').length > 0) {
                 var content = document.getElementById('content');
 
                 sceditor.create(content, {
-                    format: 'xhtml',
+                    format: 'bbcode',
                     style: '{{route("home")}}' + '/js/sceditor/minified/themes/content/default.min.css',
                     emoticonsRoot: '{{route("home")}}' + '/images/',
                     locale: 'ru',

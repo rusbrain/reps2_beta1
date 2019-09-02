@@ -62,7 +62,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                             </span>
                             @endif
                         </div>
-                        
+
                     </div><!--close div /.form-fields-box-->
 
                     <div class="form-fields-box">
@@ -104,10 +104,10 @@ $extraSmiles = $general_helper->getextraSmiles();
                                     @endif
                                 </div>
                             </div>
-                        </div>                       
+                        </div>
                     </div><!--close div /.form-fields-box-->
 
-                    
+
                     <div class="form-group margin-top-30">
                         <label for="stream_url">Вставить HTML с видео cтрим</label>
                         <textarea name="stream_url"
@@ -172,6 +172,7 @@ $extraSmiles = $general_helper->getextraSmiles();
 @section('js')
     <!--SCEditor -  WYSIWYG BBCode editor -->
     <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.min.js"></script>
+    <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.bbcode.min.js"></script>
     <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.xhtml.min.js"></script>
     <script src="{{route('home')}}/js/sceditor/languages/ru.js"></script>
     <!--JS plugin Select2 - autocomplete -->
@@ -182,20 +183,20 @@ $extraSmiles = $general_helper->getextraSmiles();
          *SCEditor -  WYSIWYG BBCode editor
          * https://www.sceditor.com/
          * */
-        
+
         $(function () {
             addStream();
-            
+
             if ($('#content').length > 0) {
                 var content = document.getElementById('content');
                 var extraSmiles = <?php echo json_encode($extraSmiles) ?>;
                 sceditor.create(content, {
-                    format: 'xhtml',
+                    format: 'bbcode',
                     style: '{{route("home")}}' + '/js/sceditor/minified/themes/content/default.min.css',
                     emoticonsRoot: '{{route("home")}}' + '/images/',
                     locale: 'ru',
                     toolbar: 'bold,italic,underline|' +
-                    'left,center,right,justify|' +
+                    'left,center,right,justify|source|' +
                     'font,size,color,removeformat|' +
                     'emoticon|' +
                     'date,time',

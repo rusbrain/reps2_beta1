@@ -35,7 +35,7 @@ class StreamController extends Controller
      * Get Paination data
      */
     public function pagination()
-    { 
+    {
         $streams = Stream::with('user')->where('user_id', Auth::user()->id)->orderBy('updated_at', 'Desc')->paginate(20);
         return [
             'streams'   => UserViewService::getStreams($streams),
@@ -77,13 +77,13 @@ class StreamController extends Controller
      */
     public function getStreamById(Request $request)
     {
-       return ['stream' =>(string)view('stream-section.stream')->with(['stream'=> Stream::where('id', $request->id)->with('country')->first()])];      
+       return ['stream' =>(string)view('stream-section.stream')->with(['stream'=> Stream::where('id', $request->id)->with('country')->first()])];
     }
 
     /**
      * @return mixed
      */
-    public function getLiveStreamsList() 
+    public function getLiveStreamsList()
     {
         return [
             'streams_list' =>(string)view('stream-section.stream-list')
@@ -92,13 +92,13 @@ class StreamController extends Controller
                                 'streams_list'=> $this->getLists(),
                                 'countries'=>$this->general_helper->getCountries(),
                             ])
-                            
-        ];    
+
+        ];
     }
 
     private function getLists()
-    {         
-        return BaseDataService::streams_list();     
+    {
+        return BaseDataService::streams_list();
     }
 
     /**
@@ -117,6 +117,7 @@ class StreamController extends Controller
      */
     public function save(StreamUpdateRequest $request, $stream_id)
     {
+
         $stream = Stream::where('id', $stream_id)->where('user_id', Auth::user()->id)->first();
 
         if($stream){

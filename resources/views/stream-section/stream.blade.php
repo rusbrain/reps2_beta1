@@ -7,17 +7,17 @@
     $parts = $general_helper->parse_stream_url( $url);
     $host = $parts['host'];
     if($host == 'player.twitch.tv') {
-        $stream_type = 'twitch';        
-        parse_str($parts['query'], $query);               
+        $stream_type = 'twitch';
+        parse_str($parts['query'], $query);
         $channel = $query['channel'];
     }
 @endphp
 <div class="stream_view">
-   
+
     @if(!empty($stream))
         <div class="widget-wrapper">
-            <div class="widget-header">                
-                <a href="#" class="chat_button" data-tip="Chatroom" onclick="chatroom_toggle(event, $(this))"></a>               
+            <div class="widget-header">
+                <a href="#" class="chat_button" data-tip="Chatroom" onclick="chatroom_toggle(event, $(this))"></a>
                 @if(isset($stream->country))
                     <span class="flag-icon flag-icon-{{mb_strtolower($stream->country->code)}}"></span>
                 @else
@@ -31,7 +31,7 @@
                 <span class="color-white">{{$stream->title}}</span>
                 <a href="#" class="theatre_mode" data-tip="Theatre Mode" onclick="theatre_mode(event, $(this))" ></a>
                 <a href="#" class="list_menu" data-tip="Streams List" onclick="menu_toggle(event, $(this))"></a>
-            </div>                  
+            </div>
         </div>
         <div class="ifram_container">
             @if($stream_type == 'twitch')
@@ -50,9 +50,9 @@
             @endif
             {!! $stream->stream_url !!}
         </div>
-    @else 
+    @else
         <div class="no-stream">
             Там нет cтрим
         </div>
-    @endif    
+    @endif
 </div>

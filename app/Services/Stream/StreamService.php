@@ -9,14 +9,15 @@
 namespace App\Services\Stream;
 
 use App\{
-   Stream, 
-   Services\Base\UserViewService, 
-   Services\User\UserService, 
+   Stream,
+   Services\Base\UserViewService,
+   Services\User\UserService,
    User
 };
 use App\Http\Controllers\StreamController;
 use App\Http\Requests\{
-    StreamStoreRequest
+    StreamStoreRequest,
+    StreamUpdateRequest
 };
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -24,7 +25,7 @@ use Illuminate\Support\Facades\Auth;
 
 class StreamService
 {
-    
+
 
     /**
      * @param StreamStoreRequest $request
@@ -33,7 +34,7 @@ class StreamService
     public static function store(StreamStoreRequest $request)
     {
         $stream_data = $request->validated();
-        $title = 'Stream ' . $request->has('title') ? $request->get('title') : '';      
+        $title = 'Stream ' . $request->has('title') ? $request->get('title') : '';
         $stream_data['user_id'] = Auth::id();
 
         if (UserService::isAdmin() ) {
@@ -45,7 +46,7 @@ class StreamService
         return $stream->id;
     }
 
-  
+
 
     /**
      * @param StreamUpdateRequest $request
@@ -57,10 +58,10 @@ class StreamService
 
         if (!$request->has('approved')) {
             $stream_data['approved'] = "0";
-        }     
-        
+        }
+
         Stream::where('id', $stream->id)->update($stream_data);
     }
 
-    
+
 }

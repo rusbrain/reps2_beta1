@@ -106,7 +106,7 @@ $extraSmiles = $general_helper->getextraSmiles();
 
                                     <div class="box-body pad">
                                         <textarea id="content" name="content" rows="10" cols="80">
-                                            {!! old('content')??$topic->content !!}
+                                            {!! old('content')??$general_helper->removeExtraTag($topic->content) !!}
                                         </textarea>
                                     </div>
                                     @if ($errors->has('content'))
