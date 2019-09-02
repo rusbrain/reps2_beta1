@@ -48,9 +48,9 @@ class TopicService
 
         $topic_data['user_id'] = Auth::id();
         $topic_data['commented_at'] = Carbon::now();
-        $topic_data['title'] = $request->get('title');
-        $topic_data['content'] = $request->get('content');
-        $topic_data['preview_content'] = $request->get('preview_content');
+        $topic_data['title'] = strip_tags($request->get('title'));
+        $topic_data['content'] = strip_tags($request->get('content'));
+        $topic_data['preview_content'] = strip_tags($request->get('preview_content'));
 
         if ($request->file('preview_img')) {
             unset($topic_data['preview_img']);

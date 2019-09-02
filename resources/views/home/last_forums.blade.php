@@ -33,14 +33,15 @@
                     <span>{{\Carbon\Carbon::parse($single_news->created_at)->format('H:i d.m.Y')}}</span>
                 </div>
                 <div class="news-content">
-                    @php                        
-                        $preview_content_text = strip_tags ($single_news->preview_content, '<img>' );
+                    @php
+                        $preview_content_text = strip_tags ($general_helper->oldContentFilter($single_news->preview_content), '<img>' );
                         $preview_content = mb_substr($preview_content_text,0,250,'utf-8').' ...';
-                        $full_content_text = strip_tags ($single_news->content ,'<img>');
-                        $full_content = mb_substr($full_content_text,0,250,'utf-8').' ...';       
+                        $full_content_text = strip_tags ($general_helper->oldContentFilter($single_news->content) ,'<img>');
+                        $full_content = mb_substr($full_content_text,0,250,'utf-8').' ...';
                     @endphp
-                    {!! $general_helper->closeAllTags( $general_helper->oldContentFilter(empty($single_news->preview_content) ?$full_content: $preview_content) )  !!}
-                   
+                    {!! $general_helper->closeAllTags( (empty($single_news->preview_content) ?$full_content: $preview_content) )  !!}
+{{--                    {!! $general_helper->closeAllTags($general_helper->oldContentFilter(mb_substr($single_news->preview_content,0,250,'UTF-8').' ...' ?? mb_substr($single_news->content,0,250,'UTF-8').' ...'))!!}--}}
+
                     <a href="{{route('forum.topic.index',['id' => $single_news->id])}}" class="read-more-link">
                         <img src="{{route('home')}}/images/icons/arrow-right.png" alt="">
                     </a>

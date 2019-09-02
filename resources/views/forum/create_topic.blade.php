@@ -99,7 +99,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                         <label for="preview_content">* Краткое содержание:</label>
                         <textarea name="preview_content" id="preview_content"
                                   class="form-control {{ $errors->has('preview_content') ? ' is-invalid' : '' }}"
-                                  rows="8">{!! old('preview_content') !!}</textarea>
+                                  rows="15">{!! old('preview_content') !!}</textarea>
                         @if ($errors->has('preview_content'))
                             <span class="invalid-feedback">
                                 <strong>{{ $errors->first('preview_content') }}</strong>
@@ -160,7 +160,6 @@ $extraSmiles = $general_helper->getextraSmiles();
 
     <!--SCEditor -  WYSIWYG BBCode editor -->
     <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.min.js"></script>
-    <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.xhtml.min.js"></script>
     <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.bbcode.min.js"></script>
     <script src="{{route('home')}}/js/sceditor/languages/ru.js"></script>
 
@@ -189,7 +188,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                 var preview_content = document.getElementById('preview_content');
 
                 sceditor.create(preview_content, {
-                    format: 'xhtml',
+                    format: 'bbcode',
                     style: '{{route("home")}}' + '/js/sceditor/minified/themes/content/default.min.css',
                     emoticonsRoot: '{{route("home")}}' + '/images/',
                     locale: 'ru',
@@ -218,7 +217,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                 var content = document.getElementById('content');
 
                 sceditor.create(content, {
-                    format: 'xhtml',
+                    format: 'bbcode',
                     style: '{{route("home")}}' + '/js/sceditor/minified/themes/content/default.min.css',
                     emoticonsRoot: '{{route("home")}}' + '/images/',
                     locale: 'ru',

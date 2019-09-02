@@ -9,12 +9,14 @@
         "doctrine/dbal": "^2.8",
         "eduardokum/laravel-mail-auto-embed": "^1.0",
         "fideloper/proxy": "^4.0",
+        "genert/bbcode": "^1.1",
         "google/recaptcha": "~1.1",
         "intervention/image": "^2.5",
         "jenssegers/agent": "^2.6",
         "laravel/framework": "5.7.*",
         "laravel/tinker": "^1.0",
         "laravelcollective/html": "^5.5.0",
+        "pherum/laravel-bbcode": "^1.0",
         "spatie/laravel-backup": "^5.12",
         "tymon/jwt-auth": "1.0.0-rc.3"
     },
@@ -37,6 +39,7 @@
             "App\\": "app/"
         }
     },
+
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/"

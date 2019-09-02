@@ -86,7 +86,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                                             </div> <!-- /.box-header -->
                                             <div class="box-body pad">
                                                 <textarea id="preview_content" name="preview_content" rows="8" cols="80">
-                                                    {!! old('preview_content')??$topic->preview_content !!}
+                                                    {!! old('preview_content')??$general_helper->removeExtraTag($topic->preview_content) !!}
                                                 </textarea>
                                             </div>
                                             @if ($errors->has('preview_content'))
@@ -160,6 +160,7 @@ $extraSmiles = $general_helper->getextraSmiles();
             </div>
         </div>
     </div>
+    <div id="preview" style="display:none"></div>
 @endsection
 
 @section('js')
@@ -170,7 +171,8 @@ $extraSmiles = $general_helper->getextraSmiles();
 
     <!--SCEditor -  WYSIWYG BBCode editor -->
     <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.min.js"></script>
-    <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.xhtml.min.js"></script>
+    <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.bbcode.min.js"></script>
+    <script src="{{route('home')}}/js/html2bbcode.js"></script>
     <script src="{{route('home')}}/js/sceditor/languages/ru.js"></script>
 
     <script src="{{route('home')}}/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
@@ -190,6 +192,20 @@ $extraSmiles = $general_helper->getextraSmiles();
         });
 
         $(function () {
+            /**
+             * Convert Html to Bbcode
+             */
+            var div = $("#preview");
+            div.html($('#preview_content').val());
+            output = bbencode(div);
+            $('#preview_content').val(output);
+            div.html('');
+
+            div.html($('#content').val());
+            output = bbencode(div);
+            $('#content').val(output);
+            div.html('');
+            //
             addCountries();
             addRaces();
             addUpload();
@@ -199,7 +215,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                 var content = document.getElementById('content');
 
                 sceditor.create(content, {
-                    format: 'xhtml',
+                    format: 'bbcode',
                     style: '{{route("home")}}' + '/js/sceditor/minified/themes/content/default.min.css',
                     emoticonsRoot: '{{route("home")}}' + '/images/',
                     locale: 'ru',
@@ -226,7 +242,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                 var preview_content = document.getElementById('preview_content');
 
                 sceditor.create(preview_content, {
-                    format: 'xhtml',
+                    format: 'bbcode',
                     style: '{{route("home")}}' + '/js/sceditor/minified/themes/content/default.min.css',
                     emoticonsRoot: '{{route("home")}}' + '/images/',
                     locale: 'ru',

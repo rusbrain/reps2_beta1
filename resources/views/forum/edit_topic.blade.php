@@ -102,7 +102,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                         <label for="preview_content">* Сокращенное содержание:</label>
                         <textarea name="preview_content" id="preview_content"
                                   class="form-control {{ $errors->has('preview_content') ? ' is-invalid' : '' }}"
-                                  rows="15">{{ old('preview_content')??$topic->preview_content }}</textarea>
+                                  rows="15">{{ old('preview_content')??$general_helper->removeExtraTag($topic->preview_content) }}</textarea>
                         @if ($errors->has('preview_content'))
                             <span class="invalid-feedback">
                                 <strong>{{ $errors->first('preview_content') }}</strong>
@@ -114,7 +114,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                         <label for="content">* Содержание:</label>
                         <textarea name="content" id="content"
                                   class="form-control {{ $errors->has('content') ? ' is-invalid' : '' }}"
-                                  rows="15">{{ old('content')??$topic->content }}</textarea>
+                                  rows="15">{{ old('content')??$general_helper->removeExtraTag($topic->content) }}</textarea>
                         @if ($errors->has('content'))
                             <span class="invalid-feedback">
                                 <strong>{{ $errors->first('content') }}</strong>
@@ -130,6 +130,7 @@ $extraSmiles = $general_helper->getextraSmiles();
             <div class="col"></div>
         </div><!-- close div /.row -->
     </div><!-- close div /.content-box -->
+    <div id="preview" style="display:none"></div>
 @endsection
 
 @section('sidebar-right')
@@ -162,7 +163,8 @@ $extraSmiles = $general_helper->getextraSmiles();
 @section('js')
     <!--SCEditor -  WYSIWYG BBCode editor -->
     <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.min.js"></script>
-    <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.xhtml.min.js"></script>
+    <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.bbcode.min.js"></script>
+    <script src="{{route('home')}}/js/html2bbcode.js"></script>
     <script src="{{route('home')}}/js/sceditor/languages/ru.js"></script>
 
     <script>
@@ -172,6 +174,20 @@ $extraSmiles = $general_helper->getextraSmiles();
          * https://www.sceditor.com/
          * */
         $(function () {
+            /**
+             * Convert Html to Bbcode
+             */
+            var div = $("#preview");
+            div.html($('#preview_content').val());
+            output = bbencode(div);
+            $('#preview_content').val(output);
+            div.html('');
+
+            div.html($('#content').val());
+            output = bbencode(div);
+            $('#content').val(output);
+            div.html('');
+
             /**custom commands for HTML text editor*/
             addCountries();
             addRaces();
@@ -188,7 +204,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                 var content = document.getElementById('content');
 
                 sceditor.create(content, {
-                    format: 'xhtml',
+                    format: 'bbcode',
                     style: '{{route("home")}}' + '/js/sceditor/minified/themes/content/default.min.css',
                     emoticonsRoot: '{{route("home")}}' + '/images/',
                     locale: 'ru',
@@ -216,7 +232,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                 var preview_content = document.getElementById('preview_content');
 
                 sceditor.create(preview_content, {
-                    format: 'xhtml',
+                    format: 'bbcode',
                     style: '{{route("home")}}' + '/js/sceditor/minified/themes/content/default.min.css',
                     emoticonsRoot: '{{route("home")}}' + '/images/',
                     locale: 'ru',
@@ -239,6 +255,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                     }
                 });
             }
-        });
+
+        })
     </script>
 @endsection
