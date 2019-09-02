@@ -1,3 +1,5 @@
+
+var baseUrl = location.protocol + "//" + location.host;
 /**Get all smiles for HTML text editor*/
  function getAllSmiles(extra_smiles) {
     var path = 'emoticons/smiles/';
@@ -209,7 +211,8 @@ function addRaces() {
                 )
                     .data('race', races[i])
                     .click(function (e) {
-                        editor.insert('<img src="/images/emoticons/smiles/'+$(this).data('race')+'" alt="" />');
+                        var image_url = baseUrl + '/images/emoticons/smiles/'+$(this).data('race');
+                        editor.insert('[img]'+image_url+'[/img]');
                         editor.closeDropDown(true);
 
                         e.preventDefault();
@@ -244,7 +247,8 @@ function addCountries() {
                 )
                     .data('flag', flags[i])
                     .click(function (e) {
-                        editor.insert('<img src="/flags/editor/'+$(this).data('flag')+'.png" alt="" />');
+                        var image_url = baseUrl + '/flags/editor/'+$(this).data('flag')+'.png';
+                        editor.insert('[img]'+image_url+'[/img]');
                         editor.closeDropDown(true);
 
                         e.preventDefault();
@@ -299,7 +303,8 @@ function addUpload() {
             $("body").on('click', '.upload-overlay .showImages .open_img', function(e){
                 $(".prev_image").each(function(index){
                     if($(this).find('input[type=checkbox]').prop("checked")) {
-                        editor.insert('<img src="' + $(this).find('img').attr('src') + '" alt="" style="max-width: 95%;">');
+                        var image_url = baseUrl + $(this).find('img').attr('src');
+                        editor.insert('[img]'+image_url+'[/img]');
                     }
                 })
                 $(".all_images").children().remove()
@@ -327,7 +332,8 @@ function addUpload() {
                             processData: false, // NEEDED, DON'T OMIT THIS
                             success: function (result) {
                                 if (result.success) {
-                                    editor.insert('<img src="' + result.data + '" alt="" style="max-width: 95%;">');
+                                    var image_url = baseUrl + result.data;
+                                    editor.insert('[img]'+image_url+'[/img]');
                                 } else {
                                     alert(result.data) //
                                 }
