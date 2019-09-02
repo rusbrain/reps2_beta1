@@ -56,7 +56,7 @@ class ForumTopicController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(ForumTopicStoreRequest $request)
-    {       
+    {
         $newTopic = TopicService::storeTopic($request);
 
         UserActivityLogService::log(UserActivityLogService::EVENT_CREATE_POST, $newTopic);
@@ -105,7 +105,7 @@ class ForumTopicController extends Controller
         if(!($topic->user_id == Auth::user()->id && TopicService::checkForumEdit($topic)) && !UserService::isAdmin() && !UserService::isModerator()){
             return redirect()->route('error',['id' => 'Данный топик закрыт для редактирования']);
         }
-
+//dd($topic);
         return view('forum.edit_topic', [
             'topic'     => $topic->load('section'),
             'sections'  => ForumSection::where('is_active', 1)->get(['id', 'title','name'])
@@ -139,9 +139,9 @@ class ForumTopicController extends Controller
      */
     public function destroy($id)
     {
-        // Not allowed 
+        // Not allowed
         return abort(403);
-        
+
         $topic = ForumTopic::find($id);
 
         if (!$topic){
@@ -223,7 +223,7 @@ class ForumTopicController extends Controller
     }
 
     /**
-     * 
+     *
      */
     public function get_prev_images(Request $request) {
         $files = Storage::disk('public')->files('forum');

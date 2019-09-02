@@ -41,7 +41,6 @@ $extraSmiles = $general_helper->getextraSmiles();
 
 @section('js')
     <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.min.js"></script>
-    <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.xhtml.min.js"></script>
     <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.bbcode.min.js"></script>
     <script src="{{route('home')}}/js/sceditor/languages/ru.js"></script>
     <script>
@@ -95,7 +94,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                 var textarea = document.getElementById('comment-content');
                 var extraSmiles = <?php echo json_encode($extraSmiles) ?>;
                 sceditor.create(textarea, {
-                    format: 'xhtml',
+                    format: 'bbcode',
                     style: '{{route('home')}}' + '/js/sceditor/minified/themes/content/default.min.css',
                     emoticonsRoot: '{{route('home')}}' + '/images/',
                     locale: 'ru',

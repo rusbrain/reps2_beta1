@@ -33,7 +33,14 @@
                     <span>20:12  Дек 21, 2018</span>
                 </div>
                 <div class="news-content">
-                    {!! $general_helper->closeAllTags($general_helper->oldContentFilter(mb_substr($single_news->preview_content,0,250,'UTF-8').' ...' ?? mb_substr($single_news->content,0,250,'UTF-8').' ...'))!!}
+{{--                    {!! $general_helper->closeAllTags($general_helper->oldContentFilter(mb_substr($single_news->preview_content,0,250,'UTF-8').' ...' ?? mb_substr($single_news->content,0,250,'UTF-8').' ...'))!!}--}}
+                    @php
+                        $preview_content_text = strip_tags ($general_helper->oldContentFilter($single_news->preview_content), '<img>' );
+                        $preview_content = mb_substr($preview_content_text,0,250,'utf-8').' ...';
+                        $full_content_text = strip_tags ($general_helper->oldContentFilter($single_news->content) ,'<img>');
+                        $full_content = mb_substr($full_content_text,0,250,'utf-8').' ...';
+                    @endphp
+                    {!! $general_helper->closeAllTags( (empty($single_news->preview_content) ?$full_content: $preview_content) )  !!}
                     <a href="{{route('forum.topic.index',['id' => $single_news->id])}}" class="read-more-link">
                         <img src="{{route('home')}}/images/icons/arrow-right.png" alt="">
                     </a>

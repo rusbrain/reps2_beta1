@@ -23,6 +23,9 @@ use App\User;
 use App\UserGallery;
 use Illuminate\Http\Request;
 
+use PheRum\BBCode\BBcodeParser;
+
+
 class GeneralViewHelper
 {
     use UserData, ReplayData, ForumData, TournamentData;
@@ -61,6 +64,7 @@ class GeneralViewHelper
         if (!self::$instance) {
             self::$instance = $this;
         }
+
     }
 
     /**
@@ -417,52 +421,62 @@ class GeneralViewHelper
      */
     public function oldContentFilter($text)
     {
+        $bbcodeParser = new BBcodeParser();
         $text = str_replace("%20", " ", $text);
+        $text = str_replace("&nbsp;", " ", $text);
 
-        $text = preg_replace("#\[(b)\](.+?)\[/\\1\]#is", "<\\1>\\2</\\1>", $text);
-        $text = preg_replace("#\[(i)\](.+?)\[/\\1\]#is", "<\\1>\\2</\\1>", $text);
-        $text = preg_replace("#\[(u)\](.+?)\[/\\1\]#is", "<\\1>\\2</\\1>", $text);
-        $text = preg_replace("#\[(s)\](.+?)\[/\\1\]#is", "<\\1>\\2</\\1>", $text);
-        $text = preg_replace("#\[spoiler\](.+?)\[/spoiler\]#is", '</p><div style="width: 99%;margin: 0 auto;">
-            <div class="quotetop" style="cursor:pointer;font-size:12px;">
-            <u>Скрытый текст <i>(кликните чтобы развернуть/свернуть)</i></u>
-            </div><div class="spoilmain" style="display:none;">
-            <font color="#555599" size="2">\\1</font></div>
-            </div
-            <p class="page_content_text" align="justify">', $text);
-        $text = preg_replace("#\[(quote)\](.+?)\[/\\1\]#is",
-            "</p><p class=\"page_content_info2\" align=\"left\" align=\"justify\"><font color=\"#555599\">\\2</font></p><p align=\"justify\">",
-            $text);
-        $text = preg_replace("#\[(left|right|center)\](.+?)\[/\\1\]#is",
-            "</p><div align=\"\\1\">\\2</div><p align=\"justify\">", $text);
-        $text = preg_replace("/\[img\](\r\n|\r|\n)*((http|https):\/\/([^;<>\*\"]+)|[a-z0-9\/\\\._\- ]+)\[\/img\]/siU",
-            "<img src=\"\\2\" class=\"imgl\" border=\"0\" alt=\"\"> ", $text);
+        $text = preg_replace("#\[spoiler\](.+?)\[/spoiler\]#is",
+            '</p><div style="width: 99%;margin: 0 auto;">
+                <div class="quotetop" style="cursor:pointer;font-size:12px;">
+                    <u>Скрытый текст <i>(кликните чтобы развернуть/свернуть)</i></u>
+                </div>
+                <div class="spoilmain" style="display:none;">
+                    <font color="#555599" size="2">\\1</font></div>
+                </div
+                <p class="page_content_text" align="justify">', $text
+            );
 
-        $text = preg_replace_callback("#(^|\s|>)((http|https|news|ftp)://\w+[^\s\[\]\<]+)#i", function ($matches) {
-            return $this->_regex_build_url_manual($matches);
-        }, $text);
-        $text = preg_replace_callback("#\[url\](.*?)\[/url\]#is", function ($matches) {
-            return $this->_regex_build_url_tags($matches);
-        }, $text);
-
-        $text = preg_replace_callback("#\[url\s*=\s*(?:\&quot\;|\")\s*(.*?)\s*(?:\&quot\;|\")\s*\](.*?)\[\/url\]#is",
+        $text = preg_replace_callback("#\[font\s*=\s*(.*?)\s*\](.*?)\[\/font\]#is",
             function ($matches) {
-                return $this->_regex_build_url_tags($matches);
+                return "<span style='font-family: ".$matches[1]."'>".$matches[2]."</span>";
             }, $text);
-        $text = preg_replace_callback("#\[url\s*=\s*(.*?)\s*\](.*?)\[\/url\]#is", function ($matches) {
-            return $this->_regex_build_url_tags($matches);
-        }, $text);
-
-        $text = preg_replace("/([\w\.]+)(@)([\w\.]+)/i", "<a rel=\"nofollow\" href=\"mailto:$0\"><b>Mail»</b></a>",
-            $text);
-
 
         /***additional smiles*/
         $text = preg_replace_callback("/:([a-z]{1,2}):/", function ($matches) {
             $this->getEditorSmile($matches);
         }, $text);
 
+        $text = $bbcodeParser->parse($text);
+
         return $text;
+    }
+
+    public function getFontsize($size) {
+        switch($size) {
+            case 1:
+                return '10px';
+                break;
+            case 2:
+                return '13px';
+                break;
+            case 3:
+                return '16px';
+                break;
+            case 4:
+                return '18px';
+                break;
+            case 5:
+                return '24px';
+                break;
+            case 6:
+                return '32px';
+                break;
+            case 7:
+                return '48px';
+                break;
+            default:
+                break;
+        }
     }
 
     /**
@@ -485,6 +499,16 @@ class GeneralViewHelper
         elseif($invert == FALSE) {
             return preg_replace('@<(\w+)\b.*?>.*?</\1>@si', '', $text);
         }
+        return $text;
+    }
+
+    /**
+     *  remove <!-- -->
+     */
+    public function removeExtraTag($text) {
+
+        $text =   preg_replace("/<!--.*?-->/mss", "", $text);
+        $text =  str_replace('&nbsp;', ' ', $text);
         return $text;
     }
 

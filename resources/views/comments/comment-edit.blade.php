@@ -52,13 +52,15 @@ $extraSmiles = $general_helper->getextraSmiles();
             @endif
         </div><!-- close div /.comment-form-wrapper-->
     </div><!-- close div /.content-box-->
+    <div id="preview" style="display:none"></div>
 @endsection
 
 @section('js')
     <!--SCEditor -  WYSIWYG BBCode editor -->
     <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.min.js"></script>
 
-    <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.xhtml.min.js"></script>
+    <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.bbcode.min.js"></script>
+    <script src="{{route('home')}}/js/html2bbcode.js"></script>
     <script src="{{route('home')}}/js/sceditor/languages/ru.js"></script>
 
     <script>
@@ -68,6 +70,15 @@ $extraSmiles = $general_helper->getextraSmiles();
          * https://www.sceditor.com/
          * */
         $(function () {
+            /**
+             * Convert Html to Bbcode
+             */
+            var div = $("#preview");
+            div.html($('#comment-content').val());
+            output = bbencode(div);
+            $('#comment-content').val(output);
+            div.html('');
+
             /**custom commands for HTML text editor*/
             addCountries();
             addRaces();
@@ -77,7 +88,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                 var textarea = document.getElementById('comment-content');
                 var extraSmiles = <?php echo json_encode($extraSmiles) ?>;
                 sceditor.create(textarea, {
-                    format: 'xhtml',
+                    format: 'bbcode',
                     style: '{{route('home')}}' + '/js/sceditor/minified/themes/content/default.min.css',
                     emoticonsRoot: '{{route('home')}}' + '/images/',
                     locale: 'ru',
