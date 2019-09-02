@@ -198,14 +198,26 @@ class ReplayController extends Controller
         $file = $request->file;
         /* @var UploadedFile $file */
 
-        try {
-            $replayData = $replayParserService->parseFile($file);
-        } catch (\Exception $e) {
-            return Response::json(['errors' => ['file' => [$e->getMessage()]]], 422);
+        $acceptedSafeMimes = [
+            'application/x-7z-compressed',
+            'application/zip',
+            'application/x-rar-compressed'
+        ];
+
+        if (in_array($file->getMimeType(), $acceptedSafeMimes)) {
+            $fileModel = File::storeFile($file, 'replays', '', false, false, 'replay_archive');
+        } else {
+            try {
+                $replayData = $replayParserService->parseFile($file);
+                $replayData['name'] = $replayData['first_name'] . ' vs ' . $replayData['second_name'];
+                $fileModel = File::storeFile($file, 'replays', '', false, false, 'replay');
+            } catch (\Exception $e) {
+                return Response::json(['errors' => ['file' => [$e->getMessage()]]], 422);
+            }
         }
 
-        $fileModel = File::storeFile($file, 'replays', '', false, false, 'replay');
         $replayData['file_id'] = $fileModel->id;
+
         return Response::json($replayData, 200);
     }
 }

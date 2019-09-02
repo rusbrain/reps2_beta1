@@ -7,7 +7,7 @@ $(document).ready(function() {
         url: $container.data('upload-url'),
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         createImageThumbnails: false,
-        acceptedFiles: '.rep',
+        acceptedFiles: '.rep,application/x-7z-compressed,application/zip,application/x-rar-compressed',
         maxFiles: 2,
         addRemoveLinks: true
     });
@@ -41,6 +41,24 @@ $(document).ready(function() {
         }
         if (response.second_location) {
             $('#second_location').val(response.second_location);
+        }
+        if (response.first_name) {
+            $('#first_name').val(response.first_name);
+        }
+        if (response.second_name) {
+            $('#second_name').val(response.second_name);
+        }
+        if (response.first_APM) {
+            $('#first_apm').val(response.first_APM);
+        }
+        if (response.second_APM) {
+            $('#second_apm').val(response.second_APM);
+        }
+        if (response.name) {
+            $('#title').val(response.name);
+        }
+        if (response.replay_time) {
+            $('#start_date').val(response.replay_time);
         }
     }).on('error', function(file, errorResponse, xhr) {
         let $errorMessage = $('#replay-file-error-container');

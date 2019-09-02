@@ -63,6 +63,18 @@ $extraSmiles = $general_helper->getextraSmiles();
                                             {{($replay->first_country->name??"Нет")}} vs {{($replay->second_country->name??"Нет")}}
                                         </div>
                                     </div>
+
+                                    @if ($replay->first_name && $replay->second_name)
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                                Игроки:
+                                            </div>
+                                            <div class="col-md-7">
+                                                {{($replay->first_name)}} vs {{($replay->second_name)}}
+                                            </div>
+                                        </div>
+                                    @endif
+
                                     <div class="row">
                                         <div class="col-md-5">
                                             Расы:
@@ -78,7 +90,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                                         <div class="col-md-7">
                                             {{$replay->type->title}} ({{$replay->type->name}})
                                         </div>
-                                    </div>                                  
+                                    </div>
                                     <div class="row">
                                         <div class="col-md-5">
                                             Локация:
@@ -87,7 +99,28 @@ $extraSmiles = $general_helper->getextraSmiles();
                                             {{$replay->first_location??"-"}} vs {{$replay->second_location??"-"}}
                                         </div>
                                     </div>
-                                   
+                                    @if ($replay->first_apm && $replay->second_apm)
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                                 APM:
+                                            </div>
+                                            <div class="col-md-7">
+                                                {{$replay->first_apm}} vs {{$replay->second_apm}}
+                                            </div>
+                                        </div>
+                                    @endif
+
+                                    @if ($replay->start_date)
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                                Дата:
+                                            </div>
+                                            <div class="col-md-7">
+                                                {{$replay->start_date}}
+                                            </div>
+                                        </div>
+                                    @endif
+
                                     <div class="row">
                                         <div class="col-md-5">
                                             Оценка пользователей:

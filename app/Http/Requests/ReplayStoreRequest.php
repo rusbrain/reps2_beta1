@@ -41,6 +41,11 @@ class ReplayStoreRequest extends FormRequest
             'first_location'        => 'nullable|integer',
             'second_location'       => 'nullable|integer',
             'approved'              => 'nullable|in:0,1',
+            'first_name'            => 'nullable',
+            'second_name'           => 'nullable',
+            'first_apm'             => 'nullable|integer|min:1',
+            'second_apm'            => 'nullable|integer|min:1',
+            'start_date'            => 'nullable|date_format:Y-m-d'
         ];
     }
 

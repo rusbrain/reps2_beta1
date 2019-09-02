@@ -111,7 +111,12 @@ class Replay extends Model implements CommentContainerInterface, LikeContainerIn
         'downloaded',
         // 'length',
         'approved',
-        'video_iframe'
+        'video_iframe',
+        'first_name',
+        'second_name',
+        'first_apm',
+        'second_apm',
+        'start_date'
     ];
 
     /**
