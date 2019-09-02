@@ -162,6 +162,40 @@ $extraSmiles = $general_helper->getextraSmiles();
                                     </span>
                                             @endif
                                         </div>
+
+                                        <div class="col-md-3">
+                                            <div class="box-header">
+                                                <h3 class="box-title">Первое имя:</h3>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <input type="text" name="first_name" class="form-control"
+                                                       placeholder="Имя..." value="{{old('first_name', $replay->first_name)}}" id="first_name">
+                                            </div>
+
+                                            @if ($errors->has('first_name'))
+                                                <span class="invalid-feedback text-red" role="alert">
+                                                    <strong>{{ $errors->first('first_name') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="box-header">
+                                                <h3 class="box-title">Первый APM:</h3>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <input type="text" name="first_apm" class="form-control"
+                                                       placeholder="APM..." value="{{old('first_apm', $replay->first_apm)}}" id="first_apm">
+                                            </div>
+
+                                            @if ($errors->has('first_apm'))
+                                                <span class="invalid-feedback text-red" role="alert">
+                                                    <strong>{{ $errors->first('first_apm') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-3">
@@ -212,7 +246,60 @@ $extraSmiles = $general_helper->getextraSmiles();
                                     </span>
                                             @endif
                                         </div>
+
+
+                                        <div class="col-md-3">
+                                            <div class="box-header">
+                                                <h3 class="box-title">Второе имя:</h3>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <input type="text" name="second_name" class="form-control"
+                                                       placeholder="Имя..." value="{{old('second_name', $replay->second_name)}}" id="second_name">
+                                            </div>
+
+                                            @if ($errors->has('second_name'))
+                                                <span class="invalid-feedback text-red" role="alert">
+                                                    <strong>{{ $errors->first('second_name') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="box-header">
+                                                <h3 class="box-title">Второй APM:</h3>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <input type="text" name="second_apm" class="form-control"
+                                                       placeholder="APM..." value="{{old('second_apm', $replay->second_apm)}}" id="second_apm">
+                                            </div>
+
+                                            @if ($errors->has('second_apm'))
+                                                <span class="invalid-feedback text-red" role="alert">
+                                                    <strong>{{ $errors->first('second_apm') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
                                     </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="box-header">
+                                        <h3 class="box-title">Дата:</h3>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input type="text" value="{{old('start_date', $replay->start_date)}}" name="start_date"
+                                               class="form-control" id="start_date" data-provide="datepicker"
+                                               data-date-format="yyyy-mm-dd"/>
+                                    </div>
+
+                                    @if ($errors->has('start_date'))
+                                        <span class="invalid-feedback text-red" role="alert">
+                                            <strong>{{ $errors->first('start_date') }}</strong>
+                                        </span>
+                                    @endif
                                 </div>
 
                                 <div class="col-md-3">
@@ -258,8 +345,8 @@ $extraSmiles = $general_helper->getextraSmiles();
                                     <input type="hidden" name="file_id" id="file_id"  data-is-uploaded="true" value="{{old('file_id', $replay->file_id)}}"
                                            class="@if(old('file_id', $replay->file_id)) js-file-preloaded @endif"/>
 
-                                    <span id="replay-file-error-container" class="invalid-feedback" @if ($errors->has('replay')) style="display: none; " @endif>
-                                        <strong>{{ $errors->first('replay') }}</strong>
+                                    <span id="replay-file-error-container" class="invalid-feedback" @if ($errors->has('file_id')) style="display: block; " @endif>
+                                        <strong>{{ $errors->first('file_id') }}</strong>
                                     </span>
                                 </div>
                             </div>

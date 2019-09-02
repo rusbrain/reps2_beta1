@@ -32,7 +32,7 @@ class ReplayUpdateRequest extends FormRequest
             'title'                 => 'required|string|min:3|max:255',
             'content'               => 'required|string|min:3|max:1000',
             'map_id'                => 'nullable|exists:replay_maps,id',
-            'file_id'               => 'required_without:video_iframe|exists:files,id',
+            'file_id'               => 'required_without:video_iframe|nullable|exists:files,id',
             'video_iframe'          => 'required_without:file_id|max:1000',
             'first_country_id'      => 'required|exists:countries,id',
             'second_country_id'     => 'required|exists:countries,id',
@@ -41,6 +41,11 @@ class ReplayUpdateRequest extends FormRequest
             'first_location'        => 'nullable|integer',
             'second_location'       => 'nullable|integer',
             'approved'              => 'nullable|in:0,1',
+            'first_name'            => 'nullable',
+            'second_name'           => 'nullable',
+            'first_apm'             => 'nullable|integer|min:1',
+            'second_apm'            => 'nullable|integer|min:1',
+            'start_date'            => 'nullable|date_format:Y-m-d'
         ];
     }
 

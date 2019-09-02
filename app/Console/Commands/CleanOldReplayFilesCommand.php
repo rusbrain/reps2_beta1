@@ -16,7 +16,7 @@ class CleanOldReplayFilesCommand extends Command
     public function handle()
     {
         File::query()->leftJoin('replays', 'files.id', '=', 'replays.file_id')
-            ->where('files.resource_type', '=', 'replay')
+            ->whereIn('files.resource_type', ['replay', 'replay_archive'])
             ->whereNull('replays.id')->delete();
     }
 }
