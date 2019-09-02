@@ -2,8 +2,8 @@
     @csrf
 
     <div class="form-group">
-        <label class="sr-only" for="exampleInputEmail3">Email address</label>
-        <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Email">
+        <label class="sr-only" for="search-text">Search text label</label>
+        <input type="text" class="form-control" id="search-text" name="text" placeholder="Поиск">
     </div>
     <div class="form-group">
         <div class="input-group">
