@@ -166,6 +166,8 @@ return [
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
 
+        PheRum\BBCode\BBCodeServiceProvider::class,
+
     ],
 
     /*
@@ -220,6 +222,7 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'Form'  => Collective\Html\FormFacade::class,
         'Html'  => Collective\Html\HtmlFacade::class,
+        "BBCode"=>PheRum\BBCode\Facades\BBCode::class,
     ],
 
 ];

@@ -23,7 +23,7 @@ use App\User;
 use App\UserGallery;
 use Illuminate\Http\Request;
 
-use PheRum\BBCode\BBcodeParser;
+use BBCode;
 
 
 class GeneralViewHelper
@@ -421,7 +421,6 @@ class GeneralViewHelper
      */
     public function oldContentFilter($text)
     {
-        $bbcodeParser = new BBcodeParser();
         $text = str_replace("%20", " ", $text);
         $text = str_replace("&nbsp;", " ", $text);
 
@@ -446,7 +445,7 @@ class GeneralViewHelper
             $this->getEditorSmile($matches);
         }, $text);
 
-        $text = $bbcodeParser->parse($text);
+        $text = BBCode::parse($text);
 
         return $text;
     }
