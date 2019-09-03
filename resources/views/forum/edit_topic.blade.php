@@ -81,7 +81,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                     <div class="form-group">
                         <label for="preview_img">Превью:
                             <span class="preview-image-wrapper">
-                                @if($topic->preview_file_id)
+                                @if($topic->preview_file_id && $topic->preview_image->link)
                                     <img src="{{$topic->preview_image->link}}" alt="">
                                 @else
                                     <img src="{{route('home').('/dist/img/default-50x50.gif')}}" alt="">

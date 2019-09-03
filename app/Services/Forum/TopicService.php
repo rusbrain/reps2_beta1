@@ -84,10 +84,9 @@ class TopicService
      */
     public static function update(ForumTopicUpdateRequest $request, ForumTopic $topic, $admin = false)
     {
-//        dd($request->all());
         $topic_data = [
-            'title'=> $request->get('title'),
-            'content'=> $request->get('content'),
+            'title'=> strip_tags($request->get('title')),
+            'content'=> strip_tags($request->get('content')),
         ];
 
         if(UserService::isAdmin() || UserService::isModerator()){
@@ -95,7 +94,7 @@ class TopicService
         }
 
         if ($request->has('preview_content') && $request->get('preview_content') != ''){
-            $topic_data['preview_content'] = $request->get('preview_content');
+            $topic_data['preview_content'] = strip_tags($request->get('preview_content'));
         } else {
             $topic_data['preview_content'] = null;
         }
