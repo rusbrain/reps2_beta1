@@ -15,6 +15,22 @@ use App\Services\GeneralViewHelper;
 
 class ChatViewHelper
 {
+    private $font_colors = array(
+        'c1' => '#FFFF77',
+        'c2' => '#FF77FF',
+        'c3' => '#77FFFF',
+        'c4' => '#FFAAAA',
+        'c5' => '#AAFFAA',
+        'c6' => '#AAAAFF'
+    );
+    private $font_sizes = array(
+        'f1' => '14px',
+        'f2' => '16px',
+        'f3' => '18px',
+    );
+
+    private $allChatImages = array();
+
     public function __construct()
     {
         $this->host = request()->getSchemeAndHttpHost();
@@ -38,6 +54,19 @@ class ChatViewHelper
         $text = $this->html_encode($text);
         $text = preg_replace("/:smile([0-9]{1,}):/", '<img src="'.$this->host.'/images/emoticons/smiles/smile$1.gif" border="0">', $text);
         $text = preg_replace("/:s([0-9]{1,}):/", '<img src="'.$this->host.'/images/emoticons/smiles/s$1.gif" border="0">', $text);
+        $text = preg_replace_callback("#\[(d)\](.+?)\[/\\1\]#is", function ($matches) {
+
+            $content = isset($matches[2]) ? $matches[2] : $matches[1];
+            $url = '';
+            if(preg_match_all('#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', $content, $match)) {
+                $url = $match[0][0];
+            }
+
+            $image_content = '<a title="'.$url.'" target="_blank" href="'.$url.'" class="id_link"> <img class="smile_inchat" src="'.$url.'"></a>';
+
+            $string = substr($content , strlen($url), strlen($content));
+            return '<center><div class="demotivator">'.$image_content.'<p>'.trim($string).'</p></div><center>';
+        }, $text);
         $text = preg_replace("#\[(b)\](.+?)\[/\\1\]#is", "<\\1>\\2</\\1>", $text);
         $text = preg_replace("#\[(i)\](.+?)\[/\\1\]#is", "<\\1>\\2</\\1>", $text);
         $text = preg_replace("#\[(u)\](.+?)\[/\\1\]#is", "<\\1>\\2</\\1>", $text);
@@ -59,22 +88,7 @@ class ChatViewHelper
 
         $text = preg_replace_callback("#\[url\](.*?)\[/url\]#is", function ($matches) {
             return $this->general_helper->_regex_build_url_tags($matches);
-        }, $text);
-
-
-        $text = preg_replace_callback("#\[(d)\](.+?)\[/\\1\]#is", function ($matches) {
-
-            $content = isset($matches[2]) ? $matches[2] : $matches[1];
-            $url = '';
-            if(preg_match_all('#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', $content, $match)) {
-                $url = $match[0][0];
-            }
-
-            $image_content = '<a title="'.$url.'" target="_blank" href="'.$url.'" class="id_link"> <img class="smile_inchat" src="'.$url.'"></a>';
-
-            $string = substr($content , strlen($url), strlen($content));
-            return '<center><div class="demotivator">'.$image_content.'<p>'.$string.'</p></div><center>';
-        }, $text);
+        }, $text);       
 
         $text = preg_replace_callback('/@([0-9]+),/', function ($matches) {
             $this->selected_user = $matches[1];
