@@ -12,7 +12,7 @@ use Illuminate\Http\UploadedFile;
 
 class ReplayParserService
 {
-    protected $commandPath = 'bin/m.rep';
+    protected $commandPath = 'bin/screp';
 
     public function parseFile(UploadedFile $file)
     {

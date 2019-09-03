@@ -199,11 +199,18 @@ class ReplayController extends Controller
         /* @var UploadedFile $file */
 
         $acceptedSafeMimes = [
+            'application/x-compressed',
+            
             'application/x-7z-compressed',
+                        
             'application/zip',
-            'application/x-rar-compressed'
+            'application/x-zip-compressed',
+            'application/zip',
+            'multipart/x-zip',
+            
+            'application/x-rar-compressed',
+            'application/x-rar'            
         ];
-
         if (in_array($file->getMimeType(), $acceptedSafeMimes)) {
             $fileModel = File::storeFile($file, 'replays', '', false, false, 'replay_archive');
         } else {

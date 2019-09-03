@@ -7,7 +7,7 @@ $(document).ready(function() {
         url: $container.data('upload-url'),
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         createImageThumbnails: false,
-        acceptedFiles: '.rep,application/x-7z-compressed,application/zip,application/x-rar-compressed',
+        acceptedFiles: '.rep,.rar,.zip,.7z',
         maxFiles: 2,
         addRemoveLinks: true
     });

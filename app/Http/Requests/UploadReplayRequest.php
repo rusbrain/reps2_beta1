@@ -24,7 +24,7 @@ class UploadReplayRequest extends FormRequest
     public function rules()
     {
         return [
-            'file' => 'required|file|max:1024',
+            'file' => 'required|file|max:5120',
         ];
     }
 
@@ -33,7 +33,7 @@ class UploadReplayRequest extends FormRequest
         return [
             'file.required' => 'Необходимо указать файл с replay',
             'file.file'     => 'Replay должен быть файлом',
-            'file.max'      => 'Максимальный размер файла replay 1mb',
+            'file.max'      => 'Максимальный размер файла replay 5mb',
         ];
     }
 }
