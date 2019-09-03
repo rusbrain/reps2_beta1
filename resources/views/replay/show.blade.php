@@ -36,14 +36,14 @@
 
     <div class="content-box">
         <div class="col-md-12 section-title ">
-           
+
             <div>{{$replay->title}}</div>
 
             <div class="author-info">
                 <a href="{{route('user_profile',['id' => $replay->user->id])}}">
                     {{$replay->user->name. ' | '}}
                 </a>
-                <div class="">                   
+                <div class="">
                     @if($replay->user->country_id)
                         <span class="flag-icon flag-icon-{{mb_strtolower($countries[$replay->user->country_id]->code)}}"></span>
                     @else
@@ -55,11 +55,11 @@
                     @else
                         <img class="margin-left-5" src="{{route('home')}}/images/emoticons/smiles/{{\App\Replay::$race_icons['All']}}" alt="">
                     @endif
-                    
+
                 </div>
-                
+
                 <div>
-                    {{$replay->user->points . ' pts | '}}            
+                    {{$replay->user->points . ' pts | '}}
                     <a href="{{route('user.get_rating', ['id' => $replay->user->id])}}"
                        class="user-rating">{{$replay->user->rating}} кг</a>
                 </div>
@@ -68,7 +68,7 @@
         <div class="user-replay-wrapper">
             <div class="col-md-12 user-replay-header">
                 <div class="user-nickname text-bold replay-header-content">
-                    <a href="">{!! $replay->content !!}</a>
+                    <a href="">{!! $general_helper->oldContentFilter($replay->content) !!}</a>
                 </div>
                 <div class="info">
                     <a href="#comments">
@@ -123,12 +123,12 @@
                             </span>
                         </div>
                     </div>
-                   
+
                     <div>
                         <div class="replay-desc-right">Рейтинг:</div>
                         <div class="replay-desc-left">{{$replay->rating??'0'}}</div>
                     </div>
-                  
+
                     <div class="replay-action-wrapper">
                         @if(Auth::id() == $replay->user->id || $general_helper->isAdmin() || $general_helper->isModerator())
                             <a href="{{route('replay.edit', ['id' => $replay->id])}}" class="user-theme-edit">
@@ -155,10 +155,10 @@
                             Не указано
                         </div>
                     @endif
-                    <div class="replay-rating">    
-                        @php 
+                    <div class="replay-rating">
+                        @php
                         $modal = (!Auth::guest() && $replay->user->id == Auth::user()->id) ?'#no-rating':'#vote-modal';
-                        @endphp                   
+                        @endphp
                         <a href="{{ $modal }}" class="positive-vote vote-replay-up" data-toggle="modal"
                            data-rating="1" data-route="{{route('replay.set_rating',['id'=>$replay->id])}}">
                             <img src="{{route('home')}}/images/icons/thumbs-up.png" alt="">

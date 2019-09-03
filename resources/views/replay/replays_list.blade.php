@@ -72,7 +72,7 @@
             </div>
             <div class="col-md-12 user-replay-content-wrapper">
                 <div class="user-replay-content">
-                    {!! $replay->content !!}
+                    {!! $general_helper->oldContentFilter($replay->content) !!}
                 </div>
                 @if(Auth::id() == $replay->user->id)
                     <div class="reputation-button-wrapper">

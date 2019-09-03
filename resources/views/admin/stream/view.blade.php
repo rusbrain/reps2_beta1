@@ -1,5 +1,5 @@
 @extends('admin.layouts.admin')
-
+@inject('general_helper', 'App\Services\GeneralViewHelper')
 @section('css')
     <!--SCEditor -  WYSIWYG BBCode editor -->
     <link rel="stylesheet" href="{{route('home')}}/js/sceditor/minified/themes/default.min.css"/>
@@ -32,7 +32,7 @@
             <div class="box-body">
                 <div class="box-tools col-md-12">
                     <div class="post">
-                        <div class="row">                           
+                        <div class="row">
                             <div class="col-md-5">
                                 <div class="row">
                                     <div class="row">
@@ -48,7 +48,7 @@
                                             Страны:
                                         </div>
                                         <div class="col-md-7">
-                                            {{($stream->country->name)}} 
+                                            {{($stream->country->name)}}
                                         </div>
                                     </div>
                                     <div class="row">
@@ -56,10 +56,10 @@
                                             Расы:
                                         </div>
                                         <div class="col-md-7">
-                                            {{$stream->race}} 
+                                            {{$stream->race}}
                                         </div>
                                     </div>
-                                      
+
                                     <div class="row">
                                         <div class="col-md-5">
                                             Подтвержден:
@@ -68,13 +68,13 @@
                                             {!! $stream->approved?'<i class="fa fa-check text-green"></i>':'<i class="fa fa-clock-o text-red"></i>' !!}
                                         </div>
                                     </div>
-                                   
+
                                     <div class="row">
                                         <div class="col-md-5">
                                             Коментарий:
                                         </div>
                                         <div class="col-md-7">
-                                            {!! $stream->content !!}
+                                            {!! $general_helper->oldContentFilter($stream->content) !!}
                                         </div>
                                     </div>
                                 </div>
@@ -100,25 +100,22 @@
                             </span>
                             <span class="description">{{$stream->created_at->format('h:m d-m-Y')}}</span>
                         </div>
-                       
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
-   
+
 @endsection
 
 @section('js')
-    <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.min.js"></script>
-    <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.xhtml.min.js"></script>
-    <script src="{{route('home')}}/js/sceditor/languages/ru.js"></script>
 
     <script src="{{route('home')}}/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
     <script src="{{route('home')}}/plugins/iCheck/icheck.min.js"></script>
 
     <script>
-        
+
 
         $('#datepicker').datepicker({
             format: "yyyy-mm-dd",

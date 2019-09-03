@@ -438,6 +438,15 @@ class GeneralViewHelper
         $text = preg_replace_callback("#\[font\s*=\s*(.*?)\s*\](.*?)\[\/font\]#is",
             function ($matches) {
                 return "<span style='font-family: ".$matches[1]."'>".$matches[2]."</span>";
+        }, $text);
+        $text = preg_replace_callback("#\[size\s*=\s*(.*?)\s*\](.*?)\[\/size\]#is",
+            function ($matches) {
+                $size = $this->getFontsize($matches[1]);
+                return "<span style='font-size: ".$size."'>".$matches[2]."</span>";
+            }, $text);
+        $text = preg_replace_callback("#\[color\s*=\s*(.*?)\s*\](.*?)\[\/color\]#is",
+            function ($matches) {
+                return "<span style='color: ".$matches[1]."'>".$matches[2]."</span>";
             }, $text);
 
         /***additional smiles*/

@@ -250,7 +250,7 @@ $game_versions = $general_helper->getGameVersion();
                         <label for="video_iframe">Вставить HTML код с Youtube с видео реплеем</label>
                         <textarea name="video_iframe"
                                   class="form-control {{ $errors->has('video_iframe') ? ' is-invalid' : '' }}"
-                                  id="video_iframe" rows="16">{!! old('video_iframe', $replay->video_iframe) !!}</textarea>
+                                  id="video_iframe" rows="16">{!! old('video_iframe')??$general_helper->removeExtraTag($replay->video_iframe) !!}</textarea>
                         @if ($errors->has('video_iframe'))
                             <span class="invalid-feedback">
                                 <strong>{{ $errors->first('video_iframe') }}</strong>
@@ -290,7 +290,7 @@ $game_versions = $general_helper->getGameVersion();
                         <label for="content">Короткое описание:</label>
                         <textarea name="content" id="content"
                                   class="form-control {{ $errors->has('content') ? ' is-invalid' : '' }}"
-                                  rows="10">{{ old('content', $replay->content) }}</textarea>
+                                  rows="10">{{ old('content') ?? $general_helper->removeExtraTag($replay->content) }}</textarea>
                         @if ($errors->has('content'))
                             <span class="invalid-feedback">
                                 <strong>{{ $errors->first('content') }}</strong>
@@ -306,6 +306,7 @@ $game_versions = $general_helper->getGameVersion();
             <div class="col"></div>
         </div><!-- close div /.row -->
     </div><!-- close div /.content-box -->
+    <div id="preview" style="display:none"></div>
 @endsection
 
 @section('sidebar-right')
@@ -339,6 +340,8 @@ $game_versions = $general_helper->getGameVersion();
     <!--SCEditor -  WYSIWYG BBCode editor -->
     <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.min.js"></script>
     <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.xhtml.min.js"></script>
+    <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.bbcode.min.js"></script>
+    <script src="{{route('home')}}/js/html2bbcode.js"></script>
     <script src="{{route('home')}}/js/sceditor/languages/ru.js"></script>
 
     <!--JS plugin Select2 - autocomplete -->
@@ -347,17 +350,27 @@ $game_versions = $general_helper->getGameVersion();
     <script src="{{route('home')}}/js/replay_form.js"></script>
 
     <script>
+
         /**
          * Comments box is the same for all pages
          *SCEditor -  WYSIWYG BBCode editor
          * https://www.sceditor.com/
          * */
         $(function () {
+            /**
+             * Convert Html to Bbcode
+             */
+            var div = $("#preview");
+            div.html($('#content').val());
+            output = bbencode(div);
+            $('#content').val(output);
+            div.html('');
+
             if ($('#content').length > 0) {
                 var content = document.getElementById('content');
                 var extraSmiles = <?php echo json_encode($extraSmiles) ?>;
                 sceditor.create(content, {
-                    format: 'xhtml',
+                    format: 'bbcode',
                     style: '{{route("home")}}' + '/js/sceditor/minified/themes/content/default.min.css',
                     emoticonsRoot: '{{route("home")}}' + '/images/',
                     locale: 'ru',
@@ -382,7 +395,7 @@ $game_versions = $general_helper->getGameVersion();
                     style: '{{route("home")}}' + '/js/sceditor/minified/themes/content/default.min.css',
                     emoticonsRoot: '{{route("home")}}' + '/images/',
                     locale: 'ru',
-                    toolbar: 'youtube,source|'
+                    toolbar: 'youtube|'
                 });
             }
         });

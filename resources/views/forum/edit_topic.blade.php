@@ -211,7 +211,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                     toolbar: 'bold,italic,underline|' +
                     'left,center,right,justify|' +
                     'font,size,color,removeformat|' +
-                    'source,quote,code|' +
+                    'quote,code|' +
                     'image,link,unlink|' +
                     'emoticon|' +
                     'date,time|' +
@@ -239,7 +239,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                     toolbar: 'bold,italic,underline|' +
                     'left,center,right,justify|' +
                     'font,size,color,removeformat|' +
-                    'source,quote,code|' +
+                    'quote,code|' +
                     'image,link,unlink|' +
                     'emoticon|' +
                     'date,time|' +

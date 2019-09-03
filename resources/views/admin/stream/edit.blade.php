@@ -56,8 +56,8 @@ $extraSmiles = $general_helper->getextraSmiles();
                                     </span>
                                     @endif
                                 </div>
-                              
-                               
+
+
                                 <div class="col-md-3">
                                     <div class="box-header">
                                         <h3 class="box-title">Первая раса:</h3>
@@ -93,9 +93,9 @@ $extraSmiles = $general_helper->getextraSmiles();
                                     </span>
                                         @endif
                                     </div>
-                                </div>                                        
-                                  
-                              
+                                </div>
+
+
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <br>
@@ -111,7 +111,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                                         @endif
                                     </div>
                                 </div>
-                              
+
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
@@ -123,7 +123,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                                                     id="content"
                                                     name="content"
                                                     rows="10"
-                                                    cols="80">{!! old('content')??$stream->content !!}</textarea>
+                                                    cols="80">{!! old('content')??$general_helper->removeExtraTag($stream->content) !!}</textarea>
                                     </div>
                                     @if ($errors->has('content'))
                                         <span class="invalid-feedback text-red" role="alert">
@@ -161,6 +161,7 @@ $extraSmiles = $general_helper->getextraSmiles();
             </div>
         </div>
     </div>
+    <div id="preview" style="display:none"></div>
 @endsection
 
 @section('js')
@@ -172,6 +173,9 @@ $extraSmiles = $general_helper->getextraSmiles();
     <!--SCEditor -  WYSIWYG BBCode editor -->
     <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.min.js"></script>
     <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.xhtml.min.js"></script>
+
+    <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.bbcode.min.js"></script>
+    <script src="{{route('home')}}/js/html2bbcode.js"></script>
     <script src="{{route('home')}}/js/sceditor/languages/ru.js"></script>
 
     <script src="{{route('home')}}/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
@@ -199,6 +203,16 @@ $extraSmiles = $general_helper->getextraSmiles();
          * https://www.sceditor.com/
          * */
         $(function () {
+            /**
+             * Convert Html to Bbcode
+             */
+            var div = $("#preview");
+            div.html($('#content').val());
+            output = bbencode(div);
+            console.log(output)
+            $('#content').val(output);
+            div.html('');
+
             addUpload();
             addStream();
             var extraSmiles = <?php echo json_encode($extraSmiles) ?>;
@@ -206,7 +220,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                 var content = document.getElementById('content');
 
                 sceditor.create(content, {
-                    format: 'xhtml',
+                    format: 'bbcode',
                     style: '{{route("home")}}' + '/js/sceditor/minified/themes/content/default.min.css',
                     emoticonsRoot: '{{route("home")}}' + '/images/',
                     locale: 'ru',

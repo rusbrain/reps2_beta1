@@ -16,7 +16,8 @@ use App\{
 };
 use App\Http\Controllers\StreamController;
 use App\Http\Requests\{
-    StreamStoreRequest
+    StreamStoreRequest,
+    StreamUpdateRequest
 };
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
