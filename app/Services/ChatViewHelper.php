@@ -56,13 +56,14 @@ class ChatViewHelper
         $text = preg_replace("/:s([0-9]{1,}):/", '<img src="'.$this->host.'/images/emoticons/smiles/s$1.gif" border="0">', $text);
         $text = preg_replace_callback("#\[(d)\](.+?)\[/\\1\]#is", function ($matches) {
 
-            $content = isset($matches[2]) ? $matches[2] : $matches[1];
+            $content = trim(isset($matches[2]) ? $matches[2] : $matches[1]);
+
             $url = '';
             if(preg_match_all('#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', $content, $match)) {
                 $url = $match[0][0];
             }
 
-            $image_content = '<a title="'.$url.'" target="_blank" href="'.$url.'" class="id_link"> <img class="smile_inchat" src="'.$url.'"></a>';
+            $image_content = '<a title="'.$url.'" target="_blank" href="'.$url.'" class="id_link"> <img class="smile_inchat" src="'.$url.'" onerror="this.onerror=null;this.src=\'/images/incorrect_img.png\';"></a>';
 
             $string = substr($content , strlen($url), strlen($content));
             return '<center><div class="demotivator">'.$image_content.'<p>'.trim($string).'</p></div><center>';
@@ -84,11 +85,11 @@ class ChatViewHelper
         }, $text);
 
         $text = preg_replace("/\[img\](\r\n|\r|\n)*((http|https):\/\/([^;<>\*\"]+)|[a-z0-9\/\\\._\- ]+)\[\/img\]/siU",
-            "<img src=\"\\2\" class=\"imgl\" border=\"0\" alt=\"\"> ", $text);
+            "<img src=\"\\2\" class=\"imgl\" border=\"0\" alt=\"\" > ", $text);
 
         $text = preg_replace_callback("#\[url\](.*?)\[/url\]#is", function ($matches) {
             return $this->general_helper->_regex_build_url_tags($matches);
-        }, $text);       
+        }, $text);
 
         $text = preg_replace_callback('/@([0-9]+),/', function ($matches) {
             $this->selected_user = $matches[1];

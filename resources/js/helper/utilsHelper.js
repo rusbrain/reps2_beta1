@@ -49,6 +49,7 @@ export const pregMatchFunction = (string) => {
 };
 
 export const ValidImgUrl = (message) => {
+    var filterString = '';
     // default incorrect image
     var default_Incorrect_img = location.protocol + '//' + location.host + '/images/incorrect_img.png';
 
@@ -61,8 +62,8 @@ export const ValidImgUrl = (message) => {
         var content = demotivate_matches[1].trim();
         //Get image Url
         var url = content.split(' ')[0];
-        if (!(/\.(gif|jpg|jpeg|tiff|png)$/i).test(url) || !validationImg(url)) {
-            message.replace(url, default_Incorrect_img);
+        if (!(/\.(gif|jpg|jpeg|tiff|png)$/i).test(url)) {
+            message = message.replace(url, default_Incorrect_img);
         }
     }
 
@@ -73,20 +74,10 @@ export const ValidImgUrl = (message) => {
     if (img_matches) {
         //extract image url from [img]
         var imgUrl = img_matches[1];
-        if (!(/\.(gif|jpg|jpeg|tiff|png)$/i).test(imgUrl) || !validationImg(imgUrl)) {
-            message.replace(imgUrl, default_Incorrect_img);
+        if (!(/\.(gif|jpg|jpeg|tiff|png)$/i).test(imgUrl)) {
+            message = message.replace(imgUrl, default_Incorrect_img);
         }
     }
     return message;
-};
-
-export const validationImg = (url) => {
-    var http = new XMLHttpRequest();
-    http.open('HEAD', url, false);
-    http.onerror = function() {
-        return false;
-    }
-    http.send();
-    return http.status != 404;
 };
 

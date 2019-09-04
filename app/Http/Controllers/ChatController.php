@@ -14,10 +14,11 @@ use App\ChatPicture;
 
 
 class ChatController extends Controller
-{  
+{
     private $selected_user = '';
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->general_helper = new GeneralViewHelper;
         $this->chat_helper = new ChatViewHelper;
     }
@@ -25,11 +26,12 @@ class ChatController extends Controller
     /**
      * Get 100 messages
      */
-    public function get_messages() {
+    public function get_messages()
+    {
         $messages = PublicChat::select('user_id', 'user_name', 'message', 'to', 'file_path', 'imo', 'created_at')->with('user')
-                ->orderBy('created_at', 'desc')
-                ->limit(100)
-                ->get();
+            ->orderBy('created_at', 'desc')
+            ->limit(100)
+            ->get();
         $result = array();
         foreach ($messages as $msg) {
             $result[] = $this->setFullMessage($msg);
@@ -41,7 +43,8 @@ class ChatController extends Controller
     /**
      * Insert new messages from chat
      */
-    public function insert_message(Request $request) {
+    public function insert_message(Request $request)
+    {
 
         $message_data = $request->all();
         if (Auth::id() == $request->user_id) {
@@ -49,7 +52,7 @@ class ChatController extends Controller
             $message_data['message'] = $this->chat_helper->rewrapperText($message_data['message']);
             $message_data['to'] = $this->selected_user;
             $insert = PublicChat::create($message_data);
-            if($insert) {
+            if ($insert) {
                 return response()->json([
                     'status' => 'ok',
                     'id' => $insert->id, 'user' => Auth::id()
@@ -65,7 +68,8 @@ class ChatController extends Controller
     /**
      * Get just updated message
      */
-    public function get_message(Request $request) {
+    public function get_message(Request $request)
+    {
         $id = $request->id;
         $user_id = $request->user_id;
         $message = PublicChat::where('id', $id)->where('user_id', $user_id)->with('user')->first();
@@ -75,25 +79,26 @@ class ChatController extends Controller
         ], 200);
     }
 
-    public function setFullMessage($msg) {
-        $countries =$this->general_helper->getCountries();
+    public function setFullMessage($msg)
+    {
+        $countries = $this->general_helper->getCountries();
         $country_code = ($msg->user->country_id) ? mb_strtolower($countries[$msg->user->country_id]->code) : '';
         $race = ($msg->user->race) ? Replay::$race_icons[$msg->user->race] : Replay::$race_icons['All'];
         $len_check = strlen($msg->message) > 350 ? true : false;
-        $short_msg = $len_check ? $this->general_helper->closeAllTags(mb_substr($msg->message,0,350,'utf-8')). '... ' :  $msg->message;
-        return  array(
-            'user_id'=>$msg->user_id,
-            'user_name'=>$msg->user_name,
-            'message'=>$msg->message,
+        $short_msg = $len_check ? $this->general_helper->closeAllTags(mb_substr($msg->message, 0, 350, 'utf-8')) . '... ' : $msg->message;
+        return array(
+            'user_id' => $msg->user_id,
+            'user_name' => $msg->user_name,
+            'message' => $msg->message,
             'short_msg' => $short_msg,
             'more_length' => $len_check,
             'show_more' => true,
             'to' => $msg->to,
-            'file_path'=>$msg->file_path,
-            'imo'=>$msg->imo,
-            'created_at'=>$msg->created_at,
-            'country_code'=>$country_code,
-            'race'=>$race
+            'file_path' => $msg->file_path,
+            'imo' => $msg->imo,
+            'created_at' => $msg->created_at,
+            'country_code' => $country_code,
+            'race' => $race
         );
         return $msg;
     }
@@ -101,10 +106,11 @@ class ChatController extends Controller
     /**
      * Get Chat Smiles
      */
-    public function get_externalsmiles() {
+    public function get_externalsmiles()
+    {
         $smiles = array();
         $extraSmiles = ChatSmile::with('file')->orderBy('updated_at', 'Desc')->get();
-        foreach ($extraSmiles as $smile ) {
+        foreach ($extraSmiles as $smile) {
             $smiles[] = array(
                 'charactor' => $smile->charactor,
                 'filename' => pathinfo($smile->file->link)["basename"]
@@ -113,18 +119,19 @@ class ChatController extends Controller
 
         return response()->json([
             'status' => "ok",
-            'smiles' =>  $smiles
+            'smiles' => $smiles
         ], 200);
     }
 
     /**
      * Get Chat Images
      */
-    public function get_externalimages() {
+    public function get_externalimages()
+    {
         $images = array();
-        $extraImages = ChatPicture::with('file','category')->orderBy('updated_at', 'Desc')->get();
-        foreach ($extraImages as $image ) {
-            if(!isset($images[$image->category->name])) {
+        $extraImages = ChatPicture::with('file', 'category')->orderBy('updated_at', 'Desc')->get();
+        foreach ($extraImages as $image) {
+            if (!isset($images[$image->category->name])) {
                 $images[$image->category->name] = array();
             }
             array_push($images[$image->category->name], array(
@@ -135,7 +142,7 @@ class ChatController extends Controller
 
         return response()->json([
             'status' => "ok",
-            'images' =>  $images
+            'images' => $images
         ], 200);
     }
 
