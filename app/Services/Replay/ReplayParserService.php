@@ -14,15 +14,18 @@ class ReplayParserService
 {
     protected $commandPath = 'bin/screp';
 
-    public function parseFile(UploadedFile $file)
+    public function parseFile($filePath)
     {
-        $command = base_path($this->commandPath) . ' ' . $file->path();
+        $command = base_path($this->commandPath) . ' ' . $filePath;
 
         $cliOutput = null;
         $cliResult = null;
 
         exec($command, $cliOutput, $cliResult);
         if ($cliResult !== 0) {
+            if ($cliOutput && is_array($cliOutput)) {
+                $cliOutput = $cliOutput[0];
+            }
             throw new ReplayParserException($cliOutput ?: '', $cliResult);
         }
 

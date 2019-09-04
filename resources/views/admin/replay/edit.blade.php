@@ -120,7 +120,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                                                 <!-- /. tools -->
                                             </div>
                                             <div class="form-group">
-                                                <select class="form-control" name="first_race">
+                                                <select class="form-control" name="first_race" id="first_race">
                                                     @foreach(\App\Replay::$races as $race)
                                                         <option value="{{$race}}" {{$race == $replay->first_race?'selected':''}}>{{$race}}</option>
                                                     @endforeach
@@ -155,7 +155,8 @@ $extraSmiles = $general_helper->getextraSmiles();
                                                 <h3 class="box-title">Первая локация:</h3>
                                                 <!-- /. tools -->
                                             </div>
-                                            <input type="text" name="first_location" class="form-control" placeholder="Локация..." value="{{old('first_location')??$replay->first_location}}">
+                                            <input type="text" name="first_location" class="form-control" placeholder="Локация..."
+                                                   value="{{ old('first_location', $replay->first_location) }}" id="first_location" />
                                             @if ($errors->has('first_location'))
                                                 <span class="invalid-feedback text-red" role="alert">
                                         <strong>{{ $errors->first('first_location') }}</strong>
@@ -204,7 +205,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                                                 <!-- /. tools -->
                                             </div>
                                             <div class="form-group">
-                                                <select class="form-control" name="second_race">
+                                                <select class="form-control" name="second_race" id="second_race">
                                                     @foreach(\App\Replay::$races as $race)
                                                         <option value="{{$race}}" {{$race == $replay->second_race?'selected':''}}>{{$race}}</option>
                                                     @endforeach
@@ -239,7 +240,9 @@ $extraSmiles = $general_helper->getextraSmiles();
                                                 <h3 class="box-title">Вторая локация:</h3>
                                                 <!-- /. tools -->
                                             </div>
-                                            <input type="text" name="second_location" class="form-control" placeholder="Локация..." value="{{old('second_location')??$replay->second_location}}">
+                                            <input type="text" name="second_location" class="form-control"
+                                                   placeholder="Локация..." value="{{old('second_location', $replay->second_location)}}"
+                                                   id="second_location">
                                             @if ($errors->has('second_location'))
                                                 <span class="invalid-feedback text-red" role="alert">
                                         <strong>{{ $errors->first('second_location') }}</strong>
