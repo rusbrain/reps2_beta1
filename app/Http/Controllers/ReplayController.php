@@ -325,7 +325,8 @@ class ReplayController extends Controller
             $fileModel = File::storeFile($file, 'replays', '', false, false, 'replay_archive');
         } else {
             try {
-                $replayData = $replayParserService->parseFile($file);
+                $replayData = $replayParserService->parseFile($file->path());
+                $replayData['name'] = $replayData['first_name'] . ' vs ' . $replayData['second_name'];
                 $fileModel = File::storeFile($file, 'replays', '', false, false, 'replay');
             } catch (\Exception $e) {
                 return Response::json(['errors' => ['file' => [$e->getMessage()]]], 422);
@@ -333,7 +334,6 @@ class ReplayController extends Controller
         }
 
         $replayData['file_id'] = $fileModel->id;
-        $replayData['name'] = $replayData['first_name'] . ' vs ' . $replayData['second_name'];
 
         return Response::json($replayData, 200);
     }
