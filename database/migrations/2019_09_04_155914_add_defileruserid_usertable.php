@@ -15,7 +15,7 @@ class AddDefileruseridUsertable extends Migration
     public function up()
     {
         Schema::table('users', function(Blueprint $table) {
-            $table->string('defiler_id')->nullable();
+            $table->integer('defiler_id')->nullable();
         });
     }
 
