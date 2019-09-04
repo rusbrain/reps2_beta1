@@ -5,6 +5,7 @@ namespace App;
 use App\Traits\ModelRelations\FileRelation;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Image;
 use Illuminate\Support\Facades\Storage; //Laravel Filesystem
@@ -36,7 +37,7 @@ class File extends Model
     /**
      * Storage new file
      *
-     * @param $file
+     * @param UploadedFile $file
      * @param $dir_name
      * @param string $file_title
      * @param bool $file_name

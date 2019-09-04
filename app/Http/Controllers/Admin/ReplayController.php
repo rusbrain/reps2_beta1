@@ -200,22 +200,19 @@ class ReplayController extends Controller
 
         $acceptedSafeMimes = [
             'application/x-compressed',
-            
             'application/x-7z-compressed',
-                        
             'application/zip',
             'application/x-zip-compressed',
             'application/zip',
             'multipart/x-zip',
-            
             'application/x-rar-compressed',
-            'application/x-rar'            
+            'application/x-rar'
         ];
         if (in_array($file->getMimeType(), $acceptedSafeMimes)) {
             $fileModel = File::storeFile($file, 'replays', '', false, false, 'replay_archive');
         } else {
             try {
-                $replayData = $replayParserService->parseFile($file);
+                $replayData = $replayParserService->parseFile($file->path());
                 $replayData['name'] = $replayData['first_name'] . ' vs ' . $replayData['second_name'];
                 $fileModel = File::storeFile($file, 'replays', '', false, false, 'replay');
             } catch (\Exception $e) {
