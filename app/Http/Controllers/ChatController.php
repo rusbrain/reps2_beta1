@@ -14,23 +14,7 @@ use App\ChatPicture;
 
 
 class ChatController extends Controller
-{
-    private $font_colors = array(
-         'c1' => '#FFFF77',
-         'c2' => '#FF77FF',
-         'c3' => '#77FFFF',
-         'c4' => '#FFAAAA',
-         'c5' => '#AAFFAA',
-         'c6' => '#AAAAFF'
-    );
-    private $font_sizes = array(
-        'f1' => '14px',
-        'f2' => '16px',
-        'f3' => '18px',
-    );
-
-    private $allChatImages = array();
-
+{  
     private $selected_user = '';
 
     public function __construct(){
