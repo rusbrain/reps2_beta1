@@ -1,7 +1,10 @@
 {
     "name": "laravel/laravel",
     "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "keywords": [
+        "framework",
+        "laravel"
+    ],
     "license": "MIT",
     "type": "project",
     "require": {
@@ -9,7 +12,6 @@
         "doctrine/dbal": "^2.8",
         "eduardokum/laravel-mail-auto-embed": "^1.0",
         "fideloper/proxy": "^4.0",
-        "genert/bbcode": "^1.1",
         "google/recaptcha": "~1.1",
         "intervention/image": "^2.5",
         "jenssegers/agent": "^2.6",
@@ -39,7 +41,6 @@
             "App\\": "app/"
         }
     },
-
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/"

@@ -17,7 +17,7 @@ class TourneyPlaysersTableSeeder extends Seeder
                     ->table('user as u')
                     ->join("lis_tourney_player as li", 'li.id_user', '=', 'u.id')
                     ->select('u.login', 'li.*')
-                    ->get();  
+                    ->get();
         foreach ($tourney_players as $player) {
             try {
                 $user = DB::table('users')->where('name',  trim($player->login))->first();
@@ -25,22 +25,23 @@ class TourneyPlaysersTableSeeder extends Seeder
                 $tourney = DB::table('tourney_lists')->where('tourney_id',  $player->id_tourney)->first();
                 if(!empty($tourney)){
                     $tourney_id = $tourney->id;
-                     
-                    $insert_player = array( 
+
+                    $insert_player = array(
                         'tourney_id' => $tourney_id,
+                        'defiler_player_id' => $player->id,
                         'user_id' => $user_id,
                         'check_in' => $player->checkin == 'YES' ? 1 : 0,
                         'description' => $player->description,
-                        'place_result' => $player->place_result  
+                        'place_result' => $player->place_result
                     );
                     TourneyPlayer::create($insert_player);
                 }
-                
-               
+
+
             } catch (\Exception $e) {
                 dd($e,$player );
             }
-        }   
-                    
+        }
+
     }
 }
