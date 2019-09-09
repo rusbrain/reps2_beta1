@@ -2,14 +2,13 @@
 
 namespace App;
 
-//use App\Traits\ModelRelations\TourneyMatchRelation;
+use App\Traits\ModelRelations\TourneyMatchRelation;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
 class TourneyMatch extends Model
 {
-    use Notifiable;
-//    TourneyMatchRelation;
+    use Notifiable, TourneyMatchRelation;
     /**
      * Using table name
      *
