@@ -81,7 +81,7 @@
                     <div>
                         <div class="replay-desc-right">Prize Fond:</div>
                         <div class="replay-desc-left">
-
+                            {{\App\TourneyList::getPrizePool($tourney->prize_pool)}}
                         </div>
                     </div>
                     <div>
@@ -102,25 +102,30 @@
                             {{$tourney->importance}}
                         </div>
                     </div>
-
-                    {{--                    <div class="replay-action-wrapper">--}}
-                    {{--                        @if(Auth::id() == $replay->user->id || $general_helper->isAdmin() || $general_helper->isModerator())--}}
-                    {{--                            <a href="{{route('replay.edit', ['id' => $replay->id])}}" class="user-theme-edit">--}}
-                    {{--                                <img src="{{route('home')}}/images/icons/svg/edit_icon.svg" alt="">--}}
-                    {{--                                <span>Редактировать</span>--}}
-                    {{--                            </a>--}}
-                    {{--                        @endif--}}
-                    {{--                        @if(!\App\Replay::isApproved($replay->approved))--}}
-                    {{--                            <div class="error margin-left-40 text-bold margin-top-10">--}}
-                    {{--                                Не подтвержден--}}
-                    {{--                            </div>--}}
-                    {{--                        @endif--}}
-                    {{--                    </div>--}}
                 </div>
                 <div class="col-md-4">
                     @if($tourney->logo_link)
                         <div><img src='{{$tourney->logo_link}}'></div>
                     @endif
+                    <div class="link">
+                        @if($tourney->rules_link)
+                            <a href='{{$tourney->rules_link}}' target="_blank">Rules/FAQ</a>
+                        @endif
+                        @if($tourney->vod_link)
+                            <a href='{{$tourney->vod_link}}' target="_blank">Vod</a>
+                        @endif
+                    </div>
+
+                    <div class="replay-download">
+                        <img src="/images/icons/download-blue.png" alt="">
+                        <a href="" class="">Full Replay</a>
+                    </div>
+                    <div class="replay-download">
+                        <img src="/images/icons/download-blue.png" alt="">
+                        <a href="" class="">Winner's Pack</a>
+                    </div>
+
+
                 </div>
             </div>
         </div>
@@ -129,7 +134,7 @@
             <!--Tourney Players -->
             <div class="row tourney_matches">
                 <div class="col-md-5">
-                    <div class="widget-header">Players </div>
+                    <div class="widget-header">Players</div>
                     @foreach($players as $key => $player)
                         <div class="tourney_ranking">
                             <div class="tourney-desc-right num">{{ $key + 1 }}</div>
@@ -141,12 +146,14 @@
                                     @else
                                         <span class="flag-icon"></span>
                                     @endif
-                                    @if($player->user->race)
-                                        <img  src="{{route('home')}}/images/emoticons/smiles/{{\App\Replay::$race_icons[$player->user->race]}}"
-                                             alt="">
+                                    @if(!empty($player->user->race))
+                                        <img
+                                            src="{{route('home')}}/images/emoticons/smiles/{{\App\Replay::$race_icons[$player->user->race]}}"
+                                            alt="">
                                     @else
-                                        <img  src="{{route('home')}}/images/emoticons/smiles/{{\App\Replay::$race_icons['All']}}"
-                                             alt="">
+                                        <img
+                                            src="{{route('home')}}/images/emoticons/smiles/{{\App\Replay::$race_icons['All']}}"
+                                            alt="">
                                     @endif
                                     <span class="overflow-hidden">{{$player->user->name}}</span>
                                 </a>
@@ -167,12 +174,14 @@
                                 <div class="tourney-desc-right num">{{ $n + 1 }}</div>
                                 <div class="tourney-desc-left user align-right">
                                     @if(!empty($match->player1->user))
-                                        @if($match->player1->user->race)
-                                            <img  src="{{route('home')}}/images/emoticons/smiles/{{\App\Replay::$race_icons[$player->user->race]}}"
-                                                 alt="">
+                                        @if(!empty($match->player1->user->race))
+                                            <img
+                                                src="{{route('home')}}/images/emoticons/smiles/{{\App\Replay::$race_icons[$match->player1->user->race]}}"
+                                                alt="">
                                         @else
-                                            <img  src="{{route('home')}}/images/emoticons/smiles/{{\App\Replay::$race_icons['All']}}"
-                                                 alt="">
+                                            <img
+                                                src="{{route('home')}}/images/emoticons/smiles/{{\App\Replay::$race_icons['All']}}"
+                                                alt="">
                                         @endif
                                         {{ $match->player1->user->name }}
                                     @else
@@ -180,16 +189,19 @@
                                     @endif
                                 </div>
                                 <div class="tourney-desc-right score">{{ $match->player1_score }}</div>
-                                <div class="tourney-desc-right score">{{ $match->player1_score > $match->player2_score ? '>':'<' }}</div>
+                                <div
+                                    class="tourney-desc-right score">{{ $match->player1_score > $match->player2_score ? '>':'<' }}</div>
                                 <div class="tourney-desc-right score">{{ $match->player2_score  }}</div>
                                 <div class="tourney-desc-right user align-left">
                                     @if(!empty($match->player2->user))
-                                        @if($match->player2->user->race)
-                                            <img  src="{{route('home')}}/images/emoticons/smiles/{{\App\Replay::$race_icons[$player->user->race]}}"
-                                                 alt="">
+                                        @if(!empty($match->player2->user->race))
+                                            <img
+                                                src="{{route('home')}}/images/emoticons/smiles/{{\App\Replay::$race_icons[$match->player2->user->race]}}"
+                                                alt="">
                                         @else
-                                            <img  src="{{route('home')}}/images/emoticons/smiles/{{\App\Replay::$race_icons['All']}}"
-                                                 alt="">
+                                            <img
+                                                src="{{route('home')}}/images/emoticons/smiles/{{\App\Replay::$race_icons['All']}}"
+                                                alt="">
                                         @endif
                                         {{ $match->player2->user->name }}
                                     @else
@@ -198,22 +210,28 @@
                                 </div>
                                 <div class="tourney-desc-left reps">
                                     @if(!empty($match->file1))
-                                        <span><a href="{{route('tourney.download', ['id' => $match->file1->id])}}">rep1</a></span>
+                                        <span><a
+                                                href="{{route('tourney.download', ['id' => $match->file1->id])}}">rep1</a></span>
                                     @endif
                                     @if(!empty($match->file2))
-                                        <span><a href="{{route('tourney.download', ['id' => $match->file2->id])}}">rep2</a></span>
+                                        <span><a
+                                                href="{{route('tourney.download', ['id' => $match->file2->id])}}">rep2</a></span>
                                     @endif
                                     @if(!empty($match->file3))
-                                        <span><a href="{{route('tourney.download', ['id' => $match->file3->id])}}">rep3</a></span>
+                                        <span><a
+                                                href="{{route('tourney.download', ['id' => $match->file3->id])}}">rep3</a></span>
                                     @endif
                                     @if(!empty($match->file4))
-                                        <span><a href="{{route('tourney.download', ['id' => $match->file4->id])}}">rep4</a></span>
+                                        <span><a
+                                                href="{{route('tourney.download', ['id' => $match->file4->id])}}">rep4</a></span>
                                     @endif
                                     @if(!empty($match->file5))
-                                        <span><a href="{{route('tourney.download', ['id' => $match->file5->id])}}">rep5</a></span>
+                                        <span><a
+                                                href="{{route('tourney.download', ['id' => $match->file5->id])}}">rep5</a></span>
                                     @endif
                                     @if(!empty($match->file6))
-                                        <span><a href="{{route('tourney.download', ['id' => $match->file6->id])}}">rep6</a></span>
+                                        <span><a
+                                                href="{{route('tourney.download', ['id' => $match->file6->id])}}">rep6</a></span>
                                     @endif
                                     @if(!empty($match->file7))
                                         <span><a href="{{route('tourney.download', ['link' => $match->file7->link])}}">rep7</a></span>

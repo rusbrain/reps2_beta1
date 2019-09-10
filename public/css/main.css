@@ -2762,6 +2762,16 @@ div.author-info {
     display: flex;
 }
 
+.user-tournament-wrapper .link,
+.user-tournament-wrapper .replay-download{
+    border:none !important;
+}
+.user-tournament-wrapper .link {
+    margin:5px;
+}
+.user-tournament-wrapper .link a {
+    padding: 5px 5px ;
+}
 .tourney_ranking .tourney-desc-right,
 .tourney_match .tourney-desc-right {
     padding-bottom: 5px;
@@ -2794,6 +2804,8 @@ div.author-info {
  }
 .tourney_ranking .checkin {
     width:15%;
+    text-align: center;
+    padding-left: 0;
 }
 .tourney_ranking .user {
     width: 60%;

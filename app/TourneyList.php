@@ -66,4 +66,9 @@ class TourneyList extends Model
      * @param status_id
      * @return string
      */
+
+    public static function getPrizePool($value)
+    {
+        return TourneyService::getPrizePool($value);
+    }
 }

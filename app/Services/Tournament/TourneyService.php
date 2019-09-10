@@ -91,4 +91,16 @@ class TourneyService
 
         return ['matches' => $matches_array, 'rounds'=>$round_array];
     }
+
+    public static function getPrizePool($value)
+    {
+        $prize = explode(",", $value);
+        $length = count($prize);
+        $sum = 0;
+        for($i = 1; $i < count($prize) - 1 ; $i++) {
+            $sum += $prize[$i];
+        }
+
+        return $prize[0]. $sum .$prize[$length -1];
+    }
 }
