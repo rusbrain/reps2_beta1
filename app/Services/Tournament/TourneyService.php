@@ -56,10 +56,10 @@ class TourneyService
      */
     public static function getTourneyPlayers($tournament_id)
     {
-        $players = TourneyPlayer::where('tourney_id', $tournament_id)->orderBy('place_result')
-            ->where('check_in', 1)
+        $players = TourneyPlayer::where('tourney_id', $tournament_id)->orderBy('check_in','desc')->orderByRaw('LENGTH(place_result)')->orderBy('place_result')
             ->with('user')
             ->get();
+        return $players;
 
     }
 
@@ -69,7 +69,7 @@ class TourneyService
      */
     public static function getTourneyMatches($tournament_id)
     {
-        $matches = TourneyMatch::where('tourney_id', $tournament_id)
+        $matches = TourneyMatch::where('tourney_id', $tournament_id)->orderBy('round_id')
             ->with(['player1' => function ($query) {
                 $query->with(['user' => function ($q) {
                     $q->with('avatar')->withTrashed();
@@ -80,8 +80,15 @@ class TourneyService
                     $q->with('avatar')->withTrashed();
                 }]);
             }])
+            ->with(['file1','file2','file3','file4','file5','file6','file7'])
             ->get();
-        dd($matches[0]);
-    }
+        $matches_array = array();
+        $round_array = array();
+        foreach ($matches as $match) {
+            $matches_array[$match->round_id][] = $match;
+            $round_array[$match->round_id] = $match->round;
+        }
 
+        return ['matches' => $matches_array, 'rounds'=>$round_array];
+    }
 }

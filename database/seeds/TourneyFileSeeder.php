@@ -17,7 +17,7 @@ class TourneyFileSeeder extends Seeder
         $matches = DB::table('tourney_matches')->select('id','rep1','rep2','rep3','rep4','rep5','rep6','rep7')->get();
         foreach ($matches as $match) {
             foreach ($match as $key => $repCol) {
-                if($key == 'id') continue;
+                if($key == 'id' || $repCol == '#WO#') continue;
                 try{
                     if ($repCol) {
                         $filedata = array(

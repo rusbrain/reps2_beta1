@@ -2756,6 +2756,80 @@ div.author-info {
     font-family: "Roboto-Medium", sans-serif;
 }
 
+.user-tournament-wrapper .tourney_ranking,
+.user-tournament-wrapper .tourney_match {
+    border-bottom: grey 1px solid;
+    display: flex;
+}
+
+.tourney_ranking .tourney-desc-right,
+.tourney_match .tourney-desc-right {
+    padding-bottom: 5px;
+    padding-top: 5px;
+    text-align: center;
+}
+
+.tourney_ranking .tourney-desc-left,
+.tourney_match .tourney-desc-left {
+    padding-bottom: 5px;
+    padding-top: 5px;
+    padding-left: 5px;
+    border-left: 1px solid grey;
+}
+.tourney_ranking .user a span,
+.tourney_match .user a span {
+    word-break: break-all;
+}
+
+.tourney_ranking .tourney-desc-result,
+.tourney_match .tourney-desc-result{
+    padding-bottom: 5px;
+    padding-top: 5px;
+    border-left: 1px solid grey;
+    text-align: center;
+}
+.tourney_ranking .num,
+.tourney_ranking .result{
+     width: 10%;
+ }
+.tourney_ranking .checkin {
+    width:15%;
+}
+.tourney_ranking .user {
+    width: 60%;
+}
+
+.tourney_match .num {
+    width: 8%;
+}
+.tourney_match .score {
+    width: 4%;
+    color: #230bea;
+    font-weight: bold;
+}
+.tourney_match .reps {
+    width: 30%;
+}
+.tourney_match .user {
+    width: 25%;
+    word-break: break-all;
+}
+
+.tourney_matches {
+    margin:0;
+}
+.tourney_matches .widget-header{
+    padding-left: 15px;
+}
+.align-left{
+    text-align: left !important;
+}
+.align-right{
+    text-align: right !important;
+}
+
+
+
 /*----------------------------------------*/
 /*--------- END TOURNEMANTPAGE -------- */
 /*---------------------------------------*/

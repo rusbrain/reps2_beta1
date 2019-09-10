@@ -208,6 +208,7 @@ Route::group(['middleware' => 'activity'], function () {
     });
     Route::group(['prefix' => 'tournament'], function () {
         Route::get('/{id}/show', 'TournamentController@show')->name('tournament.get');
+        Route::get('/{file_id}/download', 'TournamentController@download')->name('tourney.download');
         Route::get('/', 'TournamentController@index')->name('tournament.all');
         Route::get('/paginate', 'TournamentController@paginate')->name('tournament.paginate');
     });

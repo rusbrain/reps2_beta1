@@ -1,14 +1,14 @@
 @extends('layouts.site')
 @inject('general_helper', 'App\Services\GeneralViewHelper')
-@php $countries = $general_helper->getCountries();@endphp
+@php
+    $countries = $general_helper->getCountries();
+@endphp
 
 @section('sidebar-left')
-    <!-- Gosu Replay -->
-    @include('sidebar-widgets.gosu-replays')
-    <!-- END Gosu Replay -->
-    <!-- All Forum Topics -->
-    @include('sidebar-widgets.search-replay-form')
-    <!-- END All Forum Topics -->
+    <!-- Upcoming Tournaments -->
+    @include('sidebar-widgets.tournaments')
+
+    @include('sidebar-widgets.votes')
 @endsection
 
 @section('content')
@@ -17,17 +17,10 @@
         <div class="col-md-12">
             <ul class="breadcrumb">
                 <li>
-                    <a href="/">Главная</a>
+                    <a href="{{route('tournament.all')}}">Tурнир</a>
                 </li>
                 <li>
-                    @if($replay->user_replay == 1)
-                        <a href="{{route('replay.users')}}">/ Реплеи пользователей</a>
-                    @else
-                        <a href="{{route('replay.gosus')}}">/ Госу реплеи</a>
-                    @endif
-                </li>
-                <li>
-                    <a href="" class="active">/ {{$replay->title}}</a>
+                    <a href="" class="active">/ {{$tourney->name}}</a>
                 </li>
             </ul>
         </div>
@@ -36,173 +29,208 @@
 
     <div class="content-box">
         <div class="col-md-12 section-title ">
-           
-            <div>{{$replay->title}}</div>
-
-            <div class="author-info">
-                <a href="{{route('user_profile',['id' => $replay->user->id])}}">
-                    {{$replay->user->name. ' | '}}
-                </a>
-                <div class="">                   
-                    @if($replay->user->country_id)
-                        <span class="flag-icon flag-icon-{{mb_strtolower($countries[$replay->user->country_id]->code)}}"></span>
-                    @else
-                        <span class="flag-icon"></span>
-                    @endif
-
-                    @if($replay->user->race)
-                        <img class="margin-left-5" src="{{route('home')}}/images/emoticons/smiles/{{\App\Replay::$race_icons[$replay->user->race]}}" alt="">
-                    @else
-                        <img class="margin-left-5" src="{{route('home')}}/images/emoticons/smiles/{{\App\Replay::$race_icons['All']}}" alt="">
-                    @endif
-                    
-                </div>
-                
-                <div>
-                    {{$replay->user->points . ' pts | '}}            
-                    <a href="{{route('user.get_rating', ['id' => $replay->user->id])}}"
-                       class="user-rating">{{$replay->user->rating}} кг</a>
-                </div>
-            </div>
+            <div>{{$tourney->name}}</div>
         </div>
-        <div class="user-replay-wrapper">
-            <div class="col-md-12 user-replay-header">
-                <div class="user-nickname text-bold replay-header-content">
-                    <a href="">{!! $replay->content !!}</a>
-                </div>
-                <div class="info">
-                    <a href="#comments">
-                        <img src="{{route('home')}}/images/icons/message-square-white.png" alt="">
-                        {{($replay->comments_count > 0) ? $replay->comments_count : 0 }}
-                    </a>
-                    <a href="#">
-                        <img src="{{route('home')}}/images/icons/clock-white.png" alt="">
-                        {{\Carbon\Carbon::parse($replay->created_at)->format('H:i d.m.Y')}}
-                    </a>
-                </div>
-            </div>
+        <div class="user-tournament-wrapper">
             <div class="replay-content">
                 <div class="col-md-8">
                     <div>
-                        <div class="replay-desc-right">Страны:</div>
+                        <div class="replay-desc-right">Administrator:</div>
                         <div class="replay-desc-left">
-                            @if($replay->first_country_id)
-                                <span class="flag-icon flag-icon-{{mb_strtolower($countries[$replay->first_country_id]->code)}}"></span>
-                            @else
-                                <span>NO</span>
-                            @endif
-                            VS
-                            @if($replay->second_country_id)
-                                <span class="flag-icon flag-icon-{{mb_strtolower($countries[$replay->second_country_id]->code)}}"></span>
-                            @else
-                                <span>NO</span>
+                            @if(!empty($tourney->admin_user))
+                                <div class="replay-author">
+                                    @if($tourney->admin_user->avatar)
+                                        <a href="{{route('user_profile',['id' => $tourney->admin_user->id])}}">
+                                            <img src="{{$tourney->admin_user->avatar->link}}" class="user-avatar"
+                                                 alt="">
+                                        </a>
+                                    @else
+                                        <a href="{{route('user_profile',['id' => $tourney->admin_user->id])}}"
+                                           class="logged-user-avatar no-header">A</a>
+                                    @endif
+                                    <div>
+                                        <a href="{{route('user_profile',['id' => $tourney->admin_user->id])}}">{{$tourney->admin_user->name}}</a>
+                                    </div>
+                                </div>
                             @endif
                         </div>
                     </div>
                     <div>
-                        <div class="replay-desc-right">Матчап:</div>
-                        <div class="replay-desc-left">{{$replay->first_race}} vs {{$replay->second_race}}</div>
+                        <div class="replay-desc-right">Place:</div>
+                        <div class="replay-desc-left">{{$tourney->place}}</div>
                     </div>
                     <div>
-                        <div class="replay-desc-right">Локации:</div>
+                        <div class="replay-desc-right">Registration time:</div>
                         <div class="replay-desc-left">
-                            <span>
-                                @if($replay->first_location && $replay->first_location != 0)
-                                    {{$replay->first_location}}
-                                @else
-                                    no
-                                @endif
-                            </span>
-                            vs
-                            <span>
-                                @if($replay->second_location && $replay->second_location != 0)
-                                    {{$replay->second_location}}
-                                @else
-                                    no
-                                @endif
-                            </span>
+                            {{\Carbon\Carbon::parse($tourney->created_at)->format('H:i d.m.Y')}}
                         </div>
                     </div>
-                   
+
                     <div>
-                        <div class="replay-desc-right">Рейтинг:</div>
-                        <div class="replay-desc-left">{{$replay->rating??'0'}}</div>
+                        <div class="replay-desc-right">Check-in time:</div>
+                        <div class="replay-desc-left">
+                            {{\Carbon\Carbon::parse($tourney->checkin_time)->format('H:i d.m.Y')}}
+                        </div>
                     </div>
-                  
-                    <div class="replay-action-wrapper">
-                        @if(Auth::id() == $replay->user->id || $general_helper->isAdmin() || $general_helper->isModerator())
-                            <a href="{{route('replay.edit', ['id' => $replay->id])}}" class="user-theme-edit">
-                                <img src="{{route('home')}}/images/icons/svg/edit_icon.svg" alt="">
-                                <span>Редактировать</span>
-                            </a>
-                        @endif
-                        @if(!\App\Replay::isApproved($replay->approved))
-                            <div class="error margin-left-40 text-bold margin-top-10">
-                                Не подтвержден
-                            </div>
-                        @endif
+                    <div>
+                        <div class="replay-desc-right">Start of Tourney time:</div>
+                        <div class="replay-desc-left">
+                            {{\Carbon\Carbon::parse($tourney->start_time)->format('H:i d.m.Y')}}
+                        </div>
                     </div>
+                    <div>
+                        <div class="replay-desc-right">Prize Fond:</div>
+                        <div class="replay-desc-left">
+
+                        </div>
+                    </div>
+                    <div>
+                        <div class="replay-desc-right">Status of tourney:</div>
+                        <div class="replay-desc-left">
+                            {{\App\TourneyList::$status[$tourney->status]}}
+                        </div>
+                    </div>
+                    <div>
+                        <div class="replay-desc-right">Selection map:</div>
+                        <div class="replay-desc-left">
+                            {{\App\TourneyList::$map_types[$tourney->map_selecttype]}}
+                        </div>
+                    </div>
+                    <div>
+                        <div class="replay-desc-right">Importance tourney:</div>
+                        <div class="replay-desc-left">
+                            {{$tourney->importance}}
+                        </div>
+                    </div>
+
+                    {{--                    <div class="replay-action-wrapper">--}}
+                    {{--                        @if(Auth::id() == $replay->user->id || $general_helper->isAdmin() || $general_helper->isModerator())--}}
+                    {{--                            <a href="{{route('replay.edit', ['id' => $replay->id])}}" class="user-theme-edit">--}}
+                    {{--                                <img src="{{route('home')}}/images/icons/svg/edit_icon.svg" alt="">--}}
+                    {{--                                <span>Редактировать</span>--}}
+                    {{--                            </a>--}}
+                    {{--                        @endif--}}
+                    {{--                        @if(!\App\Replay::isApproved($replay->approved))--}}
+                    {{--                            <div class="error margin-left-40 text-bold margin-top-10">--}}
+                    {{--                                Не подтвержден--}}
+                    {{--                            </div>--}}
+                    {{--                        @endif--}}
+                    {{--                    </div>--}}
                 </div>
-                <div class="col-md-4 position-relative">
-                    <div class="border-0">{{$replay->map->name??'не указано'}}</div>
-                    @if(isset($replay->map->url))
-                        <div class="replay-map-wrapper">
-                            <img src="{{route('home')}}/{{$replay->map->url}}" class="replay-map"
-                                 alt="{{$replay->map->name??'не указано'}}">
-                        </div>
-                    @else
-                        <div class="replay-map-empty">
-                            Не указано
-                        </div>
+                <div class="col-md-4">
+                    @if($tourney->logo_link)
+                        <div><img src='{{$tourney->logo_link}}'></div>
                     @endif
-                    <div class="replay-rating">    
-                        @php 
-                        $modal = (!Auth::guest() && $replay->user->id == Auth::user()->id) ?'#no-rating':'#vote-modal';
-                        @endphp                   
-                        <a href="{{ $modal }}" class="positive-vote vote-replay-up" data-toggle="modal"
-                           data-rating="1" data-route="{{route('replay.set_rating',['id'=>$replay->id])}}">
-                            <img src="{{route('home')}}/images/icons/thumbs-up.png" alt="">
-                            <span id="positive-vote">{{$replay->positive_count}}</span>
-                        </a>
-                        <a href="{{ $modal }}" class="negative-vote vote-replay-down" data-toggle="modal"
-                           data-rating="-1" data-route="{{route('replay.set_rating',['id'=>$replay->id])}}">
-                            <img src="{{route('home')}}/images/icons/thumbs-down.png" alt="">
-                            <span id="negative-vote">{{$replay->negative_count}}</span>
-                        </a>
-                    </div>
-                    <div class="replay-download">
-                        @if(!is_null($replay->file_id))
-                            <img src="{{route('home')}}/images/icons/download-blue.png" alt="">
-                            <a href="{{route('replay.download', ['id' => $replay->id])}}" class="">Скачать</a>
-                            <span>({{$replay->downloaded??0}})</span>
-                        @else
-                            <span>VOD</span>
-                        @endif
-                    </div>
                 </div>
             </div>
-        </div><!-- close div /.user-replay-wrapper -->
-    </div><!-- close div /.content-box -->
-    @if($replay->video_iframe)
-    <div class="content-box">
-        <div class="col-md-12 video-link-wrapper">
-          {!! $replay->video_iframe !!}
         </div>
-    </div>
-    @endif
 
-    <!--Comments-->
-    @include('comments.comments',['object' => 'replay', 'id' => $replay->id, 'comments_pagination_route' => 'replay.comment.pagination'])
-    <!--END Comments-->
+        <div class="user-tournament-wrapper">
+            <!--Tourney Players -->
+            <div class="row tourney_matches">
+                <div class="col-md-5">
+                    <div class="widget-header">Players </div>
+                    @foreach($players as $key => $player)
+                        <div class="tourney_ranking">
+                            <div class="tourney-desc-right num">{{ $key + 1 }}</div>
+                            <div class="tourney-desc-left user">
+                                <a href="{{route('user_profile',['id' => $player->user->id])}}">
+                                    @if($player->user->country_id)
+                                        <span
+                                            class="flag-icon flag-icon-{{mb_strtolower($countries[$player->user->country_id]->code)}}"></span>
+                                    @else
+                                        <span class="flag-icon"></span>
+                                    @endif
+                                    @if($player->user->race)
+                                        <img  src="{{route('home')}}/images/emoticons/smiles/{{\App\Replay::$race_icons[$player->user->race]}}"
+                                             alt="">
+                                    @else
+                                        <img  src="{{route('home')}}/images/emoticons/smiles/{{\App\Replay::$race_icons['All']}}"
+                                             alt="">
+                                    @endif
+                                    <span class="overflow-hidden">{{$player->user->name}}</span>
+                                </a>
+                            </div>
+                            <div class="tourney-desc-left checkin">{{ ($player->check_in == 1)?'YES':'NO' }}</div>
+                            <div class="tourney-desc-left result">{{$player->place_result}}</div>
+                        </div>
+                    @endforeach
+                </div>
 
-    <!--ADD Comment-->
-    @include('comments.comment-add', [
-        'route' => route('replay.comment.store'),
-        'relation' => \App\Comment::RELATION_REPLAY,
-        'comment_type' => 'replay_id',
-        'object_id' => $replay->id
-    ])
-    <!--END ADD Comment-->
+                <!-- Tourney matches -->
+                <div class="col-md-7">
+                    @php $n = 0; @endphp
+                    @foreach($matches['rounds'] as $key => $round)
+                        <div class="widget-header">{{ $round }}</div>
+                        @foreach($matches['matches'][$key] as $match)
+                            <div class="tourney_match">
+                                <div class="tourney-desc-right num">{{ $n + 1 }}</div>
+                                <div class="tourney-desc-left user align-right">
+                                    @if(!empty($match->player1->user))
+                                        @if($match->player1->user->race)
+                                            <img  src="{{route('home')}}/images/emoticons/smiles/{{\App\Replay::$race_icons[$player->user->race]}}"
+                                                 alt="">
+                                        @else
+                                            <img  src="{{route('home')}}/images/emoticons/smiles/{{\App\Replay::$race_icons['All']}}"
+                                                 alt="">
+                                        @endif
+                                        {{ $match->player1->user->name }}
+                                    @else
+                                        - Freeslot -
+                                    @endif
+                                </div>
+                                <div class="tourney-desc-right score">{{ $match->player1_score }}</div>
+                                <div class="tourney-desc-right score">{{ $match->player1_score > $match->player2_score ? '>':'<' }}</div>
+                                <div class="tourney-desc-right score">{{ $match->player2_score  }}</div>
+                                <div class="tourney-desc-right user align-left">
+                                    @if(!empty($match->player2->user))
+                                        @if($match->player2->user->race)
+                                            <img  src="{{route('home')}}/images/emoticons/smiles/{{\App\Replay::$race_icons[$player->user->race]}}"
+                                                 alt="">
+                                        @else
+                                            <img  src="{{route('home')}}/images/emoticons/smiles/{{\App\Replay::$race_icons['All']}}"
+                                                 alt="">
+                                        @endif
+                                        {{ $match->player2->user->name }}
+                                    @else
+                                        - Freeslot -
+                                    @endif
+                                </div>
+                                <div class="tourney-desc-left reps">
+                                    @if(!empty($match->file1))
+                                        <span><a href="{{route('tourney.download', ['id' => $match->file1->id])}}">rep1</a></span>
+                                    @endif
+                                    @if(!empty($match->file2))
+                                        <span><a href="{{route('tourney.download', ['id' => $match->file2->id])}}">rep2</a></span>
+                                    @endif
+                                    @if(!empty($match->file3))
+                                        <span><a href="{{route('tourney.download', ['id' => $match->file3->id])}}">rep3</a></span>
+                                    @endif
+                                    @if(!empty($match->file4))
+                                        <span><a href="{{route('tourney.download', ['id' => $match->file4->id])}}">rep4</a></span>
+                                    @endif
+                                    @if(!empty($match->file5))
+                                        <span><a href="{{route('tourney.download', ['id' => $match->file5->id])}}">rep5</a></span>
+                                    @endif
+                                    @if(!empty($match->file6))
+                                        <span><a href="{{route('tourney.download', ['id' => $match->file6->id])}}">rep6</a></span>
+                                    @endif
+                                    @if(!empty($match->file7))
+                                        <span><a href="{{route('tourney.download', ['link' => $match->file7->link])}}">rep7</a></span>
+                                    @endif
+                                </div>
+                            </div>
+                            @php $n++; @endphp
+                        @endforeach
+
+                    @endforeach
+                </div>
+            </div>
+        </div>
+
+
+    </div><!-- close div /.content-box -->
+
 @endsection
 
 @section('sidebar-right')
