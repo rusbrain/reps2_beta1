@@ -5,6 +5,7 @@ namespace App;
 use App\Traits\ModelRelations\TourneyMatchRelation;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use App\TourneyList;
 
 class TourneyMatch extends Model
 {
@@ -14,7 +15,7 @@ class TourneyMatch extends Model
      *
      * @var string
      */
-    protected $table='tourney_matches';
+    protected $table = 'tourney_matches';
 
     /**
      * The attributes that are mass assignable.
@@ -51,4 +52,24 @@ class TourneyMatch extends Model
      * @var bool
      */
     public $timestamps = true;
+
+    /**
+     * @param $tourney_id
+     * @param $round_id
+     * @return map_link
+     */
+    public static function getTourneyRoundMap($tourney_id, $round_id)
+    {
+
+        $tourney = TourneyList::where('id', $tourney_id)->first();
+        $mapArray = explode(",", $tourney->maps);
+        $mapsCount = count($mapArray);
+        $mapIndex =  $round_id % $mapsCount;
+        $tourneyMap = ReplayMap::where('id', $mapArray[$mapIndex])->first();
+        if ($tourneyMap) {
+            return '<a href="'.$tourneyMap->url.'" target="_blank">'.$tourneyMap->name.'</a>';
+        }
+        return '';
+
+    }
 }

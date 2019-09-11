@@ -168,7 +168,7 @@
                 <div class="col-md-7">
                     @php $n = 0; @endphp
                     @foreach($matches['rounds'] as $key => $round)
-                        <div class="widget-header">{{ $round }}</div>
+                        <div class="widget-header">{{ $round }}   {!! App\TourneyMatch::getTourneyRoundMap($tourney->id, $key) !!}</div>
                         @foreach($matches['matches'][$key] as $match)
                             <div class="tourney_match">
                                 <div class="tourney-desc-right num">{{ $n + 1 }}</div>

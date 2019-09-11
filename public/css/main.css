@@ -2592,7 +2592,7 @@ form label {
 
 /*----------------------------------------*/
 /*--------- END SINGLE ARTICLES PAGE CONTENT ----------- */
-/*---------------------------------------*/
+/*---------------------------------------*/widget-header
 
 /*----------------------------------------*/
 /*--------- USER REPLAY PAGE ----------- */
@@ -2832,6 +2832,15 @@ div.author-info {
 }
 .tourney_matches .widget-header{
     padding-left: 15px;
+}
+.tourney_matches .widget-header a {
+    color: #c3c3c3;
+    font-size: 12px;
+    margin-left: 5px;
+}
+.tourney_matches .widget-header a:hover {
+    text-decoration: underline;
+    color: #ffffff;
 }
 .align-left{
     text-align: left !important;

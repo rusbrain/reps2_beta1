@@ -52,8 +52,7 @@ class TournamentController extends Controller
     /**
      * @return mixed
      */
-    public
-    function index()
+    public function index()
     {
         return view('tourney.list')->with('request', '');
     }
@@ -61,8 +60,7 @@ class TournamentController extends Controller
     /**
      *
      */
-    public
-    function paginate()
+    public function paginate()
     {
         $tournaments = TourneyService::getTournaments();
         return [
