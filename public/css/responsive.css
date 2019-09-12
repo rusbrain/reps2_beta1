@@ -112,6 +112,9 @@
         left: -300px;
         z-index: 100000000000;
     }
+    .tourney_matches .col-md-7 {
+        padding-left: 15px;
+    }
 }
 /* Small Devices, Tablets */
 @media only screen and (max-width: 767px) {

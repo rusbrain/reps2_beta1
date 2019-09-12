@@ -100,7 +100,6 @@
                         <div class="replay-desc-right">Importance tourney:</div>
                         <div class="replay-desc-left">
                             {!! \App\TourneyList::ImpToStars($tourney->id) !!}
-                            {{--                            {{$tourney->importance}}--}}
                         </div>
                     </div>
                 </div>
@@ -135,7 +134,7 @@
                 <div class="col-md-5">
                     <div class="widget-header">Players</div>
                     @foreach($players as $key => $player)
-                        <div class="tourney_ranking">
+                        <div class="tourney_ranking {{($player->check_in == 1)?'played':'noplayed'}}">
                             <div class="tourney-desc-right num">{{ $key + 1 }}</div>
                             <div class="tourney-desc-left user">
                                 <a href="{{route('user_profile',['id' => $player->user->id])}}">
@@ -157,7 +156,6 @@
                                     <span class="overflow-hidden">{{$player->user->name}}</span>
                                 </a>
                             </div>
-                            <div class="tourney-desc-left checkin">{{ ($player->check_in == 1)?'YES':'NO' }}</div>
                             <div class="tourney-desc-left result">
                                 @if (in_array($player->place_result, [1,2,3]))
                                     <img src="/images/icons/medal-{{$player->place_result}}.png">

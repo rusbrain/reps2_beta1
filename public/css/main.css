@@ -2772,6 +2772,14 @@ div.author-info {
 .user-tournament-wrapper .link a {
     padding: 5px 5px ;
 }
+
+.tourney_matches .col-md-7 {
+    padding-left: 0;
+}
+.tourney_ranking.played{
+    background: #fffef4;
+}
+
 .tourney_ranking .tourney-desc-right,
 .tourney_match .tourney-desc-right {
     padding-bottom: 5px;
@@ -2806,14 +2814,9 @@ div.author-info {
     color: var(--gray-dark);
     font-size: 14px;
  }
-.tourney_ranking .checkin {
-    width:15%;
-    text-align: center;
-    padding-left: 0;
-    text-transform: lowercase;
-}
+
 .tourney_ranking .user {
-    width: 60%;
+    width: 70%;
 }
 
 .tourney_match .num {
@@ -2828,10 +2831,10 @@ div.author-info {
     font-weight: bold;
 }
 .tourney_match .reps {
-    width: 30%;
+    width: 20%;
 }
 .tourney_match .user {
-    width: 25%;
+    width: 30%;
     word-break: break-all;
 }
 
