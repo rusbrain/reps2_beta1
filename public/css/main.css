@@ -2800,12 +2800,17 @@ div.author-info {
 }
 .tourney_ranking .num,
 .tourney_ranking .result{
-     width: 10%;
+    width: 15%;
+    padding: 5px 2px;
+    text-align: center;
+    color: var(--gray-dark);
+    font-size: 14px;
  }
 .tourney_ranking .checkin {
     width:15%;
     text-align: center;
     padding-left: 0;
+    text-transform: lowercase;
 }
 .tourney_ranking .user {
     width: 60%;
@@ -2813,6 +2818,9 @@ div.author-info {
 
 .tourney_match .num {
     width: 8%;
+    text-align: center;
+    color: var(--gray-dark);
+    font-size: 14px;
 }
 .tourney_match .score {
     width: 4%;
@@ -2849,6 +2857,47 @@ div.author-info {
     text-align: right !important;
 }
 
+.modal.prizemap h6{
+    color: #0b58a2;
+}
+
+.modal.prizemap .widget-header {
+    padding-left: 15px;
+}
+
+.modal.prizemap .tourney-match{
+    display: flex;
+}
+
+.modal.prizemap .tourney-match .tourney-desc-right{
+    width: 30%;
+    text-align: center;
+    line-height: 30px;
+    ont-size: 14px;
+    color: #0a0a0a;
+}
+
+.modal.prizemap .tourney-match .tourney-desc-left{
+    width: 70%;
+    text-align: center;
+    line-height: 30px;
+    font-size: 14px;
+    color: #0a0a0a;
+}
+.modal.prizemap .tourney-maps{
+    justify-content: space-between;
+}
+
+.modal.prizemap .tourney-map {
+    display: inline-block;
+    margin: 5px 0;
+}
+
+.modal.prizemap .tourney-map .map img {
+    width: 164px;
+    height: 150px;
+    border: solid 1px gray;
+}
 
 
 /*----------------------------------------*/

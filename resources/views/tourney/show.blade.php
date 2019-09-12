@@ -99,7 +99,8 @@
                     <div>
                         <div class="replay-desc-right">Importance tourney:</div>
                         <div class="replay-desc-left">
-                            {{$tourney->importance}}
+                            {!! \App\TourneyList::ImpToStars($tourney->id) !!}
+                            {{--                            {{$tourney->importance}}--}}
                         </div>
                     </div>
                 </div>
@@ -114,8 +115,8 @@
                         @if($tourney->vod_link)
                             <a href='{{$tourney->vod_link}}' target="_blank">Vod</a>
                         @endif
+                        <a href=" " data-toggle="modal" data-target="#prizemap">Maps/Prize</a>
                     </div>
-
                     <div class="replay-download">
                         <img src="/images/icons/download-blue.png" alt="">
                         <a href="" class="">Full Replay</a>
@@ -124,8 +125,6 @@
                         <img src="/images/icons/download-blue.png" alt="">
                         <a href="" class="">Winner's Pack</a>
                     </div>
-
-
                 </div>
             </div>
         </div>
@@ -159,7 +158,13 @@
                                 </a>
                             </div>
                             <div class="tourney-desc-left checkin">{{ ($player->check_in == 1)?'YES':'NO' }}</div>
-                            <div class="tourney-desc-left result">{{$player->place_result}}</div>
+                            <div class="tourney-desc-left result">
+                                @if (in_array($player->place_result, [1,2,3]))
+                                    <img src="/images/icons/medal-{{$player->place_result}}.png">
+                                @else
+                                    {{$player->place_result}}
+                                @endif
+                            </div>
                         </div>
                     @endforeach
                 </div>
@@ -168,7 +173,8 @@
                 <div class="col-md-7">
                     @php $n = 0; @endphp
                     @foreach($matches['rounds'] as $key => $round)
-                        <div class="widget-header">{{ $round }}   {!! App\TourneyMatch::getTourneyRoundMap($tourney->id, $key) !!}</div>
+                        <div
+                            class="widget-header">{{ $round }}   {!! App\TourneyMatch::getTourneyRoundMap($tourney->id, $key) !!}</div>
                         @foreach($matches['matches'][$key] as $match)
                             <div class="tourney_match">
                                 <div class="tourney-desc-right num">{{ $n + 1 }}</div>
@@ -249,6 +255,58 @@
 
     </div><!-- close div /.content-box -->
 
+    <div class="modal fade bd-example-modal-lg prizemap" id="prizemap" tabindex="-1" role="dialog"
+         aria-labelledby="prizemap"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title" id="title">Prize/Maps({{$tourney->name}})</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="widget-header">Prizes</div>
+                            @foreach($prize as $key => $item)
+                                <div class="tourney-match">
+                                    <div class="tourney-desc-right">
+                                        @if (in_array($key + 1, [1,2,3]))
+                                            <img src="/images/icons/medal-{{$key + 1}}.png">
+                                        @else
+                                            {{$key + 1}}
+                                        @endif
+                                    </div>
+                                    <div class="tourney-desc-left">
+                                        {{$item}}
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                        <div class="col-md-8">
+                            <div class="widget-header">Maps</div>
+                            <div class="tourney-maps">
+                                @foreach($maps as $item)
+                                    <div class="tourney-map">
+                                        <div class="widget-title">
+                                            {{$item->name}}
+                                        </div>
+                                        <div class="map">
+                                            <img src="{{$item->url}}"
+                                                 onerror="this.onerror=null;this.src='/images/nominimap.png';">
+                                        </div>
+                                    </div>
+
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('sidebar-right')

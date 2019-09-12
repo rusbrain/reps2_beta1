@@ -17,9 +17,13 @@ class TournamentController extends Controller
     public function show($tournament_id)
     {
         $tourney = TourneyList::where('id', $tournament_id)->with('admin_user')->first();
-        $tourney_players = TourneyService::getTourneyPlayers($tournament_id);
-        $tourney_matches = TourneyService::getTourneyMatches($tournament_id);
-        return view('tourney.show')->with(['tourney' => $tourney, 'players' => $tourney_players, 'matches' => $tourney_matches]);
+        return view('tourney.show')->with([
+            'tourney' => $tourney,
+            'players' => TourneyService::getTourneyPlayers($tournament_id),
+            'matches' => TourneyService::getTourneyMatches($tournament_id),
+            'prize'=>TourneyService::getPrize($tournament_id),
+            'maps'=>TourneyService::getMaps($tournament_id)
+        ]);
     }
 
     /**

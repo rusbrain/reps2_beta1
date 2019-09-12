@@ -71,4 +71,9 @@ class TourneyList extends Model
     {
         return TourneyService::getPrizePool($value);
     }
+
+    public static function ImpToStars($id)
+    {
+        return TourneyService::ImpToStars($id);
+    }
 }
