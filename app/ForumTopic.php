@@ -83,7 +83,8 @@ class ForumTopic extends Model implements CommentContainerInterface, LikeContain
         'comments_count',
         'approved',
         'commented_at',
-        'upgraded_date'
+        'upgraded_date',
+        'is_parsed'
     ];
 
     /**
@@ -364,7 +365,7 @@ class ForumTopic extends Model implements CommentContainerInterface, LikeContain
                 $q->where('is_active', 1)->where('is_general', 1);
             })->orderBy('created_at', 'desc');
     }
-    
+
     /**
      * @return mixed
      */
@@ -374,7 +375,7 @@ class ForumTopic extends Model implements CommentContainerInterface, LikeContain
             $q->whereNull('start_on')
                 ->orWhere('start_on', '<=', Carbon::now()->format('Y-m-d'));
         })
-      
+
         ->whereHas('section', function ($q) {
             $q->where('is_active', 1);
         })->orderBy('created_at', 'desc');

@@ -250,7 +250,7 @@ $game_versions = $general_helper->getGameVersion();
                         <label for="video_iframe">Вставить HTML код с Youtube с видео реплеем</label>
                         <textarea name="video_iframe"
                                   class="form-control {{ $errors->has('video_iframe') ? ' is-invalid' : '' }}"
-                                  id="video_iframe" rows="16">{!! old('video_iframe')??$general_helper->removeExtraTag($replay->video_iframe) !!}</textarea>
+                                  id="video_iframe" rows="16">{!! old('video_iframe')??$replay->video_iframe !!}</textarea>
                         @if ($errors->has('video_iframe'))
                             <span class="invalid-feedback">
                                 <strong>{{ $errors->first('video_iframe') }}</strong>
@@ -290,7 +290,7 @@ $game_versions = $general_helper->getGameVersion();
                         <label for="content">Короткое описание:</label>
                         <textarea name="content" id="content"
                                   class="form-control {{ $errors->has('content') ? ' is-invalid' : '' }}"
-                                  rows="10">{{ old('content') ?? $general_helper->removeExtraTag($replay->content) }}</textarea>
+                                  rows="10">{{ old('content') ?? $replay->content }}</textarea>
                         @if ($errors->has('content'))
                             <span class="invalid-feedback">
                                 <strong>{{ $errors->first('content') }}</strong>

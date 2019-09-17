@@ -459,6 +459,12 @@ class GeneralViewHelper
         return $text;
     }
 
+    public function lowerTagconvert($text) {
+        return preg_replace_callback("/(<\/?[^!][^>]+)/", function($matches){
+            return strtolower($matches[1]);
+        }, $text);
+    }
+
     public function getFontsize($size) {
         switch($size) {
             case 1:
@@ -507,16 +513,6 @@ class GeneralViewHelper
         elseif($invert == FALSE) {
             return preg_replace('@<(\w+)\b.*?>.*?</\1>@si', '', $text);
         }
-        return $text;
-    }
-
-    /**
-     *  remove <!-- -->
-     */
-    public function removeExtraTag($text) {
-
-        $text =   preg_replace("/<!--.*?-->/mss", "", $text);
-        $text =  str_replace('&nbsp;', ' ', $text);
         return $text;
     }
 

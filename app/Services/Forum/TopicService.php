@@ -61,6 +61,7 @@ class TopicService
         }
 
         $topic_data['approved']   = 1;
+        $topic_data['is_parsed']   = 1;
         $topic_data['upgraded_date'] = Carbon::now()->format('Y-m-d H:i:s');
         /**@var ForumTopic $topic */
         $topic = ForumTopic::create($topic_data);
@@ -132,6 +133,7 @@ class TopicService
         $user = User::getUserProfile(Auth::id());
         $topic_data['updated_by_user'] = $user->name;
         $topic_data['upgraded_date'] = Carbon::now()->format('Y-m-d H:i:s');
+        $topic_data['is_parsed'] = 1;
         ForumTopic::where('id', $topic->id)->update($topic_data);
     }
 

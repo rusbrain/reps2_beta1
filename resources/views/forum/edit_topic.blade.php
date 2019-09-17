@@ -2,6 +2,7 @@
 @inject('general_helper', 'App\Services\GeneralViewHelper')
 <?php
 $extraSmiles = $general_helper->getextraSmiles();
+//dd($topic->content);
 ?>
 
 @section('css')
@@ -102,7 +103,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                         <label for="preview_content">* Сокращенное содержание:</label>
                         <textarea name="preview_content" id="preview_content"
                                   class="form-control {{ $errors->has('preview_content') ? ' is-invalid' : '' }}"
-                                  rows="15">{{ old('preview_content')??$general_helper->removeExtraTag($topic->preview_content) }}</textarea>
+                                  rows="15">{{ old('preview_content')??$topic->preview_content }}</textarea>
                         @if ($errors->has('preview_content'))
                             <span class="invalid-feedback">
                                 <strong>{{ $errors->first('preview_content') }}</strong>
@@ -114,7 +115,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                         <label for="content">* Содержание:</label>
                         <textarea name="content" id="content"
                                   class="form-control {{ $errors->has('content') ? ' is-invalid' : '' }}"
-                                  rows="15">{{ old('content')??$general_helper->removeExtraTag($topic->content) }}</textarea>
+                                  rows="15">{{ old('content')??$topic->content }}</textarea>
                         @if ($errors->has('content'))
                             <span class="invalid-feedback">
                                 <strong>{{ $errors->first('content') }}</strong>
@@ -177,16 +178,16 @@ $extraSmiles = $general_helper->getextraSmiles();
             /**
              * Convert Html to Bbcode
              */
-            var div = $("#preview");
-            div.html($('#preview_content').val());
-            output = bbencode(div);
-            $('#preview_content').val(output);
-            div.html('');
-
-            div.html($('#content').val());
-            output = bbencode(div);
-            $('#content').val(output);
-            div.html('');
+            // var div = $("#preview");
+            // div.html($('#preview_content').val());
+            // output = bbencode(div);
+            // $('#preview_content').val(output);
+            // div.html('');
+            //
+            // div.html($('#content').val());
+            // output = bbencode(div);
+            // $('#content').val(output);
+            // div.html('');
 
             /**custom commands for HTML text editor*/
             addCountries();
@@ -211,7 +212,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                     toolbar: 'bold,italic,underline|' +
                     'left,center,right,justify|' +
                     'font,size,color,removeformat|' +
-                    'quote,code|' +
+                    'source,quote,code|' +
                     'image,link,unlink|' +
                     'emoticon|' +
                     'date,time|' +

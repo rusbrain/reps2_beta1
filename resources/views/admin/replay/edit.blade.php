@@ -363,7 +363,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                                                     id="content"
                                                     name="content"
                                                     rows="10"
-                                                    cols="80">{!! old('content')??$general_helper->removeExtraTag($replay->content) !!}</textarea>
+                                                    cols="80">{!! old('content')??$replay->content !!}</textarea>
                                     </div>
                                     @if ($errors->has('content'))
                                         <span class="invalid-feedback text-red" role="alert">

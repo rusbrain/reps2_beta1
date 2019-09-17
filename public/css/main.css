@@ -3255,6 +3255,10 @@ div.author-info {
     width: 100% !important;
 }
 
+.sceditor-container img {
+    max-width: 100%;
+}
+
 .sceditor-emoticons img, .sceditor-more-emoticons img {
     width: 15px !important;
     height: 15px;

@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         'App\Console\Commands\StreamCheck',
         'App\Console\Commands\ChatClean',
+        'App\Console\Commands\HTMLToBbcode'
     ];
 
     /**
@@ -31,6 +32,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('streamActiveCheck:start')->everyMinute();//->appendOutputTo(storage_path('logs/test.log'))
         $schedule->command('ChatMessageClean:start')->daily()->at('23:00');
         $schedule->command('replays:clean_files')->daily()->at('01:00');
+        $schedule->command('convertHtmlToBbcode')->daily()->at('01:00');
 
     }
 

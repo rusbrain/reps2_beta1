@@ -267,7 +267,7 @@ function addUpload() {
             var content = document.createElement("DIV");
             var div = '<label class="prev_imgs">All Images</label>'+
                       '<form id="upload_form"><label for="upload">Upload</label> ' +
-                      '<input type="file" id="upload" dir="ltr"  /></div>' +
+                      '<input type="file" id="upload" dir="ltr" style="max-width: 100%;" /></div>' +
                       '<div><input type="button" class="button" value="Upload" />' +
                       '</form>';
             $(content).append(div);

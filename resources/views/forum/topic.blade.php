@@ -5,7 +5,6 @@
     @include('sidebar-widgets.all-forum-sections')
     <!-- END All Forum Topics -->
 @endsection
-
 @section('content')
     <!-- Breadcrumbs -->
     <div class="row">

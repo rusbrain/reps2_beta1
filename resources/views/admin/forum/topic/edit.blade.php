@@ -86,7 +86,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                                             </div> <!-- /.box-header -->
                                             <div class="box-body pad">
                                                 <textarea id="preview_content" name="preview_content" rows="8" cols="80">
-                                                    {!! old('preview_content')??$general_helper->removeExtraTag($topic->preview_content) !!}
+                                                    {!! old('preview_content')??topic->preview_content !!}
                                                 </textarea>
                                             </div>
                                             @if ($errors->has('preview_content'))
