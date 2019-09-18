@@ -139,6 +139,7 @@ class ReplayService
         if (UserService::isAdmin() || UserService::isModerator()) {
             $replay_data['approved'] = 1;
         }
+        $replay_data['is_parsed'] = 1;
 
         $replay = Replay::create($replay_data);
 
@@ -263,6 +264,7 @@ class ReplayService
         if ($request->has('length') && $request->get('length') == '') {
             $replay_data['length'] = '00:00:00';
         }
+        $replay_data['is_parsed'] = 1;
 
         Replay::where('id', $replay->id)->update($replay_data);
     }

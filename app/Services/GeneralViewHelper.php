@@ -410,9 +410,21 @@ class GeneralViewHelper
     public function UrlFilter($text)
     {
         if (preg_match_all('#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', $text, $match)) {
+            dd($match);
             return $match[0][0];
         }
         return '';
+    }
+
+    public function encodeUrls($text)
+    {
+        if (preg_match_all('#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', $text, $match)) {
+            $urls = $match[0];
+            foreach ($urls as $url) {
+                $text = str_replace($url, urlencode($url), $text);
+            }
+        }
+        return $text;
     }
 
     /**
@@ -460,9 +472,14 @@ class GeneralViewHelper
     }
 
     public function lowerTagconvert($text) {
-        return preg_replace_callback("/(<\/?[^!][^>]+)/", function($matches){
-            return strtolower($matches[1]);
-        }, $text);
+//        return preg_replace_callback("/(<\/?[^!][^>]+)/", function($matches){
+//            return strtolower($matches[1]);
+//        }, $text);
+
+        $newString = preg_replace_callback("/(<\/?\w+)(.*?>)/", function ($m) {
+            return strtolower($m[1]) . $m[2];
+            }, $text);
+        return $newString;
     }
 
     public function getFontsize($size) {

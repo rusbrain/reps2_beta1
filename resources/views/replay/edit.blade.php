@@ -341,7 +341,6 @@ $game_versions = $general_helper->getGameVersion();
     <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.min.js"></script>
     <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.xhtml.min.js"></script>
     <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.bbcode.min.js"></script>
-    <script src="{{route('home')}}/js/html2bbcode.js"></script>
     <script src="{{route('home')}}/js/sceditor/languages/ru.js"></script>
 
     <!--JS plugin Select2 - autocomplete -->
@@ -357,14 +356,6 @@ $game_versions = $general_helper->getGameVersion();
          * https://www.sceditor.com/
          * */
         $(function () {
-            /**
-             * Convert Html to Bbcode
-             */
-            var div = $("#preview");
-            div.html($('#content').val());
-            output = bbencode(div);
-            $('#content').val(output);
-            div.html('');
 
             if ($('#content').length > 0) {
                 var content = document.getElementById('content');

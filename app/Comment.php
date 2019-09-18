@@ -47,7 +47,8 @@ class Comment extends Model
         'content',
         'relation',
         'negative_count',
-        'positive_count'
+        'positive_count',
+        'is_parsed'
     ];
 
     /**

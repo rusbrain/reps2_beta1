@@ -64,7 +64,7 @@ $races = \App\Replay::$races;
                                     <strong>{{ $errors->first('title') }}</strong>
                                 </span>
                                 @endif
-                            </div>                      
+                            </div>
                         </div><!--close div /.form-fields-box-->
 
                         <div class="form-fields-box">
@@ -106,9 +106,9 @@ $races = \App\Replay::$races;
                                         @endif
                                     </div>
                                 </div>
-                            </div>                      
+                            </div>
                         </div><!--close div /.form-fields-box-->
-                
+
                         <div class="form-group margin-top-30">
                             <label for="stream_url">Вставить HTML код с видео cтрим</label>
                             <textarea name="stream_url"

@@ -18,6 +18,7 @@ class HtmlToBBcodeParserHelper
 
     public function html_bbcode_format($replace)
     {
+        $replace = str_replace("&", "&amp;", $replace);
         $replace = preg_replace("/<!--.*?-->/mss", "", $replace);
         $replace = preg_replace('#<meta(.*?)>#is', '', $replace);
         $replace = preg_replace('#<hr(.*?)>#is', '', $replace);
@@ -25,7 +26,7 @@ class HtmlToBBcodeParserHelper
         $replace = preg_replace('#<style(.*?)>(.*?)</style>#is', '', $replace);
         $replace = preg_replace('#<detalis(.*?)>(.*?)</detalis>#is', '', $replace);
 
-        $replace = preg_replace('/\<details(.*?)>(.*?)<\/details>/i', "[spoiler]$2[/spoiler]", $replace);
+        $replace = preg_replace('#<details(.*?)>(.*?)</details>#is', "[spoiler]$2[/spoiler]", $replace);
         $replace = preg_replace('/\<summary(.*?)\>/i', '', $replace);
         $replace = preg_replace('/\<\/summary(.*?)\>/i', '', $replace);
 
@@ -35,8 +36,8 @@ class HtmlToBBcodeParserHelper
         $replace = preg_replace('/\<\/p\>/i', "\r\n", $replace);
 
         //quote without name
-        $replace = preg_replace('/<code>(.*?)<\/code>/s', '[code]$2[/code]', $replace);
-        $replace = preg_replace('/<blockquote(.*?)>(.*?)<\/blockquote>/s', '[quote]$2[/quote]', $replace);
+        $replace = preg_replace('#<code(.*?)>(.*?)</code>#is', '[code]$2[/code]', $replace);
+        $replace = preg_replace('#<blockquote(.*?)>(.*?)</blockquote>#is', '[quote]$2[/quote]', $replace);
 
         $replace = str_replace("\r\t", "", $replace);
         $replace = str_replace("\t", "", $replace);
@@ -45,11 +46,11 @@ class HtmlToBBcodeParserHelper
         $replace = preg_replace('/\<br \/\>/i', "\r\n", $replace);
 
         $replace = preg_replace_callback('/\<img(.*?)src="(.*?)"(.*?) \/>/i', function ($matches) {
-            return "[img]" . urlencode($matches[2]) . "[/img]";
+            return "[img]" . $matches[2] . "[/img]";
         }, $replace);
 
         $replace = preg_replace_callback('/\<img(.*?)src="(.*?)"(.*?)>/i', function ($matches) {
-            return "[img]" . urlencode($matches[2]) . "[/img]";
+            return "[img]" .$matches[2] . "[/img]";
         }, $replace);
 
         $replace = preg_replace('/\<font size=\"([1-7])\"\>((\s|.)+?)\<\/font>/i', '[size=\\1]\\2[/size]', $replace);
@@ -57,7 +58,7 @@ class HtmlToBBcodeParserHelper
         $replace = preg_replace('/\<font color=\"([a-zA-Z]+)\]((\s|.)+?)\<\/font>/i', '[color=\\1]\\2[/color]', $replace);
 
         $replace = preg_replace_callback('/\<a(.*?)href="(.*?)"(.*?)>(.*?)<\/a>/i', function ($matches) {
-            return "[url=" . urlencode($matches[2]) . "]" . $matches[4] . "[/url]";
+            return "[url=" . $matches[2] . "]" . $matches[4] . "[/url]";
         }, $replace);
 
         $replace = preg_replace('/<ol(.*?)>(.*?)<\/ol>/s', '[list]$2[/list]', $replace);
@@ -108,6 +109,9 @@ class HtmlToBBcodeParserHelper
     {
         $allowed_styles = array('size' => 'font-size', 'color' => 'color', 'font' => 'font-family', 'text-align' => 'text-align');
         $html_string = '<body>' . $text . '</body>';
+
+//        $dom = new \domDocument();
+//        $dom->loadHtml($html_string);
 
         $dom = new \domDocument('1.0', 'UTF-8');
         $dom->preserveWhiteSpace = false;

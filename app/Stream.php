@@ -43,7 +43,7 @@ class Stream extends Model
      *
      * @var array
      */
-    protected $fillable = ['user_id', 'title', 'race','content','country_id','stream_url', 'approved'];
+    protected $fillable = ['user_id', 'title', 'race','content','country_id','stream_url', 'approved', 'is_parsed'];
 
     /**
      * Indicates if the model should be timestamped.
@@ -58,7 +58,7 @@ class Stream extends Model
      */
     public static function getstreamById($id)
     {
-        return Stream::where('id', $id)            
+        return Stream::where('id', $id)
             ->with('user.avatar')->first();
     }
 }
