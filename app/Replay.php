@@ -116,7 +116,8 @@ class Replay extends Model implements CommentContainerInterface, LikeContainerIn
         'second_name',
         'first_apm',
         'second_apm',
-        'start_date'
+        'start_date',
+        'is_parsed'
     ];
 
     /**

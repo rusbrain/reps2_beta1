@@ -40,7 +40,7 @@ class StreamService
         if (UserService::isAdmin() ) {
             $stream_data['approved'] = 1;
         }
-
+        $stream_data['is_parsed'] =1;
         $stream = Stream::create($stream_data);
 
         return $stream->id;
@@ -59,7 +59,7 @@ class StreamService
         if (!$request->has('approved')) {
             $stream_data['approved'] = "0";
         }
-
+        $stream_data['is_parsed'] = 1;
         Stream::where('id', $stream->id)->update($stream_data);
     }
 

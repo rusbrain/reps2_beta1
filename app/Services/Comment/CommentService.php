@@ -26,6 +26,7 @@ class CommentService
         $data['user_id'] = Auth::id();
         $data['relation'] = $relation;
         $data['object_id'] = (int)$object_id;
+        $data['is_parsed'] = 1;
 
         $comment = Comment::create($data);
 
@@ -44,6 +45,7 @@ class CommentService
         $replay_data = $request->validated();
         $replay_data['title'] = $replay_data['title']??null;
         $replay_data['last_editor_id'] = Auth::id();
+        $replay_data['is_parsed'] = 1;
 
         $comment->update($replay_data);
     }
