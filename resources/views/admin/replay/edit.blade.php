@@ -414,7 +414,6 @@ $extraSmiles = $general_helper->getextraSmiles();
     <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.min.js"></script>
     <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.xhtml.min.js"></script>
     <script src="{{route('home')}}/js/sceditor/minified/jquery.sceditor.bbcode.min.js"></script>
-    <script src="{{route('home')}}/js/html2bbcode.js"></script>
     <script src="{{route('home')}}/js/sceditor/languages/ru.js"></script>
 
     <script src="{{route('home')}}/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
@@ -444,15 +443,6 @@ $extraSmiles = $general_helper->getextraSmiles();
          * https://www.sceditor.com/
          * */
         $(function () {
-            /**
-             * Convert Html to Bbcode
-             */
-            var div = $("#preview");
-            div.html($('#content').val());
-            output = bbencode(div);
-            $('#content').val(output);
-            div.html('');
-
             addUpload();
             var extraSmiles = <?php echo json_encode($extraSmiles) ?>;
             if ($('#content').length > 0) {
