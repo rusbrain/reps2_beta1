@@ -86,7 +86,7 @@ $extraSmiles = $general_helper->getextraSmiles();
                                             </div> <!-- /.box-header -->
                                             <div class="box-body pad">
                                                 <textarea id="preview_content" name="preview_content" rows="8" cols="80">
-                                                    {!! old('preview_content')??topic->preview_content !!}
+                                                    {!! old('preview_content')??$topic->preview_content !!}
                                                 </textarea>
                                             </div>
                                             @if ($errors->has('preview_content'))
@@ -192,20 +192,7 @@ $extraSmiles = $general_helper->getextraSmiles();
         });
 
         $(function () {
-            /**
-             * Convert Html to Bbcode
-             */
-            var div = $("#preview");
-            div.html($('#preview_content').val());
-            output = bbencode(div);
-            $('#preview_content').val(output);
-            div.html('');
 
-            div.html($('#content').val());
-            output = bbencode(div);
-            $('#content').val(output);
-            div.html('');
-            //
             addCountries();
             addRaces();
             addUpload();

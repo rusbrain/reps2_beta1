@@ -175,19 +175,6 @@ $extraSmiles = $general_helper->getextraSmiles();
          * https://www.sceditor.com/
          * */
         $(function () {
-            /**
-             * Convert Html to Bbcode
-             */
-            // var div = $("#preview");
-            // div.html($('#preview_content').val());
-            // output = bbencode(div);
-            // $('#preview_content').val(output);
-            // div.html('');
-            //
-            // div.html($('#content').val());
-            // output = bbencode(div);
-            // $('#content').val(output);
-            // div.html('');
 
             /**custom commands for HTML text editor*/
             addCountries();
