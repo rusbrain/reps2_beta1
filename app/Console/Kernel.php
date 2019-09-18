@@ -32,7 +32,10 @@ class Kernel extends ConsoleKernel
         $schedule->command('streamActiveCheck:start')->everyMinute();//->appendOutputTo(storage_path('logs/test.log'))
         $schedule->command('ChatMessageClean:start')->daily()->at('23:00');
         $schedule->command('replays:clean_files')->daily()->at('01:00');
-        $schedule->command('convertHtmlToBbcode')->daily()->at('01:00');
+        $schedule->command('convertHtmlToBbcode forum')->daily()->at('01:00');
+        $schedule->command('convertHtmlToBbcode replay')->daily()->at('01:00');
+        $schedule->command('convertHtmlToBbcode comment')->daily()->at('01:00');
+        $schedule->command('convertHtmlToBbcode stream')->daily()->at('01:00');
 
     }
 

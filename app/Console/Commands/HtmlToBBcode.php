@@ -15,8 +15,7 @@ class HTMLToBbcode extends Command
      *
      * @var string
      */
-    protected $signature = 'convertHtmlToBbcode';
-
+    protected $signature = 'convertHtmlToBbcode {type}';
     /**
      * The console command description.
      *
@@ -41,39 +40,93 @@ class HTMLToBbcode extends Command
     }
 
     /**
+     * Get type Forum, Replay, Comment, Stream, etc
+     * @return array|string|null
+     *
+     */
+    private function get_type()
+    {
+        return $this->argument("type");
+    }
+
+    /**
      * Execute the console command.
      *
      * @return mixed
      */
     public function handle()
     {
+        // Get command type {forum, replay, comment, stream}
+        $type = $this->get_type();
+        switch ($type) {
+            case 'forum':
+                $tablename = 'forum_topics';
+                break;
+            case 'replay':
+                $tablename = 'replays';
+                break;
+            case 'comment':
+                $tablename = 'comments';
+                break;
+            case 'stream':
+                $tablename = 'streams';
+                break;
+            default:
+                dd('no type');
+                break;
+        }
 
-        //Get All forum topics data
-        $topics = DB::table('forum_topics')
+        //Get data by table name and command type
+
+        $data = DB::table($tablename)
             ->where('is_parsed', 0)
-//            ->where('id', 42478)
+//            ->where('id',131)
+            ->limit(50000)
             ->get();
-        $progressBar = $this->output->createProgressBar($topics->count());
+
+        $progressBar = $this->output->createProgressBar($data->count());
         $progressBar->start();
-        $n = 0;
-        foreach ($topics as $forum) {
-            $n++;
-            $content = $this->general_helper->lowerTagconvert($forum->content);
-            $preview_content = $this->general_helper->lowerTagconvert(($forum->preview_content));
+
+        foreach ($data as $item) {
 
             try {
+                $content = $this->general_helper->lowerTagconvert($item->content);
+                $content = $this->general_helper->closeAllTags($content);
+                $content = $this->general_helper->encodeUrls($content);
+//                $content="";
                 $bbcode_content = $this->htmltobbcode_helper->html_bbcode_format($content);
                 $parsed_content = urldecode(html_entity_decode($bbcode_content));
 
-                $bbcode_preview_content = $this->htmltobbcode_helper->html_bbcode_format(($preview_content));
-                $parsed_preview_content = urldecode(html_entity_decode($bbcode_preview_content));
+                if ($type == 'forum') {
+                    $parsed_preview_content = null;
+                    if (!empty($item->preview_content)) {
 
-                DB::table('forum_topics')
-                    ->where('id', $forum->id)
-                    ->update(['content' => $parsed_content, 'preview_content'=>$parsed_preview_content, 'is_parsed' => 1]);
-                // dd(urldecode(html_entity_decode($bbcode)));
+                        $preview_content = $this->general_helper->lowerTagconvert(($item->preview_content));
+                        $preview_content = $this->general_helper->closeAllTags($preview_content);
+                        $preview_content = $this->general_helper->encodeUrls($preview_content);
+                        $bbcode_preview_content = $this->htmltobbcode_helper->html_bbcode_format(($preview_content));
+                        $parsed_preview_content = urldecode(html_entity_decode($bbcode_preview_content));
+                    }
+
+                    $update_array = array(
+                        'content' => $parsed_content,
+                        'preview_content' => $parsed_preview_content,
+                        'is_parsed' => 1
+                    );
+                } else {
+                    $update_array = array(
+                        'content' => $parsed_content,
+                        'is_parsed' => 1
+                    );
+                }
+
+                DB::table($tablename)
+                    ->where('id', $item->id)
+                    ->update($update_array);
+//                 dd($bbcode_content,urldecode(html_entity_decode($parsed_content)));
             } catch (\Exception $e) {
-                Log::error($forum->id);
+                Log::error($tablename . " => " . $item->id);
+//                dd($e->getMessage());
             }
             $progressBar->advance();
         }
