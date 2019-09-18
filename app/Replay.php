@@ -14,11 +14,11 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
 
 /**
- * @property int    $id
- * @property int    $user_id
- * @property int    $user_replay
- * @property int    $downloaded
- * @property int    $file_id
+ * @property integer $id
+ * @property integer $user_id
+ * @property integer $user_replay
+ * @property integer $downloaded
+ * @property integer $file_id
  * @property string $title
  * @property string $content
  * @property Carbon $email_verified_at
@@ -40,8 +40,8 @@ class Replay extends Model implements CommentContainerInterface, LikeContainerIn
         'restored' => ReplayPointsObserver::class,
     ];
 
-    const REPLAY_NOT_APPROVED = 0;
-    const REPLAY_APPROVED = 1;
+    const REPLAY_NOT_APPROVED  = 0;
+    const REPLAY_APPROVED      = 1;
 
     /**
      * @var array
@@ -53,10 +53,10 @@ class Replay extends Model implements CommentContainerInterface, LikeContainerIn
         4 => 'P',
     ];
     public static $races_full = [
-         'All' => 'Random',
-         'Z' => 'Zerg',
-         'T' => 'Terran',
-         'P' => 'Protoss',
+        'All' => 'Random',
+        'Z' => 'Zerg',
+        'T' => 'Terran',
+        'P' => 'Protoss',
     ];
 
     public static $race_icons = [
@@ -72,11 +72,11 @@ class Replay extends Model implements CommentContainerInterface, LikeContainerIn
         3 => '9',
         4 => '10',
         5 => 'Cool',
-        6 => 'Best',
+        6 => 'Best'
     ];
 
     /**
-     * Using table name.
+     * Using table name
      *
      * @var string
      */
@@ -99,7 +99,7 @@ class Replay extends Model implements CommentContainerInterface, LikeContainerIn
         'second_country_id',
         'first_matchup',
         'second_matchup',
-        'rating',
+        'rating',//
         'user_rating',
         'first_race',
         'second_race',
@@ -117,10 +117,7 @@ class Replay extends Model implements CommentContainerInterface, LikeContainerIn
         'first_apm',
         'second_apm',
         'start_date',
-<<<<<<< HEAD
-=======
         'is_parsed'
->>>>>>> 139aa62b7395c645dfc8d0a7c6534255e9f1fa09
     ];
 
     /**
@@ -133,7 +130,7 @@ class Replay extends Model implements CommentContainerInterface, LikeContainerIn
     }
 
     /**
-     * Get query users replay.
+     * Get query users replay
      *
      * @return mixed
      */
@@ -143,7 +140,7 @@ class Replay extends Model implements CommentContainerInterface, LikeContainerIn
     }
 
     /**
-     * Get query for gosu replay.
+     * Get query for gosu replay
      *
      * @return mixed
      */
@@ -154,7 +151,6 @@ class Replay extends Model implements CommentContainerInterface, LikeContainerIn
 
     /**
      * @param ReplaySearchAdminRequest $request
-     *
      * @return mixed
      */
     public static function getReplay(ReplaySearchAdminRequest $request)
@@ -166,7 +162,6 @@ class Replay extends Model implements CommentContainerInterface, LikeContainerIn
 
     /**
      * @param $id
-     *
      * @return mixed
      */
     public static function getreplayById($id)
@@ -178,15 +173,15 @@ class Replay extends Model implements CommentContainerInterface, LikeContainerIn
     }
 
     /**
-     * get last five replays.
+     * get last five replays
      *
      * @param int $limit
-     *
      * @return $this
      */
     public static function getLastReplays($limit = 5)
     {
-        return DB::table((new self())->getTable())
+
+        return DB::table((new self)->getTable())
             ->select(DB::raw("id, created_at, 'replay' AS 'type'"))
             ->where('approved', 1)
             ->orderBy('created_at', 'desc')
@@ -194,10 +189,9 @@ class Replay extends Model implements CommentContainerInterface, LikeContainerIn
     }
 
     /**
-     * Get replays by ids.
+     * Get replays by ids
      *
      * @param array $ids
-     *
      * @return mixed
      */
     public static function getReplayByIds(array $ids)
@@ -206,10 +200,9 @@ class Replay extends Model implements CommentContainerInterface, LikeContainerIn
     }
 
     /**
-     * Get five populates replays.
+     * Get five populates replays
      *
      * @param $limit
-     *
      * @return $this
      */
     public static function getTopReplays($limit)
@@ -217,7 +210,7 @@ class Replay extends Model implements CommentContainerInterface, LikeContainerIn
         return DB::table((new self())->getTable())
             ->select(DB::raw("id, rating, 'replay' AS 'type'"))
             ->where('approved', 1)
-            ->orderBy('rating', 'DESC')
+            ->orderBy('rating','DESC')
             ->limit($limit);
     }
 
@@ -235,4 +228,6 @@ class Replay extends Model implements CommentContainerInterface, LikeContainerIn
     {
         return $this->title;
     }
+
+
 }
