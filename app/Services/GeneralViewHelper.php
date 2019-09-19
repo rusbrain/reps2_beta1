@@ -410,7 +410,6 @@ class GeneralViewHelper
     public function UrlFilter($text)
     {
         if (preg_match_all('#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', $text, $match)) {
-            dd($match);
             return $match[0][0];
         }
         return '';
