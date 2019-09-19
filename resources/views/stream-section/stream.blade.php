@@ -2,8 +2,8 @@
 @inject('general_helper', 'App\Services\GeneralViewHelper')
 @php
     $stream_type = '';
-    $channel = '';dd("DDD",$stream->stream_url);
-    $url = $general_helper->UrlFilter($stream->stream_url);dd($url);
+    $channel = '';
+    $url = $general_helper->UrlFilter($stream->stream_url);
     $parts = $general_helper->parse_stream_url( $url);
     $host = $parts['host'];
     if($host == 'player.twitch.tv') {
