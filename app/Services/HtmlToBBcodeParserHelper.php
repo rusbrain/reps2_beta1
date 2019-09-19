@@ -129,44 +129,49 @@ class HtmlToBBcodeParserHelper
 
     public function clearHtml($tree, $allowed_styles)
     {
-        if ($tree->nodeType != XML_TEXT_NODE) {
-            if ($tree->hasAttribute('style')) {
+        try{
+            if ($tree->nodeType != XML_TEXT_NODE) {
+                if ($tree->hasAttribute('style')) {
 
-                $style = strtolower(trim($tree->getAttribute('style')));
-                preg_match_all('/([a-z\-]+):(.*?);/', $style, $matches);
+                    $style = strtolower(trim($tree->getAttribute('style')));
+                    preg_match_all('/([a-z\-]+):(.*?);/', $style, $matches);
 
-                for ($i = 0; $i < sizeof($matches[0]); $i++) {
-                    $style_property = trim($matches[1][$i]);
-                    $style_value = trim($matches[2][$i]);
-                    if (in_array($style_property, $allowed_styles)) {
-                        $styleKey = array_search($style_property, $allowed_styles);
+                    for ($i = 0; $i < sizeof($matches[0]); $i++) {
+                        $style_property = trim($matches[1][$i]);
+                        $style_value = trim($matches[2][$i]);
+                        if (in_array($style_property, $allowed_styles)) {
+                            $styleKey = array_search($style_property, $allowed_styles);
 
-                        if ($styleKey == 'text-align') {
-                            if ($style_value == 'left') {
-                                $tree->nodeValue = '[left]' . $tree->nodeValue . '[/left]';
-                            } elseif ($style_value == 'center') {
-                                $tree->nodeValue = '[center]' . $tree->nodeValue . '[/center]';
-                            } elseif ($style_value == 'right') {
-                                $tree->nodeValue = '[right]' . $tree->nodeValue . '[/right]';
+                            if ($styleKey == 'text-align') {
+                                if ($style_value == 'left') {
+                                    $tree->nodeValue = '[left]' . $tree->nodeValue . '[/left]';
+                                } elseif ($style_value == 'center') {
+                                    $tree->nodeValue = '[center]' . $tree->nodeValue . '[/center]';
+                                } elseif ($style_value == 'right') {
+                                    $tree->nodeValue = '[right]' . $tree->nodeValue . '[/right]';
+                                }
+                            } elseif ($styleKey == 'size') {
+                                $size = $this->convertSize($style_value);
+                                $tree->nodeValue = '[' . $styleKey . '=' . $size . ']' . $tree->nodeValue . '[/' . $styleKey . ']';
+
+                            } else {
+                                $tree->nodeValue = '[' . $styleKey . '=' . $style_value . ']' . $tree->nodeValue . '[/' . $styleKey . ']';
                             }
-                        } elseif ($styleKey == 'size') {
-                            $size = $this->convertSize($style_value);
-                            $tree->nodeValue = '[' . $styleKey . '=' . $size . ']' . $tree->nodeValue . '[/' . $styleKey . ']';
-
-                        } else {
-                            $tree->nodeValue = '[' . $styleKey . '=' . $style_value . ']' . $tree->nodeValue . '[/' . $styleKey . ']';
+                            continue;
                         }
-                        continue;
+                    }
+                    $tree->removeAttribute('style');
+                }
+                if ($tree->childNodes) {
+                    foreach ($tree->childNodes as $child) {
+                        $this->clearHtml($child, $allowed_styles);
                     }
                 }
-                $tree->removeAttribute('style');
             }
-            if ($tree->childNodes) {
-                foreach ($tree->childNodes as $child) {
-                    $this->clearHtml($child, $allowed_styles);
-                }
-            }
+        } catch (\Exception $e) {
+
         }
+
     }
 
     public function heading_parser($matches)

@@ -22,7 +22,7 @@
             </div>
             {{-- @include('stream-section.stream-list') --}}
         </div>
-    </div>    
+    </div>
 @endsection
 
 {{-- Main Section --}}
@@ -87,11 +87,11 @@
 @section('js')
     <script>
         $(function () {
-           
-            // video stream
-            getStreamsList(true);            
 
-            $('.streams_list').on('click', '.widget-stream-lists a', function(e){               
+            // video stream
+            getStreamsList(true);
+
+            $('.streams_list').on('click', '.widget-stream-lists a', function(e){
                 e.preventDefault();
                 var selectId = $(this).attr('data-id');
                 getSelectStream(selectId);
@@ -120,7 +120,7 @@
                     $(".stream-section").removeClass('active')
                     $(".toggle-action").text('hide')
                 }
-            })            
+            })
         });
 
         function getLastNews(page,shouldScroll) {
@@ -140,7 +140,7 @@
             var stream_container = $('#video-frame-container');
             var body = $("html, body");
             $.get('{{route('home.stream.view')}}'+'?id='+stream_id, {}, function (data) {
-                stream_container.html(data.stream);   
+                stream_container.html(data.stream);
                 $('#video-frame-container .load-wrapp').hide();
             });
         }
@@ -154,9 +154,9 @@
             $.get('{{route('home.streamlist.get')}}', {}, function (data) {
                 streamListContainer.html(data.streams_list);
                 if(init) {
-                    var init_streamId = $(".widget-stream-lists:first-child a").attr('data-id');   
+                    var init_streamId = $(".widget-stream-lists:first-child a").attr('data-id');
                     getSelectStream(init_streamId);
-                }               
+                }
                 setTimeout(function(){
                     getStreamsList(false);
                 },10000)
@@ -165,7 +165,7 @@
         }
 
         function menu_toggle(event, menuObj) {
-            event.preventDefault();          
+            event.preventDefault();
             // stream menu action
             if(menuObj.hasClass('active') != true) {
                 $(".stream-list-wrapper").addClass('open')
@@ -179,7 +179,7 @@
         }
 
         function theatre_mode(event, theatreBtn) {
-            event.preventDefault();  
+            event.preventDefault();
             var streamArea = $(".stream-area");
             if(streamArea.hasClass('theatre-on') == true) {
                 streamArea.removeClass('theatre-on')
@@ -193,7 +193,7 @@
         }
 
         function chatroom_toggle(event, chatBtn) {
-            event.preventDefault();          
+            event.preventDefault();
             // stream menu action
             var streamArea = $(".stream-area");
             if(streamArea.hasClass('chat_open') == true) {
@@ -207,7 +207,7 @@
 
 
         function twitch_chatroom_toggle(event, twtChatBtn) {
-            event.preventDefault();          
+            event.preventDefault();
             // stream menu action
             var twitchChatArea = $(".twitch_chat");
             if(twitchChatArea.hasClass('active') == true) {
@@ -218,13 +218,13 @@
         }
 
         function popupChat(event, popChatBtn) {
-            event.preventDefault(); 
+            event.preventDefault();
             PopupCenter('popup/chat','Chat','350',(screen.height-150))
 
             // var win = window.open('popup/chat','Chat','toolbar=no,scrollbars=no,location=no,statusbar=no,menubar=no,resizable=no,width=350, height=650,resizable =yes');
-           
-        }   
-        
+
+        }
+
         function PopupCenter(url, title, w, h) {
             // Fixes dual-screen position                         Most browsers      Firefox
             var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : window.screenX;
