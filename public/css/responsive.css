@@ -31,9 +31,6 @@
     .logged-user {
         height: 230px;
     }
-    .no-logged-user {
-        height: 230px;
-    }
     .login-form .login-wrapper {
         padding-right: 0;
     }
@@ -120,9 +117,6 @@
 @media only screen and (max-width: 767px) {
     .header-wrapper .admin-button {
         display: none;
-    }
-    .no-logged-user {
-        height: 133px;
     }
     .registration-link {
         margin-top: 0;
