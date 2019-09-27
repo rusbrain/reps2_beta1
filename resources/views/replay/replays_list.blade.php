@@ -1,5 +1,5 @@
 @inject('general_helper', 'App\Services\GeneralViewHelper')
-@php $countries = $general_helper->getCountries();@endphp
+@php $countries = $general_helper->getCountries(); @endphp
 
 @if($replays->total() > 0)
     @foreach($replays as $item => $replay)

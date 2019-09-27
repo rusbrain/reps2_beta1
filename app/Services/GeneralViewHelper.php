@@ -442,7 +442,7 @@ class GeneralViewHelper
                 </div>
                 <div class="spoilmain" style="display:none;">
                     <font color="#555599" size="2">\\1</font></div>
-                </div
+                </div>
                 <p class="page_content_text" align="justify">', $text
             );
 
